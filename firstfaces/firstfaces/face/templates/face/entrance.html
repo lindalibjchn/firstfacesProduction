@@ -1,0 +1,224 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'face/css/utils.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'face/css/entrance.css' %}" />
+
+<!-- black screen which disappears after loading -->
+<div id="foreground" style="opacity: 1">
+
+    <div id="loadingIcon">
+
+        <i class="fa fa-5x fa-spinner fa-pulse"></i>
+
+    </div>
+
+</div>
+
+
+<!-- info -->
+
+<div class="see-through-background" id="see-through-background">
+
+    <div class="w3-container infoContainer">
+
+        <div class="w3-row" id="row01">
+
+            <div class="w3-col" style="width: 12%;">
+
+                <div class="swapCardsButtonDiv">
+
+                    <button class="w3-button swapCardsButton w3-hover-none w3-ripple" id="buttonLeft">
+                        <i class="fa fa-5x fa-angle-double-left fa-angle"></i>
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div class="w3-col" style="width: 76%" id="info-main">
+
+                <div class="w3-col w3-third">
+
+                    <div class="w3-card w3-white info-card w3-center" id="infoCard01">
+
+                        <div class="w3-container w3-blue">
+                            <h3>Your English</h3>
+                        </div>
+
+                        <!--<div class="images-outer">-->
+                            <img id="womanTalkingImg" src="{% static 'face/images/woman-talking.png' %}">
+                        <!--</div>-->
+
+                    </div>
+
+                </div>
+
+                <div class="w3-col w3-third">
+
+                    <div class="w3-card w3-white info-card w3-center" id="infoCard02">
+
+                        <div class="w3-container w3-indigo">
+                            <h3>Native Speaker</h3>
+                        </div>
+
+                        <!--<div class="images-outer">-->
+                            <img id="nativeListeningImg" src="{% static 'face/images/native-listening.png' %}">
+                        <!--</div>-->
+
+                    </div>
+
+                </div>
+
+                <div class="w3-col w3-third">
+
+                    <div class="w3-card w3-white info-card w3-center" id="infoCard03">
+
+                        <div class="w3-container w3-green">
+                            <h3>Emotional Response</h3>
+                        </div>
+
+                        <!--<div class="images-outer">-->
+                            <img id="tiaSmileImg" src="{% static 'face/images/tia-smile.png' %}">
+                        <!--</div>-->
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- hidden left info cards -->
+            <div class="w3-col" style="width: 76%" id="info-talk">
+
+                <div class="w3-col w3-half">
+
+                    <div class="w3-card info-card w3-center" id="moreInfoCard01">
+
+                        <div class="w3-container w3-red">
+                            <h3 style="padding: 0px; margin: 3px;">Background - <strong style="font-size: 32px;">TEDx</strong></h3>
+                        </div>
+                            
+                        <div id="TEDVideo" class="w3-center">
+                            <iframe width="100%" height="100%" src="https://www.youtube.com/embed/6boGtBCbclc?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="w3-col w3-half">
+
+                    <div class="w3-card w3-white info-card w3-center" id="moreInfoCard02">
+
+                        <div class="w3-container w3-blue">
+                            <h3 style="padding: 0px; margin: 3px;">Development - <strong style="font-size: 32px;">AI</strong></h3>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- hidden right join cards -->
+            <div class="w3-col" style="width: 76%" id="info-join">
+
+                <div class="w3-col w3-half">
+
+                    <div class="w3-card w3-white info-card w3-center" id="joinInfoCard01">
+
+                        <div class="w3-container w3-green">
+                            <h3>Student Feedback</h3>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="w3-col w3-half">
+
+                    <div class="w3-card w3-white info-card w3-center" id="moreInfoCard02">
+
+                        <div class="w3-container w3-green">
+                            <h3>How to Join</h3>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="w3-col" style="width: 12%;">
+            
+                <div class="swapCardsButtonDiv">
+
+                    <button class="w3-button swapCardsButton w3-hover-none w3-ripple" id="buttonRight">
+                        <i class="fa fa-5x fa-angle-double-right fa-angle"></i>
+                    </button>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+
+    </div>
+
+</div>
+
+
+<!-- div for login screen -->
+
+<div class="signin-container" id="signInCont">
+            
+    <div class="w3-card-4">
+        
+        <div class="w3-container w3-white">
+
+        <form method="POST" id="loginForm">
+            {% csrf_token %}
+            <p id="misMatch" style="display: none; color: red;"></p><!-- errors go here -->
+
+            <p class="formLabelTag w3-text-blue">{{ form.username.label_tag }}</p>
+            <p id="username">{{ form.username }}</p>
+            <p class="formLabelTag w3-text-blue">{{ form.password.label_tag }}</p>
+            <p>{{ form.password }}</p>
+                    
+            <div class="w3-center w3-container">
+                <input class="w3-button w3-padding-large w3-xlarge w3-green w3-hover-teal w3-ripple" type="submit" value="login" style="margin: 20px;"/>
+            </div>
+        </form>
+            
+        </div>
+
+    </div>
+
+</div>
+
+<!-- variables for blender objects from JSON -->
+<script>
+    var building = "{% static 'face/JSON/outsideUCDBuilding.json' %}";
+    var trees = "{% static 'face/JSON/outsideUCDTrees.json' %}";
+    var ground = "{% static 'face/JSON/outsideUCDGround.json' %}";
+</script>
+
+<!-- fonts -->
+<script>var board_font = "{% static 'face/fonts/roboto_condensed_regular.json' %}"</script>
+
+<!-- my own scripts -->
+<script src="{% static 'face/javascript/variablesAndConstants.js' %}"></script>
+<script src="{% static 'face/javascript/entrance/variablesAndConstants.js' %}"></script>
+<script src="{% static 'face/javascript/entrance/loadBuilding.js' %}"></script>
+<script src="{% static 'face/javascript/entrance/enterBuilding.js' %}"></script>
+<script src="{% static 'face/javascript/entrance/main.js' %}"></script>
+
+{% endblock %}

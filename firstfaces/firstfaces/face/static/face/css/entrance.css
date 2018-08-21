@@ -1,0 +1,231 @@
+.see-through-background {
+
+    position: absolute;
+    width: 100%;
+    height: 52%;
+    bottom: 8%;
+    background: rgba( 0, 0, 0, 0.3 );
+    display: none;
+
+}
+
+#loadingIcon {
+
+    position: absolute;
+    color: yellow;
+    height: 50px;
+    width: 50px;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+
+}
+
+.signin-container {
+
+    margin-top: 50px;
+    width: 300px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: none;
+
+}
+
+.infoContainer {
+
+    height: 80%;
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+
+}
+
+.info-card {
+
+    width: 85%;
+    height: 100%;
+    margin: auto;
+    display: none;
+
+}
+
+.swapCardsButtonDiv {
+
+    width: 100%;
+    display: none;
+
+}
+
+/*stops the empty columns from disappearing*/
+.w3-col {
+
+    min-height: 1px;
+
+}
+
+#infoCard01 {
+
+    width: 95%; 
+    min-width: 300px;
+    height: 70%;
+
+}
+
+#infoCard02 {
+
+    width: 65%; 
+    min-width: 200px;
+    height: 100%;
+
+}
+
+#infoCard03 {
+
+    width: 95%; 
+    min-width: 350px;
+    height: 90%;
+
+}
+
+#moreInfoCard01 {
+    
+    width: 80%;
+    height: 80%;
+
+}
+
+.swapCardsButtonDiv {
+    
+    height: 100%;
+    width: 100%;
+
+}
+
+.swapCardsButton {
+
+    width: 80px;
+    height: 80px;
+    margin: 0 auto;
+    display: block;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 0;
+}
+
+/*hide left button at start*/
+.fa-angle {
+
+    color: yellow;
+
+}
+
+.fa-angle:hover {
+
+    transform: scale(1.2);
+
+}
+
+.fa-angle:active {
+
+    transform: scale(0.8);
+
+}
+
+#info-main {
+
+
+}
+
+#info-talk {
+
+    display: none;
+
+}
+
+#info-join {
+
+    display: none;
+
+}
+
+.formLabelTag {
+    
+    font-size: 20px;
+
+}
+
+#TEDVideo {
+
+    width: 100%;
+    height: 100%;
+
+} 
+
+#womanTalkingImg {
+
+    width: 100%;
+
+}
+
+#nativeListeningImg {
+
+    height: 100%;
+
+}
+
+#tiaSmilingImg {
+
+    width: 100%;
+
+}
+
+/*.images-outer {*/
+
+    /*position: relative;*/
+    /*width: 90%;*/
+    /*height: 75%;*/
+    /*[>margin: 0 auto;<]*/
+    /*border: 1px solid blue;*/
+    /*top: 50%;*/
+    /*transform: perspective(1px) translateY(-50%);*/
+
+/*}*/
+
+#womanTalkingImg {
+
+    position: relative;
+    width: 250px;
+    top: 50%;
+    transform: perspective(1px) translateY(30%);
+
+}
+
+#nativeListeningImg {
+
+    position: relative;
+    height: 250px;
+    top: 40%;
+    transform: perspective(1px) translateY(10%);
+
+}
+
+#tiaSmileImg {
+
+    position: relative;
+    width: 150px;
+    top: 50%;
+    transform: perspective(1px) translateY(30%);
+
+}
+
+
+
+
+
+
+

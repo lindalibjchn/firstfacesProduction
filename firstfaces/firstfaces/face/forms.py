@@ -1,0 +1,17 @@
+from django.forms import ModelForm
+from django import forms
+from django.contrib.auth.models import User
+
+class UserForm(ModelForm):
+    class Meta:
+        model = User
+        fields = ['username', 'password']
+    
+    def __init__(self, *args, **kwargs):
+        # first call the 'real' __init__()
+        super(UserForm, self).__init__(*args, **kwargs)
+        # then do extra stuff:
+        self.fields['username'].help_text = ''
+        self.fields['username'].widget = forms.TextInput(attrs={'placeholder': '', 'style': 'font-size: 20', 'class': 'w3-input w3-border'})
+        self.fields['password'].widget = forms.PasswordInput(attrs={'placeholder': '', 'style': 'font-size: 20', 'class': 'w3-input w3-border'})
+        # self.fields['password'].widget.attrs['class'] = 'form-control'       

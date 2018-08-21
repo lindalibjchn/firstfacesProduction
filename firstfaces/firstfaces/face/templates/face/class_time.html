@@ -1,0 +1,291 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'face/css/utils.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'face/css/class.css' %}" />
+
+<!-- black screen which disappears after loading -->
+<div id="foreground" style="opacity: 1">
+
+    <div id="loadingIcon">
+
+        <i class="fa fa-5x fa-spinner fa-pulse"></i>
+
+    </div>
+
+</div>
+
+<div class="init-questions-container" id="emotionQuestionsContainer" class="w3-container">
+
+    <div class="w3-row">
+
+        <div class="w3-third">
+
+            <button class="w3-btn w3-light-green init-emot" id="happy">happy</button>
+
+        </div>
+
+        <div class="w3-third">
+
+            <button class="w3-btn w3-light-blue init-emot" id="surprised">surprised</button>
+
+        </div>
+
+        <div class="w3-third">
+
+            <button class="w3-btn w3-green init-emot" id="excited">excited</button>
+
+        </div>
+
+    </div>
+
+    <div class="w3-row">
+
+        <div class="w3-third">
+
+            <button class="w3-btn w3-blue init-emot" id="sad">sad</button>
+
+        </div>
+
+        <div class="w3-third">
+
+            <button class="w3-btn w3-red init-emot" id="angry">angry</button>
+
+        </div>
+
+        <div class="w3-third">
+
+            <button class="w3-btn w3-orange init-emot" id="annoyed">annoyed</button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="w3-container init-questions-container" id="topicChoices">
+
+    <div class="w3-row topic-row">
+
+        <!--this will be filled in with js depending on student's choice-->
+        <button class="w3-btn w3-green choice-btn" id="myEmotion"></button>
+
+    </div>
+
+    <div class="w3-row topic-row">
+
+        <button class="w3-btn w3-blue choice-btn" id="myChoice">Choose my own topic</button>
+
+    </div>
+
+    <div class="w3-row topic-row">
+
+        <button class="w3-btn w3-red choice-btn" id="todaysNewsArticle">One of today's news articles</button>
+
+    </div>
+
+</div>
+
+<div class="w3-container init-questions-container" id="chooseTopicTextContainer">
+
+    <div class="w3-container">
+
+        <p id="topicExample">e.g. friends, travelling, family relations... </p>
+
+    </div>
+
+    <div class="w3-container">
+
+        <input class="w3-input" type="text" id="topicChoiceInput">
+
+    </div>
+
+    <button class="w3-button w3-green w3-large" id="submitOwnTopicBtn">submit</button>
+
+</div>
+
+<div id="textInputContainer">
+
+    <div id="textInputBox">
+
+        <textarea id="textInput"></textarea>
+
+    </div>
+
+</div>
+
+
+<!-- right hand side controls for student to respond and see their own sentences -->
+
+<div id="controllerContainer" class="w3-container">
+
+    <div id="timeInfoContainer">
+
+        <div class="w3-row" id="timeInfoRow">
+
+            <div class="w3-col w3-half timeInfoCols">
+
+                <div id="timeDiv">
+
+                </div>
+
+            </div>
+
+            <div class="w3-col w3-half timeInfoCols">
+
+                <div id="questionStreakDiv">
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div id="prevSentsContainer">
+
+        <div id="prevSents">
+
+        </div>
+
+    </div>
+
+    <div id="inputButtonsContainer">
+
+        <div id="thinkingLoading">
+
+            <p class="thinking">thinking<span>.</span><span>.</span><span>.</span></p>
+
+        </div>
+
+        <div id="recordBtnsContainer">
+
+            <div class="w3-container" id="recordAndStopBtnsContainer">
+
+                <div id="recordAndStopBtns">
+
+                    <button class="w3-btn w3-circle w3-xxxlarge w3-blue input-btn-large record-btn w3-padding-large" id="recordVoiceBtn">
+                     
+                        <i class="fa fa-microphone inputfa"></i>
+
+                    </button>
+
+                    <button class="w3-btn w3-circle w3-xxxlarge w3-red input-btn-large record-btn w3-padding-large" id="stopRecordVoiceBtn">
+                     
+                        <i class="fa fa-stop inputfa"></i>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div class="w3-container" id="listenAndSynthBtnsContainer">
+                 
+                <div id="listenAndSynthBtns">
+
+                    <button class="w3-btn w3-circle w3-xxlarge w3-indigo input-btn record-btn w3-padding-large play-btn" id="listenVoiceBtn">
+                    
+                        <i class="fa fa-play inputfa">
+                        </i>
+
+                    </button>
+
+                    <button class="w3-btn w3-circle w3-xxlarge w3-indigo input-btn record-btn w3-padding-large play-btn" id="listenSynthesisBtn">
+                    
+                        <i class="fa fa-volume-up inputfa"></i>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div class="w3-container" id="talkBtnContainer">
+
+                <div id="talkBtnCont">
+
+                    <button class="w3-btn w3-green w3-large inputfa input-btn record-btn" id="talkBtn">talk</button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="w3-container" id="optionBtns">
+
+            <div class="w3-row option-row">
+
+                <button class="w3-btn w3-blue option-btn" id="tryAgainBtn">try again</button>
+
+            </div>
+
+            <div class="w3-row option-row">
+
+                <button class="w3-btn w3-indigo option-btn" id="whatsWrongBtn">what's wrong</button>
+                <button class="w3-btn w3-indigo option-btn" id="showCorrectionBtn">showCorrection</button>
+
+            </div>
+
+            <div class="w3-row option-row">
+
+                <button class="w3-btn w3-green option-btn" id="nextSentenceBtn">next sentence</button>
+
+            </div>
+
+        </div>
+
+    </div>
+                            
+    <audio id="soundClip"></audio>
+
+</div>
+
+<!-- three.js script -->
+<script src="{% static 'three.min.js' %}"></script>
+
+<!-- datgui included in development -->
+<script src="{% static 'dat.gui.min.js' %}"></script>
+<script src="{% static 'face/javascript/datguiOptions.js' %}"></script>
+
+<!-- controls -->
+<script src="{% static 'TrackballControls.js' %}"></script>
+<script src="{% static 'OrbitControls.js' %}"></script>
+
+<!-- variables for blender objects from JSON -->
+<script>var face = "{% static 'face/JSON/mary_face.json' %}"</script>
+<script>var mouth = "{% static 'face/JSON/tia_mouth.json' %}"</script>
+<script>var eye = "{% static 'face/JSON/mary_eye.json' %}"</script>
+<script>var hair = "{% static 'face/JSON/mary_hair.json' %}"</script>
+<script>var body = "{% static 'face/JSON/tia_body.json' %}"</script>
+<script>var classroom = "{% static 'face/JSON/classroom.json' %}"</script>
+<script>var speechBubble = "{% static 'face/JSON/speechBubble.json' %}"</script>
+<script>var classVariableDict = {{ class_variable_dict|safe }}</script>;
+
+<!-- fonts -->
+<script>var board_font = "{% static 'face/fonts/monaco_regular.json' %}"</script>
+
+<!-- my own scripts -->
+<script src="{% static 'face/javascript/variablesAndConstants.js' %}"></script>
+<script src="{% static 'face/javascript/classroom/variablesAndConstants.js' %}"></script>
+<script src="{% static 'face/javascript/classroom/loadObjects.js' %}"></script>
+<script src="{% static 'face/javascript/classroom/moveIndividual.js' %}"></script>
+<script src="{% static 'face/javascript/classroom/moveCamera.js' %}"></script>
+<script src="{% static 'face/javascript/classroom/moveComplex.js' %}"></script>
+<script src="{% static 'face/javascript/classroom/seqEnter.js' %}"></script>
+<script src="{% static 'face/javascript/classroom/moveExpression.js' %}"></script>
+<script src="{% static 'face/javascript/classroom/moveBody.js' %}"></script>
+<script src="{% static 'face/javascript/classroom/input.js' %}"></script>
+<script src="{% static 'face/javascript/classroom/text.js' %}"></script>
+<script src="{% static 'face/javascript/classroom/timeStuff.js' %}"></script>
+<script src="{% static 'face/javascript/classroom/previousSents.js' %}"></script>
+<script src="{% static 'face/javascript/classroom/seqAfterJudgement.js' %}"></script>
+<script src="{% static 'face/javascript/classroom/main.js' %}"></script>
+
+
+{% endblock %}

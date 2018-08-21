@@ -1,0 +1,292 @@
+from .models import Available, Sentence, Session
+import datetime
+import time
+from django.utils import timezone
+from operator import itemgetter
+
+def get_this_weeks_dates():
+
+    days_add_minus = {
+
+            'Sat': [0,7],
+            'Sun': [0,6],
+            'Mon': [-1,5],
+            'Tue': [-2,4],
+            'Wed': [-3,3],
+            'Thu': [-4,2],
+            'Fri': [-5,1]
+
+    }
+
+    todays_date = timezone.localtime().date()
+    todays_day = todays_date.strftime("%a")
+    today = timezone.localtime()
+    date_mon = today + datetime.timedelta( days_add_minus[ todays_day ][ 0 ] )
+    date_fri = today + datetime.timedelta( days_add_minus[ todays_day ][ 1 ] )
+
+    return [ date_mon, date_fri ]
+
+
+def get_availables_for_schedule():
+    
+    this_weeks_dates = get_this_weeks_dates()
+
+    # get all availables in this period
+
+    this_weeks_availables = Available.objects.filter( start_availability__gte=this_weeks_dates[ 0 ] ).filter( end_availability__lte=this_weeks_dates[ 1 ] ) 
+
+    return this_weeks_availables
+
+
+days_nums = {
+                
+    'Sat': -1,
+    'Sun': -1,
+    'Mon': 0,
+    'Tue': 1,
+    'Wed': 2,
+    'Thu': 3,
+    'Fri': 4
+
+}
+
+# for schedule board in waiting views
+def make_schedule_dict( availables ):
+
+    # my teaching timetable starts at this time
+    zero_hour = 10
+
+    # 0, 1, 2... are Mon, Tue, Wed.. for x-axis
+    # in list are y-axis top and bottom of block
+    schedule_dict_prot = {
+
+            0: [],
+            1: [],
+            2: [],
+            3: [],
+            4: []
+
+    }
+
+    day_now = timezone.now().strftime("%a")
+    hour_now = int(timezone.localtime().strftime("%H"))
+    min_now = int(timezone.localtime().strftime("%M"))
+
+    line_now = [days_nums[ day_now ], round(hour_now - zero_hour + min_now / 60 , 1)]
+
+    for a in availables:
+
+        start_hour = int(timezone.localtime(a.start_availability).strftime("%H"))
+        start_min = int(timezone.localtime(a.start_availability).strftime("%M"))
+        end_hour = int(timezone.localtime(a.end_availability).strftime("%H"))
+        end_min = int(timezone.localtime(a.end_availability).strftime("%M"))
+
+        decimal_start = round(start_hour - zero_hour + start_min / 60, 1)
+        decimal_end = round(end_hour - zero_hour + end_min / 60, 1)
+
+        if decimal_start != decimal_end:
+            schedule_dict_prot[ days_nums[ a.start_availability.strftime("%a") ] ].append( [decimal_start, decimal_end] )
+
+    return schedule_dict_prot, line_now
+
+def get_upcoming_class( availables ):
+
+    """
+    gets next available and next available at another day incase the student has already finished one class
+    """
+
+    time_now = timezone.now()
+    todays_date = time_now.date()
+
+    next_class = None;
+    next_class_after_today = None;
+
+    for a in availables:
+
+        if a.start_availability > time_now:
+
+            if next_class != None:
+
+                if a.start_availability < next_class.start_availability:
+
+                    next_class = a
+
+            else:
+
+                next_class = a
+        
+            if next_class_after_today != None:
+
+                if a.start_availability.date() > todays_date:
+
+                    if a.start_availability < next_class_after_today.start_availability:
+
+                        next_class_after_today = a
+
+                    else:
+
+                        next_class_after_today = a
+        
+    if next_class != None:
+
+        next_class = timezone.localtime(next_class.start_availability).strftime("%A %H:%M")
+
+    else:
+
+        next_class = "No Classes"
+
+    if next_class_after_today != None:
+
+        next_class_after_today = timezone.localtime(next_class_after_today.start_availability).strftime("%A %H:%M")
+
+    else:
+
+        next_class_after_today = "No Classes"
+
+    return next_class, next_class_after_today
+
+def get_class_already_done_today( sessions ):
+
+    for s in sessions:
+
+        if s.start_time.date() == timezone.now().date():
+
+            if s.end_time != None:
+
+                return True
+
+    return False
+
+def get_in_class_now( sessions ):
+
+    if len( sessions ) == 0:
+
+        return False, 0
+
+    else:
+
+        # get the most recent session
+        s = sessions.order_by('-start_time')[ 0 ]
+        
+        print('s:', s)
+
+        # if no end time then session is currently running
+        if s.end_time == None:
+
+            return True, s.id
+
+        else:
+
+            return False, 0
+
+def has_user_clicked_option_btn(s_id):
+
+    sent = Sentence.objects.get(pk=s_id)
+
+    if sent.try_again or sent.next_sentence or sent.whats_wrong:
+
+        return True
+
+    else:
+
+        return False
+
+# def has_user_added_sent_to_blob(s_id):
+
+    # sent = Sentence.objects.get(pk=s_id)
+
+    # print('sent_id:', s_id)
+    # print('sent:', sent)
+    # print('sent added from blob:', sent)
+
+    # if sent.sentence != None:
+
+        # return True
+
+    # else:
+
+        # return False
+
+def fill_sessions_dict():
+
+    # create JSON object containing all info for teacher meeting
+    sessions = {}
+
+    # get all sessions currently underway
+    cur_sessions = Session.objects.filter(end_time=None)
+
+    # get total sentences in db in order to check later if this has increased
+    total_sentences = Sentence.objects.count()
+    sessions[ 'totalSentences' ] = total_sentences
+    sess_id_to_username = {}
+    for s in cur_sessions:
+        
+        sessions[s.pk] = {}
+        sessions[s.pk]["user_id"] = s.learner.pk
+        sessions[s.pk]["username"] = s.learner.username
+        # need to convert to basic time units for JS
+        sessions[s.pk]["start_time"] = int(time.mktime(timezone.localtime(s.start_time).timetuple())) * 1000
+        
+
+        # get prev sentences
+        this_sess_sents = Sentence.objects.filter(session=s)
+        sents = []
+
+        for sent in this_sess_sents:
+
+            # timestamps only work if there is an actual time, else None
+            sent_time = None
+            judge_time = None
+            whats_wrong_time = None
+            try_again_time = None
+            next_sentence_time = None
+            if sent.sentence_timestamp != None:
+
+                sent_time = int(time.mktime((sent.sentence_timestamp).timetuple()))
+                
+            if sent.judgement_timestamp != None:
+
+                judge_time = int(time.mktime((sent.judgement_timestamp).timetuple()))
+
+            if sent.whats_wrong_timestamp != None:
+
+                whats_wrong_time = int(time.mktime((sent.whats_wrong_timestamp).timetuple()))
+
+            if sent.try_again_timestamp != None:
+
+                try_again_time = int(time.mktime((sent.try_again_timestamp).timetuple()))
+
+            if sent.next_sentence_timestamp != None:
+
+                next_sentence_time = int(time.mktime((sent.next_sentence_timestamp).timetuple()))
+
+            sent_meta = {
+                "sess_id": s.pk,
+                "sent_id": sent.id, 
+                "sentence": sent.sentence,
+                "sentence_timestamp": sent_time,
+                "judgement": sent.judgement,
+                "judgement_timestamp": judge_time,
+                "indexes": sent.indexes,
+                "prompt": sent.prompt,
+                "correction": sent.correction,
+                "whats_wrong": sent.whats_wrong,
+                "whats_wrong_timestamp": whats_wrong_time,
+                "try_again": sent.try_again,
+                "try_again_timestamp": try_again_time,
+                "next_sentence": sent.next_sentence,
+                "next_sentence_timestamp": next_sentence_time,
+            }
+            sents.append(sent_meta)
+
+        sents = sorted(sents, key=itemgetter("sent_id"), reverse=True)
+
+        sessions[s.pk]["sentences"]= sents
+
+    return sessions
+
+
+
+
+
+

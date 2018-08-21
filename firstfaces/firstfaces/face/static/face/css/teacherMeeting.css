@@ -1,0 +1,455 @@
+.content-container {
+
+    height: 100%;
+
+}
+
+#topRow {
+
+    height: 60%;
+
+}
+
+#bottomRow {
+
+    height: 40%;
+
+}
+
+/*STUFF FOR JUDGEMENT*/
+
+#judgementCol {
+
+    position: relative;
+    height: 100%;
+
+}
+
+#judgementOuter {
+
+    position: absolute;
+    height: 92%;
+    width: 100%;
+    bottom: 0;
+
+}
+
+#topJudgementRow {
+
+    margin-top: 2%;
+    height: 60%;
+    width: 100%;
+
+}
+
+#emotionWheelContainer {
+
+    position: relative;
+
+}
+
+#emotionWheel {
+
+    height: 220px;
+    width: 220px;
+    border-radius: 50%;
+    background-color: green;
+    margin-top: 3%;
+    margin-left: 5%;
+
+}
+
+#emotionWheel:hover {
+
+    background-color: yellow;
+
+}
+
+#judgementButtonsContainer {
+
+    height: 100%;
+
+}
+
+#nodShakeClickables {
+
+    margin-top: 5%;
+    height: 40%;
+
+}
+
+.triangle-bottomleft {
+
+	width: 0;
+	height: 0;
+    border-right: 100px solid transparent;
+    top: 10px;
+
+}
+
+#nodClickable {
+
+    height: 100%;
+
+}
+
+#nodTriangle {
+
+	border-bottom: 100px solid green;
+
+}
+
+#nodTriangle:hover {
+
+	border-bottom: 100px solid chartreuse;
+
+}
+
+#shakeTriangle {
+
+	border-bottom: 100px solid red;
+
+}
+
+#shakeTriangle:hover {
+
+	border-bottom: 100px solid pink;
+
+}
+
+#shakeClickable {
+
+    height: 100%;
+
+}
+
+#judgementCurStates {
+
+    font-size: 1vw;
+    padding: 0px;
+
+}
+
+#surpriseAndCorrectSubmit {
+
+    width: 100%;
+    height: 25%;
+
+}
+
+#surpriseClickable {
+
+    height: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+/* The slider itself */
+.slider {
+    
+    width: 80%;
+    -webkit-appearance: none;  /* Override default CSS styles */
+    appearance: none;
+    height: 25px; /* Specified height */
+    background: #d3d3d3; /* Grey background */
+    outline: none; /* Remove outline */
+    opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+    transition: opacity .2s;
+}
+
+/* Mouse-over effects */
+.slider:hover {
+    opacity: 1; /* Fully shown on mouse-over */
+}
+
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */ 
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    width: 25px; /* Set a specific slider handle width */
+    height: 25px; /* Slider handle height */
+    background: #4CAF50; /* Green background */
+    cursor: pointer; /* Cursor on hover */
+}
+
+.slider::-moz-range-thumb {
+    width: 25px; /* Set a specific slider handle width */
+    height: 25px; /* Slider handle height */
+    background: #4CAF50; /* Green background */
+    cursor: pointer; /* Cursor on hover */
+}
+
+#submitClickable {
+
+    height: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+#judgementBtnsRow {
+
+    width: 100%;
+    height: 25%;
+
+}
+
+#uncertainSelectionsContainer {
+
+    height: 100%;
+
+}
+
+#meanByBetterBtnsContainer {
+
+    position: relative;
+    height: 100%;
+
+}
+
+.judgement-btn-col {
+
+    height: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.judgement-btns {
+
+
+
+}
+
+#meanByBtn {
+
+}
+
+#sentenceForSelectionRow {
+
+    height: 18%;
+
+}
+
+#sentenceForJudgement {
+
+    margin: 0px 10px;
+    letter-spacing: 0.4vw;
+    font-size: 1vw;
+    font-weight: bold;
+    
+}
+
+#promptInputRow {
+
+    height: 18%;
+
+}
+
+#promptInput {
+
+    height: 100%;
+
+}
+
+#promptText {
+
+    width: 100%;
+    height: 100%;
+
+}
+
+#selectedSections {
+
+    height: 100%;
+
+}
+
+.selectedSection {
+
+    font-size: 1vw;
+    padding: 0px 4px;
+
+}
+
+/* WRONG SENTENCES ON THE RIGHT */
+
+#sentForCorrectionNow {
+
+    margin-top: 6%;
+    height: 30%; 
+    padding: 2%;
+
+}
+
+#wrongSentForCorrectionNow {
+
+    font-size: 1.2vw;
+    font-weight: bold;
+    color: white;
+    letter-spacing: 0.4vw;
+
+}
+
+#wrongSents {
+
+    height: 41%;
+    padding: 1%;
+    overflow-y: scroll;
+
+}
+
+.wrong-sents {
+
+    width: 100%;
+    font-size: 1.2vw;
+
+}
+
+.wrong-sents-individual-container {
+
+    margin-bottom: 5px;
+    padding: 5px;
+
+}
+
+.wrong-sent-btn-cont {
+
+
+}
+
+#wrongInputRow {
+
+    height: 18%;
+
+}
+
+#wrongInput {
+
+    height: 100%;
+
+}
+
+#wrongText {
+
+    width: 100%;
+    height: 100%;
+
+}
+
+#selectedWrongSections {
+
+    height: 100%;
+
+}
+
+#wrongSelectionsRow {
+
+    height: 100%;
+
+}
+
+.wrongSelections {
+
+    height: 100%;
+    background-color: orange;
+    font-size: 1vw;
+    padding: 0px 4px;
+
+}
+
+
+/*STUFF FOR PREVIOUS SENTENCES*/
+
+#students-top-row {
+
+    height: 50%;
+
+}
+
+#students-bottom-row {
+
+    height: 50%;
+
+}
+
+.students-box-outer {
+
+    height: 100%;
+    overflow-y: scroll;
+    border: 1px solid black
+
+}
+
+.student-box-title {
+
+    border: 2px solid red;
+    width: 98%;
+
+}
+
+.prev-username {
+
+    background-color: pink;
+
+}
+
+.prev-minutes {
+
+    background-color: grey;
+
+}
+
+.student-box-content {
+
+    /*overflow-y: scroll;*/
+    width: 98%;
+
+}
+
+.prev-sents {
+
+    color: white;
+    margin: 1px;
+    background-color: blue;
+
+}
+
+.prev-judgements{
+
+    color: white;
+    margin: 1px;
+    background-color: red;
+
+}
+
+.prev-corrections{
+
+    color: white;
+    margin: 1px;
+    margin-bottom: 5px;
+    background-color: green;
+
+}
+
+.prev-try-again {
+
+    color: white;
+    margin: 1px;
+    margin-bottom: 5px;
+    background-color: orange;
+
+}
+
+
+
+
+

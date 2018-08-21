@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'face/css/utils.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'face/css/waiting.css' %}" />
+
+<!-- black screen which disappears after loading -->
+<div id="foreground" style="opacity: 1">
+
+    <div id="loadingIcon">
+
+        <i class="fa fa-5x fa-spinner fa-pulse"></i>
+
+    </div>
+
+</div>
+
+<div id="bookContentBackground">
+
+    <div id="bookContentPage">
+
+        <span onclick="bookBackToDesk()" class="w3-button w3-xlarge w3-display-topright">&times;</span>
+
+        <p>yo</p>
+
+    </div>
+
+</div>
+<!-- variables for blender objects from JSON -->
+<script>
+    var waitingRoom = "{% static 'face/JSON/waitingRoom.json' %}";
+    var sentencesBook = "{% static 'face/JSON/sentencesBook.json' %}";
+    var testsBook = "{% static 'face/JSON/testsBook.json' %}";
+    var laptop = "{% static 'face/JSON/laptop.json' %}";
+    var schedule = "{% static 'face/JSON/waitingRoomSchedule.json' %}";
+    var doorSign = "{% static 'face/JSON/waitingRoomDoorSign.json' %}";
+    var scheduleDict = {{ schedule_dict|safe }};
+    var scheduleNow = {{ schedule_now|safe }};
+</script>
+
+<!-- my own scripts -->
+<script src="{% static 'face/javascript/variablesAndConstants.js' %}"></script>
+<script src="{% static 'face/javascript/waiting/variablesAndConstants.js' %}"></script>
+<script src="{% static 'face/javascript/waiting/loadWaitingRoom.js' %}"></script>
+<script src="{% static 'face/javascript/waiting/enterClassroom.js' %}"></script>
+<script src="{% static 'face/javascript/waiting/main.js' %}"></script>
+
+<!-- fonts -->
+<script>var board_font = "{% static 'face/fonts/roboto_condensed_regular.json' %}"</script>
+
+<!-- move camera toward building and then show sign in form -->
+<!-- <script src="{% static 'face/javascript/enterWaitingRoom.js' %}"></script> -->
+
+{% endblock %}

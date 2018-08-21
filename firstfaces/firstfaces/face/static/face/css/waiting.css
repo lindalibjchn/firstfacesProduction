@@ -1,0 +1,40 @@
+#bookContentBackground {
+
+    width: 100%;
+    height: 100%;
+    background: rgba( 0, 0, 0, 0.3 );
+    position: absolute;
+    display: none;
+    
+}
+
+#bookContentPage {
+
+    width: 80%;
+    min-width: 800px;
+    min-height: 600px;
+    height: 80%;
+    background: rgba( 256, 256, 256, 1 );
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+
+}
+
+#loadingIcon {
+
+    position: absolute;
+    color: yellow;
+    height: 50px;
+    width: 50px;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+
+}
+
