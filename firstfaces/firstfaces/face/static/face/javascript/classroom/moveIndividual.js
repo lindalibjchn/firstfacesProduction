@@ -4,8 +4,7 @@ function initMove( obj, coords, speed, direction ) {
 
     if ( obj.bool ) {
 
-        console.log(' initMove cant move: ' + obj.name + '. Still moving previous one!!')
-
+        console.log(' initMove cant move: ' + obj.name + '. Still moving previous one!!\n\nCalled by' + initMove.caller.name )
     } else {
 
         //console.log(' initMove object moving is: ', obj.name);

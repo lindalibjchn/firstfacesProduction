@@ -32,6 +32,7 @@ class Sentence(models.Model):
     session = models.ForeignKey(Session, on_delete=models.CASCADE)
     sentence = models.CharField(max_length=300, blank=True, null=True)
     sentence_timestamp = models.DateTimeField(null=True, blank=True)
+    question = models.BooleanField(default=False)
 
     JUDGEMENT_CHOICES = (
         ('C', 'correct'),
@@ -75,6 +76,12 @@ class AudioFile(models.Model):
     sentence = models.ForeignKey(Sentence, on_delete=models.CASCADE)
     audio = models.FileField(upload_to="")
 
-
+class Profile(models.Model):
+    learner = models.ForeignKey(User, on_delete=models.CASCADE)
+    GENDER_CHOICES = (
+        ('M', 'male'),
+        ('F', 'female'),
+    )
+    gender = models.CharField(max_length=1, choices=GENDER_CHOICES, null=True, blank=True)
 
 

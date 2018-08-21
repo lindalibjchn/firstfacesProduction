@@ -6,9 +6,11 @@ function createRelativeExpression( exp ){
     if ( expressionObject.bool ) {
 
         console.log('cant create expression while another one is running')
+        console.log('\ncreateExpression called by\n\n' + createRelativeExpression.caller )
 
     } else {
 
+        //console.log('\ncreateExpression successfully called by\n\n' + createRelativeExpression.caller )
         relativeExpression = $.extend(true, {}, blankExpression);
          
         Object.keys( exp.AUs ).forEach( function( AU ) {
@@ -28,12 +30,6 @@ function createRelativeExpression( exp ){
                     }
 
                 }
-
-                //if ( masterExpressionState.AUs[AU][bone] === [[0,0,0],[0,0,0]] ) {
-
-                    //delete masterExpressionState.AUs[AU][bone];
-
-                //}
 
             })
 
@@ -398,9 +394,111 @@ function changeExpression() {
 }
 
 
+function getAbsoluteCoordsOfExpressionNow() {
+
+    let absExpression = $.extend(true, {}, blankExpression);
+
+    Object.keys( expressionObject.AUs.AU2 ).forEach( function( key ) {
+
+        // pos x
+       
+        absExpression.AUs.AU2[ key ][ 0 ][ 0 ] = tiaObject.faceBones[ key + '.L'].position.x;
+
+        // pos y
+        
+        absExpression.AUs.AU2[ key ][ 0 ][ 1 ] = tiaObject.faceBones[ key + '.L'].position.y;
+
+        // pos z
+        
+        absExpression.AUs.AU2[ key ][ 0 ][ 2 ] = tiaObject.faceBones[ key + '.L'].position.z;
 
 
+        // rot x
+       
+        absExpression.AUs.AU2[ key ][ 1 ][ 0 ] = tiaObject.faceBones[ key + '.L'].rotation.x;
+
+        // rot y
+        
+        absExpression.AUs.AU2[ key ][ 1 ][ 1 ] = tiaObject.faceBones[ key + '.L'].rotation.y;
+
+        // rot z
+        
+        absExpression.AUs.AU2[ key ][ 1 ][ 2 ] = tiaObject.faceBones[ key + '.L'].rotation.z;
+
+    })
+        
+    Object.keys( absExpression.AUs.AU1 ).forEach( function( key ) {
+
+        // pos x
+       
+        absExpression.AUs.AU1[ key ][ 0 ][ 0 ] = tiaObject.faceBones[ key ].position.x;
+
+        // pos y
+        
+        absExpression.AUs.AU1[ key ][ 0 ][ 1 ] = tiaObject.faceBones[ key ].position.y;
+
+        // pos z
+        
+        absExpression.AUs.AU1[ key ][ 0 ][ 2 ] = tiaObject.faceBones[ key ].position.z;
 
 
+        // rot x
+       
+        absExpression.AUs.AU1[ key ][ 1 ][ 0 ] = tiaObject.faceBones[ key ].rotation.x;
+
+        // rot y
+        
+        absExpression.AUs.AU1[ key ][ 1 ][ 1 ] = tiaObject.faceBones[ key ].rotation.y;
+
+        // rot z
+        
+        absExpression.AUs.AU1[ key ][ 1 ][ 2 ] = tiaObject.faceBones[ key ].rotation.z;
+
+    })
+
+    //Mouth Jaw Inner is part of a different object and so needs to be done separately
+    Object.keys( absExpression.AUs.AU1m ).forEach( function( key ) {
+
+        // pos x
+       
+        absExpression.AUs.AU1m[ key ][ 0 ][ 0 ] = mouthObject.mouthBones[ key ].position.x;
+
+        // pos y
+        
+        absExpression.AUs.AU1m[ key ][ 0 ][ 1 ] = mouthObject.mouthBones[ key ].position.y;
+
+        // pos z
+        
+        absExpression.AUs.AU1m[ key ][ 0 ][ 2 ] = mouthObject.mouthBones[ key ].position.z;
+
+
+        // rot x
+       
+        absExpression.AUs.AU1m[ key ][ 1 ][ 0 ] = mouthObject.mouthBones[ key ].rotation.x;
+
+        // rot y
+        
+        absExpression.AUs.AU1m[ key ][ 1 ][ 1 ] = mouthObject.mouthBones[ key ].rotation.y;
+
+        // rot z
+        
+        absExpression.AUs.AU1m[ key ][ 1 ][ 2 ] = mouthObject.mouthBones[ key ].rotation.z;
+        
+    })
+
+
+    return absExpression;
+
+}
+
+function resetExpression() {
+
+    absCurExpression = getAbsoluteCoordsOfExpressionNow();
+    masterExpressionState = $.extend( true, {}, absCurExpression );
+    createRelativeExpression( absNeutralExpression );
+    initExpression( relativeExpression, '1' );
+    masterExpressionState = $.extend( true, {}, neutralExpression );
+
+}
 
 

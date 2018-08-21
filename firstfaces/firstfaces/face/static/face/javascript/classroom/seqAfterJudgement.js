@@ -7,18 +7,50 @@ function runAfterJudgement() {
     
     if ( classVariableDict.last_sent.judgement === "C" ) {
 
+        //this delay is for nod and shake changing speed
+        var delay = 3000 + parseFloat( getNodSpeedInString() ) * 6500;
         if ( classVariableDict.last_sent.prompt === null ) {
 
-            setTimeout( function() {
-                
-                returnToLaptop( '' )
-                    
-            }, 4000 );
+            if ( classVariableDict.last_sent.nod !== null ) {
 
+                //this changes with the speed of nod and shake
+
+                setTimeout( function() {
+
+                    console.log('in nod return');
+                
+                    returnToLaptop( '' )
+
+                }, delay );
+
+            } else {
+
+                setTimeout( function() {
+
+                    console.log('in no nod return');
+                
+                    returnToLaptop( '' )
+
+                }, 2000);
+
+            }
+                    
         } else {
 
+            synthesisObject.text = classVariableDict.last_sent.prompt;
+            sendTTS( classVariableDict.last_sent.prompt, true );
+
             speechBubbleObject.sentence = " " + classVariableDict.last_sent.prompt;
-            setTimeout( displaySpeechBubblePrompt, 3500 );
+
+            if ( classVariableDict.last_sent.nod !== null ) {
+
+                setTimeout( displaySpeechBubblePrompt, delay );
+
+            } else {
+
+                setTimeout( displaySpeechBubblePrompt, 2000 );
+
+            }
 
         }
 
@@ -39,7 +71,7 @@ function runAfterJudgement() {
         createRelativeMovement( confused01Movement );
         initMovement( relativeMovement, '0.5', '2' );
 
-        createSingleExpression(confusedExpression, 1)
+        createSingleExpression(confusedExpression, 1);
         createRelativeExpression( calculatedExpression );
 
         addToPrevSents(classVariableDict.last_sent);
@@ -56,37 +88,50 @@ function runAfterJudgement() {
 
         // delay for moving back to laptop and showing sent in prevSents
         //let delay = 5000;
+        var text;
         if ( classVariableDict.last_sent.judgement === "B" ) {
 
             text = " " + createBetterTextForPromptBox( classVariableDict.last_sent );
+            sendTTS( text, true );
             
             $.when($.when(changeExpression()).then(createRelativeExpression( calculatedExpression ))).then( initExpression( relativeExpression, '1' ));
             //no nod or shak efor better as it may interfere with speech
+            setTimeout( displaySpeechBubblePrompt, 2000 );
         
         } else if ( classVariableDict.last_sent.judgement === "M" ) {
             
             text = " " + createMeanByTextForPromptBox( classVariableDict.last_sent );
+            sendTTS( text, true );
             $.when($.when(createSingleExpression(confusedExpression, 1)).then(createRelativeExpression( calculatedExpression ))).then( initExpression( relativeExpression, '1' ));
+            setTimeout( displaySpeechBubblePrompt, 1500 );
         
         } else if ( classVariableDict.last_sent.judgement === "3" ) {
             
             text = " There are more than 3 mistakes in your sentence. Could you simplify and try again?";
+            sendTTS( text, true );
             $.when($.when(createSingleExpression(confusedExpression, 1)).then(createRelativeExpression( calculatedExpression))).then( initExpression( relativeExpression, '1' ));
+            setTimeout( displaySpeechBubblePrompt, 1500 );
         
         } else {
 
             text = " I'm sorry but I don't understand what you said.";
+            sendTTS( text, true );
             $.when($.when(createSingleExpression(confusedExpression, 1)).then(createRelativeExpression( calculatedExpression ))).then( initExpression( relativeExpression, '1' ));
-            setTimeout( nodOrShakeHead, 1250 ); 
+            setTimeout( function() {
+                
+                nodOrShakeHead(); 
+                setTimeout( displaySpeechBubblePrompt, 5000 );
+
+            }, 1250 );
+
         }
 
+        synthesisObject.text = text;
         speechBubbleObject.sentence = text;
-        setTimeout( displaySpeechBubblePrompt, 3000 );
 
     }
     
     
-    //run expressionChange - to be done at end
 }
 
 function getNodSpeedInString() {
@@ -115,17 +160,17 @@ function getNodSpeedInString() {
 
 function nodOrShakeHead() {
 
-    if ( classVariableDict.last_sent['judgement'] === "D" ) {
+    if ( classVariableDict.last_sent.judgement === "D" ) {
 
         initShake( 0.5, '0.75' );
 
     } else {
 
-        let nod = classVariableDict.last_sent['nod']
+        let nod = classVariableDict.last_sent.nod
 
         if ( nod !== null ) {
 
-            let nodAmount = 0.5 + 0.5 * classVariableDict.last_sent['nodAmount'];
+            let nodAmount = 0.4 + 0.5 * classVariableDict.last_sent['nodAmount'];
 
             let nodSpeedString = getNodSpeedInString();
 
@@ -147,23 +192,28 @@ function nodOrShakeHead() {
 
 function displaySpeechBubblePrompt() {
 
-    //return to talking pos
+    // actually delay to return to laptop
+    synthesisObject.delayToThinkAndTurn = synthesisObject.text.length * 200;
+
+    // return to talking pos
     $.when(createRelativeExpression( talkCalculatedExpression )).then(initExpression( relativeExpression, '1' ));
 
     //display speechBubble with prompt
-    displaySpeechBubble();
     speechBubbleObject.bubble.material[0].opacity = 0.95; 
     speechBubbleObject.bubble.material[1].opacity = 0.95; 
 
     setTimeout( function() { 
         
-        initTalk();
+        displaySpeechBubble();
         classVariableDict.promptSpeaking = true;
-        synthesisObject.toSpeak = speechBubbleObject.sentence;
-        synthesisObject.speaker = "tia";
-        getVoices( setVoice );
+        synthesisObject.realSpeak = true;
+        
+        synthesisObject.synthAudio.play();
+        initTalk();
 
-    }, 1200 );
+        setTimeout( returnToLaptop, synthesisObject.delayToThinkAndTurn )
+    
+    }, 1500);
 
 }
 
@@ -181,36 +231,33 @@ function returnToLaptop( sent ) {
 
     } else {
 
-        createRelativeMovement( studentMovement );
-        createRelativeExpression( neutralExpression );
-
+        addToPrevSents();
         setTimeout( function() {
 
             initCameraMove('laptop', '2');
 
             setTimeout( function() {
 
-                initMovement( relativeMovement, '2', '1.5' );
-                
+                resetExpression();
                 removeSpeechBubble();
-
+                initInputReady( sent )
+                showQuestionStreak();
+                
                 setTimeout( function() { 
                     
-                    initExpression( relativeExpression, '2' )
-                    initInputReady( sent )
-                    addToPrevSents();
+                    resetMovement();
 
                     setTimeout( function() {
 
                         normalBlinkObject.bool = true;
                 
-                    }, 2250 );
+                    }, 1800 );
 
-                }, 2300 );
-                
-            }, 500);
+                }, 1500 );
 
-        }, 1000);
+            }, 2300 )
+
+        }, 500);
 
     }
 
@@ -225,7 +272,7 @@ function addToPrevSents() {
     loadPrevSents( scrollBottom );
     setTimeout( function() {
         $('#prevSents').fadeTo( 500, 1 )
-    }, 1500 );
+    }, 2200 );
     console.log('in addToPrevSents');
 
 }
@@ -244,35 +291,47 @@ function showOptionBtns() {
 
     $('#optionBtns').fadeIn( 1000 )
 
-    $('#tryAgainBtn').on( 'click', tryAgain );
-    $('#whatsWrongBtn').on( 'click', whatsWrong );
-    $('#showCorrectionBtn').on( 'click', showCorrection );
-    $('#nextSentenceBtn').on( 'click', nextSentence );
-
 }
 
 function tryAgain() {
 
-    let sent = classVariableDict.sentences[ classVariableDict.id_of_last_sent ].sentence;
+    normalBlinkObject.bool = false;
+    // avoid moving for a fraction of a second if mid-blink
+    if ( blinkNowObject.bool ) {
 
-    returnToLaptop( sent )
+        setTimeout( tryAgain, 50 );
 
-    $('#prevSents').fadeTo( 500, 1 );
-    $('#optionBtns').fadeOut( 500 )
-    $('#recordBtnsContainer').fadeIn( 1000 )
+    } else {
+    
+        let sent = classVariableDict.sentences[ classVariableDict.id_of_last_sent ].sentence;
 
-    let sentId = classVariableDict.last_sent.sent_id
-    $.ajax({
-        url: "/face/store_try_again",
-        type: "GET",
-        data: {'sentId': sentId},
-        success: function(json) {
-        },
-        error: function() {
-            console.log("that's wrong");
-        },
-        
-    });
+        returnToLaptop( sent );
+
+        $('#prevSents').fadeTo( 500, 1 );
+        $('#optionBtns').fadeOut( 500 )
+        $('#recordBtnsContainer').fadeIn( 1000 )
+
+        let sentId = classVariableDict.last_sent.sent_id
+        $.ajax({
+            url: "/face/store_try_again",
+            type: "GET",
+            data: {'sentId': sentId},
+            success: function(json) {
+            },
+            error: function() {
+                console.log("that's wrong");
+            },
+            
+        });
+
+        setTimeout( function() {
+
+            removeCorrection();
+            removeSentence();
+
+        }, 1000 )
+    }
+
 }
 
 function whatsWrong() {
@@ -354,32 +413,53 @@ function showCorrection() {
 
 function nextSentence() {
 
-    $('#nextSentenceBtn').prop( "disabled", true).fadeOut( 500 );
+    normalBlinkObject.bool = false;
+    if ( blinkNowObject.bool ) {
 
-    returnToLaptop( '' )
+        setTimeout( nextSentence, 50 );
 
-    let sentId = classVariableDict.last_sent.sent_id
-    $.ajax({
-        url: "/face/store_next_sentence",
-        type: "GET",
-        data: {'sentId': sentId},
-        success: function(json) {
-        },
-        error: function() {
-            console.log("that's wrong");
-        },
-        
-    });
+    } else {
+    
+        $('#optionBtns').fadeOut( 500 );
+        $('.option-btn').prop( "disabled", true);
 
-    setTimeout( function() {
+        returnToLaptop( '' );
 
-        removeCorrection();
-        removeSentence();
+        //setTimeout( function() {
+            
+            //$.when(createRelativeExpression( neutralExpression )).then(initExpression( relativeExpression, '1' ));
 
-        initInputReady( '' );
-        $('#prevSents').fadeTo( 500, 1 );
-        
-    }, 1000 )
+            //setTimeout( function() {
+
+                //$.when(createRelativeMovement( studentMovement )).then(initMovement( relativeMovement, '0.5', '1.5' ));
+
+            //}, 1250 );
+
+        //}, 2800 );
+
+        let sentId = classVariableDict.last_sent.sent_id
+        $.ajax({
+            url: "/face/store_next_sentence",
+            type: "GET",
+            data: {'sentId': sentId},
+            success: function(json) {
+            },
+            error: function() {
+                console.log("that's wrong");
+            },
+            
+        });
+
+        setTimeout( function() {
+
+            removeCorrection();
+            removeSentence();
+
+            $('#prevSents').fadeTo( 500, 1 );
+            
+        }, 1000 )
+
+    }
 
 }
 

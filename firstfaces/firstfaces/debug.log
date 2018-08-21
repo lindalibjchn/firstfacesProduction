@@ -1,0 +1,1690 @@
+"GET /face/class_time/1 HTTP/1.1" 200 34972
+"GET /static/face/javascript/classroom/moveIndividual.js HTTP/1.1" 200 6975
+"GET /static/face/javascript/classroom/loadObjects.js HTTP/1.1" 200 19220
+"GET /static/face/javascript/variablesAndConstants.js HTTP/1.1" 200 2713
+"GET /static/face/javascript/classroom/moveCamera.js HTTP/1.1" 200 3257
+"GET /static/face/javascript/classroom/moveComplex.js HTTP/1.1" 200 8940
+"GET /static/face/css/class.css HTTP/1.1" 200 7211
+"GET /static/face/javascript/classroom/seqEnter.js HTTP/1.1" 200 10075
+"GET /static/face/javascript/classroom/moveExpression.js HTTP/1.1" 200 15560
+"GET /static/face/javascript/classroom/input.js HTTP/1.1" 200 5401
+"GET /static/face/javascript/classroom/variablesAndConstants.js HTTP/1.1" 200 26714
+"GET /static/face/javascript/classroom/moveBody.js HTTP/1.1" 200 11139
+"GET /static/face/javascript/classroom/timeStuff.js HTTP/1.1" 200 3112
+"GET /static/face/javascript/classroom/text.js HTTP/1.1" 200 10256
+"GET /static/face/javascript/classroom/previousSents.js HTTP/1.1" 200 6098
+"GET /static/face/javascript/classroom/main.js HTTP/1.1" 200 9963
+"GET /static/face/javascript/classroom/seqAfterJudgement.js HTTP/1.1" 200 13671
+"GET /static/face/JSON/classroom.json HTTP/1.1" 200 25715
+"GET /static/face/JSON/keyboard.png HTTP/1.1" 304 0
+"GET /static/face/JSON/tia_body.json HTTP/1.1" 304 0
+"GET /face/class_time/1 HTTP/1.1" 200 34972
+"GET /static/face/JSON/mary_eye.json HTTP/1.1" 304 0
+"GET /static/face/JSON/mary_hair.json HTTP/1.1" 304 0
+"GET /static/face/JSON/fia-eye-texture.jpg HTTP/1.1" 304 0
+"GET /static/face/fonts/monaco_regular.json HTTP/1.1" 304 0
+"GET /static/face/JSON/speechBubble.json HTTP/1.1" 304 0
+"GET /face/teacherMeeting HTTP/1.1" 200 44645
+"GET /static/face/css/teacherMeeting.css HTTP/1.1" 304 0
+"GET /static/face/javascript/teacherMeeting/buttons.js HTTP/1.1" 200 4545
+"GET /static/face/javascript/teacherMeeting/main.js HTTP/1.1" 200 18890
+"GET /face/check_for_change?totalSents=97&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/teacherMeeting HTTP/1.1" 200 44645
+"GET /face/check_for_change?totalSents=97&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=97&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=97&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=97&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=97&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=97&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=97&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=97&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"POST /face/store_blob HTTP/1.1" 200 16
+"GET /face/check_for_change?totalSents=97&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 17
+"POST /face/update_session_object HTTP/1.1" 200 40056
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"POST /face/store_blob HTTP/1.1" 200 16
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"POST /face/store_blob HTTP/1.1" 200 16
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/teacherMeeting HTTP/1.1" 200 44993
+"GET /static/OrbitControls.js HTTP/1.1" 200 22569
+"GET /static/face/css/teacherMeeting.css HTTP/1.1" 200 5244
+"GET /static/ajaxPost.js HTTP/1.1" 200 2149
+"GET /static/jquery-3.3.1.min.js HTTP/1.1" 200 86927
+"GET /static/three.min.js HTTP/1.1" 200 512218
+"GET /static/face/javascript/teacherMeeting/buttons.js HTTP/1.1" 200 4545
+"GET /static/face/javascript/teacherMeeting/main.js HTTP/1.1" 200 18890
+"GET /static/face/sounds/to-the-point.mp3 HTTP/1.1" 200 77740
+"GET /static/face/sounds/chimes-glassy.mp3 HTTP/1.1" 200 82363
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/teacherMeeting HTTP/1.1" 200 44993
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"POST /face/store_judgement HTTP/1.1" 200 551
+"GET /face/store_sent?sent=want%20to%20and%20again&isItQ=false&blob_no_text=true&blob_no_text_sent_id=418&sessionID=1 HTTP/1.1" 200 314
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=98&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 17
+"POST /face/update_session_object HTTP/1.1" 200 40512
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"POST /face/store_judgement HTTP/1.1" 200 682
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/store_sent?sent=few%20few%20fwe%20&isItQ=false&blob_no_text=false&blob_no_text_sent_id=418&sessionID=1 HTTP/1.1" 200 441
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/check_for_change?totalSents=99&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET /face/class_time/1 HTTP/1.1" 200 35906
+"GET /static/ajaxPost.js HTTP/1.1" 200 2149
+"GET /static/OrbitControls.js HTTP/1.1" 200 22569
+"GET /static/face/css/utils.css HTTP/1.1" 200 106
+"GET /static/three.min.js HTTP/1.1" 200 512218
+"GET /static/face/css/class.css HTTP/1.1" 200 7211
+"GET /static/jquery-3.3.1.min.js HTTP/1.1" 200 86927
+"GET /static/face/javascript/datguiOptions.js HTTP/1.1" 200 13242
+"GET /static/dat.gui.min.js HTTP/1.1" 200 56992
+"GET /static/face/javascript/variablesAndConstants.js HTTP/1.1" 200 2713
+"GET /static/TrackballControls.js HTTP/1.1" 200 13966
+"GET /static/face/javascript/classroom/variablesAndConstants.js HTTP/1.1" 200 26714
+"GET /static/face/javascript/classroom/moveIndividual.js HTTP/1.1" 200 6975
+"GET /static/face/javascript/classroom/loadObjects.js HTTP/1.1" 200 19220
+"GET /static/face/javascript/classroom/moveComplex.js HTTP/1.1" 200 8940
+"GET /static/face/javascript/classroom/moveCamera.js HTTP/1.1" 200 3257
+"GET /static/face/javascript/classroom/seqEnter.js HTTP/1.1" 200 10075
+"GET /static/face/javascript/classroom/moveExpression.js HTTP/1.1" 200 15560
+"GET /static/face/javascript/classroom/moveBody.js HTTP/1.1" 200 11139
+"GET /static/face/javascript/classroom/input.js HTTP/1.1" 200 5401
+"GET /static/face/javascript/classroom/text.js HTTP/1.1" 200 10256
+"GET /static/face/javascript/classroom/previousSents.js HTTP/1.1" 200 6098
+"GET /static/face/javascript/classroom/timeStuff.js HTTP/1.1" 200 3112
+"GET /static/face/javascript/classroom/seqAfterJudgement.js HTTP/1.1" 200 13671
+"GET /static/face/javascript/classroom/main.js HTTP/1.1" 200 10482
+"GET /static/face/JSON/classroom.json HTTP/1.1" 200 25715
+"GET /face/class_time/1 HTTP/1.1" 200 35906
+Internal Server Error: /face/tts
+Traceback (most recent call last):
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/john/johnsHDD/PhD/2018_autumn/firstfacesProduction/firstfaces/firstfaces/face/views.py", line 322, in tts
+    tia_speaker = json.loads(request.GET['tiaSpeaker'])
+NameError: name 'ijson' is not defined
+Internal Server Error: /face/tts
+Traceback (most recent call last):
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/john/johnsHDD/PhD/2018_autumn/firstfacesProduction/firstfaces/firstfaces/face/views.py", line 322, in tts
+    tia_speaker = json.loads(request.GET['tiaSpeaker'])
+NameError: name 'ijson' is not defined
+"POST /face/tts HTTP/1.1" 500 16814
+"GET /face/class_time/1 HTTP/1.1" 200 35906
+"GET /static/three.min.js HTTP/1.1" 200 512218
+"GET /static/ajaxPost.js HTTP/1.1" 200 2149
+"GET /static/OrbitControls.js HTTP/1.1" 200 22569
+"GET /static/face/css/utils.css HTTP/1.1" 200 106
+"GET /static/jquery-3.3.1.min.js HTTP/1.1" 200 86927
+"GET /static/face/css/class.css HTTP/1.1" 200 7211
+"GET /static/face/javascript/datguiOptions.js HTTP/1.1" 200 13242
+"GET /static/dat.gui.min.js HTTP/1.1" 200 56992
+"GET /static/TrackballControls.js HTTP/1.1" 200 13966
+"GET /static/face/javascript/variablesAndConstants.js HTTP/1.1" 200 2713
+"GET /static/face/javascript/classroom/variablesAndConstants.js HTTP/1.1" 200 26714
+"GET /static/face/javascript/classroom/moveIndividual.js HTTP/1.1" 200 6975
+"GET /static/face/javascript/classroom/loadObjects.js HTTP/1.1" 200 19220
+"GET /static/face/javascript/classroom/moveComplex.js HTTP/1.1" 200 8940
+"GET /static/face/javascript/classroom/seqEnter.js HTTP/1.1" 200 10075
+"GET /static/face/javascript/classroom/moveCamera.js HTTP/1.1" 200 3257
+"GET /static/face/javascript/classroom/moveBody.js HTTP/1.1" 200 11139
+"GET /static/face/javascript/classroom/input.js HTTP/1.1" 200 5401
+"GET /static/face/javascript/classroom/text.js HTTP/1.1" 200 10256
+"GET /static/face/javascript/classroom/timeStuff.js HTTP/1.1" 200 3112
+"GET /static/face/javascript/classroom/previousSents.js HTTP/1.1" 200 6098
+"GET /static/face/javascript/classroom/main.js HTTP/1.1" 200 10481
+"GET /static/face/javascript/classroom/moveExpression.js HTTP/1.1" 200 15560
+"GET /static/face/javascript/classroom/seqAfterJudgement.js HTTP/1.1" 200 13671
+"GET /static/face/JSON/classroom.json HTTP/1.1" 200 25715
+"GET /face/class_time/1 HTTP/1.1" 200 35906
+Internal Server Error: /face/tts
+Traceback (most recent call last):
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/utils/datastructures.py", line 77, in __getitem__
+    list_ = super().__getitem__(key)
+KeyError: 'sentence'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/john/johnsHDD/PhD/2018_autumn/firstfacesProduction/firstfaces/firstfaces/face/views.py", line 321, in tts
+    text = request.GET['sentence']
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/utils/datastructures.py", line 79, in __getitem__
+    raise MultiValueDictKeyError(key)
+django.utils.datastructures.MultiValueDictKeyError: 'sentence'
+Internal Server Error: /face/tts
+Traceback (most recent call last):
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/utils/datastructures.py", line 77, in __getitem__
+    list_ = super().__getitem__(key)
+KeyError: 'sentence'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/john/johnsHDD/PhD/2018_autumn/firstfacesProduction/firstfaces/firstfaces/face/views.py", line 321, in tts
+    text = request.GET['sentence']
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/utils/datastructures.py", line 79, in __getitem__
+    raise MultiValueDictKeyError(key)
+django.utils.datastructures.MultiValueDictKeyError: 'sentence'
+"GET /face/tts?sentence=hello%20there&tiaSpeaker=false HTTP/1.1" 500 17076
+"GET /face/class_time/1 HTTP/1.1" 200 35906
+"GET /static/jquery-3.3.1.min.js HTTP/1.1" 200 86927
+"GET /static/OrbitControls.js HTTP/1.1" 200 22569
+"GET /static/ajaxPost.js HTTP/1.1" 200 2149
+"GET /static/three.min.js HTTP/1.1" 200 512218
+"GET /static/face/css/utils.css HTTP/1.1" 200 106
+"GET /static/face/css/class.css HTTP/1.1" 200 7211
+"GET /static/TrackballControls.js HTTP/1.1" 200 13966
+"GET /static/face/javascript/datguiOptions.js HTTP/1.1" 200 13242
+"GET /static/dat.gui.min.js HTTP/1.1" 200 56992
+"GET /static/face/javascript/classroom/loadObjects.js HTTP/1.1" 200 19220
+"GET /static/face/javascript/classroom/variablesAndConstants.js HTTP/1.1" 200 26714
+"GET /static/face/javascript/classroom/moveComplex.js HTTP/1.1" 200 8940
+"GET /static/face/javascript/classroom/moveIndividual.js HTTP/1.1" 200 6975
+"GET /static/face/javascript/classroom/moveCamera.js HTTP/1.1" 200 3257
+"GET /static/face/javascript/classroom/seqEnter.js HTTP/1.1" 200 10075
+"GET /static/face/javascript/classroom/moveExpression.js HTTP/1.1" 200 15560
+"GET /static/face/javascript/classroom/input.js HTTP/1.1" 200 5401
+"GET /static/face/javascript/classroom/text.js HTTP/1.1" 200 10256
+"GET /static/face/javascript/variablesAndConstants.js HTTP/1.1" 200 2713
+"GET /static/face/javascript/classroom/moveBody.js HTTP/1.1" 200 11139
+"GET /static/face/javascript/classroom/timeStuff.js HTTP/1.1" 200 3112
+"GET /static/face/javascript/classroom/previousSents.js HTTP/1.1" 200 6098
+"GET /static/face/javascript/classroom/seqAfterJudgement.js HTTP/1.1" 200 13671
+"GET /static/face/javascript/classroom/main.js HTTP/1.1" 200 10481
+"GET /static/face/JSON/classroom.json HTTP/1.1" 200 25715
+"GET /face/class_time/1 HTTP/1.1" 200 35906
+Internal Server Error: /face/tts
+Traceback (most recent call last):
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/utils/datastructures.py", line 77, in __getitem__
+    list_ = super().__getitem__(key)
+KeyError: 'sentence'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/john/johnsHDD/PhD/2018_autumn/firstfacesProduction/firstfaces/firstfaces/face/views.py", line 321, in tts
+    text = request.GET['sentence']
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/utils/datastructures.py", line 79, in __getitem__
+    raise MultiValueDictKeyError(key)
+django.utils.datastructures.MultiValueDictKeyError: 'sentence'
+Internal Server Error: /face/tts
+Traceback (most recent call last):
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/utils/datastructures.py", line 77, in __getitem__
+    list_ = super().__getitem__(key)
+KeyError: 'sentence'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/john/johnsHDD/PhD/2018_autumn/firstfacesProduction/firstfaces/firstfaces/face/views.py", line 321, in tts
+    text = request.GET['sentence']
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/utils/datastructures.py", line 79, in __getitem__
+    raise MultiValueDictKeyError(key)
+django.utils.datastructures.MultiValueDictKeyError: 'sentence'
+"GET /face/tts?sentence=fewfew&tiaSpeaker=false HTTP/1.1" 500 17057
+"GET /face/class_time/1 HTTP/1.1" 200 35906
+"GET /static/jquery-3.3.1.min.js HTTP/1.1" 200 86927
+"GET /static/OrbitControls.js HTTP/1.1" 200 22569
+"GET /static/face/css/utils.css HTTP/1.1" 200 106
+"GET /static/ajaxPost.js HTTP/1.1" 200 2149
+"GET /static/dat.gui.min.js HTTP/1.1" 200 56992
+"GET /static/three.min.js HTTP/1.1" 200 512218
+"GET /static/face/css/class.css HTTP/1.1" 200 7211
+"GET /static/face/javascript/classroom/variablesAndConstants.js HTTP/1.1" 200 26714
+"GET /static/face/javascript/classroom/loadObjects.js HTTP/1.1" 200 19220
+"GET /static/TrackballControls.js HTTP/1.1" 200 13966
+"GET /static/face/javascript/classroom/moveIndividual.js HTTP/1.1" 200 6975
+"GET /static/face/javascript/classroom/moveCamera.js HTTP/1.1" 200 3257
+"GET /static/face/javascript/classroom/seqEnter.js HTTP/1.1" 200 10075
+"GET /static/face/javascript/classroom/moveExpression.js HTTP/1.1" 200 15560
+"GET /static/face/javascript/classroom/input.js HTTP/1.1" 200 5401
+"GET /static/face/javascript/classroom/timeStuff.js HTTP/1.1" 200 3112
+"GET /static/face/javascript/classroom/seqAfterJudgement.js HTTP/1.1" 200 13671
+"GET /static/face/javascript/classroom/moveComplex.js HTTP/1.1" 200 8940
+"GET /static/face/javascript/classroom/text.js HTTP/1.1" 200 10256
+"GET /static/face/javascript/variablesAndConstants.js HTTP/1.1" 200 2713
+"GET /static/face/javascript/classroom/moveBody.js HTTP/1.1" 200 11139
+"GET /static/face/javascript/datguiOptions.js HTTP/1.1" 200 13242
+"GET /static/face/javascript/classroom/previousSents.js HTTP/1.1" 200 6098
+"GET /static/face/javascript/classroom/main.js HTTP/1.1" 200 10481
+"GET /static/face/JSON/classroom.json HTTP/1.1" 200 25715
+"GET /face/class_time/1 HTTP/1.1" 200 35906
+"GET /face/class_time/1 HTTP/1.1" 200 35966
+"GET /face/class_time/1 HTTP/1.1" 200 35966
+Internal Server Error: /face/tts
+Traceback (most recent call last):
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/utils/datastructures.py", line 77, in __getitem__
+    list_ = super().__getitem__(key)
+KeyError: 'sentence'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/john/johnsHDD/PhD/2018_autumn/firstfacesProduction/firstfaces/firstfaces/face/views.py", line 321, in tts
+    text = request.GET['sentence']
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/utils/datastructures.py", line 79, in __getitem__
+    raise MultiValueDictKeyError(key)
+django.utils.datastructures.MultiValueDictKeyError: 'sentence'
+Internal Server Error: /face/tts
+Traceback (most recent call last):
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/utils/datastructures.py", line 77, in __getitem__
+    list_ = super().__getitem__(key)
+KeyError: 'sentence'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/john/johnsHDD/PhD/2018_autumn/firstfacesProduction/firstfaces/firstfaces/face/views.py", line 321, in tts
+    text = request.GET['sentence']
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/utils/datastructures.py", line 79, in __getitem__
+    raise MultiValueDictKeyError(key)
+django.utils.datastructures.MultiValueDictKeyError: 'sentence'
+"GET /face/tts?sentence=gwrgre%20rge&tiaSpeaker=false HTTP/1.1" 500 17074
+"GET /face/class_time/1 HTTP/1.1" 200 35966
+"GET /static/three.min.js HTTP/1.1" 200 512218
+"GET /static/jquery-3.3.1.min.js HTTP/1.1" 200 86927
+"GET /static/OrbitControls.js HTTP/1.1" 200 22569
+"GET /static/face/css/utils.css HTTP/1.1" 200 106
+"GET /static/ajaxPost.js HTTP/1.1" 200 2149
+"GET /static/face/css/class.css HTTP/1.1" 200 7211
+"GET /static/TrackballControls.js HTTP/1.1" 200 13966
+"GET /static/face/javascript/variablesAndConstants.js HTTP/1.1" 200 2713
+"GET /static/face/javascript/datguiOptions.js HTTP/1.1" 200 13242
+"GET /static/face/javascript/classroom/variablesAndConstants.js HTTP/1.1" 200 26714
+"GET /static/face/javascript/classroom/loadObjects.js HTTP/1.1" 200 19220
+"GET /static/face/javascript/classroom/moveIndividual.js HTTP/1.1" 200 6975
+"GET /static/face/javascript/classroom/moveComplex.js HTTP/1.1" 200 8940
+"GET /static/face/javascript/classroom/seqEnter.js HTTP/1.1" 200 10075
+"GET /static/face/javascript/classroom/moveCamera.js HTTP/1.1" 200 3257
+"GET /static/face/javascript/classroom/moveExpression.js HTTP/1.1" 200 15560
+"GET /static/face/javascript/classroom/moveBody.js HTTP/1.1" 200 11139
+"GET /static/face/javascript/classroom/text.js HTTP/1.1" 200 10256
+"GET /static/face/javascript/classroom/input.js HTTP/1.1" 200 5401
+"GET /static/face/javascript/classroom/previousSents.js HTTP/1.1" 200 6098
+"GET /static/face/javascript/classroom/timeStuff.js HTTP/1.1" 200 3112
+"GET /static/face/javascript/classroom/main.js HTTP/1.1" 200 10481
+"GET /static/face/javascript/classroom/seqAfterJudgement.js HTTP/1.1" 200 13671
+"GET /static/dat.gui.min.js HTTP/1.1" 200 56992
+"GET /static/face/JSON/classroom.json HTTP/1.1" 200 25715
+"GET /face/class_time/1 HTTP/1.1" 200 35966
+"GET /face/class_time/1 HTTP/1.1" 200 35966
+"GET /static/OrbitControls.js HTTP/1.1" 200 22569
+"GET /static/three.min.js HTTP/1.1" 200 512218
+"GET /static/jquery-3.3.1.min.js HTTP/1.1" 200 86927
+"GET /static/ajaxPost.js HTTP/1.1" 200 2149
+"GET /static/face/css/utils.css HTTP/1.1" 200 106
+"GET /static/face/css/class.css HTTP/1.1" 200 7211
+"GET /static/face/javascript/datguiOptions.js HTTP/1.1" 200 13242
+"GET /static/dat.gui.min.js HTTP/1.1" 200 56992
+"GET /static/TrackballControls.js HTTP/1.1" 200 13966
+"GET /static/face/javascript/variablesAndConstants.js HTTP/1.1" 200 2713
+"GET /static/face/javascript/classroom/moveIndividual.js HTTP/1.1" 200 6975
+"GET /static/face/javascript/classroom/variablesAndConstants.js HTTP/1.1" 200 26714
+"GET /static/face/javascript/classroom/seqEnter.js HTTP/1.1" 200 10075
+"GET /static/face/javascript/classroom/moveCamera.js HTTP/1.1" 200 3257
+"GET /static/face/javascript/classroom/loadObjects.js HTTP/1.1" 200 19220
+"GET /static/face/javascript/classroom/moveComplex.js HTTP/1.1" 200 8940
+"GET /static/face/javascript/classroom/input.js HTTP/1.1" 200 5401
+"GET /static/face/javascript/classroom/previousSents.js HTTP/1.1" 200 6098
+"GET /static/face/javascript/classroom/timeStuff.js HTTP/1.1" 200 3112
+"GET /static/face/javascript/classroom/text.js HTTP/1.1" 200 10256
+"GET /static/face/javascript/classroom/moveBody.js HTTP/1.1" 200 11139
+"GET /static/face/javascript/classroom/moveExpression.js HTTP/1.1" 200 15560
+"GET /static/face/javascript/classroom/seqAfterJudgement.js HTTP/1.1" 200 13671
+"GET /static/face/javascript/classroom/main.js HTTP/1.1" 200 10481
+"GET /static/face/JSON/classroom.json HTTP/1.1" 200 25715
+"GET /face/class_time/1 HTTP/1.1" 200 35966
+Internal Server Error: /face/tts
+Traceback (most recent call last):
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/john/johnsHDD/PhD/2018_autumn/firstfacesProduction/firstfaces/firstfaces/face/views.py", line 333, in tts
+    prof = Profile.objects.get(learner=request.user)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/db/models/manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/db/models/query.py", line 403, in get
+    self.model._meta.object_name
+face.models.DoesNotExist: Profile matching query does not exist.
+Internal Server Error: /face/tts
+Traceback (most recent call last):
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/john/johnsHDD/PhD/2018_autumn/firstfacesProduction/firstfaces/firstfaces/face/views.py", line 333, in tts
+    prof = Profile.objects.get(learner=request.user)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/db/models/manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/db/models/query.py", line 403, in get
+    self.model._meta.object_name
+face.models.DoesNotExist: Profile matching query does not exist.
+"GET /face/tts?sentence=fwrf%20&tiaSpeaker=false HTTP/1.1" 500 17051
+"GET /face/class_time/1 HTTP/1.1" 200 35966
+"GET /static/three.min.js HTTP/1.1" 200 512218
+"GET /static/jquery-3.3.1.min.js HTTP/1.1" 200 86927
+"GET /static/OrbitControls.js HTTP/1.1" 200 22569
+"GET /static/ajaxPost.js HTTP/1.1" 200 2149
+"GET /static/face/css/utils.css HTTP/1.1" 200 106
+"GET /static/face/css/class.css HTTP/1.1" 200 7211
+"GET /static/dat.gui.min.js HTTP/1.1" 200 56992
+"GET /static/face/javascript/datguiOptions.js HTTP/1.1" 200 13242
+"GET /static/face/javascript/variablesAndConstants.js HTTP/1.1" 200 2713
+"GET /static/face/javascript/classroom/variablesAndConstants.js HTTP/1.1" 200 26714
+"GET /static/TrackballControls.js HTTP/1.1" 200 13966
+"GET /static/face/javascript/classroom/loadObjects.js HTTP/1.1" 200 19220
+"GET /static/face/javascript/classroom/moveIndividual.js HTTP/1.1" 200 6975
+"GET /static/face/javascript/classroom/moveCamera.js HTTP/1.1" 200 3257
+"GET /static/face/javascript/classroom/seqEnter.js HTTP/1.1" 200 10075
+"GET /static/face/javascript/classroom/moveExpression.js HTTP/1.1" 200 15560
+"GET /static/face/javascript/classroom/moveComplex.js HTTP/1.1" 200 8940
+"GET /static/face/javascript/classroom/input.js HTTP/1.1" 200 5401
+"GET /static/face/javascript/classroom/moveBody.js HTTP/1.1" 200 11139
+"GET /static/face/javascript/classroom/text.js HTTP/1.1" 200 10256
+"GET /static/face/javascript/classroom/seqAfterJudgement.js HTTP/1.1" 200 13671
+"GET /static/face/javascript/classroom/previousSents.js HTTP/1.1" 200 6098
+"GET /static/face/javascript/classroom/timeStuff.js HTTP/1.1" 200 3112
+"GET /static/face/javascript/classroom/main.js HTTP/1.1" 200 10481
+"GET /static/face/JSON/classroom.json HTTP/1.1" 200 25715
+"GET /face/class_time/1 HTTP/1.1" 200 35966
+Internal Server Error: /face/tts
+Traceback (most recent call last):
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/john/johnsHDD/PhD/2018_autumn/firstfacesProduction/firstfaces/firstfaces/face/views.py", line 333, in tts
+    prof = Profile.objects.get(learner=request.user)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/db/models/manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/db/models/query.py", line 403, in get
+    self.model._meta.object_name
+face.models.DoesNotExist: Profile matching query does not exist.
+Internal Server Error: /face/tts
+Traceback (most recent call last):
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/john/johnsHDD/PhD/2018_autumn/firstfacesProduction/firstfaces/firstfaces/face/views.py", line 333, in tts
+    prof = Profile.objects.get(learner=request.user)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/db/models/manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/db/models/query.py", line 403, in get
+    self.model._meta.object_name
+face.models.DoesNotExist: Profile matching query does not exist.
+"GET /face/tts?sentence=dewdwe&tiaSpeaker=false HTTP/1.1" 500 17050
+"GET /admin/face/ HTTP/1.1" 200 3617
+"GET /static/admin/css/responsive.css HTTP/1.1" 304 0
+"GET /static/admin/css/base.css HTTP/1.1" 304 0
+"GET /static/admin/css/fonts.css HTTP/1.1" 304 0
+"GET /static/admin/fonts/Roboto-Regular-webfont.woff HTTP/1.1" 304 0
+"GET /static/admin/fonts/Roboto-Bold-webfont.woff HTTP/1.1" 304 0
+"GET /static/admin/img/icon-addlink.svg HTTP/1.1" 304 0
+"GET /static/admin/img/icon-changelink.svg HTTP/1.1" 304 0
+"GET /static/admin/fonts/Roboto-Light-webfont.woff HTTP/1.1" 304 0
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 2208
+"GET /admin/face/ HTTP/1.1" 200 4014
+"GET /admin/face/profile/add/ HTTP/1.1" 200 5277
+"GET /static/admin/css/forms.css HTTP/1.1" 304 0
+"GET /static/admin/js/core.js HTTP/1.1" 304 0
+"GET /static/admin/js/jquery.init.js HTTP/1.1" 304 0
+"GET /static/admin/js/admin/RelatedObjectLookups.js HTTP/1.1" 304 0
+"GET /static/admin/js/urlify.js HTTP/1.1" 304 0
+"GET /static/admin/js/actions.js HTTP/1.1" 304 0
+"GET /admin/jsi18n/ HTTP/1.1" 200 3185
+"GET /static/admin/js/prepopulate.js HTTP/1.1" 304 0
+"GET /static/admin/css/widgets.css HTTP/1.1" 304 0
+"GET /static/admin/js/change_form.js HTTP/1.1" 304 0
+"GET /static/admin/js/prepopulate_init.js HTTP/1.1" 304 0
+"POST /admin/face/profile/add/ HTTP/1.1" 302 0
+"GET /admin/face/profile/ HTTP/1.1" 200 4582
+"GET /static/admin/css/changelists.css HTTP/1.1" 304 0
+"GET /admin/jsi18n/ HTTP/1.1" 200 3185
+"GET /face/class_time/1 HTTP/1.1" 200 35966
+"GET /static/jquery-3.3.1.min.js HTTP/1.1" 200 86927
+"GET /static/ajaxPost.js HTTP/1.1" 200 2149
+"GET /static/face/css/utils.css HTTP/1.1" 200 106
+"GET /static/OrbitControls.js HTTP/1.1" 200 22569
+"GET /static/three.min.js HTTP/1.1" 200 512218
+"GET /static/dat.gui.min.js HTTP/1.1" 200 56992
+"GET /static/face/javascript/variablesAndConstants.js HTTP/1.1" 200 2713
+"GET /static/TrackballControls.js HTTP/1.1" 200 13966
+"GET /static/face/javascript/datguiOptions.js HTTP/1.1" 200 13242
+"GET /static/face/css/class.css HTTP/1.1" 200 7211
+"GET /static/face/javascript/classroom/variablesAndConstants.js HTTP/1.1" 200 26714
+"GET /static/face/javascript/classroom/moveIndividual.js HTTP/1.1" 200 6975
+"GET /static/face/javascript/classroom/loadObjects.js HTTP/1.1" 200 19220
+"GET /static/face/javascript/classroom/moveCamera.js HTTP/1.1" 200 3257
+"GET /static/face/javascript/classroom/moveComplex.js HTTP/1.1" 200 8940
+"GET /static/face/javascript/classroom/moveExpression.js HTTP/1.1" 200 15560
+"GET /static/face/javascript/classroom/seqEnter.js HTTP/1.1" 200 10075
+"GET /static/face/javascript/classroom/moveBody.js HTTP/1.1" 200 11139
+"GET /static/face/javascript/classroom/timeStuff.js HTTP/1.1" 200 3112
+"GET /static/face/javascript/classroom/text.js HTTP/1.1" 200 10256
+"GET /static/face/javascript/classroom/previousSents.js HTTP/1.1" 200 6098
+"GET /static/face/javascript/classroom/seqAfterJudgement.js HTTP/1.1" 200 13671
+"GET /static/face/javascript/classroom/main.js HTTP/1.1" 200 10481
+"GET /static/face/javascript/classroom/input.js HTTP/1.1" 200 5401
+"GET /static/face/JSON/classroom.json HTTP/1.1" 200 25715
+"GET /face/class_time/1 HTTP/1.1" 200 35966
+Internal Server Error: /face/tts
+Traceback (most recent call last):
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/john/johnsHDD/PhD/2018_autumn/firstfacesProduction/firstfaces/firstfaces/face/views.py", line 372, in tts
+    return JsonResponse(response_data)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/http/response.py", line 509, in __init__
+    data = json.dumps(data, cls=encoder, **json_dumps_params)
+  File "/home/john/anaconda3/lib/python3.6/json/__init__.py", line 238, in dumps
+    **kw).encode(obj)
+  File "/home/john/anaconda3/lib/python3.6/json/encoder.py", line 199, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/home/john/anaconda3/lib/python3.6/json/encoder.py", line 257, in iterencode
+    return _iterencode(o, 0)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/serializers/json.py", line 104, in default
+    return super().default(o)
+  File "/home/john/anaconda3/lib/python3.6/json/encoder.py", line 180, in default
+    o.__class__.__name__)
+TypeError: Object of type 'SynthesizeSpeechResponse' is not JSON serializable
+Internal Server Error: /face/tts
+Traceback (most recent call last):
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/john/johnsHDD/PhD/2018_autumn/firstfacesProduction/firstfaces/firstfaces/face/views.py", line 372, in tts
+    return JsonResponse(response_data)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/http/response.py", line 509, in __init__
+    data = json.dumps(data, cls=encoder, **json_dumps_params)
+  File "/home/john/anaconda3/lib/python3.6/json/__init__.py", line 238, in dumps
+    **kw).encode(obj)
+  File "/home/john/anaconda3/lib/python3.6/json/encoder.py", line 199, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/home/john/anaconda3/lib/python3.6/json/encoder.py", line 257, in iterencode
+    return _iterencode(o, 0)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/serializers/json.py", line 104, in default
+    return super().default(o)
+  File "/home/john/anaconda3/lib/python3.6/json/encoder.py", line 180, in default
+    o.__class__.__name__)
+TypeError: Object of type 'SynthesizeSpeechResponse' is not JSON serializable
+"GET /face/tts?sentence=frwfr%20fr&tiaSpeaker=false HTTP/1.1" 500 17547
+"GET /face/class_time/1 HTTP/1.1" 200 35966
+"GET /static/OrbitControls.js HTTP/1.1" 200 22569
+"GET /static/ajaxPost.js HTTP/1.1" 200 2149
+"GET /static/face/css/class.css HTTP/1.1" 200 7211
+"GET /static/jquery-3.3.1.min.js HTTP/1.1" 200 86927
+"GET /static/dat.gui.min.js HTTP/1.1" 200 56992
+"GET /static/three.min.js HTTP/1.1" 200 512218
+"GET /static/face/css/utils.css HTTP/1.1" 200 106
+"GET /static/TrackballControls.js HTTP/1.1" 200 13966
+"GET /static/face/javascript/variablesAndConstants.js HTTP/1.1" 200 2713
+"GET /static/face/javascript/datguiOptions.js HTTP/1.1" 200 13242
+"GET /static/face/javascript/classroom/variablesAndConstants.js HTTP/1.1" 200 26714
+"GET /static/face/javascript/classroom/moveCamera.js HTTP/1.1" 200 3257
+"GET /static/face/javascript/classroom/moveIndividual.js HTTP/1.1" 200 6975
+"GET /static/face/javascript/classroom/moveComplex.js HTTP/1.1" 200 8940
+"GET /static/face/javascript/classroom/seqEnter.js HTTP/1.1" 200 10075
+"GET /static/face/javascript/classroom/loadObjects.js HTTP/1.1" 200 19220
+"GET /static/face/javascript/classroom/moveExpression.js HTTP/1.1" 200 15560
+"GET /static/face/javascript/classroom/timeStuff.js HTTP/1.1" 200 3112
+"GET /static/face/javascript/classroom/moveBody.js HTTP/1.1" 200 11139
+"GET /static/face/javascript/classroom/text.js HTTP/1.1" 200 10256
+"GET /static/face/javascript/classroom/input.js HTTP/1.1" 200 5401
+"GET /static/face/javascript/classroom/seqAfterJudgement.js HTTP/1.1" 200 13671
+"GET /static/face/javascript/classroom/main.js HTTP/1.1" 200 10481
+"GET /static/face/javascript/classroom/previousSents.js HTTP/1.1" 200 6098
+"GET /static/face/JSON/classroom.json HTTP/1.1" 200 25715
+"GET /face/class_time/1 HTTP/1.1" 200 35966
+"GET /face/class_time/1 HTTP/1.1" 200 36207
+"GET /static/jquery-3.3.1.min.js HTTP/1.1" 200 86927
+"GET /static/ajaxPost.js HTTP/1.1" 200 2149
+"GET /static/OrbitControls.js HTTP/1.1" 200 22569
+"GET /static/face/css/utils.css HTTP/1.1" 200 106
+"GET /static/face/css/class.css HTTP/1.1" 200 7211
+"GET /static/three.min.js HTTP/1.1" 200 512218
+"GET /static/dat.gui.min.js HTTP/1.1" 200 56992
+"GET /static/face/javascript/datguiOptions.js HTTP/1.1" 200 13242
+"GET /static/face/javascript/variablesAndConstants.js HTTP/1.1" 200 2713
+"GET /static/TrackballControls.js HTTP/1.1" 200 13966
+"GET /static/face/javascript/classroom/loadObjects.js HTTP/1.1" 200 19220
+"GET /static/face/javascript/classroom/moveCamera.js HTTP/1.1" 200 3257
+"GET /static/face/javascript/classroom/variablesAndConstants.js HTTP/1.1" 200 26714
+"GET /static/face/javascript/classroom/seqEnter.js HTTP/1.1" 200 10075
+"GET /static/face/javascript/classroom/moveComplex.js HTTP/1.1" 200 8940
+"GET /static/face/javascript/classroom/moveExpression.js HTTP/1.1" 200 15560
+"GET /static/face/javascript/classroom/text.js HTTP/1.1" 200 10256
+"GET /static/face/javascript/classroom/moveBody.js HTTP/1.1" 200 11139
+"GET /static/face/javascript/classroom/timeStuff.js HTTP/1.1" 200 3112
+"GET /static/face/javascript/classroom/input.js HTTP/1.1" 200 5401
+"GET /static/face/javascript/classroom/previousSents.js HTTP/1.1" 200 6098
+"GET /static/face/javascript/classroom/seqAfterJudgement.js HTTP/1.1" 200 13671
+"GET /static/face/javascript/classroom/main.js HTTP/1.1" 200 10481
+"GET /static/face/javascript/classroom/moveIndividual.js HTTP/1.1" 200 6975
+"GET /static/face/JSON/classroom.json HTTP/1.1" 200 25715
+"GET /face/class_time/1 HTTP/1.1" 200 36207
+Internal Server Error: /face/tts
+Traceback (most recent call last):
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/john/johnsHDD/PhD/2018_autumn/firstfacesProduction/firstfaces/firstfaces/face/views.py", line 372, in tts
+    return JsonResponse(response_data)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/http/response.py", line 509, in __init__
+    data = json.dumps(data, cls=encoder, **json_dumps_params)
+  File "/home/john/anaconda3/lib/python3.6/json/__init__.py", line 238, in dumps
+    **kw).encode(obj)
+  File "/home/john/anaconda3/lib/python3.6/json/encoder.py", line 199, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/home/john/anaconda3/lib/python3.6/json/encoder.py", line 257, in iterencode
+    return _iterencode(o, 0)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/serializers/json.py", line 104, in default
+    return super().default(o)
+  File "/home/john/anaconda3/lib/python3.6/json/encoder.py", line 180, in default
+    o.__class__.__name__)
+TypeError: Object of type 'SynthesizeSpeechResponse' is not JSON serializable
+Internal Server Error: /face/tts
+Traceback (most recent call last):
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/john/johnsHDD/PhD/2018_autumn/firstfacesProduction/firstfaces/firstfaces/face/views.py", line 372, in tts
+    return JsonResponse(response_data)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/http/response.py", line 509, in __init__
+    data = json.dumps(data, cls=encoder, **json_dumps_params)
+  File "/home/john/anaconda3/lib/python3.6/json/__init__.py", line 238, in dumps
+    **kw).encode(obj)
+  File "/home/john/anaconda3/lib/python3.6/json/encoder.py", line 199, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/home/john/anaconda3/lib/python3.6/json/encoder.py", line 257, in iterencode
+    return _iterencode(o, 0)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/serializers/json.py", line 104, in default
+    return super().default(o)
+  File "/home/john/anaconda3/lib/python3.6/json/encoder.py", line 180, in default
+    o.__class__.__name__)
+TypeError: Object of type 'SynthesizeSpeechResponse' is not JSON serializable
+"GET /face/tts?sentence=frefre&tiaSpeaker=false HTTP/1.1" 500 17537
+"GET /face/class_time/1 HTTP/1.1" 200 36207
+"GET /static/jquery-3.3.1.min.js HTTP/1.1" 200 86927
+"GET /static/three.min.js HTTP/1.1" 200 512218
+"GET /static/ajaxPost.js HTTP/1.1" 200 2149
+"GET /static/OrbitControls.js HTTP/1.1" 200 22569
+"GET /static/face/css/utils.css HTTP/1.1" 200 106
+"GET /static/face/css/class.css HTTP/1.1" 200 7211
+"GET /static/dat.gui.min.js HTTP/1.1" 200 56992
+"GET /static/TrackballControls.js HTTP/1.1" 200 13966
+"GET /static/face/javascript/datguiOptions.js HTTP/1.1" 200 13242
+"GET /static/face/javascript/variablesAndConstants.js HTTP/1.1" 200 2713
+"GET /static/face/javascript/classroom/variablesAndConstants.js HTTP/1.1" 200 26714
+"GET /static/face/javascript/classroom/loadObjects.js HTTP/1.1" 200 19220
+"GET /static/face/javascript/classroom/moveIndividual.js HTTP/1.1" 200 6975
+"GET /static/face/javascript/classroom/moveCamera.js HTTP/1.1" 200 3257
+"GET /static/face/javascript/classroom/moveComplex.js HTTP/1.1" 200 8940
+"GET /static/face/javascript/classroom/timeStuff.js HTTP/1.1" 200 3112
+"GET /static/face/javascript/classroom/moveBody.js HTTP/1.1" 200 11139
+"GET /static/face/javascript/classroom/previousSents.js HTTP/1.1" 200 6098
+"GET /static/face/javascript/classroom/moveExpression.js HTTP/1.1" 200 15560
+"GET /static/face/javascript/classroom/seqAfterJudgement.js HTTP/1.1" 200 13671
+"GET /static/face/javascript/classroom/text.js HTTP/1.1" 200 10256
+"GET /static/face/javascript/classroom/main.js HTTP/1.1" 200 10481
+"GET /static/face/javascript/classroom/seqEnter.js HTTP/1.1" 200 10075
+"GET /static/face/javascript/classroom/input.js HTTP/1.1" 200 5401
+"GET /static/face/JSON/classroom.json HTTP/1.1" 200 25715
+"GET /face/class_time/1 HTTP/1.1" 200 36207
+Internal Server Error: /face/tts
+Traceback (most recent call last):
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/john/johnsHDD/PhD/2018_autumn/firstfacesProduction/firstfaces/firstfaces/face/views.py", line 372, in tts
+    return JsonResponse(response_data)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/http/response.py", line 509, in __init__
+    data = json.dumps(data, cls=encoder, **json_dumps_params)
+  File "/home/john/anaconda3/lib/python3.6/json/__init__.py", line 238, in dumps
+    **kw).encode(obj)
+  File "/home/john/anaconda3/lib/python3.6/json/encoder.py", line 199, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/home/john/anaconda3/lib/python3.6/json/encoder.py", line 257, in iterencode
+    return _iterencode(o, 0)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/serializers/json.py", line 104, in default
+    return super().default(o)
+  File "/home/john/anaconda3/lib/python3.6/json/encoder.py", line 180, in default
+    o.__class__.__name__)
+TypeError: Object of type 'SynthesizeSpeechResponse' is not JSON serializable
+Internal Server Error: /face/tts
+Traceback (most recent call last):
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/john/johnsHDD/PhD/2018_autumn/firstfacesProduction/firstfaces/firstfaces/face/views.py", line 372, in tts
+    return JsonResponse(response_data)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/http/response.py", line 509, in __init__
+    data = json.dumps(data, cls=encoder, **json_dumps_params)
+  File "/home/john/anaconda3/lib/python3.6/json/__init__.py", line 238, in dumps
+    **kw).encode(obj)
+  File "/home/john/anaconda3/lib/python3.6/json/encoder.py", line 199, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/home/john/anaconda3/lib/python3.6/json/encoder.py", line 257, in iterencode
+    return _iterencode(o, 0)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/serializers/json.py", line 104, in default
+    return super().default(o)
+  File "/home/john/anaconda3/lib/python3.6/json/encoder.py", line 180, in default
+    o.__class__.__name__)
+TypeError: Object of type 'SynthesizeSpeechResponse' is not JSON serializable
+"GET /face/tts?sentence=greg&tiaSpeaker=false HTTP/1.1" 500 17531
+"GET /face/class_time/1 HTTP/1.1" 200 36207
+"GET /static/jquery-3.3.1.min.js HTTP/1.1" 200 86927
+"GET /static/three.min.js HTTP/1.1" 200 512218
+"GET /static/ajaxPost.js HTTP/1.1" 200 2149
+"GET /static/dat.gui.min.js HTTP/1.1" 200 56992
+"GET /static/face/css/utils.css HTTP/1.1" 200 106
+"GET /static/OrbitControls.js HTTP/1.1" 200 22569
+"GET /static/face/css/class.css HTTP/1.1" 200 7211
+"GET /static/face/javascript/datguiOptions.js HTTP/1.1" 200 13242
+"GET /static/face/javascript/variablesAndConstants.js HTTP/1.1" 200 2713
+"GET /static/face/javascript/classroom/variablesAndConstants.js HTTP/1.1" 200 26714
+"GET /static/face/javascript/classroom/moveIndividual.js HTTP/1.1" 200 6975
+"GET /static/face/javascript/classroom/loadObjects.js HTTP/1.1" 200 19220
+"GET /static/face/javascript/classroom/moveComplex.js HTTP/1.1" 200 8940
+"GET /static/face/javascript/classroom/moveCamera.js HTTP/1.1" 200 3257
+"GET /static/face/javascript/classroom/seqEnter.js HTTP/1.1" 200 10075
+"GET /static/face/javascript/classroom/moveBody.js HTTP/1.1" 200 11139
+"GET /static/face/javascript/classroom/input.js HTTP/1.1" 200 5401
+"GET /static/face/javascript/classroom/timeStuff.js HTTP/1.1" 200 3112
+"GET /static/face/javascript/classroom/previousSents.js HTTP/1.1" 200 6098
+"GET /static/face/javascript/classroom/moveExpression.js HTTP/1.1" 200 15560
+"GET /static/face/javascript/classroom/text.js HTTP/1.1" 200 10256
+"GET /static/face/javascript/classroom/seqAfterJudgement.js HTTP/1.1" 200 13671
+"GET /static/face/javascript/classroom/main.js HTTP/1.1" 200 10481
+"GET /static/TrackballControls.js HTTP/1.1" 200 13966
+"GET /static/face/JSON/classroom.json HTTP/1.1" 200 25715
+"GET /face/class_time/1 HTTP/1.1" 200 36207
+Internal Server Error: /face/tts
+Traceback (most recent call last):
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/john/johnsHDD/PhD/2018_autumn/firstfacesProduction/firstfaces/firstfaces/face/views.py", line 368, in tts
+    return JsonResponse(response_data)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/http/response.py", line 509, in __init__
+    data = json.dumps(data, cls=encoder, **json_dumps_params)
+  File "/home/john/anaconda3/lib/python3.6/json/__init__.py", line 238, in dumps
+    **kw).encode(obj)
+  File "/home/john/anaconda3/lib/python3.6/json/encoder.py", line 199, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/home/john/anaconda3/lib/python3.6/json/encoder.py", line 257, in iterencode
+    return _iterencode(o, 0)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/serializers/json.py", line 104, in default
+    return super().default(o)
+  File "/home/john/anaconda3/lib/python3.6/json/encoder.py", line 180, in default
+    o.__class__.__name__)
+TypeError: Object of type 'bytes' is not JSON serializable
+Internal Server Error: /face/tts
+Traceback (most recent call last):
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/john/johnsHDD/PhD/2018_autumn/firstfacesProduction/firstfaces/firstfaces/face/views.py", line 368, in tts
+    return JsonResponse(response_data)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/http/response.py", line 509, in __init__
+    data = json.dumps(data, cls=encoder, **json_dumps_params)
+  File "/home/john/anaconda3/lib/python3.6/json/__init__.py", line 238, in dumps
+    **kw).encode(obj)
+  File "/home/john/anaconda3/lib/python3.6/json/encoder.py", line 199, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/home/john/anaconda3/lib/python3.6/json/encoder.py", line 257, in iterencode
+    return _iterencode(o, 0)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/serializers/json.py", line 104, in default
+    return super().default(o)
+  File "/home/john/anaconda3/lib/python3.6/json/encoder.py", line 180, in default
+    o.__class__.__name__)
+TypeError: Object of type 'bytes' is not JSON serializable
+"GET /face/tts?sentence=hell&tiaSpeaker=false HTTP/1.1" 500 17493
+"GET /face/class_time/1 HTTP/1.1" 200 36207
+"GET /static/jquery-3.3.1.min.js HTTP/1.1" 200 86927
+"GET /static/three.min.js HTTP/1.1" 200 512218
+"GET /static/ajaxPost.js HTTP/1.1" 200 2149
+"GET /static/OrbitControls.js HTTP/1.1" 200 22569
+"GET /static/face/css/utils.css HTTP/1.1" 200 106
+"GET /static/face/css/class.css HTTP/1.1" 200 7211
+"GET /static/dat.gui.min.js HTTP/1.1" 200 56992
+"GET /static/face/javascript/datguiOptions.js HTTP/1.1" 200 13242
+"GET /static/TrackballControls.js HTTP/1.1" 200 13966
+"GET /static/face/javascript/variablesAndConstants.js HTTP/1.1" 200 2713
+"GET /static/face/javascript/classroom/variablesAndConstants.js HTTP/1.1" 200 26714
+"GET /static/face/javascript/classroom/moveCamera.js HTTP/1.1" 200 3257
+"GET /static/face/javascript/classroom/moveComplex.js HTTP/1.1" 200 8940
+"GET /static/face/javascript/classroom/loadObjects.js HTTP/1.1" 200 19220
+"GET /static/face/javascript/classroom/moveIndividual.js HTTP/1.1" 200 6975
+"GET /static/face/javascript/classroom/moveExpression.js HTTP/1.1" 200 15560
+"GET /static/face/javascript/classroom/moveBody.js HTTP/1.1" 200 11139
+"GET /static/face/javascript/classroom/input.js HTTP/1.1" 200 5401
+"GET /static/face/javascript/classroom/seqEnter.js HTTP/1.1" 200 10075
+"GET /static/face/javascript/classroom/timeStuff.js HTTP/1.1" 200 3112
+"GET /static/face/javascript/classroom/text.js HTTP/1.1" 200 10256
+"GET /static/face/javascript/classroom/previousSents.js HTTP/1.1" 200 6098
+"GET /static/face/javascript/classroom/seqAfterJudgement.js HTTP/1.1" 200 13671
+"GET /static/face/javascript/classroom/main.js HTTP/1.1" 200 10481
+"GET /static/face/JSON/classroom.json HTTP/1.1" 200 25715
+"GET /face/class_time/1 HTTP/1.1" 200 36207
+"GET /face/tts?sentence=get&tiaSpeaker=false HTTP/1.1" 200 9070
+"GET /face/class_time/1 HTTP/1.1" 200 36242
+"GET /static/ajaxPost.js HTTP/1.1" 200 2149
+"GET /static/OrbitControls.js HTTP/1.1" 200 22569
+"GET /static/face/css/class.css HTTP/1.1" 200 7211
+"GET /static/jquery-3.3.1.min.js HTTP/1.1" 200 86927
+"GET /static/three.min.js HTTP/1.1" 200 512218
+"GET /static/face/css/utils.css HTTP/1.1" 200 106
+"GET /static/dat.gui.min.js HTTP/1.1" 200 56992
+"GET /static/face/javascript/datguiOptions.js HTTP/1.1" 200 13242
+"GET /static/TrackballControls.js HTTP/1.1" 200 13966
+"GET /static/face/javascript/classroom/variablesAndConstants.js HTTP/1.1" 200 26714
+"GET /static/face/javascript/classroom/loadObjects.js HTTP/1.1" 200 19220
+"GET /static/face/javascript/classroom/moveIndividual.js HTTP/1.1" 200 6975
+"GET /static/face/javascript/variablesAndConstants.js HTTP/1.1" 200 2713
+"GET /static/face/javascript/classroom/moveCamera.js HTTP/1.1" 200 3257
+"GET /static/face/javascript/classroom/moveExpression.js HTTP/1.1" 200 15560
+"GET /static/face/javascript/classroom/seqEnter.js HTTP/1.1" 200 10075
+"GET /static/face/javascript/classroom/moveBody.js HTTP/1.1" 200 11139
+"GET /static/face/javascript/classroom/moveComplex.js HTTP/1.1" 200 8940
+"GET /static/face/javascript/classroom/input.js HTTP/1.1" 200 5401
+"GET /static/face/javascript/classroom/timeStuff.js HTTP/1.1" 200 3112
+"GET /static/face/javascript/classroom/seqAfterJudgement.js HTTP/1.1" 200 13671
+"GET /static/face/javascript/classroom/previousSents.js HTTP/1.1" 200 6098
+"GET /static/face/javascript/classroom/main.js HTTP/1.1" 200 10651
+"GET /static/face/javascript/classroom/text.js HTTP/1.1" 200 10256
+"GET /static/face/JSON/classroom.json HTTP/1.1" 200 25715
+"GET /face/class_time/1 HTTP/1.1" 200 36242
+"GET /face/tts?sentence=hello&tiaSpeaker=false HTTP/1.1" 200 11319
+"GET /face/class_time/1 HTTP/1.1" 200 36242
+"GET /static/ajaxPost.js HTTP/1.1" 200 2149
+"GET /static/face/css/class.css HTTP/1.1" 200 7211
+"GET /static/OrbitControls.js HTTP/1.1" 200 22569
+"GET /static/face/css/utils.css HTTP/1.1" 200 106
+"GET /static/jquery-3.3.1.min.js HTTP/1.1" 200 86927
+"GET /static/three.min.js HTTP/1.1" 200 512218
+"GET /static/dat.gui.min.js HTTP/1.1" 200 56992
+"GET /static/face/javascript/datguiOptions.js HTTP/1.1" 200 13242
+"GET /static/TrackballControls.js HTTP/1.1" 200 13966
+"GET /static/face/javascript/variablesAndConstants.js HTTP/1.1" 200 2713
+"GET /static/face/javascript/classroom/variablesAndConstants.js HTTP/1.1" 200 26714
+"GET /static/face/javascript/classroom/moveIndividual.js HTTP/1.1" 200 6975
+"GET /static/face/javascript/classroom/loadObjects.js HTTP/1.1" 200 19220
+"GET /static/face/javascript/classroom/moveCamera.js HTTP/1.1" 200 3257
+"GET /static/face/javascript/classroom/moveComplex.js HTTP/1.1" 200 8940
+"GET /static/face/javascript/classroom/seqEnter.js HTTP/1.1" 200 10075
+"GET /static/face/javascript/classroom/moveExpression.js HTTP/1.1" 200 15560
+"GET /static/face/javascript/classroom/moveBody.js HTTP/1.1" 200 11139
+"GET /static/face/javascript/classroom/input.js HTTP/1.1" 200 5401
+"GET /static/face/javascript/classroom/text.js HTTP/1.1" 200 10256
+"GET /static/face/javascript/classroom/timeStuff.js HTTP/1.1" 200 3112
+"GET /static/face/javascript/classroom/previousSents.js HTTP/1.1" 200 6098
+"GET /static/face/javascript/classroom/seqAfterJudgement.js HTTP/1.1" 200 13671
+"GET /static/face/javascript/classroom/main.js HTTP/1.1" 200 10624
+"GET /static/face/JSON/classroom.json HTTP/1.1" 200 25715
+"GET /face/class_time/1 HTTP/1.1" 200 36242
+Internal Server Error: /face/tts
+Traceback (most recent call last):
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/john/johnsHDD/PhD/2018_autumn/firstfacesProduction/firstfaces/firstfaces/face/views.py", line 368, in tts
+    return JsonResponse(response_data)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/http/response.py", line 509, in __init__
+    data = json.dumps(data, cls=encoder, **json_dumps_params)
+  File "/home/john/anaconda3/lib/python3.6/json/__init__.py", line 238, in dumps
+    **kw).encode(obj)
+  File "/home/john/anaconda3/lib/python3.6/json/encoder.py", line 199, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/home/john/anaconda3/lib/python3.6/json/encoder.py", line 257, in iterencode
+    return _iterencode(o, 0)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/serializers/json.py", line 104, in default
+    return super().default(o)
+  File "/home/john/anaconda3/lib/python3.6/json/encoder.py", line 180, in default
+    o.__class__.__name__)
+TypeError: Object of type 'SynthesizeSpeechResponse' is not JSON serializable
+Internal Server Error: /face/tts
+Traceback (most recent call last):
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/john/johnsHDD/PhD/2018_autumn/firstfacesProduction/firstfaces/firstfaces/face/views.py", line 368, in tts
+    return JsonResponse(response_data)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/http/response.py", line 509, in __init__
+    data = json.dumps(data, cls=encoder, **json_dumps_params)
+  File "/home/john/anaconda3/lib/python3.6/json/__init__.py", line 238, in dumps
+    **kw).encode(obj)
+  File "/home/john/anaconda3/lib/python3.6/json/encoder.py", line 199, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/home/john/anaconda3/lib/python3.6/json/encoder.py", line 257, in iterencode
+    return _iterencode(o, 0)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/serializers/json.py", line 104, in default
+    return super().default(o)
+  File "/home/john/anaconda3/lib/python3.6/json/encoder.py", line 180, in default
+    o.__class__.__name__)
+TypeError: Object of type 'SynthesizeSpeechResponse' is not JSON serializable
+"GET /face/tts?sentence=hello&tiaSpeaker=false HTTP/1.1" 500 17534
+"GET /face/class_time/1 HTTP/1.1" 200 36242
+"GET /static/three.min.js HTTP/1.1" 200 512218
+"GET /static/OrbitControls.js HTTP/1.1" 200 22569
+"GET /static/ajaxPost.js HTTP/1.1" 200 2149
+"GET /static/face/css/utils.css HTTP/1.1" 200 106
+"GET /static/jquery-3.3.1.min.js HTTP/1.1" 200 86927
+"GET /static/face/css/class.css HTTP/1.1" 200 7211
+"GET /static/face/javascript/datguiOptions.js HTTP/1.1" 200 13242
+"GET /static/TrackballControls.js HTTP/1.1" 200 13966
+"GET /static/dat.gui.min.js HTTP/1.1" 200 56992
+"GET /static/face/javascript/variablesAndConstants.js HTTP/1.1" 200 2713
+"GET /static/face/javascript/classroom/loadObjects.js HTTP/1.1" 200 19220
+"GET /static/face/javascript/classroom/variablesAndConstants.js HTTP/1.1" 200 26714
+"GET /static/face/javascript/classroom/moveIndividual.js HTTP/1.1" 200 6975
+"GET /static/face/javascript/classroom/moveCamera.js HTTP/1.1" 200 3257
+"GET /static/face/javascript/classroom/moveComplex.js HTTP/1.1" 200 8940
+"GET /static/face/javascript/classroom/seqEnter.js HTTP/1.1" 200 10075
+"GET /static/face/javascript/classroom/moveExpression.js HTTP/1.1" 200 15560
+"GET /static/face/javascript/classroom/text.js HTTP/1.1" 200 10256
+"GET /static/face/javascript/classroom/moveBody.js HTTP/1.1" 200 11139
+"GET /static/face/javascript/classroom/input.js HTTP/1.1" 200 5401
+"GET /static/face/javascript/classroom/timeStuff.js HTTP/1.1" 200 3112
+"GET /static/face/javascript/classroom/previousSents.js HTTP/1.1" 200 6098
+"GET /static/face/javascript/classroom/seqAfterJudgement.js HTTP/1.1" 200 13671
+"GET /static/face/javascript/classroom/main.js HTTP/1.1" 200 10624
+"GET /static/face/JSON/classroom.json HTTP/1.1" 200 25715
+"GET /face/class_time/1 HTTP/1.1" 200 36242
+"GET /face/class_time/1 HTTP/1.1" 200 36242
+"GET /static/jquery-3.3.1.min.js HTTP/1.1" 200 86927
+"GET /static/ajaxPost.js HTTP/1.1" 200 2149
+"GET /static/three.min.js HTTP/1.1" 200 512218
+"GET /static/OrbitControls.js HTTP/1.1" 200 22569
+"GET /static/face/css/utils.css HTTP/1.1" 200 106
+"GET /static/dat.gui.min.js HTTP/1.1" 200 56992
+"GET /static/face/css/class.css HTTP/1.1" 200 7211
+"GET /static/TrackballControls.js HTTP/1.1" 200 13966
+"GET /static/face/javascript/datguiOptions.js HTTP/1.1" 200 13242
+"GET /static/face/javascript/variablesAndConstants.js HTTP/1.1" 200 2713
+"GET /static/face/javascript/classroom/variablesAndConstants.js HTTP/1.1" 200 26714
+"GET /static/face/javascript/classroom/moveIndividual.js HTTP/1.1" 200 6975
+"GET /static/face/javascript/classroom/loadObjects.js HTTP/1.1" 200 19220
+"GET /static/face/javascript/classroom/moveComplex.js HTTP/1.1" 200 8940
+"GET /static/face/javascript/classroom/moveCamera.js HTTP/1.1" 200 3257
+"GET /static/face/javascript/classroom/moveExpression.js HTTP/1.1" 200 15560
+"GET /static/face/javascript/classroom/moveBody.js HTTP/1.1" 200 11139
+"GET /static/face/javascript/classroom/seqEnter.js HTTP/1.1" 200 10075
+"GET /static/face/javascript/classroom/input.js HTTP/1.1" 200 5401
+"GET /static/face/javascript/classroom/text.js HTTP/1.1" 200 10256
+"GET /static/face/javascript/classroom/timeStuff.js HTTP/1.1" 200 3112
+"GET /static/face/javascript/classroom/previousSents.js HTTP/1.1" 200 6098
+"GET /static/face/javascript/classroom/seqAfterJudgement.js HTTP/1.1" 200 13671
+"GET /static/face/javascript/classroom/main.js HTTP/1.1" 200 10624
+"GET /static/face/JSON/classroom.json HTTP/1.1" 200 25715
+"GET /face/class_time/1 HTTP/1.1" 200 36242
+Internal Server Error: /face/tts
+Traceback (most recent call last):
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/john/johnsHDD/PhD/2018_autumn/firstfacesProduction/firstfaces/firstfaces/face/views.py", line 370, in tts
+    return JsonResponse(response_data)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/http/response.py", line 509, in __init__
+    data = json.dumps(data, cls=encoder, **json_dumps_params)
+  File "/home/john/anaconda3/lib/python3.6/json/__init__.py", line 238, in dumps
+    **kw).encode(obj)
+  File "/home/john/anaconda3/lib/python3.6/json/encoder.py", line 199, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/home/john/anaconda3/lib/python3.6/json/encoder.py", line 257, in iterencode
+    return _iterencode(o, 0)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/serializers/json.py", line 104, in default
+    return super().default(o)
+  File "/home/john/anaconda3/lib/python3.6/json/encoder.py", line 180, in default
+    o.__class__.__name__)
+TypeError: Object of type 'SynthesizeSpeechResponse' is not JSON serializable
+Internal Server Error: /face/tts
+Traceback (most recent call last):
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/john/johnsHDD/PhD/2018_autumn/firstfacesProduction/firstfaces/firstfaces/face/views.py", line 370, in tts
+    return JsonResponse(response_data)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/http/response.py", line 509, in __init__
+    data = json.dumps(data, cls=encoder, **json_dumps_params)
+  File "/home/john/anaconda3/lib/python3.6/json/__init__.py", line 238, in dumps
+    **kw).encode(obj)
+  File "/home/john/anaconda3/lib/python3.6/json/encoder.py", line 199, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/home/john/anaconda3/lib/python3.6/json/encoder.py", line 257, in iterencode
+    return _iterencode(o, 0)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/serializers/json.py", line 104, in default
+    return super().default(o)
+  File "/home/john/anaconda3/lib/python3.6/json/encoder.py", line 180, in default
+    o.__class__.__name__)
+TypeError: Object of type 'SynthesizeSpeechResponse' is not JSON serializable
+"GET /face/tts?sentence=hello&tiaSpeaker=false HTTP/1.1" 500 17534
+"GET /face/class_time/1 HTTP/1.1" 200 36242
+"GET /static/face/css/class.css HTTP/1.1" 200 7211
+"GET /static/ajaxPost.js HTTP/1.1" 200 2149
+"GET /static/OrbitControls.js HTTP/1.1" 200 22569
+"GET /static/face/css/utils.css HTTP/1.1" 200 106
+"GET /static/three.min.js HTTP/1.1" 200 512218
+"GET /static/jquery-3.3.1.min.js HTTP/1.1" 200 86927
+"GET /static/TrackballControls.js HTTP/1.1" 200 13966
+"GET /static/face/javascript/variablesAndConstants.js HTTP/1.1" 200 2713
+"GET /static/face/javascript/classroom/variablesAndConstants.js HTTP/1.1" 200 26714
+"GET /static/face/javascript/classroom/moveIndividual.js HTTP/1.1" 200 6975
+"GET /static/face/javascript/classroom/loadObjects.js HTTP/1.1" 200 19220
+"GET /static/face/javascript/classroom/moveCamera.js HTTP/1.1" 200 3257
+"GET /static/face/javascript/classroom/moveComplex.js HTTP/1.1" 200 8940
+"GET /static/face/javascript/classroom/seqEnter.js HTTP/1.1" 200 10075
+"GET /static/face/javascript/classroom/moveExpression.js HTTP/1.1" 200 15560
+"GET /static/face/javascript/datguiOptions.js HTTP/1.1" 200 13242
+"GET /static/dat.gui.min.js HTTP/1.1" 200 56992
+"GET /static/face/javascript/classroom/moveBody.js HTTP/1.1" 200 11139
+"GET /static/face/javascript/classroom/input.js HTTP/1.1" 200 5401
+"GET /static/face/javascript/classroom/previousSents.js HTTP/1.1" 200 6098
+"GET /static/face/javascript/classroom/timeStuff.js HTTP/1.1" 200 3112
+"GET /static/face/javascript/classroom/text.js HTTP/1.1" 200 10256
+"GET /static/face/javascript/classroom/main.js HTTP/1.1" 200 10624
+"GET /static/face/javascript/classroom/seqAfterJudgement.js HTTP/1.1" 200 13671
+"GET /static/face/JSON/classroom.json HTTP/1.1" 200 25715
+"GET /face/class_time/1 HTTP/1.1" 200 36242
+"GET /face/class_time/1 HTTP/1.1" 200 36242
+"GET /static/jquery-3.3.1.min.js HTTP/1.1" 200 86927
+"GET /static/ajaxPost.js HTTP/1.1" 200 2149
+"GET /static/OrbitControls.js HTTP/1.1" 200 22569
+"GET /static/three.min.js HTTP/1.1" 200 512218
+"GET /static/face/css/utils.css HTTP/1.1" 200 106
+"GET /static/face/css/class.css HTTP/1.1" 200 7211
+"GET /static/dat.gui.min.js HTTP/1.1" 200 56992
+"GET /static/face/javascript/datguiOptions.js HTTP/1.1" 200 13242
+"GET /static/face/javascript/classroom/variablesAndConstants.js HTTP/1.1" 200 26714
+"GET /static/TrackballControls.js HTTP/1.1" 200 13966
+"GET /static/face/javascript/variablesAndConstants.js HTTP/1.1" 200 2713
+"GET /static/face/javascript/classroom/loadObjects.js HTTP/1.1" 200 19220
+"GET /static/face/javascript/classroom/moveCamera.js HTTP/1.1" 200 3257
+"GET /static/face/javascript/classroom/moveIndividual.js HTTP/1.1" 200 6975
+"GET /static/face/javascript/classroom/moveComplex.js HTTP/1.1" 200 8940
+"GET /static/face/javascript/classroom/seqEnter.js HTTP/1.1" 200 10075
+"GET /static/face/javascript/classroom/moveExpression.js HTTP/1.1" 200 15560
+"GET /static/face/javascript/classroom/moveBody.js HTTP/1.1" 200 11139
+"GET /static/face/javascript/classroom/input.js HTTP/1.1" 200 5401
+"GET /static/face/javascript/classroom/timeStuff.js HTTP/1.1" 200 3112
+"GET /static/face/javascript/classroom/text.js HTTP/1.1" 200 10256
+"GET /static/face/javascript/classroom/main.js HTTP/1.1" 200 10624
+"GET /static/face/javascript/classroom/seqAfterJudgement.js HTTP/1.1" 200 13671
+"GET /static/face/javascript/classroom/previousSents.js HTTP/1.1" 200 6098
+"GET /static/face/JSON/classroom.json HTTP/1.1" 200 25715
+"GET /face/class_time/1 HTTP/1.1" 200 36242
+"POST /face/store_blob HTTP/1.1" 200 16
+"GET /face/class_time/1 HTTP/1.1" 200 36480
+"GET /static/jquery-3.3.1.min.js HTTP/1.1" 200 86927
+"GET /static/OrbitControls.js HTTP/1.1" 200 22569
+"GET /static/three.min.js HTTP/1.1" 200 512218
+"GET /static/face/css/utils.css HTTP/1.1" 200 106
+"GET /static/ajaxPost.js HTTP/1.1" 200 2149
+"GET /static/dat.gui.min.js HTTP/1.1" 200 56992
+"GET /static/face/javascript/datguiOptions.js HTTP/1.1" 200 13242
+"GET /static/face/css/class.css HTTP/1.1" 200 7211
+"GET /static/TrackballControls.js HTTP/1.1" 200 13966
+"GET /static/face/javascript/classroom/variablesAndConstants.js HTTP/1.1" 200 26714
+"GET /static/face/javascript/variablesAndConstants.js HTTP/1.1" 200 2713
+"GET /static/face/javascript/classroom/moveIndividual.js HTTP/1.1" 200 6975
+"GET /static/face/javascript/classroom/moveCamera.js HTTP/1.1" 200 3257
+"GET /static/face/javascript/classroom/loadObjects.js HTTP/1.1" 200 19220
+"GET /static/face/javascript/classroom/moveExpression.js HTTP/1.1" 200 15560
+"GET /static/face/javascript/classroom/moveComplex.js HTTP/1.1" 200 8940
+"GET /static/face/javascript/classroom/seqEnter.js HTTP/1.1" 200 10075
+"GET /static/face/javascript/classroom/input.js HTTP/1.1" 200 5401
+"GET /static/face/javascript/classroom/text.js HTTP/1.1" 200 10256
+"GET /static/face/javascript/classroom/moveBody.js HTTP/1.1" 200 11139
+"GET /static/face/javascript/classroom/previousSents.js HTTP/1.1" 200 6098
+"GET /static/face/javascript/classroom/timeStuff.js HTTP/1.1" 200 3112
+"GET /static/face/javascript/classroom/seqAfterJudgement.js HTTP/1.1" 200 13671
+"GET /static/face/javascript/classroom/main.js HTTP/1.1" 200 10624
+"GET /static/face/JSON/classroom.json HTTP/1.1" 200 25715
+"GET /face/class_time/1 HTTP/1.1" 200 36480
+Internal Server Error: /face/tts
+Traceback (most recent call last):
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/john/johnsHDD/PhD/2018_autumn/firstfacesProduction/firstfaces/firstfaces/face/views.py", line 370, in tts
+    return JsonResponse(response_data)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/http/response.py", line 509, in __init__
+    data = json.dumps(data, cls=encoder, **json_dumps_params)
+  File "/home/john/anaconda3/lib/python3.6/json/__init__.py", line 238, in dumps
+    **kw).encode(obj)
+  File "/home/john/anaconda3/lib/python3.6/json/encoder.py", line 199, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/home/john/anaconda3/lib/python3.6/json/encoder.py", line 257, in iterencode
+    return _iterencode(o, 0)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/serializers/json.py", line 104, in default
+    return super().default(o)
+  File "/home/john/anaconda3/lib/python3.6/json/encoder.py", line 180, in default
+    o.__class__.__name__)
+TypeError: Object of type 'bytes' is not JSON serializable
+Internal Server Error: /face/tts
+Traceback (most recent call last):
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/john/johnsHDD/PhD/2018_autumn/firstfacesProduction/firstfaces/firstfaces/face/views.py", line 370, in tts
+    return JsonResponse(response_data)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/http/response.py", line 509, in __init__
+    data = json.dumps(data, cls=encoder, **json_dumps_params)
+  File "/home/john/anaconda3/lib/python3.6/json/__init__.py", line 238, in dumps
+    **kw).encode(obj)
+  File "/home/john/anaconda3/lib/python3.6/json/encoder.py", line 199, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/home/john/anaconda3/lib/python3.6/json/encoder.py", line 257, in iterencode
+    return _iterencode(o, 0)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/serializers/json.py", line 104, in default
+    return super().default(o)
+  File "/home/john/anaconda3/lib/python3.6/json/encoder.py", line 180, in default
+    o.__class__.__name__)
+TypeError: Object of type 'bytes' is not JSON serializable
+"GET /face/tts?sentence=frw&tiaSpeaker=false HTTP/1.1" 500 17490
+"GET /face/class_time/1 HTTP/1.1" 200 36480
+"GET /static/OrbitControls.js HTTP/1.1" 200 22569
+"GET /static/ajaxPost.js HTTP/1.1" 200 2149
+"GET /static/face/css/class.css HTTP/1.1" 200 7211
+"GET /static/face/css/utils.css HTTP/1.1" 200 106
+"GET /static/three.min.js HTTP/1.1" 200 512218
+"GET /static/jquery-3.3.1.min.js HTTP/1.1" 200 86927
+"GET /static/dat.gui.min.js HTTP/1.1" 200 56992
+"GET /static/face/javascript/datguiOptions.js HTTP/1.1" 200 13242
+"GET /static/TrackballControls.js HTTP/1.1" 200 13966
+"GET /static/face/javascript/classroom/moveCamera.js HTTP/1.1" 200 3257
+"GET /static/face/javascript/classroom/moveIndividual.js HTTP/1.1" 200 6975
+"GET /static/face/javascript/classroom/variablesAndConstants.js HTTP/1.1" 200 26714
+"GET /static/face/javascript/classroom/moveComplex.js HTTP/1.1" 200 8940
+"GET /static/face/javascript/classroom/loadObjects.js HTTP/1.1" 200 19220
+"GET /static/face/javascript/variablesAndConstants.js HTTP/1.1" 200 2713
+"GET /static/face/javascript/classroom/seqEnter.js HTTP/1.1" 200 10075
+"GET /static/face/javascript/classroom/moveExpression.js HTTP/1.1" 200 15560
+"GET /static/face/javascript/classroom/text.js HTTP/1.1" 200 10256
+"GET /static/face/javascript/classroom/timeStuff.js HTTP/1.1" 200 3112
+"GET /static/face/javascript/classroom/input.js HTTP/1.1" 200 5401
+"GET /static/face/javascript/classroom/moveBody.js HTTP/1.1" 200 11139
+"GET /static/face/javascript/classroom/main.js HTTP/1.1" 200 10772
+"GET /static/face/javascript/classroom/seqAfterJudgement.js HTTP/1.1" 200 13671
+"GET /static/face/javascript/classroom/previousSents.js HTTP/1.1" 200 6098
+"GET /static/face/JSON/classroom.json HTTP/1.1" 200 25715
+"GET /face/class_time/1 HTTP/1.1" 200 36480
+Internal Server Error: /face/tts
+Traceback (most recent call last):
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/john/johnsHDD/PhD/2018_autumn/firstfacesProduction/firstfaces/firstfaces/face/views.py", line 370, in tts
+    return JsonResponse(response_data)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/http/response.py", line 509, in __init__
+    data = json.dumps(data, cls=encoder, **json_dumps_params)
+  File "/home/john/anaconda3/lib/python3.6/json/__init__.py", line 238, in dumps
+    **kw).encode(obj)
+  File "/home/john/anaconda3/lib/python3.6/json/encoder.py", line 199, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/home/john/anaconda3/lib/python3.6/json/encoder.py", line 257, in iterencode
+    return _iterencode(o, 0)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/serializers/json.py", line 104, in default
+    return super().default(o)
+  File "/home/john/anaconda3/lib/python3.6/json/encoder.py", line 180, in default
+    o.__class__.__name__)
+TypeError: Object of type 'bytes' is not JSON serializable
+Internal Server Error: /face/tts
+Traceback (most recent call last):
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/john/johnsHDD/PhD/2018_autumn/firstfacesProduction/firstfaces/firstfaces/face/views.py", line 370, in tts
+    return JsonResponse(response_data)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/http/response.py", line 509, in __init__
+    data = json.dumps(data, cls=encoder, **json_dumps_params)
+  File "/home/john/anaconda3/lib/python3.6/json/__init__.py", line 238, in dumps
+    **kw).encode(obj)
+  File "/home/john/anaconda3/lib/python3.6/json/encoder.py", line 199, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/home/john/anaconda3/lib/python3.6/json/encoder.py", line 257, in iterencode
+    return _iterencode(o, 0)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/serializers/json.py", line 104, in default
+    return super().default(o)
+  File "/home/john/anaconda3/lib/python3.6/json/encoder.py", line 180, in default
+    o.__class__.__name__)
+TypeError: Object of type 'bytes' is not JSON serializable
+"GET /face/tts?sentence=hel&tiaSpeaker=false HTTP/1.1" 500 17490
+"GET /face/class_time/1 HTTP/1.1" 200 36480
+"GET /static/jquery-3.3.1.min.js HTTP/1.1" 200 86927
+"GET /static/face/css/utils.css HTTP/1.1" 200 106
+"GET /static/ajaxPost.js HTTP/1.1" 200 2149
+"GET /static/face/css/class.css HTTP/1.1" 200 7211
+"GET /static/OrbitControls.js HTTP/1.1" 200 22569
+"GET /static/three.min.js HTTP/1.1" 200 512218
+"GET /static/face/javascript/datguiOptions.js HTTP/1.1" 200 13242
+"GET /static/dat.gui.min.js HTTP/1.1" 200 56992
+"GET /static/face/javascript/variablesAndConstants.js HTTP/1.1" 200 2713
+"GET /static/TrackballControls.js HTTP/1.1" 200 13966
+"GET /static/face/javascript/classroom/variablesAndConstants.js HTTP/1.1" 200 26714
+"GET /static/face/javascript/classroom/loadObjects.js HTTP/1.1" 200 19220
+"GET /static/face/javascript/classroom/moveIndividual.js HTTP/1.1" 200 6975
+"GET /static/face/javascript/classroom/moveCamera.js HTTP/1.1" 200 3257
+"GET /static/face/javascript/classroom/moveComplex.js HTTP/1.1" 200 8940
+"GET /static/face/javascript/classroom/moveExpression.js HTTP/1.1" 200 15560
+"GET /static/face/javascript/classroom/moveBody.js HTTP/1.1" 200 11139
+"GET /static/face/javascript/classroom/input.js HTTP/1.1" 200 5401
+"GET /static/face/javascript/classroom/text.js HTTP/1.1" 200 10256
+"GET /static/face/javascript/classroom/timeStuff.js HTTP/1.1" 200 3112
+"GET /static/face/javascript/classroom/previousSents.js HTTP/1.1" 200 6098
+"GET /static/face/javascript/classroom/seqAfterJudgement.js HTTP/1.1" 200 13671
+"GET /static/face/javascript/classroom/seqEnter.js HTTP/1.1" 200 10075
+"GET /static/face/javascript/classroom/main.js HTTP/1.1" 200 10772
+"GET /static/face/JSON/classroom.json HTTP/1.1" 200 25715
+"GET /face/class_time/1 HTTP/1.1" 200 36480
+"GET /face/tts?sentence=nut&tiaSpeaker=false HTTP/1.1" 200 7977
+"GET /face/class_time/1 HTTP/1.1" 200 36480
+"GET /static/OrbitControls.js HTTP/1.1" 200 22569
+"GET /static/ajaxPost.js HTTP/1.1" 200 2149
+"GET /static/face/css/utils.css HTTP/1.1" 200 106
+"GET /static/jquery-3.3.1.min.js HTTP/1.1" 200 86927
+"GET /static/three.min.js HTTP/1.1" 200 512218
+"GET /static/face/css/class.css HTTP/1.1" 200 7211
+"GET /static/dat.gui.min.js HTTP/1.1" 200 56992
+"GET /static/face/javascript/datguiOptions.js HTTP/1.1" 200 13242
+"GET /static/TrackballControls.js HTTP/1.1" 200 13966
+"GET /static/face/javascript/variablesAndConstants.js HTTP/1.1" 200 2713
+"GET /static/face/javascript/classroom/variablesAndConstants.js HTTP/1.1" 200 26714
+"GET /static/face/javascript/classroom/moveIndividual.js HTTP/1.1" 200 6975
+"GET /static/face/javascript/classroom/loadObjects.js HTTP/1.1" 200 19220
+"GET /static/face/javascript/classroom/moveCamera.js HTTP/1.1" 200 3257
+"GET /static/face/javascript/classroom/moveExpression.js HTTP/1.1" 200 15560
+"GET /static/face/javascript/classroom/moveComplex.js HTTP/1.1" 200 8940
+"GET /static/face/javascript/classroom/moveBody.js HTTP/1.1" 200 11139
+"GET /static/face/javascript/classroom/seqEnter.js HTTP/1.1" 200 10075
+"GET /static/face/javascript/classroom/input.js HTTP/1.1" 200 5401
+"GET /static/face/javascript/classroom/timeStuff.js HTTP/1.1" 200 3112
+"GET /static/face/javascript/classroom/previousSents.js HTTP/1.1" 200 6098
+"GET /static/face/javascript/classroom/seqAfterJudgement.js HTTP/1.1" 200 13671
+"GET /static/face/javascript/classroom/text.js HTTP/1.1" 200 10256
+"GET /static/face/javascript/classroom/main.js HTTP/1.1" 200 10772
+"GET /static/face/JSON/classroom.json HTTP/1.1" 200 25715
+"GET /face/class_time/1 HTTP/1.1" 200 36480
+"GET /face/class_time/1 HTTP/1.1" 200 36480
+"GET /static/jquery-3.3.1.min.js HTTP/1.1" 200 86927
+"GET /static/face/css/utils.css HTTP/1.1" 200 106
+"GET /static/OrbitControls.js HTTP/1.1" 200 22569
+"GET /static/ajaxPost.js HTTP/1.1" 200 2149
+"GET /static/face/css/class.css HTTP/1.1" 200 7211
+"GET /static/TrackballControls.js HTTP/1.1" 200 13966
+"GET /static/dat.gui.min.js HTTP/1.1" 200 56992
+"GET /static/three.min.js HTTP/1.1" 200 512218
+"GET /static/face/javascript/datguiOptions.js HTTP/1.1" 200 13242
+"GET /static/face/javascript/classroom/variablesAndConstants.js HTTP/1.1" 200 26714
+"GET /static/face/javascript/variablesAndConstants.js HTTP/1.1" 200 2713
+"GET /static/face/javascript/classroom/loadObjects.js HTTP/1.1" 200 19220
+"GET /static/face/javascript/classroom/moveCamera.js HTTP/1.1" 200 3257
+"GET /static/face/javascript/classroom/moveIndividual.js HTTP/1.1" 200 6975
+"GET /static/face/javascript/classroom/moveComplex.js HTTP/1.1" 200 8940
+"GET /static/face/javascript/classroom/seqEnter.js HTTP/1.1" 200 10075
+"GET /static/face/javascript/classroom/moveExpression.js HTTP/1.1" 200 15560
+"GET /static/face/javascript/classroom/moveBody.js HTTP/1.1" 200 11139
+"GET /static/face/javascript/classroom/text.js HTTP/1.1" 200 10256
+"GET /static/face/javascript/classroom/input.js HTTP/1.1" 200 5401
+"GET /static/face/javascript/classroom/seqAfterJudgement.js HTTP/1.1" 200 13671
+"GET /static/face/javascript/classroom/timeStuff.js HTTP/1.1" 200 3112
+"GET /static/face/javascript/classroom/previousSents.js HTTP/1.1" 200 6098
+"GET /static/face/javascript/classroom/main.js HTTP/1.1" 200 10778
+"GET /static/face/JSON/classroom.json HTTP/1.1" 200 25715
+"GET /face/class_time/1 HTTP/1.1" 200 36480
+"GET /face/tts?sentence=gregr&tiaSpeaker=false HTTP/1.1" 200 9258
+"GET /face/class_time/1 HTTP/1.1" 200 36480
+"GET /static/ajaxPost.js HTTP/1.1" 200 2149
+"GET /static/jquery-3.3.1.min.js HTTP/1.1" 200 86927
+"GET /static/face/css/utils.css HTTP/1.1" 200 106
+"GET /static/three.min.js HTTP/1.1" 200 512218
+"GET /static/OrbitControls.js HTTP/1.1" 200 22569
+"GET /static/face/css/class.css HTTP/1.1" 200 7211
+"GET /static/dat.gui.min.js HTTP/1.1" 200 56992
+"GET /static/face/javascript/datguiOptions.js HTTP/1.1" 200 13242
+"GET /static/face/javascript/variablesAndConstants.js HTTP/1.1" 200 2713
+"GET /static/face/javascript/classroom/variablesAndConstants.js HTTP/1.1" 200 26714
+"GET /static/face/javascript/classroom/loadObjects.js HTTP/1.1" 200 19220
+"GET /static/TrackballControls.js HTTP/1.1" 200 13966
+"GET /static/face/javascript/classroom/moveIndividual.js HTTP/1.1" 200 6975
+"GET /static/face/javascript/classroom/moveCamera.js HTTP/1.1" 200 3257
+"GET /static/face/javascript/classroom/moveExpression.js HTTP/1.1" 200 15560
+"GET /static/face/javascript/classroom/seqEnter.js HTTP/1.1" 200 10075
+"GET /static/face/javascript/classroom/moveComplex.js HTTP/1.1" 200 8940
+"GET /static/face/javascript/classroom/moveBody.js HTTP/1.1" 200 11139
+"GET /static/face/javascript/classroom/input.js HTTP/1.1" 200 5401
+"GET /static/face/javascript/classroom/text.js HTTP/1.1" 200 10256
+"GET /static/face/javascript/classroom/timeStuff.js HTTP/1.1" 200 3112
+"GET /static/face/javascript/classroom/main.js HTTP/1.1" 200 11257
+"GET /static/face/javascript/classroom/seqAfterJudgement.js HTTP/1.1" 200 13671
+"GET /static/face/javascript/classroom/previousSents.js HTTP/1.1" 200 6098
+"GET /static/face/JSON/classroom.json HTTP/1.1" 200 25715
+"GET /face/class_time/1 HTTP/1.1" 200 36480
+"GET /face/tts?sentence=hello&tiaSpeaker=false HTTP/1.1" 200 11319
+"GET /face/class_time/1 HTTP/1.1" 200 36480
+"GET /static/ajaxPost.js HTTP/1.1" 200 2149
+"GET /static/OrbitControls.js HTTP/1.1" 200 22569
+"GET /static/three.min.js HTTP/1.1" 200 512218
+"GET /static/face/css/class.css HTTP/1.1" 200 7211
+"GET /static/face/css/utils.css HTTP/1.1" 200 106
+"GET /static/face/javascript/datguiOptions.js HTTP/1.1" 200 13242
+"GET /static/jquery-3.3.1.min.js HTTP/1.1" 200 86927
+"GET /static/TrackballControls.js HTTP/1.1" 200 13966
+"GET /static/face/javascript/classroom/variablesAndConstants.js HTTP/1.1" 200 26714
+"GET /static/face/javascript/classroom/moveCamera.js HTTP/1.1" 200 3257
+"GET /static/face/javascript/classroom/loadObjects.js HTTP/1.1" 200 19220
+"GET /static/face/javascript/classroom/moveIndividual.js HTTP/1.1" 200 6975
+"GET /static/face/javascript/classroom/moveComplex.js HTTP/1.1" 200 8940
+"GET /static/face/javascript/classroom/seqEnter.js HTTP/1.1" 200 10075
+"GET /static/face/javascript/classroom/moveBody.js HTTP/1.1" 200 11139
+"GET /static/face/javascript/classroom/input.js HTTP/1.1" 200 5401
+"GET /static/face/javascript/classroom/moveExpression.js HTTP/1.1" 200 15560
+"GET /static/face/javascript/classroom/timeStuff.js HTTP/1.1" 200 3112
+"GET /static/face/javascript/classroom/seqAfterJudgement.js HTTP/1.1" 200 13671
+"GET /static/face/javascript/classroom/previousSents.js HTTP/1.1" 200 6098
+"GET /static/face/javascript/classroom/text.js HTTP/1.1" 200 10256
+"GET /static/face/javascript/classroom/main.js HTTP/1.1" 200 11255
+"GET /static/dat.gui.min.js HTTP/1.1" 200 56992
+"GET /static/face/javascript/variablesAndConstants.js HTTP/1.1" 200 2713
+"GET /static/face/JSON/classroom.json HTTP/1.1" 200 25715
+"GET /face/class_time/1 HTTP/1.1" 200 36480
+"GET /face/tts?sentence=hello&tiaSpeaker=false HTTP/1.1" 200 11319
+"GET /face/class_time/1 HTTP/1.1" 200 36480
+"GET /static/jquery-3.3.1.min.js HTTP/1.1" 200 86927
+"GET /static/three.min.js HTTP/1.1" 200 512218
+"GET /static/OrbitControls.js HTTP/1.1" 200 22569
+"GET /static/ajaxPost.js HTTP/1.1" 200 2149
+"GET /static/face/css/utils.css HTTP/1.1" 200 106
+"GET /static/dat.gui.min.js HTTP/1.1" 200 56992
+"GET /static/face/javascript/datguiOptions.js HTTP/1.1" 200 13242
+"GET /static/TrackballControls.js HTTP/1.1" 200 13966
+"GET /static/face/javascript/variablesAndConstants.js HTTP/1.1" 200 2713
+"GET /static/face/css/class.css HTTP/1.1" 200 7211
+"GET /static/face/javascript/classroom/variablesAndConstants.js HTTP/1.1" 200 26714
+"GET /static/face/javascript/classroom/moveIndividual.js HTTP/1.1" 200 6975
+"GET /static/face/javascript/classroom/loadObjects.js HTTP/1.1" 200 19220
+"GET /static/face/javascript/classroom/moveCamera.js HTTP/1.1" 200 3257
+"GET /static/face/javascript/classroom/seqEnter.js HTTP/1.1" 200 10075
+"GET /static/face/javascript/classroom/moveExpression.js HTTP/1.1" 200 15560
+"GET /static/face/javascript/classroom/moveBody.js HTTP/1.1" 200 11139
+"GET /static/face/javascript/classroom/input.js HTTP/1.1" 200 5401
+"GET /static/face/javascript/classroom/moveComplex.js HTTP/1.1" 200 8940
+"GET /static/face/javascript/classroom/timeStuff.js HTTP/1.1" 200 3112
+"GET /static/face/javascript/classroom/text.js HTTP/1.1" 200 10256
+"GET /static/face/javascript/classroom/previousSents.js HTTP/1.1" 200 6098
+"GET /static/face/javascript/classroom/seqAfterJudgement.js HTTP/1.1" 200 13671
+"GET /static/face/javascript/classroom/main.js HTTP/1.1" 200 10753
+"GET /face/class_time/1 HTTP/1.1" 200 36480
+"GET /face/class_time/1 HTTP/1.1" 200 36480
+"GET /static/OrbitControls.js HTTP/1.1" 200 22569
+"GET /static/jquery-3.3.1.min.js HTTP/1.1" 200 86927
+"GET /static/three.min.js HTTP/1.1" 200 512218
+"GET /static/face/css/utils.css HTTP/1.1" 200 106
+"GET /static/ajaxPost.js HTTP/1.1" 200 2149
+"GET /static/face/css/class.css HTTP/1.1" 200 7211
+"GET /static/TrackballControls.js HTTP/1.1" 200 13966
+"GET /static/face/javascript/classroom/variablesAndConstants.js HTTP/1.1" 200 26714
+"GET /static/dat.gui.min.js HTTP/1.1" 200 56992
+"GET /static/face/javascript/classroom/loadObjects.js HTTP/1.1" 200 19220
+"GET /static/face/javascript/datguiOptions.js HTTP/1.1" 200 13242
+"GET /static/face/javascript/variablesAndConstants.js HTTP/1.1" 200 2713
+"GET /static/face/javascript/classroom/moveComplex.js HTTP/1.1" 200 8940
+"GET /static/face/javascript/classroom/moveIndividual.js HTTP/1.1" 200 6975
+"GET /static/face/javascript/classroom/text.js HTTP/1.1" 200 10256
+"GET /static/face/javascript/classroom/moveBody.js HTTP/1.1" 200 11139
+"GET /static/face/javascript/classroom/moveCamera.js HTTP/1.1" 200 3257
+"GET /static/face/javascript/classroom/previousSents.js HTTP/1.1" 200 6098
+"GET /static/face/javascript/classroom/seqEnter.js HTTP/1.1" 200 10075
+"GET /static/face/javascript/classroom/moveExpression.js HTTP/1.1" 200 15560
+"GET /static/face/javascript/classroom/input.js HTTP/1.1" 200 5401
+"GET /static/face/javascript/classroom/main.js HTTP/1.1" 200 10753
+"GET /static/face/javascript/classroom/timeStuff.js HTTP/1.1" 200 3112
+"GET /static/face/javascript/classroom/seqAfterJudgement.js HTTP/1.1" 200 13671
+"GET /static/face/JSON/classroom.json HTTP/1.1" 200 25715
+"GET /face/class_time/1 HTTP/1.1" 200 36480
+Internal Server Error: /face/tts
+Traceback (most recent call last):
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/john/johnsHDD/PhD/2018_autumn/firstfacesProduction/firstfaces/firstfaces/face/views.py", line 364, in tts
+    with open( os.join(BASE_DIR, 'media/synths/session' + session_id + '.mp3'), 'wb') as out:
+AttributeError: module 'os' has no attribute 'join'
+Internal Server Error: /face/tts
+Traceback (most recent call last):
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/john/johnsHDD/PhD/2018_autumn/firstfacesProduction/firstfaces/firstfaces/face/views.py", line 364, in tts
+    with open( os.join(BASE_DIR, 'media/synths/session' + session_id + '.mp3'), 'wb') as out:
+AttributeError: module 'os' has no attribute 'join'
+"GET /face/tts?sentence=hello&tiaSpeaker=false&sessionID=1 HTTP/1.1" 500 16796
+"GET /face/class_time/1 HTTP/1.1" 200 36480
+"GET /static/ajaxPost.js HTTP/1.1" 200 2149
+"GET /static/face/css/utils.css HTTP/1.1" 200 106
+"GET /static/jquery-3.3.1.min.js HTTP/1.1" 200 86927
+"GET /static/OrbitControls.js HTTP/1.1" 200 22569
+"GET /static/face/css/class.css HTTP/1.1" 200 7211
+"GET /static/three.min.js HTTP/1.1" 200 512218
+"GET /static/dat.gui.min.js HTTP/1.1" 200 56992
+"GET /static/face/javascript/datguiOptions.js HTTP/1.1" 200 13242
+"GET /static/TrackballControls.js HTTP/1.1" 200 13966
+"GET /static/face/javascript/variablesAndConstants.js HTTP/1.1" 200 2713
+"GET /static/face/javascript/classroom/variablesAndConstants.js HTTP/1.1" 200 26714
+"GET /static/face/javascript/classroom/moveIndividual.js HTTP/1.1" 200 6975
+"GET /static/face/javascript/classroom/moveComplex.js HTTP/1.1" 200 8940
+"GET /static/face/javascript/classroom/moveCamera.js HTTP/1.1" 200 3257
+"GET /static/face/javascript/classroom/loadObjects.js HTTP/1.1" 200 19220
+"GET /static/face/javascript/classroom/seqEnter.js HTTP/1.1" 200 10075
+"GET /static/face/javascript/classroom/text.js HTTP/1.1" 200 10256
+"GET /static/face/javascript/classroom/moveExpression.js HTTP/1.1" 200 15560
+"GET /static/face/javascript/classroom/moveBody.js HTTP/1.1" 200 11139
+"GET /static/face/javascript/classroom/timeStuff.js HTTP/1.1" 200 3112
+"GET /static/face/javascript/classroom/previousSents.js HTTP/1.1" 200 6098
+"GET /static/face/javascript/classroom/input.js HTTP/1.1" 200 5401
+"GET /static/face/javascript/classroom/main.js HTTP/1.1" 200 10763
+"GET /static/face/javascript/classroom/seqAfterJudgement.js HTTP/1.1" 200 13671
+"GET /static/face/JSON/classroom.json HTTP/1.1" 200 25715
+"GET /face/class_time/1 HTTP/1.1" 200 36480
+Internal Server Error: /face/tts
+Traceback (most recent call last):
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/john/johnsHDD/PhD/2018_autumn/firstfacesProduction/firstfaces/firstfaces/face/views.py", line 364, in tts
+    with open( os.join(BASE_DIR, 'media/synths/session' + session_id + '.mp3'), 'wb') as out:
+AttributeError: module 'os' has no attribute 'join'
+Internal Server Error: /face/tts
+Traceback (most recent call last):
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/john/anaconda3/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/john/johnsHDD/PhD/2018_autumn/firstfacesProduction/firstfaces/firstfaces/face/views.py", line 364, in tts
+    with open( os.join(BASE_DIR, 'media/synths/session' + session_id + '.mp3'), 'wb') as out:
+AttributeError: module 'os' has no attribute 'join'
+"GET /face/tts?sentence=hello&tiaSpeaker=false&sessionID=1 HTTP/1.1" 500 16796

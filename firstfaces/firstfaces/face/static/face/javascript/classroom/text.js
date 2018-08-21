@@ -302,7 +302,7 @@ function displayCorrection() {
     findCorrectionSplitIndexes();
     addCloneLettersToCorrectionBackground();
 
-    scene.add( correctionObject.background );
+    scene.add( correctionObject.correctionBackground );
     //put this here just to call it
     //displaySpeechBubble();
 }
@@ -339,10 +339,10 @@ function removeSentence() {
     // c=1 cuz don't delete the background itself which is the first child
 
     let sLen = sentenceObject.background.children.length
-    for (let c=1; c<sLen; c++ ) {
+    for (let c=0; c<sLen; c++ ) {
 
         // as objects are deleted the list shortens, so always delete object at position 1
-        sentenceObject.background.remove( sentenceObject.background.children[ 1 ] );
+        sentenceObject.background.remove( sentenceObject.background.children[ 0 ] );
 
     }
 
@@ -355,10 +355,10 @@ function removeCorrection() {
     // c=1 cuz don't delete the background itself which is the first child
 
     let cLen = correctionObject.correctionBackground.children.length
-    for (let c=1; c<cLen; c++ ) {
+    for (let c=0; c<cLen; c++ ) {
 
         // as objects are deleted the list shortens, so always delete object at position 1
-        correctionObject.correctionBackground.remove( correctionObject.correctionBackground.children[ 1 ] );
+        correctionObject.correctionBackground.remove( correctionObject.correctionBackground.children[ 0 ] );
 
     }
 

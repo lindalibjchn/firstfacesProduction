@@ -23,6 +23,9 @@ function initTalk() {
 
     // create this as creating talk will override the original expression one
     //talkStartPoint = $.extend( true, {}, talkCalculatedExpression );
+
+    synthesisObject.length = synthesisObject.text.length;
+    talkObject.endCount = mainCount + synthesisObject.length * 3;
     talkObject.bool = true;
     talkObject.dir = 1;
     talk();
@@ -55,9 +58,9 @@ function talk() {
 
                 talk();
 
-            }, parseFloat( randDuration ) * 1000 + 100 );
+            }, parseFloat( randDuration ) * 1000 + 200 );
 
-        }, parseFloat( randDuration ) * 1000 + 100 );
+        }, parseFloat( randDuration ) * 1000 + 200 );
 
     } else {
 
@@ -66,7 +69,7 @@ function talk() {
         //return if not entrance
         if ( talkObject.learning ) {
         
-            returnToLaptop();
+            setTimeout( returnToLaptop, 1000 );
 
         }
 
@@ -87,6 +90,8 @@ function initMoveEyelids( upperPos, lowerPos, speed, rel ) {
 
     } else {
     
+        //console.log('\n\ninitMoveEyelid: called by\n\n' + initMoveEyelids.caller.name )
+
         eyelidObject.bool = true;
         assignSinArrayForSpeed( speed, eyelidObject, sineArrays ) 
         eyelidObject.speed = speed;
@@ -178,7 +183,6 @@ function initNod( depth, speed ) {
 
         nodObject.startCount = mainCount;
 
-        //initMove( eyeObject, [[0,0,0],[-nodObject.amount / 2, 0, 0]], speed );
         initSaccNew( [[0,0,0],[ -nodObject.amount / 3, 0, 0]], speed, true );
         
     }
@@ -281,7 +285,7 @@ function shake( main ) {
 
 function initSaccNew( coords, speed, rel ) {
 
-    console.log('\ninitSaccNew called by\n\n' + initSaccNew.caller.name )
+    //console.log('\ninitSaccNew called by\n\n' + initSaccNew.caller.name )
     
     initMove( eyeObject, coords, speed );
    
@@ -308,7 +312,7 @@ function breathe( remaining ) {
 
 function randomTiltSpine( remaining ) {
 
-    tiaObject.bodyBones.spineUpperInner.rotation.z = spineRandomTiltObject.direction * spineRandomTiltObject.mult * spineRandomTiltObject.sin[ remaining ];
+    tiaObject.bodyBones.spineLower.rotation.z = spineRandomTiltObject.direction * spineRandomTiltObject.mult * spineRandomTiltObject.sin[ remaining ];
 
 }
 

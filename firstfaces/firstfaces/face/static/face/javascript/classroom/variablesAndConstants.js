@@ -87,6 +87,8 @@ const blankMovement = {
 var masterMovementState = $.extend(true, {}, blankMovement);
 //var calculatedMovement = $.extend(true, {}, blankMovement);
 var relativeMovement = $.extend(true, {}, blankMovement);
+var absNeutralMovement;
+var absCurMovement;
 
 const boardMovement = {
 
@@ -325,6 +327,8 @@ var calculatedExpression = $.extend(true, {}, blankExpression);
 var negativeCalculatedExpression = $.extend(true, {}, blankExpression);
 var talkCalculatedExpression = $.extend(true, {}, blankExpression);
 var relativeExpression = $.extend(true, {}, blankExpression);
+var absNeutralExpression;
+var absCurExpression;
 
 const mouthOpenExpression = {
 
@@ -635,9 +639,9 @@ const thinkingExpression = {
             'jaw_inner': [[0, 0, 0], [0, 0, 0]],
         },
         'AU2': {
-            'eyebrow_inner': [[-0.1, -0.1, 0], [0, 0, 0]],
-            'eyebrow_middle': [[-0.075, -0.1, 0], [0, 0, 0]],
-            'eyebrow_outer': [[-0.05, -0.1, 0], [0, 0, 0]],
+            'eyebrow_inner': [[-0.05, -0.025, 0.05], [0, 0, 0]],
+            'eyebrow_middle': [[-0.05, -0.05, 0.025], [0, 0, 0]],
+            'eyebrow_outer': [[-0.025, -0.05, 0], [0, 0, 0]],
             'nose_side': [[0, 0, 0], [0, 0, 0]],
             'cheek': [[0, 0, 0], [0, 0, 0]],
             'jaw_upper': [[0, 0, 0], [0, 0, 0]],
@@ -969,9 +973,8 @@ var talkObject = {
 // SPEECH STUFF
 
 var synthesisObject = {
-    toSpeak: "",
     textFromSpeech: "",
-    textInBox: "",
+    text: "",
     realSpeak: true,
 }
 

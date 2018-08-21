@@ -370,7 +370,12 @@ function init( skeleton=false ) {
 
         //addGUI( 'face' );
 
-        $.when(createRelativeExpression( neutralExpression )).then(initExpression( relativeExpression, '0.1' ));
+        setTimeout( function() {
+
+            $.when(createRelativeExpression( neutralExpression )).then(initExpression( relativeExpression, '0.1' ));
+        
+        }, 1000 );
+
         //if first enter then run entrance animation else sitting at chair
         if ( classVariableDict.first_enter ) {
             
@@ -399,20 +404,19 @@ function init( skeleton=false ) {
             // camera looking at place in main.js - should be laptop
             cameraLookingAt( 'laptop' );
 
-            createRelativeMovement( studentMovement );
-            createRelativeExpression( neutralExpression )
-            initMovement( relativeMovement, '0.1', '0.1' );
+            talkObject.learning = true;
+            $.when(createRelativeMovement( studentMovement )).then( initMovement( relativeMovement, '0.1', '0.1' ));
             
 
 
 
             // change these while making facial expressions
             //initSmile('0.5', '0.1', smileClosedObject);
-            normalBlinkObject.bool = true;
-
             setTimeout( function() {
                 
                 initInputReady();
+                normalBlinkObject.bool = true;
+
 
             }, 1000 );
 
@@ -421,8 +425,9 @@ function init( skeleton=false ) {
         setTimeout( function() {
             
             $("#foreground").fadeOut( 1500 );
+            absNeutralExpression = getAbsoluteCoordsOfExpressionNow();
         
-        }, 1000 );
+        }, 1250 );
 
         animate();
 
@@ -483,12 +488,6 @@ function animate () {
     if ( enterCameraObject[ 'bool' ] ) {
 
         enterCameraMove( mainCount );
-
-    }
-
-    if ( tiaObject[ 'bool' ] ) {
-
-        rotateTia( mainCount );
 
     }
 

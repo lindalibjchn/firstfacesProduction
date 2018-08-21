@@ -16,6 +16,11 @@ $(window).on( 'load', function() {
     // show questionStreak
     showQuestionStreak();
 
+    $('#tryAgainBtn').on( 'click', tryAgain );
+    $('#whatsWrongBtn').on( 'click', whatsWrong );
+    $('#showCorrectionBtn').on( 'click', showCorrection );
+    $('#nextSentenceBtn').on( 'click', nextSentence );
+
 });
 
 var blob;
@@ -52,11 +57,21 @@ function readyAudioBtns() {
 
     $('#listenSynthesisBtn').on( 'click', function() {
 
-        synthesisObject.textInBox = $('#textInput').val();
-        synthesisObject.toSpeak = synthesisObject.textInBox;
-        synthesisObject.speaker = "male";
-        synthesisObject.realSpeak = false;
-        getVoices( setVoice );
+        // checks if play is repeat - dont need to send to server again
+        let textInBox = $('#textInput').val();
+        if ( textInBox === synthesisObject.text ) {
+
+            synthesisObject.synthAudio.play();
+            console.log('repeating play');
+
+        } else {
+
+            synthesisObject.text = textInBox;
+            synthesisObject.length = synthesisObject.text;
+            synthesisObject.endCount = 1000 + synthesisObject.length * 50;
+            sendTTS( textInBox, false, "listen" );
+
+        }
 
     });
 
@@ -165,68 +180,81 @@ function readyAudioBtns() {
 }
 
 
+// text is string and tiaSpeaker is true if it is tia speaking, false if student
+function sendTTS( text, tiaSpeaker, caller ) {
 
-function getVoices( setVoice ) {
+    console.log('this:', this);
 
-    // get voices
-    let voices = speechSynthesis.getVoices();
+    $.ajax({
+        url: "/face/tts",
+        type: "GET",
+        data: {
+            'sentence': text,
+            'tiaSpeaker': tiaSpeaker,
+            'sessionID': classVariableDict.session_id
+        },
+        success: function(json) {
 
-    setVoice( voices, speak );
+            //console.log( json.response );
 
-}
-    
-function setVoice( voices, speak ) {
+            //var synthBlob = new Blob([json.response], {type: "audio/ogg; codecs: opus"})
+            //var synthAudioURL = window.URL.createObjectURL( synthBlob );
+            var synthAudioURL = "http://127.0.0.1:8000/" + json.synthURL;
+            console.log('synthAudioURL:', synthAudioURL);
+            synthesisObject.synthAudio = document.getElementById( 'synthClip' );
+            //console.log( 'synthAudio:', synthAudio );
+            synthesisObject.synthAudio.src = synthAudioURL;
+            
+            if ( tiaSpeaker ) {
 
-    let speech = new SpeechSynthesisUtterance();
-    let speaker = synthesisObject.speaker;
+                synthesisObject.speaker = "tia";
 
-    if ( speaker === "tia" ) {
-        
-        speech.voice = voices[1];
 
-    } else if ( speaker === "female" ) {
+            } else {
 
-        speech.voice = voices[2];
+                if ( caller === "listen" ) {
 
-    } else if ( speaker === "male" ) {
+                    synthesisObject.synthAudio.play();
 
-        speech.voice = voices[3];
+                } else {
+                
+                    console.log('talk speech synth made');
 
-    }
+                }
 
-    // Set the text and voice attributes.
-    speech.text = synthesisObject.toSpeak;
-    speech.length = synthesisObject.toSpeak.length;
-    speech.volume = 1;
-    speech.rate = 1;
-    speech.pitch = 1;
+            }
 
-    speak( speech );
-    
-}
+        },
+        error: function() {
+            console.log("that's wrong");
+        },
 
-function speak( speech ) {
-
-    window.speechSynthesis.speak(speech)
-    
-    if ( synthesisObject.realSpeak ) {
-
-        // time when talk will end
-        talkObject.endCount = mainCount + speech.length * 4;
-
-        if ( synthesisObject.speaker === "tia" ) {
-
-            initTalk();
-
-        } else {
-
-            setTimeout( thinkAndTurn, speech.endCount );
-
-        }
-
-    }
+    });
 
 }
+
+//function speak( speech ) {
+
+    //window.speechSynthesis.speak(speech)
+    
+    //if ( synthesisObject.realSpeak ) {
+
+        //// time when talk will end
+        //talkObject.endCount = mainCount + speech.length * 3;
+
+        //if ( synthesisObject.speaker === "tia" ) {
+
+            //initTalk();
+
+        //} else {
+
+            //setTimeout( tiaThinkAboutSentence, speech.endCount );
+
+        //}
+
+    //}
+
+//}
 
 function sendBlobToServer( blob_to_send ) {
 
@@ -261,6 +289,22 @@ window.speechSynthesis.onvoiceschanged = function() {
       //console.log('voice changed');
 };
 
+function checkIfSentIsQuestion( s ) {
+
+    isQ = false;
+
+    trimmed_s = ( s.trim() ).toLowerCase();
+    
+    if ( trimmed_s.substring( 0, 2 ) === "wh" || trimmed_s.substring( 0, 4 ) === "how " ) {
+
+        isQ = true;
+
+    }
+
+    return isQ;
+
+}
+
 function sendSentToServer() {
 
     // set this to false until judgement comes in where it will be changed to true
@@ -268,67 +312,88 @@ function sendSentToServer() {
     //tiaThinkingObject.thinking = false;
 
     let sent = $('#textInput').val();
-    console.log('sent:', sent);
-    
-    if ( sent.length > 2 ) {
+
+    // if wh-question and 
+    isItQ = checkIfSentIsQuestion( sent );
+    let allowed = true;
+    if ( isItQ ) {
+
+        if ( calculateQuestionStreak() !== 3 ) {
+           
+            allowed = false;
         
-        talkToTia(); 
+        }
 
-        $.ajax({
-            url: "/face/store_sent",
-            type: "POST",
-            data: { 
-                'sent': sent,
-                'blob_no_text': classVariableDict.blob_no_text,
-                'blob_no_text_sent_id': classVariableDict.blob_no_text_sent_id,
-                'sessionID': classVariableDict.session_id
-            },
-            success: function(json) {
-                
-                console.log('in sendSentToServer got judgement success');
+    }
 
-                // update classVariables to include new sentence. newInd gets index of next sent
-                let newInd = Object.keys(classVariableDict.sentences).length;
-                json.sent_meta.emotion = JSON.parse(json.sent_meta.emotion);
-                classVariableDict.sentences[ newInd ] = json.sent_meta;
-                classVariableDict.id_of_last_sent = newInd;
-                classVariableDict.last_sent = json.sent_meta;
-                sentenceObject.sentence = json.sent_meta.sentence;
+    if ( allowed ) { 
 
-                // keeps state of sentence
-                classVariableDict.blob_no_text = false;
-                classVariableDict.awaitingJudgement = false;
+        if ( sent.length > 2 ) {
+            
+            talkToTia(); 
 
-                // if tia is thinking then need to come back immediately
-                if ( classVariableDict.thinking ) {
+            $.ajax({
+                url: "/face/store_sent",
+                type: "GET",
+                data: { 
+                    'sent': sent,
+                    'isItQ': isItQ,
+                    'blob_no_text': classVariableDict.blob_no_text,
+                    'blob_no_text_sent_id': classVariableDict.blob_no_text_sent_id,
+                    'sessionID': classVariableDict.session_id
+                },
+                success: function(json) {
+                    
+                    console.log('in sendSentToServer got judgement success');
 
-                    // need to return to laptop only if not incorrect
-                    if ( json.sent_meta.judgement !== "I" ) {
+                    // update classVariables to include new sentence. newInd gets index of next sent
+                    let newInd = Object.keys(classVariableDict.sentences).length;
+                    json.sent_meta.emotion = JSON.parse(json.sent_meta.emotion);
+                    classVariableDict.sentences[ newInd ] = json.sent_meta;
+                    classVariableDict.id_of_last_sent = newInd;
+                    classVariableDict.last_sent = json.sent_meta;
+                    sentenceObject.sentence = json.sent_meta.sentence;
 
-                        initReturnFromThinking();
+                    // keeps state of sentence
+                    classVariableDict.blob_no_text = false;
+                    classVariableDict.awaitingJudgement = false;
 
-                    } else {
+                    // if tia is thinking then need to come back immediately
+                    if ( classVariableDict.thinking ) {
 
-                        tiaThinkingObject.thinking = false;
-                        normalBlinkObject.bool = false;
-                        //return eyes to original thinking position
-                        $('#thinkingLoading').hide();
-                        setTimeout(runAfterJudgement, 600);
+                        // need to return to laptop only if not incorrect
+                        if ( json.sent_meta.judgement !== "I" ) {
+
+                            initReturnFromThinking();
+
+                        } else {
+
+                            tiaThinkingObject.thinking = false;
+                            normalBlinkObject.bool = false;
+                            //return eyes to original thinking position
+                            $('#thinkingLoading').hide();
+                            setTimeout(runAfterJudgement, 600);
+
+                        }
 
                     }
+                
+                },
+                error: function() {
+                    console.log("that's wrong");
+                },
 
-                }
-            
-            },
-            error: function() {
-                console.log("that's wrong");
-            },
+            });
 
-        });
+        } else {
+
+            alert('this is not a sentence');
+
+        }
 
     } else {
 
-        alert('this is not a sentence');
+        alert("you can only ask a 'Wh-' or 'How' question after 3 correct non-question sentences. The small red circle with the number in it will turn green when you can ask these questions.");
 
     }
 

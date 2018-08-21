@@ -86,7 +86,34 @@ DATABASES = {
     }
 }
 
-
+# LOGGING = {
+    # 'version': 1,
+    # 'disable_existing_loggers': False,
+    # 'handlers': {
+        # 'file': {
+            # 'level': 'DEBUG',
+            # 'class': 'logging.FileHandler',
+            # 'filename': os.path.join( BASE_DIR, 'debug.log' ),
+        # },
+    # },
+    # 'loggers': {
+        # 'django': {
+            # 'handlers': ['file'],
+            # 'level': 'INFO',
+            # 'propagate': True,
+        # },
+        # 'face': {
+            # 'handlers': ['file'],
+            # 'level': 'DEBUG',
+            # 'propagate': True,
+        # },
+        # 'django.request': {
+            # 'handlers': ['file'],
+            # 'level': 'DEBUG',
+            # 'propagate': True,
+        # },
+    # },
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
@@ -128,7 +155,7 @@ LOGIN_REDIRECT_URL = '/face/waiting'
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
-#STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 STATICFILES_DIRS = [
         os.path.join(BASE_DIR, "static"),

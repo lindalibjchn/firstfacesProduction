@@ -25,17 +25,43 @@ function initInputReady( boxVal ) {
 
 function talkToTia() {
 
+    // check that final text bax has been changed or not from recording
+    let finalTextInBox = $('#textInput').val();
+    synthesisObject.realSpeak = true;
+
+    synthesisObject.delayToThinkAndTurn = finalTextInBox.length * 200;
+    
+    //no change from audio
+    if ( finalTextInBox === synthesisObject.textFromSpeech ) {
+
+        synthesisObject.synthAudio = document.getElementById('soundClip');
+
+    } else {
+
+        // learner has laready heard it through the listen button
+        if ( synthesisObject.text === finalTextInBox ) {
+
+            console.log('no need to create new one');
+
+        } else {
+
+            synthesisObject.text = finalTextInBox;
+            sendTTS( finalTextInBox, false, "talk" ); 
+
+        }
+
+    }
+
     // fadeOut all prev sentences - this is to stop learners reading prev sents while should be looking at tia
     $('#prevSents').fadeTo( 500, 0.1 );
-
     $('#textInputContainer').hide();
     $('.record-btn').prop("disabled", true);
     $('#recordBtnsContainer').fadeOut( 1000 );
     // normal blinking interferes with saccs
     normalBlinkObject.bool = false;
     setTimeout( function(){initCameraMove('tia', '2')}, 1000 );
-
-    setTimeout( tiaLeanToListen, 3000 );
+    $.when(createSingleExpression( listeningExpression, 0.5 )).then(createRelativeExpression( calculatedExpression ))
+    setTimeout( tiaLeanToListen, 3500 );
 
     // get expression ready beforehand
 
@@ -44,55 +70,20 @@ function talkToTia() {
 
 function tiaLeanToListen() {
 
-    initMove( leanObject, leanObject.coords.close, '2' );
-    $.when($.when(createSingleExpression( listeningExpression, 0.5 )).then(createRelativeExpression( calculatedExpression ))).then( initExpression( relativeExpression, '0.5' ));
-    ;
-
-    setTimeout( speakWords, 1500 );
+    initMove( leanObject, leanObject.coords.close, '1.5' );
+    initExpression( relativeExpression, '0.5' );
+    
+    setTimeout( speakWords, 2000 );
 
 }
 
 function speakWords() {
 
     // stop normal blinking
-    normalBlinkObject.bool = false;
 
-    // check that final text bax has been changed or not from recording
-    let finalTextInBox = $('#textInput').val();
+    synthesisObject.synthAudio.play();
 
-    if ( finalTextInBox === synthesisObject.textFromSpeech ) {
-
-        let aud = document.getElementById('soundClip')
-        aud.play();
-        
-        let delayToThinkAndTurn = finalTextInBox.length * 1000;
-
-        // do this by timing
-        setTimeout( thinkAndTurn, delayToThinkAndTurn );
-
-    } else {
-
-        synthesisObject.toSpeak = finalTextInBox;
-        synthesisObject.speaker = "male";
-        synthesisObject.realSpeak = true;
-        getVoices( setVoice );
-
-    }
-
-}
-
-function thinkAndTurn() {
-
-    // prob add change in facial expression here too to go with lean back
-    //if ( classVariableDict.awaitingJudgement ) {
-
-        tiaThinkAboutSentence();
-
-    //} else {
-
-        //runAfterJudgement();
-
-    //}
+    setTimeout( tiaThinkAboutSentence, synthesisObject.delayToThinkAndTurn );
 
 }
 
@@ -119,7 +110,7 @@ function tiaThinkAboutSentence() {
                     
                 }
             
-            }, 2000 );
+            }, 3000 );
 
         }, 1000 );
 
@@ -133,9 +124,10 @@ function goToThinkingPos() {
     // don't want to run runAfterJudgement if Tia is turning to think
     classVariableDict.goingToThinking = true;
 
+    console.log('in goToThinkingPos');
     $.when(createRelativeMovement( thinkMovement )).then( initMovement( relativeMovement, '0.5', '2' ));
 
-    setTimeout( setThinkingFace, 1000 );
+    setTimeout( setThinkingFace, 2500 );
 
 }
 
@@ -173,7 +165,7 @@ function setThinkingFace() {
 
         }
 
-    }, 2100)
+    }, 2250)
 
 }
 
@@ -218,7 +210,7 @@ function returnFromThinking() {
     $.when(createRelativeMovement( studentMovement )).then( initMovement( relativeMovement, '0.5', '1.5' ));
     
     normalBlinkObject.bool = false;
-    setTimeout( runAfterJudgement, 600 );
+    setTimeout( runAfterJudgement, 1000 );
 
 
 } 

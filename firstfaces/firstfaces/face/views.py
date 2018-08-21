@@ -6,7 +6,7 @@ from django.http import JsonResponse
 from .utils import get_availables_for_schedule, make_schedule_dict, get_upcoming_class, get_class_already_done_today, get_in_class_now, has_user_clicked_option_btn, fill_sessions_dict 
 from django.utils import timezone
 import json
-from .models import Session, Sentence, AudioFile
+from .models import Session, Sentence, AudioFile, Profile
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 import code
@@ -16,8 +16,13 @@ import os
 import time
 from operator import itemgetter
 import datetime
+import logging
+from google.cloud import texttospeech
+
+logger = logging.getLogger(__name__)
 
 def entrance(request):
+
     form = UserForm()
 
     context = {
@@ -86,14 +91,12 @@ def class_time(request, session_id):
 
             start_time = int(time.mktime((sess.start_time).timetuple()))
        
-            print('end time is None')
-
             if request.user == sess.learner:
 
                 #check if learner entered a topic. If so then it is not first entry
                 first_enter = True 
                 sentences = {}
-                id_of_last_sent = 0
+                id_of_last_sent = None;
                 last_sent = {}
 
                 blob_no_text = False
@@ -133,6 +136,7 @@ def class_time(request, session_id):
                             sentences[i] = {
                                 'sent_id': s.id,
                                 'sentence': s.sentence,
+                                'question': s.question,
                                 'judgement': s.judgement,
                                 'emotion': s.emotion,
                                 'nod': s.nod,
@@ -165,6 +169,7 @@ def class_time(request, session_id):
                     'blob_no_text_sent_id': blob_no_text_sent_id,
                     'id_of_last_sent': id_of_last_sent,
                     'last_sent': last_sent,
+                    'thinking': False,
 
                 }
 
@@ -178,15 +183,21 @@ def class_time(request, session_id):
             
             else:
             
+                logger.error('\n\nerror from inside if in class_time')
+        
                 return redirect('waiting')
         
         else:
 
+            logger.error('\n\nerror from outside if in class_time')
+        
             return redirect('waiting')
 
     except BaseException as e:
         
         print('exception:', e)
+
+        logger.error('\n\nerror from try except in class_time:', e + '\n')
         
         return redirect('waiting')
     
@@ -305,26 +316,86 @@ def store_blob(request):
 
     return JsonResponse(response_data)    
 
+def tts(request):
+
+    text = request.GET['sentence']
+    tia_speaker = json.loads(request.GET['tiaSpeaker'])
+    session_id = request.GET['sessionID']
+
+    print('text:', text)
+    print('tia_speaker:', tia_speaker)
+
+    if tia_speaker:
+
+        speaking_voice = 'en-GB-Wavenet-C'
+    
+    else:
+
+        prof = Profile.objects.get(learner=request.user)
+        if prof.gender == 'M':
+
+            speaking_voice = 'en-GB-Wavenet-B'
+    
+        else:
+
+            speaking_voice = 'en-GB-Wavenet-A'
+
+
+    client = texttospeech.TextToSpeechClient()
+    input_text = texttospeech.types.SynthesisInput(text=text)
+
+    # Note: the voice can also be specified by name.
+    # Names of voices can be retrieved with client.list_voices().
+    voice = texttospeech.types.VoiceSelectionParams(
+        language_code='en-GB',
+        name=speaking_voice
+        # ssml_gender=texttospeech.enums.SsmlVoiceGender.MALE
+        )
+
+    audio_config = texttospeech.types.AudioConfig(
+        audio_encoding=texttospeech.enums.AudioEncoding.MP3,
+        pitch = 0.00,
+        speaking_rate = 0.90,
+        )
+
+    response = client.synthesize_speech(input_text, voice, audio_config)
+    print('response:', type(response))
+
+    synthURL = 'media/synths/session' + session_id + '.mp3'
+    with open( os.path.join(settings.BASE_DIR, synthURL ), 'wb') as out:
+        out.write(response.audio_content)
+    
+    response_data = {
+
+        'synthURL': synthURL,
+
+    }
+
+    return JsonResponse(response_data)    
+
 def store_sent(request):
 
-    sentence_text = request.POST['sent']
-    # code.interact(local=locals());
+    sentence_text = request.GET['sent']
+    q = json.loads(request.GET['isItQ'])
+    #code.interact(local=locals());
+    print('q:', type(q))
 
     # get session
-    blob_no_text = json.loads(request.POST['blob_no_text'])
-    blob_no_text_sent_id = request.POST['blob_no_text_sent_id']
-    sess = Session.objects.get(pk=int(request.POST['sessionID']))
+    blob_no_text = json.loads(request.GET['blob_no_text'])
+    blob_no_text_sent_id = request.GET['blob_no_text_sent_id']
+    sess = Session.objects.get(pk=int(request.GET['sessionID']))
 
     # if very first attempt or new sent then need to create empty sentence
     if blob_no_text:
 
         s = Sentence.objects.get( pk=blob_no_text_sent_id )
         s.sentence = sentence_text
+        s.question = q
         s.save()
 
     else:
     
-        s = Sentence(learner=request.user, session=sess, sentence=sentence_text, sentence_timestamp=timezone.now())
+        s = Sentence(learner=request.user, session=sess, sentence=sentence_text, question=q, sentence_timestamp=timezone.now())
         s.save()
 
     while True:
@@ -348,6 +419,7 @@ def store_sent(request):
     sent_meta = {
         'sent_id': s.id,
         'sentence': s_new.sentence,
+        'question': s_new.question,
         'judgement': s_new.judgement,
         'emotion': s_new.emotion,
         'indexes': s_new.indexes,

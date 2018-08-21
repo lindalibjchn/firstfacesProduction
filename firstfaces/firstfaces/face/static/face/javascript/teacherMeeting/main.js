@@ -23,9 +23,11 @@ $(window).on( 'load', function() {
     // press ` to add wrong areas
     $(document).keydown(function(e) {
         if(e.keyCode == 65 && e.ctrlKey) {
+            console.log('Ctrl-A pressed');
             e.preventDefault();
             appendWrongSection();
         } else if (e.keyCode == 83 && e.ctrlKey) {
+            console.log('Ctrl-S pressed');
             e.preventDefault();
             appendCorrectionSection();
         }

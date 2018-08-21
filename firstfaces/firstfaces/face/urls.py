@@ -9,6 +9,7 @@ urlpatterns = [
     path('store_emotion', views.store_emotion, name='store_emotion'),
     path('store_topic', views.store_topic, name='store_topic'),
     path('store_blob', views.store_blob, name='store_blob'),
+    path('tts', views.tts, name='tts'),
     path('store_sent', views.store_sent, name='store_sent'),
     path('store_judgement', views.store_judgement, name='store_judgement'),
     path('store_correction', views.store_correction, name='store_correction'),

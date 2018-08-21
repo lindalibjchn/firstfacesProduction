@@ -56,7 +56,7 @@ function mainEnter() {
 
         $.when(createRelativeExpression( talkCalculatedExpression )).then( initExpression( relativeExpression, '1'));
 
-    } else if ( mainCount === 870 ) {
+    } else if ( mainCount === 890 ) {
 
         let studentName = classVariableDict.username;
         let greeting = " Hello " + studentName + ", nice to see you! How are you feeling today?";
@@ -72,10 +72,9 @@ function mainEnter() {
         speechBubbleObject.sentence = greeting;
         displaySpeechBubble();
 
-    } else if ( mainCount === 1060 ) {
+    } else if ( mainCount === 1180 ) {
         
         showInitEmotionQuestions();
-        //hardcode these stopping of talking also
 
     }
 
@@ -193,9 +192,6 @@ function goToAskTopic( emotion ) {
 
     }
     
-    $('.init-emot').unbind();
-    $('#emotionQuestionsContainer').fadeOut( 500 );
-
     // remove speech bubble to ask which topic
     removeSpeechBubble();
 
@@ -218,19 +214,15 @@ function storeEmotion() {
             document.getElementById("myEmotion").innerHTML = "Why I feel " + emotion;
 
             normalBlinkObject.bool = false;
-            if ( blinkNowObject.bool ) {
 
-                setTimeout( function() {
+            $('.init-emot').unbind();
+            $('#emotionQuestionsContainer').fadeOut( 500 );
+
+            setTimeout( function() {
                     
-                    goToAskTopic( emotion )
-                        
-                }, 50 );
-
-            } else {
-
-                goToAskTopic( emotion );
-                
-            }
+                goToAskTopic( emotion )
+                    
+            }, 600 );
 
         },
         error: function() {
@@ -284,7 +276,7 @@ function showChoiceTextInput() {
 
         $('#submitOwnTopicBtn').on( 'click', getOwnTopicFromTextbox );
     
-    }, 1000 );
+    }, 2000 );
 
 }
 
@@ -302,9 +294,6 @@ function getOwnTopicFromTextbox() {
 
 function storeTopic( topicChoice ) {
 
-    removeSpeechBubble();
-    $('#topicChoices').fadeOut( 1000 );
-
     $.ajax({
         url: "/face/store_topic",
         type: "POST",
@@ -316,7 +305,17 @@ function storeTopic( topicChoice ) {
 
             normalBlinkObject.bool = false;
             blinkNowObject.bool = false;    
-            setTimeout( beginTalking, 1000 );
+
+            $('#topicChoices').fadeOut( 500 );
+
+            setTimeout( function(){ 
+                
+                removeSpeechBubble();
+                initNod( 0.4, '0.5' )
+                
+                setTimeout( beginTalking, 4000 );
+            
+            }, 1000 );
 
         },
         error: function() {
@@ -340,17 +339,28 @@ function beginTalking() {
 
     setTimeout( function() {
 
-        createRelativeExpression( neutralExpression )
-
         initArmIndicate('right', 0, 'low', '0.75');
         removeSpeechBubble();
         initCameraMove( 'laptop', '2' );      
         setTimeout( function() {
             
-            initExpression( relativeExpression, '3' );
+            resetExpression();
             initInputReady('');
         
-        }, 2000);
+            setTimeout( function() {
+                
+                resetMovement();
+                talkObject.learning = true;
+
+                setTimeout( function() {
+
+                    normalBlinkObject.bool = true;
+            
+                }, 2000 );
+
+            }, 3500);
+
+        }, 2500);
 
     }, 3000 )
 
