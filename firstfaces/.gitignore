@@ -1,5 +1,0 @@
-*.py[co]
-__pycache__
-*.sqlite3
-*.swp
-*.blend1
