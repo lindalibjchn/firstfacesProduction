@@ -1,7 +1,7 @@
 // CONTAINS THE EXPRESSIONS FOR THE EMOTION WHEEL AND THE LOGIC FOR TURNING THE WHEEL INTO THE EXPRESSIONS //
 
 // create the relative expression and store the masterExpressionState
-function createRelativeExpression( exp ){
+function createRelativeExpression( expFrom, expTo ){
 
     if ( expressionObject.bool ) {
 
@@ -11,21 +11,17 @@ function createRelativeExpression( exp ){
     } else {
 
         //console.log('\ncreateExpression successfully called by\n\n' + createRelativeExpression.caller )
-        relativeExpression = $.extend(true, {}, blankExpression);
+        relativeExpression = $.extend( true, {}, expTo );
          
-        Object.keys( exp.AUs ).forEach( function( AU ) {
+        Object.keys( relativeExpression.AUs ).forEach( function( AU ) {
 
-            Object.keys( exp.AUs[AU] ).forEach( function( bone ) {
-
-                relativeExpression.AUs[AU][bone] = [[0,0,0],[0,0,0]];
+            Object.keys( relativeExpression.AUs[AU] ).forEach( function( bone ) {
 
                 for ( var j=0; j < 2; j++ ) {
 
                     for ( var k=0; k < 3; k++ ) {
-                
-                        let change = exp.AUs[AU][bone][ j ][ k ] - masterExpressionState.AUs[AU][bone][ j ][ k ]
-                        relativeExpression.AUs[AU][bone][ j ][ k ] = change;
-                        masterExpressionState.AUs[AU][bone][ j ][ k ] += change;
+                        
+                        relativeExpression.AUs[AU][bone][ j ][ k ] -= expFrom.AUs[AU][bone][ j ][ k ];
                         
                     }
 
@@ -35,9 +31,8 @@ function createRelativeExpression( exp ){
 
         })
 
-        let eyelidChange = exp.eyelids;
+        let eyelidChange = expTo.eyelids; - expFrom.eyelids;
         relativeExpression.eyelids = eyelidChange;
-        masterExpressionState.eyelids += eyelidChange;
         eyelidObject.currentCoords[ 1 ][ 0 ] += eyelidChange;
 
     }
@@ -278,13 +273,13 @@ function createSingleExpression( exp, mult ) {
 
 }
 
-var sectors = [ 
-    [ contentExpression, happyExpression ], 
-    [ happyExpression, disgustExpression ],
-    [ disgustExpression, fearExpression ],
-    [ fearExpression, sadExpression ],
-    [ sadExpression, contentExpression ]
-]
+//var sectors = [ 
+    //[ contentExpression, happyExpression ], 
+    //[ happyExpression, disgustExpression ],
+    //[ disgustExpression, fearExpression ],
+    //[ fearExpression, sadExpression ],
+    //[ sadExpression, contentExpression ]
+//]
 
 function createCombinedExpression( twoExpressions, ratio, mult, surp ){
 
@@ -423,9 +418,9 @@ function changeExpression() {
 
 function getAbsoluteCoordsOfExpressionNow() {
 
-    let absExpression = $.extend(true, {}, blankExpression);
+    let absExpression = $.extend(true, {}, expressionsRel[ 'blank' ]);
 
-    Object.keys( expressionObject.AUs.AU2 ).forEach( function( key ) {
+    Object.keys( absExpression.AUs.AU2 ).forEach( function( key ) {
 
         // pos x
        
@@ -515,6 +510,107 @@ function getAbsoluteCoordsOfExpressionNow() {
 
 
     return absExpression;
+
+}
+
+function getAbsoluteCoordsOfMainExpressions() {
+
+    Object.keys( expressionsRel ).forEach( function( exp ) {
+
+        indExpRel = expressionsRel[ exp ];
+        let expression = $.extend( true, {}, indExpRel );
+
+        Object.keys( indExpRel.AUs.AU2 ).forEach( function( key ) {
+
+            // pos x
+           
+            expression.AUs.AU2[ key ][ 0 ][ 0 ] += expressionBase.AUs.AU2[ key ][ 0 ][ 0 ];
+
+            // pos y
+            
+            expression.AUs.AU2[ key ][ 0 ][ 1 ] += expressionBase.AUs.AU2[ key ][ 0 ][ 1 ];
+
+            // pos z
+            
+            expression.AUs.AU2[ key ][ 0 ][ 2 ] += expressionBase.AUs.AU2[ key ][ 0 ][ 2 ];
+
+
+            // rot x
+           
+            expression.AUs.AU2[ key ][ 1 ][ 0 ] += expressionBase.AUs.AU2[ key ][ 1 ][ 0 ];
+
+            // rot y
+            
+            expression.AUs.AU2[ key ][ 1 ][ 1 ] += expressionBase.AUs.AU2[ key ][ 1 ][ 1 ];
+
+            // rot z
+            
+            expression.AUs.AU2[ key ][ 1 ][ 2 ] += expressionBase.AUs.AU2[ key ][ 1 ][ 2 ];
+
+        })
+            
+        Object.keys( expressionBase.AUs.AU1 ).forEach( function( key ) {
+
+            // pos x
+           
+            expression.AUs.AU1[ key ][ 0 ][ 0 ] += expressionBase.AUs.AU1[ key ][ 0 ][ 0 ];
+
+            // pos y
+            
+            expression.AUs.AU1[ key ][ 0 ][ 1 ] += expressionBase.AUs.AU1[ key ][ 0 ][ 1 ];
+
+            // pos z
+            
+            expression.AUs.AU1[ key ][ 0 ][ 2 ] += expressionBase.AUs.AU1[ key ][ 0 ][ 2 ];
+
+
+            // rot x
+           
+            expression.AUs.AU1[ key ][ 1 ][ 0 ] += expressionBase.AUs.AU1[ key ][ 1 ][ 0 ];
+
+            // rot y
+            
+            expression.AUs.AU1[ key ][ 1 ][ 1 ] += expressionBase.AUs.AU1[ key ][ 1 ][ 1 ];
+
+            // rot z
+            
+            expression.AUs.AU1[ key ][ 1 ][ 2 ] += expressionBase.AUs.AU1[ key ][ 1 ][ 2 ];
+
+        })
+
+        //Mouth Jaw Inner is part of a different object and so needs to be done separately
+        Object.keys( expressionBase.AUs.AU1m ).forEach( function( key ) {
+
+            // pos x
+           
+            expression.AUs.AU1m[ key ][ 0 ][ 0 ] += expressionBase.AUs.AU1m[ key ][ 0 ][ 0 ];
+
+            // pos y
+            
+            expression.AUs.AU1m[ key ][ 0 ][ 1 ] += expressionBase.AUs.AU1m[ key ][ 0 ][ 1 ];
+
+            // pos z
+            
+            expression.AUs.AU1m[ key ][ 0 ][ 2 ] += expressionBase.AUs.AU1m[ key ][ 0 ][ 2 ];
+
+
+            // rot x
+           
+            expression.AUs.AU1m[ key ][ 1 ][ 0 ] += expressionBase.AUs.AU1m[ key ][ 1 ][ 0 ];
+
+            // rot y
+            
+            expression.AUs.AU1m[ key ][ 1 ][ 1 ] += expressionBase.AUs.AU1m[ key ][ 1 ][ 1 ];
+
+            // rot z
+            
+            expression.AUs.AU1m[ key ][ 1 ][ 2 ] += expressionBase.AUs.AU1m[ key ][ 1 ][ 2 ];
+            
+        });
+
+        expressionsAbs[ indExpRel.name ] = expression;
+
+    });
 
 }
 

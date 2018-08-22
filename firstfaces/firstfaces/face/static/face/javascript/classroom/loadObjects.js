@@ -368,13 +368,23 @@ function init( skeleton=false ) {
 
     function cameraAndTiaLookAt() {
 
+        // get absolute position of base expression
+        expressionBase = getAbsoluteCoordsOfExpressionNow();
+        getAbsoluteCoordsOfMainExpressions()
+
+        // get absolute position of eyelids for blink
+        eyelidsAbs.upperMiddle.open = tiaObject.faceBones[ 'eyelid_upper_middle.L' ].position.y
+        eyelidsAbs.lowerMiddle.open = tiaObject.faceBones[ 'eyelid_lower_middle.L' ].position.y
+        eyelidsAbs.upperMiddle.closed = eyelidsAbs.upperMiddle.open - 0.45;
+        eyelidsAbs.lowerMiddle.closed = eyelidsAbs.lowerMiddle.open + 0.2;
+
         //addGUI( 'face' );
 
-        setTimeout( function() {
+        //setTimeout( function() {
 
-            $.when(createRelativeExpression( neutralExpression )).then(initExpression( relativeExpression, '0.1' ));
+            //$.when(createRelativeExpression( neutralExpression )).then(initExpression( relativeExpression, '0.1' ));
         
-        }, 1000 );
+        //}, 1000 );
 
         //if first enter then run entrance animation else sitting at chair
         if ( classVariableDict.first_enter ) {
@@ -425,7 +435,7 @@ function init( skeleton=false ) {
         setTimeout( function() {
             
             $("#foreground").fadeOut( 1500 );
-            absNeutralExpression = getAbsoluteCoordsOfExpressionNow();
+            //absNeutralExpression = getAbsoluteCoordsOfExpressionNow();
         
         }, 1250 );
 
