@@ -238,6 +238,13 @@ function getTwoExpressions( eCo ) {
 
 function createSingleExpression( exp, mult ) {
 
+    if ( exp.changeVoice ) {
+
+        synthesisObject.pitch = exp.name.pitch * mult;
+        synthesisObject.speaking_rate = 0.85 + exp.name.speaking_rate * mult;
+
+    }
+
     calculatedExpression = $.extend(true, {}, exp);
     talkCalculatedExpression = $.extend(true, {}, exp);
 
@@ -376,6 +383,9 @@ function createCombinedExpression( twoExpressions, ratio, mult, surp ){
 
 function changeExpression() {
 
+    synthesisObject.pitch = 0;
+    synthesisObject.speaking_rate = 0.85;
+
     let emotionCoords = classVariableDict.last_sent['emotion']
     let surprise = classVariableDict.last_sent['surprise']
 
@@ -385,9 +395,26 @@ function changeExpression() {
     if ( dia >= 0.2 ) {
 
         let sectorNRatio = getTwoExpressions( emotionCoords );
+        let exp01 = sectors[ sectorNRatio[ 0 ] ][ 0 ];
+        let exp02 = sectors[ sectorNRatio[ 0 ] ][ 1 ];
+        let pitch01 = exp01.pitch;
+        let pitch02 = exp02.pitch;
+        let speech_rate01 = exp01.speaking_rate;
+        let speech_rate02 = exp02.speaking_rate;
+
+        console.log('dia');
+
+        let ratio = sectorNRatio[ 1 ];
+
+        synthesisObject.pitch += dia * ( ( 1 - ratio ) * pitch02 + ratio * pitch01 ) + surprise;
+        synthesisObject.speaking_rate += dia * ( ( 1 - ratio ) * speech_rate02 + ratio * speech_rate01 ) + surprise / 10;
 
         //arguments are [happyExpression, contentExpression], ratio of 1st to 2nd, diameter/amount, surprise amount
-        createCombinedExpression( sectors[ sectorNRatio[ 0 ] ], sectorNRatio[ 1 ],  dia, surprise );
+        createCombinedExpression( sectors[ sectorNRatio[ 0 ] ], ratio,  dia, surprise );
+
+    } else {
+
+        createSingleExpression( blankExpression, 1 )
 
     }
 

@@ -54,7 +54,6 @@ function runAfterJudgement() {
 
         }
 
-        changeExpression();
         createRelativeExpression( calculatedExpression )
         
         setTimeout( function() {
@@ -94,7 +93,7 @@ function runAfterJudgement() {
             text = " " + createBetterTextForPromptBox( classVariableDict.last_sent );
             sendTTS( text, true );
             
-            $.when($.when(changeExpression()).then(createRelativeExpression( calculatedExpression ))).then( initExpression( relativeExpression, '1' ));
+            $.when(createRelativeExpression( calculatedExpression )).then( initExpression( relativeExpression, '1' ));
             //no nod or shak efor better as it may interfere with speech
             setTimeout( displaySpeechBubblePrompt, 2000 );
         

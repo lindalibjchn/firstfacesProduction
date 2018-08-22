@@ -294,6 +294,10 @@ var expressionObject = {
 
 const blankExpression = {
 
+    'name': 'blankExp',
+    'changeVoice': true,
+    'pitch': 0,
+    'speaking_rate': 0,
     'AUs': {
         'AU1': {
             'nose': [[0, 0, 0], [0, 0, 0]],
@@ -332,6 +336,8 @@ var absCurExpression;
 
 const mouthOpenExpression = {
 
+    'name': 'mouthOpenExp',
+    'changeVoice': false,
     'AUs': {
         'AU1': {
             'nose': [[0, 0, 0], [0, 0, 0]],
@@ -362,6 +368,8 @@ const mouthOpenExpression = {
 
 const purseLipsExpression = {
 
+    'name': 'purseLipsExp',
+    'changeVoice': false,
     'AUs': {
         'AU1': {
             'nose': [[0, 0, 0], [0, 0, 0]],
@@ -392,6 +400,8 @@ const purseLipsExpression = {
 
 const surpriseExpression = {
 
+    'name': 'surpriseExp',
+    'changeVoice': false,
     'AUs': {
         'AU1': {
             'nose': [[0, 0, 0], [0, 0, 0]],
@@ -422,6 +432,10 @@ const surpriseExpression = {
 
 const happyExpression = {
 
+    'name': 'happyExp',
+    'changeVoice': true,
+    'pitch': 2,
+    'speaking_rate': 0.15,
     'AUs': {
         'AU1': {
             'nose': [[0, 0, 0], [0, 0, 0]],
@@ -451,6 +465,10 @@ const happyExpression = {
 
 const contentExpression = {
 
+    'name': 'contentExp',
+    'changeVoice': true,
+    'pitch': 1,
+    'speaking_rate': 0.05,
     'AUs': {
         'AU1': {
             'nose': [[0, 0, 0], [0, 0, 0]],
@@ -481,6 +499,10 @@ const contentExpression = {
 
 const neutralExpression = {
 
+    'name': 'neutralExp',
+    'changeVoice': true,
+    'pitch': 0,
+    'speaking_rate': 0,
     'AUs': {
         'AU1': {
             'nose': [[0, 0, 0], [0, 0, 0]],
@@ -511,6 +533,10 @@ const neutralExpression = {
 
 const sadExpression = {
 
+    'name': 'sadExp',
+    'changeVoice': true,
+    'pitch': -5,
+    'speaking_rate': -0.15,
     'AUs': {
         'AU1': {
             'nose': [[0, 0, 0], [0, 0, 0]],
@@ -541,6 +567,10 @@ const sadExpression = {
 
 const fearExpression = {
 
+    'name': 'fearExp',
+    'changeVoice': true,
+    'pitch': -2.5,
+    'speaking_rate': -0.05,
     'AUs': {
         'AU1': {
             'nose': [[0, 0, 0], [0, 0, 0]],
@@ -571,6 +601,10 @@ const fearExpression = {
 
 const disgustExpression = {
 
+    'name': 'disgustExp',
+    'changeVoice': true,
+    'pitch': 0,
+    'speaking_rate': 0,
     'AUs': {
         'AU1': {
             'nose': [[0, 0.1, 0], [0, 0, 0]],
@@ -600,6 +634,8 @@ const disgustExpression = {
 
 const listeningExpression = {
 
+    'name': 'listeningExp',
+    'changeVoice': false,
     'AUs': {
         'AU1': {
             'nose': [[0, 0, 0], [0, 0, 0]],
@@ -630,6 +666,8 @@ const listeningExpression = {
 
 const thinkingExpression = {
 
+    'name': 'thinkingExp',
+    'changeVoice': false,
     'AUs': {
         'AU1': {
             'nose': [[0, 0, 0], [0, 0, 0]],
@@ -660,6 +698,8 @@ const thinkingExpression = {
 
 const confusedExpression = {
 
+    'name': 'confusedExp',
+    'changeVoice': true,
     'AUs': {
         'AU1': {
             'nose': [[0, 0, 0], [0, 0, 0]],
@@ -976,6 +1016,8 @@ var synthesisObject = {
     textFromSpeech: "",
     text: "",
     realSpeak: true,
+    pitch: 0,
+    speaking_rate: 0.85,
 }
 
 var tiaThinkingObject = {

@@ -191,6 +191,8 @@ function sendTTS( text, tiaSpeaker, caller ) {
         data: {
             'sentence': text,
             'tiaSpeaker': tiaSpeaker,
+            'pitch': synthesisObject.pitch,
+            'speaking_rate': synthesisObject.speaking_rate,
             'sessionID': classVariableDict.session_id
         },
         success: function(json) {
@@ -206,9 +208,6 @@ function sendTTS( text, tiaSpeaker, caller ) {
             synthesisObject.synthAudio.src = synthAudioURL;
             
             if ( tiaSpeaker ) {
-
-                synthesisObject.speaker = "tia";
-
 
             } else {
 
@@ -232,29 +231,6 @@ function sendTTS( text, tiaSpeaker, caller ) {
     });
 
 }
-
-//function speak( speech ) {
-
-    //window.speechSynthesis.speak(speech)
-    
-    //if ( synthesisObject.realSpeak ) {
-
-        //// time when talk will end
-        //talkObject.endCount = mainCount + speech.length * 3;
-
-        //if ( synthesisObject.speaker === "tia" ) {
-
-            //initTalk();
-
-        //} else {
-
-            //setTimeout( tiaThinkAboutSentence, speech.endCount );
-
-        //}
-
-    //}
-
-//}
 
 function sendBlobToServer( blob_to_send ) {
 
@@ -283,11 +259,6 @@ function sendBlobToServer( blob_to_send ) {
     });
 
 }
-
-// this function, for some reason, means the voice changes correctly. I don't know why this is
-window.speechSynthesis.onvoiceschanged = function() {
-      //console.log('voice changed');
-};
 
 function checkIfSentIsQuestion( s ) {
 
@@ -357,6 +328,12 @@ function sendSentToServer() {
                     // keeps state of sentence
                     classVariableDict.blob_no_text = false;
                     classVariableDict.awaitingJudgement = false;
+
+                    // do this here to change voices too
+                    if ( classVariableDict.last_sent.judgement === "B" || classVariableDict.last_sent.judgement === "C" ) {
+                        changeExpression();
+
+                    }
 
                     // if tia is thinking then need to come back immediately
                     if ( classVariableDict.thinking ) {

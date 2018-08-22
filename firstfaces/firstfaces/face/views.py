@@ -321,9 +321,13 @@ def tts(request):
     text = request.GET['sentence']
     tia_speaker = json.loads(request.GET['tiaSpeaker'])
     session_id = request.GET['sessionID']
+    pitch_designated = float(request.GET['pitch'])
+    speaking_rate_designated = float(request.GET['speaking_rate'])
 
     print('text:', text)
-    print('tia_speaker:', tia_speaker)
+    print('pitch_designated:', pitch_designated)
+    print('text:', text)
+    print('speaking_rate_designated:', speaking_rate_designated)
 
     if tia_speaker:
 
@@ -354,12 +358,11 @@ def tts(request):
 
     audio_config = texttospeech.types.AudioConfig(
         audio_encoding=texttospeech.enums.AudioEncoding.MP3,
-        pitch = 0.00,
-        speaking_rate = 0.90,
+        pitch = pitch_designated,
+        speaking_rate = speaking_rate_designated,
         )
 
     response = client.synthesize_speech(input_text, voice, audio_config)
-    print('response:', type(response))
 
     synthURL = 'media/synths/session' + session_id + '.mp3'
     with open( os.path.join(settings.BASE_DIR, synthURL ), 'wb') as out:

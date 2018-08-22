@@ -45,6 +45,8 @@ function talkToTia() {
 
         } else {
 
+            synthesisObject.pitch = 0;
+            synthesisObject.speaking_rate = 0.85;
             synthesisObject.text = finalTextInBox;
             sendTTS( finalTextInBox, false, "talk" ); 
 
