@@ -368,23 +368,19 @@ function init( skeleton=false ) {
 
     function cameraAndTiaLookAt() {
 
-        // get absolute position of base expression
-        expressionBase = getAbsoluteCoordsOfExpressionNow();
-        getAbsoluteCoordsOfMainExpressions()
-
         // get absolute position of eyelids for blink
         eyelidsAbs.upperMiddle.open = tiaObject.faceBones[ 'eyelid_upper_middle.L' ].position.y
         eyelidsAbs.lowerMiddle.open = tiaObject.faceBones[ 'eyelid_lower_middle.L' ].position.y
         eyelidsAbs.upperMiddle.closed = eyelidsAbs.upperMiddle.open - 0.45;
         eyelidsAbs.lowerMiddle.closed = eyelidsAbs.lowerMiddle.open + 0.2;
 
-        //addGUI( 'face' );
-
-        //setTimeout( function() {
-
-            //$.when(createRelativeExpression( neutralExpression )).then(initExpression( relativeExpression, '0.1' ));
+        // get absolute position of base expression
+        expressionBase = getAbsoluteCoordsOfExpressionNow();
+        expressionNow = $.extend( true, {}, expressionBase );
+        getAbsoluteCoordsOfMainExpressions();
         
-        //}, 1000 );
+        movementBase = getAbsoluteCoordsOfMovementNow();
+        movementNow = $.extend( true, {}, movementBase );
 
         //if first enter then run entrance animation else sitting at chair
         if ( classVariableDict.first_enter ) {
@@ -415,10 +411,7 @@ function init( skeleton=false ) {
             cameraLookingAt( 'laptop' );
 
             talkObject.learning = true;
-            $.when(createRelativeMovement( studentMovement )).then( initMovement( relativeMovement, '0.1', '0.1' ));
-            
-
-
+            movementController( movements.student, '0.1', '0.1' );
 
             // change these while making facial expressions
             //initSmile('0.5', '0.1', smileClosedObject);
@@ -519,12 +512,6 @@ function animate () {
 
     }
 
-    if ( eyebrowObject[ 'bool' ] ) {
-
-        moveEyebrow( mainCount );
-
-    }
-
     if ( eyeObject[ 'bool' ] ) {
 
         moveEyes( mainCount );
@@ -562,12 +549,6 @@ function animate () {
         mainEnter();
 
     }
-
-    //if ( backNReadALineObject.bool ) {
-
-        //backNReadALine();
-
-    //}
 
     // CONTINUOUS AND RANDOM MOVEMENTS
     

@@ -336,22 +336,30 @@ function sendSentToServer() {
                     }
 
                     // if tia is thinking then need to come back immediately
-                    if ( classVariableDict.thinking ) {
+                    if ( tiaThinkingObject.thinking ) {
 
-                        // need to return to laptop only if not incorrect
-                        if ( json.sent_meta.judgement !== "I" ) {
+                        tiaThinkingObject.thinking = false;
+                        normalBlinkObject.bool = false;
 
-                            initReturnFromThinking();
+                        // just incase there is a blink underway
+                        whenAllMovFinished( function() {
 
-                        } else {
+                            movementNow = getAbsoluteCoordsOfMovementNow();
+                            
+                            // need to return to laptop only if not incorrect
+                            if ( json.sent_meta.judgement === "I" ) {
 
-                            tiaThinkingObject.thinking = false;
-                            normalBlinkObject.bool = false;
-                            //return eyes to original thinking position
-                            $('#thinkingLoading').hide();
-                            setTimeout(runAfterJudgement, 600);
+                                //return eyes to original thinking position
+                                $('#thinkingLoading').hide();
+                                runAfterJudgement();
 
-                        }
+                            } else {
+
+                                initReturnFromThinking();
+
+                            }
+
+                        });
 
                     }
                 

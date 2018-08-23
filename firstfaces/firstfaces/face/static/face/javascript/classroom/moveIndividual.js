@@ -58,42 +58,42 @@ function moveEyes( main ) {
 }
 
 
-function moveEyebrow( main ) {
+//function moveEyebrow( main ) {
 
-    let main_start = main - eyebrowObject[ 'startCount' ];
-    let sinAmount = eyebrowObject.sin[ main_start ]
+    //let main_start = main - eyebrowObject[ 'startCount' ];
+    //let sinAmount = eyebrowObject.sin[ main_start ]
     
-    if ( main_start < eyebrowObject.sinLength ) {
+    //if ( main_start < eyebrowObject.sinLength ) {
 
-        let innerMultX = sinAmount * 0.05 * eyebrowObject.movementCoords[ 0 ][ 0 ];
-        let middleMultX = sinAmount * 0 * eyebrowObject.movementCoords[ 0 ][ 0 ]; 
-        let outerMultX = sinAmount * 0.05 * eyebrowObject.movementCoords[ 0 ][ 0 ]; 
+        //let innerMultX = sinAmount * 0.05 * eyebrowObject.movementCoords[ 0 ][ 0 ];
+        //let middleMultX = sinAmount * 0 * eyebrowObject.movementCoords[ 0 ][ 0 ]; 
+        //let outerMultX = sinAmount * 0.05 * eyebrowObject.movementCoords[ 0 ][ 0 ]; 
 
-        let innerMultY = sinAmount * 0.2 * eyebrowObject.movementCoords[ 0 ][ 1 ];
-        let middleMultY = sinAmount * 0.3 * eyebrowObject.movementCoords[ 0 ][ 1 ]; 
-        let outerMultY = sinAmount * 0.15 * eyebrowObject.movementCoords[ 0 ][ 1 ]; 
+        //let innerMultY = sinAmount * 0.2 * eyebrowObject.movementCoords[ 0 ][ 1 ];
+        //let middleMultY = sinAmount * 0.3 * eyebrowObject.movementCoords[ 0 ][ 1 ]; 
+        //let outerMultY = sinAmount * 0.15 * eyebrowObject.movementCoords[ 0 ][ 1 ]; 
 
-        // POS x
-        tiaObject.faceBones['eyebrow_inner.L'].position.x += innerMultX;
-        tiaObject.faceBones['eyebrow_inner.R'].position.x += innerMultX;
-        tiaObject.faceBones['eyebrow_outer.L'].position.x += outerMultX;
-        tiaObject.faceBones['eyebrow_outer.R'].position.x += outerMultX;
+        //// POS x
+        //tiaObject.faceBones['eyebrow_inner.L'].position.x += innerMultX;
+        //tiaObject.faceBones['eyebrow_inner.R'].position.x += innerMultX;
+        //tiaObject.faceBones['eyebrow_outer.L'].position.x += outerMultX;
+        //tiaObject.faceBones['eyebrow_outer.R'].position.x += outerMultX;
 
-        // POS y
-        tiaObject.faceBones['eyebrow_inner.L'].position.y += innerMultY;
-        tiaObject.faceBones['eyebrow_inner.R'].position.y += innerMultY;
-        tiaObject.faceBones['eyebrow_middle.L'].position.y += middleMultY;
-        tiaObject.faceBones['eyebrow_middle.R'].position.y += middleMultY;
-        tiaObject.faceBones['eyebrow_outer.L'].position.y += outerMultY;
-        tiaObject.faceBones['eyebrow_outer.R'].position.y += outerMultY;
+        //// POS y
+        //tiaObject.faceBones['eyebrow_inner.L'].position.y += innerMultY;
+        //tiaObject.faceBones['eyebrow_inner.R'].position.y += innerMultY;
+        //tiaObject.faceBones['eyebrow_middle.L'].position.y += middleMultY;
+        //tiaObject.faceBones['eyebrow_middle.R'].position.y += middleMultY;
+        //tiaObject.faceBones['eyebrow_outer.L'].position.y += outerMultY;
+        //tiaObject.faceBones['eyebrow_outer.R'].position.y += outerMultY;
 
-    } else {
+    //} else {
 
-        eyebrowObject.bool = false;
+        //eyebrowObject.bool = false;
 
-    }
+    //}
 
-}
+//}
 
 
 function lean( main ) {

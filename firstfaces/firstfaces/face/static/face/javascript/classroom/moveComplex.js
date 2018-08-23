@@ -1,19 +1,23 @@
 function backNReadALine() {
 
-    var randomReadingMovement = $.extend( true, {}, laptopMovement );
+    var randomReadingMovement = $.extend( true, {}, movements.laptop );
 
-    let randomHeadRotX = 0.15 + Math.random() * 0.04 - 0.02;
-    let randomHeadRotY = Math.random() * 0.2 - 0.1;
+    let plusOrMinusX = Math.random() - 0.5; 
+    let plusOrMinusY = Math.random() - 0.5; 
+    let randomHeadRotX = 0.15 + plusOrMinusX * 0.02;
+    let randomHeadRotY = plusOrMinusY * 0.1;
     randomReadingMovement.AUs.AU1.head = [[0,0,0],[randomHeadRotX, randomHeadRotY, 0]]
 
-    let randomEyeRotX = 0.3 + Math.random() * 0.2 - 0.1;
-    let randomEyeRotY = Math.random() * 0.8 - 0.4;
-    randomReadingMovement.sacc = [[0,0,0],[randomHeadRotX, randomHeadRotY, 0]]
+    let randomEyeRotX = 0.2 + plusOrMinusX * 0.05;
+    let randomEyeRotY = plusOrMinusY * 0.2;
+    randomReadingMovement.sacc = [[0,0,0],[randomEyeRotX, randomEyeRotY, 0]]
+    
+    let randSaccDur = [ '0.25', '0.5' ][Math.floor(Math.random() * 2)]
+    let randHeadDur = [ '0.75', '1', '1.5' ][Math.floor(Math.random() * 3)]
+    
+    movementController( randomReadingMovement, randSaccDur, randHeadDur )
 
-    createRelativeMovement( randomReadingMovement )
-    initMovement( relativeMovement, '0.5', '1' )
-
-    let delayForReadingSacc = 2000 + Math.random() * 1500;
+    let delayForReadingSacc = 2000 + Math.random() * 2500;
     setTimeout( waitForWrongSlices, delayForReadingSacc )
 
 }
@@ -46,13 +50,17 @@ function talk() {
         // create random duration
         randDuration = [ '0.1', '0.25', '0.5' ][Math.floor(Math.random() * 3)];
         
-        $.when(createCombinedExpression([mouthOpenExpression, purseLipsExpression], randRatio, randMult, 0 )).then( initExpression( calculatedExpression, randDuration ));
+        let prevCalcExp = $.extend( true, {}, calculatedExpression )
+
+        let calcExp = createCalculatedExpression([expressionsRel.mouthOpen, expressionsRel.purseLips], randRatio, randMult, 0 )[ 0 ];
+        expressionController( calcExp );
+
 
         // CALCULATE RELATIVE MOVEMENT
 
         setTimeout( function() {
 
-            initExpression( negativeCalculatedExpression, randDuration );
+            expressionController( prevCalcExp, randDuration );
 
             setTimeout( function() {
 
@@ -85,13 +93,9 @@ function initMoveEyelids( upperPos, lowerPos, speed, rel ) {
 
     if ( eyelidObject.bool ) {
 
-        console.log('\n\ninitMoveEyelid: cant move while still moving. Called by\n\n' + initMoveEyelids.caller.name)
-        
 
     } else {
     
-        //console.log('\n\ninitMoveEyelid: called by\n\n' + initMoveEyelids.caller.name )
-
         eyelidObject.bool = true;
         assignSinArrayForSpeed( speed, eyelidObject, sineArrays ) 
         eyelidObject.speed = speed;

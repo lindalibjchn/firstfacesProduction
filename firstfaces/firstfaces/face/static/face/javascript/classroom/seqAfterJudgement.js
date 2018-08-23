@@ -3,7 +3,7 @@ function runAfterJudgement() {
     // logic for different types of judgement
 
     // not practise listening buttons
-    synthesisObject.realSpeak = false;
+    synthesisObject.realSpeak = true;
     
     if ( classVariableDict.last_sent.judgement === "C" ) {
 
@@ -54,34 +54,39 @@ function runAfterJudgement() {
 
         }
 
-        createRelativeExpression( calculatedExpression )
+        whenAllMovFinished( function() { 
+         
+            expressionController( calculatedExpression, '1' );
+        
+        })
         
         setTimeout( function() {
-
-            initExpression( relativeExpression, '1' );
-
-            setTimeout( nodOrShakeHead, 1250 ); 
-
-        }, 250);
-
+            
+            whenAllMovFinished( nodOrShakeHead );
+            
+        }, 1100 ); 
 
     } else if ( classVariableDict.last_sent.judgement === "I" ) {
 
-        createRelativeMovement( confused01Movement );
-        initMovement( relativeMovement, '0.5', '2' );
+        whenAllMovFinished( function() { 
+         
+            movementController( movements.confused01, '0.5', '1.5' );
 
-        createSingleExpression(confusedExpression, 1);
-        createRelativeExpression( calculatedExpression );
+        })
 
         addToPrevSents(classVariableDict.last_sent);
         
         setTimeout( function() {
             
-            initExpression( relativeExpression, '1' );
+            whenAllMovFinished( function() { 
+         
+                expressionController( expressionsAbs.confused, '1', true );
         
+            })
+
             setTimeout( showOptionBtns, 2000 );
 
-        }, 1000 )
+        }, 1600 )
 
     } else if ( classVariableDict.last_sent.judgement === "B" || classVariableDict.last_sent.judgement === "M" || classVariableDict.last_sent.judgement === "D" || classVariableDict.last_sent.judgement === "3" ) {
 
@@ -93,7 +98,12 @@ function runAfterJudgement() {
             text = " " + createBetterTextForPromptBox( classVariableDict.last_sent );
             sendTTS( text, true );
             
-            $.when(createRelativeExpression( calculatedExpression )).then( initExpression( relativeExpression, '1' ));
+            whenAllMovFinished( function() { 
+         
+                expressionController( calculatedExpression, '1' );
+            
+            })
+
             //no nod or shak efor better as it may interfere with speech
             setTimeout( displaySpeechBubblePrompt, 2000 );
         
@@ -101,27 +111,45 @@ function runAfterJudgement() {
             
             text = " " + createMeanByTextForPromptBox( classVariableDict.last_sent );
             sendTTS( text, true );
-            $.when($.when(createSingleExpression(confusedExpression, 1)).then(createRelativeExpression( calculatedExpression ))).then( initExpression( relativeExpression, '1' ));
+        
+            whenAllMovFinished( function() { 
+         
+                expressionController( expressionsAbs.confused, '1' );
+            
+            })
+                
             setTimeout( displaySpeechBubblePrompt, 1500 );
         
         } else if ( classVariableDict.last_sent.judgement === "3" ) {
             
             text = " There are more than 3 mistakes in your sentence. Could you simplify and try again?";
             sendTTS( text, true );
-            $.when($.when(createSingleExpression(confusedExpression, 1)).then(createRelativeExpression( calculatedExpression))).then( initExpression( relativeExpression, '1' ));
+            
+            whenAllMovFinished( function() { 
+         
+                expressionController( expressionsAbs.confused, '1' );
+            
+            })
+
             setTimeout( displaySpeechBubblePrompt, 1500 );
         
         } else {
 
             text = " I'm sorry but I don't understand what you said.";
             sendTTS( text, true );
-            $.when($.when(createSingleExpression(confusedExpression, 1)).then(createRelativeExpression( calculatedExpression ))).then( initExpression( relativeExpression, '1' ));
+            
+            whenAllMovFinished( function() { 
+         
+                expressionController( expressionsAbs.confused, '1' );
+            
+            })
+
             setTimeout( function() {
                 
-                nodOrShakeHead(); 
+                whenExpFinished( nodOrShakeHead ); 
                 setTimeout( displaySpeechBubblePrompt, 5000 );
 
-            }, 1250 );
+            }, 1100 );
 
         }
 
@@ -131,6 +159,25 @@ function runAfterJudgement() {
     }
     
     
+}
+
+// check if expression has finished running
+var whenAllMovFinished = function( funcToCall ) {
+
+    if ( expressionObject.bool || cameraObject.bool || movementObject.bool || eyelidObject.bool || eyeObject.bool || blinkNowObject.bool || normalBlinkObject.bool || nodObject.bool || shakeObject.bool ) {
+      
+        setTimeout( function() {
+         
+            whenAllMovFinished( funcToCall );
+        
+        }, 200 );
+
+    } else {
+
+        funcToCall();
+
+    }
+
 }
 
 function getNodSpeedInString() {
@@ -195,7 +242,7 @@ function displaySpeechBubblePrompt() {
     synthesisObject.delayToThinkAndTurn = synthesisObject.text.length * 200;
 
     // return to talking pos
-    $.when(createRelativeExpression( talkCalculatedExpression )).then(initExpression( relativeExpression, '1' ));
+    expressionController( calculatedTalkExpression, '1' );
 
     //display speechBubble with prompt
     speechBubbleObject.bubble.material[0].opacity = 0.95; 
@@ -237,20 +284,29 @@ function returnToLaptop( sent ) {
 
             setTimeout( function() {
 
-                resetExpression();
+                whenAllMovFinished( function() { 
+         
+                    expressionController( expressionsAbs.neutral, '1' );
+                
+                })
+
                 removeSpeechBubble();
                 initInputReady( sent )
                 showQuestionStreak();
                 
                 setTimeout( function() { 
                     
-                    resetMovement();
+                    whenAllMovFinished( function() { 
+         
+                        movementController( movements.student, '2', '1.5' );
+
+                    })
 
                     setTimeout( function() {
 
                         normalBlinkObject.bool = true;
                 
-                    }, 1800 );
+                    }, 2500 );
 
                 }, 1500 );
 
@@ -277,8 +333,6 @@ function addToPrevSents() {
 }
 
 function showOptionBtns() {
-
-    normalBlinkObject.bool = true;
 
     $('.option-btn').prop( "disabled", false);
 
@@ -335,7 +389,6 @@ function tryAgain() {
 
 function whatsWrong() {
 
-    normalBlinkObject.bool = false;
     // avoid moving for a fraction of a second if mid-blink
     if ( blinkNowObject.bool ) {
 
@@ -359,14 +412,17 @@ function whatsWrong() {
         $('.option-btn').prop( "disabled", true);
         $('#optionBtns').fadeOut( 500 )
         
-        createRelativeMovement( laptopMovement );
-        initMovement( relativeMovement, '0.5', '1.5' );
+        whenAllMovFinished( function() {
+
+            movementController( movements.laptop, '0.5', '1.5' );
+
+        });
 
         setTimeout( function() {
         
             backNReadALine();
 
-        }, 2000 );
+        }, 3500 );
 
     }
 
@@ -424,18 +480,6 @@ function nextSentence() {
 
         returnToLaptop( '' );
 
-        //setTimeout( function() {
-            
-            //$.when(createRelativeExpression( neutralExpression )).then(initExpression( relativeExpression, '1' ));
-
-            //setTimeout( function() {
-
-                //$.when(createRelativeMovement( studentMovement )).then(initMovement( relativeMovement, '0.5', '1.5' ));
-
-            //}, 1250 );
-
-        //}, 2800 );
-
         let sentId = classVariableDict.last_sent.sent_id
         $.ajax({
             url: "/face/store_next_sentence",
@@ -485,15 +529,8 @@ function waitForWrongSlices() {
                 
                 normalBlinkObject.bool = false;
                 // avoid moving for a fraction of a second if mid-blink
-                if ( blinkNowObject.bool ) {
-
-                    setTimeout( turnToBoardToShowErrors, 50 );
-
-                } else {
-    
-                    turnToBoardToShowErrors();
-
-                }
+                
+                whenAllMovFinished( turnToBoardToShowErrors );
 
             } else {
 
@@ -512,13 +549,9 @@ function waitForWrongSlices() {
 
 function turnToBoardToShowErrors() {
 
-    createRelativeMovement( boardMovement )
-    createSingleExpression( contentExpression, 0.2 );
-    createRelativeExpression( calculatedExpression );
-    
     setTimeout( function() {
     
-        initMovement( relativeMovement, '0.5', '2' );
+        movementController( movements.board, '0.5', '2' );
 
         let newInd = Object.keys(classVariableDict.sentences).length - 1;
         parseText( sentenceObject, true, 0x2d2d2d );
@@ -527,7 +560,12 @@ function turnToBoardToShowErrors() {
 
         setTimeout( function() {
 
-            initCameraMove('board', '2');
+
+            whenAllMovFinished( function() { 
+         
+                initCameraMove('board', '2');
+
+            })
 
             setTimeout( function() {
 
@@ -535,7 +573,12 @@ function turnToBoardToShowErrors() {
 
                 setTimeout( function() {
 
-                    initExpression( relativeExpression, '1' );
+                    whenAllMovFinished( function() { 
+         
+                        expressionController( expressionsAbs.neutral, '1', true );
+                    
+                    });
+                    
                     highlightWrong(); 
                     
                     setTimeout( function() {

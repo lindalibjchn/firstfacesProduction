@@ -59,11 +59,17 @@ function talkToTia() {
     $('#textInputContainer').hide();
     $('.record-btn').prop("disabled", true);
     $('#recordBtnsContainer').fadeOut( 1000 );
+    
     // normal blinking interferes with saccs
     normalBlinkObject.bool = false;
+    
     setTimeout( function(){initCameraMove('tia', '2')}, 1000 );
-    $.when(createSingleExpression( listeningExpression, 0.5 )).then(createRelativeExpression( calculatedExpression ))
-    setTimeout( tiaLeanToListen, 3500 );
+    
+    setTimeout( function() {
+        
+        whenAllMovFinished( tiaLeanToListen )
+            
+    }, 3500 );
 
     // get expression ready beforehand
 
@@ -73,7 +79,7 @@ function talkToTia() {
 function tiaLeanToListen() {
 
     initMove( leanObject, leanObject.coords.close, '1.5' );
-    initExpression( relativeExpression, '0.5' );
+    expressionController( expressionsAbs.listening, '0.5' ) 
     
     setTimeout( speakWords, 2000 );
 
@@ -104,11 +110,11 @@ function tiaThinkAboutSentence() {
             
                 if( classVariableDict.awaitingJudgement ) {
 
-                    goToThinkingPos();
+                    whenAllMovFinished( goToThinkingPos );
                     
                 } else {
 
-                    runAfterJudgement();
+                    whenAllMovFinished( runAfterJudgement );
                     
                 }
             
@@ -126,75 +132,98 @@ function goToThinkingPos() {
     // don't want to run runAfterJudgement if Tia is turning to think
     classVariableDict.goingToThinking = true;
 
-    console.log('in goToThinkingPos');
-    $.when(createRelativeMovement( thinkMovement )).then( initMovement( relativeMovement, '0.5', '2' ));
+    movementController( movements.think, '0.5', '2' );
 
-    setTimeout( setThinkingFace, 2500 );
+    setTimeout( function() {
+        
+       whenAllMovFinished( setThinkingFace );
+       
+    }, 2100 );
 
 }
 
 function setThinkingFace() {
 
-    $.when($.when(createSingleExpression( thinkingExpression, 1 )).then(createRelativeExpression( calculatedExpression ))).then( initExpression( relativeExpression, '2' ));
-    $('#thinkingLoading').show();
+    expressionController( expressionsAbs.thinking, '1', true );
 
-    //setTimeout( thinkingEyes, 2000 );
+    $('#thinkingLoading').show();
 
     setTimeout( function() {
 
-        classVariableDict.goingToThinking = false;
-        classVariableDict.thinking = true;
-
-        if ( classVariableDict.awaitingJudgement === false ) {
-
-            if ( classVariableDict.last_sent.judgement !== "I" ) {
-
-                initReturnFromThinking();
-
-            } else {
-
-                normalBlinkObject.bool = false;
-                classVariableDict.thinking = false;
-                //return eyes to original thinking position
-                $('#thinkingLoading').hide();
-                setTimeout(runAfterJudgement, 600);
-
-            }
-
-        } else {
-
-            normalBlinkObject.bool = true;
-
-        }
+        whenAllMovFinished( firstCheckAfterThinking );
 
     }, 2250)
 
 }
 
-//function thinkingEyes() { 
+function firstCheckAfterThinking() {
 
-    ////init solo talk like thinking
-    ////initTalk( true );
-    
-    //if ( tiaThinkingObject.thinkingEyes ) {
+    classVariableDict.goingToThinking = false;
 
-        //$('#thinkingLoading').show();
+    if ( classVariableDict.awaitingJudgement === false ) {
 
-        //// get random sacc time between 1-4seconds
-        //let saccInterval = Math.floor(Math.random() * 2000) + 1000;
+        tiaThinkingObject.thinking = false;
         
-        //let randomSaccX = tiaThinkingObject.startX + Math.random() * tiaThinkingObject.maxX;
-        //let randomSaccY = tiaThinkingObject.startY + Math.random() * tiaThinkingObject.maxY;
+        if ( classVariableDict.last_sent.judgement === "I" ) {
 
-        //let saccCoords = [[0,0,0],[randomSaccX, randomSaccY, 0]];
+            $('#thinkingLoading').hide();
+            setTimeout(runAfterJudgement, 600);
 
-        //initMove( eyeObject, saccCoords, '0.5' );
+        } else {
 
-        //setTimeout( thinkingEyes, saccInterval );
+            initReturnFromThinking();
 
-    //}
+        }
 
-//}
+    } else {
+
+        tiaThinkingObject.thinking = true;
+        //normalBlinkObject.bool = true;
+        setTimeout( thinkingEyes );
+
+    }
+
+}
+
+function thinkingEyes() { 
+
+    //init solo talk like thinking
+    //initTalk( true );
+    
+    normalBlinkObject.bool = false;
+
+    if ( tiaThinkingObject.thinking ) {
+        
+        // get random sacc time between 1-4seconds
+        let saccInterval = Math.floor(Math.random() * 3000) + 1000;
+
+        if ( blinkNowObject.bool === false ) {
+
+            var plusOrMinus = Math.random() < 0.5 ? -1 : 1;
+            let randomSaccX = tiaThinkingObject.startX + plusOrMinus * Math.random() * tiaThinkingObject.maxX;
+            let randomSaccY = tiaThinkingObject.startY + Math.random() * tiaThinkingObject.maxY;
+
+            let saccCoords = [[0,0,0],[randomSaccX, randomSaccY, 0]];
+
+            movementNow.sacc = saccCoords;
+            initSaccNew( saccCoords, '0.75', false );
+
+        }
+
+        setTimeout( function() {
+
+            normalBlinkObject.bool = true;
+            setTimeout( function() {
+                
+                thinkingEyes()
+
+            }, saccInterval );
+
+        }, 1500 );
+
+    }
+
+}
 
 
 function initReturnFromThinking() {
@@ -202,18 +231,21 @@ function initReturnFromThinking() {
     //tiaThinkingObject.thinkingEyes = false;
     $('#thinkingLoading').hide();
      
-    setTimeout( returnFromThinking, 600 );
+    whenAllMovFinished( returnFromThinking );
 
 }
 
 function returnFromThinking() {
 
     //initMove( eyeObject, [[0,0,0],[tiaThinkingObject.startX, tiaThinkingObject.startY, 0]], '0.5' );
-    $.when(createRelativeMovement( studentMovement )).then( initMovement( relativeMovement, '0.5', '1.5' ));
+    movementController( movements.student, '0.5', '1.5' );
     
     normalBlinkObject.bool = false;
-    setTimeout( runAfterJudgement, 1000 );
-
+    setTimeout( function () {
+        
+        whenAllMovFinished( runAfterJudgement ); 
+        
+    }, 1600 );
 
 } 
 

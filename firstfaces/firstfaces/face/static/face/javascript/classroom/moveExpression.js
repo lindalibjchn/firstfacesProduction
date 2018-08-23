@@ -1,46 +1,51 @@
 // CONTAINS THE EXPRESSIONS FOR THE EMOTION WHEEL AND THE LOGIC FOR TURNING THE WHEEL INTO THE EXPRESSIONS //
 
+function expressionController( expressionTo, duration, eyelids=false ) {
+
+    console.log(
+            "\nexpression initiated\n"
+    );
+
+    let relativeExpressionMovement = createRelativeExpression( expressionTo );
+    initExpression( relativeExpressionMovement, duration, eyelids );
+
+}
+
 // create the relative expression and store the masterExpressionState
-function createRelativeExpression( expFrom, expTo ){
+function createRelativeExpression( expTo ){
 
-    if ( expressionObject.bool ) {
+    relativeExpression = $.extend( true, {}, expTo );
+     
+    Object.keys( relativeExpression.AUs ).forEach( function( AU ) {
 
-        console.log('cant create expression while another one is running')
-        console.log('\ncreateExpression called by\n\n' + createRelativeExpression.caller )
+        Object.keys( relativeExpression.AUs[AU] ).forEach( function( bone ) {
 
-    } else {
+            for ( var j=0; j < 2; j++ ) {
 
-        //console.log('\ncreateExpression successfully called by\n\n' + createRelativeExpression.caller )
-        relativeExpression = $.extend( true, {}, expTo );
-         
-        Object.keys( relativeExpression.AUs ).forEach( function( AU ) {
-
-            Object.keys( relativeExpression.AUs[AU] ).forEach( function( bone ) {
-
-                for ( var j=0; j < 2; j++ ) {
-
-                    for ( var k=0; k < 3; k++ ) {
-                        
-                        relativeExpression.AUs[AU][bone][ j ][ k ] -= expFrom.AUs[AU][bone][ j ][ k ];
-                        
-                    }
-
+                for ( var k=0; k < 3; k++ ) {
+                    
+                    relativeExpression.AUs[AU][bone][ j ][ k ] -= expressionNow.AUs[AU][bone][ j ][ k ];
+                    
                 }
 
-            })
+            }
 
         })
 
-        let eyelidChange = expTo.eyelids; - expFrom.eyelids;
-        relativeExpression.eyelids = eyelidChange;
-        eyelidObject.currentCoords[ 1 ][ 0 ] += eyelidChange;
+    })
 
-    }
+    console.log( 'eyelidsTo:', expTo.eyelids );
+    console.log( 'eyelidsNow:', expressionNow.eyelids );
+    let eyelidChange = expTo.eyelids - expressionNow.eyelids;
+    relativeExpression.eyelids = eyelidChange;
+    //eyelidObject.currentCoords[ 1 ][ 0 ] += eyelidChange;
+
+    return relativeExpression;
 
 }
 
 //// general all-purpose method for all expressions
-function initExpression( obj, speed ) {
+function initExpression( obj, speed, eyelids ) {
 
     expressionObject = obj
 
@@ -48,7 +53,7 @@ function initExpression( obj, speed ) {
     expressionObject.startCount = mainCount;
     expressionObject.bool = true;
 
-    initMoveEyelids( expressionObject.eyelids, -expressionObject.eyelids, speed, false );
+    initMoveEyelids( expressionObject.eyelids, -expressionObject.eyelids, speed, eyelids );
 
 }
 
@@ -156,6 +161,11 @@ function expression( main ) {
     } else {
 
         expressionObject.bool = false;
+        expressionNow = getAbsoluteCoordsOfExpressionNow();
+
+        console.log(
+                "\nexpression movement complete\n"
+        );
 
     }
 
@@ -240,8 +250,8 @@ function createSingleExpression( exp, mult ) {
 
     }
 
-    calculatedExpression = $.extend(true, {}, exp);
-    talkCalculatedExpression = $.extend(true, {}, exp);
+    calcExp = $.extend(true, {}, exp);
+    talkCalcExp = $.extend(true, {}, exp);
 
     Object.keys( exp.AUs ).forEach( function( AU ) {
 
@@ -256,8 +266,8 @@ function createSingleExpression( exp, mult ) {
                     let movementAmount = expThisBone[ j ][ k ] * mult;
                     let talkAmount = 0.5 * expThisBone[ j ][ k ] * mult
 
-                    calculatedExpression.AUs[ AU ][ bone ][ j ][ k ] = movementAmount;
-                    talkCalculatedExpression.AUs[ AU ][ bone ][ j ][ k ] = talkAmount;
+                    calcExp.AUs[ AU ][ bone ][ j ][ k ] = movementAmount;
+                    talkCalcExp.AUs[ AU ][ bone ][ j ][ k ] = talkAmount;
 
                 }
 
@@ -268,23 +278,23 @@ function createSingleExpression( exp, mult ) {
     })
 
     let eyelidMovementAmount = exp.eyelids * mult;
-    calculatedExpression.eyelids = eyelidMovementAmount;
-    talkCalculatedExpression.eyelids = 0.5 * eyelidMovementAmount;
+    calcExp.eyelids = eyelidMovementAmount;
+    talkCalcExp.eyelids = 0.5 * eyelidMovementAmount;
 
 }
 
-//var sectors = [ 
-    //[ contentExpression, happyExpression ], 
-    //[ happyExpression, disgustExpression ],
-    //[ disgustExpression, fearExpression ],
-    //[ fearExpression, sadExpression ],
-    //[ sadExpression, contentExpression ]
-//]
+var sectors = [ 
+    [ expressionsRel.content, expressionsRel.happy ], 
+    [ expressionsRel.happy, expressionsRel.disgust ],
+    [ expressionsRel.disgust, expressionsRel.fear ],
+    [ expressionsRel.fear, expressionsRel.sad ],
+    [ expressionsRel.sad, expressionsRel.content ]
+]
 
-function createCombinedExpression( twoExpressions, ratio, mult, surp ){
+function createCalculatedExpression( twoExpressions, ratio, mult, surp ){
 
-    calculatedExpression = $.extend(true, {}, blankExpression);
-    talkCalculatedExpression = $.extend(true, {}, blankExpression);
+    calcExp = $.extend(true, {}, expressionsRel.blank );
+    calcTalkExp = $.extend(true, {}, expressionsRel.blank );
 
     let zeroMovement = [[0,0,0],[0,0,0]];
 
@@ -294,32 +304,16 @@ function createCombinedExpression( twoExpressions, ratio, mult, surp ){
     let expression01 = twoExpressions[ 0 ];
     let expression02 = twoExpressions[ 1 ];
 
-    // loops through every pos and rot a,y,z of each bone and assigns mix of two expressions in proportion to calculatedExpression. negativeCalculatedExpression is for returning to neutral
-    Object.keys( blankExpression.AUs ).forEach( function( AU ) {
+    // loops through every pos and rot a,y,z of each bone and assigns mix of two expressions in proportion to calcExp. negativeCalculatedExpression is for returning to neutral
+    Object.keys( calcExp.AUs ).forEach( function( AU ) {
 
-        Object.keys( blankExpression.AUs[AU] ).forEach( function( bone ) {
+        Object.keys( calcExp.AUs[AU] ).forEach( function( bone ) {
 
             var expression01ThisBone;
-            if ( expression01.AUs[AU][bone] === undefined ) {
-
-                expression01ThisBone = zeroMovement;
-
-            } else {
-
-                expression01ThisBone = expression01.AUs[ AU ][ bone ];
-
-            }
+            expression01ThisBone = expression01.AUs[ AU ][ bone ];
 
             var expression02ThisBone;
-            if ( expression02.AUs[ AU ][ bone ] === undefined ) {
-
-                expression02ThisBone = zeroMovement;
-
-            } else {
-
-                expression02ThisBone = expression02.AUs[ AU ][ bone ];
-
-            }
+            expression02ThisBone = expression02.AUs[ AU ][ bone ];
 
             //maybe no surprise at all
             var surpriseExpressionThisBone;
@@ -329,15 +323,7 @@ function createCombinedExpression( twoExpressions, ratio, mult, surp ){
 
             } else {
 
-                if ( surpriseExpression.AUs[ AU ][ bone ] === undefined ) {
-
-                    surpriseExpressionThisBone = zeroMovement;
-
-                } else {
-
-                    surpriseExpressionThisBone = surpriseExpression.AUs[ AU ][ bone ];
-
-                }
+                surpriseExpressionThisBone = expressionsRel.surprise.AUs[ AU ][ bone ];
 
             }
 
@@ -345,8 +331,8 @@ function createCombinedExpression( twoExpressions, ratio, mult, surp ){
 
             } else {
 
-                calculatedExpression.AUs[ AU ][ bone ] = [[],[]];
-                talkCalculatedExpression.AUs[ AU ][ bone ] = [[],[]];
+                calcExp.AUs[ AU ][ bone ] = [[],[]];
+                calcTalkExp.AUs[ AU ][ bone ] = [[],[]];
 
                 for ( var j=0; j < 2; j++ ) {
 
@@ -355,10 +341,10 @@ function createCombinedExpression( twoExpressions, ratio, mult, surp ){
                         let movementAmount = expression01ThisBone[ j ][ k ] * expression01Amount + expression02ThisBone[ j ][ k ] * expression02Amount + surpriseExpressionThisBone[ j ][ k ] * surp;
                         let talkAmount = 0.5 * expression01ThisBone[ j ][ k ] * expression01Amount + 0.5 * expression02ThisBone[ j ][ k ] * expression02Amount;
 
-                        calculatedExpression.AUs[ AU ][ bone ][ j ][ k ] = movementAmount;
-                        talkCalculatedExpression.AUs[ AU ][ bone ][ j ][ k ] = talkAmount;
+                        calcExp.AUs[ AU ][ bone ][ j ][ k ] = movementAmount;
+                        calcTalkExp.AUs[ AU ][ bone ][ j ][ k ] = talkAmount;
                         //only for talk
-                        negativeCalculatedExpression.AUs[ AU ][ bone ][ j ][ k ] = -movementAmount;
+                        //negativeCalculatedExpression.AUs[ AU ][ bone ][ j ][ k ] = -movementAmount;
 
                     }
 
@@ -370,9 +356,11 @@ function createCombinedExpression( twoExpressions, ratio, mult, surp ){
 
     })
 
-    let eyelidMovementAmount = expression01.eyelids * expression01Amount + expression02.eyelids * expression02Amount + surpriseExpression.eyelids * surp
-    calculatedExpression.eyelids = eyelidMovementAmount;
-    talkCalculatedExpression.eyelids = 0.5 * expression01.eyelids * expression01Amount + 0.5 * expression02.eyelids * expression02Amount;
+    let eyelidMovementAmount = expression01.eyelids * expression01Amount + expression02.eyelids * expression02Amount + expressionsAbs.surprise.eyelids * surp
+    calcExp.eyelids = eyelidMovementAmount;
+    calcTalkExp.eyelids = 0.5 * expression01.eyelids * expression01Amount + 0.5 * expression02.eyelids * expression02Amount;
+
+    return [ calcExp, calcTalkExp ];
 
 }
 
@@ -405,11 +393,17 @@ function changeExpression() {
         synthesisObject.speaking_rate += dia * ( ( 1 - ratio ) * speech_rate02 + ratio * speech_rate01 ) + surprise / 10;
 
         //arguments are [happyExpression, contentExpression], ratio of 1st to 2nd, diameter/amount, surprise amount
-        createCombinedExpression( sectors[ sectorNRatio[ 0 ] ], ratio,  dia, surprise );
+        let calculatedExpressions = createCalculatedExpression( sectors[ sectorNRatio[ 0 ] ], ratio,  dia, surprise );
+        console.log('calculatedExpressions:', calculatedExpressions);
+        //need to get absolute vals
+        calculatedExpression = getAbsoluteCoordsOfExpressionTo( calculatedExpressions[ 0 ] )
+        calculatedTalkExpression = getAbsoluteCoordsOfExpressionTo( calculatedExpressions[ 1 ] )
 
     } else {
 
-        createSingleExpression( blankExpression, 1 )
+        let singleCalculatedExpressions = createSingleExpression( expressionsRel.blank, 1 )
+        calculatedExpression = getAbsoluteCoordsOfExpressionTo( singleCalculatedExpressions[ 0 ] )
+        calculatedTalkExpression = getAbsoluteCoordsOfExpressionTo( singleCalculatedExpressions[ 1 ] )
 
     }
 
@@ -418,7 +412,7 @@ function changeExpression() {
 
 function getAbsoluteCoordsOfExpressionNow() {
 
-    let absExpression = $.extend(true, {}, expressionsRel[ 'blank' ]);
+    let absExpression = $.extend(true, {}, expressionsRel.blank);
 
     Object.keys( absExpression.AUs.AU2 ).forEach( function( key ) {
 
@@ -508,8 +502,105 @@ function getAbsoluteCoordsOfExpressionNow() {
         
     })
 
+    //absExpression.eyelids = ( eyelidsAbs.upperMiddle.open - tiaObject.faceBones['eyelid_upper_middle.L'].position.y ) / 0.45;
 
     return absExpression;
+
+}
+
+function getAbsoluteCoordsOfExpressionTo( exp ) {
+
+    let expression = $.extend( true, {}, exp );
+
+    Object.keys( exp.AUs.AU2 ).forEach( function( key ) {
+
+        // pos x
+       
+        expression.AUs.AU2[ key ][ 0 ][ 0 ] += expressionBase.AUs.AU2[ key ][ 0 ][ 0 ];
+
+        // pos y
+        
+        expression.AUs.AU2[ key ][ 0 ][ 1 ] += expressionBase.AUs.AU2[ key ][ 0 ][ 1 ];
+
+        // pos z
+        
+        expression.AUs.AU2[ key ][ 0 ][ 2 ] += expressionBase.AUs.AU2[ key ][ 0 ][ 2 ];
+
+
+        // rot x
+       
+        expression.AUs.AU2[ key ][ 1 ][ 0 ] += expressionBase.AUs.AU2[ key ][ 1 ][ 0 ];
+
+        // rot y
+        
+        expression.AUs.AU2[ key ][ 1 ][ 1 ] += expressionBase.AUs.AU2[ key ][ 1 ][ 1 ];
+
+        // rot z
+        
+        expression.AUs.AU2[ key ][ 1 ][ 2 ] += expressionBase.AUs.AU2[ key ][ 1 ][ 2 ];
+
+    })
+        
+    Object.keys( expressionBase.AUs.AU1 ).forEach( function( key ) {
+
+        // pos x
+       
+        expression.AUs.AU1[ key ][ 0 ][ 0 ] += expressionBase.AUs.AU1[ key ][ 0 ][ 0 ];
+
+        // pos y
+        
+        expression.AUs.AU1[ key ][ 0 ][ 1 ] += expressionBase.AUs.AU1[ key ][ 0 ][ 1 ];
+
+        // pos z
+        
+        expression.AUs.AU1[ key ][ 0 ][ 2 ] += expressionBase.AUs.AU1[ key ][ 0 ][ 2 ];
+
+
+        // rot x
+       
+        expression.AUs.AU1[ key ][ 1 ][ 0 ] += expressionBase.AUs.AU1[ key ][ 1 ][ 0 ];
+
+        // rot y
+        
+        expression.AUs.AU1[ key ][ 1 ][ 1 ] += expressionBase.AUs.AU1[ key ][ 1 ][ 1 ];
+
+        // rot z
+        
+        expression.AUs.AU1[ key ][ 1 ][ 2 ] += expressionBase.AUs.AU1[ key ][ 1 ][ 2 ];
+
+    })
+
+    //Mouth Jaw Inner is part of a different object and so needs to be done separately
+    Object.keys( expressionBase.AUs.AU1m ).forEach( function( key ) {
+
+        // pos x
+       
+        expression.AUs.AU1m[ key ][ 0 ][ 0 ] += expressionBase.AUs.AU1m[ key ][ 0 ][ 0 ];
+
+        // pos y
+        
+        expression.AUs.AU1m[ key ][ 0 ][ 1 ] += expressionBase.AUs.AU1m[ key ][ 0 ][ 1 ];
+
+        // pos z
+        
+        expression.AUs.AU1m[ key ][ 0 ][ 2 ] += expressionBase.AUs.AU1m[ key ][ 0 ][ 2 ];
+
+
+        // rot x
+       
+        expression.AUs.AU1m[ key ][ 1 ][ 0 ] += expressionBase.AUs.AU1m[ key ][ 1 ][ 0 ];
+
+        // rot y
+        
+        expression.AUs.AU1m[ key ][ 1 ][ 1 ] += expressionBase.AUs.AU1m[ key ][ 1 ][ 1 ];
+
+        // rot z
+        
+        expression.AUs.AU1m[ key ][ 1 ][ 2 ] += expressionBase.AUs.AU1m[ key ][ 1 ][ 2 ];
+        
+    });
+
+    return expression;
 
 }
 
@@ -613,7 +704,6 @@ function getAbsoluteCoordsOfMainExpressions() {
     });
 
 }
-
 function resetExpression() {
 
     absCurExpression = getAbsoluteCoordsOfExpressionNow();

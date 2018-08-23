@@ -49,31 +49,6 @@ var movementObject = {
     'sinLength': 0,
 }
 
-const blankMovement = {
-
-    'AUs': {
-        'AU1': {
-            'head': [[0, 0, 0], [0, 0, 0]],
-            'neck': [[0, 0, 0], [0, 0, 0]],
-        },
-        'AU1b': {
-            'spineLower': [[0, 0, 0], [0, 0, 0]],
-            'spineUpper': [[0, 0, 0], [0, 0, 0]],
-            'spineUpperInner': [[0, 0, 0], [0, 0, 0]],
-        },
-        'AU2': {
-            'shoulder': [[0, 0, 0], [0, 0, 0]],
-        },
-        'AU2b': {
-            'hand': [[0, 0, 0], [0, 0, 0]],
-            'upperArm': [[0, 0, 0], [0, 0, 0]],
-            'lowerArm': [[0, 0, 0], [0, 0, 0]],
-        },
-    },
-
-    'sacc': [[0,0,0],[0,0,0]],
-}
-
 //var movementProt = {
     //'AUs': {
         //'AU1': {},
@@ -84,193 +59,213 @@ const blankMovement = {
     //'sacc': [[0,0,0],[0,0,0]],
 //};
 
-var masterMovementState = $.extend(true, {}, blankMovement);
-//var calculatedMovement = $.extend(true, {}, blankMovement);
-var relativeMovement = $.extend(true, {}, blankMovement);
-var absNeutralMovement;
-var absCurMovement;
+//var masterMovementState = $.extend(true, {}, blankMovement);
+////var calculatedMovement = $.extend(true, {}, blankMovement);
+//var relativeMovement = $.extend(true, {}, blankMovement);
+//var absNeutralMovement;
+//var absCurMovement;
 
-const boardMovement = {
+var movements = {
 
-    'name': 'board',
-    'AUs': {
-        'AU1': {
-            'head': [[0, 0, 0], [-0.1, -0.4, 0]],
-            'neck': [[0, 0, 0], [0, 0, 0]],
+    'blank': {
+        'AUs': {
+            'AU1': {
+                'head': [[0, 0, 0], [0, 0, 0]],
+                'neck': [[0, 0, 0], [0, 0, 0]],
+            },
+            'AU1b': {
+                'spineLower': [[0, 0, 0], [0, 0, 0]],
+                'spineUpper': [[0, 0, 0], [0, 0, 0]],
+                'spineUpperInner': [[0, 0, 0], [0, 0, 0]],
+            },
+            'AU2': {
+                'shoulder': [[0, 0, 0], [0, 0, 0]],
+            },
+            'AU2b': {
+                'hand': [[0, 0, 0], [0, 0, 0]],
+                'upperArm': [[0, 0, 0], [0, 0, 0]],
+                'lowerArm': [[0, 0, 0], [0, 0, 0]],
+            },
         },
-        'AU1b': {
-            'spineUpperInner': [[0, 0, 0], [0, -0.4, 0]],
-            'spineLower': [[0, 0, 0], [0, 0, 0]],
-            'spineUpper': [[0, 0, 0], [0, 0, 0]],
-        },
-        'AU2': {
-            'shoulder': [[0, 0, 0], [0, 0, 0]],
-        },
-        'AU2b': {
-            'hand': [[0, 0, 0], [0, 0, 0]],
-            'upperArm': [[0, 0, 0], [0, 0, 0]],
-            'lowerArm': [[0, 0, 0], [0, 0, 0]],
-        },
-    },
-    'sacc': [[0,0,0],[0,-0.3,0]]
-
-}
-
-const studentMovement = {
-
-    'name': 'student',
-    'AUs': {
-        'AU1': {
-            'head': [[0, 0, 0], [0, 0.0175, 0]],
-            'neck': [[0, 0, 0], [0, 0, 0]],
-        },
-        'AU1b': {
-            'spineLower': [[0, 0, 0], [0, 0, 0]],
-            'spineUpper': [[0, 0, 0], [0, 0, 0]],
-            'spineUpperInner': [[0, 0, 0], [0.075, 0, 0]],
-        },
-        'AU2': {
-            'shoulder': [[0, 0, 0], [0, 0, 0]],
-        },
-        'AU2b': {
-            'hand': [[0, 0, 0], [0, 0, 0]],
-            'upperArm': [[0, 0, 0], [0, 0, 0]],
-            'lowerArm': [[0, 0, 0], [0, 0, 0]],
-        },
+        'sacc': [[0,0,0],[0,0,0]],
     },
 
-    'sacc': [[0,0,0],[0,0,0]],
-
-}
-const laptopMovement = {
-
-    'name': 'laptop',
-    'AUs': {
-        'AU1': {
-            'head': [[0, 0, 0], [0.15, 0, 0]],
-            'neck': [[0, 0, 0], [0, 0, 0]],
+    'board': {
+        'name': 'board',
+        'AUs': {
+            'AU1': {
+                'head': [[0, 0, 0], [-0.1, -0.4, 0]],
+                'neck': [[0, 0, 0], [0, 0, 0]],
+            },
+            'AU1b': {
+                'spineUpperInner': [[0, 0, 0], [0, -0.4, 0]],
+                'spineLower': [[0, 0, 0], [0, 0, 0]],
+                'spineUpper': [[0, 0, 0], [0, 0, 0]],
+            },
+            'AU2': {
+                'shoulder': [[0, 0, 0], [0, 0, 0]],
+            },
+            'AU2b': {
+                'hand': [[0, 0, 0], [0, 0, 0]],
+                'upperArm': [[0, 0, 0], [0, 0, 0]],
+                'lowerArm': [[0, 0, 0], [0, 0, 0]],
+            },
         },
-        'AU1b': {
-            'spineUpperInner': [[0, 0, 0], [0.05, 0, 0]],
-            'spineLower': [[0, 0, 0], [0, 0, 0]],
-            'spineUpper': [[0, 0, 0], [0, 0, 0]],
-        },
-        'AU2': {
-            'shoulder': [[0, 0, 0], [0, 0, 0]],
-        },
-        'AU2b': {
-            'upperArm': [[0, 0.15, 0], [-0.2, -0.05, 0.2]],
-            'hand': [[0, 0, 0], [0, 0, 0]],
-            'lowerArm': [[0, 0, 0], [0, 0, 0]],
-        },
+        'sacc': [[0,0,0],[0,-0.3,0]]
     },
-    'sacc': [[0,0,0],[0.3,0,0]],
 
-}
+    'student': {
+        'name': 'student',
+        'AUs': {
+            'AU1': {
+                'head': [[0, 0, 0], [0, 0.0175, 0]],
+                'neck': [[0, 0, 0], [0, 0, 0]],
+            },
+            'AU1b': {
+                'spineLower': [[0, 0, 0], [0, 0, 0]],
+                'spineUpper': [[0, 0, 0], [0, 0, 0]],
+                'spineUpperInner': [[0, 0, 0], [0.075, 0, 0]],
+            },
+            'AU2': {
+                'shoulder': [[0, 0, 0], [0, 0, 0]],
+            },
+            'AU2b': {
+                'hand': [[0, 0, 0], [0, 0, 0]],
+                'upperArm': [[0, 0, 0], [0, 0, 0]],
+                'lowerArm': [[0, 0, 0], [0, 0, 0]],
+            },
+        },
 
-const thinkMovement = {
-
-    'name': 'think',
-    'AUs': {
-        'AU1': {
-            'head': [[0, 0, 0], [-0.025, 0.25, 0]],
-            'neck': [[0, 0, 0], [0, 0, 0]],
-        },
-        'AU1b': {
-            'spineUpperInner': [[0, 0, 0], [0, 0.2, 0]],
-            'spineLower': [[0, 0, 0], [0, 0, 0]],
-            'spineUpper': [[0, 0, 0], [0, 0, 0]],
-        },
-        'AU2': {
-            'shoulder': [[0, 0, 0], [0, 0, 0]],
-        },
-        'AU2b': {
-            'hand': [[0, 0, 0], [0, 0, 0]],
-            'upperArm': [[0, 0, 0], [0, 0, 0]],
-            'lowerArm': [[0, 0, 0], [0, 0, 0]],
-        },
+        'sacc': [[0,0,0],[0,0,0]],
     },
-    'sacc': [[0,0,0],[-0.025,0.15,0]]
 
-}
-
-const standingStudentMovement = {
-
-    'name': 'standingStudent',
-    'AUs': {
-        'AU1': {
-            'head': [[0, 0, 0], [-0.07, -0.13, 0]],
-            'neck': [[0, 0, 0], [0, 0, 0]],
+    'laptop': {
+        'name': 'laptop',
+        'AUs': {
+            'AU1': {
+                'head': [[0, 0, 0], [0.15, 0, 0]],
+                'neck': [[0, 0, 0], [0, 0, 0]],
+            },
+            'AU1b': {
+                'spineUpperInner': [[0, 0, 0], [0.05, 0, 0]],
+                'spineLower': [[0, 0, 0], [0, 0, 0]],
+                'spineUpper': [[0, 0, 0], [0, 0, 0]],
+            },
+            'AU2': {
+                'shoulder': [[0, 0, 0], [0, 0, 0]],
+            },
+            'AU2b': {
+                'upperArm': [[0, 0.15, 0], [-0.2, -0.05, 0.2]],
+                'hand': [[0, 0, 0], [0, 0, 0]],
+                'lowerArm': [[0, 0, 0], [0, 0, 0]],
+            },
         },
-        'AU1b': {
-            'spineUpperInner': [[0, 0, 0], [-0.02, -0.08, 0]],
-            'spineLower': [[0, 0, 0], [0, 0, 0]],
-            'spineUpper': [[0, 0, 0], [0, 0, 0]],
-        },
-        'AU2': {
-            'shoulder': [[0, 0, 0], [0, 0, 0]],
-        },
-        'AU2b': {
-            'hand': [[0, 0, 0], [0, 0, 0]],
-            'upperArm': [[0, 0, 0], [0, 0, 0]],
-            'lowerArm': [[0, 0, 0], [0, 0, 0]],
-        },
+        'sacc': [[0,0,0],[0.2,0,0]],
     },
-    'sacc': [[0,0,0],[0,0,0]]
 
-}
-
-const confused01Movement = {
-
-    'name': 'confused01',
-    'AUs': {
-        'AU1': {
-            'head': [[0, 0, 0], [0.15, 0.25, 0]],
-            'neck': [[0, 0, 0], [0, 0, 0]],
+    'think': {
+        'name': 'think',
+        'AUs': {
+            'AU1': {
+                'head': [[0, 0, 0], [-0.025, 0.25, 0]],
+                'neck': [[0, 0, 0], [0, 0, 0]],
+            },
+            'AU1b': {
+                'spineUpperInner': [[0, 0, 0], [0, 0.2, 0]],
+                'spineLower': [[0, 0, 0], [0, 0, 0]],
+                'spineUpper': [[0, 0, 0], [0, 0, 0]],
+            },
+            'AU2': {
+                'shoulder': [[0, 0, 0], [0, 0, 0]],
+            },
+            'AU2b': {
+                'hand': [[0, 0, 0], [0, 0, 0]],
+                'upperArm': [[0, 0, 0], [0, 0, 0]],
+                'lowerArm': [[0, 0, 0], [0, 0, 0]],
+            },
         },
-        'AU1b': {
-            'spineUpperInner': [[0, 0, 0], [0, 0.2, 0]],
-            'spineLower': [[0, 0, 0], [0, 0, 0]],
-            'spineUpper': [[0, 0, 0], [0, 0, 0]],
-        },
-        'AU2': {
-            'shoulder': [[0, 0, 0], [0, 0, 0]],
-        },
-        'AU2b': {
-            'hand': [[0, 0, 0], [0, 0, 0]],
-            'upperArm': [[0, 0, 0], [0, 0, 0]],
-            'lowerArm': [[0, 0, 0], [0, 0, 0]],
-        },
+        'sacc': [[0,0,0],[-0.025,0.15,0]]
     },
-    'sacc': [[0,0,0],[0.1,0.15,0]]
 
-}
-
-const lookChairMovement = {
-
-    'name': 'lookChair',
-    'AUs': {
-        'AU1': {
-            'head': [[0, 0, 0], [0.015, 0.015, 0]],
-            'neck': [[0, 0, 0], [0, 0, 0]],
+    'standingStudent': {
+        'name': 'standingStudent',
+        'AUs': {
+            'AU1': {
+                'head': [[0, 0, 0], [-0.07, -0.13, 0]],
+                'neck': [[0, 0, 0], [0, 0, 0]],
+            },
+            'AU1b': {
+                'spineUpperInner': [[0, 0, 0], [-0.02, -0.08, 0]],
+                'spineLower': [[0, 0, 0], [0, 0, 0]],
+                'spineUpper': [[0, 0, 0], [0, 0, 0]],
+            },
+            'AU2': {
+                'shoulder': [[0, 0, 0], [0, 0, 0]],
+            },
+            'AU2b': {
+                'hand': [[0, 0, 0], [0, 0, 0]],
+                'upperArm': [[0, 0, 0], [0, 0, 0]],
+                'lowerArm': [[0, 0, 0], [0, 0, 0]],
+            },
         },
-        'AU1b': {
-            'spineLower': [[0, 0, 0], [0, 0, 0]],
-            'spineUpper': [[0, 0, 0], [0, 0, 0]],
-            'spineUpperInner': [[0, 0, 0], [0, 0, 0]],
-        },
-        'AU2': {
-            'shoulder': [[0, 0, 0], [0, 0, 0]],
-        },
-        'AU2b': {
-            'hand': [[0, 0, 0], [0, 0, 0]],
-            'upperArm': [[0, 0, 0], [0, 0, 0]],
-            'lowerArm': [[0, 0, 0], [0, 0, 0]],
-        },
+        'sacc': [[0,0,0],[0,0,0]]
     },
-    'sacc': [[0,0,0],[0.2,0.1,0]]
 
+    'confused01': {
+        'name': 'confused01',
+        'AUs': {
+            'AU1': {
+                'head': [[0, 0, 0], [0.15, 0.25, 0]],
+                'neck': [[0, 0, 0], [0, 0, 0]],
+            },
+            'AU1b': {
+                'spineUpperInner': [[0, 0, 0], [0, 0.2, 0]],
+                'spineLower': [[0, 0, 0], [0, 0, 0]],
+                'spineUpper': [[0, 0, 0], [0, 0, 0]],
+            },
+            'AU2': {
+                'shoulder': [[0, 0, 0], [0, 0, 0]],
+            },
+            'AU2b': {
+                'hand': [[0, 0, 0], [0, 0, 0]],
+                'upperArm': [[0, 0, 0], [0, 0, 0]],
+                'lowerArm': [[0, 0, 0], [0, 0, 0]],
+            },
+        },
+        'sacc': [[0,0,0],[0.15,0.25,0]]
+    },
+
+    'lookChair': {
+        'name': 'lookChair',
+        'AUs': {
+            'AU1': {
+                'head': [[0, 0, 0], [0.015, 0.015, 0]],
+                'neck': [[0, 0, 0], [0, 0, 0]],
+            },
+            'AU1b': {
+                'spineLower': [[0, 0, 0], [0, 0, 0]],
+                'spineUpper': [[0, 0, 0], [0, 0, 0]],
+                'spineUpperInner': [[0, 0, 0], [0, 0, 0]],
+            },
+            'AU2': {
+                'shoulder': [[0, 0, 0], [0, 0, 0]],
+            },
+            'AU2b': {
+                'hand': [[0, 0, 0], [0, 0, 0]],
+                'upperArm': [[0, 0, 0], [0, 0, 0]],
+                'lowerArm': [[0, 0, 0], [0, 0, 0]],
+            },
+        },
+        'sacc': [[0,0,0],[0.2,0.1,0]]
+    },
+ 
 }
+
+// abs coords of expression on enter - completely blank
+var movementBase;
+
+// abs coords of expression at current moment
+var movementNow;
 
 ////////// EYELIDS
 
@@ -293,15 +288,9 @@ var expressionObject = {
     'sinLength': 0,
 }
 
-var expressionBase;
-
 const expressionsRel = {
     
     'blank': {
-        'name': 'blank',
-        'changeVoice': true,
-        'pitch': 0,
-        'speaking_rate': 0,
         'AUs': {
             'AU1': {
                 'nose': [[0, 0, 0], [0, 0, 0]],
@@ -616,7 +605,7 @@ const expressionsRel = {
                 'lip_lower_inner': [[0, 0, 0], [0, 0, 0]],
             },
         },
-        'eyelids': -0.05,
+        'eyelids': -0.1,
 
     },
 
@@ -648,14 +637,83 @@ const expressionsRel = {
                 'lip_lower_inner': [[0, 0, 0], [0, 0, 0]],
             },
         },
-        'eyelids': -0.15,
+        'eyelids': 0,
 
     },
 
+    'mouthOpen': {
+        'name': 'mouthOpen',
+        'changeVoice': false,
+        'AUs': {
+            'AU1': {
+                'nose': [[0, 0, 0], [0, 0, 0]],
+                'jaw': [[0, 0, 0], [0.23, 0, 0]],
+            },
+            'AU1m': {
+                'jaw_inner': [[0, 0, 0], [0.23, 0, 0]],
+            },
+            'AU2': {
+                'eyebrow_inner': [[0, 0, 0], [0, 0, 0]],
+                'eyebrow_middle': [[0, 0, 0], [0, 0, 0]],
+                'eyebrow_outer': [[0, 0, 0], [0, 0, 0]],
+                'nose_side': [[0, 0, 0], [0, 0, 0]],
+                'cheek': [[-0.06, 0, 0], [0, 0, 0]],
+                'jaw_upper': [[0, 0, -0.15], [0, 0, 0]],
+                'pal_ja_jooreum': [[0, -0.3, 0], [0, 0, 0]],
+                'lip_upper_inner': [[0, 0.05, 0], [0, 0, -0.1]],
+                'lip_upper_outer': [[-0.08, -0.06, 0.05], [0, 0, 0]],
+                'lip_edge_upper': [[-0.23, -0.4, 0.1], [0, 0, -0.08]],
+                'lip_edge_lower': [[-0.3, -0.65, 0.1], [0, 0, -0.2]],
+                'lip_lower_outer': [[-0.1, -1.0, 0.05], [-0.1, 0, -0.14]],
+                'lip_lower_inner': [[-0.017, -1, 0], [-0.1, 0, 0]],
+            },
+        },
+        'eyelids': 0,
+    },
+
+    'purseLips': {
+        'name': 'purseLips',
+        'changeVoice': false,
+        'AUs': {
+            'AU1': {
+                'nose': [[0, 0, 0], [0, 0, 0]],
+                'jaw': [[0, 0, 0], [0, 0, 0]],
+            },
+            'AU1m': {
+                'jaw_inner': [[0, 0, 0], [0, 0, 0]],
+            },
+            'AU2': {
+                'eyebrow_inner': [[0, 0, 0], [0, 0, 0]],
+                'eyebrow_middle': [[0, 0, 0], [0, 0, 0]],
+                'eyebrow_outer': [[0, 0, 0], [0, 0, 0]],
+                'nose_side': [[0, 0, 0], [0, 0, 0]],
+                'cheek': [[0, 0, 0], [0, 0, 0]],
+                'jaw_upper': [[0, 0, 0], [0, 0, 0]],
+                'pal_ja_jooreum': [[0, 0, 0], [0, 0, 0]],
+                'lip_upper_inner': [[-0.1, 0, 0.05], [0, 0, 0]],
+                'lip_upper_outer': [[-0.2, 0, 0.15], [0, 0, 0]],
+                'lip_edge_upper': [[-0.3, 0, 0.3], [0, 0.3, 0]],
+                'lip_edge_lower': [[-0.3, 0, 0.3], [0, 0.3, 0]],
+                'lip_lower_outer': [[-0.15, 0, 0.15], [0, 0, 0]],
+                'lip_lower_inner': [[-0.05, 0, 0.05], [0, 0, 0]],
+            },
+        },
+        'eyelids': 0,
+    }
+
 }
 
-// will calculate this on enter
+// dict of above but Abs rather than Rel will calculate this on enter
 var expressionsAbs = {};
+
+// abs coords of expression on enter - completely blank
+var expressionBase;
+
+// abs coords of expression at current moment
+var expressionNow;
+
+var calculatedExpression;
+var calculatedTalkExpression;
 
 //var masterExpressionState = $.extend(true, {}, blankExpression);
 //var calculatedExpression = $.extend(true, {}, blankExpression);
@@ -664,70 +722,6 @@ var expressionsAbs = {};
 //var relativeExpression = $.extend(true, {}, blankExpression);
 //var absNeutralExpression;
 //var absCurExpression;
-
-//const mouthOpenExpression = {
-
-    //'name': 'mouthOpenExp',
-    //'changeVoice': false,
-    //'AUs': {
-        //'AU1': {
-            //'nose': [[0, 0, 0], [0, 0, 0]],
-            //'jaw': [[0, 0, 0], [0.23, 0, 0]],
-        //},
-        //'AU1m': {
-            //'jaw_inner': [[0, 0, 0], [0.23, 0, 0]],
-        //},
-        //'AU2': {
-            //'eyebrow_inner': [[0, 0, 0], [0, 0, 0]],
-            //'eyebrow_middle': [[0, 0, 0], [0, 0, 0]],
-            //'eyebrow_outer': [[0, 0, 0], [0, 0, 0]],
-            //'nose_side': [[0, 0, 0], [0, 0, 0]],
-            //'cheek': [[-0.06, 0, 0], [0, 0, 0]],
-            //'jaw_upper': [[0, 0, -0.15], [0, 0, 0]],
-            //'pal_ja_jooreum': [[0, -0.3, 0], [0, 0, 0]],
-            //'lip_upper_inner': [[0, 0.05, 0], [0, 0, -0.1]],
-            //'lip_upper_outer': [[-0.08, -0.06, 0.05], [0, 0, 0]],
-            //'lip_edge_upper': [[-0.23, -0.4, 0.1], [0, 0, -0.08]],
-            //'lip_edge_lower': [[-0.3, -0.65, 0.1], [0, 0, -0.2]],
-            //'lip_lower_outer': [[-0.1, -1.0, 0.05], [-0.1, 0, -0.14]],
-            //'lip_lower_inner': [[-0.017, -1, 0], [-0.1, 0, 0]],
-        //},
-    //},
-    //'eyelids': 0,
-
-//}
-
-//const purseLipsExpression = {
-
-    //'name': 'purseLipsExp',
-    //'changeVoice': false,
-    //'AUs': {
-        //'AU1': {
-            //'nose': [[0, 0, 0], [0, 0, 0]],
-            //'jaw': [[0, 0, 0], [0, 0, 0]],
-        //},
-        //'AU1m': {
-            //'jaw_inner': [[0, 0, 0], [0, 0, 0]],
-        //},
-        //'AU2': {
-            //'eyebrow_inner': [[0, 0, 0], [0, 0, 0]],
-            //'eyebrow_middle': [[0, 0, 0], [0, 0, 0]],
-            //'eyebrow_outer': [[0, 0, 0], [0, 0, 0]],
-            //'nose_side': [[0, 0, 0], [0, 0, 0]],
-            //'cheek': [[0, 0, 0], [0, 0, 0]],
-            //'jaw_upper': [[0, 0, 0], [0, 0, 0]],
-            //'pal_ja_jooreum': [[0, 0, 0], [0, 0, 0]],
-            //'lip_upper_inner': [[-0.1, 0, 0.05], [0, 0, 0]],
-            //'lip_upper_outer': [[-0.2, 0, 0.15], [0, 0, 0]],
-            //'lip_edge_upper': [[-0.3, 0, 0.3], [0, 0.3, 0]],
-            //'lip_edge_lower': [[-0.3, 0, 0.3], [0, 0.3, 0]],
-            //'lip_lower_outer': [[-0.15, 0, 0.15], [0, 0, 0]],
-            //'lip_lower_inner': [[-0.05, 0, 0.05], [0, 0, 0]],
-        //},
-    //},
-    //'eyelids': 0,
-
-//}
 
 
 // Breathe
@@ -1025,6 +1019,10 @@ var synthesisObject = {
 var tiaThinkingObject = {
 
     thinking: false,
+    startX: - 0.1,
+    startY: 0.2,
+    maxX: 0.075,
+    maxY: 0.15,
 
 }
 
