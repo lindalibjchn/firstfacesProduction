@@ -1,6 +1,7 @@
 // CONTAINS THE EXPRESSIONS FOR THE EMOTION WHEEL AND THE LOGIC FOR TURNING THE WHEEL INTO THE EXPRESSIONS //
 
-function expressionController( expressionTo, duration, eyelids=false ) {
+// if eyelids is false, then the absolute coordinates in AUs is used
+function expressionController( expressionTo, duration, eyelids=true ) {
 
     console.log(
             "\nexpression initiated\n"
@@ -34,8 +35,6 @@ function createRelativeExpression( expTo ){
 
     })
 
-    console.log( 'eyelidsTo:', expTo.eyelids );
-    console.log( 'eyelidsNow:', expressionNow.eyelids );
     let eyelidChange = expTo.eyelids - expressionNow.eyelids;
     relativeExpression.eyelids = eyelidChange;
     //eyelidObject.currentCoords[ 1 ][ 0 ] += eyelidChange;
@@ -47,13 +46,19 @@ function createRelativeExpression( expTo ){
 //// general all-purpose method for all expressions
 function initExpression( obj, speed, eyelids ) {
 
-    expressionObject = obj
+    expressionObject = obj;
+    expressionObject.eyelidsTrue = eyelids;
 
-    assignSinArrayForSpeed( speed, expressionObject, sineArrays ) 
+    assignSinArrayForSpeed( speed, expressionObject, sineArrays );
     expressionObject.startCount = mainCount;
     expressionObject.bool = true;
 
-    initMoveEyelids( expressionObject.eyelids, -expressionObject.eyelids, speed, eyelids );
+    if ( eyelids ) {
+
+        console.log('in eyelids')
+        initMoveEyelids( expressionObject.eyelids, -expressionObject.eyelids, speed, eyelids );
+
+    }
 
 }
 
@@ -99,6 +104,19 @@ function expression( main ) {
             
         })
             
+        if ( expressionObject.eyelidsTrue === false ) {
+
+            Object.keys( expressionObject.AUs.eyelids ).forEach( function( key ) {
+
+                // pos y
+                
+                tiaObject.faceBones[ key + '.L'].position.y += sinAmount * expressionObject.AUs.eyelids[ key ][ 0 ][ 1 ];
+                tiaObject.faceBones[ key + '.R'].position.y += sinAmount * expressionObject.AUs.eyelids[ key ][ 0 ][ 1 ];
+
+            })
+            
+        }
+
         Object.keys( expressionObject.AUs.AU1 ).forEach( function( key ) {
 
             // pos x
@@ -443,6 +461,14 @@ function getAbsoluteCoordsOfExpressionNow() {
 
     })
         
+    Object.keys( absExpression.AUs.eyelids ).forEach( function( key ) {
+
+        // pos y
+        
+        absExpression.AUs.eyelids[ key ][ 0 ][ 1 ] = tiaObject.faceBones[ key + '.L'].position.y;
+
+    })
+
     Object.keys( absExpression.AUs.AU1 ).forEach( function( key ) {
 
         // pos x
@@ -512,7 +538,7 @@ function getAbsoluteCoordsOfExpressionTo( exp ) {
 
     let expression = $.extend( true, {}, exp );
 
-    Object.keys( exp.AUs.AU2 ).forEach( function( key ) {
+    Object.keys( expression.AUs.AU2 ).forEach( function( key ) {
 
         // pos x
        
@@ -541,7 +567,15 @@ function getAbsoluteCoordsOfExpressionTo( exp ) {
 
     })
         
-    Object.keys( expressionBase.AUs.AU1 ).forEach( function( key ) {
+    Object.keys( expression.AUs.eyelids ).forEach( function( key ) {
+
+        // pos y
+       
+        expression.AUs.eyelids[ key ][ 0 ][ 1 ] += expressionBase.AUs.eyelids[ key ][ 0 ][ 1 ];
+
+    })
+
+    Object.keys( expression.AUs.AU1 ).forEach( function( key ) {
 
         // pos x
        
@@ -571,7 +605,7 @@ function getAbsoluteCoordsOfExpressionTo( exp ) {
     })
 
     //Mouth Jaw Inner is part of a different object and so needs to be done separately
-    Object.keys( expressionBase.AUs.AU1m ).forEach( function( key ) {
+    Object.keys( expression.AUs.AU1m ).forEach( function( key ) {
 
         // pos x
        
@@ -640,6 +674,14 @@ function getAbsoluteCoordsOfMainExpressions() {
 
         })
             
+        Object.keys( expression.AUs.eyelids ).forEach( function( key ) {
+
+            // pos y
+           
+            expression.AUs.eyelids[ key ][ 0 ][ 1 ] += expressionBase.AUs.eyelids[ key ][ 0 ][ 1 ];
+
+        })
+
         Object.keys( expressionBase.AUs.AU1 ).forEach( function( key ) {
 
             // pos x

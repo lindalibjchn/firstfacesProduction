@@ -79,7 +79,7 @@ function talkToTia() {
 function tiaLeanToListen() {
 
     initMove( leanObject, leanObject.coords.close, '1.5' );
-    expressionController( expressionsAbs.listening, '0.5' ) 
+    expressionController( expressionsAbs.listening, '0.5', false ) 
     
     setTimeout( speakWords, 2000 );
 
@@ -144,7 +144,7 @@ function goToThinkingPos() {
 
 function setThinkingFace() {
 
-    expressionController( expressionsAbs.thinking, '1', true );
+    expressionController( expressionsAbs.thinking, '1', false );
 
     $('#thinkingLoading').show();
 

@@ -314,6 +314,14 @@ const expressionsRel = {
                 'lip_lower_outer': [[0, 0, 0], [0, 0, 0]],
                 'lip_lower_inner': [[0, 0, 0], [0, 0, 0]],
             },
+            'eyelids': {
+                'eyelid_upper_inner': [[0, 0, 0], [0, 0, 0]],
+                'eyelid_upper_middle': [[0, 0, 0], [0, 0, 0]],
+                'eyelid_upper_outer': [[0, 0, 0], [0, 0, 0]],
+                'eyelid_lower_inner': [[0, 0, 0], [0, 0, 0]],
+                'eyelid_lower_middle': [[0, 0, 0], [0, 0, 0]],
+                'eyelid_lower_outer': [[0, 0, 0], [0, 0, 0]],
+            },
         },
         'eyelids': 0,
     },
@@ -346,6 +354,14 @@ const expressionsRel = {
                 'lip_lower_outer': [[0.06, 0.04, -0.08], [0, 0, 0]],
                 'lip_lower_inner': [[0.04, 0.05, -0.04], [0, 0, 0]],
             },
+            'eyelids': {
+                'eyelid_upper_inner': [[0, -0.014, 0], [0, 0, 0]],
+                'eyelid_upper_middle': [[0, -0.018, 0], [0, 0, 0]],
+                'eyelid_upper_outer': [[0, -0.014, 0], [0, 0, 0]],
+                'eyelid_lower_inner': [[0, 0.008, 0], [0, 0, 0]],
+                'eyelid_lower_middle': [[0, 0.008, 0], [0, 0, 0]],
+                'eyelid_lower_outer': [[0, 0.008, 0], [0, 0, 0]],
+            },
         },
         'eyelids': -0.04,
     },
@@ -375,6 +391,14 @@ const expressionsRel = {
                 'lip_edge_lower': [[-0.3, -0.65, 0.1], [0, 0, -0.2]],
                 'lip_lower_outer': [[-0.1, -1.0, 0.05], [-0.1, 0, -0.14]],
                 'lip_lower_inner': [[-0.017, -1, 0], [-0.1, 0, 0]],
+            },
+            'eyelids': {
+                'eyelid_upper_inner': [[0, 0.07, 0], [0, 0, 0]],
+                'eyelid_upper_middle': [[0, 0.09, 0], [0, 0, 0]],
+                'eyelid_upper_outer': [[0, 0.07, 0], [0, 0, 0]],
+                'eyelid_lower_inner': [[0, -0.04, 0], [0, 0, 0]],
+                'eyelid_lower_middle': [[0, -0.04, 0], [0, 0, 0]],
+                'eyelid_lower_outer': [[0, -0.04, 0], [0, 0, 0]],
             },
         },
         'eyelids': 0.2,
@@ -408,6 +432,14 @@ const expressionsRel = {
                 'lip_lower_outer': [[0.15, 0.05, -0.4], [-0.1, 0.2, 0.1]],
                 'lip_lower_inner': [[0, -0.1, -0.3], [-0.1, 0, 0]],
             },
+            'eyelids': {
+                'eyelid_upper_inner': [[0, -0.035, 0], [0, 0, 0]],
+                'eyelid_upper_middle': [[0, -0.045, 0], [0, 0, 0]],
+                'eyelid_upper_outer': [[0, -0.035, 0], [0, 0, 0]],
+                'eyelid_lower_inner': [[0, 0.02, 0], [0, 0, 0]],
+                'eyelid_lower_middle': [[0, 0.02, 0], [0, 0, 0]],
+                'eyelid_lower_outer': [[0, 0.02, 0], [0, 0, 0]],
+            },
         },
         'eyelids': -0.1,
     },
@@ -439,6 +471,14 @@ const expressionsRel = {
                 'lip_edge_lower': [[0.2, 0.15, -0.2], [0, 0, -0.3]],
                 'lip_lower_outer': [[0.15, 0.11, -0.2], [0, 0, 0]],
                 'lip_lower_inner': [[0.1, 0.12, -0.1], [0, 0, 0]],
+            },
+            'eyelids': {
+                'eyelid_upper_inner': [[0, -0.035, 0], [0, 0, 0]],
+                'eyelid_upper_middle': [[0, -0.045, 0], [0, 0, 0]],
+                'eyelid_upper_outer': [[0, -0.035, 0], [0, 0, 0]],
+                'eyelid_lower_inner': [[0, 0.02, 0], [0, 0, 0]],
+                'eyelid_lower_middle': [[0, 0.02, 0], [0, 0, 0]],
+                'eyelid_lower_outer': [[0, 0.02, 0], [0, 0, 0]],
             },
         },
         'eyelids': -0.1,
@@ -472,6 +512,14 @@ const expressionsRel = {
                 'lip_edge_lower': [[-0.1, -0.2, 0], [0, 0, 0]],
                 'lip_lower_outer': [[-0.05, -0.05, 0], [0.1, 0, 0]],
                 'lip_lower_inner': [[0, 0, 0], [0.2, 0, 0]],
+            },
+            'eyelids': {
+                'eyelid_upper_inner': [[0, -0.035, 0], [0, 0, 0]],
+                'eyelid_upper_middle': [[0, -0.045, 0], [0, 0, 0]],
+                'eyelid_upper_outer': [[0, -0.035, 0], [0, 0, 0]],
+                'eyelid_lower_inner': [[0, 0.02, 0], [0, 0, 0]],
+                'eyelid_lower_middle': [[0, 0.02, 0], [0, 0, 0]],
+                'eyelid_lower_outer': [[0, 0.02, 0], [0, 0, 0]],
             },
         },
         'eyelids': -0.1,
@@ -507,6 +555,14 @@ const expressionsRel = {
                 'lip_lower_outer': [[0, -0.3, -0.1], [0, 0, 0]],
                 'lip_lower_inner': [[0, -0.2, 0], [0, 0, 0]],
             },
+            'eyelids': {
+                'eyelid_upper_inner': [[0, 0.07, 0], [0, 0, 0]],
+                'eyelid_upper_middle': [[0, 0.09, 0], [0, 0, 0]],
+                'eyelid_upper_outer': [[0, 0.07, 0], [0, 0, 0]],
+                'eyelid_lower_inner': [[0, -0.04, 0], [0, 0, 0]],
+                'eyelid_lower_middle': [[0, -0.04, 0], [0, 0, 0]],
+                'eyelid_lower_outer': [[0, -0.04, 0], [0, 0, 0]],
+            },
         },
         'eyelids': 0.2,
 
@@ -541,6 +597,14 @@ const expressionsRel = {
                 'lip_lower_outer': [[0, -0.1, 0], [0, 0, 0]],
                 'lip_lower_inner': [[0, -0.05, 0], [0, 0, 0]],
             },
+            'eyelids': {
+                'eyelid_upper_inner': [[0, -0.105, 0], [0, 0, 0]],
+                'eyelid_upper_middle': [[0, -0.135, 0], [0, 0, 0]],
+                'eyelid_upper_outer': [[0, -0.105, 0], [0, 0, 0]],
+                'eyelid_lower_inner': [[0, 0.06, 0], [0, 0, 0]],
+                'eyelid_lower_middle': [[0, 0.06, 0], [0, 0, 0]],
+                'eyelid_lower_outer': [[0, 0.06, 0], [0, 0, 0]],
+            },
         },
         'eyelids': -0.3,
     },
@@ -571,6 +635,14 @@ const expressionsRel = {
                 'lip_edge_lower': [[0.2, 0.15, -0.2], [0, 0, -0.3]],
                 'lip_lower_outer': [[0.15, 0.11, -0.2], [0, 0, 0]],
                 'lip_lower_inner': [[0.1, 0.12, -0.1], [0, 0, 0]],
+            },
+            'eyelids': {
+                'eyelid_upper_inner': [[0, 0.035, 0], [0, 0, 0]],
+                'eyelid_upper_middle': [[0, 0.045, 0], [0, 0, 0]],
+                'eyelid_upper_outer': [[0, 0.035, 0], [0, 0, 0]],
+                'eyelid_lower_inner': [[0, -0.02, 0], [0, 0, 0]],
+                'eyelid_lower_middle': [[0, -0.02, 0], [0, 0, 0]],
+                'eyelid_lower_outer': [[0, -0.02, 0], [0, 0, 0]],
             },
         },
         'eyelids': 0.1,
@@ -604,12 +676,20 @@ const expressionsRel = {
                 'lip_lower_outer': [[-0.05, 0, 0], [0, 0, 0]],
                 'lip_lower_inner': [[0, 0, 0], [0, 0, 0]],
             },
+            'eyelids': {
+                'eyelid_upper_inner': [[0, -0.035, 0], [0, 0, 0]],
+                'eyelid_upper_middle': [[0, -0.045, 0], [0, 0, 0]],
+                'eyelid_upper_outer': [[0, -0.035, 0], [0, 0, 0]],
+                'eyelid_lower_inner': [[0, 0.02, 0], [0, 0, 0]],
+                'eyelid_lower_middle': [[0, 0.02, 0], [0, 0, 0]],
+                'eyelid_lower_outer': [[0, 0.02, 0], [0, 0, 0]],
+            },
         },
         'eyelids': -0.1,
 
     },
 
-    confused: {
+    'confused': {
 
         'name': 'confused',
         'changeVoice': true,
@@ -636,7 +716,22 @@ const expressionsRel = {
                 'lip_lower_outer': [[-0.05, 0, 0], [0, 0, 0]],
                 'lip_lower_inner': [[0, 0, 0], [0, 0, 0]],
             },
+            'eyelids': {
+                //'eyelid_upper_inner': [[0, -0.07, 0], [0, 0, 0]],
+                //'eyelid_upper_middle': [[0, -0.09, 0], [0, 0, 0]],
+                //'eyelid_upper_outer': [[0, -0.07, 0], [0, 0, 0]],
+                //'eyelid_lower_inner': [[0, 0.04, 0], [0, 0, 0]],
+                //'eyelid_lower_middle': [[0, 0.04, 0], [0, 0, 0]],
+                //'eyelid_lower_outer': [[0, 0.04, 0], [0, 0, 0]],
+                'eyelid_upper_inner': [[0, 0, 0], [0, 0, 0]],
+                'eyelid_upper_middle': [[0, 0, 0], [0, 0, 0]],
+                'eyelid_upper_outer': [[0, 0, 0], [0, 0, 0]],
+                'eyelid_lower_inner': [[0, 0, 0], [0, 0, 0]],
+                'eyelid_lower_middle': [[0, 0, 0], [0, 0, 0]],
+                'eyelid_lower_outer': [[0, 0, 0], [0, 0, 0]],
+            },
         },
+        //'eyelids': -0.2,
         'eyelids': 0,
 
     },
@@ -667,6 +762,14 @@ const expressionsRel = {
                 'lip_lower_outer': [[-0.1, -1.0, 0.05], [-0.1, 0, -0.14]],
                 'lip_lower_inner': [[-0.017, -1, 0], [-0.1, 0, 0]],
             },
+            'eyelids': {
+                'eyelid_upper_inner': [[0, 0, 0], [0, 0, 0]],
+                'eyelid_upper_middle': [[0, 0, 0], [0, 0, 0]],
+                'eyelid_upper_outer': [[0, 0, 0], [0, 0, 0]],
+                'eyelid_lower_inner': [[0, 0, 0], [0, 0, 0]],
+                'eyelid_lower_middle': [[0, 0, 0], [0, 0, 0]],
+                'eyelid_lower_outer': [[0, 0, 0], [0, 0, 0]],
+            },
         },
         'eyelids': 0,
     },
@@ -696,6 +799,14 @@ const expressionsRel = {
                 'lip_edge_lower': [[-0.3, 0, 0.3], [0, 0.3, 0]],
                 'lip_lower_outer': [[-0.15, 0, 0.15], [0, 0, 0]],
                 'lip_lower_inner': [[-0.05, 0, 0.05], [0, 0, 0]],
+            },
+            'eyelids': {
+                'eyelid_upper_inner': [[0, 0, 0], [0, 0, 0]],
+                'eyelid_upper_middle': [[0, 0, 0], [0, 0, 0]],
+                'eyelid_upper_outer': [[0, 0, 0], [0, 0, 0]],
+                'eyelid_lower_inner': [[0, 0, 0], [0, 0, 0]],
+                'eyelid_lower_middle': [[0, 0, 0], [0, 0, 0]],
+                'eyelid_lower_outer': [[0, 0, 0], [0, 0, 0]],
             },
         },
         'eyelids': 0,
@@ -965,6 +1076,22 @@ var neckRandomTiltObject = {
     'to': true,
 }
 
+var purseLipsObject = {
+    'bool': false,
+    'startCount': 0,
+    'sin': [ ],
+    'sinLength': 0,
+    'amount': 0,
+};
+
+var mouthOpenObject = {
+    'bool': false,
+    'startCount': 0,
+    'sin': [ ],
+    'sinLength': 0,
+    'amount': 0,
+};
+
 var nodObject = {
     'bool': false,
     'startCount': 0,
@@ -994,7 +1121,6 @@ var armIndicateObject = {
 }
 
 var talkObject = {
-    'bool': false,
 }
 
 // FULL MOVEMENT OBJECTS

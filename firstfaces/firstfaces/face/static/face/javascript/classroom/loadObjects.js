@@ -518,9 +518,15 @@ function animate () {
 
     }
 
-    if ( nodObject.bool ) {
+    if ( mouthOpenObject.bool ) {
 
-        nod( mainCount )
+        openMouth( mainCount )
+
+    }
+
+    if ( purseLipsObject.bool ) {
+
+        purseLips( mainCount )
 
     }
 

@@ -56,7 +56,7 @@ function runAfterJudgement() {
 
         whenAllMovFinished( function() { 
          
-            expressionController( calculatedExpression, '1' );
+            expressionController( calculatedExpression, '1', false );
         
         })
         
@@ -100,7 +100,7 @@ function runAfterJudgement() {
             
             whenAllMovFinished( function() { 
          
-                expressionController( calculatedExpression, '1' );
+                expressionController( calculatedExpression, '1', false );
             
             })
 
@@ -114,7 +114,7 @@ function runAfterJudgement() {
         
             whenAllMovFinished( function() { 
          
-                expressionController( expressionsAbs.confused, '1' );
+                expressionController( expressionsAbs.confused, '1', false );
             
             })
                 
@@ -127,7 +127,7 @@ function runAfterJudgement() {
             
             whenAllMovFinished( function() { 
          
-                expressionController( expressionsAbs.confused, '1' );
+                expressionController( expressionsAbs.confused, '1', false );
             
             })
 
@@ -140,7 +140,7 @@ function runAfterJudgement() {
             
             whenAllMovFinished( function() { 
          
-                expressionController( expressionsAbs.confused, '1' );
+                expressionController( expressionsAbs.confused, '1', false );
             
             })
 
@@ -242,7 +242,7 @@ function displaySpeechBubblePrompt() {
     synthesisObject.delayToThinkAndTurn = synthesisObject.text.length * 200;
 
     // return to talking pos
-    expressionController( calculatedTalkExpression, '1' );
+    expressionController( calculatedTalkExpression, '1', false );
 
     //display speechBubble with prompt
     speechBubbleObject.bubble.material[0].opacity = 0.95; 
@@ -286,7 +286,7 @@ function returnToLaptop( sent ) {
 
                 whenAllMovFinished( function() { 
          
-                    expressionController( expressionsAbs.neutral, '1' );
+                    movementController( movements.student, '2', '1.5' );
                 
                 })
 
@@ -298,8 +298,9 @@ function returnToLaptop( sent ) {
                     
                     whenAllMovFinished( function() { 
          
-                        movementController( movements.student, '2', '1.5' );
-
+                        //getAbsoluteCoordsOfExpressionNow();
+                        //expressionController( expressionsAbs.neutral, '1', eyelids=false );
+                    
                     })
 
                     setTimeout( function() {
