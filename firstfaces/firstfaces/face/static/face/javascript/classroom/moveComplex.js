@@ -4,12 +4,12 @@ function backNReadALine() {
 
     let plusOrMinusX = Math.random() - 0.5; 
     let plusOrMinusY = Math.random() - 0.5; 
-    let randomHeadRotX = 0.15 + plusOrMinusX * 0.02;
-    let randomHeadRotY = plusOrMinusY * 0.1;
+    let randomHeadRotX = 0.15 + plusOrMinusX * 0.03;
+    let randomHeadRotY = plusOrMinusY * 0.15;
     randomReadingMovement.AUs.AU1.head = [[0,0,0],[randomHeadRotX, randomHeadRotY, 0]]
 
-    let randomEyeRotX = 0.2 + plusOrMinusX * 0.05;
-    let randomEyeRotY = plusOrMinusY * 0.2;
+    let randomEyeRotX = 0.2 + plusOrMinusX * 0.075;
+    let randomEyeRotY = plusOrMinusY * 0.3;
     randomReadingMovement.sacc = [[0,0,0],[randomEyeRotX, randomEyeRotY, 0]]
     
     let randSaccDur = [ '0.25', '0.5' ][Math.floor(Math.random() * 2)]
@@ -17,7 +17,7 @@ function backNReadALine() {
     
     movementController( randomReadingMovement, randSaccDur, randHeadDur )
 
-    let delayForReadingSacc = 2000 + Math.random() * 2500;
+    let delayForReadingSacc = 1000 + Math.random() * 2500;
     setTimeout( waitForWrongSlices, delayForReadingSacc )
 
 }
@@ -86,7 +86,7 @@ function backNReadALine() {
 //}
 
 
-function initTalk( times ) {
+function initTalk() {
    
     synthesisObject.length = synthesisObject.text.length;
     talkObject.endCount = mainCount + synthesisObject.length * 3;
@@ -145,7 +145,7 @@ function whenOpenMouthEnds( funcToCall ) {
 function mouthOpenLoop() {
 
     mouthOpenObject.dur = [ '0.1', '0.25' ][Math.floor(Math.random() * 2)];
-    mouthOpenObject.amount = Math.random() * 0.15;
+    mouthOpenObject.amount = Math.random() * 0.25;
 
     initOpenMouth( mouthOpenObject.amount, mouthOpenObject.dur );
 
@@ -293,6 +293,7 @@ function initOpenMouth( to, speed ) {
 
 function openMouth( main ) {
 
+    console.log('in openMouth');
     let main_start = main - mouthOpenObject[ 'startCount' ];
 
     let sinAmount = mouthOpenObject[ 'sin' ][ main_start ]
@@ -402,7 +403,7 @@ function openMouth( main ) {
 
     } else {
 
-        mouthObject.bool = false;
+        mouthOpenObject.bool = false;
 
     }
 
@@ -481,6 +482,12 @@ function moveEyelids( main ) {
 
 }
 
+function updateEyelids( upperPos, lowerPos ) {
+
+    eyelidObject.coords.currentUpper += upperPos;
+    eyelidObject.coords.currentLower += lowerPos;
+
+}
 
 //////////////// NOD AND SHAKE VHEAD
 

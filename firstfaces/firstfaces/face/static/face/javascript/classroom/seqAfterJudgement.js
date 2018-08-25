@@ -31,7 +31,7 @@ function runAfterJudgement() {
                 
                     returnToLaptop( '' )
 
-                }, 2000);
+                }, 3000);
 
             }
                     
@@ -48,7 +48,7 @@ function runAfterJudgement() {
 
             } else {
 
-                setTimeout( displaySpeechBubblePrompt, 2000 );
+                setTimeout( displaySpeechBubblePrompt, 3000 );
 
             }
 
@@ -80,7 +80,7 @@ function runAfterJudgement() {
             
             whenAllMovFinished( function() { 
          
-                expressionController( expressionsAbs.confused, '1', true );
+                expressionController( expressionsAbs.confused, '1.5', true );
         
             })
 
@@ -164,6 +164,7 @@ function runAfterJudgement() {
 // check if expression has finished running
 var whenAllMovFinished = function( funcToCall ) {
 
+    console.log( 'in whenAllMovFinished' );
     if ( expressionObject.bool || cameraObject.bool || movementObject.bool || eyelidObject.bool || eyeObject.bool || blinkNowObject.bool || normalBlinkObject.bool || nodObject.bool || shakeObject.bool ) {
       
         setTimeout( function() {
@@ -174,6 +175,7 @@ var whenAllMovFinished = function( funcToCall ) {
 
     } else {
 
+        console.log( 'in whenAllMovFinished funcToCall' );
         funcToCall();
 
     }
@@ -239,7 +241,7 @@ function nodOrShakeHead() {
 function displaySpeechBubblePrompt() {
 
     // actually delay to return to laptop
-    synthesisObject.delayToThinkAndTurn = synthesisObject.text.length * 200;
+    synthesisObject.delayToThinkAndTurn = synthesisObject.text.length * 70;
 
     // return to talking pos
     expressionController( calculatedTalkExpression, '1', false );
@@ -298,8 +300,7 @@ function returnToLaptop( sent ) {
                     
                     whenAllMovFinished( function() { 
          
-                        //getAbsoluteCoordsOfExpressionNow();
-                        //expressionController( expressionsAbs.neutral, '1', eyelids=false );
+                        expressionController( expressionsAbs.neutral, '1', eyelids=false );
                     
                     })
 
@@ -603,7 +604,7 @@ function turnToBoardToShowErrors() {
 
                 }, 1500 );
 
-            }, 2000 );
+            }, 3000 );
 
         }, 1000 )
 

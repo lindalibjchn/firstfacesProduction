@@ -344,8 +344,6 @@ function sendSentToServer() {
                         // just incase there is a blink underway
                         whenAllMovFinished( function() {
 
-                            movementNow = getAbsoluteCoordsOfMovementNow();
-                            
                             // need to return to laptop only if not incorrect
                             if ( json.sent_meta.judgement === "I" ) {
 

@@ -5,7 +5,7 @@ function movementController( movementTo, saccDur, bodyDur ) {
     console.log(
             "\nmovement initiated\n"
     );
-
+    movementNow = getAbsoluteCoordsOfMovementNow();
     let relativeMovementMovement = createRelativeMovement( movementTo );
     initMovement( relativeMovement, saccDur, bodyDur );
 

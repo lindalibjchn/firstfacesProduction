@@ -26,9 +26,84 @@ function showTimeRemaining() {
 
     } else {
 
-        $('#timeDiv').text( "reload" );
+        classVariableDict.classOver = true;
+        $('#timeDiv').text( "class finished" );
+        setTimeout( endClass, 100 );
 
     }
+
+}
+
+function endClass() {
+
+    normalBlinkObject.bool = false;
+    // disable all buttons
+    $('.option-btn').prop( "disabled", true);
+    $('.input-btn').prop( "disabled", true);
+    $('.input-btn-large').prop( "disabled", true);
+    $('#textInput').hide();
+
+    // fadeOut controller container on the right
+    $('#controllerContainer').fadeOut( 500 );
+
+    // prepare speech 
+    synthesisObject.text = "Well done today! Class is now over, but you can come back anytime to practise your English.";
+    sendTTS( synthesisObject.text, true );
+    speechBubbleObject.sentence = " " + synthesisObject.text;
+
+    let singleCalculatedExpressions = createSingleExpression( expressionsRel.happy, 0.7 )
+    calculatedExpression = getAbsoluteCoordsOfExpressionTo( singleCalculatedExpressions[ 0 ] )
+    calculatedTalkExpression = getAbsoluteCoordsOfExpressionTo( singleCalculatedExpressions[ 1 ] )
+
+    setTimeout( function() {
+
+        initCameraMove( 'tia', '2' );
+
+        setTimeout( function() {
+
+            whenAllMovFinished( function() {
+
+                expressionController( calculatedExpression, '1', false );
+
+                setTimeout( goodbyeTalk, 3000 ); 
+
+            })
+
+        }, 2100 );
+
+    }, 600 );
+
+
+}
+
+function goodbyeTalk() {
+
+    // actually delay to return to laptop
+    synthesisObject.delayToThinkAndTurn = 2000 + synthesisObject.text.length * 70;
+
+    // return to talking pos
+    expressionController( calculatedTalkExpression, '1', false );
+
+    //display speechBubble with prompt
+    speechBubbleObject.bubble.material[0].opacity = 0.95; 
+    speechBubbleObject.bubble.material[1].opacity = 0.95; 
+
+    setTimeout( function() { 
+        
+        displaySpeechBubble();
+        classVariableDict.promptSpeaking = true;
+        synthesisObject.realSpeak = true;
+        
+        synthesisObject.synthAudio.play();
+        initTalk();
+
+        setTimeout( function() {
+            
+            location.reload( true );
+            
+        }, synthesisObject.delayToThinkAndTurn )
+    
+    }, 1500);
 
 }
 

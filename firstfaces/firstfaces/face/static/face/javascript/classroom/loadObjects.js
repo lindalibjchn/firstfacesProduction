@@ -369,10 +369,10 @@ function init( skeleton=false ) {
     function cameraAndTiaLookAt() {
 
         // get absolute position of eyelids for blink
-        eyelidsAbs.upperMiddle.open = tiaObject.faceBones[ 'eyelid_upper_middle.L' ].position.y
-        eyelidsAbs.lowerMiddle.open = tiaObject.faceBones[ 'eyelid_lower_middle.L' ].position.y
-        eyelidsAbs.upperMiddle.closed = eyelidsAbs.upperMiddle.open - 0.45;
-        eyelidsAbs.lowerMiddle.closed = eyelidsAbs.lowerMiddle.open + 0.2;
+        //eyelidsAbs.upperMiddle.open = tiaObject.faceBones[ 'eyelid_upper_middle.L' ].position.y
+        //eyelidsAbs.lowerMiddle.open = tiaObject.faceBones[ 'eyelid_lower_middle.L' ].position.y
+        //eyelidsAbs.upperMiddle.closed = eyelidsAbs.upperMiddle.open - 0.45;
+        //eyelidsAbs.lowerMiddle.closed = eyelidsAbs.lowerMiddle.open + 0.2;
 
         // get absolute position of base expression
         expressionBase = getAbsoluteCoordsOfExpressionNow();
@@ -417,11 +417,20 @@ function init( skeleton=false ) {
             //initSmile('0.5', '0.1', smileClosedObject);
             setTimeout( function() {
                 
-                initInputReady();
-                normalBlinkObject.bool = true;
+                whenAllMovFinished( function(){
 
+                    expressionController( expressionsAbs.neutral, '0.1', false );
 
-            }, 1000 );
+                })
+
+                setTimeout( function() {
+                    
+                    initInputReady();
+                    normalBlinkObject.bool = true;
+
+                }, 1000)
+
+            }, 200 );
 
         }
 
@@ -527,6 +536,12 @@ function animate () {
     if ( purseLipsObject.bool ) {
 
         purseLips( mainCount )
+
+    }
+
+    if ( nodObject.bool ) {
+
+        nod( mainCount )
 
     }
 

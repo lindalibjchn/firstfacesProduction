@@ -159,8 +159,13 @@ def class_time(request, session_id):
 
                         last_sent = sentences[id_of_last_sent]
 
+                class_over = False
+                if sess.end_time != None:
+                    class_over = True
+
                 class_variable_dict = {
 
+                    'classOver': class_over,
                     'username': request.user.username,
                     'start_time': start_time * 1000,
                     'session_id': session_id,
@@ -382,7 +387,7 @@ def store_sent(request):
     sentence_text = request.GET['sent']
     q = json.loads(request.GET['isItQ'])
     #code.interact(local=locals());
-    print('q:', type(q))
+    # print('q:', type(q))
 
     # get session
     blob_no_text = json.loads(request.GET['blob_no_text'])

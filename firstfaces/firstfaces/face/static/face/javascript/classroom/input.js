@@ -29,7 +29,7 @@ function talkToTia() {
     let finalTextInBox = $('#textInput').val();
     synthesisObject.realSpeak = true;
 
-    synthesisObject.delayToThinkAndTurn = finalTextInBox.length * 200;
+    synthesisObject.delayToThinkAndTurn = finalTextInBox.length * 70;
     
     //no change from audio
     if ( finalTextInBox === synthesisObject.textFromSpeech ) {
@@ -95,6 +95,20 @@ function speakWords() {
 
 }
 
+function goToThinkOrChangeExp() {
+
+    if( classVariableDict.awaitingJudgement ) {
+
+        whenAllMovFinished( goToThinkingPos );
+        
+    } else {
+
+        whenAllMovFinished( runAfterJudgement );
+        
+    }
+    
+}
+
 function tiaThinkAboutSentence() {
     
     initMove( leanObject, leanObject.coords.middle, '3' );
@@ -106,19 +120,7 @@ function tiaThinkAboutSentence() {
 
             initSelectBlink( '0.1', 0.05 );
 
-            setTimeout( function() {
-            
-                if( classVariableDict.awaitingJudgement ) {
-
-                    whenAllMovFinished( goToThinkingPos );
-                    
-                } else {
-
-                    whenAllMovFinished( runAfterJudgement );
-                    
-                }
-            
-            }, 3000 );
+            setTimeout( goToThinkOrChangeExp, 3000 );
 
         }, 1000 );
 
@@ -144,7 +146,7 @@ function goToThinkingPos() {
 
 function setThinkingFace() {
 
-    expressionController( expressionsAbs.thinking, '1', false );
+    expressionController( expressionsAbs.thinking, '1.5', false );
 
     $('#thinkingLoading').show();
 

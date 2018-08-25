@@ -7,6 +7,12 @@ function expressionController( expressionTo, duration, eyelids=true ) {
             "\nexpression initiated\n"
     );
 
+    if ( eyelids === false ) {
+
+        updateEyelids( expressionTo.eyelids, -expressionTo.eyelids );
+
+    }
+    expressionNow = getAbsoluteCoordsOfExpressionNow();
     let relativeExpressionMovement = createRelativeExpression( expressionTo );
     initExpression( relativeExpressionMovement, duration, eyelids );
 
@@ -268,8 +274,8 @@ function createSingleExpression( exp, mult ) {
 
     }
 
-    calcExp = $.extend(true, {}, exp);
-    talkCalcExp = $.extend(true, {}, exp);
+    let calcExp = $.extend(true, {}, exp);
+    let talkCalcExp = $.extend(true, {}, exp);
 
     Object.keys( exp.AUs ).forEach( function( AU ) {
 
@@ -298,6 +304,8 @@ function createSingleExpression( exp, mult ) {
     let eyelidMovementAmount = exp.eyelids * mult;
     calcExp.eyelids = eyelidMovementAmount;
     talkCalcExp.eyelids = 0.5 * eyelidMovementAmount;
+
+    return [ calcExp, talkCalcExp ];
 
 }
 
