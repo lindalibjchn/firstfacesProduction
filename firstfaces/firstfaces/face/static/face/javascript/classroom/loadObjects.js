@@ -382,10 +382,16 @@ function init( skeleton=false ) {
         movementBase = getAbsoluteCoordsOfMovementNow();
         movementNow = $.extend( true, {}, movementBase );
 
+        // put time remaining on screen
+        showTimeRemaining();
+
+        // show questionStreak
+        showQuestionStreak();
+
         //if first enter then run entrance animation else sitting at chair
         if ( classVariableDict.first_enter ) {
             
-            $.when(createRelativeMovement( laptopMovement )).then( initMovement( relativeMovement, '0.1', '0.1' ));
+            movementController( movements.laptop, '0.1', '0.1' );
 
             initMainEnter();
 
@@ -423,12 +429,16 @@ function init( skeleton=false ) {
 
                 })
 
-                setTimeout( function() {
-                    
-                    initInputReady();
-                    normalBlinkObject.bool = true;
+                if ( classVariableDict.classOver === false ) {
+                
+                    setTimeout( function() {
+                        
+                        initInputReady();
+                        normalBlinkObject.bool = true;
 
-                }, 1000)
+                    }, 1000)
+
+                }
 
             }, 200 );
 

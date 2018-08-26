@@ -3,7 +3,7 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 from .forms import UserForm
 from django.http import JsonResponse
-from .utils import get_availables_for_schedule, make_schedule_dict, get_upcoming_class, get_class_already_done_today, get_in_class_now, has_user_clicked_option_btn, fill_sessions_dict 
+from .utils import get_availables_for_schedule, make_schedule_dict, get_upcoming_class, get_class_already_done_today, get_in_class_now, has_user_clicked_option_btn, fill_sessions_dict, get_scores 
 from django.utils import timezone
 import json
 from .models import Session, Sentence, AudioFile, Profile
@@ -18,6 +18,7 @@ from operator import itemgetter
 import datetime
 import logging
 from google.cloud import texttospeech
+import math
 
 logger = logging.getLogger(__name__)
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/johnsHDD/PhD_backup/erle-3666ad7eec71.json"
@@ -195,8 +196,7 @@ def class_time(request, session_id):
         
         else:
 
-            logger.error('\n\nerror from outside if in class_time')
-        
+            # class is over
             return redirect('waiting')
 
     except BaseException as e:
@@ -444,6 +444,27 @@ def store_sent(request):
     response_data = {
 
         'sent_meta': sent_meta,
+
+    }
+
+    return JsonResponse(response_data)    
+
+def store_class_over(request):
+
+    session_id = int(request.GET['sessId'])
+
+    scores = get_scores( session_id )
+    score = math.floor(min(100, sum(scores)))
+
+    time_now = timezone.now();
+    sess = Session.objects.get(pk=session_id)
+    sess.end_time = time_now
+    sess.score = score
+    sess.save()
+
+    response_data = {
+
+        'score': score,
 
     }
 

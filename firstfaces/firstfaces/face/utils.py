@@ -3,6 +3,8 @@ import datetime
 import time
 from django.utils import timezone
 from operator import itemgetter
+import math
+import json
 
 def get_this_weeks_dates():
 
@@ -284,6 +286,62 @@ def fill_sessions_dict():
         sessions[s.pk]["sentences"]= sents
 
     return sessions
+
+def get_scores( sess_id ):
+
+    sess = Session.objects.get(pk=sess_id)
+    sentences = Sentence.objects.filter(session=sess).order_by('pk')
+    no_sentences = len( sentences )
+
+    correct_sentences = [s for s in sentences if s.judgement in ['C', 'B']]
+    no_correct_sentences = len(correct_sentences)
+    no_incorrect_sentences = no_sentences - no_correct_sentences
+
+    ratio_correct = len(correct_sentences) / no_sentences
+
+    av_correct_sent_length = min(10, sum([len(c_s.sentence) for c_s in correct_sentences]) / no_correct_sentences)
+
+    emotion_amounts = []
+    for e_s in correct_sentences:
+
+        emotion_list = json.loads(e_s.emotion)
+        emotion_amounts.append(math.sqrt(abs(emotion_list[0]) + abs(emotion_list[1])))
+
+    av_correct_emotion = sum(emotion_amounts) / no_correct_sentences
+
+    # try again - if use try again and get it right - bonus points!
+    successful_try_again_count = 0
+    for i, t_s in enumerate(sentences):
+        
+        if i != 0:
+
+            if t_s.judgement in ['C', 'B']:
+
+                if sentences[i-1].try_again:
+
+                    successful_try_again_count += 1
+    
+    ratio_successful_try_again = successful_try_again_count / no_incorrect_sentences
+
+    raw_score = ratio_correct * av_correct_sent_length
+    try_again_bonus = math.ceil(ratio_successful_try_again * 5)
+    emotion_bonus = math.ceil(av_correct_emotion * 5)
+
+    return [raw_score, try_again_bonus, emotion_bonus]
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

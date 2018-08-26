@@ -293,8 +293,13 @@ function returnToLaptop( sent ) {
                 })
 
                 removeSpeechBubble();
-                initInputReady( sent )
-                showQuestionStreak();
+                        
+                if ( classVariableDict.classOver === false ) {
+
+                    initInputReady( sent )
+                    showQuestionStreak();
+
+                }
                 
                 setTimeout( function() { 
                     
@@ -306,8 +311,16 @@ function returnToLaptop( sent ) {
 
                     setTimeout( function() {
 
-                        normalBlinkObject.bool = true;
+                        if ( classVariableDict.classOver ) {
+
+                            endClass();
+
+                        } else {
+
+                            normalBlinkObject.bool = true;
                 
+                        }
+
                     }, 2500 );
 
                 }, 1500 );

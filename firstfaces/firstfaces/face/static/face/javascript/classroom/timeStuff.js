@@ -23,18 +23,42 @@ function showTimeRemaining() {
     } else if ( timeRemainingMinutes > -5 ) {
 
         $('#timeDiv').text( "last sentence" );
+        classVariableDict.lastSentToBeSent = true;
 
     } else {
 
         classVariableDict.classOver = true;
         $('#timeDiv').text( "class finished" );
-        setTimeout( endClass, 100 );
+        endClass();
 
     }
 
 }
 
 function endClass() {
+
+    
+    let sessId = classVariableDict.session_id;
+    $.ajax({
+        url: "/face/store_class_over",
+        type: "GET",
+        data: {'sessId': sessId},
+        success: function(json) {
+
+            classVariableDict.score = json.score
+            synthesisObject.text = "Well done today! your score is " + ( classVariableDict.score ).toString() + ". I hope to see you again soon!";
+            // prepare speech 
+            synthesisObject.pitch = 0;
+            synthesisObject.speaking_rate = 0.85;
+            sendTTS( synthesisObject.text, true );
+            speechBubbleObject.sentence = " " + synthesisObject.text;
+        
+        },
+        error: function() {
+            console.log("that's wrong");
+        },
+        
+    });
 
     normalBlinkObject.bool = false;
     // disable all buttons
@@ -46,10 +70,6 @@ function endClass() {
     // fadeOut controller container on the right
     $('#controllerContainer').fadeOut( 500 );
 
-    // prepare speech 
-    synthesisObject.text = "Well done today! Class is now over, but you can come back anytime to practise your English.";
-    sendTTS( synthesisObject.text, true );
-    speechBubbleObject.sentence = " " + synthesisObject.text;
 
     let singleCalculatedExpressions = createSingleExpression( expressionsRel.happy, 0.7 )
     calculatedExpression = getAbsoluteCoordsOfExpressionTo( singleCalculatedExpressions[ 0 ] )
@@ -65,7 +85,7 @@ function endClass() {
 
                 expressionController( calculatedExpression, '1', false );
 
-                setTimeout( goodbyeTalk, 3000 ); 
+                setTimeout( goodbyeTalk, 2000 ); 
 
             })
 
@@ -79,7 +99,7 @@ function endClass() {
 function goodbyeTalk() {
 
     // actually delay to return to laptop
-    synthesisObject.delayToThinkAndTurn = 2000 + synthesisObject.text.length * 70;
+    synthesisObject.delayToThinkAndTurn = 4000 + synthesisObject.text.length * 70;
 
     // return to talking pos
     expressionController( calculatedTalkExpression, '1', false );

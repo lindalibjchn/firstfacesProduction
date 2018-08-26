@@ -17,6 +17,7 @@ urlpatterns = [
     path('store_whats_wrong', views.store_whats_wrong, name='store_whats_wrong'),
     path('store_try_again', views.store_try_again, name='store_try_again'),
     path('store_next_sentence', views.store_next_sentence, name='store_next_sentence'),
+    path('store_class_over', views.store_class_over, name='store_class_over'),
     path('check_for_change', views.check_for_change, name='check_for_change'),
     path('update_session_object', views.update_session_object, name='update_session_object'),
     path('wait_for_correction', views.wait_for_correction, name='wait_for_correction'),

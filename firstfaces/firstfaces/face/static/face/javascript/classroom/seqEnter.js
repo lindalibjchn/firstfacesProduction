@@ -30,33 +30,25 @@ function mainEnter() {
  
     } else if ( mainCount === 300 ) {
 
-        $.when(createRelativeMovement( standingStudentMovement )).then( initMovement( relativeMovement, '0.5', '1'));
+        movementController( movements.standingStudent, '0.5', '1');
         //initArmsPrepareTyping( 0, '0.5' );
         //typeObject.bool = false;
 
     } else if ( mainCount === 380 ) {
 
-        $.when($.when(createSingleExpression( happyExpression, 0.75 )).then(createRelativeExpression( calculatedExpression ))).then( initExpression( relativeExpression, '0.5'));
+        let calculatedExpressions = createSingleExpression( expressionsRel.happy, 0.75 );
+        calculatedExpression = getAbsoluteCoordsOfExpressionTo( calculatedExpressions[0] );
+        calculatedTalkExpression = getAbsoluteCoordsOfExpressionTo( calculatedExpressions[1] );
+        expressionController( calculatedExpression, '0.5');
 
     } else if ( mainCount === 430 ) {
 
         initArmIndicate('left', 1, 'low', '1');
-        $.when(createRelativeMovement( lookChairMovement )).then( initMovement( relativeMovement, '0.5', '1'));
+        initMovement( movements.lookChair, '0.5', '1');
 
     } else if ( mainCount === 510 ) {
 
-        $.when(createRelativeMovement( standingStudentMovement )).then( initMovement( relativeMovement, '0.5', '1'));
-
-    } else if ( mainCount === 590 ) {
-
-        initEnterCameraMove('chair', '3');
-        $.when(createRelativeMovement( studentMovement )).then( initMovement( relativeMovement, '3', '3'));
-
-    }  else if ( mainCount === 790 ) {
-
-        $.when(createRelativeExpression( talkCalculatedExpression )).then( initExpression( relativeExpression, '1'));
-
-    } else if ( mainCount === 890 ) {
+        initMovement( movements.standingStudent, '0.5', '1');
 
         let studentName = classVariableDict.username;
         let greeting = " Hello " + studentName + ", nice to see you! How are you feeling today?";
@@ -65,12 +57,36 @@ function mainEnter() {
         //in entrance so need to not return to laptop after talking when not learning
         talkObject.learning = false;
 
-        synthesisObject.toSpeak = greeting;
+        synthesisObject.pitch = 0;
+        synthesisObject.speaking_rate = 0.85;
+        synthesisObject.text = greeting;
+        synthesisObject.length = synthesisObject.text.length;
+        synthesisObject.endCount = 1000 + synthesisObject.length * 70;
         synthesisObject.speaker = "tia";
-        getVoices( setVoice );
-        
         speechBubbleObject.sentence = greeting;
+        sendTTS( greeting, true, "talk" );
+
+    } else if ( mainCount === 590 ) {
+
+        initEnterCameraMove('chair', '3');
+        movementController( movements.student, '3', '3');
+
+    }  else if ( mainCount === 830 ) {
+
+        expressionController( calculatedTalkExpression, '1', false );
+
+        //display speechBubble with prompt
+        speechBubbleObject.bubble.material[0].opacity = 0.95; 
+        speechBubbleObject.bubble.material[1].opacity = 0.95; 
+
+    } else if ( mainCount === 920 ) {
+
         displaySpeechBubble();
+        classVariableDict.promptSpeaking = true;
+        synthesisObject.realSpeak = true;
+        
+        synthesisObject.synthAudio.play();
+        initTalk();
 
     } else if ( mainCount === 1180 ) {
         
@@ -164,7 +180,11 @@ function goToAskTopic( emotion ) {
 
     if ( emotion === "happy" || emotion === "surprised" || emotion === "excited" ) {
 
-        $.when($.when(createCombinedExpression([happyExpression, contentExpression], 0.95, 0.6, 0.2))).then(createRelativeExpression( calculatedExpression )).then( initExpression( relativeExpression, '0.5'));
+        let calculatedExpressions = createCalculatedExpression([expressionsRel.happy, expressionsRel.content], 0.95, 0.6, 0.2)
+        calculatedExpression = getAbsoluteCoordsOfExpressionTo( calculatedExpressions[ 0 ] );
+        calculatedTalkExpression = getAbsoluteCoordsOfExpressionTo( calculatedExpressions[ 1 ] );
+        
+        expressionController( calculatedExpression, '0.5');
 
         speechBubbleObject.sentence = " That's great! What would you like to talk about today?";
     
@@ -178,7 +198,10 @@ function goToAskTopic( emotion ) {
 
     } else {
 
-        $.when($.when(createCombinedExpression([sadExpression, fearExpression], 0.98, 0.5, 0))).then(createRelativeExpression( calculatedExpression )).then( initExpression( relativeExpression, '0.5'));
+        calculatedExpressions = createCombinedExpression([expressionsRel.sad, expressionsRel.fear], 0.98, 0.5, 0);
+        calculatedExpression = getAbsoluteCoordsOfExpressionTo( calculatedExpressions[0] );
+        calculatedTalkExpression = getAbsoluteCoordsOfExpressionTo( calculatedExpressions[1] );
+        expressionController( calculatedExpression, '0.5');
     
         speechBubbleObject.sentence = " I'm sorry to hear that. What would you like to talk about today?";
 
@@ -195,6 +218,10 @@ function goToAskTopic( emotion ) {
     // remove speech bubble to ask which topic
     removeSpeechBubble();
 
+    synthesisObject.text = speechBubbleObject.sentence
+    synthesisObject.length = synthesisObject.text.length;
+    synthesisObject.endCount = 1000 + synthesisObject.length * 70;
+    sendTTS( synthesisObject.text, true, "talk" );
 }
 
 function storeEmotion() {
@@ -236,15 +263,13 @@ function storeEmotion() {
 function askTopic() {
 
     // remove emotion questions container, making sure to unbind the click event to avoid multiple clicks
-    $.when( createRelativeExpression( talkCalculatedExpression )).then( initExpression( relativeExpression, '1'));
+    expressionController( calculatedTalkExpression, '1');
     setTimeout( function() {
 
         displaySpeechBubble();
+        synthesisObject.synthAudio.play();
+        initTalk();
         
-        synthesisObject.toSpeak = speechBubbleObject.sentence;
-        synthesisObject.speaker = "tia";
-        getVoices( setVoice );
-
         setTimeout( function() {
             
             showTopicChoices();
@@ -313,6 +338,13 @@ function storeTopic( topicChoice ) {
                 removeSpeechBubble();
                 initNod( 0.4, '0.5' )
                 
+                let startTalkSent = " Ok, please begin when you are ready.";
+                speechBubbleObject.sentence = startTalkSent;
+                synthesisObject.text = speechBubbleObject.sentence
+                synthesisObject.length = synthesisObject.text.length;
+                synthesisObject.endCount = 1000 + synthesisObject.length * 70;
+                sendTTS( startTalkSent, true, "talk" );
+
                 setTimeout( beginTalking, 4000 );
             
             }, 1000 );
@@ -328,15 +360,10 @@ function storeTopic( topicChoice ) {
 function beginTalking() {
 
     initArmIndicate('right', 1.2, 'low', '0.75');
-    let startTalkSent = " Ok, please begin when you are ready.";
-
-    speechBubbleObject.sentence = startTalkSent;
     displaySpeechBubble();
+    synthesisObject.synthAudio.play();
+    initTalk();
     
-    synthesisObject.toSpeak = startTalkSent;
-    synthesisObject.speaker = "tia";
-    getVoices( setVoice );
-
     setTimeout( function() {
 
         initArmIndicate('right', 0, 'low', '0.75');
@@ -344,12 +371,11 @@ function beginTalking() {
         initCameraMove( 'laptop', '2' );      
         setTimeout( function() {
             
-            resetExpression();
             initInputReady('');
         
             setTimeout( function() {
                 
-                resetMovement();
+                expressionController( expressionsAbs.neutral, '0.25', '0.5' );
                 talkObject.learning = true;
 
                 setTimeout( function() {

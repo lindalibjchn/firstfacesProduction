@@ -10,12 +10,6 @@ $(window).on( 'load', function() {
     //fill prevSents
     loadPrevSents( scrollBottom );
     
-    // put time remaining on screen
-    showTimeRemaining();
-
-    // show questionStreak
-    showQuestionStreak();
-
     $('#tryAgainBtn').on( 'click', tryAgain );
     $('#whatsWrongBtn').on( 'click', whatsWrong );
     $('#showCorrectionBtn').on( 'click', showCorrection );
@@ -67,7 +61,7 @@ function readyAudioBtns() {
         } else {
 
             synthesisObject.text = textInBox;
-            synthesisObject.length = synthesisObject.text;
+            synthesisObject.length = synthesisObject.text.length;
             synthesisObject.endCount = 1000 + synthesisObject.length * 50;
             sendTTS( textInBox, false, "listen" );
 
@@ -316,6 +310,12 @@ function sendSentToServer() {
                 success: function(json) {
                     
                     console.log('in sendSentToServer got judgement success');
+
+                    if ( classVariableDict.lastSentToBeSent ) {
+
+                        classVariableDict.classOver = true;
+
+                    }
 
                     // update classVariables to include new sentence. newInd gets index of next sent
                     let newInd = Object.keys(classVariableDict.sentences).length;
