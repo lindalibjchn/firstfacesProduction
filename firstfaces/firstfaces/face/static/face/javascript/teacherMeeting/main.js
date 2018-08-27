@@ -604,7 +604,7 @@ var appendCorrectionSection = function() {
 
 function checkForChange() {
 
-    //console.log('calling checkForChange()');
+    console.log('calling checkForChange()');
 
     $.ajax({
         url: "/face/check_for_change",
@@ -624,14 +624,14 @@ function checkForChange() {
             }
 
             // hit db every 2 seconds to check for changes
-            setTimeout( checkForChange, 2000 );
-
         },
         error: function() {
             console.log("that's wrong");
         },
 
     });
+
+    setTimeout( checkForChange, 2000 );
 
 }
 

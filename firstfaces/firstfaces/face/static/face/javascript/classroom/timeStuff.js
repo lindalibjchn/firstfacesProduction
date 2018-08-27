@@ -133,7 +133,7 @@ function calculateQuestionStreak() {
     let questionStreak = 0;
     let lastSentId = classVariableDict.id_of_last_sent
 
-    if ( lastSentId !== null ) {
+    if ( lastSentId !== null && classVariableDict.last_sent.sentence !== null ) {
 
         //skip the sentence waiting for judgement    
         let n = 0;

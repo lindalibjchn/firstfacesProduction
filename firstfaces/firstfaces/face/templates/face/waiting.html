@@ -23,11 +23,28 @@
 
         <span onclick="bookBackToDesk()" class="w3-button w3-xlarge w3-display-topright">&times;</span>
 
-        <p>yo</p>
+        <div class="which-book" id="sentencesBook">
+
+            <h2>Sentences</h2>
+
+        </div> 
+
+        <div class="which-book" id="testsBook">
+
+            <h2>Tests</h2>
+
+        </div> 
+
+        <div class="which-book" id="newsBook">
+
+            <h2>News</h2>
+
+        </div> 
 
     </div>
 
 </div>
+
 <!-- variables for blender objects from JSON -->
 <script>
     var waitingRoom = "{% static 'face/JSON/waitingRoom.json' %}";
@@ -45,6 +62,7 @@
 <script src="{% static 'face/javascript/waiting/variablesAndConstants.js' %}"></script>
 <script src="{% static 'face/javascript/waiting/loadWaitingRoom.js' %}"></script>
 <script src="{% static 'face/javascript/waiting/enterClassroom.js' %}"></script>
+<script src="{% static 'face/javascript/waiting/books.js' %}"></script>
 <script src="{% static 'face/javascript/waiting/main.js' %}"></script>
 
 <!-- fonts -->

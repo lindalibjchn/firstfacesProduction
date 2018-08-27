@@ -141,7 +141,6 @@ function onClick(event) {
 function bookBackToDesk() {
 
     $("#bookContentBackground").fadeOut( 1000, initBookBack );
-    
     function initBookBack() {
 
         initBookMove( clickableObjects.clickedBook, "desk", "2" )

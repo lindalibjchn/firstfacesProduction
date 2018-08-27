@@ -24,6 +24,30 @@
 
 }
 
+.which-book {
+
+    border: 2px dashed black;
+
+}
+
+#sentencesBook {
+
+    display: none;
+
+}
+
+#testsBook {
+
+    display: none;
+
+}
+
+#newsBook {
+
+    display: none;
+
+}
+
 #loadingIcon {
 
     position: absolute;

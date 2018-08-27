@@ -52,20 +52,26 @@ function initCameraMove( to, speed ) {
 function initBookMove( book, to, speed ) {
 
     let bookObj = {}
+    $('#testsBook').hide(); 
+    $('#sentencesBook').hide(); 
+    $('#newsBook').hide(); 
 
     if ( book === "tests" ) {
         
         bookObj = clickableObjects.tests;
+        showTestsBook();
         clickableObjects.clickedBook = "tests";
 
     } else if ( book === "sentences" ) {
 
         bookObj = clickableObjects.sentences;
+        showSentencesBook();
         clickableObjects.clickedBook = "sentences";
 
     } else if ( book === "laptop" ) {
 
         bookObj = clickableObjects.laptop;
+        showNewsBook();
         clickableObjects.clickedBook = "laptop";
 
     }
