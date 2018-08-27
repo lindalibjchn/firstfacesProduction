@@ -224,31 +224,32 @@ function init( skeleton=false ) {
     function addHair( geom, mat ) {
 
         // load the materials for the hair and hair-tie. Only need 2 materials but JSON has all.
-        mat[0].skinning = true;
-        mat[1].skinning = true;
-        mat[0].morphtargets = true;
-        mat[1].morphtargets = true;
+        //mat[0].skinning = true;
+        //mat[1].skinning = true;
+        //mat[0].morphtargets = true;
+        //mat[1].morphtargets = true;
 
-        tiaObject.mHair = new THREE.SkinnedMesh( geom, mat );
+        //tiaObject.mHair = new THREE.SkinnedMesh( geom, mat );
+        tiaObject.mHair = new THREE.Mesh( geom, mat );
 
 
         // SKELETON HELPER \\
         
-        if ( skeleton ) {
+        //if ( skeleton ) {
         
-            hairSkeletonHelper = new THREE.SkeletonHelper( tiaObject.mHair );
-            scene.add( hairSkeletonHelper );
+            //hairSkeletonHelper = new THREE.SkeletonHelper( tiaObject.mHair );
+            //scene.add( hairSkeletonHelper );
 
-        };
-        // iterate over the bones in the JSON file and put them into the global hairBones object. Call bones with hairBones["<bone name>"] 
-        for (var i=0; i<tiaObject.mHair.skeleton.bones.length; i++) {
+        //};
+        //// iterate over the bones in the JSON file and put them into the global hairBones object. Call bones with hairBones["<bone name>"] 
+        //for (var i=0; i<tiaObject.mHair.skeleton.bones.length; i++) {
             
-            tiaObject.hairBones[ tiaObject.mHair.skeleton.bones[i].name ] = tiaObject.mHair.skeleton.bones[i];
+            //tiaObject.hairBones[ tiaObject.mHair.skeleton.bones[i].name ] = tiaObject.mHair.skeleton.bones[i];
 
-        }
+        //}
         
         // need to manually assign position again
-        tiaObject.mHair.position.set( 0, 5.6, 1.9 );
+        tiaObject.mHair.position.set( -0.1, 5.5, 1.9 );
         
         // again, parent to headbone
         tiaObject.faceBones.head.add( tiaObject.mHair );

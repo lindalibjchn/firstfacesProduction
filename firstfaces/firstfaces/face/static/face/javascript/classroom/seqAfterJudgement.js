@@ -162,16 +162,26 @@ function runAfterJudgement() {
 }
 
 // check if expression has finished running
+whenAllMovFinishedCount = 0;
 var whenAllMovFinished = function( funcToCall ) {
 
-    console.log( 'in whenAllMovFinished' );
+    console.log( 'in whenAllMovFinished:', whenAllMovFinishedCount );
     if ( expressionObject.bool || cameraObject.bool || movementObject.bool || eyelidObject.bool || eyeObject.bool || blinkNowObject.bool || normalBlinkObject.bool || nodObject.bool || shakeObject.bool ) {
       
-        setTimeout( function() {
-         
-            whenAllMovFinished( funcToCall );
-        
-        }, 500 );
+        if ( whenAllMovFinishedCount < 10000 ) {
+
+            setTimeout( function() {
+             
+                whenAllMovFinishedCount += 500;
+                whenAllMovFinished( funcToCall );
+            
+            }, 500 );
+
+        } else {
+
+            returnToLaptop('');
+
+        }
 
     } else {
 
@@ -181,6 +191,7 @@ var whenAllMovFinished = function( funcToCall ) {
     }
 
 }
+
 
 function getNodSpeedInString() {
 
