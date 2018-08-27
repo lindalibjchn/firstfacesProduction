@@ -3,7 +3,7 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 from .forms import UserForm
 from django.http import JsonResponse
-from .utils import get_availables_for_schedule, make_schedule_dict, get_upcoming_class, get_class_already_done_today, get_in_class_now, has_user_clicked_option_btn, fill_sessions_dict, get_scores 
+from .utils import get_availables_for_schedule, make_schedule_dict, get_upcoming_class, get_class_already_done_today, get_in_class_now, has_user_clicked_option_btn, fill_sessions_dict, get_scores
 from django.utils import timezone
 import json
 from .models import Session, Sentence, AudioFile, Profile
@@ -21,7 +21,8 @@ from google.cloud import texttospeech
 import math
 
 logger = logging.getLogger(__name__)
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/johnsHDD/PhD_backup/erle-3666ad7eec71.json"
+# os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/johnsHDD/PhD_backup/erle-3666ad7eec71.json"
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/johnsHDD/PhD/2018_autumn/erle-3666ad7eec71.json"
 
 def entrance(request):
 

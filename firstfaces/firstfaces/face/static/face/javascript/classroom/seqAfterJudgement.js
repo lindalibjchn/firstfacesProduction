@@ -171,7 +171,7 @@ var whenAllMovFinished = function( funcToCall ) {
          
             whenAllMovFinished( funcToCall );
         
-        }, 200 );
+        }, 500 );
 
     } else {
 
@@ -241,7 +241,7 @@ function nodOrShakeHead() {
 function displaySpeechBubblePrompt() {
 
     // actually delay to return to laptop
-    synthesisObject.delayToThinkAndTurn = synthesisObject.text.length * 70;
+    synthesisObject.delayToThinkAndTurn = synthesisObject.text.length * 100 * synthesisObject.speaking_rate;
 
     // return to talking pos
     expressionController( calculatedTalkExpression, '1', false );

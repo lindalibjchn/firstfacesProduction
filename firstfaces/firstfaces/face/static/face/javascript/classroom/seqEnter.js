@@ -43,8 +43,8 @@ function mainEnter() {
 
     } else if ( mainCount === 430 ) {
 
+        movementController( movements.lookChair, '0.5', '1');
         initArmIndicate('left', 1, 'low', '1');
-        initMovement( movements.lookChair, '0.5', '1');
 
     } else if ( mainCount === 510 ) {
 
@@ -186,6 +186,8 @@ function goToAskTopic( emotion ) {
         
         expressionController( calculatedExpression, '0.5');
 
+        synthesisObject.pitch = 2;
+        synthesisObject.speaking_rate = 0.9;
         speechBubbleObject.sentence = " That's great! What would you like to talk about today?";
     
         setTimeout( function() {
@@ -198,11 +200,13 @@ function goToAskTopic( emotion ) {
 
     } else {
 
-        calculatedExpressions = createCombinedExpression([expressionsRel.sad, expressionsRel.fear], 0.98, 0.5, 0);
+        calculatedExpressions = createCalculatedExpression([expressionsRel.sad, expressionsRel.fear], 0.98, 0.5, 0);
         calculatedExpression = getAbsoluteCoordsOfExpressionTo( calculatedExpressions[0] );
         calculatedTalkExpression = getAbsoluteCoordsOfExpressionTo( calculatedExpressions[1] );
-        expressionController( calculatedExpression, '0.5');
+        expressionController( calculatedExpression, '0.75');
     
+        synthesisObject.pitch = -4;
+        synthesisObject.speaking_rate = 0.75;
         speechBubbleObject.sentence = " I'm sorry to hear that. What would you like to talk about today?";
 
         setTimeout( function() {
@@ -211,7 +215,7 @@ function goToAskTopic( emotion ) {
 
             setTimeout( askTopic, 3500 );
 
-        }, 800)
+        }, 1050)
 
     }
     
@@ -375,7 +379,7 @@ function beginTalking() {
         
             setTimeout( function() {
                 
-                expressionController( expressionsAbs.neutral, '0.25', '0.5' );
+                expressionController( expressionsAbs.neutral, '0.75' );
                 talkObject.learning = true;
 
                 setTimeout( function() {

@@ -37,7 +37,6 @@ function showTimeRemaining() {
 
 function endClass() {
 
-    
     let sessId = classVariableDict.session_id;
     $.ajax({
         url: "/face/store_class_over",

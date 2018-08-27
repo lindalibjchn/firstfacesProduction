@@ -1,10 +1,11 @@
-from .models import Available, Sentence, Session
+from .models import Available, Sentence, Session, PermSentence
 import datetime
 import time
 from django.utils import timezone
 from operator import itemgetter
 import math
 import json
+from django.forms.models import model_to_dict
 
 def get_this_weeks_dates():
 
@@ -291,10 +292,20 @@ def get_scores( sess_id ):
 
     sess = Session.objects.get(pk=sess_id)
     sentences = Sentence.objects.filter(session=sess).order_by('pk')
+
+    save_to_perm_db( sentences )
+
     no_sentences = len( sentences )
+
+    if no_sentences == 0:
+        return [0,0,0]
 
     correct_sentences = [s for s in sentences if s.judgement in ['C', 'B']]
     no_correct_sentences = len(correct_sentences)
+
+    if no_correct_sentences == 0:
+        return [0,0,0]
+
     no_incorrect_sentences = no_sentences - no_correct_sentences
 
     ratio_correct = len(correct_sentences) / no_sentences
@@ -309,19 +320,21 @@ def get_scores( sess_id ):
 
     av_correct_emotion = sum(emotion_amounts) / no_correct_sentences
 
-    # try again - if use try again and get it right - bonus points!
-    successful_try_again_count = 0
-    for i, t_s in enumerate(sentences):
+    ratio_successful_try_again = 0
+    if no_incorrect_sentences != 0:
+        # try again - if use try again and get it right - bonus points!
+        successful_try_again_count = 0
+        for i, t_s in enumerate(sentences):
+            
+            if i != 0:
+
+                if t_s.judgement in ['C', 'B']:
+
+                    if sentences[i-1].try_again:
+
+                        successful_try_again_count += 1
         
-        if i != 0:
-
-            if t_s.judgement in ['C', 'B']:
-
-                if sentences[i-1].try_again:
-
-                    successful_try_again_count += 1
-    
-    ratio_successful_try_again = successful_try_again_count / no_incorrect_sentences
+        ratio_successful_try_again = successful_try_again_count / no_incorrect_sentences
 
     raw_score = ratio_correct * av_correct_sent_length
     try_again_bonus = math.ceil(ratio_successful_try_again * 5)
@@ -329,8 +342,18 @@ def get_scores( sess_id ):
 
     return [raw_score, try_again_bonus, emotion_bonus]
         
+def save_to_perm_db( sents_tbcopied ):
 
+    for s in sents_tbcopied:
 
+        print('\n\nsent_tbcopied:', s)
+
+        s_dict = model_to_dict( s )
+        s_dict['learner'] = s.learner
+        s_dict['session'] = s.session
+        del(s_dict['id'])
+        PermSentence.objects.create(**s_dict)
+        Sentence.objects.get(pk=s.pk).delete()
 
 
 
