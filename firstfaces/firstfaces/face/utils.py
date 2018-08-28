@@ -376,13 +376,17 @@ def get_prev_sessions( user ):
 
         for s in sents:
 
+            a_s = s.permaudiofile_set.all().order_by('-pk')
+            a_s_ids = [a.id for a in a_s]
+
             sentences.append({
                 'sentence': s.sentence, 
                 'judgement': s.judgement, 
                 'correction': s.correction, 
                 'indexes': s.indexes,
                 'try_again': s.try_again, 
-                'prompt': s.prompt
+                'prompt': s.prompt,
+                'audio_files': a_s_ids
             })
 
         sessions_dict[ sess.id ] = {

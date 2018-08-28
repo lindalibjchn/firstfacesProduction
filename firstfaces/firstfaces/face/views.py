@@ -21,8 +21,8 @@ from google.cloud import texttospeech
 import math
 
 logger = logging.getLogger(__name__)
-# os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/johnsHDD/PhD_backup/erle-3666ad7eec71.json"
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/johnsHDD/PhD/2018_autumn/erle-3666ad7eec71.json"
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/johnsHDD/PhD_backup/erle-3666ad7eec71.json"
+# os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/johnsHDD/PhD/2018_autumn/erle-3666ad7eec71.json"
 
 def entrance(request):
 
@@ -288,10 +288,6 @@ def store_topic(request):
 def store_blob(request):
 
     blob = request.FILES['data']
-    # filename = request.user.username + "__" + timezone.now().strftime( '%Y-%m-%d-%H-%M-%S' )
-    filename = 'test.wav'
-    blob.name = filename
-
     # code.interact(local=locals());
 
     # get session
@@ -304,20 +300,22 @@ def store_blob(request):
 
     # if very first attempt or new sent then need to create empty sentence
     if blob_no_text:
-
+        
         blob_no_text_sent_id = int(request.POST['blob_no_text_sent_id'])
         s = Sentence.objects.get( pk=blob_no_text_sent_id )
-        a = AudioFile(sentence=s, audio=blob, speech_to_text=text_from_speech)
-        a.save()
 
     else:
 
         s = Sentence(learner=request.user, session=sess)
         s.save()
 
-        #and then link the recording
-        a = AudioFile(sentence=s, audio=blob, speech_to_text=text_from_speech)
-        a.save()
+
+    filename = str(sess.id) + "_" + str(s.id) + "_" + timezone.now().strftime( '%H-%M-%S' )
+    blob.name = filename
+
+    #and then link the recording
+    a = AudioFile(sentence=s, audio=blob, speech_to_text=text_from_speech)
+    a.save()
 
     response_data = {
 

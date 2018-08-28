@@ -49,20 +49,23 @@ function showSession( ind ) {
         let topic = sess.topic
         let sentence = sess.sentences
     
-        sents = ""
-        sentence.forEach( function(s) {
-
-            console.log('s:', s);
-            sents += "<div>" + s.sentence + "</div>";
-
-        });
+        let node = document.getElementById('sentencesInnerMain');
+        node.innerHTML = '';
 
         let html = "<div>" + sT + "</div>" +
-            "<div>" + topic + "</div>" +
-            "<div>" + sents + "</div>"; 
+            "<div>" + topic + "</div>"; 
         
+        //node.appendChild( html );
 
-        $('#sentencesInnerMain').append( html );
+        sentence.forEach( function(s) {
+
+            //let audioIds = JSON.parse( s.audio_files )
+            console.log('audioIds:', s.audio_files )
+
+            appendRecordings( s, node )
+            appendExchange( s, node );
+
+        });
 
     }
 

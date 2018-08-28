@@ -57,6 +57,26 @@
 
 }
 
+#sentencesInnerMain {
+
+    height: 90%;
+    width: 100%;
+    overflow-y: scroll;
+
+}
+
+.sentenceWaitingBox {
+
+    background-color: white;
+    border-radius: 7px 0px 7px 7px;
+    width: 85%;
+    margin: 4px;
+    padding: 1%;
+    float: right;
+    font-size: 1.3vw;
+    
+}
+
 #testsBook {
 
     display: none;
