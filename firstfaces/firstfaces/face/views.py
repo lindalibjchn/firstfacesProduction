@@ -3,7 +3,7 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 from .forms import UserForm
 from django.http import JsonResponse
-from .utils import get_availables_for_schedule, make_schedule_dict, get_upcoming_class, get_class_already_done_today, get_in_class_now, has_user_clicked_option_btn, fill_sessions_dict, get_scores
+from .utils import get_availables_for_schedule, make_schedule_dict, get_upcoming_class, get_class_already_done_today, get_in_class_now, has_user_clicked_option_btn, fill_sessions_dict, get_scores, get_prev_sessions
 from django.utils import timezone
 import json
 from .models import Session, Sentence, AudioFile, Profile
@@ -21,8 +21,8 @@ from google.cloud import texttospeech
 import math
 
 logger = logging.getLogger(__name__)
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/johnsHDD/PhD_backup/erle-3666ad7eec71.json"
-# os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/johnsHDD/PhD/2018_autumn/erle-3666ad7eec71.json"
+# os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/johnsHDD/PhD_backup/erle-3666ad7eec71.json"
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/johnsHDD/PhD/2018_autumn/erle-3666ad7eec71.json"
 
 def entrance(request):
 
@@ -73,10 +73,14 @@ def waiting(request):
     schedule_dict[ 'class_already_done_today' ] = json.dumps( get_class_already_done_today( sessions ) )
     schedule_dict[ 'in_class_now' ], schedule_dict[ 'session_id' ] = get_in_class_now( sessions )
 
+    # get dictionary of all previous sessions
+    sessions_dict = get_prev_sessions( request.user )
+
     context = {
 
         'schedule_dict': json.dumps(schedule_dict),
         'schedule_now': json.dumps(schedule_now),
+        'sessions_dict': json.dumps(sessions_dict)
 
     }
 
@@ -293,6 +297,7 @@ def store_blob(request):
     # get session
     blob_no_text = json.loads(request.POST['blob_no_text'])
     sess = Session.objects.get( pk=request.POST['sessionID'] )
+    text_from_speech = request.POST['textFromSpeech']
 
     #check if this recording is a retry
     #get prev sents for this user in this session
@@ -302,7 +307,7 @@ def store_blob(request):
 
         blob_no_text_sent_id = int(request.POST['blob_no_text_sent_id'])
         s = Sentence.objects.get( pk=blob_no_text_sent_id )
-        a = AudioFile(sentence=s, audio=blob)
+        a = AudioFile(sentence=s, audio=blob, speech_to_text=text_from_speech)
         a.save()
 
     else:
@@ -311,7 +316,7 @@ def store_blob(request):
         s.save()
 
         #and then link the recording
-        a = AudioFile(sentence=s, audio=blob)
+        a = AudioFile(sentence=s, audio=blob, speech_to_text=text_from_speech)
         a.save()
 
     response_data = {
@@ -384,6 +389,7 @@ def tts(request):
 
 def store_sent(request):
 
+    time_now = timezone.now();
     sentence_text = request.GET['sent']
     q = json.loads(request.GET['isItQ'])
     #code.interact(local=locals());
@@ -399,12 +405,14 @@ def store_sent(request):
 
         s = Sentence.objects.get( pk=blob_no_text_sent_id )
         s.sentence = sentence_text
+        s.sentence_timestamp = time_now
         s.question = q
         s.save()
 
     else:
     
         s = Sentence(learner=request.user, session=sess, sentence=sentence_text, question=q, sentence_timestamp=timezone.now())
+        s.sentence_timestamp = time_now
         s.save()
 
     while True:

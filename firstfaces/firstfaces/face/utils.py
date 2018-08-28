@@ -1,4 +1,4 @@
-from .models import Available, Sentence, Session, PermSentence
+from .models import Available, Sentence, Session, PermSentence, PermAudioFile
 import datetime
 import time
 from django.utils import timezone
@@ -346,15 +346,56 @@ def save_to_perm_db( sents_tbcopied ):
 
     for s in sents_tbcopied:
 
-        print('\n\nsent_tbcopied:', s)
+        # print('\n\nsent_tbcopied:', s)
 
         s_dict = model_to_dict( s )
         s_dict['learner'] = s.learner
         s_dict['session'] = s.session
         del(s_dict['id'])
-        PermSentence.objects.create(**s_dict)
+        ps = PermSentence.objects.create(**s_dict)
+
+        # change audio files over to PermSentence
+        audiofile_set = s.audiofile_set.all().order_by('-pk')
+        for a in audiofile_set.reverse():
+            pa = PermAudioFile.objects.create(sentence=ps, audio=a.audio, speech_to_text=a.speech_to_text)
+            pa.save()
+
         Sentence.objects.get(pk=s.pk).delete()
 
+def get_prev_sessions( user ):
+
+    all_sessions = Session.objects.filter(learner=user)
+
+    sessions_dict = {}
+
+    for sess in all_sessions:
+
+        sents = PermSentence.objects.filter(session=sess)
+
+        sentences = []
+
+        for s in sents:
+
+            sentences.append({
+                'sentence': s.sentence, 
+                'judgement': s.judgement, 
+                'correction': s.correction, 
+                'indexes': s.indexes,
+                'try_again': s.try_again, 
+                'prompt': s.prompt
+            })
+
+        sessions_dict[ sess.id ] = {
+
+            'score': sess.score,
+            'start_time': int(time.mktime((sess.start_time).timetuple())),
+            'topic': sess.topic,
+            'emotion': sess.learner_emotion,
+            'sentences': sentences
+
+        }
+                
+    return sessions_dict 
 
 
 

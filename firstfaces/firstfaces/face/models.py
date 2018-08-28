@@ -118,6 +118,12 @@ class PermSentence(models.Model):
 # may need multiple audio files per sentence as student attempts and re-attempts
 class AudioFile(models.Model):
     sentence = models.ForeignKey(Sentence, on_delete=models.CASCADE)
+    speech_to_text = models.CharField(max_length=300, blank=True, null=True)
+    audio = models.FileField(upload_to="")
+
+class PermAudioFile(models.Model):
+    sentence = models.ForeignKey(PermSentence, on_delete=models.CASCADE)
+    speech_to_text = models.CharField(max_length=300, blank=True, null=True)
     audio = models.FileField(upload_to="")
 
 class Profile(models.Model):

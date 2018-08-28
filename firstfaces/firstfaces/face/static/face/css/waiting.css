@@ -24,9 +24,30 @@
 
 }
 
-.which-book {
+#bookContentPageInner {
 
-    border: 2px dashed black;
+    width: 90%;
+    min-width: 720px;
+    min-height: 540px;
+    height: 90%;
+    background: rgba( 224, 236, 255, 1 );
+    border-radius: 20px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+
+}
+
+.book-title {
+
+    text-align: center;
+
+}
+
+.which-book {
 
 }
 

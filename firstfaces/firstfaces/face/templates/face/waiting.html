@@ -21,25 +21,31 @@
 
     <div id="bookContentPage">
 
-        <span onclick="bookBackToDesk()" class="w3-button w3-xlarge w3-display-topright">&times;</span>
+        <span onclick="bookBackToDesk()" class="w3-button w3-xlarge w3-red w3-display-topright">&times;</span>
 
-        <div class="which-book" id="sentencesBook">
+        <div id="bookContentPageInner">
 
-            <h2>Sentences</h2>
+            <div class="which-book" id="sentencesBook">
 
-        </div> 
+                <h3 class="book-title">Sentences</h3>
 
-        <div class="which-book" id="testsBook">
+                <div id="sentencesInnerMain"></div>
 
-            <h2>Tests</h2>
+            </div> 
 
-        </div> 
+            <div class="which-book" id="testsBook">
 
-        <div class="which-book" id="newsBook">
+                <h3 class="book-title">Tests</h3>
 
-            <h2>News</h2>
+            </div> 
 
-        </div> 
+            <div class="which-book" id="newsBook">
+
+                <h3 class="book-title">News</h3>
+
+            </div> 
+
+        </div>
 
     </div>
 
@@ -55,6 +61,7 @@
     var doorSign = "{% static 'face/JSON/waitingRoomDoorSign.json' %}";
     var scheduleDict = {{ schedule_dict|safe }};
     var scheduleNow = {{ schedule_now|safe }};
+    var sessionsDict = {{ sessions_dict|safe }};
 </script>
 
 <!-- my own scripts -->

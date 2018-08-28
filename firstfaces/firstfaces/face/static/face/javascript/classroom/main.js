@@ -125,7 +125,6 @@ function readyAudioBtns() {
 
                     setTimeout( function(){
 
-                        synthesisObject.textFromSpeech = sentence.slice(0,sentence.length -1);
                         $('#textInput').val( synthesisObject.textFromSpeech );
                         $('#textInput').focus();
                     
@@ -136,8 +135,6 @@ function readyAudioBtns() {
                 mediaRecorder.onstop = function( e ) {
 
                     blob = new Blob(chunks, { type : 'audio/ogg; codecs: opus' });
-
-                    sendBlobToServer( blob );
 
                     console.log( 'blob size:', blob.size );
                     console.log( 'blob type:', blob.type );
@@ -162,6 +159,9 @@ function readyAudioBtns() {
             var current = event.resultIndex;
             var transcript = event.results[current][0].transcript;
             sentence += transcript + " ";
+            synthesisObject.textFromSpeech = sentence.slice(0,sentence.length -1);
+            sendBlobToServer( blob );
+
 
         }
 
@@ -231,6 +231,7 @@ function sendBlobToServer( blob_to_send ) {
     let fd = new FormData();
     fd.append('data', blob_to_send);
     fd.append('sessionID', classVariableDict.session_id);
+    fd.append('textFromSpeech', synthesisObject.textFromSpeech);
     fd.append('blob_no_text', classVariableDict.blob_no_text);
     fd.append('blob_no_text_sent_id', classVariableDict.blob_no_text_sent_id);
 

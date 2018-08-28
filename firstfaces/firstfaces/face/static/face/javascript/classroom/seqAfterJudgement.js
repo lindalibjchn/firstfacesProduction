@@ -180,12 +180,14 @@ var whenAllMovFinished = function( funcToCall ) {
         } else {
 
             returnToLaptop('');
+            whenAllMovFinishedCount = 0
 
         }
 
     } else {
 
         console.log( 'in whenAllMovFinished funcToCall' );
+        whenAllMovFinishedCount = 0;
         funcToCall();
 
     }
