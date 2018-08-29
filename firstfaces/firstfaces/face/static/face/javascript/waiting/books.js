@@ -48,13 +48,15 @@ function showSession( ind ) {
         let niceDate = sT.getDate(); 
         let topic = sess.topic
         let sentence = sess.sentences
+        let score = sess.score
     
         let node = document.getElementById('sentencesInnerMain');
         node.innerHTML = '';
 
         let html = document.createElement( "div" );
         html.innerHTML = "<div id='sessDate'>" + sT + "</div>" +
-            "<div id='sessTopic'>" + "Topic: " + topic + "</div>"; 
+            "<div id='sessTopic'>" + "Topic: <span style='font-weight: bold'>" + topic + "</div>" +
+            "<div id='sessScore'>" + "Score: <span style='font-weight: bold'>" + score + "</span></div>"; 
         
         node.appendChild( html );
 
