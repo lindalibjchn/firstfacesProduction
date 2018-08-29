@@ -21,8 +21,8 @@ from google.cloud import texttospeech
 import math
 
 logger = logging.getLogger(__name__)
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/johnsHDD/PhD_backup/erle-3666ad7eec71.json"
-# os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/johnsHDD/PhD/2018_autumn/erle-3666ad7eec71.json"
+# os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/johnsHDD/PhD_backup/erle-3666ad7eec71.json"
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/johnsHDD/PhD/2018_autumn/erle-3666ad7eec71.json"
 
 def entrance(request):
 
@@ -310,7 +310,7 @@ def store_blob(request):
         s.save()
 
 
-    filename = str(sess.id) + "_" + str(s.id) + "_" + timezone.now().strftime( '%H-%M-%S' )
+    filename = str(sess.id) + "_" + str(s.id) + "_" + timezone.now().strftime( '%H-%M-%S' ) + ".wav"
     blob.name = filename
 
     #and then link the recording
@@ -373,7 +373,7 @@ def tts(request):
 
     response = client.synthesize_speech(input_text, voice, audio_config)
 
-    synthURL = 'media/synths/session' + session_id + '.mp3'
+    synthURL = 'media/synths/session' + session_id + '.wav'
     with open( os.path.join(settings.BASE_DIR, synthURL ), 'wb') as out:
         out.write(response.audio_content)
     

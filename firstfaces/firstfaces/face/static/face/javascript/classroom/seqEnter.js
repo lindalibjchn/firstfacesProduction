@@ -60,8 +60,7 @@ function mainEnter() {
         synthesisObject.pitch = 0;
         synthesisObject.speaking_rate = 0.85;
         synthesisObject.text = greeting;
-        synthesisObject.length = synthesisObject.text.length;
-        synthesisObject.endCount = 1000 + synthesisObject.length * 70;
+        synthesisObject.endCount = 1000 + synthesisObject.text.length * 70;
         synthesisObject.speaker = "tia";
         speechBubbleObject.sentence = greeting;
         sendTTS( greeting, true, "talk" );
@@ -224,7 +223,7 @@ function goToAskTopic( emotion ) {
 
     synthesisObject.text = speechBubbleObject.sentence
     synthesisObject.length = synthesisObject.text.length;
-    synthesisObject.endCount = 1000 + synthesisObject.length * 70;
+    synthesisObject.endCount = 1000 + synthesisObject.text.length * 70;
     sendTTS( synthesisObject.text, true, "talk" );
 }
 
@@ -346,7 +345,7 @@ function storeTopic( topicChoice ) {
                 speechBubbleObject.sentence = startTalkSent;
                 synthesisObject.text = speechBubbleObject.sentence
                 synthesisObject.length = synthesisObject.text.length;
-                synthesisObject.endCount = 1000 + synthesisObject.length * 70;
+                synthesisObject.endCount = 1000 + synthesisObject.text.length * 70;
                 sendTTS( startTalkSent, true, "talk" );
 
                 setTimeout( beginTalking, 4000 );

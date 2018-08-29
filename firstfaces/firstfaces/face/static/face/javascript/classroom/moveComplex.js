@@ -89,7 +89,7 @@ function backNReadALine() {
 function initTalk() {
    
     synthesisObject.length = synthesisObject.text.length;
-    talkObject.endCount = mainCount + synthesisObject.length * 3;
+    talkObject.endCount = mainCount + synthesisObject.endCount;
 
     // start mouth pursed when talking
     talkObject.bool = true;

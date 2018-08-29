@@ -61,8 +61,7 @@ function readyAudioBtns() {
         } else {
 
             synthesisObject.text = textInBox;
-            synthesisObject.length = synthesisObject.text.length;
-            synthesisObject.endCount = 1000 + synthesisObject.length * 50;
+            synthesisObject.endCount = 1000 + synthesisObject.text.length * 70;
             sendTTS( textInBox, false, "listen" );
 
         }

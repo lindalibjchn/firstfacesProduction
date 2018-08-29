@@ -7,6 +7,14 @@ function appendExchange( sentenceMeta, node ) {
     if ( sentenceMeta.judgement === "C" ) {
 
         sentenceBox.className += " correctSent";
+
+        let a_btn = document.createElement("button");
+        a_btn.id = sentenceMeta.sentence;
+        a_btn.innerHTML = "<i class='fa fa-play inputfa'></i>";
+        a_btn.className = "listen-synth-btn w3-button w3-green w3-circle";
+        a_btn.sessID = sentenceMeta.sess_id;
+        sentenceBox.appendChild( a_btn );
+
     
     } else if ( sentenceMeta.judgement === "I" ) {
 
@@ -26,6 +34,13 @@ function appendExchange( sentenceMeta, node ) {
         sentenceBox.className += " correctSent";
         sentenceBox.innerHTML = makeHighlightedSent( sentenceMeta );
     
+        let a_btn = document.createElement("button");
+        a_btn.id = sentenceMeta.sentence;
+        a_btn.innerHTML = "<i class='fa fa-play inputfa'></i>";
+        a_btn.className = "w3-small w3-button w3-green listen-synth-btn";
+        a_btn.sessID = sentenceMeta.sess_id;
+        sentenceBox.appendChild( a_btn );
+
         let betterText = createBetterTextForPromptBox( sentenceMeta ); 
         exchange.appendChild( createPromptBox( betterText ) );
 
@@ -216,7 +231,32 @@ function createBetterTextForPromptBox( sentenceMetaData ) {
 
 function appendRecordings( sentData, n ) {
 
-    
+    let recordingsBox = document.createElement("div");
+    recordingsBox.className = "recordingsBox";
+
+    for ( var a in sentData.audio_files ) {
+
+        let singleRecordingBox = document.createElement( "div" );
+
+        let text = document.createElement( "div" );
+        text.className = "speech-to-text";
+        text.innerHTML = sentData.audio_files[a][1]; 
+        singleRecordingBox.appendChild( text );
+
+        let a_btn = document.createElement("button");
+        a_btn.id = sentData.audio_files[a][2];
+        a_btn.innerHTML = "<i class='fa fa-play inputfa'></i>";
+        a_btn.className = "listen-btn w3-xsmall w3-blue w3-btn w3-circle";
+        text.appendChild( a_btn );
+
+        recordingsBox.appendChild( singleRecordingBox );
+
+    }
+
+    n.appendChild( recordingsBox );
 
 }
+
+
+
 

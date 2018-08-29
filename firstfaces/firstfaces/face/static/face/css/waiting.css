@@ -1,3 +1,33 @@
+#leftScroll {
+
+
+}
+
+#rightScroll {
+
+
+}
+
+.fa-angle-double-left {
+
+    float: right;
+
+}
+
+.fa-angle-double-right {
+
+    float: left;
+
+}
+
+.fa-angle:hover {
+
+    color: yellow;
+    transform: scale(1.5);
+    cursor: pointer; 
+
+}
+
 #bookContentBackground {
 
     width: 100%;
@@ -65,16 +95,63 @@
 
 }
 
+#sessDate {
+
+    text-align: center;
+    font-size: 1.4vw;
+
+}
+
+#sessTopic {
+
+    text-align: center;
+    font-size: 1.5vw;
+    margin-bottom: 20px;
+
+}
+
 .sentenceWaitingBox {
 
     background-color: white;
     border-radius: 7px 0px 7px 7px;
     width: 85%;
     margin: 4px;
+    margin-top: 2px;
+    margin-bottom: 10px;
     padding: 1%;
     float: right;
-    font-size: 1.3vw;
+    font-size: 1.5vw;
     
+}
+
+.speech-to-text {
+
+    background-color: white;
+    border-radius: 5px 0px 5px 5px;
+    width: 80%;
+    margin: 2px;
+    padding: 0.4%;
+    float: right;
+    font-size: 1.2vw;
+    font-style: italic;
+
+}
+
+.listen-btn {
+
+    float: right;
+    padding: 5 7 5 9;
+    font-size: 1.3vw !important;
+
+}
+
+.listen-synth-btn {
+
+    padding: 7 9 7 11;
+    float: right;
+    font-size: 1.4vw !important;
+    font-weight: bold;
+
 }
 
 #testsBook {

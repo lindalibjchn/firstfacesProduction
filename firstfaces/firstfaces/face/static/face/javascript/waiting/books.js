@@ -52,20 +52,21 @@ function showSession( ind ) {
         let node = document.getElementById('sentencesInnerMain');
         node.innerHTML = '';
 
-        let html = "<div>" + sT + "</div>" +
-            "<div>" + topic + "</div>"; 
+        let html = document.createElement( "div" );
+        html.innerHTML = "<div id='sessDate'>" + sT + "</div>" +
+            "<div id='sessTopic'>" + "Topic: " + topic + "</div>"; 
         
-        //node.appendChild( html );
+        node.appendChild( html );
 
         sentence.forEach( function(s) {
-
-            //let audioIds = JSON.parse( s.audio_files )
-            console.log('audioIds:', s.audio_files )
 
             appendRecordings( s, node )
             appendExchange( s, node );
 
         });
+
+        $('.listen-btn').on( 'click', getRecording );
+        $('.listen-synth-btn').on( 'click', getSynth );
 
     }
 

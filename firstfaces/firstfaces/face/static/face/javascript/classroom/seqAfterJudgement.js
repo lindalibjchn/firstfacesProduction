@@ -138,16 +138,21 @@ function runAfterJudgement() {
             text = " I'm sorry but I don't understand what you said.";
             sendTTS( text, true );
             
+            let singleCalculatedExpressions = createSingleExpression( expressionsRel.confused, 1 )
+            calculatedExpression = getAbsoluteCoordsOfExpressionTo( singleCalculatedExpressions[ 0 ] )
+            calculatedTalkExpression = getAbsoluteCoordsOfExpressionTo( singleCalculatedExpressions[ 1 ] )
+
+            
             whenAllMovFinished( function() { 
          
-                expressionController( expressionsAbs.confused, '1', false );
+                expressionController( calculatedExpression, '1', false );
             
             })
 
             setTimeout( function() {
                 
-                whenExpFinished( nodOrShakeHead ); 
-                setTimeout( displaySpeechBubblePrompt, 5000 );
+                whenAllMovFinished( nodOrShakeHead ); 
+                setTimeout( displaySpeechBubblePrompt, 8000 );
 
             }, 1100 );
 
@@ -199,15 +204,11 @@ function getNodSpeedInString() {
 
     let nodSpeed = classVariableDict.last_sent['nodSpeed']
     
-    if ( nodSpeed <= 0.25 ) {
-
-        return '1'
-
-    } else if ( nodSpeed > 0.25 && nodSpeed <= 0.5 ) {
+    if ( nodSpeed <= 0.33 ) {
 
         return '0.75'
 
-    } else if ( nodSpeed > 0.5 && nodSpeed <= 0.75 ) {
+    } else if ( nodSpeed > 0.33 && nodSpeed <= 0.66 ) {
 
         return '0.5'
 

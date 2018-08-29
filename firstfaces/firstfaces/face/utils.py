@@ -376,10 +376,12 @@ def get_prev_sessions( user ):
 
         for s in sents:
 
-            a_s = s.permaudiofile_set.all().order_by('-pk')
-            a_s_ids = [a.id for a in a_s]
+            a_s = s.permaudiofile_set.all()
+            a_s_ids = [[a.id, a.speech_to_text, a.audio.name] for a in a_s]
 
             sentences.append({
+                'sent_id': s.id,
+                'sess_id': sess.id,
                 'sentence': s.sentence, 
                 'judgement': s.judgement, 
                 'correction': s.correction, 

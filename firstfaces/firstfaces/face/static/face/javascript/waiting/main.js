@@ -7,8 +7,12 @@ $(window).on( 'load', function() {
     // gets session id's in lit to order the calling of sessions from the sessionsDict
     getSessionsIdList();
     
-    $('#bookContentBackground').fadeIn( 1000 ); 
-    showSentencesBook()
+    // this is for developing the sentences book
+    //$('#bookContentBackground').fadeIn( 1000 ); 
+    //showSentencesBook()
+
+    $('.fa-angle-double-left').on( 'click', sessionLeft );
+    $('.fa-angle-double-right').on( 'click', sessionRight );
 
 });
 
@@ -191,4 +195,72 @@ function doDoor() {
     }
 
 }
+
+function getRecording() {
+
+    let audio_url = this.id
+
+    let aud = document.getElementById('listen_audio');
+    aud.src = "http://127.0.0.1:8000/media/" + audio_url + ".wav";
+    aud.play();
+
+}
+
+function getSynth() {
+
+    let sent = this.id;
+    let sess_id = this.sessID;
+
+    $.ajax({
+        url: "/face/tts",
+        type: "GET",
+        data: {
+            'sentence': sent,
+            'tiaSpeaker': false,
+            'sessionID': sess_id,
+            'pitch': 0,
+            'speaking_rate': 0.85,
+        },
+        success: function(json) {
+
+            let aud = document.getElementById('listen_audio');
+            aud.src = "http://127.0.0.1:8000/" + json.synthURL;
+            aud.play();
+
+        },
+        error: function() {
+            console.log("that's wrong");
+        },
+        
+    });
+
+}
+
+function sessionLeft() {
+
+    if ( sessionsDict.currentPos !== sessionsDict.IDList.length - 1 ) {
+
+        sessionsDict.currentPos += 1;
+    
+        showSession( sessionsDict.currentPos );
+
+    }
+
+}
+
+function sessionRight() {
+
+    if ( sessionsDict.currentPos !== 0 ) {
+
+        sessionsDict.currentPos -= 1;
+    
+        showSession( sessionsDict.currentPos );
+
+    }
+
+    
+
+}
+
+
 
