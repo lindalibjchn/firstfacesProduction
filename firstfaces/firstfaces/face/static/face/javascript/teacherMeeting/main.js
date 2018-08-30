@@ -36,6 +36,7 @@ $(window).on( 'load', function() {
     $('.judgement-btns').on( 'click', sendJudgementToServer )
     $('#sendCorrectionsBtn').on( 'click', sendCorrectionToServer )
 
+    checkForChange.count = 0;
     checkForChange();
 
 });
@@ -604,7 +605,7 @@ var appendCorrectionSection = function() {
 
 function checkForChange() {
 
-    console.log('calling checkForChange()');
+    console.log('checkForChange.count:', checkForChange.count);
 
     $.ajax({
         url: "/face/check_for_change",
@@ -620,6 +621,18 @@ function checkForChange() {
             if ( json.changed ) {
 
                 updateSessionsDictFromServer(); 
+                checkForChange.count = 0;
+
+            } else {
+
+                checkForChange.count += 1;
+
+            }
+
+            if ( checkForChange.count === 10 ) {
+
+                updateSessionsDictFromServer();
+                checkForChange.count = 0;
 
             }
 

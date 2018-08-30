@@ -60,8 +60,6 @@ function readyAudioBtns() {
 
         } else {
 
-            synthesisObject.text = textInBox;
-            synthesisObject.endCount = 1000 + synthesisObject.text.length * 70;
             sendTTS( textInBox, false, "listen" );
 
         }
@@ -176,7 +174,9 @@ function readyAudioBtns() {
 // text is string and tiaSpeaker is true if it is tia speaking, false if student
 function sendTTS( text, tiaSpeaker, caller ) {
 
-    console.log('this:', this);
+    synthesisObject.gotNewSpeech = false;
+    synthesisObject.text = text;
+    synthesisObject.endCount = 60 + text.length * 2.0 * ( 1 / synthesisObject.speaking_rate );
 
     $.ajax({
         url: "/face/tts",
@@ -194,11 +194,14 @@ function sendTTS( text, tiaSpeaker, caller ) {
 
             //var synthBlob = new Blob([json.response], {type: "audio/ogg; codecs: opus"})
             //var synthAudioURL = window.URL.createObjectURL( synthBlob );
+            //var synthAudioURL = "http://127.0.0.1:8000/" + json.synthURL;
+            //var synthAudioURL = "https://erle.ucd.ie/" + json.synthURL;
             var synthAudioURL = "http://127.0.0.1:8000/" + json.synthURL;
             console.log('synthAudioURL:', synthAudioURL);
             synthesisObject.synthAudio = document.getElementById( 'synthClip' );
             //console.log( 'synthAudio:', synthAudio );
             synthesisObject.synthAudio.src = synthAudioURL;
+            synthesisObject.gotNewSpeech = true;
             
             if ( tiaSpeaker ) {
 
@@ -206,7 +209,11 @@ function sendTTS( text, tiaSpeaker, caller ) {
 
                 if ( caller === "listen" ) {
 
-                    synthesisObject.synthAudio.play();
+                    setTimeout( function() {
+
+                        synthesisObject.synthAudio.play();
+
+                    }, 500 );
 
                 } else {
                 

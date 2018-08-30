@@ -109,11 +109,21 @@ function goodbyeTalk() {
 
     setTimeout( function() { 
         
+        goodbyeSpeak();
         displaySpeechBubble();
         classVariableDict.promptSpeaking = true;
         synthesisObject.realSpeak = true;
         
+    }, 1500);
+
+}
+
+function goodbyeSpeak() {
+
+    if ( synthesisObject.gotNewSpeech ) {
+        
         synthesisObject.synthAudio.play();
+        synthesisObject.gotNewSpeech = false
         initTalk();
 
         setTimeout( function() {
@@ -121,11 +131,16 @@ function goodbyeTalk() {
             location.reload( true );
             
         }, synthesisObject.delayToThinkAndTurn )
-    
-    }, 1500);
+
+    } else {
+
+        console.log('waiting for speech synthesis to return audio')
+        setTimeout( goodbyeSpeak, 1000 );
+
+    }
 
 }
-
+    
 /////////QUESTION STREAK
 
 function calculateQuestionStreak() {
@@ -146,7 +161,7 @@ function calculateQuestionStreak() {
         console.log('lastSentId:', lastSentId);
         console.log('n:', n);
 
-        if ( classVariableDict.sentences[ lastSentId - n ].judgement === "C" || classVariableDict.sentences[ lastSentId - 1 - n ].judgement === "B" ) {
+        if ( classVariableDict.sentences[ lastSentId - n ].judgement === "C" || classVariableDict.sentences[ lastSentId - n ].judgement === "B" ) {
 
             if ( classVariableDict.sentences[ lastSentId - n ].question === false ) {
             
@@ -162,7 +177,7 @@ function calculateQuestionStreak() {
 
                             if ( classVariableDict.sentences[ lastSentId - 2 - n ] !== undefined ) {
 
-                                if ( classVariableDict.sentences[ lastSentId - 2 - n ].judgement === "C" || classVariableDict.sentences[ lastSentId - 3 - n ].judgement === "B" ) {
+                                if ( classVariableDict.sentences[ lastSentId - 2 - n ].judgement === "C" || classVariableDict.sentences[ lastSentId - 2 - n ].judgement === "B" ) {
 
                                     if ( classVariableDict.sentences[ lastSentId - 2 - n ].question === false ) {
                     

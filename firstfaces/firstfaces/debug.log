@@ -1688,3 +1688,97 @@ Traceback (most recent call last):
     with open( os.join(BASE_DIR, 'media/synths/session' + session_id + '.mp3'), 'wb') as out:
 AttributeError: module 'os' has no attribute 'join'
 "GET /face/tts?sentence=hello&tiaSpeaker=false&sessionID=1 HTTP/1.1" 500 16796
+"GET /face/teacherMeeting HTTP/1.1" 200 8681
+Not Found: /static/face/javascript/teacherMeeting/main.js
+Not Found: /static/face/javascript/teacherMeeting/main.js
+Not Found: /static/jquery-3.3.1.min.js
+Not Found: /static/jquery-3.3.1.min.js
+"GET /static/jquery-3.3.1.min.js HTTP/1.1" 404 100
+Not Found: /static/three.min.js
+Not Found: /static/three.min.js
+"GET /static/face/javascript/teacherMeeting/main.js HTTP/1.1" 404 119
+"GET /static/three.min.js HTTP/1.1" 404 93
+Not Found: /static/face/javascript/teacherMeeting/buttons.js
+Not Found: /static/OrbitControls.js
+Not Found: /static/face/javascript/teacherMeeting/buttons.js
+Not Found: /static/OrbitControls.js
+"GET /static/face/javascript/teacherMeeting/buttons.js HTTP/1.1" 404 122
+"GET /static/OrbitControls.js HTTP/1.1" 404 97
+Not Found: /static/ajaxPost.js
+Not Found: /static/ajaxPost.js
+Not Found: /static/face/css/teacherMeeting.css
+Not Found: /static/face/css/teacherMeeting.css
+"GET /static/ajaxPost.js HTTP/1.1" 404 92
+"GET /static/face/css/teacherMeeting.css HTTP/1.1" 404 108
+Not Found: /static/three.min.js
+Not Found: /static/three.min.js
+"GET /static/three.min.js HTTP/1.1" 404 93
+Not Found: /static/OrbitControls.js
+Not Found: /static/OrbitControls.js
+"GET /static/OrbitControls.js HTTP/1.1" 404 97
+Not Found: /static/ajaxPost.js
+Not Found: /static/ajaxPost.js
+"GET /static/ajaxPost.js HTTP/1.1" 404 92
+Not Found: /static/face/css/teacherMeeting.css
+Not Found: /static/face/css/teacherMeeting.css
+"GET /static/face/css/teacherMeeting.css HTTP/1.1" 404 108
+Not Found: /static/ajaxPost.js
+Not Found: /static/ajaxPost.js
+"GET /static/ajaxPost.js HTTP/1.1" 404 92
+Not Found: /static/face/sounds/to-the-point.mp3
+Not Found: /static/face/sounds/to-the-point.mp3
+Not Found: /static/face/sounds/chimes-glassy.mp3
+Not Found: /static/face/sounds/chimes-glassy.mp3
+"GET /static/face/sounds/to-the-point.mp3 HTTP/1.1" 404 109
+"GET /static/face/sounds/chimes-glassy.mp3 HTTP/1.1" 404 110
+Not Found: /static/face/javascript/teacherMeeting/main.js
+Not Found: /static/face/javascript/teacherMeeting/main.js
+"GET /static/face/javascript/teacherMeeting/main.js HTTP/1.1" 404 119
+Not Found: /static/face/javascript/teacherMeeting/buttons.js
+Not Found: /static/face/javascript/teacherMeeting/buttons.js
+"GET /static/face/javascript/teacherMeeting/buttons.js HTTP/1.1" 404 122
+"GET /face/teacherMeeting HTTP/1.1" 200 8681
+"GET /face/teacherMeeting HTTP/1.1" 200 8681
+Not Found: /static/OrbitControls.js
+Not Found: /static/jquery-3.3.1.min.js
+Not Found: /static/jquery-3.3.1.min.js
+Not Found: /static/ajaxPost.js
+Not Found: /static/ajaxPost.js
+Not Found: /static/three.min.js
+Not Found: /static/three.min.js
+"GET /static/jquery-3.3.1.min.js HTTP/1.1" 404 100
+Not Found: /static/face/javascript/teacherMeeting/main.js
+Not Found: /static/face/javascript/teacherMeeting/main.js
+"GET /static/ajaxPost.js HTTP/1.1" 404 92
+Not Found: /static/OrbitControls.js
+Not Found: /static/face/css/teacherMeeting.css
+Not Found: /static/face/css/teacherMeeting.css
+"GET /static/face/javascript/teacherMeeting/main.js HTTP/1.1" 404 119
+"GET /static/three.min.js HTTP/1.1" 404 93
+"GET /static/face/css/teacherMeeting.css HTTP/1.1" 404 108
+Not Found: /static/face/javascript/teacherMeeting/buttons.js
+Not Found: /static/face/javascript/teacherMeeting/buttons.js
+"GET /static/OrbitControls.js HTTP/1.1" 404 97
+"GET /static/face/javascript/teacherMeeting/buttons.js HTTP/1.1" 404 122
+Not Found: /static/ajaxPost.js
+Not Found: /static/ajaxPost.js
+"GET /static/ajaxPost.js HTTP/1.1" 404 92
+Not Found: /static/face/css/teacherMeeting.css
+Not Found: /static/face/css/teacherMeeting.css
+"GET /static/face/css/teacherMeeting.css HTTP/1.1" 404 108
+Not Found: /static/ajaxPost.js
+Not Found: /static/ajaxPost.js
+Not Found: /static/face/sounds/to-the-point.mp3
+Not Found: /static/face/sounds/to-the-point.mp3
+Not Found: /static/face/sounds/chimes-glassy.mp3
+Not Found: /static/face/sounds/chimes-glassy.mp3
+"GET /static/ajaxPost.js HTTP/1.1" 404 92
+"GET /static/face/sounds/chimes-glassy.mp3 HTTP/1.1" 404 110
+"GET /static/face/sounds/to-the-point.mp3 HTTP/1.1" 404 109
+Not Found: /static/face/javascript/teacherMeeting/main.js
+Not Found: /static/face/javascript/teacherMeeting/main.js
+"GET /static/face/javascript/teacherMeeting/main.js HTTP/1.1" 404 119
+Not Found: /static/face/javascript/teacherMeeting/buttons.js
+Not Found: /static/face/javascript/teacherMeeting/buttons.js
+"GET /static/face/javascript/teacherMeeting/buttons.js HTTP/1.1" 404 122
+"GET /face/teacherMeeting HTTP/1.1" 200 8681

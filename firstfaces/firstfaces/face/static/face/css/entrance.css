@@ -5,7 +5,7 @@
     height: 450px;
     bottom: 0;
     background: rgba( 0, 0, 0, 0.3 );
-    /*display: none;*/
+    display: none;
 
 }
 
@@ -39,8 +39,9 @@
     height: 300px;
     width: 100%;
     position: absolute;
-    top: 50%;
+    top: 45%;
     transform: translateY(-50%);
+    /*display: none;*/
 
 }
 
@@ -50,14 +51,22 @@
     position: absolute;
     height: 320px;
     width: 320px;
-    /*display: none;*/
+    display: none;
+
+}
+
+.info-card-join {
+
+    position: absolute;
+    height: 320px;
+    width: 400px;
 
 }
 
 .swapCardsButtonDiv {
 
     width: 100%;
-    /*display: none;*/
+    display: none;
 
 }
 
@@ -86,11 +95,11 @@
 
 /*}*/
 
-#moreInfoCard01 {
+/*#moreInfoCard01 {*/
     
-    width: 80%;
+    /*width: 80%;*/
 
-}
+/*}*/
 
 .swapCardsButtonDiv {
     
@@ -131,13 +140,14 @@
 
 #info-main {
 
-    display: none;
+    /*display: none;*/
 
 }
 
 #info-talk {
 
-    /*display: none;*/
+    display: none;
+    height: 100%;
 
 }
 
@@ -150,6 +160,24 @@
 .formLabelTag {
     
     font-size: 20px;
+
+}
+
+.w3-half {
+
+    display: flex;
+    /*align-items: center;*/
+    justify-content: center;
+
+}
+
+.info-card-video {
+
+    position: absolute;
+    /*height: 400px;*/
+    width: 30%;
+    float: right;
+    /*display: none;*/
 
 }
 
@@ -180,7 +208,7 @@
     /*transform: perspective(1px) translateY(30%);*/
     bottom: 10px;
     left: 0px;
-    opacity: 0.5;
+    opacity: 0.8;
 
 }
 
@@ -190,7 +218,7 @@
     height: 250px;
     /*top: 40%;*/
     /*transform: perspective(1px) translateY(10%);*/
-    opacity: 0.5;
+    opacity: 0.8;
     bottom: 8px;
     left: 90px;
 
@@ -205,9 +233,33 @@
 
 }
 
+#feedbackDiv {
 
+    position: absolute;
+    width: 90%;
+    height: 80%;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    padding: 10px;
 
+}
 
+.feedback {
+
+    font-size: 1.3vw;
+    font-style: italic;
+
+}
+
+.email {
+
+    font-size: 1.3vw;
+    font-style: bold;
+
+}
 
 
 

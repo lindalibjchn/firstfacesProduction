@@ -88,7 +88,6 @@ function backNReadALine() {
 
 function initTalk() {
    
-    synthesisObject.length = synthesisObject.text.length;
     talkObject.endCount = mainCount + synthesisObject.endCount;
 
     // start mouth pursed when talking
@@ -113,7 +112,7 @@ function whenPurseLipsEnds( funcToCall ) {
              
             whenPurseLipsEnds( funcToCall )
 
-        }, 200 );
+        }, 500 );
 
     } else {
 
@@ -131,7 +130,7 @@ function whenOpenMouthEnds( funcToCall ) {
              
             whenOpenMouthEnds( funcToCall )
 
-        }, 200 );
+        }, 500 );
 
     } else {
 
@@ -161,9 +160,9 @@ function mouthOpenLoop() {
 
             }
 
-        }, mouthOpenObject.dur * 1200 )
+        }, mouthOpenObject.dur * 1000 + 50 )
 
-    }, mouthOpenObject.dur * 1200 );
+    }, mouthOpenObject.dur * 1000 + 50 );
 
 }
 
@@ -200,9 +199,9 @@ function purseLipsLoop() {
 
             }
 
-        }, purseLipsObject.dur * 1200 )
+        }, purseLipsObject.dur * 1000 + 50 );
 
-    }, purseLipsObject.dur * 1200 );
+    }, purseLipsObject.dur * 1000 + Math.random() * 1000 );
 
 }
 

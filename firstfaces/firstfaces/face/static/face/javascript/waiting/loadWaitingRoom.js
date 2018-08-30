@@ -125,11 +125,13 @@ function init() {
         clickableObjects.sentences.startCount = 0;
         clickableObjects.sentences.bool = false;
         clickableObjects.sentences.sin = [];
-        clickableObjects.sentences.deskPos = { x: -1.49, y: 2.47, z: 1.83 };
+        clickableObjects.sentences.deskPos = { x: -1.49, y: 2.51, z: 1.83 };
+        clickableObjects.sentences.deskRot = { x: 0.06, y: 0, z: 0 };
         clickableObjects.sentences.facePos = { x: -0.6, y: 3.38, z: 3.5 };
-        clickableObjects.sentences.faceRot = { x: 1.2, y: -0.27, z: -0.4 };
+        clickableObjects.sentences.faceRot = { x: 1.14, y: -0.27, z: -0.4 };
 
         mSentencesBook.position.set( clickableObjects.sentences.deskPos.x, clickableObjects.sentences.deskPos.y, clickableObjects.sentences.deskPos.z );
+        mSentencesBook.rotation.set( clickableObjects.sentences.deskRot.x, clickableObjects.sentences.deskRot.y, clickableObjects.sentences.deskRot.z );
         //mSentencesBook.position.set( clickableObjects.sentences.facePos.x, clickableObjects.sentences.facePos.y, clickableObjects.sentences.facePos.z );
         //mSentencesBook.rotation.set( clickableObjects.sentences.faceRot.x, clickableObjects.sentences.faceRot.y, clickableObjects.sentences.faceRot.z );
 
@@ -149,11 +151,13 @@ function init() {
         clickableObjects.tests.startCount = 0;
         clickableObjects.tests.bool = false;
         clickableObjects.tests.sin = [];
-        clickableObjects.tests.deskPos = { x: -0.82, y: 2.6, z: 1.2 };
+        clickableObjects.tests.deskPos = { x: -0.82, y: 2.63, z: 1.2 };
+        clickableObjects.tests.deskRot = { x: 0.04, y: -0.12, z: 0 };
         clickableObjects.tests.facePos = { x: -0.6, y: 3.38, z: 3.5 };
-        clickableObjects.tests.faceRot = { x: 1.3, y: 0.2, z: -0.3 };
+        clickableObjects.tests.faceRot = { x: 1.26, y: 0.32, z: -0.3 };
 
         mTestsBook.position.set( clickableObjects.tests.deskPos.x, clickableObjects.tests.deskPos.y, clickableObjects.tests.deskPos.z );
+        mTestsBook.rotation.set( clickableObjects.tests.deskRot.x, clickableObjects.tests.deskRot.y, clickableObjects.tests.deskRot.z );
         mTestsBook.rotation.x -= 0.02;
 
         mWaitingRoom.add( mTestsBook );
@@ -289,7 +293,7 @@ function init() {
         clickableObjects.laptop.startCount = 0;
         clickableObjects.laptop.bool = false;
         clickableObjects.laptop.sin = [];
-        clickableObjects.laptop.deskPos = { x: 0.4, y: 2.9, z: 1.9 };
+        clickableObjects.laptop.deskPos = { x: 0.4, y: 2.89, z: 1.9 };
         clickableObjects.laptop.facePos = { x: -0.4, y: 3.25, z: 4.2 };
         clickableObjects.laptop.faceRot = { x: 0.02, y: 0.95, z: 0.15};
 

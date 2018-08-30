@@ -60,7 +60,6 @@ function mainEnter() {
         synthesisObject.pitch = 0;
         synthesisObject.speaking_rate = 0.85;
         synthesisObject.text = greeting;
-        synthesisObject.endCount = 1000 + synthesisObject.text.length * 70;
         synthesisObject.speaker = "tia";
         speechBubbleObject.sentence = greeting;
         sendTTS( greeting, true, "talk" );
@@ -83,18 +82,30 @@ function mainEnter() {
         displaySpeechBubble();
         classVariableDict.promptSpeaking = true;
         synthesisObject.realSpeak = true;
+        speakOpening();
         
-        synthesisObject.synthAudio.play();
-        initTalk();
-
-    } else if ( mainCount === 1180 ) {
-        
-        showInitEmotionQuestions();
-
     }
 
 }
 
+function speakOpening() {
+
+    if ( synthesisObject.gotNewSpeech ) {
+        
+        synthesisObject.synthAudio.play();
+        synthesisObject.gotNewSpeech = false
+        initTalk();
+
+        setTimeout( showInitEmotionQuestions, 4500 );
+
+    } else {
+
+        console.log('waiting for speech synthesis to return audio')
+        setTimeout( speakOpening, 1000 );
+
+    }
+
+}
 
 function initEnterCameraMove( to, speed ) {
 
@@ -185,8 +196,8 @@ function goToAskTopic( emotion ) {
         
         expressionController( calculatedExpression, '0.5');
 
-        synthesisObject.pitch = 2;
-        synthesisObject.speaking_rate = 0.9;
+        synthesisObject.pitch = 1;
+        synthesisObject.speaking_rate = 0.95;
         speechBubbleObject.sentence = " That's great! What would you like to talk about today?";
     
         setTimeout( function() {
@@ -222,9 +233,8 @@ function goToAskTopic( emotion ) {
     removeSpeechBubble();
 
     synthesisObject.text = speechBubbleObject.sentence
-    synthesisObject.length = synthesisObject.text.length;
-    synthesisObject.endCount = 1000 + synthesisObject.text.length * 70;
     sendTTS( synthesisObject.text, true, "talk" );
+
 }
 
 function storeEmotion() {
@@ -270,16 +280,33 @@ function askTopic() {
     setTimeout( function() {
 
         displaySpeechBubble();
-        synthesisObject.synthAudio.play();
-        initTalk();
+        speakTopic();
         
+    }, 1500 );
+
+}
+
+function speakTopic() {
+
+    if ( synthesisObject.gotNewSpeech ) {
+        
+        synthesisObject.synthAudio.play();
+        synthesisObject.gotNewSpeech = false
+        initTalk();
+
         setTimeout( function() {
             
             showTopicChoices();
         
         }, 3000 );
 
-    }, 1500 );
+    } else {
+
+        console.log('waiting for speech synthesis to return audio')
+        setTimeout( speakTopic, 1000 );
+
+    }
+
 
 }
 
@@ -344,8 +371,6 @@ function storeTopic( topicChoice ) {
                 let startTalkSent = " Ok, please begin when you are ready.";
                 speechBubbleObject.sentence = startTalkSent;
                 synthesisObject.text = speechBubbleObject.sentence
-                synthesisObject.length = synthesisObject.text.length;
-                synthesisObject.endCount = 1000 + synthesisObject.text.length * 70;
                 sendTTS( startTalkSent, true, "talk" );
 
                 setTimeout( beginTalking, 4000 );
@@ -364,34 +389,49 @@ function beginTalking() {
 
     initArmIndicate('right', 1.2, 'low', '0.75');
     displaySpeechBubble();
-    synthesisObject.synthAudio.play();
-    initTalk();
-    
-    setTimeout( function() {
-
-        initArmIndicate('right', 0, 'low', '0.75');
-        removeSpeechBubble();
-        initCameraMove( 'laptop', '2' );      
-        setTimeout( function() {
-            
-            initInputReady('');
-        
-            setTimeout( function() {
-                
-                expressionController( expressionsAbs.neutral, '0.75' );
-                talkObject.learning = true;
-
-                setTimeout( function() {
-
-                    normalBlinkObject.bool = true;
-            
-                }, 2000 );
-
-            }, 3500);
-
-        }, 2500);
-
-    }, 3000 )
+    finalSpeak();
 
 }
 
+function finalSpeak() {
+
+    if ( synthesisObject.gotNewSpeech ) {
+        
+        synthesisObject.synthAudio.play();
+        synthesisObject.gotNewSpeech = false
+        initTalk();
+    
+        setTimeout( function() {
+
+            initArmIndicate('right', 0, 'low', '0.75');
+            removeSpeechBubble();
+            initCameraMove( 'laptop', '2' );      
+            setTimeout( function() {
+                
+                initInputReady('');
+            
+                setTimeout( function() {
+                    
+                    expressionController( expressionsAbs.neutral, '0.75' );
+                    talkObject.learning = true;
+
+                    setTimeout( function() {
+
+                        normalBlinkObject.bool = true;
+                
+                    }, 2000 );
+
+                }, 3500);
+
+            }, 2500);
+
+        }, 3000 )
+
+    } else {
+
+        console.log('waiting for speech synthesis to return audio')
+        setTimeout( finalSpeak, 1000 );
+
+    }
+
+}

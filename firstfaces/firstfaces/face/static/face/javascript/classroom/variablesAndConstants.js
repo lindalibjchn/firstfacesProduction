@@ -693,6 +693,8 @@ const expressionsRel = {
 
         'name': 'confused',
         'changeVoice': true,
+        'pitch': 0,
+        'speaking_rate': 0,
         'AUs': {
             'AU1': {
                 'nose': [[0, 0, 0], [0, 0, 0]],

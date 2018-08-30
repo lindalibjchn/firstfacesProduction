@@ -48,7 +48,7 @@ function runAfterJudgement() {
 
             } else {
 
-                setTimeout( displaySpeechBubblePrompt, 3000 );
+                setTimeout( displaySpeechBubblePrompt, 2000 );
 
             }
 
@@ -90,6 +90,7 @@ function runAfterJudgement() {
 
     } else if ( classVariableDict.last_sent.judgement === "B" || classVariableDict.last_sent.judgement === "M" || classVariableDict.last_sent.judgement === "D" || classVariableDict.last_sent.judgement === "3" ) {
 
+        synthesisObject.speaking_rate = 0.8;
         // delay for moving back to laptop and showing sent in prevSents
         //let delay = 5000;
         var text;
@@ -110,11 +111,17 @@ function runAfterJudgement() {
         } else if ( classVariableDict.last_sent.judgement === "M" ) {
             
             text = " " + createMeanByTextForPromptBox( classVariableDict.last_sent );
+            synthesisObject.speaking_rate = 0.8;
+            synthesisObject.pitch = -2;
             sendTTS( text, true );
         
+            let singleCalculatedExpressions = createSingleExpression( expressionsRel.confused, 1 )
+            calculatedExpression = getAbsoluteCoordsOfExpressionTo( singleCalculatedExpressions[ 0 ] )
+            calculatedTalkExpression = getAbsoluteCoordsOfExpressionTo( singleCalculatedExpressions[ 1 ] )
+
             whenAllMovFinished( function() { 
          
-                expressionController( expressionsAbs.confused, '1', false );
+                expressionController( calculatedExpression, '1', false );
             
             })
                 
@@ -123,11 +130,17 @@ function runAfterJudgement() {
         } else if ( classVariableDict.last_sent.judgement === "3" ) {
             
             text = " There are more than 3 mistakes in your sentence. Could you simplify and try again?";
+            synthesisObject.speaking_rate = 0.8;
+            synthesisObject.pitch = -2;
             sendTTS( text, true );
             
-            whenAllMovFinished( function() { 
+            let singleCalculatedExpressions = createSingleExpression( expressionsRel.confused, 1 )
+            calculatedExpression = getAbsoluteCoordsOfExpressionTo( singleCalculatedExpressions[ 0 ] )
+            calculatedTalkExpression = getAbsoluteCoordsOfExpressionTo( singleCalculatedExpressions[ 1 ] )
+
+            whenAllMovFinished( function() {
          
-                expressionController( expressionsAbs.confused, '1', false );
+                expressionController( calculatedExpression, '1', false );
             
             })
 
@@ -136,6 +149,9 @@ function runAfterJudgement() {
         } else {
 
             text = " I'm sorry but I don't understand what you said.";
+            synthesisObject.speaking_rate = 0.8;
+            console.log('speaking_rate:', synthesisObject.speaking_rate);
+            synthesisObject.pitch = -2;
             sendTTS( text, true );
             
             let singleCalculatedExpressions = createSingleExpression( expressionsRel.confused, 1 )
@@ -152,7 +168,7 @@ function runAfterJudgement() {
             setTimeout( function() {
                 
                 whenAllMovFinished( nodOrShakeHead ); 
-                setTimeout( displaySpeechBubblePrompt, 8000 );
+                setTimeout( displaySpeechBubblePrompt, 7000 );
 
             }, 1100 );
 
@@ -255,7 +271,10 @@ function nodOrShakeHead() {
 function displaySpeechBubblePrompt() {
 
     // actually delay to return to laptop
-    synthesisObject.delayToThinkAndTurn = synthesisObject.text.length * 100 * synthesisObject.speaking_rate;
+    console.log('speaking_rate:', synthesisObject.speaking_rate);
+    console.log('text.length:', synthesisObject.text.length);
+    synthesisObject.delayToThinkAndTurn = synthesisObject.text.length * 120 * synthesisObject.speaking_rate;
+    console.log('delayToThinkAndTurn:', synthesisObject.delayToThinkAndTurn);
 
     // return to talking pos
     expressionController( calculatedTalkExpression, '1', false );
@@ -269,16 +288,30 @@ function displaySpeechBubblePrompt() {
         displaySpeechBubble();
         classVariableDict.promptSpeaking = true;
         synthesisObject.realSpeak = true;
+        speakSpeechBubble();
         
-        synthesisObject.synthAudio.play();
-        initTalk();
-
-        setTimeout( returnToLaptop, synthesisObject.delayToThinkAndTurn )
-    
     }, 1500);
 
 }
 
+function speakSpeechBubble() {
+
+    if ( synthesisObject.gotNewSpeech ) {
+        
+        synthesisObject.synthAudio.play();
+        synthesisObject.gotNewSpeech = false
+        initTalk();
+        setTimeout( returnToLaptop, synthesisObject.delayToThinkAndTurn )
+
+    } else {
+
+        console.log('waiting for speech synthesis to return audio')
+        setTimeout( speakSpeechBubble, 1000 );
+
+    }
+
+}
+    
 function returnToLaptop( sent ) {
 
     normalBlinkObject.bool = false;

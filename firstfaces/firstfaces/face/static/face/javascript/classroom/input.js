@@ -89,9 +89,18 @@ function speakWords() {
 
     // stop normal blinking
 
-    synthesisObject.synthAudio.play();
+    if ( synthesisObject.gotNewSpeech ) {
+        
+        synthesisObject.synthAudio.play();
+        synthesisObject.gotNewSpeech = false
+        setTimeout( tiaThinkAboutSentence, synthesisObject.delayToThinkAndTurn );
 
-    setTimeout( tiaThinkAboutSentence, synthesisObject.delayToThinkAndTurn );
+    } else {
+
+        console.log('waiting for speech synthesis to return audio')
+        setTimeout( speakWords, 1000 );
+
+    }
 
 }
 

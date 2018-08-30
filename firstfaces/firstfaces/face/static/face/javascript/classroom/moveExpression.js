@@ -269,8 +269,8 @@ function createSingleExpression( exp, mult ) {
 
     if ( exp.changeVoice ) {
 
-        synthesisObject.pitch = exp.name.pitch * mult;
-        synthesisObject.speaking_rate = 0.85 + exp.name.speaking_rate * mult;
+        synthesisObject.pitch = exp.pitch * mult;
+        synthesisObject.speaking_rate = 0.85 + exp.speaking_rate * mult;
 
     }
 

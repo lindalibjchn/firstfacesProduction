@@ -201,7 +201,8 @@ function getRecording() {
     let audio_url = this.id
 
     let aud = document.getElementById('listen_audio');
-    aud.src = "http://127.0.0.1:8000/media/" + audio_url + ".wav";
+    aud.src = "http://127.0.0.1:8000/media/" + audio_url;
+    //aud.src = "https://erle.ucd.ie/media/" + audio_url;
     aud.play();
 
 }
@@ -225,7 +226,13 @@ function getSynth() {
 
             let aud = document.getElementById('listen_audio');
             aud.src = "http://127.0.0.1:8000/" + json.synthURL;
-            aud.play();
+            //aud.src = "https://erle.ucd.ie/" + json.synthURL;
+
+            setTimeout( function() {
+
+                aud.play();
+
+            }, 1500 );
 
         },
         error: function() {
