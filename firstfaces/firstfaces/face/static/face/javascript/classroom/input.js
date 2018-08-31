@@ -259,6 +259,7 @@ function returnFromThinking() {
     normalBlinkObject.bool = false;
     setTimeout( function () {
         
+        makeAllBoolsFalse();
         whenAllMovFinished( runAfterJudgement ); 
         
     }, 1600 );

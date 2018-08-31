@@ -404,7 +404,7 @@ function JudgementReceived( sentMeta ) {
     if ( tiaThinkingObject.thinking ) {
 
         tiaThinkingObject.thinking = false;
-        normalBlinkObject.bool = false;
+        makeAllBoolsFalse();
 
         // just incase there is a blink underway
         whenAllMovFinished( function() {
