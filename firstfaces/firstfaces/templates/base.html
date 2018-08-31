@@ -47,6 +47,7 @@
 
                     {% if request.user.is_authenticated %}
 
+                        <!--<p class="w3-bar-item">{{ request.user.username }}</p>-->
                         <a href="#" class="w3-bar-item w3-button w3-hover-blue w3-ripple">{{ request.user.username }}</a>
                         <a href="{% url 'logout' %}" class="w3-bar-item w3-button w3-hover-blue w3-ripple">logout</a>
 

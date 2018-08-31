@@ -374,7 +374,7 @@ def tts(request):
 
     response = client.synthesize_speech(input_text, voice, audio_config)
 
-    synthURL = 'media/synths/session' + session_id + '.wav'
+    synthURL = 'media/synths/session' + session_id + '_' + str(int(time.mktime((timezone.now()).timetuple()))) + '.wav'
     with open( os.path.join(settings.BASE_DIR, synthURL ), 'wb') as out:
         out.write(response.audio_content)
     
@@ -389,15 +389,15 @@ def tts(request):
 def store_sent(request):
 
     time_now = timezone.now();
-    sentence_text = request.GET['sent']
-    q = json.loads(request.GET['isItQ'])
+    sentence_text = request.POST['sent']
+    q = json.loads(request.POST['isItQ'])
     #code.interact(local=locals());
     # print('q:', type(q))
 
     # get session
-    blob_no_text = json.loads(request.GET['blob_no_text'])
-    blob_no_text_sent_id = request.GET['blob_no_text_sent_id']
-    sess = Session.objects.get(pk=int(request.GET['sessionID']))
+    blob_no_text = json.loads(request.POST['blob_no_text'])
+    blob_no_text_sent_id = request.POST['blob_no_text_sent_id']
+    sess = Session.objects.get(pk=int(request.POST['sessionID']))
 
     # if very first attempt or new sent then need to create empty sentence
     if blob_no_text:
@@ -414,26 +414,42 @@ def store_sent(request):
         s.sentence_timestamp = time_now
         s.save()
 
+
+    response_data = {
+
+        'sent_id': s.id,
+
+    }
+
+    return JsonResponse(response_data)    
+
+def check_judgement(request):
+
+    sent_id = int(request.GET['sentId'])
+
+    count = 0;
     while True:
 
+        print('in while loop')
         time.sleep(2)
+        count += 1
 
-        s_new = Sentence.objects.get(pk=s.pk)
+        s_new = Sentence.objects.get(pk=sent_id)
         
         if s_new.judgement != None:
 
-            if s_new.judgement == "C":
+            received_judgement = True
+            break
 
-                if s_new.emotion != None:
-                
-                    break
+        elif count == 5:
 
+            received_judgement = False
             break
 
     # deal with nonetypes for the bleeding decimals
 
     sent_meta = {
-        'sent_id': s.id,
+        'sent_id': s_new.id,
         'sentence': s_new.sentence,
         'question': s_new.question,
         'judgement': s_new.judgement,
@@ -446,6 +462,7 @@ def store_sent(request):
         'nodAmount': float(s_new.nodAmount),
         'nodSpeed': float(s_new.nodSpeed),
         'show_correction': s_new.show_correction,
+        'receivedJudgement': received_judgement,
     }
 
     response_data = {

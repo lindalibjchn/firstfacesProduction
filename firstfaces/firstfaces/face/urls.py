@@ -11,6 +11,7 @@ urlpatterns = [
     path('store_blob', views.store_blob, name='store_blob'),
     path('tts', views.tts, name='tts'),
     path('store_sent', views.store_sent, name='store_sent'),
+    path('check_judgement', views.check_judgement, name='check_judgement'),
     path('store_judgement', views.store_judgement, name='store_judgement'),
     path('store_correction', views.store_correction, name='store_correction'),
     path('store_show_correction', views.store_show_correction, name='store_show_correction'),

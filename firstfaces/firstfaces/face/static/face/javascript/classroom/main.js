@@ -194,7 +194,6 @@ function sendTTS( text, tiaSpeaker, caller ) {
 
             //var synthBlob = new Blob([json.response], {type: "audio/ogg; codecs: opus"})
             //var synthAudioURL = window.URL.createObjectURL( synthBlob );
-            //var synthAudioURL = "http://127.0.0.1:8000/" + json.synthURL;
             //var synthAudioURL = "https://erle.ucd.ie/" + json.synthURL;
             var synthAudioURL = "http://127.0.0.1:8000/" + json.synthURL;
             console.log('synthAudioURL:', synthAudioURL);
@@ -306,7 +305,7 @@ function sendSentToServer() {
 
             $.ajax({
                 url: "/face/store_sent",
-                type: "GET",
+                type: "POST",
                 data: { 
                     'sent': sent,
                     'isItQ': isItQ,
@@ -316,61 +315,12 @@ function sendSentToServer() {
                 },
                 success: function(json) {
                     
-                    console.log('in sendSentToServer got judgement success');
+                    console.log('sentence successfully sent to server');
+                    checkJudgement( json.sent_id );
 
-                    if ( classVariableDict.lastSentToBeSent ) {
-
-                        classVariableDict.classOver = true;
-
-                    }
-
-                    // update classVariables to include new sentence. newInd gets index of next sent
-                    let newInd = Object.keys(classVariableDict.sentences).length;
-                    json.sent_meta.emotion = JSON.parse(json.sent_meta.emotion);
-                    classVariableDict.sentences[ newInd ] = json.sent_meta;
-                    classVariableDict.id_of_last_sent = newInd;
-                    classVariableDict.last_sent = json.sent_meta;
-                    sentenceObject.sentence = json.sent_meta.sentence;
-
-                    // keeps state of sentence
-                    classVariableDict.blob_no_text = false;
-                    classVariableDict.awaitingJudgement = false;
-
-                    // do this here to change voices too
-                    if ( classVariableDict.last_sent.judgement === "B" || classVariableDict.last_sent.judgement === "C" ) {
-                        changeExpression();
-
-                    }
-
-                    // if tia is thinking then need to come back immediately
-                    if ( tiaThinkingObject.thinking ) {
-
-                        tiaThinkingObject.thinking = false;
-                        normalBlinkObject.bool = false;
-
-                        // just incase there is a blink underway
-                        whenAllMovFinished( function() {
-
-                            // need to return to laptop only if not incorrect
-                            if ( json.sent_meta.judgement === "I" ) {
-
-                                //return eyes to original thinking position
-                                $('#thinkingLoading').hide();
-                                runAfterJudgement();
-
-                            } else {
-
-                                initReturnFromThinking();
-
-                            }
-
-                        });
-
-                    }
-                
                 },
                 error: function() {
-                    console.log("that's wrong");
+                    alert("sentence failed to send to server");
                 },
 
             });
@@ -389,4 +339,105 @@ function sendSentToServer() {
 
 }
 
+function checkJudgement( sentId ) {
 
+    $.ajax({
+        url: "/face/check_judgement",
+        type: "GET",
+        data: { 
+            'sentId': sentId,
+        },
+        success: function(json) {
+            
+            if ( json.sent_meta.receivedJudgement ) {
+
+                console.log('got judgement');
+
+                if ( classVariableDict.lastSentToBeSent ) {
+
+                    classVariableDict.classOver = true;
+
+                }
+                
+                console.log('sentMeta:', json.sent_meta);
+                JudgementReceived( json.sent_meta )
+            
+            } else {
+
+                console.log('checking for judgement again');
+                checkJudgement( sentId );
+
+            }
+
+        },
+        error: function() {
+            alert("error awaiting judgement");
+        },
+
+    });
+
+}
+
+function JudgementReceived( sentMeta ) {
+
+    console.log('sentMeta:', sentMeta);
+
+    // update classVariables to include new sentence. newInd gets index of next sent
+    let newInd = Object.keys(classVariableDict.sentences).length;
+    sentMeta.emotion = JSON.parse(sentMeta.emotion);
+    classVariableDict.sentences[ newInd ] = sentMeta;
+    classVariableDict.id_of_last_sent = newInd;
+    classVariableDict.last_sent = sentMeta;
+    sentenceObject.sentence = sentMeta.sentence;
+
+    // keeps state of sentence
+    classVariableDict.blob_no_text = false;
+    classVariableDict.awaitingJudgement = false;
+
+    // do this here to change voices too
+    if ( classVariableDict.last_sent.judgement === "B" || classVariableDict.last_sent.judgement === "C" ) {
+        changeExpression();
+
+    }
+
+    // if tia is thinking then need to come back immediately
+    if ( tiaThinkingObject.thinking ) {
+
+        tiaThinkingObject.thinking = false;
+        normalBlinkObject.bool = false;
+
+        // just incase there is a blink underway
+        whenAllMovFinished( function() {
+
+            // need to return to laptop only if not incorrect
+            if ( sentMeta.judgement === "I" ) {
+
+                //return eyes to original thinking position
+                $('#thinkingLoading').hide();
+                runAfterJudgement();
+
+            } else {
+
+                initReturnFromThinking();
+
+            }
+
+        });
+
+    }
+                
+}
+
+function makeAllBoolsFalse() {
+
+    expressionObject.bool = false;
+    cameraObject.bool = false;
+    movementObject.bool = false;
+    eyelidObject.bool = false;
+    eyeObject.bool = false;
+    blinkNowObject.bool = false;
+    normalBlinkObject.bool = false;
+    nodObject.bool = false;
+    shakeObject.bool = false;
+
+}

@@ -25,19 +25,22 @@ function initInputReady( boxVal ) {
 
 function talkToTia() {
 
+    normalBlinkObject.bool = false;
     // check that final text bax has been changed or not from recording
     let finalTextInBox = $('#textInput').val();
     synthesisObject.realSpeak = true;
 
-    synthesisObject.delayToThinkAndTurn = finalTextInBox.length * 70;
+    synthesisObject.delayToThinkAndTurn = 1000 + finalTextInBox.length * 75;
     
     //no change from audio
     if ( finalTextInBox === synthesisObject.textFromSpeech ) {
 
         synthesisObject.synthAudio = document.getElementById('soundClip');
+        synthesisObject.originalVoice = true;
 
     } else {
 
+        synthesisObject.originalVoice = false;
         // learner has laready heard it through the listen button
         if ( synthesisObject.text === finalTextInBox ) {
 
@@ -60,19 +63,21 @@ function talkToTia() {
     $('.record-btn').prop("disabled", true);
     $('#recordBtnsContainer').fadeOut( 1000 );
     
-    // normal blinking interferes with saccs
-    normalBlinkObject.bool = false;
-    
-    setTimeout( function(){initCameraMove('tia', '2')}, 1000 );
-    
-    setTimeout( function() {
+    makeAllBoolsFalse();
+    setTimeout( function(){
         
-        whenAllMovFinished( tiaLeanToListen )
+        initCameraMove('tia', '2');
+    
+        setTimeout( function() {
             
-    }, 3500 );
+            whenAllMovFinished( tiaLeanToListen )
+                
+        }, 3000 );
 
+    
+    }, 1500 );
+    
     // get expression ready beforehand
-
 
 }
 
@@ -89,7 +94,7 @@ function speakWords() {
 
     // stop normal blinking
 
-    if ( synthesisObject.gotNewSpeech ) {
+    if ( synthesisObject.gotNewSpeech || synthesisObject.originalVoice ) {
         
         synthesisObject.synthAudio.play();
         synthesisObject.gotNewSpeech = false
