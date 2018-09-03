@@ -194,16 +194,17 @@ var whenAllMovFinished = function( funcToCall ) {
             setTimeout( function() {
              
                 whenAllMovFinishedCount += 500;
-                whenAllMovFinished( funcToCall );
             
             }, 500 );
 
         } else {
 
-            returnToLaptop('');
-            whenAllMovFinishedCount = 0
+            makeAllBoolsFalse();
+            whenAllMovFinishedCount = 0;
 
         }
+
+        whenAllMovFinished( funcToCall );
 
     } else {
 

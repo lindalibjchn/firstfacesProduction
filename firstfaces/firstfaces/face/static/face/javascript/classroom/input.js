@@ -63,7 +63,6 @@ function talkToTia() {
     $('.record-btn').prop("disabled", true);
     $('#recordBtnsContainer').fadeOut( 1000 );
     
-    makeAllBoolsFalse();
     setTimeout( function(){
         
         initCameraMove('tia', '2');
@@ -259,7 +258,6 @@ function returnFromThinking() {
     normalBlinkObject.bool = false;
     setTimeout( function () {
         
-        makeAllBoolsFalse();
         whenAllMovFinished( runAfterJudgement ); 
         
     }, 1600 );
