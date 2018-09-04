@@ -149,7 +149,7 @@ function moveCamera( main ) {
 
         } else if ( cameraObject.currentState === "class" ) {
 
-            window.location.href = "/face/class_time/" + scheduleDict[ 'session_id' ].toString();
+            window.location.href = "/class_time/" + scheduleDict[ 'session_id' ].toString();
 
         }
 

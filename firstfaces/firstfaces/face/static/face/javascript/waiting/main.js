@@ -166,7 +166,7 @@ function doDoor() {
     if ( scheduleDict.in_class_now === false ) {
 
         $.ajax({
-            url: "/face/book_session",
+            url: "/book_session",
             type: "POST",
             success: function(json) {
                 if ( json.sessionCreated ) {
@@ -213,7 +213,7 @@ function getSynth() {
     let sess_id = this.sessID;
 
     $.ajax({
-        url: "/face/tts",
+        url: "/tts",
         type: "GET",
         data: {
             'sentence': sent,

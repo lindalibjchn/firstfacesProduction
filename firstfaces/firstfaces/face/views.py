@@ -25,6 +25,16 @@ logger = logging.getLogger(__name__)
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/johnsHDD/PhD/2018_autumn/erle-3666ad7eec71.json"
 # os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/firstfaces/erle-3666ad7eec71.json"
 
+def out_or_in(request):
+
+    if request.user.is_authenticated:
+
+        return redirect('waiting')
+
+    else:
+
+        return redirect('entrance')
+
 def entrance(request):
 
     form = UserForm()

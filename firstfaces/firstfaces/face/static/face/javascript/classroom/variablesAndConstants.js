@@ -407,7 +407,7 @@ const expressionsRel = {
     happy: {
         'name': 'happy',
         'changeVoice': true,
-        'pitch': 2,
+        'pitch': 1.5,
         'speaking_rate': 0.15,
         'AUs': {
             'AU1': {
@@ -488,8 +488,8 @@ const expressionsRel = {
 
         'name': 'sad',
         'changeVoice': true,
-        'pitch': -5,
-        'speaking_rate': -0.15,
+        'pitch': -4,
+        'speaking_rate': -0.1,
         'AUs': {
             'AU1': {
                 'nose': [[0, 0, 0], [0, 0, 0]],
@@ -530,7 +530,7 @@ const expressionsRel = {
 
         'name': 'fear',
         'changeVoice': true,
-        'pitch': -2.5,
+        'pitch': 1,
         'speaking_rate': -0.05,
         'AUs': {
             'AU1': {
@@ -572,8 +572,8 @@ const expressionsRel = {
 
         'name': 'disgust',
         'changeVoice': true,
-        'pitch': 0,
-        'speaking_rate': 0,
+        'pitch': -1,
+        'speaking_rate': -0.05,
         'AUs': {
             'AU1': {
                 'nose': [[0, 0.1, 0], [0, 0, 0]],

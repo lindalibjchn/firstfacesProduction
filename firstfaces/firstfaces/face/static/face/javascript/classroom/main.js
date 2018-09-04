@@ -179,7 +179,7 @@ function sendTTS( text, tiaSpeaker, caller ) {
     synthesisObject.endCount = 60 + text.length * 2.0 * ( 1 / synthesisObject.speaking_rate );
 
     $.ajax({
-        url: "/face/tts",
+        url: "/tts",
         type: "GET",
         data: {
             'sentence': text,
@@ -241,7 +241,7 @@ function sendBlobToServer( blob_to_send ) {
     fd.append('blob_no_text_sent_id', classVariableDict.blob_no_text_sent_id);
 
     $.ajax({
-        url: "/face/store_blob",
+        url: "/store_blob",
         type: "POST",
         data: fd,
         processData: false,
@@ -304,7 +304,7 @@ function sendSentToServer() {
             talkToTia(); 
 
             $.ajax({
-                url: "/face/store_sent",
+                url: "/store_sent",
                 type: "POST",
                 data: { 
                     'sent': sent,
@@ -342,7 +342,7 @@ function sendSentToServer() {
 function checkJudgement( sentId ) {
 
     $.ajax({
-        url: "/face/check_judgement",
+        url: "/check_judgement",
         type: "GET",
         data: { 
             'sentId': sentId,
@@ -355,7 +355,11 @@ function checkJudgement( sentId ) {
 
                 if ( classVariableDict.lastSentToBeSent ) {
 
-                    classVariableDict.classOver = true;
+                    if ( classVariableDict.last_sent.judgement !== "I" ) {
+
+                        classVariableDict.classOver = true;
+
+                    }
 
                 }
                 

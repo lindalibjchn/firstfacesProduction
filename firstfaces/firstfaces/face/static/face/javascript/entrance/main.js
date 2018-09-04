@@ -1,6 +1,12 @@
 
 $(window).on( 'load', function() {
 
+    if ( !!window.chrome !== true ) {
+
+        alert( "Erle is currently optomised for Google Chrome only. On other browsers, it may not work properly. If you wish to use Erle, please consider downloading and using Chrome.");
+
+    }
+
     // begins the loading of objects
     init();
     
@@ -49,7 +55,7 @@ function logIn() {
     console.log('formData:', formData);
 
     $.ajax({
-        url: "/face/login",
+        url: "/login",
         type: "POST",
         data: formData,
         success: function(json) {

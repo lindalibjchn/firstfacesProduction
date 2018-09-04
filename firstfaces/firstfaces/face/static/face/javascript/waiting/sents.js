@@ -120,6 +120,7 @@ function makeHighlightedSent( sentenceMeta ) {
             let cut_0 = sentenceMeta.sentence.slice( lastInd, ind_0 );
             let cut_1 = sentenceMeta.sentence.slice( ind_0, ind_1 );
             let cut_2 = sentenceMeta.sentence.slice( ind_1 );
+            lastInd = ind_1;
 
             let spanClass;
             // just one now, but can add other types of highlights later if needed

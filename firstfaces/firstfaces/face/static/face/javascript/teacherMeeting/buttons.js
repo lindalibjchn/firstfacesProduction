@@ -83,7 +83,7 @@ function sendJudgementToServer( e ) {
 
     
     $.ajax({
-        url: "/face/store_judgement",
+        url: "/store_judgement",
         type: "POST",
         data: { sentMeta: JSON.stringify( sentencesNeedJudgement[ 0 ] ) }, 
         success: function(json) {
@@ -131,7 +131,7 @@ function sendCorrectionToServer() {
     }
 
     $.ajax({
-        url: "/face/store_correction",
+        url: "/store_correction",
         type: "POST",
         data: { sentMeta: JSON.stringify( sentForCorrection ) }, 
         success: function(json) {

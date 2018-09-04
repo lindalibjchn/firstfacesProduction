@@ -74,7 +74,7 @@ function moveCamera( main ) {
 
         } else if ( cameraObject.currentState === "inside" ) {
 
-            window.location.href = "/face/waiting";
+            window.location.href = "/waiting";
 
         }
 

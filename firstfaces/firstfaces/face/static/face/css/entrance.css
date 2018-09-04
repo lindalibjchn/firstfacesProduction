@@ -233,30 +233,37 @@
 
 }
 
+#joinInfoCard01 {
+
+    position: relative;
+
+}
+
 #feedbackDiv {
 
     position: absolute;
-    width: 90%;
-    height: 80%;
-    left: 0;
-    right: 0;
+    width: 80%;
+    height: 90%;
+    left: 20;
+    right: 20;
     top: 0;
     bottom: 0;
     margin: auto;
     padding: 10px;
+    color: grey;
 
 }
 
 .feedback {
 
-    font-size: 1.3vw;
+    font-size: 18px;
     font-style: italic;
 
 }
 
 .email {
 
-    font-size: 1.3vw;
+    font-size: 18px;
     font-style: bold;
 
 }

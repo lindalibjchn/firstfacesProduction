@@ -6,8 +6,19 @@ var shakeTriangleBottomLeft;
 var triangleLength;
 var wrongIndexes = [];
 var correctionIndexes = [];
+var aud;
+var thud;
+var noSessions;
 
 $(window).on( 'load', function() {
+
+    noSessions = Object.keys( sessions ).length;
+
+    aud = document.getElementById('bells')
+    aud.src = "http://127.0.0.1:8000/media/to-the-point.mp3";
+
+    aud1 = document.getElementById('thud')
+    aud1.src = "http://127.0.0.1:8000/media/chimes-glassy.mp3";
 
     updateAll();
 
@@ -170,6 +181,14 @@ function updatePrevSentences() {
     // count is used for the ids of the student boxes
     var count = 0;
     var timeNow = new Date();
+    
+    //empty content before putting back
+    for (let i=0; i<8; i++) {
+        
+        $( '#studentBox0' + i.toString() ).empty();  
+
+    }
+
     for (key in sessions) {
         
         //check that key is not 'totalSentences'
@@ -608,7 +627,7 @@ function checkForChange() {
     console.log('checkForChange.count:', checkForChange.count);
 
     $.ajax({
-        url: "/face/check_for_change",
+        url: "/check_for_change",
         type: "GET",
         data: { 
             totalSents: sessions.totalSentences,
@@ -619,7 +638,8 @@ function checkForChange() {
             //console.log('changed:', json.changed);
             
             if ( json.changed ) {
-
+                
+                aud.play();
                 updateSessionsDictFromServer(); 
                 checkForChange.count = 0;
 
@@ -653,14 +673,21 @@ function updateSessionsDictFromServer( correction=false) {
     //if comes from send correction to server then correction=true and update sentence for correction too.
     
     $.ajax({
-        url: "/face/update_session_object",
+        url: "/update_session_object",
         type: "POST",
         data: {}, 
         success: function(json) {
 
-            prevSentencesNeedJudgementLength = sentencesNeedJudgement.length
+            prevSentencesNeedJudgementLength = sentencesNeedJudgement.length;
 
             sessions = JSON.parse(json.sessions);
+
+            if ( Object.keys( sessions ).length !== noSessions ) {
+
+                aud1.play();
+                noSessions = Object.keys( sessions ).length;
+
+            }
 
             updateSentenceObjects();
             updateWrongSentences();

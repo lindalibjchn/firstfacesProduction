@@ -215,8 +215,8 @@ function goToAskTopic( emotion ) {
         calculatedTalkExpression = getAbsoluteCoordsOfExpressionTo( calculatedExpressions[1] );
         expressionController( calculatedExpression, '0.75');
     
-        synthesisObject.pitch = -4;
-        synthesisObject.speaking_rate = 0.75;
+        synthesisObject.pitch = -3;
+        synthesisObject.speaking_rate = 0.8;
         speechBubbleObject.sentence = " I'm sorry to hear that. What would you like to talk about today?";
 
         setTimeout( function() {
@@ -242,7 +242,7 @@ function storeEmotion() {
     let emotion = $(this).attr('id');
 
     $.ajax({
-        url: "/face/store_emotion",
+        url: "/store_emotion",
         type: "POST",
         data: {
             'emotionID': emotion,
@@ -350,7 +350,7 @@ function getOwnTopicFromTextbox() {
 function storeTopic( topicChoice ) {
 
     $.ajax({
-        url: "/face/store_topic",
+        url: "/store_topic",
         type: "POST",
         data: {
             'topic': topicChoice,

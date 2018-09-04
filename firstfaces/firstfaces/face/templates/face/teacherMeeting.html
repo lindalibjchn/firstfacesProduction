@@ -232,10 +232,12 @@
 
 </div>
 
+<audio id="bells"></audio>
+<audio id="thud"></audio>
 
 <link rel="stylesheet" type="text/css" href="{% static 'face/css/teacherMeeting.css' %}"/>
-<script>var newSentSound = new Audio("{% static 'face/sounds/to-the-point.mp3' %}")</script>
-<script>var newClassSound = new Audio("{% static 'face/sounds/chimes-glassy.mp3' %}")</script>
+<!--<script>var newSentSound = new Audio("{% static 'face/sounds/to-the-point.mp3' %}")</script>-->
+<!--<script>var newClassSound = new Audio("{% static 'face/sounds/chimes-glassy.mp3' %}")</script>-->
 <script>var sessions = {{ sessions|safe }}</script>
 <script src="{% static 'ajaxPost.js' %}"></script>
 <script src="{% static 'face/javascript/teacherMeeting/main.js' %}"></script>

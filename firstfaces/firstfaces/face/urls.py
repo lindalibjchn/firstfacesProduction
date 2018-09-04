@@ -4,6 +4,7 @@ from django.contrib.auth.views import LogoutView
 from . import views
 
 urlpatterns = [
+    path('', views.out_or_in, name="out_or_in"),
     path('class_time/<int:session_id>', views.class_time, name="class_time"),
     path('teacherMeeting', views.teacherMeeting, name="teacherMeeting"),
     path('store_emotion', views.store_emotion, name='store_emotion'),

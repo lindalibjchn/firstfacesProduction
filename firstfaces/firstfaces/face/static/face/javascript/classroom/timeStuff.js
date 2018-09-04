@@ -39,7 +39,7 @@ function endClass() {
 
     let sessId = classVariableDict.session_id;
     $.ajax({
-        url: "/face/store_class_over",
+        url: "/store_class_over",
         type: "GET",
         data: {'sessId': sessId},
         success: function(json) {

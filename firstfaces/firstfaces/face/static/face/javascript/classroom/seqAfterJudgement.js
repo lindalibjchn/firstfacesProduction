@@ -191,20 +191,21 @@ var whenAllMovFinished = function( funcToCall ) {
       
         if ( whenAllMovFinishedCount < 10000 ) {
 
+            whenAllMovFinishedCount += 500;
+
             setTimeout( function() {
-             
-                whenAllMovFinishedCount += 500;
-            
+                 
+                whenAllMovFinished( funcToCall );
+
             }, 500 );
 
         } else {
 
             makeAllBoolsFalse();
             whenAllMovFinishedCount = 0;
+            funcToCall();
 
         }
-
-        whenAllMovFinished( funcToCall );
 
     } else {
 
@@ -429,7 +430,7 @@ function tryAgain() {
 
         let sentId = classVariableDict.last_sent.sent_id
         $.ajax({
-            url: "/face/store_try_again",
+            url: "/store_try_again",
             type: "GET",
             data: {'sentId': sentId},
             success: function(json) {
@@ -461,7 +462,7 @@ function whatsWrong() {
     
         let sentId = classVariableDict.last_sent.sent_id
         $.ajax({
-            url: "/face/store_whats_wrong",
+            url: "/store_whats_wrong",
             type: "GET",
             data: {'sentId': sentId},
             success: function(json) {
@@ -498,7 +499,7 @@ function showCorrection() {
 
     let sentId = classVariableDict.last_sent.sent_id
     $.ajax({
-        url: "/face/store_show_correction",
+        url: "/store_show_correction",
         type: "GET",
         data: {'sentId': sentId},
         success: function(json) {
@@ -541,11 +542,17 @@ function nextSentence() {
         $('#optionBtns').fadeOut( 500 );
         $('.option-btn').prop( "disabled", true);
 
+        if ( classVariableDict.lastSentToBeSent ) {
+
+            classVariableDict.classOver = true;
+
+        }
+
         returnToLaptop( '' );
 
         let sentId = classVariableDict.last_sent.sent_id
         $.ajax({
-            url: "/face/store_next_sentence",
+            url: "/store_next_sentence",
             type: "GET",
             data: {'sentId': sentId},
             success: function(json) {
@@ -577,7 +584,7 @@ function waitForWrongSlices() {
     let sentId = classVariableDict.last_sent.sent_id
 
     $.ajax({
-        url: "/face/wait_for_correction",
+        url: "/wait_for_correction",
         type: "GET",
         data: {'sentId': sentId},
         success: function(json) {
