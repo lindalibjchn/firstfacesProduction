@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
+from django.conf import settings
+import json
 
 class Session(models.Model):
 
@@ -126,12 +128,52 @@ class PermAudioFile(models.Model):
     speech_to_text = models.CharField(max_length=300, blank=True, null=True)
     audio = models.FileField(upload_to="")
 
+
+with open( settings.BASE_DIR + '/face/text_files/countries.txt', 'r') as f:
+    
+    COUNTRY_CHOICES = json.loads(f.read())
+
+with open( settings.BASE_DIR + '/face/text_files/languages.txt', 'r') as f:
+    
+    LANGUAGE_CHOICES = json.loads(f.read())
+
+GENDER_CHOICES = (
+    ('M', 'male'),
+    ('F', 'female'),
+)
+
+BORN_CHOICES = (
+    ('1940-1944', '1940-1944'),
+    ('1944-1949', '1944-1949'),
+    ('1950-1954', '1950-1954'),
+    ('1955-1959', '1955-1959'),
+    ('1960-1964', '1960-1964'),
+    ('1964-1969', '1964-1969'),
+    ('1970-1974', '1970-1974'),
+    ('1975-1979', '1975-1979'),
+    ('1980-1984', '1980-1984'),
+    ('1984-1989', '1984-1989'),
+    ('1990-1994', '1990-1994'),
+    ('1995-1999', '1995-1999'),
+    ('2000-2005', '2000-2005')
+)
+
+LIVED_CHOICES = (
+    ('0', 'never'),
+    ('1', '0-1 year'),
+    ('2', '1-3 years'),
+    ('3', '3-5 years'),
+    ('4', '5-10 years'),
+    ('5', '10+ years'),
+)
+
+EDUCATION_CHOICES = [('0', 'no education'), ('1', 'finished primary/elementary school'), ('2', 'finished secondary/high school'), ('3', 'received vocational qualification'), ('4', 'current undergraduate student'), ('5', "received Bachelor's degree"), ('6', "received Master's degree"), ('7', 'received Doctorate or higher')]
+
 class Profile(models.Model):
     learner = models.ForeignKey(User, on_delete=models.CASCADE)
-    GENDER_CHOICES = (
-        ('M', 'male'),
-        ('F', 'female'),
-    )
-    gender = models.CharField(max_length=1, choices=GENDER_CHOICES, null=True, blank=True)
-
-
+    nationality = models.CharField(max_length=40, choices=COUNTRY_CHOICES, null=True, blank=False)
+    language = models.CharField(max_length=10, choices=LANGUAGE_CHOICES, null=True, blank=False)
+    born = models.CharField(max_length=10, choices=BORN_CHOICES, null=True, blank=False)
+    gender = models.CharField(max_length=1, choices=GENDER_CHOICES, null=True, blank=False)
+    education = models.CharField(max_length=1, choices=EDUCATION_CHOICES, null=True, blank=False)
+    lived_in_english_speaking_country = models.CharField(max_length=1, choices=LIVED_CHOICES, null=True, blank=False)

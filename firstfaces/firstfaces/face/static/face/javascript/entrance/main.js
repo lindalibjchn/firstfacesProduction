@@ -12,6 +12,7 @@ $(window).on( 'load', function() {
     
     // login dropdown
     $("#logInDropdown").on( "click", showLogInDropdown )
+    $("#signUpBtn").on( "click", showSignUpForm )
     
     // log in
     $( "#loginForm" ).on( "submit", function( event ) {
@@ -21,12 +22,6 @@ $(window).on( 'load', function() {
         logIn()
         
     });
-
-    $("#buttonLeft").hide();
-    // info slide
-    $("#buttonLeft").on( "click", function(){swapCards( "left" )} );
-    $("#buttonRight").on( "click", function(){swapCards( "right" )} );
-    
 });
 
 function showLogInDropdown() {
@@ -78,57 +73,11 @@ function logIn() {
     });
 }
 
-function swapCards( direction ) {
+function showSignUpForm() {
 
-    if ( currentSlide === 0 ) {
-     
-        if ( direction === "right" ) {
-
-            currentSlide = 1;
-
-            $( "#info-main" ).fadeOut( 1000, function(){$( "#info-talk" ).fadeIn( 2000 )} );
-            $( "#buttonLeft" ).show();
-
-        }   
-        
-    } else if ( currentSlide === 1 ) {
-     
-        if ( direction === "left" ) {
-
-            currentSlide = 0;
-
-            $( "#info-talk" ).fadeOut( 1000, function(){$( "#info-main" ).fadeIn( 2000 )} );
-            $( "#buttonLeft" ).hide();
-
-        }
-
-        if ( direction === "right" ) {
-
-            currentSlide = 2;
-
-            $( "#info-talk" ).fadeOut( 1000, function(){$( "#info-join" ).fadeIn( 2000 )} );
-            $( "#buttonRight" ).hide();
-
-        }
-
-    } else if ( currentSlide === 2 ) {
-     
-        if ( direction === "left" ) {
-
-            currentSlide = 1;
-
-            $( "#info-join" ).fadeOut( 1000, function(){$( "#info-talk" ).fadeIn( 2000 )} );
-            $( "#buttonRight" ).show();
-
-        }
-
-    }
+    
 
 }
-
-
-
-
 
 
 

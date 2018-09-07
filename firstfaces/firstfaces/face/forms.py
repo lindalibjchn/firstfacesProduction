@@ -1,6 +1,7 @@
 from django.forms import ModelForm
 from django import forms
 from django.contrib.auth.models import User
+from face.models import Profile
 
 class UserForm(ModelForm):
     class Meta:
@@ -15,3 +16,9 @@ class UserForm(ModelForm):
         self.fields['username'].widget = forms.TextInput(attrs={'placeholder': '', 'style': 'font-size: 20', 'class': 'w3-input w3-border'})
         self.fields['password'].widget = forms.PasswordInput(attrs={'placeholder': '', 'style': 'font-size: 20', 'class': 'w3-input w3-border'})
         # self.fields['password'].widget.attrs['class'] = 'form-control'       
+
+class SignUpForm(ModelForm):
+    class Meta:
+        model = Profile
+        exclude = ['learner']
+    

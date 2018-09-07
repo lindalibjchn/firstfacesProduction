@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
-from .forms import UserForm
+from .forms import UserForm, SignUpForm
 from django.http import JsonResponse
 from .utils import get_availables_for_schedule, make_schedule_dict, get_upcoming_class, get_class_already_done_today, get_in_class_now, has_user_clicked_option_btn, fill_sessions_dict, get_scores, get_prev_sessions
 from django.utils import timezone
@@ -38,8 +38,10 @@ def out_or_in(request):
 def entrance(request):
 
     form = UserForm()
+    sign_up_form = SignUpForm()
     context = {
         'form': form,
+        'signUpForm': sign_up_form,
     }
 
     return render(request, 'face/entrance.html', context)

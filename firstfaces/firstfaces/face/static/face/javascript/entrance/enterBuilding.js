@@ -70,7 +70,7 @@ function moveCamera( main ) {
 
         if ( cameraObject.currentState === "door" ) {
 
-            $("#see-through-background").fadeIn( 1000, showInfoBoxes );
+            $("#see-through-background").fadeIn( 1500, showInfoBoxes );
 
         } else if ( cameraObject.currentState === "inside" ) {
 
@@ -84,14 +84,14 @@ function moveCamera( main ) {
 
         console.log('showing info boxes');
 
-        let ids = [ "#infoCard01", "#infoCard02", "#infoCard03" ]
+        let ids = [ "#text1", "#text2", "#text3" ]
 
         let idCount = 0
         setTimeout(function(){showInfoBox( ids[ idCount ] )}, 1000);
 
         function showInfoBox( id ) {
 
-            $( id ).fadeIn( 1000 );
+            $( id ).css('visibility', 'visible').hide().fadeIn( 500 );
 
             if ( idCount < ids.length ) {
 
@@ -100,8 +100,7 @@ function moveCamera( main ) {
 
             } else {
 
-                $(".swapCardsButtonDiv").fadeIn( 1000 );
-                $(".info-card").show();
+                $(".info-card").fadeIn( 1500 );
 
             }
 

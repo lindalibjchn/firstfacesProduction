@@ -22,67 +22,31 @@
 
 <div class="see-through-background" id="see-through-background">
 
-    <div class="w3-container infoContainer">
+    <div id="outer-container">
+
+        <div id="infoSentenceContainer" class="w3-center">
+
+            <div id="moreInfoSentence">
+
+                <span id="text1">Your spoken English. </span><span id="text2">Native speaker judgement. </span><span id="text3">Emotional Response.</span>
+
+            </div>
+
+        </div>
 
         <div class="w3-row" id="row01">
 
-            <div class="w3-col" style="width: 12%;">
+            <div class="w3-col w3-third info-cols">
 
-                <div class="swapCardsButtonDiv">
+                <div class="info-card" id="moreInfoCard01">
 
-                    <button class="w3-button swapCardsButton w3-hover-none w3-ripple" id="buttonLeft">
-                        <i class="fa fa-5x fa-angle-double-left fa-angle"></i>
-                    </button>
-
-                </div>
-
-            </div>
-
-            <div class="w3-col" style="width: 76%" id="info-main">
-
-                <div class="w3-col w3-third">
-
-                    <div class="w3-card w3-white info-card w3-center" id="infoCard01">
-
-                        <div class="w3-container w3-blue">
-                            <h3>Your English</h3>
-                        </div>
-
-                        <!--<div class="images-outer">-->
-                            <img id="womanTalkingImg" src="{% static 'face/images/woman-talking.png' %}">
-                        <!--</div>-->
-
+                    <div class="w3-container w3-blue w3-center">
+                        <div class="card-titles">Background</div>
                     </div>
-
-                </div>
-
-                <div class="w3-col w3-third">
-
-                    <div class="w3-card w3-white info-card w3-center" id="infoCard02">
-
-                        <div class="w3-container w3-indigo">
-                            <h3>Native Speaker</h3>
-                        </div>
-
-                        <!--<div class="images-outer">-->
-                            <img id="nativeListeningImg" src="{% static 'face/images/native-listening.png' %}">
-                        <!--</div>-->
-
-                    </div>
-
-                </div>
-
-                <div class="w3-col w3-third">
-
-                    <div class="w3-card w3-white info-card w3-center" id="infoCard03">
-
-                        <div class="w3-container w3-green">
-                            <h3>Emotional Response</h3>
-                        </div>
-
-                        <!--<div class="images-outer">-->
-                            <img id="tiaSmileImg" src="{% static 'face/images/tia-smile.png' %}">
-                        <!--</div>-->
+                        
+                    <div class="card-content">
+                    
+                        <iframe width="100%" height="80%"src="https://www.youtube.com/embed/6boGtBCbclc?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
                     </div>
 
@@ -90,38 +54,18 @@
 
             </div>
 
+            <div class="w3-col w3-third info-cols">
 
-            <!-- hidden left info cards -->
-            <div class="w3-col" style="width: 76%" id="info-talk">
+                <div class="info-card" id="moreInfoCard02">
 
-                <div class="w3-col w3-half">
-
-                    <div class="w3-card info-card-video w3-center" id="moreInfoCard01">
-
-                        <div class="w3-container w3-red">
-                            <h3 style="padding: 0px; margin: 3px;">Background - <strong style="font-size: 32px;">TEDx</strong></h3>
-                        </div>
-                            
-                        <div id="TEDVideo" class="w3-center">
-                            <iframe width="100%" height="100%" src="https://www.youtube.com/embed/6boGtBCbclc?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-                        </div>
-
+                    <div class="w3-container w3-indigo w3-center">
+                        <!--<h3 style="padding: 0px; margin: 3px;">Development - <strong style="font-size: 32px;">AI</strong></h3>-->
+                        <div class="card-titles">How it Works</div>
                     </div>
 
-                </div>
-
-                <div class="w3-col w3-half">
-
-                    <div class="w3-card w3-white info-card-video w3-center" id="moreInfoCard02">
-
-                        <div class="w3-container w3-blue">
-                            <!--<h3 style="padding: 0px; margin: 3px;">Development - <strong style="font-size: 32px;">AI</strong></h3>-->
-                            <h3 style="padding: 6px; margin: 3px;">How it Works</h3>
-                        </div>
-
-                        <div id="TEDVideo" class="w3-center">
-                            <iframe width="100%" height="100%" src="https://www.youtube.com/embed/bgKAmwa4X-Y?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-                        </div>
+                    <div class="card-content">
+                    
+                        <iframe width="100%" height="80%" src="https://www.youtube.com/embed/xYNMh4sZu6k?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
                     </div>
 
@@ -129,18 +73,17 @@
 
             </div>
 
-            <!-- hidden right join cards -->
-            <div class="w3-col" style="width: 76%" id="info-join">
+            <div class="w3-col w3-third info-cols">
 
-                <div class="w3-col w3-half">
+                <div class="info-card" id="joinInfoCard01">
 
-                    <div class="w3-card w3-white info-card-join w3-center" id="joinInfoCard01">
+                    <div class="w3-container w3-green w3-center">
+                        <div class="card-titles" id="feedbackTitle">Student Feedback</div>
+                    </div>
 
-                        <div class="w3-container w3-green">
-                            <h3>Student Feedback</h3>
-                        </div>
-
-                        <div id=feedbackDiv">
+                    <div class="card-content">
+                    
+                        <div class="w3-center feedback-outer">
 
                             <p class="feedback">"It is so helpful. You correct so many mistakes which I didn't know before."</p>
                             <p class="feedback">"It's a simple process. This program is easy to use and feedback is very fast"</p>
@@ -152,44 +95,9 @@
 
                 </div>
 
-                <div class="w3-col w3-half">
-
-                    <div class="w3-card w3-white info-card-join w3-center" id="moreInfoCard02">
-
-                        <div class="w3-container w3-green">
-                            <h3>How to Join</h3>
-                        </div>
-
-                        <div id="joinDiv">
-
-                            <p class="email">send an email with the subject: <i>"request to join ERLE"</i> to:</p>
-                            <p class="email" style="color: blue;"><u>john.sloan.1@ucdconnect.ie</u></p>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="w3-col" style="width: 12%;">
-            
-                <div class="swapCardsButtonDiv">
-
-                    <button class="w3-button swapCardsButton w3-hover-none w3-ripple" id="buttonRight">
-                        <i class="fa fa-5x fa-angle-double-right fa-angle"></i>
-                    </button>
-
-
-                </div>
-
             </div>
 
         </div>
-
-
-
 
     </div>
 
@@ -219,6 +127,47 @@
         </form>
             
         </div>
+
+    </div>
+
+</div>
+
+<div id="signUpBackground">
+
+    <div class="sign-up-info-background" id="profile">
+
+        <form method="POST" id="signUpForm">
+            {% csrf_token %}
+
+            <h2 class="w3-text-indigo w3-center">Profile</h2>
+
+            <p class="formLabelTag w3-text-indigo">{{ signUpForm.nationality.label_tag }}</p>
+            <p>{{ signUpForm.nationality }}</p>
+                    
+            <p class="formLabelTag w3-text-indigo">{{ signUpForm.language.label_tag }}</p>
+            <p>{{ signUpForm.language }}</p>
+                    
+            <p class="formLabelTag w3-text-indigo">{{ signUpForm.born.label_tag }}</p>
+            <p>{{ signUpForm.born }}</p>
+                    
+            <p class="formLabelTag w3-text-indigo">{{ signUpForm.gender.label_tag }}</p>
+            <p>{{ signUpForm.gender }}</p>
+                    
+            <p class="formLabelTag w3-text-indigo">{{ signUpForm.education.label_tag }}</p>
+            <p>{{ signUpForm.education }}</p>
+                    
+            <p class="formLabelTag w3-text-indigo">How long have you lived in an English speaking country?</p>
+            <p>{{ signUpForm.lived_in_english_speaking_country }}</p>
+                    
+            <div class="w3-center w3-container">
+                <input class="w3-button w3-padding-large w3-large w3-blue w3-hover-indigo w3-ripple" type="submit" value="next" style="margin: 20px;"/>
+            </div>
+        </form>
+
+    </div>
+
+    <div class="sign-up-info-background" id="consent">
+
 
     </div>
 

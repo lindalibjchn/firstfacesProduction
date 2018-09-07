@@ -2,9 +2,10 @@
 
     position: absolute;
     width: 100%;
-    height: 450px;
+    height: 50%;
     bottom: 0;
-    background: rgba( 0, 0, 0, 0.3 );
+    opacity: 1;
+    background: rgba( 255, 255,255, 0.7);
     display: none;
 
 }
@@ -34,239 +35,167 @@
 
 }
 
-.infoContainer {
+#infoSentenceContainer {
 
-    height: 300px;
     width: 100%;
-    position: absolute;
-    top: 45%;
-    transform: translateY(-50%);
-    /*display: none;*/
+    /*height: 12%;*/
 
 }
 
+#moreInfoSentence {
+
+    padding: 1%;
+    font-size: 1.8vw;
+    color: #595959;
+    font-family: courier;
+
+}
+
+#text1 {
+
+    visibility: hidden;
+
+}
+
+#text2 {
+
+    visibility: hidden;
+
+}
+
+#text3 {
+
+    visibility: hidden;
+
+}
+
+.info-cols {
+
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
 
 .info-card {
 
-    position: absolute;
-    height: 320px;
-    width: 320px;
+    width: 90%;
+    height: 75%;
     display: none;
 
 }
+ 
+.card-content {
 
-.info-card-join {
-
-    position: absolute;
-    height: 320px;
-    width: 400px;
-
-}
-
-.swapCardsButtonDiv {
-
-    width: 100%;
-    display: none;
-
-}
-
-/*stops the empty columns from disappearing*/
-.w3-col {
-
-    min-height: 1px;
-
-}
-
-/*#infoCard01 {*/
-
-    /*width: 370px; */
-
-/*}*/
-
-/*#infoCard02 {*/
-
-    /*width: 240px; */
-
-/*}*/
-
-/*#infoCard03 {*/
-
-    /*width: 360px; */
-
-/*}*/
-
-/*#moreInfoCard01 {*/
-    
-    /*width: 80%;*/
-
-/*}*/
-
-.swapCardsButtonDiv {
-    
-    height: 100%;
-
-}
-
-.swapCardsButton {
-
-    width: 80px;
-    height: 80px;
-    margin: 0 auto;
-    display: block;
     position: relative;
-    top: 50%;
-    transform: translateY(-50%);
-    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
 }
 
-/*hide left button at start*/
-.fa-angle {
+.card-titles {
+
+    color: white;
+    padding: 6px; 
+    margin: 3px;
+    font-size: 1.7vw;
+    font-weight: bold;
+
+}
+
+#feedbackTitle {
 
     color: yellow;
 
 }
 
-.fa-angle:hover {
+#moreInfoCard01 {
 
-    transform: scale(1.2);
-
-}
-
-.fa-angle:active {
-
-    transform: scale(0.8);
-
-}
-
-#info-main {
-
+    background-color: black;
     /*display: none;*/
 
 }
 
-#info-talk {
+#moreInfoCard02 {
 
-    display: none;
-    height: 100%;
-
-}
-
-#info-join {
-
-    display: none;
-
-}
-
-.formLabelTag {
-    
-    font-size: 20px;
-
-}
-
-.w3-half {
-
-    display: flex;
-    /*align-items: center;*/
-    justify-content: center;
-
-}
-
-.info-card-video {
-
-    position: absolute;
-    /*height: 400px;*/
-    width: 30%;
-    float: right;
+    background-color: black;
     /*display: none;*/
-
-}
-
-#TEDVideo {
-
-    width: 100%;
-    height: 100%;
-
-} 
-
-/*.images-outer {*/
-
-    /*position: relative;*/
-    /*width: 90%;*/
-    /*height: 75%;*/
-    /*[>margin: 0 auto;<]*/
-    /*border: 1px solid blue;*/
-    /*top: 50%;*/
-    /*transform: perspective(1px) translateY(-50%);*/
-
-/*}*/
-
-#womanTalkingImg {
-
-    position: absolute;
-    width: 320px;
-    /*top: 50%;*/
-    /*transform: perspective(1px) translateY(30%);*/
-    bottom: 10px;
-    left: 0px;
-    opacity: 0.8;
-
-}
-
-#nativeListeningImg {
-
-    position: absolute;
-    height: 250px;
-    /*top: 40%;*/
-    /*transform: perspective(1px) translateY(10%);*/
-    opacity: 0.8;
-    bottom: 8px;
-    left: 90px;
-
-}
-
-#tiaSmileImg {
-
-    position: absolute;
-    width: 200px;
-    bottom: 10px;
-    left: 60px;
 
 }
 
 #joinInfoCard01 {
 
-    position: relative;
+    color: yellow !important;
+    background-color: white;
+    /*display: none;*/
 
 }
 
-#feedbackDiv {
+.feedback-outer {
 
-    position: absolute;
-    width: 80%;
-    height: 90%;
-    left: 20;
-    right: 20;
-    top: 0;
-    bottom: 0;
-    margin: auto;
-    padding: 10px;
-    color: grey;
+    padding: 1%;
 
 }
 
 .feedback {
 
-    font-size: 18px;
+    font-size: 1.2vw;
+    color: #484747;
+    font-family: serif;
     font-style: italic;
 
 }
 
-.email {
 
-    font-size: 18px;
-    font-style: bold;
+/*sign up stuff*/
+
+#signUpBackground {
+
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background: rgba( 0, 0, 0, 0.7);
 
 }
 
+.sign-up-info-background {
 
+    position: absolute;
+    height: 80%;
+    width: 60%;
+    left: 0;
+    right: 0;
+    top: 7%;
+    bottom: 0;
+    margin: auto;
+    background: white;
+    min-height: 600px;
 
+}
+
+#signUpForm {
+
+    position: absolute;
+    height: 95%;
+    width: 80%;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+
+}
+
+#profile {
+
+      
+
+}
+
+#consent {
+
+    display: none;
+
+}
