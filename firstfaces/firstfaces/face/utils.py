@@ -1,4 +1,5 @@
 from .models import Available, Sentence, Session, PermSentence, PermAudioFile
+from django.contrib.auth.models import User
 import datetime
 import time
 from django.utils import timezone
@@ -403,6 +404,15 @@ def get_prev_sessions( user ):
                 
     return sessions_dict 
 
+def check_if_username_is_unique( name ):
+
+    if User.objects.filter(username=name).exists():
+
+        return False
+
+    else:
+
+        return True
 
 
 

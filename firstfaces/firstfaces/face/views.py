@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
-from .forms import UserForm, SignUpForm
+from django.contrib.auth.models import User
+from .forms import UserForm, SignUpForm, SignUpUserForm
 from django.http import JsonResponse
-from .utils import get_availables_for_schedule, make_schedule_dict, get_upcoming_class, get_class_already_done_today, get_in_class_now, has_user_clicked_option_btn, fill_sessions_dict, get_scores, get_prev_sessions
+from .utils import get_availables_for_schedule, make_schedule_dict, get_upcoming_class, get_class_already_done_today, get_in_class_now, has_user_clicked_option_btn, fill_sessions_dict, get_scores, get_prev_sessions, check_if_username_is_unique
 from django.utils import timezone
 import json
 from .models import Session, Sentence, AudioFile, Profile
@@ -39,9 +40,11 @@ def entrance(request):
 
     form = UserForm()
     sign_up_form = SignUpForm()
+    sign_up_user_form = SignUpUserForm()
     context = {
         'form': form,
         'signUpForm': sign_up_form,
+        'signUpUserForm': sign_up_user_form,
     }
 
     return render(request, 'face/entrance.html', context)
@@ -65,6 +68,46 @@ def my_login(request):
         response_data = {
             'loggedIn': False,
         }
+
+    return JsonResponse(response_data)    
+
+def sign_up(request):
+
+    nationality = request.GET['nationality']
+    language = request.GET['language']
+    born = request.GET['born']
+    gender = request.GET['gender']
+    education = request.GET['education']
+    lived_in_english_speaking_country = request.GET['lived_in_english_speaking_country']
+    p = Profile(learner=request.user, nationality=nationality, language=language, born=born, gender=gender, education=education, lived_in_english_speaking_country=lived_in_english_speaking_country)   
+    p.save()
+
+    response_data = {
+
+    }
+
+    return JsonResponse(response_data)    
+
+def sign_up_user(request):
+
+    username = request.POST['username']
+    email = request.POST['email']
+    password = request.POST['password']
+   
+    username_unique = check_if_username_is_unique( username )
+    user_id = 0
+
+    if username_unique:
+        
+        u = User(username=username, password=password, email=email)
+        u.save();
+        login(request, u)
+
+    response_data = {
+
+        'usernameUnique': username_unique,
+
+    }
 
     return JsonResponse(response_data)    
 

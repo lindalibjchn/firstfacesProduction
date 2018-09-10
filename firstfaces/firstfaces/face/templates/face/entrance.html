@@ -134,40 +134,105 @@
 
 <div id="signUpBackground">
 
-    <div class="sign-up-info-background" id="profile">
+    <div class="sign-up-info-background" id="IDProfileConsent">
 
-        <form method="POST" id="signUpForm">
+        <div id="info" class="sign-up-pages">
+
+            <h2 class="w3-text-indigo w3-center">Information Sheet</h2>
+
+            <div id="infoSheetContent">
+
+                <p>some info</p>
+                        
+                <p>some more info</p>
+
+            </div>
+
+            <input type="checkbox" name="infoAgreement" id="infoAgree">&nbsp I have read the information sheet and watched the 'How To' video</label>
+
+            <div class="w3-center w3-container" id="infoBtnOuterDiv">
+                <button id="infoBtn" class="w3-button w3-padding-large w3-large w3-blue w3-hover-indigo w3-ripple"/>next</button>
+            </div>
+
+        </div>
+
+        <div id="consent" class="sign-up-pages">
+
+            <h2 class="w3-text-indigo w3-center">Consent</h2>
+
+            <input type="checkbox" name="consent" class="consentChecks">&nbsp I am over 18 years old</p>
+            <input type="checkbox" name="consent" class="consentChecks">&nbsp I understand that I will talk or type English sentences when using ERLE</p>
+            <input type="checkbox" name="consent" class="consentChecks">&nbsp I understand that I will receive feedback in the form of facial expressions of an avatar</p>
+            <input type="checkbox" name="consent" class="consentChecks">&nbsp I consent to the recordings I submit being used to train pronunciation models</p>
+            <input type="checkbox" name="consent" class="consentChecks">&nbsp I consent to the sentences I submit being used to trian language models</p>
+            <input type="checkbox" name="consent" class="consentChecks">&nbsp I understand that all data I submit is anonymous</p>
+            <input type="checkbox" name="consent" class="consentChecks">&nbsp I understand that I can request the deletion of my data at any time</p>
+            <input type="checkbox" name="consent" class="consentChecks">&nbsp I understand that I can stop participating in this research project at any time</p>
+
+            <input type="checkbox" name="consent" class="consentChecks">&nbsp I consent to taking part in this research</p>
+
+            <div class="w3-center w3-container">
+                <button id="consentBtn" class="w3-button w3-padding-large w3-large w3-blue w3-hover-indigo w3-ripple" style="margin: 20px;">next</button>
+            </div>
+
+        </div>
+
+        <form method="POST" id="signUpUserForm">
+
             {% csrf_token %}
 
-            <h2 class="w3-text-indigo w3-center">Profile</h2>
+            <div id="learnerID" class="sign-up-pages">
 
-            <p class="formLabelTag w3-text-indigo">{{ signUpForm.nationality.label_tag }}</p>
-            <p>{{ signUpForm.nationality }}</p>
-                    
-            <p class="formLabelTag w3-text-indigo">{{ signUpForm.language.label_tag }}</p>
-            <p>{{ signUpForm.language }}</p>
-                    
-            <p class="formLabelTag w3-text-indigo">{{ signUpForm.born.label_tag }}</p>
-            <p>{{ signUpForm.born }}</p>
-                    
-            <p class="formLabelTag w3-text-indigo">{{ signUpForm.gender.label_tag }}</p>
-            <p>{{ signUpForm.gender }}</p>
-                    
-            <p class="formLabelTag w3-text-indigo">{{ signUpForm.education.label_tag }}</p>
-            <p>{{ signUpForm.education }}</p>
-                    
-            <p class="formLabelTag w3-text-indigo">How long have you lived in an English speaking country?</p>
-            <p>{{ signUpForm.lived_in_english_speaking_country }}</p>
-                    
-            <div class="w3-center w3-container">
-                <input class="w3-button w3-padding-large w3-large w3-blue w3-hover-indigo w3-ripple" type="submit" value="next" style="margin: 20px;"/>
+                <h2 class="w3-text-indigo w3-center">ID</h2>
+
+                <p class="formLabelTag w3-text-indigo">{{ signUpUserForm.username.label_tag }}</p>
+                <p>{{ signUpUserForm.username }}</p>
+                        
+                <p class="formLabelTag w3-text-indigo">{{ signUpUserForm.email.label_tag }}</p>
+                <p>{{ signUpUserForm.email }}</p>
+                        
+                <p class="formLabelTag w3-text-indigo">{{ signUpUserForm.password.label_tag }}</p>
+                <p>{{ signUpUserForm.password }}</p>
+
+                <div class="w3-center w3-container">
+                    <input id="IDBtn" class="w3-button w3-padding-large w3-xlarge w3-blue w3-hover-indigo w3-ripple" type="submit" value="next" style="margin: 20px;"/>
+                </div>
+
             </div>
+
         </form>
 
-    </div>
+        <form method="GET" id="signUpForm">
 
-    <div class="sign-up-info-background" id="consent">
+            <div id="profile" class="sign-up-pages">
 
+                <h2 class="w3-text-indigo w3-center">Profile</h2>
+
+                <p class="formLabelTag w3-text-indigo">{{ signUpForm.nationality.label_tag }}</p>
+                <p>{{ signUpForm.nationality }}</p>
+                        
+                <p class="formLabelTag w3-text-indigo">{{ signUpForm.language.label_tag }}</p>
+                <p>{{ signUpForm.language }}</p>
+                        
+                <p class="formLabelTag w3-text-indigo">{{ signUpForm.born.label_tag }}</p>
+                <p>{{ signUpForm.born }}</p>
+                        
+                <p class="formLabelTag w3-text-indigo">{{ signUpForm.gender.label_tag }}</p>
+                <p>{{ signUpForm.gender }}</p>
+                        
+                <p class="formLabelTag w3-text-indigo">{{ signUpForm.education.label_tag }}</p>
+                <p>{{ signUpForm.education }}</p>
+                        
+                <p class="formLabelTag w3-text-indigo">How long have you lived in an English speaking country?</p>
+                <p>{{ signUpForm.lived_in_english_speaking_country }}</p>
+                        
+                <div class="w3-center w3-container">
+                    <input id="profileBtn" class="w3-button w3-padding-large w3-xlarge w3-blue w3-hover-indigo w3-ripple" type="submit" value="next" style="margin: 20px;"/>
+                </div>
+
+            </div>
+
+        </form>
 
     </div>
 

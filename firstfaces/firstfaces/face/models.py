@@ -177,3 +177,4 @@ class Profile(models.Model):
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, null=True, blank=False)
     education = models.CharField(max_length=1, choices=EDUCATION_CHOICES, null=True, blank=False)
     lived_in_english_speaking_country = models.CharField(max_length=1, choices=LIVED_CHOICES, null=True, blank=False)
+    consent = models.BooleanField(default=True)
