@@ -87,7 +87,7 @@ function moveCamera( main ) {
         let ids = [ "#text1", "#text2", "#text3" ]
 
         let idCount = 0
-        setTimeout(function(){showInfoBox( ids[ idCount ] )}, 1000);
+        setTimeout(function(){showInfoBox( ids[ idCount ] )}, 500);
 
         function showInfoBox( id ) {
 

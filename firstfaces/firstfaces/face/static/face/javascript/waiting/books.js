@@ -37,7 +37,9 @@ function showNewsBook() {
 
 function showSession( ind ) {
 
-    if ( ind < 0 || ind >= sessionsDict[ 'IDList' ].length ) {
+    if ( sessionsDict[ 'IDList' ].length === 0 ) {
+
+    } else if ( ind < 0 || ind >= sessionsDict[ 'IDList' ].length ) {
 
         alert( 'index for session out of range' )
 

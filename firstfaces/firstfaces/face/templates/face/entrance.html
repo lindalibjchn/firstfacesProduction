@@ -136,19 +136,52 @@
 
     <div class="sign-up-info-background" id="IDProfileConsent">
 
+        <span onclick="removeSignUp()" class="w3-button w3-xlarge w3-red w3-display-topright">&times;</span>
+
         <div id="info" class="sign-up-pages">
 
             <h2 class="w3-text-indigo w3-center">Information Sheet</h2>
 
             <div id="infoSheetContent">
 
-                <p>some info</p>
-                        
-                <p>some more info</p>
+                <p class="information-sheet-b"><span style="font-weight: bold;">Title:</span>&nbsp;&nbsp;&nbsp;Pilot Study for Emotional Response Language Education E-learning Platform</p>
+                <p class="information-sheet-b"><span style="font-weight: bold;">Topic:</span>&nbsp;&nbsp;&nbsp; Second Language Acquisition, Computational Linguistics, Multimodal Communication</p>
+                <p class="information-sheet-b"><span style="font-weight: bold;">Institution:</span>&nbsp;&nbsp;&nbsp; UCD Computer Science</p>
+                <p class="information-sheet-b" style="margin-bottom: -20px;"><span style="font-weight: bold;">Researcher:</span>&nbsp;&nbsp;&nbsp; John Sloan </p>
+                <p>&nbsp;</p>
+                <p class="information-sheet-pb"> What is this research about? </p>
+                <p class="information-sheet-p">ERLE is a language learning website which uses the emotions of an avatar to give feedback. I am interested in how users interact with the website and the avatar.</p>
+                <p class="information-sheet-pb">Why are you doing this research? </p>
+                <p class="information-sheet-p">I believe facial expressions are a very important means of non-verbal communication. I want to understand how language learners feel about interacting with an avatar who displays different emotions when they make correct and incorrect sentences.</p>
+                <p class="information-sheet-pb"> Why have I been invited to take part? </p>
+                <p class="information-sheet-p">This study is open to all intermediate level English learners in Dublin over 18 years old.</p>
+                <p class="information-sheet-pb">What will happen if I decide to take part in this research study? </p>
+                <p class="information-sheet-p">If you decide to participate, you will choose a username and password and be allowed to log in and practice your English with the avatar for 30 minutes each day. You may choose to type or speak to input sentences. You may be asked some questions on the website when you finish a session.</p>
+                <p class="information-sheet-pb"> How will the data be used? </p>
+                <p class="information-sheet-p">Your answers from the questions will be used to understand what you think of the avatar and the website. The sentences you type and speak will be used to understand how you change your language pronunciation and production after receiving feedback.
+                <p class="information-sheet-pb"> How will you protect my privacy? </p>
+                <p class="information-sheet-p">You will be provided with a username which has no connection to your real name. In the study you will be referred to only by the basic demographic information you provide: age, sex and nationality.</p>
+
+                <p class="information-sheet-pb">How is this research funded? </p>
+                <p class="information-sheet-p">This project is funded by UCD Computer Science.</p>
+
+                <p class="information-sheet-pb">What are the benefits of taking part in this research study? </p>
+                <p class="information-sheet-p">You will be able to practice your English. You may find it enjoyable to interact with an avatar who responds to your sentences.</p>
+                <p class="information-sheet-pb">What are the risks of taking part in this research study? </p>
+                <p class="information-sheet-p">If you see negative expressions from the avatar you may feel bad. When using the speech recognition, it may be frustrating to see a diiferent result from what you expect</p>
+
+                <p class="information-sheet-pb">Can I change my mind at any stage and withdraw from the study? </p>
+                <p class="information-sheet-p">Yes. You can change your mind anytime and withdraw with no disadvantage. </p>
+
+                <p class="information-sheet-pb">Has this research project received ethical approval? </p>
+                <p class="information-sheet-p">Pending.</p>
+
+                <p class="information-sheet-pb">How will I find out what happens with this project? </p>
+                <p class="information-sheet-p">You can email - john.sloan.1@ucdconnect.ie or phone - 00447470180188. </p>
 
             </div>
 
-            <input type="checkbox" name="infoAgreement" id="infoAgree">&nbsp I have read the information sheet and watched the 'How To' video</label>
+            <label><input type="checkbox" name="infoAgreement" id="infoAgree">&nbsp I have read the information sheet and watched the 'How To' video</label></label>
 
             <div class="w3-center w3-container" id="infoBtnOuterDiv">
                 <button id="infoBtn" class="w3-button w3-padding-large w3-large w3-blue w3-hover-indigo w3-ripple"/>next</button>
@@ -160,16 +193,15 @@
 
             <h2 class="w3-text-indigo w3-center">Consent</h2>
 
-            <input type="checkbox" name="consent" class="consentChecks">&nbsp I am over 18 years old</p>
-            <input type="checkbox" name="consent" class="consentChecks">&nbsp I understand that I will talk or type English sentences when using ERLE</p>
-            <input type="checkbox" name="consent" class="consentChecks">&nbsp I understand that I will receive feedback in the form of facial expressions of an avatar</p>
-            <input type="checkbox" name="consent" class="consentChecks">&nbsp I consent to the recordings I submit being used to train pronunciation models</p>
-            <input type="checkbox" name="consent" class="consentChecks">&nbsp I consent to the sentences I submit being used to trian language models</p>
-            <input type="checkbox" name="consent" class="consentChecks">&nbsp I understand that all data I submit is anonymous</p>
-            <input type="checkbox" name="consent" class="consentChecks">&nbsp I understand that I can request the deletion of my data at any time</p>
-            <input type="checkbox" name="consent" class="consentChecks">&nbsp I understand that I can stop participating in this research project at any time</p>
-
-            <input type="checkbox" name="consent" class="consentChecks">&nbsp I consent to taking part in this research</p>
+            <label><input type="checkbox" name="consent" class="consentChecks">&nbsp I am over 18 years old</p></label>
+            <label><input type="checkbox" name="consent" class="consentChecks">&nbsp I understand that I will talk or type English sentences when using ERLE</p></label>
+            <label><input type="checkbox" name="consent" class="consentChecks">&nbsp I understand that I will receive feedback in the form of facial expressions of an avatar</p></label>
+            <label><input type="checkbox" name="consent" class="consentChecks">&nbsp I understand that all data I submit is anonymous</p></label>
+            <label><input type="checkbox" name="consent" class="consentChecks">&nbsp I consent to the recordings I submit being used to train pronunciation models</p></label>
+            <label><input type="checkbox" name="consent" class="consentChecks">&nbsp I consent to the sentences I submit being used to trian language models</p></label>
+            <label><input type="checkbox" name="consent" class="consentChecks">&nbsp I understand that I can request the deletion of my data at any time</p></label>
+            <label><input type="checkbox" name="consent" class="consentChecks">&nbsp I understand that I can stop participating in this research project at any time</p></label>
+            <label><input type="checkbox" name="consent" class="consentChecks">&nbsp I consent to taking part in this research</p></label>
 
             <div class="w3-center w3-container">
                 <button id="consentBtn" class="w3-button w3-padding-large w3-large w3-blue w3-hover-indigo w3-ripple" style="margin: 20px;">next</button>
@@ -185,7 +217,7 @@
 
                 <h2 class="w3-text-indigo w3-center">ID</h2>
 
-                <p class="formLabelTag w3-text-indigo">{{ signUpUserForm.username.label_tag }}</p>
+                <p class="formLabelTag w3-text-indigo">Please choose a username:</p>
                 <p>{{ signUpUserForm.username }}</p>
                         
                 <p class="formLabelTag w3-text-indigo">{{ signUpUserForm.email.label_tag }}</p>

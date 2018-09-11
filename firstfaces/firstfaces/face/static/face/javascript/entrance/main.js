@@ -3,7 +3,7 @@ $(window).on( 'load', function() {
 
     if ( !!window.chrome !== true ) {
 
-        alert( "Erle is currently optomised for Google Chrome only. On other browsers, it may not work properly. If you wish to use Erle, please consider downloading and using Chrome.");
+        alert( "Erle is currently optomised for Google Chrome only. On other browsers, it may not work as expected. If you wish to use Erle, please consider downloading and using Chrome.");
 
     }
 
@@ -30,7 +30,7 @@ $(window).on( 'load', function() {
         if ( $('input[name="infoAgreement"]').is(':checked') ) {
 
             console.log('i infoAgreement');
-            $('#info').fadeOut( 1000, function(){ $('#consent').fadeIn( 1000 ) } );
+            $('#info').fadeOut( 500, function(){ $('#consent').fadeIn( 500 ) } );
 
         } else {
 
@@ -45,7 +45,7 @@ $(window).on( 'load', function() {
 
         if ( $('.consentChecks:checked').length === $('.consentChecks').length ) {
 
-            $('#consent').fadeOut( 1000, function(){ $('#learnerID').fadeIn( 1000 ) } );
+            $('#consent').fadeOut( 500, function(){ $('#learnerID').fadeIn( 500 ) } );
 
         } else {
 
@@ -136,7 +136,7 @@ function registerProfile() {
         data: formData,
         success: function(json) {
 
-            $('#signUpBackground').fadeOut( 1500, enterSchool );
+            $('#signUpBackground').fadeOut( 500, enterSchool );
 
         },
         error: function() {
@@ -163,7 +163,7 @@ function signUpUser() {
                 username = formData.username
                 // go to profile entry
 
-                $('#learnerID').fadeOut( 1000, function(){ $('#profile').fadeIn( 1000 )});
+                $('#learnerID').fadeOut( 500, function(){ $('#profile').fadeIn( 500 )});
 
             } else {
 
@@ -182,9 +182,27 @@ function signUpUser() {
 function showSignUpForm() {
 
     console.log('in showSignUpForm');
-    $('#signUpBackground').fadeIn( 1500 );
+    $('#signUpBackground').fadeIn( 500 );
 
 }
+
+function removeSignUp() {
+
+   $('#signUpBackground').fadeOut( 500 ); 
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
