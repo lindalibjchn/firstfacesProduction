@@ -20,6 +20,7 @@ import datetime
 import logging
 from google.cloud import texttospeech
 import math
+from django.core.mail import send_mail
 
 logger = logging.getLogger(__name__)
 # os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/johnsHDD/PhD_backup/erle-3666ad7eec71.json"
@@ -277,6 +278,8 @@ def book_session(request):
         
         session = Session(learner=user, start_time=time_now) 
         session.save()
+
+        send_mail('Class booked by: ' + request.user.username, 'starts soon', 'ucd.erle@gmail.com', ['john.sloan.1@ucdconnect.ie'])
 
         response_data = {
             'sessionCreated': True,
