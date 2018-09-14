@@ -3,8 +3,9 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .forms import UserForm, SignUpForm, SignUpUserForm
+from django.contrib.auth.password_validation import validate_password
 from django.http import JsonResponse
-from .utils import get_availables_for_schedule, make_schedule_dict, get_upcoming_class, get_class_already_done_today, get_in_class_now, has_user_clicked_option_btn, fill_sessions_dict, get_scores, get_prev_sessions, check_if_username_is_unique
+from .utils import *
 from django.utils import timezone
 import json
 from .models import Session, Sentence, AudioFile, Profile
@@ -91,22 +92,36 @@ def sign_up(request):
 
 def sign_up_user(request):
 
+    # code.interact(local=locals());
     username = request.POST['username']
     email = request.POST['email']
-    password = request.POST['password']
-   
+    password = request.POST['password1']
+
     username_unique = check_if_username_is_unique( username )
     user_id = 0
 
+    password_ok = True
+    
     if username_unique:
         
-        u = User(username=username, password=password, email=email)
-        u.save();
-        login(request, u)
+        u = User(username=username, email=email)
+        u.set_password(password)
+
+        try: 
+            
+            validate_password( password, u )
+   
+            u.save();
+            login(request, u)
+
+        except:
+            
+            password_ok = False
 
     response_data = {
 
         'usernameUnique': username_unique,
+        'passwordOK': password_ok,
 
     }
 
@@ -145,6 +160,8 @@ def waiting(request):
 
 @login_required
 def class_time(request, session_id):
+
+    print('request.class_time:', request.path)
 
     try:
 
@@ -243,7 +260,8 @@ def class_time(request, session_id):
 
                 context = {
 
-                    'class_variable_dict': json.dumps(class_variable_dict)   
+                    'class_variable_dict': json.dumps(class_variable_dict), 
+                    'class': True
 
                 }
 

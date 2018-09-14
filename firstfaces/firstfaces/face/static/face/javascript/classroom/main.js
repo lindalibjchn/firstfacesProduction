@@ -15,6 +15,8 @@ $(window).on( 'load', function() {
     $('#showCorrectionBtn').on( 'click', showCorrection );
     $('#nextSentenceBtn').on( 'click', nextSentence );
 
+    $('#finishClassBtn').on( 'click', endClass );
+
 });
 
 var blob;

@@ -41,15 +41,22 @@
             <!-- navbar -->
             <div class="w3-bar w3-blue w3-xlarge" style="position: fixed; z-index: 100;">
 
-                <a href="{% url 'waiting' %}" class="w3-bar-item w3-button w3-hover-blue w3-ripple">Home</a>
-
                 <div style="float: right">
 
                     {% if request.user.is_authenticated %}
 
                         <!--<p class="w3-bar-item">{{ request.user.username }}</p>-->
                         <a href="#" class="w3-bar-item w3-button w3-hover-blue w3-ripple">{{ request.user.username }}</a>
-                        <a href="{% url 'logout' %}" class="w3-bar-item w3-button w3-hover-blue w3-ripple">logout</a>
+
+                        {% if class %}
+                        
+                            <a href="#" id="finishClassBtn" class="w3-bar-item w3-button w3-hover-blue w3-ripple">finish class</a>
+
+                        {% else %}
+
+                            <a href="{% url 'logout' %}" class="w3-bar-item w3-button w3-hover-blue w3-ripple">logout</a>
+                        
+                        {% endif %}
 
                     {% else %}
 

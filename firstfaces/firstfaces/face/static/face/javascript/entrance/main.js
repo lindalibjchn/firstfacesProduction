@@ -160,10 +160,21 @@ function signUpUser() {
             if ( json.usernameUnique ) {
                 
                 console.log('unique');
-                username = formData.username
-                // go to profile entry
+                
+                if ( json.passwordOK ) {
 
-                $('#learnerID').fadeOut( 500, function(){ $('#profile').fadeIn( 500 )});
+                    console.log('password is ok');
+
+                    username = formData.username
+                    // go to profile entry
+
+                    $('#learnerID').fadeOut( 500, function(){ $('#profile').fadeIn( 500 )});
+
+                } else {
+
+                    alert('Password must be at least 8 characters and not similar to your username.')
+
+                }
 
             } else {
 

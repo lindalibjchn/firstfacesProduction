@@ -190,7 +190,7 @@
 
 #info {
 
-    /*display: none;*/
+    display: none;
 
 }
 
@@ -225,7 +225,7 @@
 
 #learnerID {
 
-    display: none;
+    /*display: none;*/
 
 }
 

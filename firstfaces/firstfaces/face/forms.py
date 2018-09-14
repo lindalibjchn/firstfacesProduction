@@ -2,6 +2,7 @@ from django.forms import ModelForm
 from django import forms
 from django.contrib.auth.models import User
 from face.models import Profile
+from django.contrib.auth.forms import UserCreationForm
 
 class UserForm(ModelForm):
     class Meta:
@@ -22,7 +23,7 @@ class SignUpForm(ModelForm):
         model = Profile
         exclude = ['learner']
     
-class SignUpUserForm(ModelForm):
+class SignUpUserForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username', 'email', 'password']
@@ -32,8 +33,8 @@ class SignUpUserForm(ModelForm):
         super(SignUpUserForm, self).__init__(*args, **kwargs)
         # then do extra stuff:
         self.fields['username'].help_text = ''
-        self.fields['username'].widget = forms.TextInput(attrs={'placeholder': '', 'style': 'font-size: 20', 'class': 'w3-input w3-border'})
+        self.fields['username'].widget = forms.TextInput(attrs={'placeholder': '', 'style': 'font-size: 20', 'class': 'w3-input w3-border', 'id': 'signUpUsername'})
         self.fields['email'].widget = forms.EmailInput(attrs={'placeholder': '', 'style': 'font-size: 20', 'class': 'w3-input w3-border'})
-        self.fields['password'].widget = forms.PasswordInput(attrs={'placeholder': '', 'style': 'font-size: 20', 'class': 'w3-input w3-border'})
-        # self.fields['password'].widget.attrs['class'] = 'form-control'       
+        self.fields['password1'].widget = forms.PasswordInput(attrs={'placeholder': '', 'style': 'font-size: 20', 'class': 'w3-input w3-border'})
+        # self.fields['password1'].widget.attrs['class'] = 'form-control'       
 
