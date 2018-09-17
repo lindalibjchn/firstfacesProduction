@@ -41,6 +41,16 @@
             <!-- navbar -->
             <div class="w3-bar w3-blue w3-xlarge" style="position: fixed; z-index: 100;">
 
+                {% if waiting %}
+
+                    <div style="float: left">
+
+                        <div class="w3-bar-item" id="timeInIre">Time in Ireland: {{ timeNow }}</div>
+
+                    </div>
+
+                {% endif %}
+
                 <div style="float: right">
 
                     {% if request.user.is_authenticated %}

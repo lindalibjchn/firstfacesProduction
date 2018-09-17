@@ -5,7 +5,7 @@
     height: 50%;
     bottom: 0;
     opacity: 1;
-    background: rgba( 255, 255,255, 0.8);
+    background: rgba( 255, 255,255, 0.6);
     display: none;
 
 }
@@ -47,6 +47,8 @@
     font-size: 1.8vw;
     color: #595959;
     font-family: courier;
+    background: rgba( 255, 255, 255, 1.0);
+    margin-bottom: 1%;
 
 }
 
@@ -190,7 +192,7 @@
 
 #info {
 
-    display: none;
+    /*display: none;*/
 
 }
 
@@ -225,7 +227,7 @@
 
 #learnerID {
 
-    /*display: none;*/
+    display: none;
 
 }
 

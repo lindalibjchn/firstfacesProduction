@@ -130,6 +130,8 @@ def sign_up_user(request):
 @login_required
 def waiting(request):
     
+    time_now = timezone.localtime(timezone.now()).strftime("%H:%M")
+
     availables = get_availables_for_schedule()
 
     # in utils.py, for schedule on board
@@ -152,7 +154,9 @@ def waiting(request):
 
         'schedule_dict': json.dumps(schedule_dict),
         'schedule_now': json.dumps(schedule_now),
-        'sessions_dict': json.dumps(sessions_dict)
+        'sessions_dict': json.dumps(sessions_dict),
+        'waiting': True,
+        'timeNow': time_now,
 
     }
 
