@@ -44,24 +44,74 @@
 
 #emotionWheelContainer {
 
+    top: 5px;
     position: relative;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
 }
 
 #emotionWheel {
 
+    position: absolute;
     height: 220px;
     width: 220px;
     border-radius: 50%;
-    background-color: green;
-    margin-top: 3%;
-    margin-left: 5%;
+    background-color: orange;
+    /*margin-top: 3%;*/
+    /*margin-left: 5%;*/
 
 }
 
 #emotionWheel:hover {
 
     background-color: yellow;
+    cursor: pointer;
+
+}
+
+.emotion-labels {
+
+    position: absolute;
+    top: 100px;
+    font-size: 20px;
+
+}
+
+#fearLabel {
+
+    top: 85px;
+    left: -40px;
+
+}
+
+#sadLabel {
+
+    left: 55px;
+    top: 200px;
+
+}
+
+#contentLabel {
+
+    left: 205px;
+    top: 160px;
+
+}
+
+#happyLabel {
+
+    left: 205px;
+    top: 10px;
+
+}
+
+#disgustLabel {
+
+    left: 35px;
+    top: -45px;
 
 }
 
@@ -75,21 +125,48 @@
 
     margin-top: 5%;
     height: 40%;
+    cursor: pointer;
 
 }
 
 .triangle-bottomleft {
 
+    position: relative;
 	width: 0;
 	height: 0;
+    bottom: 15px;
     border-right: 100px solid transparent;
-    top: 10px;
 
 }
 
 #nodClickable {
 
     height: 100%;
+
+}
+
+.nod-shake-names {
+
+    position: relative;
+    left: 30px;
+    font-weight: bold;
+
+}
+
+.nod-shake-speed {
+
+    position: relative;
+    top: 30px;
+    left: -10px;
+    transform: rotate(-90deg);
+
+}
+
+.nod-shake-amount {
+
+    position: relative;
+    top: 20px;
+    left: 20px;
 
 }
 
@@ -141,9 +218,19 @@
 
     height: 100%;
     position: relative;
+    top: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
+
+}
+
+#surpriseLabel {
+
+    position: relative;
+    top: -30px;
+    left: 45%;
+    font-weight: bold;
 
 }
 
@@ -195,6 +282,8 @@
 
 #judgementBtnsRow {
 
+    position: relative;
+    top: 10px;
     width: 100%;
     height: 25%;
 
@@ -284,7 +373,7 @@
 
 #sentForCorrectionNow {
 
-    margin-top: 6%;
+    margin-top: 5%;
     height: 30%; 
     padding: 2%;
 

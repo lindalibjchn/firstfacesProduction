@@ -14,6 +14,12 @@
 
                     <div id="emotionWheel">
                         
+                        <p id="happyLabel" class="emotion-labels">happy</p>
+                        <p id="disgustLabel" class="emotion-labels">disgust</p>
+                        <p id="fearLabel" class="emotion-labels">fear</p>
+                        <p id="sadLabel" class="emotion-labels">sad</p>
+                        <p id="contentLabel" class="emotion-labels">content</p>
+
                     </div>
 
                 </div>
@@ -24,13 +30,25 @@
 
                         <div class="w3-col w3-third" id="nodClickable">
 
-                            <div class="triangle-bottomleft" id="nodTriangle"></div>
+                            <div class="triangle-bottomleft" id="nodTriangle">
+                            
+                                <p id="nodName" class="nod-shake-names">Nod</p>
+                                <p class="nod-shake-speed">speed</p>
+                                <p class="nod-shake-amount">amount</p>
+
+                            </div>
 
                         </div>
 
                         <div class="w3-col w3-third" id="shakeClickable">
 
-                            <div class="triangle-bottomleft" id="shakeTriangle"></div>
+                            <div class="triangle-bottomleft" id="shakeTriangle">
+                            
+                                <p id="shakeName" class="nod-shake-names">Shake</p>
+                                <p class="nod-shake-speed">speed</p>
+                                <p class="nod-shake-amount">amount</p>
+
+                            </div>
 
                         </div>
 
@@ -48,7 +66,9 @@
 
                         <div class="w3-col m10 slide-container" id="surpriseClickable">
 
-                              <input type="range" min="0" max="10" value="0" class="slider" id="surpriseRange">
+                            <p id="surpriseLabel">Surprise</p>
+                              
+                            <input type="range" min="0" max="10" value="0" class="slider" id="surpriseRange">
                      
                         </div>
 
