@@ -173,6 +173,8 @@ def class_time(request, session_id):
         
         if sess.end_time == None:
 
+            print("time_now:", sess.start_time)
+            print("time_now local:", timezone.localtime(sess.start_time))
             start_time = int(time.mktime((sess.start_time).timetuple()))
        
             if request.user == sess.learner:
@@ -244,6 +246,7 @@ def class_time(request, session_id):
 
                 class_over = False
                 if sess.end_time != None:
+                    print('sess.end_time and so class_over is true:', sess.end_time)
                     class_over = True
 
                 class_variable_dict = {
@@ -556,6 +559,8 @@ def check_judgement(request):
 def store_class_over(request):
 
     session_id = int(request.GET['sessId'])
+
+    print('in store_class_over')
 
     scores = get_scores( session_id )
     score = math.floor(min(100, sum(scores)))

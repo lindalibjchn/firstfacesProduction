@@ -1,8 +1,10 @@
 function calcTimeRemaining() {
 
     let timeNow = new Date();
+    console.log('timeNow:', timeNow)
     let timePassed = timeNow - classVariableDict.start_time;
-    let timePassedMinutes = Math.ceil( timePassed / 60000 );
+    console.log('timePassed:', timePassed)
+    let timePassedMinutes = Math.ceil( -60 + timePassed / 60000  );
 
     // this classTimeMinutes is defined in variables
     let timeRemainingMinutes = classTimeMinutes - timePassedMinutes;
@@ -15,6 +17,7 @@ function calcTimeRemaining() {
 function showTimeRemaining() {
 
     let timeRemainingMinutes = calcTimeRemaining();
+    console.log('timeRemainingMinutes:', timeRemainingMinutes);
 
     if ( timeRemainingMinutes > 0 ) {
 
@@ -37,6 +40,7 @@ function showTimeRemaining() {
 
 function endClass() {
 
+    console.log('in endClass()');
     let sessId = classVariableDict.session_id;
     $.ajax({
         url: "/store_class_over",

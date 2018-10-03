@@ -254,7 +254,18 @@ function updatePrevSentences() {
 
 
                 // dont want 'undefined' appearing in try again box - it's too wide
+                var wW;
                 var tA;
+
+                if ( sessions[ key ].sentences[ sent ].whats_wrong === true ) {
+
+                    wW = "W"
+
+                } else {
+
+                    wW = "&nbsp"
+
+                }
 
                 if ( sessions[ key ].sentences[ sent ].try_again === true ) {
 
@@ -300,7 +311,9 @@ function updatePrevSentences() {
                                 
                                 "<div class='prev-corrections'>" +
                                     
-                                    "C:" + sessions[ key ].sentences[ sent ].correction +
+                                    "C:" + sessions[ key ].sentences[ sent ].correction + "<br>" +
+
+                                    "P:" + sessions[ key ].sentences[ sent ].prompt +
                                 
                                 "</div>" +
 
@@ -310,7 +323,7 @@ function updatePrevSentences() {
 
                                 "<div class='prev-try-again'>" +
                                     
-                                    tA +
+                                    wW + "&nbsp" + tA +
                                 
                                 "</div>" +
 

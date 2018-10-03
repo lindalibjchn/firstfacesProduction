@@ -362,7 +362,7 @@ function returnToLaptop( sent ) {
 
                         if ( classVariableDict.classOver ) {
 
-                            endClass();
+                            //endClass();
 
                         } else {
 
