@@ -8,7 +8,7 @@ from django.http import JsonResponse
 from .utils import *
 from django.utils import timezone
 import json
-from .models import Session, Sentence, AudioFile, Profile
+from .models import Session, Sentence, AudioFile, Profile, NewsArticle
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 import code
@@ -131,6 +131,7 @@ def sign_up_user(request):
 def waiting(request):
     
     time_now = timezone.localtime(timezone.now()).strftime("%H:%M")
+    date_now = timezone.localtime(timezone.now()).date()
 
     availables = get_availables_for_schedule()
 
@@ -150,6 +151,10 @@ def waiting(request):
     # get dictionary of all previous sessions
     sessions_dict = get_prev_sessions( request.user )
 
+    todays_news_article = NewsArticle.objects.get(date=date_now)
+    headline = todays_news_article.title
+    article_link = todays_news_article.link
+
     context = {
 
         'schedule_dict': json.dumps(schedule_dict),
@@ -157,6 +162,8 @@ def waiting(request):
         'sessions_dict': json.dumps(sessions_dict),
         'waiting': True,
         'timeNow': time_now,
+        'headline': headline,
+        'article_link': article_link,
 
     }
 

@@ -173,6 +173,20 @@
 
 }
 
+#articleTitleCont {
+
+    width: 100%;
+    text-align: center;
+    color: blue;
+
+}
+
+#articleLink:hover {
+
+    color: navy;
+
+}
+
 #loadingIcon {
 
     position: absolute;

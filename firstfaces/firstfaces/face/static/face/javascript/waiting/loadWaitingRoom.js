@@ -294,8 +294,8 @@ function init() {
         clickableObjects.laptop.bool = false;
         clickableObjects.laptop.sin = [];
         clickableObjects.laptop.deskPos = { x: 0.4, y: 2.89, z: 1.9 };
-        clickableObjects.laptop.facePos = { x: -0.4, y: 3.25, z: 4.2 };
-        clickableObjects.laptop.faceRot = { x: 0.02, y: 0.95, z: 0.15};
+        clickableObjects.laptop.facePos = { x: -0.4, y: 3.25, z: 4.3 };
+        clickableObjects.laptop.faceRot = { x: 0.02, y: 0.85, z: 0.10};
 
 
         geom.center();
