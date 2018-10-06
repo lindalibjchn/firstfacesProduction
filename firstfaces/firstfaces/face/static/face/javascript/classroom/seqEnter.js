@@ -198,8 +198,17 @@ function goToAskTopic( emotion ) {
 
         synthesisObject.pitch = 1;
         synthesisObject.speaking_rate = 0.95;
-        speechBubbleObject.sentence = " That's great! What would you like to talk about today?";
+
+        if ( classVariableDict['prev_topic'] !== null ) {
+
+            speechBubbleObject.sentence = " That's great! Last time you talked about '" + classVariableDict['prev_topic'] + "'. Would you like to continue with the same topic, or choose something different?";
+
+        } else {
+
+            speechBubbleObject.sentence = " That's great! What would you like to talk about today?";
     
+        }
+
         setTimeout( function() {
 
             initNod( 0.4, '0.5' )
@@ -217,13 +226,24 @@ function goToAskTopic( emotion ) {
     
         synthesisObject.pitch = -3;
         synthesisObject.speaking_rate = 0.8;
-        speechBubbleObject.sentence = " I'm sorry to hear that. What would you like to talk about today?";
+
+        if ( classVariableDict['prev_topic'] !== null ) {
+
+            speechBubbleObject.sentence = " I'm sorry to hear that! Last time you talked about '" + classVariableDict['prev_topic'] + "'. Would you like to continue with the same topic, or choose something different?";
+
+        } else {
+
+            speechBubbleObject.sentence = " I'm sorry to hear that! What would you like to talk about today?";
+    
+        }
+
 
         setTimeout( function() {
 
             initNod( 0.4, '0.5' )
 
-            setTimeout( askTopic, 3500 );
+            //setTimeout( askTopic, 3500 );
+            setTimeout( askIfContinuePrevOrNew, 3500 )
 
         }, 1050)
 
@@ -315,6 +335,7 @@ function showTopicChoices() {
     // allow topics to be clickable and follow logic depending on their needs
     $('#myChoice').on( 'click', showChoiceTextInput );
     $('#myEmotion').on( 'click', function() { storeTopic( 'emotion' ) } );
+    $('#todaysNewsArticle').on( 'click', function() { storeTopic( 'news: ' + classVariableDict['headline'] ) } );
 
     $('#topicChoices').fadeIn( 1000 );
 

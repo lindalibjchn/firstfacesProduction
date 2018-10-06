@@ -151,9 +151,13 @@ def waiting(request):
     # get dictionary of all previous sessions
     sessions_dict = get_prev_sessions( request.user )
 
-    todays_news_article = NewsArticle.objects.get(date=date_now)
-    headline = todays_news_article.title
-    article_link = todays_news_article.link
+    try:
+        todays_news_article = NewsArticle.objects.get(date=date_now)
+        headline = todays_news_article.title
+        article_link = todays_news_article.link
+    except:
+        headline = "no article today"
+        article_link = "#"
 
     context = {
 
@@ -191,6 +195,26 @@ def class_time(request, session_id):
                 sentences = {}
                 id_of_last_sent = None;
                 last_sent = {}
+
+                # get news article details
+                try:
+                    todays_news_article = NewsArticle.objects.get(date=date_now)
+                    headline = todays_news_article.title
+                    article_link = todays_news_article.link
+                except:
+                    headline = "no article today"
+                    article_link = "#"
+
+                # get previous session topic
+                prev_topic = None
+                try:
+                    recent_sesss = Session.objects.filter(start_time__gte=sess.start_time-datetime.timedelta(days=14)).order_by('-pk')
+                    if len(recent_sesss) > 1:
+                        prev_topic = recent_sesss[1].topic
+                        if prev_topic == 'emotion':
+                            prev_topic = 'feeling ' + recent_sesss[1].learner_emotion
+                except:
+                    pass
 
                 blob_no_text = False
                 blob_no_text_sent_id = None
@@ -269,7 +293,10 @@ def class_time(request, session_id):
                     'id_of_last_sent': id_of_last_sent,
                     'last_sent': last_sent,
                     'thinking': False,
-
+                    'headline': headline,
+                    'article_link': article_link,
+                    'prev_topic': prev_topic,
+                    
                 }
 
                 context = {

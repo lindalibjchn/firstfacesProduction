@@ -371,15 +371,12 @@ def get_prev_sessions( user ):
 
     for sess in all_sessions:
 
-        print('sess:', sess.id)
         sents = PermSentence.objects.filter(session=sess)
-        print('sents:', sents)
-
         sentences = []
 
         for s in sents:
 
-            a_s = s.permaudiofile_set.all()
+            a_s = s.permaudiofile_set.all().order_by('pk')
             a_s_ids = [[a.id, a.speech_to_text, a.audio.name] for a in a_s]
 
             sentences.append({

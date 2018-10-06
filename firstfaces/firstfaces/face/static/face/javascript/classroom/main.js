@@ -115,17 +115,19 @@ function readyAudioBtns() {
                     console.log( "recorder stopped" );
 
                     $(this).hide();
-                    $('#recordVoiceBtn').show();
                     recognition.stop();
-
-                    //show play buttons below
-                    $('.play-btn').prop( "disabled", false);
-                    $('#talkBtn').prop( "disabled", false);
 
                     setTimeout( function(){
 
                         $('#textInput').val( synthesisObject.textFromSpeech );
                         $('#textInput').focus();
+
+                        //show play buttons below
+                        $('#recordVoiceBtn').show();
+                        $('.play-btn').prop( "disabled", false);
+                        $('#talkBtn').prop( "disabled", false);
+
+                        sendBlobToServer( blob );
                     
                     }, 1000);
 
@@ -159,7 +161,6 @@ function readyAudioBtns() {
             var transcript = event.results[current][0].transcript;
             sentence += transcript + " ";
             synthesisObject.textFromSpeech = sentence.slice(0,sentence.length -1);
-            sendBlobToServer( blob );
 
 
         }
