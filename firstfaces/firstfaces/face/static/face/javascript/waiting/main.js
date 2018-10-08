@@ -6,13 +6,14 @@ $(window).on( 'load', function() {
 
     // gets session id's in lit to order the calling of sessions from the sessionsDict
     getSessionsIdList();
+    insertChart();
     
     // this is for developing the sentences book
     //$('#bookContentBackground').fadeIn( 1000 ); 
     //showSentencesBook()
 
-    $('.fa-angle-double-left').on( 'click', sessionLeft );
-    $('.fa-angle-double-right').on( 'click', sessionRight );
+    //$('.fa-angle-double-left').on( 'click', sessionLeft );
+    //$('.fa-angle-double-right').on( 'click', sessionRight );
 
 });
 
@@ -243,31 +244,31 @@ function getSynth() {
 
 }
 
-function sessionLeft() {
+//function sessionLeft() {
 
-    if ( sessionsDict.currentPos !== sessionsDict.IDList.length - 1 ) {
+    //if ( sessionsDict.currentPos !== sessionsDict.IDList.length - 1 ) {
 
-        sessionsDict.currentPos += 1;
+        //sessionsDict.currentPos += 1;
     
-        showSession( sessionsDict.currentPos );
+        //showSession( sessionsDict.currentPos );
 
-    }
+    //}
 
-}
+//}
 
-function sessionRight() {
+//function sessionRight() {
 
-    if ( sessionsDict.currentPos !== 0 ) {
+    //if ( sessionsDict.currentPos !== 0 ) {
 
-        sessionsDict.currentPos -= 1;
+        //sessionsDict.currentPos -= 1;
     
-        showSession( sessionsDict.currentPos );
+        //showSession( sessionsDict.currentPos );
 
-    }
+    //}
 
     
 
-}
+//}
 
 
 

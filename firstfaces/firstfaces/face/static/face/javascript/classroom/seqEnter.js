@@ -242,8 +242,7 @@ function goToAskTopic( emotion ) {
 
             initNod( 0.4, '0.5' )
 
-            //setTimeout( askTopic, 3500 );
-            setTimeout( askIfContinuePrevOrNew, 3500 )
+            setTimeout( askTopic, 3500 );
 
         }, 1050)
 
@@ -316,8 +315,16 @@ function speakTopic() {
 
         setTimeout( function() {
             
-            showTopicChoices();
+            if ( classVariableDict['prev_topic'] !== null ) {
+
+                showContinueOrNew();
+
+            } else {
+
+                showTopicChoices();
         
+            }
+
         }, 3000 );
 
     } else {
@@ -327,6 +334,27 @@ function speakTopic() {
 
     }
 
+
+}
+
+function showContinueOrNew() {
+
+    // allow topics to be clickable and follow logic depending on their needs
+    $('#continueBtn').on( 'click', function() { 
+        
+        $('#continueNewChoices').fadeOut( 1000 );
+        storeTopic( 'same' ) 
+    
+    } );
+
+    $('#newBtn').on( 'click', function() { 
+    
+        $('#continueNewChoices').fadeOut( 1000 );
+        setTimeout( showTopicChoices, 1000 );
+
+    } );
+
+    $('#continueNewChoices').fadeIn( 1000 );
 
 }
 

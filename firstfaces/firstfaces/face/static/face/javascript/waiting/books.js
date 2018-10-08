@@ -47,7 +47,7 @@ function showSession( ind ) {
 
         let sess = sessionsDict[ sessionsDict[ 'IDList' ][ ind ] ]
         let sT = new Date( sess.start_time * 1000 )
-        let niceDate = sT.getDate(); 
+        let niceDate = sT.toLocaleDateString("en-GB"); 
         let topic = sess.topic
         let sentence = sess.sentences
         let score = sess.score
@@ -56,9 +56,7 @@ function showSession( ind ) {
         node.innerHTML = '';
 
         let html = document.createElement( "div" );
-        html.innerHTML = "<div id='sessDate'>" + sT + "</div>" +
-            "<div id='sessTopic'>" + "Topic: <span style='font-weight: bold'>" + topic + "</div>" +
-            "<div id='sessScore'>" + "Score: <span style='font-weight: bold'>" + score + "</span></div>"; 
+        html.innerHTML = "<div id='sessDate'> Date: <span style='font-weight: bold'>" + niceDate + "</span>" + " --- Topic: <span style='font-weight: bold'>" + topic + "</span>" + " --- Score: <span style='font-weight: bold'>" + score + "</span></div>"; 
         
         node.appendChild( html );
 

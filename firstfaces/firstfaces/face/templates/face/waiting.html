@@ -30,18 +30,28 @@
 
                 <div class="w3-row">
                 
-                    <div class="w3-col w3-third" id="leftScroll">
-                        <i class="fa fa-3x fa-angle-double-left fa-angle"></i>
+                    <div class="w3-col w3-third" id="leftScroll">&nbsp
+                        <!--<i class="fa fa-3x fa-angle-double-left fa-angle"></i>-->
                     </div>
 
                     <div class="w3-col w3-third">
                         
-                        <h3 class="book-title">Sentences</h3>
+                        <h3 class="book-title">Scores & Sentences</h3>
 
                     </div>
 
-                    <div class="w3-col w3-third" id="rightScroll">
-                        <i class="fa fa-3x fa-angle-double-right fa-angle"></i>
+                    <div class="w3-col w3-third" id="rightScroll">&nbsp
+                        <!--<i class="fa fa-3x fa-angle-double-right fa-angle"></i>-->
+                    </div>
+
+                </div>
+
+                <div class="w3-row" id="chartRow">
+
+                    <div id="chartOuterDiv">
+
+                        <canvas id="scoresChart"></canvas>
+
                     </div>
 
                 </div>
@@ -94,6 +104,7 @@
 <script src="{% static 'face/javascript/waiting/books.js' %}"></script>
 <script src="{% static 'face/javascript/waiting/main.js' %}"></script>
 <script src="{% static 'face/javascript/waiting/sents.js' %}"></script>
+<script src="{% static 'face/javascript/waiting/scoreCharts.js' %}"></script>
 
 <!-- fonts -->
 <script>var board_font = "{% static 'face/fonts/roboto_condensed_regular.json' %}"</script>

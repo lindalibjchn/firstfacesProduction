@@ -87,9 +87,30 @@
 
 }
 
+#chartRow {
+
+    position: relative;
+
+}
+
+#chartOuterDiv {
+
+    width: 50%;
+    position: relative;
+    left: 0;
+    right: 0;
+    margin: auto;
+
+}
+
+#scoresChart {
+
+
+}
+
 #sentencesInnerMain {
 
-    height: 90%;
+    height: 50%;
     width: 100%;
     overflow-y: scroll;
 
