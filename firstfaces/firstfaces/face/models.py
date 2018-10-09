@@ -167,6 +167,15 @@ LIVED_CHOICES = (
     ('5', '10+ years'),
 )
 
+LEVEL_CHOICES = (
+    ('0', 'low beginner'),
+    ('1', 'high beginner'),
+    ('2', 'low intermediate'),
+    ('3', 'high intermediate'),
+    ('4', 'low advanced'),
+    ('5', 'high advanced'),
+)
+
 EDUCATION_CHOICES = [('0', 'no education'), ('1', 'finished primary/elementary school'), ('2', 'finished secondary/high school'), ('3', 'received vocational qualification'), ('4', 'current undergraduate student'), ('5', "received Bachelor's degree"), ('6', "received Master's degree"), ('7', 'received Doctorate or higher')]
 
 class Profile(models.Model):
@@ -176,6 +185,7 @@ class Profile(models.Model):
     born = models.CharField(max_length=10, choices=BORN_CHOICES, null=True, blank=False)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, null=True, blank=False)
     education = models.CharField(max_length=1, choices=EDUCATION_CHOICES, null=True, blank=False)
+    english_level = models.CharField(max_length=1, choices=LEVEL_CHOICES, null=True, blank=False)
     lived_in_english_speaking_country = models.CharField(max_length=1, choices=LIVED_CHOICES, null=True, blank=False)
     consent = models.BooleanField(default=True)
 

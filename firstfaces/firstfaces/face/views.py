@@ -80,8 +80,9 @@ def sign_up(request):
     born = request.GET['born']
     gender = request.GET['gender']
     education = request.GET['education']
+    english_level = request.GET['english_level']
     lived_in_english_speaking_country = request.GET['lived_in_english_speaking_country']
-    p = Profile(learner=request.user, nationality=nationality, language=language, born=born, gender=gender, education=education, lived_in_english_speaking_country=lived_in_english_speaking_country)   
+    p = Profile(learner=request.user, nationality=nationality, language=language, born=born, gender=gender, education=education, english_level=english_level, lived_in_english_speaking_country=lived_in_english_speaking_country)   
     p.save()
 
     response_data = {
