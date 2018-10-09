@@ -294,7 +294,7 @@ def get_scores( sess_id ):
     sess = Session.objects.get(pk=sess_id)
     sentences = Sentence.objects.filter(session=sess).order_by('pk')
 
-    save_to_perm_db( sentences )
+    # save_to_perm_db( sentences )
 
     no_sentences = len( sentences )
 

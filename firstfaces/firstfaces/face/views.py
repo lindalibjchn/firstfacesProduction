@@ -207,12 +207,14 @@ def class_time(request, session_id):
 
                 # get previous session topic
                 prev_topic = None
+                prev_score = None
                 try:
                     recent_sesss = Session.objects.filter(start_time__gte=sess.start_time-datetime.timedelta(days=14)).order_by('-pk')
                     if len(recent_sesss) > 1:
                         prev_topic = recent_sesss[1].topic
                         if prev_topic == 'emotion':
                             prev_topic = 'feeling ' + recent_sesss[1].learner_emotion
+                        prev_score = recent_sesss[1].score
                 except:
                     pass
 
@@ -296,6 +298,7 @@ def class_time(request, session_id):
                     'headline': headline,
                     'article_link': article_link,
                     'prev_topic': prev_topic,
+                    'prev_score': prev_score,
                     
                 }
 

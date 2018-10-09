@@ -201,7 +201,7 @@ function goToAskTopic( emotion ) {
 
         if ( classVariableDict['prev_topic'] !== null ) {
 
-            speechBubbleObject.sentence = " That's great! Last time you talked about '" + classVariableDict['prev_topic'] + "'. Would you like to continue with the same topic, or choose something different?";
+            speechBubbleObject.sentence = " That's great! Last time you talked about '" + classVariableDict['prev_topic'] + "' and your score was " + classVariableDict.prev_score.toString() + ". Would you like to continue with the same topic, or choose something different?";
 
         } else {
 
@@ -229,7 +229,7 @@ function goToAskTopic( emotion ) {
 
         if ( classVariableDict['prev_topic'] !== null ) {
 
-            speechBubbleObject.sentence = " I'm sorry to hear that! Last time you talked about '" + classVariableDict['prev_topic'] + "'. Would you like to continue with the same topic, or choose something different?";
+            speechBubbleObject.sentence = " I'm sorry to hear that! Last time you talked about '" + classVariableDict['prev_topic'] + "' and your score was " + classVariableDict.prev_score.toString() + ". Would you like to continue with the same topic, or choose something different?";
 
         } else {
 

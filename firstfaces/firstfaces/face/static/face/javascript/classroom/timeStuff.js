@@ -49,7 +49,32 @@ function endClass() {
         success: function(json) {
 
             classVariableDict.score = json.score
-            synthesisObject.text = "Well done today! your score is " + ( classVariableDict.score ).toString() + ". I hope to see you again soon!";
+
+            console.log('score:', classVariableDict.score)
+            console.log('prev_score:', classVariableDict.prev_score)
+            if ( classVariableDict.score > classVariableDict.prev_score ) {
+            
+                let improvement = classVariableDict.score - classVariableDict.prev_score;
+                
+                let praise = "";
+                if ( improvement >= 5 ) {
+
+                    praise = " You are improving a lot! ";
+
+                } else if ( improvement >= 10 ) {
+
+                    praise = " You have improved so much! ";
+                
+                }
+
+                synthesisObject.text = "Well done today! your score is " + ( classVariableDict.score ).toString() + ". That is better than last time by " + improvement.toString() + " points." + praise + ". I look forward to seeing you again soon!";
+            
+            } else {
+
+                synthesisObject.text = "Well done today! your score is " + ( classVariableDict.score ).toString() +  ". I look forward to seeing you again soon!";
+            
+            }
+
             // prepare speech 
             synthesisObject.pitch = 0;
             synthesisObject.speaking_rate = 0.85;
