@@ -311,13 +311,14 @@ def get_scores( sess_id ):
 
     ratio_correct = len(correct_sentences) / no_sentences
 
-    av_correct_sent_length = min(10, sum([len(c_s.sentence) for c_s in correct_sentences]) / no_correct_sentences)
+    av_correct_sent_length = sum([len(c_s.sentence.split()) for c_s in correct_sentences]) / no_correct_sentences
+    av_correct_sent_length = min(10, av_correct_sent_length)
 
     emotion_amounts = []
     for e_s in correct_sentences:
 
         emotion_list = json.loads(e_s.emotion)
-        emotion_amounts.append(math.sqrt(abs(emotion_list[0]) + abs(emotion_list[1])))
+        emotion_amounts.append(math.sqrt(emotion_list[0]**2 + emotion_list[1]**2))
 
     av_correct_emotion = sum(emotion_amounts) / no_correct_sentences
 
@@ -337,7 +338,7 @@ def get_scores( sess_id ):
         
         ratio_successful_try_again = successful_try_again_count / no_incorrect_sentences
 
-    raw_score = ratio_correct * av_correct_sent_length
+    raw_score = ratio_correct * av_correct_sent_length * 10;
     try_again_bonus = math.ceil(ratio_successful_try_again * 5)
     emotion_bonus = math.ceil(av_correct_emotion * 5)
 
