@@ -177,16 +177,12 @@ def waiting(request):
 @login_required
 def class_time(request, session_id):
 
-    print('request.class_time:', request.path)
-
     try:
 
         sess = Session.objects.get(id=session_id)
         
         if sess.end_time == None:
 
-            print("time_now:", sess.start_time)
-            print("time_now local:", timezone.localtime(sess.start_time))
             start_time = int(time.mktime((sess.start_time).timetuple()))
        
             if request.user == sess.learner:
@@ -209,13 +205,19 @@ def class_time(request, session_id):
                 # get previous session topic
                 prev_topic = None
                 prev_score = None
+                prev_emotion = None
+                first_ever_class = False
                 try:
-                    recent_sesss = Session.objects.filter(start_time__gte=sess.start_time-datetime.timedelta(days=14)).order_by('-pk')
+                    all_sesss = Session.objects.all()
+                    recent_sesss = all_sesss.filter(start_time__gte=sess.start_time-datetime.timedelta(days=14)).order_by('-pk')
                     if len(recent_sesss) > 1:
                         prev_topic = recent_sesss[1].topic
+                        prev_emotion = recent_sesss[1].learner_emotion
                         if prev_topic == 'emotion':
-                            prev_topic = 'feeling ' + recent_sesss[1].learner_emotion
+                            prev_topic = 'feeling ' + prev_emotion
                         prev_score = recent_sesss[1].score
+                    if len(all_sesss) == 1:
+                        first_ever_class = True
                 except:
                     pass
 
@@ -300,7 +302,9 @@ def class_time(request, session_id):
                     'article_link': article_link,
                     'prev_topic': prev_topic,
                     'prev_score': prev_score,
-                    
+                    'first_ever_class': first_ever_class,
+                    'prev_emotion': prev_emotion,
+
                 }
 
                 context = {
