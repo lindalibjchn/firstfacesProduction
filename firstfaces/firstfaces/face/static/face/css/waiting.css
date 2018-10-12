@@ -34,7 +34,7 @@
     height: 100%;
     background: rgba( 0, 0, 0, 0.3 );
     position: absolute;
-    display: none;
+    /*display: none;*/
     
 }
 
@@ -84,6 +84,15 @@
 #sentencesBook {
 
     display: none;
+
+}
+
+#scoresExplanationBtn {
+
+    position: absolute;
+    right: 10;
+    bottom: 30;
+    color: white !important;
 
 }
 
