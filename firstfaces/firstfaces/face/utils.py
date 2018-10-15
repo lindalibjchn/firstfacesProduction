@@ -58,7 +58,7 @@ days_nums = {
 def make_schedule_dict( availables ):
 
     # my teaching timetable starts at this time
-    zero_hour = 10
+    zero_hour = 8
 
     # 0, 1, 2... are Mon, Tue, Wed.. for x-axis
     # in list are y-axis top and bottom of block
@@ -294,7 +294,7 @@ def get_scores( sess_id ):
     sess = Session.objects.get(pk=sess_id)
     sentences = Sentence.objects.filter(session=sess).order_by('pk')
 
-    # save_to_perm_db( sentences )
+    save_to_perm_db( sentences )
 
     no_sentences = len( sentences )
 

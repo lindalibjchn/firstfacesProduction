@@ -15,12 +15,12 @@ $(window).on( 'load', function() {
     noSessions = Object.keys( sessions ).length;
 
     aud = document.getElementById('bells')
-    //aud.src = "http://127.0.0.1:8000/media/to-the-point.mp3";
-    aud.src = "https:erle.ucd.ie/media/to-the-point.mp3";
+    aud.src = "http://127.0.0.1:8000/media/to-the-point.mp3";
+    //aud.src = "https:erle.ucd.ie/media/to-the-point.mp3";
 
     aud1 = document.getElementById('thud')
-    //aud1.src = "http://127.0.0.1:8000/media/chimes-glassy.mp3";
-    aud1.src = "erle.ucd.ie/media/chimes-glassy.mp3";
+    aud1.src = "http://127.0.0.1:8000/media/chimes-glassy.mp3";
+    //aud1.src = "erle.ucd.ie/media/chimes-glassy.mp3";
 
     updateAll();
 
@@ -242,8 +242,8 @@ function updatePrevSentences() {
 
                         "<div class='prev-minutes w3-col w3-quarter'>" +
                         
-                            // mins since beginning
-                            Math.floor( ( timeNow - sessions[key].start_time ) / 60000 ).toString() +
+                            // mins since beginning - added the 60 mins(3600000) cuz was an hour off
+                            Math.floor( ( timeNow - sessions[key].start_time + 3600000 ) / 60000 ).toString() +
 
                         "</div>" + 
 

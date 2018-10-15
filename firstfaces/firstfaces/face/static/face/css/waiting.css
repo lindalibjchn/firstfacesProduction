@@ -34,7 +34,7 @@
     height: 100%;
     background: rgba( 0, 0, 0, 0.3 );
     position: absolute;
-    /*display: none;*/
+    display: none;
     
 }
 
@@ -87,12 +87,34 @@
 
 }
 
-#scoresExplanationBtn {
+#whatIsScoresBtn {
+
+    color: white;
+    background-color: blue;
+    font-size: 14px;
+    border-radius: 100%;
+    padding: 0px 4px 0px 4px;
+    position: relative;
+    top: -15px;
+
+}
+
+#whatIsScoresBtn:hover {
+
+    cursor: pointer;
+    background-color: blue;
+
+}
+
+#scoresExplanation {
 
     position: absolute;
-    right: 10;
-    bottom: 30;
-    color: white !important;
+    display: none;
+    padding: 20px;
+    border-radius: 15px;
+    border: 3px DodgerBlue solid;
+    background-color: white;
+    z-index: 200;
 
 }
 

@@ -28,7 +28,7 @@ const doorSignPosX = 2.0;
 const doorSignPosY = 1.6;
 const doorSignPosZ = 0.02;
 
-const schedYMult = 0.22;
+const schedYMult = 0.11;
 
 var sessionId;
 
@@ -60,10 +60,10 @@ var clickableObjects = {
 var scheduleObject = {
 
     timeBlock: {},
-    lenX: 2.77,
-    lenY: 1.64,
-    position: { x: -0.34, y: 3.93, z: 0.1 },
-    topLeftPos: { x: -1.1, y: 0.71, z: 0 },
+    lenX: 2.64,
+    lenY: 1.60,
+    position: { x: -0.34, y: 3.96, z: 0.1 },
+    topLeftPos: { x: -1.04, y: 0.73, z: 0 },
     blinkingBlock: {},
     blinkingBlockMat: new THREE.MeshBasicMaterial( { color: 0x53ef59 /*, transparent: true, opacity: 0.5 */} ),
     availableNow: false,

@@ -174,7 +174,7 @@ function init() {
 
         let timeBlockGeom = new THREE.PlaneGeometry( scheduleObject.lenX, scheduleObject.lenY );
         let timeBlockMat = new THREE.MeshBasicMaterial( { color: 0xffc4c4, transparent: true, opacity: 0.5 } );
-        let hourBlockGeom = new THREE.PlaneGeometry( scheduleObject.lenX / 5.2, scheduleObject.lenY / 7.3 );
+        let hourBlockGeom = new THREE.PlaneGeometry( scheduleObject.lenX / 5.2, scheduleObject.lenY / 14.0 );
         let hourBlockMat = new THREE.MeshBasicMaterial( { color: 0x519f3f, transparent: true, opacity: 0.8 } );
         let timeNowGeom = new THREE.PlaneGeometry( scheduleObject.lenX / 5.2, 0.02 );
         let timeNowMat = new THREE.MeshBasicMaterial( { color: 0x00427a, transparent: true, opacity: 0.8 } );

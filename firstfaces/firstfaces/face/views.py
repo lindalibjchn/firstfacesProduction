@@ -194,6 +194,7 @@ def class_time(request, session_id):
                 last_sent = {}
 
                 # get news article details
+                date_now = timezone.localtime(timezone.now()).date()
                 try:
                     todays_news_article = NewsArticle.objects.get(date=date_now)
                     headline = todays_news_article.title
@@ -208,7 +209,7 @@ def class_time(request, session_id):
                 prev_emotion = None
                 first_ever_class = False
                 try:
-                    all_sesss = Session.objects.all()
+                    all_sesss = Session.objects.filter(learner=request.user)
                     recent_sesss = all_sesss.filter(start_time__gte=sess.start_time-datetime.timedelta(days=14)).order_by('-pk')
                     if len(recent_sesss) > 1:
                         prev_topic = recent_sesss[1].topic

@@ -172,7 +172,7 @@ function signUpUser() {
 
                 } else {
 
-                    alert('Password must be at least 8 characters and not similar to your username.')
+                    alert('Password must be at least 8 characters, not too simple, and not similar to your username.')
 
                 }
 

@@ -15,6 +15,8 @@ $(window).on( 'load', function() {
     //$('.fa-angle-double-left').on( 'click', sessionLeft );
     //$('.fa-angle-double-right').on( 'click', sessionRight );
 
+    $('#whatIsScoresBtn').hover( showScoresExpl, hideScoresExpl );
+
 });
 
 function onMouseMove(event) {
@@ -269,6 +271,25 @@ function getSynth() {
     
 
 //}
+
+function showScoresExpl() {
+
+    $('#scoresExplanation').show();
+    console.log('show scores');
+
+}
+
+function hideScoresExpl() {
+
+    $('#scoresExplanation').hide()
+
+}
+
+
+
+
+
+
 
 
 

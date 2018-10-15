@@ -298,9 +298,8 @@ function putTimetableUp() {
 
         scheduleObject.timeNowLine.position.y = scheduleObject.topLeftPos.y + 0.11;
 
-    } else if ( scheduleNow[ 1 ] < 7 ) {
+    } else if ( scheduleNow[ 1 ] < 14 ) {
 
-        console.log('deq');
         scheduleObject.timeNowLine.position.y = scheduleObject.topLeftPos.y + schedYMult / 2 - schedYMult * scheduleNow[1];
 
     } else {
