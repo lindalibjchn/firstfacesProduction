@@ -5,24 +5,20 @@ $(window).on( 'load', function() {
     init();
 
     //get audio ready
-    readyAudioBtns();
+    readyBtns();
 
     //fill prevSents
     loadPrevSents( scrollBottom );
+    
+});
+
+function readyBtns() {
     
     $('#tryAgainBtn').on( 'click', tryAgain );
     $('#whatsWrongBtn').on( 'click', whatsWrong );
     $('#showCorrectionBtn').on( 'click', showCorrection );
     $('#nextSentenceBtn').on( 'click', nextSentence );
-
     $('#finishClassBtn').on( 'click', endClass );
-
-});
-
-var blob;
-
-function readyAudioBtns() {
-    
     $('#talkBtn').on( 'click', sendSentToServer );
 
     // check that the browser has speech recognition
@@ -43,10 +39,10 @@ function readyAudioBtns() {
 
     var record = document.getElementById( 'recordVoiceBtn' );
     var stop = document.getElementById( 'stopRecordVoiceBtn' );
+    var aud = document.getElementById('soundClip')
 
     $('#listenVoiceBtn').on( 'click', function() {
 
-        let aud = document.getElementById('soundClip')
         aud.play();
 
     });
@@ -86,13 +82,13 @@ function readyAudioBtns() {
                 record.onclick = function() {
 
                     mediaRecorder.start();
-                    console.log( mediaRecorder.state );
-                    console.log( "recorder started" );
-
+                    //console.log( mediaRecorder.state );
+                    //console.log( "recorder started" );
 
                     // this is the live stuff
                     sentence = "";
 
+                    // hide the microphone button
                     $(this).hide();
                     $('#stopRecordVoiceBtn').show();
                     recognition.start();
@@ -117,6 +113,7 @@ function readyAudioBtns() {
                     $(this).hide();
                     recognition.stop();
 
+
                     setTimeout( function(){
 
                         $('#textInput').val( synthesisObject.textFromSpeech );
@@ -127,23 +124,23 @@ function readyAudioBtns() {
                         $('.play-btn').prop( "disabled", false);
                         $('#talkBtn').prop( "disabled", false);
 
-                        sendBlobToServer( blob );
-                    
                     }, 1000);
 
                 }
 
                 mediaRecorder.onstop = function( e ) {
 
-                    blob = new Blob(chunks, { type : 'audio/ogg; codecs: opus' });
+                    classVariableDict.blob = new Blob(chunks, { type : 'audio/ogg; codecs: opus' });
 
-                    console.log( 'blob size:', blob.size );
-                    console.log( 'blob type:', blob.type );
+                    // create audiourl for easy replay
+                    var audioURL = window.URL.createObjectURL(classVariableDict.blob);
+                    aud.src = audioURL;
+
+                    // send blob to server to be stored
+                    sendBlobToServer( classVariableDict.blob );
+                    
+                    // reset chunks
                     chunks = [];
-                    var audioURL = window.URL.createObjectURL(blob);
-
-                    var audio = document.getElementById( 'soundClip' );
-                    audio.src = audioURL;
 
                 }
 

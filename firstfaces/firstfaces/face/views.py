@@ -179,21 +179,19 @@ def class_time(request, session_id):
 
     try:
 
+        # when entering a class, must check that a session exists at that url e.g. 'class_time/234'. If a DoesNot
         sess = Session.objects.get(id=session_id)
         
+        # if session is ended, return to waiting
         if sess.end_time == None:
 
+            # changes the datetime objct into unix time
             start_time = int(time.mktime((sess.start_time).timetuple()))
        
+            # check that the user is the one whose session it is. If not, return to waiting.
             if request.user == sess.learner:
 
-                #check if learner entered a topic. If so then it is not first entry
-                first_enter = True 
-                sentences = {}
-                id_of_last_sent = None;
-                last_sent = {}
-
-                # get news article details
+                # get news article details. This will set the 'headline' and 'article_link' variables
                 date_now = timezone.localtime(timezone.now()).date()
                 try:
                     todays_news_article = NewsArticle.objects.get(date=date_now)
@@ -203,7 +201,7 @@ def class_time(request, session_id):
                     headline = "no article today"
                     article_link = "#"
 
-                # get previous session topic
+                # get previous session details
                 prev_topic = None
                 prev_score = None
                 prev_emotion = None
@@ -225,16 +223,20 @@ def class_time(request, session_id):
                 blob_no_text = False
                 blob_no_text_sent_id = None
 
-                #check to see if there is a topic i.e. not their first enter
+                #check if learner entered a topic. If so then it is not first entry
+                first_enter = True 
+                sentences = {}
+                id_of_last_sent = None
+                last_sent = {}
                 if sess.topic != None:
                     
                     first_enter = False
-
                     this_sess_sents = Sentence.objects.filter(session=sess).order_by('pk')
 
                     #check that there are entries in the queryset i.e. not empty
                     if this_sess_sents:
 
+                        #this is to be the index of the sentence
                         id_of_last_sent = this_sess_sents.count() - 1
 
                         for i, s in enumerate(this_sess_sents):
@@ -281,9 +283,9 @@ def class_time(request, session_id):
 
                         last_sent = sentences[id_of_last_sent]
 
+                # check if class is over
                 class_over = False
                 if sess.end_time != None:
-                    print('sess.end_time and so class_over is true:', sess.end_time)
                     class_over = True
 
                 class_variable_dict = {
@@ -311,7 +313,7 @@ def class_time(request, session_id):
                 context = {
 
                     'class_variable_dict': json.dumps(class_variable_dict), 
-                    'class': True
+                    'class': True # for the navbar to know we are in class
 
                 }
 
@@ -319,20 +321,19 @@ def class_time(request, session_id):
             
             else:
             
-                logger.error('\n\nerror from inside if in class_time')
-        
+                # user is not the owner of the class
+                logger.error('\n\nerror from inside if in class_time: user is not owner of class')
                 return redirect('waiting')
         
         else:
 
-            # class is over
+            # session has already ended
             return redirect('waiting')
 
-    except BaseException as e:
-        
-        print('exception:', e)
+    # if the session doesn't exist from the url the following exception handles it by returning the user to the waiting area:
+    except Session.DoesNotExist as e:
 
-        logger.error('\n\nerror from try except in class_time:', e + '\n')
+        logger.error('\n\nerror from try except in class_time:' + str(e) + '\n')
         
         return redirect('waiting')
     
