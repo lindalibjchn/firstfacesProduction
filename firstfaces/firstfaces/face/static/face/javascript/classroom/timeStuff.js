@@ -1,15 +1,13 @@
 function calcTimeRemaining() {
 
     let timeNow = new Date();
-    console.log('timeNow:', timeNow)
     let timePassed = timeNow - classVariableDict.start_time;
-    console.log('timePassed:', timePassed)
     let timePassedMinutes = Math.ceil( -60 + timePassed / 60000  );
 
     // this classTimeMinutes is defined in variables
     let timeRemainingMinutes = classTimeMinutes - timePassedMinutes;
 
-    return timeRemainingMinutes
+    return timeRemainingMinutes + 10000
 
 }
 
@@ -17,7 +15,6 @@ function calcTimeRemaining() {
 function showTimeRemaining() {
 
     let timeRemainingMinutes = calcTimeRemaining();
-    console.log('timeRemainingMinutes:', timeRemainingMinutes);
 
     if ( timeRemainingMinutes > 0 ) {
 
@@ -40,7 +37,6 @@ function showTimeRemaining() {
 
 function endClass() {
 
-    console.log('in endClass()');
     let sessId = classVariableDict.session_id;
     $.ajax({
         url: "/store_class_over",
@@ -50,8 +46,6 @@ function endClass() {
 
             classVariableDict.score = json.score
 
-            console.log('score:', classVariableDict.score)
-            console.log('prev_score:', classVariableDict.prev_score)
             if ( classVariableDict.score > classVariableDict.prev_score ) {
             
                 let improvement = classVariableDict.score - classVariableDict.prev_score;
@@ -127,7 +121,7 @@ function endClass() {
 function goodbyeTalk() {
 
     // actually delay to return to laptop
-    synthesisObject.delayToThinkAndTurn = 4000 + synthesisObject.text.length * 70;
+    synthesisObject.delayToGoodbye = 4000 + synthesisObject.text.length * 70;
 
     // return to talking pos
     expressionController( calculatedTalkExpression, '1', false );
@@ -141,7 +135,6 @@ function goodbyeTalk() {
         goodbyeSpeak();
         displaySpeechBubble();
         classVariableDict.promptSpeaking = true;
-        synthesisObject.realSpeak = true;
         
     }, 1500);
 
@@ -159,11 +152,10 @@ function goodbyeSpeak() {
             
             location.reload( true );
             
-        }, synthesisObject.delayToThinkAndTurn )
+        }, synthesisObject.delayToGoodbye )
 
     } else {
 
-        console.log('waiting for speech synthesis to return audio')
         setTimeout( goodbyeSpeak, 1000 );
 
     }
@@ -187,8 +179,6 @@ function calculateQuestionStreak() {
 
         }
 
-        console.log('lastSentId:', lastSentId);
-        console.log('n:', n);
 
         if ( classVariableDict.sentences[ lastSentId - n ].judgement === "C" || classVariableDict.sentences[ lastSentId - n ].judgement === "B" ) {
 

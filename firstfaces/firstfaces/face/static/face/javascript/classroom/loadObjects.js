@@ -434,7 +434,7 @@ function init( skeleton=false ) {
                 
                     setTimeout( function() {
                         
-                        initInputReady();
+                        initInputReady('');
                         normalBlinkObject.bool = true;
 
                     }, 1000)

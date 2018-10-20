@@ -25,12 +25,12 @@ function initInputReady( boxVal ) {
 
 function talkToTia() {
 
+    // stop blinking
     normalBlinkObject.bool = false;
-    // check that final text bax has been changed or not from recording
+    // check that final text box has been changed or not from recording
     let finalTextInBox = $('#textInput').val();
-    synthesisObject.realSpeak = true;
 
-    synthesisObject.delayToThinkAndTurn = 1000 + finalTextInBox.length * 75;
+    synthesisObject.delayToThinkAndTurn = 1500 + finalTextInBox.length * 70;
     
     //no change from audio
     if ( finalTextInBox === synthesisObject.textFromSpeech ) {
@@ -85,6 +85,7 @@ function tiaLeanToListen() {
     initMove( leanObject, leanObject.coords.close, '1.5' );
     expressionController( expressionsAbs.listening, '0.5', false ) 
     
+    synthesisObject.waitingForSynthCount = 0;
     setTimeout( speakWords, 2000 );
 
 }
@@ -95,14 +96,27 @@ function speakWords() {
 
     if ( synthesisObject.gotNewSpeech || synthesisObject.originalVoice ) {
         
+        synthesisObject.waitingForSynthCount = 0;
         synthesisObject.synthAudio.play();
         synthesisObject.gotNewSpeech = false
         setTimeout( tiaThinkAboutSentence, synthesisObject.delayToThinkAndTurn );
 
     } else {
 
-        console.log('waiting for speech synthesis to return audio')
-        setTimeout( speakWords, 1000 );
+        console.log('waiting for speech synthesis to return audio: ' + synthesisObject.waitingForSynthCount.toString())
+        synthesisObject.waitingForSynthCount += 1;
+        
+        if ( synthesisObject.waitingForSynthCount > 6 ) {
+
+            synthesisObject.waitingForSynthCount = 0;
+            synthesisObject.gotNewSpeech = false
+            tiaThinkAboutSentence();
+
+        } else {
+
+            setTimeout( speakWords, 1000 );
+
+        }
 
     }
 

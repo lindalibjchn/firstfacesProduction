@@ -1139,7 +1139,6 @@ var talkObject = {
 var synthesisObject = {
     textFromSpeech: "",
     text: "",
-    realSpeak: true,
     pitch: 0,
     speaking_rate: 0.85,
 }

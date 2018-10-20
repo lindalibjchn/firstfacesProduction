@@ -1,10 +1,10 @@
 function runAfterJudgement() {
 
     // logic for different types of judgement
-
-    // not practise listening buttons
-    synthesisObject.realSpeak = true;
     
+    // in return to laptop, movement will only be needed if tia not looking straight at student
+    classVariableDict.tiaLookingAtStudent = true;
+
     if ( classVariableDict.last_sent.judgement === "C" ) {
 
         //this delay is for nod and shake changing speed
@@ -17,8 +17,6 @@ function runAfterJudgement() {
 
                 setTimeout( function() {
 
-                    console.log('in nod return');
-                
                     returnToLaptop( '' )
 
                 }, delay );
@@ -27,8 +25,6 @@ function runAfterJudgement() {
 
                 setTimeout( function() {
 
-                    console.log('in no nod return');
-                
                     returnToLaptop( '' )
 
                 }, 3000);
@@ -273,10 +269,7 @@ function nodOrShakeHead() {
 function displaySpeechBubblePrompt() {
 
     // actually delay to return to laptop
-    console.log('speaking_rate:', synthesisObject.speaking_rate);
-    console.log('text.length:', synthesisObject.text.length);
-    synthesisObject.delayToThinkAndTurn = synthesisObject.text.length * 120 * synthesisObject.speaking_rate;
-    console.log('delayToThinkAndTurn:', synthesisObject.delayToThinkAndTurn);
+    synthesisObject.delayToReturnToLaptop = 3000 + synthesisObject.text.length * 60 * ( 1 / synthesisObject.speaking_rate );
 
     // return to talking pos
     expressionController( calculatedTalkExpression, '1', false );
@@ -289,7 +282,6 @@ function displaySpeechBubblePrompt() {
         
         displaySpeechBubble();
         classVariableDict.promptSpeaking = true;
-        synthesisObject.realSpeak = true;
         speakSpeechBubble();
         
     }, 1500);
@@ -303,7 +295,7 @@ function speakSpeechBubble() {
         synthesisObject.synthAudio.play();
         synthesisObject.gotNewSpeech = false
         initTalk();
-        setTimeout( returnToLaptop, synthesisObject.delayToThinkAndTurn )
+        setTimeout( returnToLaptop, synthesisObject.delayToReturnToLaptop )
 
     } else {
 
@@ -318,7 +310,7 @@ function returnToLaptop( sent ) {
 
     normalBlinkObject.bool = false;
 
-    if ( blinkNowObject === true ) {
+    if ( blinkNowObject.bool ) {
 
         setTimeout( function() {
 
@@ -335,14 +327,16 @@ function returnToLaptop( sent ) {
 
             setTimeout( function() {
 
-                whenAllMovFinished( function() { 
-         
-                    movementController( movements.student, '2', '1.5' );
-                
-                })
+                if ( classVariableDict.tiaLookingAtStudent === false ) {
 
-                removeSpeechBubble();
-                        
+                    whenAllMovFinished( function() { 
+             
+                        movementController( movements.student, '2', '1.5' );
+                    
+                    })
+
+                }
+
                 if ( classVariableDict.classOver === false ) {
 
                     initInputReady( sent )
@@ -354,23 +348,29 @@ function returnToLaptop( sent ) {
                     
                     whenAllMovFinished( function() { 
          
-                        expressionController( expressionsAbs.neutral, '1', eyelids=false );
+                        expressionController( expressionsAbs.neutral, '2', eyelids=false );
                     
                     })
 
                     setTimeout( function() {
 
-                        if ( classVariableDict.classOver ) {
+                        removeSpeechBubble();
+                        
+                        setTimeout( function() {
 
-                            //endClass();
+                            if ( classVariableDict.classOver ) {
 
-                        } else {
+                                endClass();
 
-                            normalBlinkObject.bool = true;
-                
-                        }
+                            } else {
 
-                    }, 2500 );
+                                normalBlinkObject.bool = true;
+                    
+                            }
+
+                        }, 2500 )
+
+                    }, 1000 );
 
                 }, 1500 );
 
@@ -422,6 +422,7 @@ function tryAgain() {
     
         let sent = classVariableDict.sentences[ classVariableDict.id_of_last_sent ].sentence;
 
+        classVariableDict.tiaLookingAtStudent = false;
         returnToLaptop( sent );
 
         $('#prevSents').fadeTo( 500, 1 );
@@ -548,6 +549,7 @@ function nextSentence() {
 
         }
 
+        classVariableDict.tiaLookingAtStudent = false;
         returnToLaptop( '' );
 
         let sentId = classVariableDict.last_sent.sent_id

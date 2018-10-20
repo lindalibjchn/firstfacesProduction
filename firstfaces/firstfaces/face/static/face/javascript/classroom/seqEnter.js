@@ -8,8 +8,6 @@ function initMainEnter() {
     //$('#topicChoiceInput').focus();
     //$('#submitOwnTopicBtn').on( 'click', getOwnTopicFromTextbox );
     
-    // not practise buttons for listening
-    synthesisObject.realSpeak = true;
 
     mainEnterObject.bool = true;
 
@@ -96,7 +94,6 @@ function mainEnter() {
 
         displaySpeechBubble();
         classVariableDict.promptSpeaking = true;
-        synthesisObject.realSpeak = true;
         speakOpening();
         
     }
