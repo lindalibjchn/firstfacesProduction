@@ -16,9 +16,19 @@ function sendTTS( text, tiaSpeaker, caller ) {
             'tiaSpeaker': tiaSpeaker,
             'pitch': synthesisObject.pitch,
             'speaking_rate': synthesisObject.speaking_rate,
-            'sessionID': classVariableDict.session_id
+            'sessionID': classVariableDict.session_id,
+            'caller': caller,
+            'blob_no_text': classVariableDict.blob_no_text,
+            'blob_no_text_sent_id': classVariableDict.blob_no_text_sent_id,
         },
         success: function(json) {
+
+            if ( json.caller === "listen" ) {
+
+                classVariableDict.blob_no_text = true;
+                classVariableDict.blob_no_text_sent_id = json.sent_id;
+
+            }
 
             //var synthAudioURL = "https://erle.ucd.ie/" + json.synthURL;
             var synthAudioURL = "http://127.0.0.1:8000/" + json.synthURL;

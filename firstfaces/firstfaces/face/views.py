@@ -8,7 +8,7 @@ from django.http import JsonResponse
 from .utils import *
 from django.utils import timezone
 import json
-from .models import Session, Sentence, AudioFile, Profile, NewsArticle
+from .models import Session, Sentence, AudioFile, Profile, NewsArticle, PronunciationRequest
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 import code
@@ -460,11 +460,9 @@ def tts(request):
     session_id = request.GET['sessionID']
     pitch_designated = float(request.GET['pitch'])
     speaking_rate_designated = float(request.GET['speaking_rate'])
-
-    print('text:', text)
-    print('pitch_designated:', pitch_designated)
-    print('text:', text)
-    print('speaking_rate_designated:', speaking_rate_designated)
+    caller = request.GET['caller']
+    blob_no_text = json.loads(request.GET['blob_no_text'])
+    blob_no_text_sent_id = request.GET['blob_no_text_sent_id']
 
     if tia_speaker:
 
@@ -480,6 +478,22 @@ def tts(request):
         else:
 
             speaking_voice = 'en-GB-Wavenet-A'
+
+    # if the request is from the students text to listen to pronunciation, need to save it in the PronunciationRequest model
+    sent_id = None
+    if caller == "listen":
+        
+        # if a blob exists with no text, then sentence id will already exist
+        if blob_no_text:
+            s = Sentence.objects.get(pk=int(blob_no_text_sent_id))
+        else:
+            sess = Session.objects.get(pk=int(session_id))
+            s = Sentence(learner=request.user, session=sess)
+            s.save()
+
+        p = PronunciationRequest(sentence=s, text_to_speech=text)
+        p.save()
+        sent_id = s.id
 
 
     client = texttospeech.TextToSpeechClient()
@@ -505,9 +519,13 @@ def tts(request):
     with open( os.path.join(settings.BASE_DIR, synthURL ), 'wb') as out:
         out.write(response.audio_content)
     
+    # if they are listening to something they typed, want to keep note of it. If they listen and try to speak again, then the change in pronunciation could be useful for pronunciation training
+
     response_data = {
 
         'synthURL': synthURL,
+        'sent_id': sent_id,
+        'caller': caller
 
     }
 

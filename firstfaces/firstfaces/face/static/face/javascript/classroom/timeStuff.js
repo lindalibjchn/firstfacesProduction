@@ -72,7 +72,7 @@ function endClass() {
             // prepare speech 
             synthesisObject.pitch = 0;
             synthesisObject.speaking_rate = 0.85;
-            sendTTS( synthesisObject.text, true );
+            sendTTS( synthesisObject.text, true, "talk" );
             speechBubbleObject.sentence = " " + synthesisObject.text;
         
         },
@@ -173,7 +173,7 @@ function calculateQuestionStreak() {
 
         //skip the sentence waiting for judgement    
         let n = 0;
-        if ( classVariableDict.sentences[ lastSentId ].judgement === null ) {
+        if ( classVariableDict.sentences[ lastSentId ].judgement === null && Object.keys( classVariableDict.sentences ).length !== 1) {
 
             n = 1;
 

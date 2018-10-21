@@ -122,12 +122,23 @@ class AudioFile(models.Model):
     sentence = models.ForeignKey(Sentence, on_delete=models.CASCADE)
     speech_to_text = models.CharField(max_length=300, blank=True, null=True)
     audio = models.FileField(upload_to="")
+    created_at = models.DateTimeField(auto_now_add=True)
 
 class PermAudioFile(models.Model):
     sentence = models.ForeignKey(PermSentence, on_delete=models.CASCADE)
     speech_to_text = models.CharField(max_length=300, blank=True, null=True)
     audio = models.FileField(upload_to="")
+    created_at = models.DateTimeField(auto_now_add=True)
 
+class PronunciationRequest(models.Model):
+    sentence = models.ForeignKey(Sentence, on_delete=models.CASCADE)
+    text_to_speech = models.CharField(max_length=300, blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+class PermPronunciationRequest(models.Model):
+    sentence = models.ForeignKey(PermSentence, on_delete=models.CASCADE)
+    text_to_speech = models.CharField(max_length=300, blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
 with open( settings.BASE_DIR + '/face/text_files/countries.txt', 'r') as f:
     

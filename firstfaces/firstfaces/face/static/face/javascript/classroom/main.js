@@ -18,8 +18,19 @@ function readyBtns() {
     $('#whatsWrongBtn').on( 'click', whatsWrong );
     $('#showCorrectionBtn').on( 'click', showCorrection );
     $('#nextSentenceBtn').on( 'click', nextSentence );
-    $('#finishClassBtn').on( 'click', endClass );
     $('#talkBtn').on( 'click', sendSentToServer );
+
+    $('#finishClassBtn').on( 'click', function() {
+        
+        if ( classVariableDict.awaitingJudgement ) {
+        
+        } else {
+
+            endClass();
+            
+        }
+
+    });
 
     // check that the browser has speech recognition
     try {
@@ -136,9 +147,6 @@ function readyBtns() {
                     var audioURL = window.URL.createObjectURL(classVariableDict.blob);
                     aud.src = audioURL;
 
-                    // send blob to server to be stored
-                    sendBlobToServer( classVariableDict.blob );
-                    
                     // reset chunks
                     chunks = [];
 
@@ -159,6 +167,8 @@ function readyBtns() {
             sentence += transcript + " ";
             synthesisObject.textFromSpeech = sentence.slice(0,sentence.length -1);
 
+            // send blob to server to be stored
+            sendBlobToServer( classVariableDict.blob );
 
         }
 

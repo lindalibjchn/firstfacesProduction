@@ -34,7 +34,7 @@ function runAfterJudgement() {
         } else {
 
             synthesisObject.text = classVariableDict.last_sent.prompt;
-            sendTTS( classVariableDict.last_sent.prompt, true );
+            sendTTS( classVariableDict.last_sent.prompt, true, "talk" );
 
             speechBubbleObject.sentence = " " + classVariableDict.last_sent.prompt;
 
@@ -93,7 +93,7 @@ function runAfterJudgement() {
         if ( classVariableDict.last_sent.judgement === "B" ) {
 
             text = " " + createBetterTextForPromptBox( classVariableDict.last_sent );
-            sendTTS( text, true );
+            sendTTS( text, true, "talk");
             
             whenAllMovFinished( function() { 
          
@@ -109,7 +109,7 @@ function runAfterJudgement() {
             text = " " + createMeanByTextForPromptBox( classVariableDict.last_sent );
             synthesisObject.speaking_rate = 0.8;
             synthesisObject.pitch = -2;
-            sendTTS( text, true );
+            sendTTS( text, true, "talk");
         
             let singleCalculatedExpressions = createSingleExpression( expressionsRel.confused, 1 )
             calculatedExpression = getAbsoluteCoordsOfExpressionTo( singleCalculatedExpressions[ 0 ] )
@@ -128,7 +128,7 @@ function runAfterJudgement() {
             text = " There are more than 3 mistakes in your sentence. Could you simplify and try again?";
             synthesisObject.speaking_rate = 0.8;
             synthesisObject.pitch = -2;
-            sendTTS( text, true );
+            sendTTS( text, true, "talk");
             
             let singleCalculatedExpressions = createSingleExpression( expressionsRel.confused, 1 )
             calculatedExpression = getAbsoluteCoordsOfExpressionTo( singleCalculatedExpressions[ 0 ] )
@@ -148,7 +148,7 @@ function runAfterJudgement() {
             synthesisObject.speaking_rate = 0.8;
             console.log('speaking_rate:', synthesisObject.speaking_rate);
             synthesisObject.pitch = -2;
-            sendTTS( text, true );
+            sendTTS( text, true, "talk" );
             
             let singleCalculatedExpressions = createSingleExpression( expressionsRel.confused, 1 )
             calculatedExpression = getAbsoluteCoordsOfExpressionTo( singleCalculatedExpressions[ 0 ] )
