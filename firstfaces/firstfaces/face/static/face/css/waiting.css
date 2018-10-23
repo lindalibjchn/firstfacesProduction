@@ -30,6 +30,7 @@
 
 #bookContentBackground {
 
+    top:20px;
     width: 100%;
     height: 100%;
     background: rgba( 0, 0, 0, 0.3 );
@@ -40,8 +41,8 @@
 
 #bookContentPage {
 
-    width: 75%;
-    height: 75%;
+    width: 85%;
+    height: 90%;
     background: rgba( 256, 256, 256, 1 );
     position: absolute;
     left: 0;
@@ -54,8 +55,8 @@
 
 #bookContentPageInner {
 
-    width: 85%;
-    height: 85%;
+    width: 90%;
+    height: 90%;
     background: rgba( 224, 236, 255, 1 );
     border-radius: 10px;
     position: absolute;
@@ -124,7 +125,7 @@
 
 #chartOuterDiv {
 
-    width: 50%;
+    width: 35%;
     position: relative;
     left: 0;
     right: 0;
@@ -139,9 +140,10 @@
 
 #sentencesInnerMain {
 
-    height: 50%;
+    height: 65%;
     width: 100%;
     overflow-y: scroll;
+    padding-bottom: 30px;
 
 }
 
