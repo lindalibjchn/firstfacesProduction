@@ -40,10 +40,8 @@
 
 #bookContentPage {
 
-    width: 80%;
-    min-width: 800px;
-    min-height: 600px;
-    height: 80%;
+    width: 75%;
+    height: 75%;
     background: rgba( 256, 256, 256, 1 );
     position: absolute;
     left: 0;
@@ -56,24 +54,24 @@
 
 #bookContentPageInner {
 
-    width: 90%;
-    min-width: 720px;
-    min-height: 540px;
-    height: 90%;
+    width: 85%;
+    height: 85%;
     background: rgba( 224, 236, 255, 1 );
-    border-radius: 20px;
+    border-radius: 10px;
     position: absolute;
     left: 0;
     right: 0;
     top: 0;
     bottom: 0;
     margin: auto;
+    overflow-y: hidden;
 
 }
 
 .book-title {
 
     text-align: center;
+    font-size: 2vw;
 
 }
 

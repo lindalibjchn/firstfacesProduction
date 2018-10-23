@@ -224,6 +224,9 @@ function getSynth() {
             'sessionID': sess_id,
             'pitch': 0,
             'speaking_rate': 0.85,
+            'caller': 'talk',
+            'blob_no_text': false,
+            'blob_no_text_sent_id': null,
         },
         success: function(json) {
 

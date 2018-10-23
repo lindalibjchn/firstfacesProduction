@@ -16,11 +16,11 @@ $(window).on( 'load', function() {
 
     aud = document.getElementById('bells')
     aud.src = "http://127.0.0.1:8000/media/to-the-point.mp3";
-    //aud.src = "https:erle.ucd.ie/media/to-the-point.mp3";
+    //aud.src = "media/to-the-point.mp3";
 
-    aud1 = document.getElementById('thud')
+    //aud1 = document.getElementById('thud')
     aud1.src = "http://127.0.0.1:8000/media/chimes-glassy.mp3";
-    //aud1.src = "erle.ucd.ie/media/chimes-glassy.mp3";
+    aud1.src = "media/chimes-glassy.mp3";
 
     updateAll();
 
@@ -123,7 +123,7 @@ function updateSentenceObjects() {
                             let timeSinceJudgement = timeNow - jud_t;
 
                             // change this to 60000 for production, for testing to keep all sents in maybe state its bigger
-                            if ( timeSinceJudgement < 600000000000 ) {
+                            if ( timeSinceJudgement < 60000000000 ) {
 
                                 // don't need it if try again or next sentence has been pressed
                                 if ( sessions[ key ].sentences[ sent ].try_again === true || sessions[ key ].sentences[ sent ].next_sentence === true) {
@@ -243,7 +243,7 @@ function updatePrevSentences() {
                         "<div class='prev-minutes w3-col w3-quarter'>" +
                         
                             // mins since beginning - added the 60 mins(3600000) cuz was an hour off
-                            Math.floor( ( timeNow - sessions[key].start_time + 3600000 ) / 60000 ).toString() +
+                            Math.floor( ( timeNow - sessions[key].start_time ) / 60000 ).toString() +
 
                         "</div>" + 
 

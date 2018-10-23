@@ -90,11 +90,13 @@ function readyBtns() {
      
                 var mediaRecorder = new MediaRecorder(stream);
 
-                record.onclick = function() {
+                function onRecord() {
 
                     mediaRecorder.start();
-                    //console.log( mediaRecorder.state );
-                    //console.log( "recorder started" );
+
+                    // will check that the user has clicked the stop button by timing them and using this boolean
+                    classVariableDict.recording = true;
+                    setTimeout( checkIfClickedStop, 15000 );
 
                     // this is the live stuff
                     sentence = "";
@@ -107,6 +109,23 @@ function readyBtns() {
 
                 }
 
+                // this function checks that the user clicked stop after speaking one sentence. If not, it automatically finishes.
+                function checkIfClickedStop() {
+
+                    // double check the boolean is true
+                    if ( classVariableDict.recording ) {
+
+                        onStopClick();
+
+                        alert('You have 15 seconds to say each sentence. If it is a very long sentence, try breaking it up into smaller sentences.')
+
+                    }
+
+                }
+
+
+                record.onclick = onRecord;
+
                 var chunks = [];
 
                 mediaRecorder.ondataavailable = function( e ) {
@@ -115,32 +134,25 @@ function readyBtns() {
 
                 }
 
-                stop.onclick = function() {
+                // put this in a function so that I can call it later if the user doesn't click stop after X seconds.
+                function onStopClick() {
 
                     mediaRecorder.stop();
                     console.log( mediaRecorder.state );
                     console.log( "recorder stopped" );
 
-                    $(this).hide();
+                    classVariableDict.recording = false;
+
+                    $('#stopRecordVoiceBtn').hide();
                     recognition.stop();
-
-
-                    setTimeout( function(){
-
-                        $('#textInput').val( synthesisObject.textFromSpeech );
-                        $('#textInput').focus();
-
-                        //show play buttons below
-                        $('#recordVoiceBtn').show();
-                        $('.play-btn').prop( "disabled", false);
-                        $('#talkBtn').prop( "disabled", false);
-
-                    }, 1000);
 
                 }
 
-                mediaRecorder.onstop = function( e ) {
+                stop.onclick = onStopClick;
+                    
+                function onMediaRecorderStop() {
 
+                    $('#talkBtn').prop( "disabled", true )
                     classVariableDict.blob = new Blob(chunks, { type : 'audio/ogg; codecs: opus' });
 
                     // create audiourl for easy replay
@@ -150,8 +162,17 @@ function readyBtns() {
                     // reset chunks
                     chunks = [];
 
+                    // send blob to server to be stored, but wait a bit to make sure it has come through
+                    setTimeout( function() {
+                        
+                        sendBlobToServer( classVariableDict.blob );
+
+                    }, 1000);
+
                 }
 
+                mediaRecorder.onstop = onMediaRecorderStop;
+                    
             })
 
             // Error callback
@@ -166,9 +187,6 @@ function readyBtns() {
             var transcript = event.results[current][0].transcript;
             sentence += transcript + " ";
             synthesisObject.textFromSpeech = sentence.slice(0,sentence.length -1);
-
-            // send blob to server to be stored
-            sendBlobToServer( classVariableDict.blob );
 
         }
 

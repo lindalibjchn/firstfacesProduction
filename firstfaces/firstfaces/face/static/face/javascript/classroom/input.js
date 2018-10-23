@@ -30,7 +30,7 @@ function talkToTia() {
     // check that final text box has been changed or not from recording
     let finalTextInBox = $('#textInput').val();
 
-    synthesisObject.delayToThinkAndTurn = 1500 + finalTextInBox.length * 70;
+    synthesisObject.delayToThinkAndTurn = 1500 + finalTextInBox.length * 65;
     
     //no change from audio
     if ( finalTextInBox === synthesisObject.textFromSpeech ) {
@@ -41,19 +41,11 @@ function talkToTia() {
     } else {
 
         synthesisObject.originalVoice = false;
-        // learner has laready heard it through the listen button
-        if ( synthesisObject.text === finalTextInBox ) {
-
-            console.log('no need to create new one');
-
-        } else {
-
-            synthesisObject.pitch = 0;
-            synthesisObject.speaking_rate = 0.85;
-            synthesisObject.text = finalTextInBox;
-            sendTTS( finalTextInBox, false, "talk" ); 
-
-        }
+        
+        synthesisObject.pitch = 0;
+        synthesisObject.speaking_rate = 0.85;
+        synthesisObject.text = finalTextInBox;
+        sendTTS( finalTextInBox, false, "talk" ); 
 
     }
 
@@ -147,7 +139,16 @@ function tiaThinkAboutSentence() {
 
             initSelectBlink( '0.1', 0.05 );
 
-            setTimeout( goToThinkOrChangeExp, 3000 );
+            setTimeout( function() {
+
+                whenAllMovFinished( function() { 
+     
+                    expressionController( expressionsAbs.neutral, '1', eyelids=false );
+                    setTimeout( goToThinkOrChangeExp, 2000 );
+                
+                })
+
+            }, 1000)
 
         }, 1000 );
 
@@ -181,7 +182,7 @@ function setThinkingFace() {
 
         whenAllMovFinished( firstCheckAfterThinking );
 
-    }, 2250)
+    }, 2500)
 
 }
 
@@ -208,7 +209,7 @@ function firstCheckAfterThinking() {
 
         tiaThinkingObject.thinking = true;
         //normalBlinkObject.bool = true;
-        setTimeout( thinkingEyes );
+        setTimeout( thinkingEyes, 1000 );
 
     }
 

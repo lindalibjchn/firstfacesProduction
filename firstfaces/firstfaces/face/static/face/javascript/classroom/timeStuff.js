@@ -2,12 +2,13 @@ function calcTimeRemaining() {
 
     let timeNow = new Date();
     let timePassed = timeNow - classVariableDict.start_time;
-    let timePassedMinutes = Math.ceil( -60 + timePassed / 60000  );
+    let timePassedMinutes = Math.ceil( -60 + timePassed / 60000  );	
+    console.log('time passed minutes:', timePassedMinutes);
 
     // this classTimeMinutes is defined in variables
     let timeRemainingMinutes = classTimeMinutes - timePassedMinutes;
 
-    return timeRemainingMinutes + 10000
+    return timeRemainingMinutes
 
 }
 
@@ -46,28 +47,36 @@ function endClass() {
 
             classVariableDict.score = json.score
 
-            if ( classVariableDict.score > classVariableDict.prev_score ) {
-            
-                let improvement = classVariableDict.score - classVariableDict.prev_score;
-                
-                let praise = "";
-                if ( improvement >= 5 ) {
+	    if ( classVariableDict.first_ever_class ) {
 
-                    praise = " You are improving a lot! ";
+		synthesisObject.text = "Well done today! Your first ever score is " + ( classVariableDict.score ).toString() + ". I hope to see you again for a second class!";
 
-                } else if ( improvement >= 10 ) {
+	    } else {
 
-                    praise = " You have improved so much! ";
-                
-                }
+		    if ( classVariableDict.score > classVariableDict.prev_score ) {
+		    
+			let improvement = classVariableDict.score - classVariableDict.prev_score;
+			
+			let praise = "";
+			if ( improvement >= 5 ) {
 
-                synthesisObject.text = "Well done today! your score is " + ( classVariableDict.score ).toString() + ". That is better than last time by " + improvement.toString() + " points." + praise + ". I look forward to seeing you again soon!";
-            
-            } else {
+			    praise = " You are improving a lot! ";
 
-                synthesisObject.text = "Well done today! your score is " + ( classVariableDict.score ).toString() +  ". I look forward to seeing you again soon!";
-            
-            }
+			} else if ( improvement >= 10 ) {
+
+			    praise = " You have improved so much! ";
+			
+			}
+
+			synthesisObject.text = "Well done today! your score is " + ( classVariableDict.score ).toString() + ". That is better than last time by " + improvement.toString() + " points." + praise + "I look forward to seeing you again soon!";
+		    
+		    } else {
+
+			synthesisObject.text = "Well done today! your score is " + ( classVariableDict.score ).toString() +  ". I look forward to seeing you again soon!";
+		    
+		    }
+
+	    }
 
             // prepare speech 
             synthesisObject.pitch = 0;

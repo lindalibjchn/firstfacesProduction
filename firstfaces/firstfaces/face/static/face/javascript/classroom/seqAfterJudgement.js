@@ -295,7 +295,11 @@ function speakSpeechBubble() {
         synthesisObject.synthAudio.play();
         synthesisObject.gotNewSpeech = false
         initTalk();
-        setTimeout( returnToLaptop, synthesisObject.delayToReturnToLaptop )
+        setTimeout( function() {
+
+	    returnToLaptop('');
+
+        }, synthesisObject.delayToReturnToLaptop )
 
     } else {
 
@@ -352,25 +356,21 @@ function returnToLaptop( sent ) {
                     
                     })
 
+                    removeSpeechBubble();
+                        
                     setTimeout( function() {
 
-                        removeSpeechBubble();
-                        
-                        setTimeout( function() {
+                        if ( classVariableDict.classOver ) {
 
-                            if ( classVariableDict.classOver ) {
+                            endClass();
 
-                                endClass();
+                        } else {
 
-                            } else {
-
-                                normalBlinkObject.bool = true;
+                            normalBlinkObject.bool = true;
                     
-                            }
+                        }
 
-                        }, 2500 )
-
-                    }, 1000 );
+                    }, 3500 )
 
                 }, 1500 );
 

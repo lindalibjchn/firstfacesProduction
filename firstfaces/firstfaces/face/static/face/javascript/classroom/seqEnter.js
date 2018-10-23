@@ -54,7 +54,7 @@ function mainEnter() {
             
         if ( classVariableDict.first_ever_class ) {
 
-            greeting = " Hello " + studentName + ", welcome to your first class at ERLE. My name is Tia and I am from Dublin, Ireland. It's really nice to meet you.";
+            greeting = " Hello " + studentName + ", welcome to your first class at ERLE. My name is Tia and I am from Ireland. It's nice to meet you.";
         
         } else if ( classVariableDict['prev_topic'] !== null ) {
 
@@ -114,7 +114,15 @@ function speakOpening() {
 
         } else {
 
-            setTimeout( showInitEmotionQuestions, 4500 );
+            if ( classVariableDict['prev_topic'] !== null ) {
+
+                setTimeout( showInitEmotionQuestions, 7500 );
+
+            } else {
+
+                setTimeout( showInitEmotionQuestions, 4500 );
+
+            }
 
         }
 
@@ -207,7 +215,7 @@ function newGreeting01() {
 
     $('#niceToMeetYou').fadeOut( 1000 );
     removeSpeechBubble();
-    speechBubbleObject.sentence = " In this class, you can talk to me about anything. I am here to listen and help you."
+    speechBubbleObject.sentence = " In this class, you can talk to me about anything. I am here to listen and help you with your English."
     synthesisObject.text = speechBubbleObject.sentence;
     sendTTS( synthesisObject.text, true, "talk" );
 
@@ -481,7 +489,7 @@ function speakTopic() {
             
             if ( classVariableDict['prev_topic'] !== null ) {
 
-                showContinueOrNew();
+                setTimeout( showContinueOrNew, 5000);
 
             } else {
 

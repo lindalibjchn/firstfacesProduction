@@ -87,6 +87,15 @@ function sendBlobToServer( blob_to_send ) {
 
             classVariableDict.blob_no_text = true;
             classVariableDict.blob_no_text_sent_id = json.sent_id;
+            console.log('got response from sending blob to server');
+
+            $('#textInput').val( synthesisObject.textFromSpeech );
+            $('#textInput').focus();
+
+            //show play buttons below
+            $('#recordVoiceBtn').show();
+            $('.play-btn').prop( "disabled", false);
+            $('#talkBtn').prop( "disabled", false);
 
         },
         error: function() {

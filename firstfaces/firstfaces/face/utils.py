@@ -378,7 +378,7 @@ def get_prev_sessions( user ):
 
     for sess in all_sessions:
 
-        sents = PermSentence.objects.filter(session=sess)
+        sents = PermSentence.objects.filter(session=sess).order_by('pk')
         sentences = []
 
         for s in sents:
