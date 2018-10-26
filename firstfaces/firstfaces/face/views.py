@@ -128,51 +128,103 @@ def sign_up_user(request):
 
     return JsonResponse(response_data)    
 
+group_leader_dict = {
+
+    "Beate": "FengChia",
+
+}
+def group_data(request):
+    groups_sessions = {}
+    try:
+    
+        group_leader_dict[ request.user.username ]
+        
+        # the user is a group_leader
+        group_leader = True
+
+        group = group_leader_dict[ request.user.username ]
+
+        group_users = User.objects.filter(groups__name=group)
+
+        print('group_users: ', group_users)
+
+        for u in group_users:
+
+            sessions = Session.objects.filter( learner=u )
+            print('sessions: ', sessions)
+            # get dictionary of all previous sessions
+            sessions_dict = get_prev_sessions( u )
+            print('sessions_dict: ', sessions_dict)
+
+            groups_sessions[ u.username ] = sessions_dict
+        
+        print('groups_sessions: ', groups_sessions)
+
+        context = {
+
+            "groups_sessions": json.dumps(groups_sessions),
+
+        }
+
+        return render(request, 'face/group_data.html', context)
+
+    except:
+
+        return redirect('entrance')
+
+
 @login_required
 def waiting(request):
     
-    time_now = timezone.localtime(timezone.now()).strftime("%H:%M")
-    date_now = timezone.localtime(timezone.now()).date()
-
-    availables = get_availables_for_schedule()
-
-    # in utils.py, for schedule on board
-    schedule_dict, schedule_now = make_schedule_dict( availables )
-
-    # in "Monday 18:00" format
-    next_class, next_class_after_today = get_upcoming_class( availables )
-    schedule_dict[ 'upcomingClass' ] = next_class
-    schedule_dict[ 'upcomingClassAfterToday' ] = next_class_after_today
-    # check if in class or during class
-    sessions = Session.objects.filter( learner=request.user )
-    # returns boolean
-    schedule_dict[ 'class_already_done_today' ] = json.dumps( get_class_already_done_today( sessions ) )
-    schedule_dict[ 'in_class_now' ], schedule_dict[ 'session_id' ] = get_in_class_now( sessions )
-
-    # get dictionary of all previous sessions
-    sessions_dict = get_prev_sessions( request.user )
-
-    try:
-        todays_news_article = NewsArticle.objects.get(date=date_now)
-        headline = todays_news_article.title
-        article_link = todays_news_article.link
+    # if it is a group leader then they will be redirected to the group_data page
+    try:    
+        group_leader_dict[ request.user.username ]
+        return redirect('group_data')
+    
     except:
-        headline = "no article today"
-        article_link = "#"
+    
+        time_now = timezone.localtime(timezone.now()).strftime("%H:%M")
+        date_now = timezone.localtime(timezone.now()).date()
 
-    context = {
+        availables = get_availables_for_schedule()
 
-        'schedule_dict': json.dumps(schedule_dict),
-        'schedule_now': json.dumps(schedule_now),
-        'sessions_dict': json.dumps(sessions_dict),
-        'waiting': True,
-        'timeNow': time_now,
-        'headline': headline,
-        'article_link': article_link,
+        # in utils.py, for schedule on board
+        schedule_dict, schedule_now = make_schedule_dict( availables )
 
-    }
+        # in "Monday 18:00" format
+        next_class, next_class_after_today = get_upcoming_class( availables )
+        schedule_dict[ 'upcomingClass' ] = next_class
+        schedule_dict[ 'upcomingClassAfterToday' ] = next_class_after_today
+        # check if in class or during class
+        sessions = Session.objects.filter( learner=request.user )
+        # returns boolean
+        schedule_dict[ 'class_already_done_today' ] = json.dumps( get_class_already_done_today( sessions ) )
+        schedule_dict[ 'in_class_now' ], schedule_dict[ 'session_id' ] = get_in_class_now( sessions )
 
-    return render(request, 'face/waiting.html', context)
+        # get dictionary of all previous sessions
+        sessions_dict = get_prev_sessions( request.user )
+
+        try:
+            todays_news_article = NewsArticle.objects.get(date=date_now)
+            headline = todays_news_article.title
+            article_link = todays_news_article.link
+        except:
+            headline = "no article today"
+            article_link = "#"
+
+        context = {
+
+            'schedule_dict': json.dumps(schedule_dict),
+            'schedule_now': json.dumps(schedule_now),
+            'sessions_dict': json.dumps(sessions_dict),
+            'waiting': True,
+            'timeNow': time_now,
+            'headline': headline,
+            'article_link': article_link,
+
+        }
+
+        return render(request, 'face/waiting.html', context)
 
 @login_required
 def class_time(request, session_id):
@@ -887,6 +939,8 @@ def update_session_object(request):
     };
 
     return JsonResponse(response_data)    
+
+
 
 
 

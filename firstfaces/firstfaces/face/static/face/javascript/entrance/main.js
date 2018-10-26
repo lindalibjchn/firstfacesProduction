@@ -97,8 +97,6 @@ function logIn() {
     let search = $("#loginForm").serialize();
     let formData = JSON.parse('{"' + search.replace(/&/g, '","').replace(/=/g,'":"') + '"}', function(key, value) { return key===""?value:decodeURIComponent(value) })
 
-    console.log('formData:', formData);
-
     $.ajax({
         url: "/login",
         type: "POST",

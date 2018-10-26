@@ -26,6 +26,7 @@ urlpatterns = [
     path('update_session_object', views.update_session_object, name='update_session_object'),
     path('wait_for_correction', views.wait_for_correction, name='wait_for_correction'),
     path('waiting', views.waiting, name="waiting"),
+    path('group_data', views.group_data, name="group_data"),
     path('book_session', views.book_session, name="book_session"),
     path('entrance', views.entrance, name='entrance'),
     path('login', views.my_login, name='login'),
