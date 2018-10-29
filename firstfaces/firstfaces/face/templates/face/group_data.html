@@ -4,75 +4,75 @@
 {% block content %}
 
 <link rel="stylesheet" type="text/css" href="{% static 'face/css/utils.css' %}" />
-<link rel="stylesheet" type="text/css" href="{% static 'face/css/waiting.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'face/css/groupData.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'face/css/class.css' %}" />
 
-<div id="bookContentBackground">
+<div id="mainBackground" class="w3-row">
 
-    <div id="bookContentPage">
+    <div id="studentNamesCol" class="w3-col m2">
 
-        <!--<span onclick="bookBackToDesk()" class="w3-button w3-xlarge w3-red w3-display-topright">&times;</span>-->
+        <div id="studentNamesCont"></div>
+
+    </div>
+
+    <div id="bookContentPage" class="w3-col m10">
 
         <div id="bookContentPageInner">
 
-            <div class="which-book" id="sentencesBook">
+            <div class="w3-row">
+            
+                <div class="w3-col w3-third" id="leftScroll">&nbsp
+                    <!--<i class="fa fa-3x fa-angle-double-left fa-angle"></i>-->
+                </div>
 
-                <div class="w3-row">
-                
-                    <div class="w3-col w3-third" id="leftScroll">&nbsp
-                        <!--<i class="fa fa-3x fa-angle-double-left fa-angle"></i>-->
-                    </div>
+                <div class="w3-col w3-third">
+                    
+                    <h3 class="book-title"><span id="whatIsScoresBtn" class="w3-blue">?</span>Scores & Sentences</h3>
 
-                    <div class="w3-col w3-third">
-                        
-                        <h3 class="book-title"><span id="whatIsScoresBtn" class="w3-blue">?</span>Scores & Sentences</h3>
+                    <div id="scoresExplanation">
 
-                        <div id="scoresExplanation">
+                        <div id="sETitle">
+                            <h4>Scores Explanation</h4>
+                        </div>
 
-                            <div id="sETitle">
-                                <h4>Scores Explanation</h4>
-                            </div>
+                        <div id="sEExplanation">
+                            <p>Scores are based on:</p>
+                            <ul>
+                                <li>Average correct sentence length (number of words)</li>
+                                <li>Percentage correct sentences</li>
+                            </ul>
+                            <p>Bonus points are given for:</p>
+                            <ul>
+                                <li>successful 'Try Again' sentences</li>
+                                <li>creating great emotion from Tia</li>
+                            </ul>
+                        </div>
 
-                            <div id="sEExplanation">
-                                <p>Scores are based on:</p>
-                                <ul>
-                                    <li>Average correct sentence length (number of words)</li>
-                                    <li>Percentage correct sentences</li>
-                                </ul>
-                                <p>Bonus points are given for:</p>
-                                <ul>
-                                    <li>successful 'Try Again' sentences</li>
-                                    <li>creating great emotion from Tia</li>
-                                </ul>
-                            </div>
-
-                            <div id="sEExample">
-
-                            </div>
+                        <div id="sEExample">
 
                         </div>
 
                     </div>
 
-                    <div class="w3-col w3-third" id="rightScroll">&nbsp
-                        <!--<i class="fa fa-3x fa-angle-double-right fa-angle"></i>-->
-                    </div>
+                </div>
+
+                <div class="w3-col w3-third" id="rightScroll">&nbsp
+                    <!--<i class="fa fa-3x fa-angle-double-right fa-angle"></i>-->
+                </div>
+
+            </div>
+
+            <div class="w3-row" id="chartRow">
+
+                <div id="chartOuterDiv">
+
+                    <canvas id="scoresChart"></canvas>
 
                 </div>
 
-                <div class="w3-row" id="chartRow">
+            </div>
 
-                    <div id="chartOuterDiv">
-
-                        <canvas id="scoresChart"></canvas>
-
-                    </div>
-
-                </div>
-
-                <div id="sentencesInnerMain"></div>
-
-            </div> 
+            <div id="sentencesInnerMain"></div>
 
         </div>
 
@@ -87,8 +87,9 @@
 </script>
 
 <!-- my own scripts -->
-<script src="{% static 'face/javascript/waiting/books.js' %}"></script>
-<script src="{% static 'face/javascript/waiting/sents.js' %}"></script>
-<script src="{% static 'face/javascript/waiting/scoreCharts.js' %}"></script>
+<script src="{% static 'face/javascript/groupData/main.js' %}"></script>
+<script src="{% static 'face/javascript/groupData/books.js' %}"></script>
+<script src="{% static 'face/javascript/groupData/sents.js' %}"></script>
+<script src="{% static 'face/javascript/groupData/scoreCharts.js' %}"></script>
 
 {% endblock %}
