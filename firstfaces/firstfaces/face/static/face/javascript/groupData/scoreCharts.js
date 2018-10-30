@@ -131,7 +131,7 @@ function resetCanvas() {
 
     $('#scoresChart').remove();
     $('#chartOuterDiv').append("<canvas id='scoresChart'></canvas>");
-    insertChart( this.id )
+    insertChart()
 
 }
 

@@ -131,22 +131,19 @@ def sign_up_user(request):
 group_leader_dict = {
 
     "Beate": "FengChia",
+    "john": "all",
 
 }
 def group_data(request):
     groups_sessions = {}
     try:
     
-        group_leader_dict[ request.user.username ]
-        
-        # the user is a group_leader
-        group_leader = True
-
         group = group_leader_dict[ request.user.username ]
 
-        group_users = User.objects.filter(groups__name=group)
-
-        print('group_users: ', group_users)
+        if group == "all":
+            group_users = User.objects.all()
+        else:
+            group_users = User.objects.filter(groups__name=group)
 
         for u in group_users:
 

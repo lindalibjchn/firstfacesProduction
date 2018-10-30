@@ -39,7 +39,7 @@ function showStudentData() {
     sessionsDict = $.extend( true, {}, groupSessions[ this.id ] );
     getSessionsIdList();
 
-    resetCanvas( );
+    resetCanvas();
     showSentencesBook();
     
 }
