@@ -7365,3 +7365,6 @@ Not Found: /favicon.ico
 "GET /check_for_change?totalSents=11&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
 "GET /check_for_change?totalSents=11&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
 "GET /check_for_change?totalSents=11&sentsAwaitingMaybeUrgentUpdate=%5B%5D HTTP/1.1" 200 18
+"GET / HTTP/1.1" 302 0
+"GET /waiting HTTP/1.1" 200 13302
+"GET /waiting HTTP/1.1" 200 13302
