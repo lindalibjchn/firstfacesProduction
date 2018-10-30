@@ -1,0 +1,190 @@
+#mainBackground {
+
+    height: 100%;
+    width: 100%;
+    position: absolute;
+
+}
+
+#studentNamesCol {
+
+    background-color: grey;
+    height: 100%;
+    overflow-y: hidden;
+
+}
+
+#studentNamesCont {
+
+    position: absolute;
+    top: 80px;
+    padding: 10px;
+    font-size: 22px;
+    color: white;
+
+}
+
+.student-names {
+
+    padding: 10px;
+
+}
+
+.student-names:hover {
+
+    cursor: pointer;
+
+}
+
+#bookContentPage {
+
+    height: 100%;
+    position: relative;
+
+}
+
+#bookContentPageInner {
+
+    width: 97%;
+    height: 90%;
+    border-radius: 10px;
+    position: absolute;
+    background-color: #e6f0ff;
+    left: 0;
+    right: 0;
+    top: 50;
+    bottom: 0;
+    margin: auto;
+    overflow-y: hidden;
+
+}
+
+.book-title {
+
+    text-align: center;
+    font-size: 2vw;
+
+}
+
+#whatIsScoresBtn {
+
+    color: white;
+    background-color: blue;
+    font-size: 14px;
+    border-radius: 100%;
+    padding: 0px 4px 0px 4px;
+    position: relative;
+    top: -15px;
+
+}
+
+#whatIsScoresBtn:hover {
+
+    cursor: pointer;
+    background-color: blue;
+
+}
+
+#scoresExplanation {
+
+    position: absolute;
+    display: none;
+    padding: 20px;
+    border-radius: 15px;
+    border: 3px DodgerBlue solid;
+    background-color: white;
+    z-index: 200;
+
+}
+
+#chartRow {
+
+    position: relative;
+
+}
+
+#chartOuterDiv {
+
+    width: 35%;
+    position: relative;
+    left: 0;
+    right: 0;
+    margin: auto;
+
+}
+
+#sentencesInnerMain {
+
+    height: 65%;
+    width: 100%;
+    overflow-y: scroll;
+    padding-bottom: 30px;
+
+}
+
+#sessDate {
+
+    text-align: center;
+    font-size: 1.4vw;
+
+}
+
+#sessTopic {
+
+    text-align: center;
+    font-size: 1.5vw;
+
+}
+
+#sessScore {
+
+    text-align: center;
+    font-size: 1.5vw;
+    margin-bottom: 20px;
+
+}
+
+.sentenceWaitingBox {
+
+    background-color: white;
+    border-radius: 7px 0px 7px 7px;
+    width: 85%;
+    margin: 4px;
+    margin-top: 2px;
+    margin-bottom: 10px;
+    padding: 1%;
+    float: right;
+    font-size: 1.5vw;
+    
+}
+
+.speech-to-text {
+
+    background-color: #c6dcff;
+    border-radius: 5px 0px 5px 5px;
+    width: 80%;
+    margin: 2px;
+    padding: 0.4%;
+    float: right;
+    font-size: 1.2vw;
+    font-style: italic;
+
+}
+
+.listen-btn {
+
+    float: right;
+    padding: 5 7 5 9;
+    font-size: 1.3vw !important;
+
+}
+
+.listen-synth-btn {
+
+    padding: 7 9 7 11;
+    float: right;
+    font-size: 1.4vw !important;
+    font-weight: bold;
+
+}
+
