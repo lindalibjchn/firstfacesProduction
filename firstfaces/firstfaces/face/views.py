@@ -148,14 +148,11 @@ def group_data(request):
         for u in group_users:
 
             sessions = Session.objects.filter( learner=u )
-            print('sessions: ', sessions)
-            # get dictionary of all previous sessions
-            sessions_dict = get_prev_sessions( u )
-            print('sessions_dict: ', sessions_dict)
 
-            groups_sessions[ u.username ] = sessions_dict
-        
-        print('groups_sessions: ', groups_sessions)
+            if sessions.count() != 0:
+                # get dictionary of all previous sessions
+                sessions_dict = get_prev_sessions( u )
+                groups_sessions[ u.username ] = sessions_dict
 
         context = {
 
