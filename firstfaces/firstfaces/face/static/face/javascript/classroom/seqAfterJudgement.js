@@ -140,7 +140,7 @@ function runAfterJudgement() {
             
             })
 
-            setTimeout( displaySpeechBubblePrompt, 1500 );
+            setTimeout( function() { whenAllMovFinished( displaySpeechBubblePrompt ) }, 1500 );
         
         } else {
 
@@ -164,7 +164,7 @@ function runAfterJudgement() {
             setTimeout( function() {
                 
                 whenAllMovFinished( nodOrShakeHead ); 
-                setTimeout( displaySpeechBubblePrompt, 7000 );
+                setTimeout( function() { whenAllMovFinished( displaySpeechBubblePrompt )}, 5000 );
 
             }, 1100 );
 
@@ -185,7 +185,7 @@ var whenAllMovFinished = function( funcToCall ) {
     console.log( 'in whenAllMovFinished:', whenAllMovFinishedCount );
     if ( expressionObject.bool || cameraObject.bool || movementObject.bool || eyelidObject.bool || eyeObject.bool || blinkNowObject.bool || normalBlinkObject.bool || nodObject.bool || shakeObject.bool ) {
       
-        if ( whenAllMovFinishedCount < 10000 ) {
+        if ( whenAllMovFinishedCount < 3000 ) {
 
             whenAllMovFinishedCount += 500;
 
@@ -195,6 +195,12 @@ var whenAllMovFinished = function( funcToCall ) {
 
             }, 500 );
 
+            console.log( 
+                    "movementObject.bool : ", movementObject.bool.toString() + 
+                    "\neyelidObject.bool : ", eyelidObject.bool.toString() + 
+                    "\neyeObject.bool : ", eyeObject.bool.toString()
+                    );
+        
         } else {
 
             makeAllBoolsFalse();
@@ -348,6 +354,8 @@ function returnToLaptop( sent ) {
 
                 }
                 
+                removeSpeechBubble();
+                        
                 setTimeout( function() { 
                     
                     whenAllMovFinished( function() { 
@@ -356,8 +364,6 @@ function returnToLaptop( sent ) {
                     
                     })
 
-                    removeSpeechBubble();
-                        
                     setTimeout( function() {
 
                         if ( classVariableDict.classOver ) {

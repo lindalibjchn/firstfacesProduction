@@ -18,9 +18,9 @@ $(window).on( 'load', function() {
     aud.src = "http://127.0.0.1:8000/media/to-the-point.mp3";
     //aud.src = "media/to-the-point.mp3";
 
-    //aud1 = document.getElementById('thud')
+    aud1 = document.getElementById('thud')
     aud1.src = "http://127.0.0.1:8000/media/chimes-glassy.mp3";
-    aud1.src = "media/chimes-glassy.mp3";
+    //aud1.src = "media/chimes-glassy.mp3";
 
     updateAll();
 

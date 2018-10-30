@@ -90,13 +90,15 @@ function readyBtns() {
      
                 var mediaRecorder = new MediaRecorder(stream);
 
+                var recorder15sTimeout;
+
                 function onRecord() {
 
                     mediaRecorder.start();
 
                     // will check that the user has clicked the stop button by timing them and using this boolean
                     classVariableDict.recording = true;
-                    setTimeout( checkIfClickedStop, 15000 );
+                    recorder15sTimeout = setTimeout( checkIfClickedStop, 20000 );
 
                     // this is the live stuff
                     sentence = "";
@@ -117,7 +119,7 @@ function readyBtns() {
 
                         onStopClick();
 
-                        alert('You have 15 seconds to say each sentence. If it is a very long sentence, try breaking it up into smaller sentences.')
+                        alert('You have 20 seconds to say each sentence. If it is a very long sentence, try breaking it up into smaller sentences.')
 
                     }
 
@@ -136,6 +138,8 @@ function readyBtns() {
 
                 // put this in a function so that I can call it later if the user doesn't click stop after X seconds.
                 function onStopClick() {
+
+                    clearTimeout( recorder15sTimeout );
 
                     mediaRecorder.stop();
                     console.log( mediaRecorder.state );
@@ -178,6 +182,7 @@ function readyBtns() {
             // Error callback
             .catch(function(err) {
                 console.log('The following getUserMedia error occured: ' + err);
+                alert("If you want to speak to Tia, you must allow Chrome to use your microphone. Click the small 'i' next to the web address and then change the settings to allow the microphone.");
             }
         );
             
