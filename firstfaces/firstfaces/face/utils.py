@@ -31,13 +31,13 @@ def get_this_weeks_dates():
     return [ date_mon, date_fri ]
 
 
-def get_availables_for_schedule():
+def get_availables_for_schedule(groups):
     
     this_weeks_dates = get_this_weeks_dates()
 
     # get all availables in this period
-
-    this_weeks_availables = Available.objects.filter( start_availability__gte=this_weeks_dates[ 0 ] ).filter( end_availability__lte=this_weeks_dates[ 1 ] ) 
+    this_weeks_availables = Available.objects.filter( avail_group__name__in=groups).filter( start_availability__gte=this_weeks_dates[ 0 ] ).filter( end_availability__lte=this_weeks_dates[ 1 ] ) 
+    print('this weeks availables: ', this_weeks_availables)
 
     return this_weeks_availables
 

@@ -108,61 +108,69 @@ function sendBlobToServer( blob_to_send ) {
 
 function sendSentToServer() {
 
-    // set this to false until judgement comes in where it will be changed to true
-    classVariableDict.awaitingJudgement = true;
-
     let sent = $('#textInput').val();
 
-    // if wh-question and if allowed. If not allowed, raise alert 
-    isItQ = checkIfSentIsQuestion( sent );
-    let allowed = true;
-    if ( isItQ ) {
+    if ( sent.length >= 300 ) {
 
-        if ( calculateQuestionStreak() !== 3 ) {
-           
-            allowed = false;
-        
-        }
-
-    }
-
-    if ( allowed ) { 
-
-        if ( sent.length > 2 ) {
-            
-            talkToTia(); 
-
-            $.ajax({
-                url: "/store_sent",
-                type: "POST",
-                data: { 
-                    'sent': sent,
-                    'isItQ': isItQ,
-                    'blob_no_text': classVariableDict.blob_no_text,
-                    'blob_no_text_sent_id': classVariableDict.blob_no_text_sent_id,
-                    'sessionID': classVariableDict.session_id
-                },
-                success: function(json) {
-                    
-                    console.log('sentence successfully sent to server');
-                    checkJudgement( json.sent_id );
-
-                },
-                error: function() {
-                    alert("sentence failed to send to server");
-                },
-
-            });
-
-        } else {
-
-            alert('this is not a sentence');
-
-        }
+        alert( 'This sentence is too long. Please simplify and try again.')
 
     } else {
 
-        alert("you can only ask a 'Wh-' or 'How' question after 3 correct non-question sentences. The small red circle with the number in it will turn green when you can ask these questions.");
+        // set this to false until judgement comes in where it will be changed to true
+        classVariableDict.awaitingJudgement = true;
+
+        // if wh-question and if allowed. If not allowed, raise alert 
+        isItQ = checkIfSentIsQuestion( sent );
+        let allowed = true;
+        if ( isItQ ) {
+
+            if ( calculateQuestionStreak() !== 3 ) {
+               
+                allowed = false;
+            
+            }
+
+        }
+
+        if ( allowed ) { 
+
+            if ( sent.length > 2 ) {
+                
+                talkToTia(); 
+
+                $.ajax({
+                    url: "/store_sent",
+                    type: "POST",
+                    data: { 
+                        'sent': sent,
+                        'isItQ': isItQ,
+                        'blob_no_text': classVariableDict.blob_no_text,
+                        'blob_no_text_sent_id': classVariableDict.blob_no_text_sent_id,
+                        'sessionID': classVariableDict.session_id
+                    },
+                    success: function(json) {
+                        
+                        console.log('sentence successfully sent to server');
+                        checkJudgement( json.sent_id );
+
+                    },
+                    error: function() {
+                        alert("sentence failed to send to server");
+                    },
+
+                });
+
+            } else {
+
+                alert('this is not a sentence');
+
+            }
+
+        } else {
+
+            alert("you can only ask a 'Wh-' or 'How' question after 3 correct non-question sentences. The small red circle with the number in it will turn green when you can ask these questions.");
+
+        }
 
     }
 

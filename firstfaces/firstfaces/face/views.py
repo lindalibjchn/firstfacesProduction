@@ -24,8 +24,8 @@ import math
 from django.core.mail import send_mail
 
 logger = logging.getLogger(__name__)
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/johnsHDD/PhD_backup/erle-3666ad7eec71.json"
-# os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/johnsHDD/PhD/2018_autumn/erle-3666ad7eec71.json"
+# os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/johnsHDD/PhD_backup/erle-3666ad7eec71.json"
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/johnsHDD/PhD/2018_autumn/erle-3666ad7eec71.json"
 # os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/firstfaces/erle-3666ad7eec71.json"
 
 def out_or_in(request):
@@ -180,7 +180,9 @@ def waiting(request):
         time_now = timezone.localtime(timezone.now()).strftime("%H:%M")
         date_now = timezone.localtime(timezone.now()).date()
 
-        availables = get_availables_for_schedule()
+        groups = request.user.groups.values_list('name', flat=True)
+        print('groups: ', groups)
+        availables = get_availables_for_schedule(groups)
 
         # in utils.py, for schedule on board
         schedule_dict, schedule_now = make_schedule_dict( availables )

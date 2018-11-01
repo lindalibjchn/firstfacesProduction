@@ -191,7 +191,19 @@ function readyBtns() {
             var current = event.resultIndex;
             var transcript = event.results[current][0].transcript;
             sentence += transcript + " ";
-            synthesisObject.textFromSpeech = sentence.slice(0,sentence.length -1);
+            
+            // avoid sending sentence which is too long to server
+            if ( sentence.length >= 300 ) {
+
+                alert('Your sentence was too long and will be shortened. Please check it before sending.')
+
+                synthesisObject.textFromSpeech = sentence.slice(0, 299);
+
+            } else {
+
+                synthesisObject.textFromSpeech = sentence.slice(0,sentence.length -1);
+
+            }
 
         }
 

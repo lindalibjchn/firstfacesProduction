@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.utils import timezone
 from django.conf import settings
 import json
@@ -19,6 +19,7 @@ class Session(models.Model):
 class Available(models.Model):
     start_availability = models.DateTimeField()
     end_availability = models.DateTimeField()
+    avail_group = models.ManyToManyField(Group, default=3)
     
     @property
     def available_now(self):
