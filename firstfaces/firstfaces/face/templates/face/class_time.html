@@ -17,31 +17,32 @@
 
 </div>
 
-<div class="w3-container init-questions-container" id="niceToMeetYou">
+<!--will fill this tutorial button with confirmations from tutorial.js-->
+<div class="init-questions-container" id="tutorialBtnSingleCont">
 
     <div class="w3-row nice-row">
 
-        <button class="w3-btn w3-green choice-btn" id="niceBtn">It's nice to meet you too.</button>
+        <button class="w3-btn w3-green choice-btn" id="tutorialBtnSingle"></button>
 
     </div>
 
 </div>
 
-<div class="w3-container init-questions-container" id="ok">
+<div class="init-questions-container" id="tutorialBtnDoubleCont">
 
     <div class="w3-row nice-row">
 
-        <button class="w3-btn w3-green choice-btn" id="okBtn">Ok</button>
+        <div class="w3-half">
 
-    </div>
+            <button class="w3-btn w3-green choice-btn tut-double-btn" id="tutorialBtnDouble0"></button>
 
-</div>
+        </div>
 
-<div class="w3-container init-questions-container" id="ok2">
+        <div class="w3-half">
 
-    <div class="w3-row nice-row">
+            <button class="w3-btn w3-red choice-btn tut-double-btn" id="tutorialBtnDouble1"></button>
 
-        <button class="w3-btn w3-green choice-btn" id="ok2Btn">I watched the instructions video</button>
+        </div>
 
     </div>
 
@@ -325,6 +326,7 @@
 <script src="{% static 'face/javascript/classroom/moveCamera.js' %}"></script>
 <script src="{% static 'face/javascript/classroom/moveComplex.js' %}"></script>
 <script src="{% static 'face/javascript/classroom/seqEnter.js' %}"></script>
+<script src="{% static 'face/javascript/classroom/tutorial.js' %}"></script>
 <script src="{% static 'face/javascript/classroom/moveExpression.js' %}"></script>
 <script src="{% static 'face/javascript/classroom/moveBody.js' %}"></script>
 <script src="{% static 'face/javascript/classroom/input.js' %}"></script>

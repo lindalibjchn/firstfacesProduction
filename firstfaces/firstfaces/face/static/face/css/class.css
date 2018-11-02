@@ -77,7 +77,7 @@ button:active {
 
 .choice-btn {
 
-    width: 100%; 
+    width: 90%; 
     height: 90%;
     /*this is to vertically align the bottons*/
     margin-top: 0.8%;

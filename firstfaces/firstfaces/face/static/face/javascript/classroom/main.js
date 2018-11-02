@@ -56,6 +56,14 @@ function readyBtns() {
 
         aud.play();
 
+        // for tutorial
+        if ( classVariableDict.tutorialStep === 0 ) {
+
+            $('#listenVoiceBtn').prop( 'disabled', true );
+            setTimeout( greeting07, 3000 );
+
+        }
+
     });
 
     $('#listenSynthesisBtn').on( 'click', function() {
@@ -70,6 +78,30 @@ function readyBtns() {
         } else {
 
             sendTTS( textInBox, false, "listen" );
+
+        }
+
+        if ( classVariableDict.tutorialStep === 0 ) {
+
+            $('#listenSynthesisBtn').prop( 'disabled', true );
+            setTimeout( greeting08, 3000 );
+
+        } else if ( classVariableDict.tutorialStep === 1 ) {
+
+            let textOnLaptop = $.trim($('#textInput').val().toLowerCase());
+            console.log('text on laptop');
+
+            if ( textOnLaptop === "this is my first class" || textOnLaptop === "this is my first class." ) {
+
+                $('#listenSynthesisBtn').prop( 'disabled', true );
+                setTimeout( greeting10, 3000 );
+
+            } else {
+    
+                setTimeout( greeting28, 3000 );
+
+            }
+
 
         }
 

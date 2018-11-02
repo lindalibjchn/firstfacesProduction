@@ -95,7 +95,22 @@ function sendBlobToServer( blob_to_send ) {
             //show play buttons below
             $('#recordVoiceBtn').show();
             $('.play-btn').prop( "disabled", false);
-            $('#talkBtn').prop( "disabled", false);
+            
+            // dont want to send sentence while doing tutorial
+            if ( classVariableDict.tutorial === false ) {
+
+                $('#talkBtn').prop( "disabled", false);
+
+            } else {
+
+                if (classVariableDict.tutorialStep === 0 ) {
+
+                    $('#recordVoiceBtn').prop( 'disabled', true );
+                    greeting06();
+
+                }
+
+            }
 
         },
         error: function() {

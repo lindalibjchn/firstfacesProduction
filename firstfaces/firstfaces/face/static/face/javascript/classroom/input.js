@@ -14,7 +14,14 @@ function initInputReady( boxVal ) {
     $('#textInput').bind('input propertychange', function() {
 
         $('#listenSynthesisBtn').prop( "disabled", false );
-        $('#talkBtn').prop( "disabled", false );
+
+        if ( classVariableDict.tutorial ) {
+
+        } else {
+
+            $('#talkBtn').prop( "disabled", false );
+
+        }
 
     });
 

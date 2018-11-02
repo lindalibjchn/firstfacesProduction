@@ -52,9 +52,13 @@ function mainEnter() {
         
         let greeting = ""
             
+        classVariableDict.tutorial = false;
         if ( classVariableDict.first_ever_class ) {
 
-            greeting = " Hello " + studentName + ", welcome to your first class at ERLE. My name is Tia and I am from Ireland. It's nice to meet you.";
+            // if in tutorial, need this to be true so that responses from the recording and speech synthesis react in the correct way
+            classVariableDict.tutorial = true;
+            classVariableDict.tutorialStep = 0;
+            greeting = " Hello " + studentName + ", welcome to your first class at ERLE. My name is Tia and I am from Ireland.";
         
         } else if ( classVariableDict['prev_topic'] !== null ) {
 
@@ -110,7 +114,7 @@ function speakOpening() {
 
         if ( classVariableDict.first_ever_class ) {
 
-            setTimeout( preNewGreeting01, 9000 );
+            setTimeout( runTutorial, 7000 );
 
         } else {
 
@@ -199,150 +203,6 @@ function enterCameraMove( main ) {
         enterCameraObject[ 'bool' ] = false;
 
     }
-
-}
-
-function preNewGreeting01() {
-
-    $('#niceToMeetYou').fadeIn( 1000 );
-
-    $('#niceBtn').on( 'click', newGreeting01 );
-
-
-}
-
-function newGreeting01() {
-
-    $('#niceToMeetYou').fadeOut( 1000 );
-    removeSpeechBubble();
-    speechBubbleObject.sentence = " In this class, you can talk to me about anything. I am here to listen and help you with your English."
-    synthesisObject.text = speechBubbleObject.sentence;
-    sendTTS( synthesisObject.text, true, "talk" );
-
-    setTimeout( function() {
-        displaySpeechBubble();
-        speakNewGreeting01()
-    }, 1500 );
-
-}
-
-function speakNewGreeting01() {
-
-    if ( synthesisObject.gotNewSpeech ) {
-        
-        synthesisObject.synthAudio.play();
-        synthesisObject.gotNewSpeech = false
-        initTalk();
-
-        setTimeout( function() {
-            
-            preNewGreeting02();
-
-        }, 6000 );
-
-    } else {
-
-        console.log('waiting for speech synthesis to return audio')
-        setTimeout( speakNewGreeting01, 1000 );
-
-    }
-
-
-}
-
-
-function preNewGreeting02() {
-
-    $('#ok').fadeIn( 1000 );
-
-    $('#okBtn').on( 'click', newGreeting02 );
-
-
-}
-
-function newGreeting02() {
-
-    $('#ok').fadeOut( 1000 );
-    removeSpeechBubble();
-    speechBubbleObject.sentence = " You can click the 'instructions' button at the top to watch a video about how this class works."
-    synthesisObject.text = speechBubbleObject.sentence;
-    sendTTS( synthesisObject.text, true, "talk" );
-
-    setTimeout( function() {
-        displaySpeechBubble();
-        speakNewGreeting02()
-    }, 1500 );
-
-}
-
-function speakNewGreeting02() {
-
-    if ( synthesisObject.gotNewSpeech ) {
-        
-        synthesisObject.synthAudio.play();
-        synthesisObject.gotNewSpeech = false
-        initTalk();
-
-        setTimeout( function() {
-            
-            preNewGreeting03();
-
-        }, 5000 );
-
-    } else {
-
-        console.log('waiting for speech synthesis to return audio')
-        setTimeout( speakNewGreeting02, 1000 );
-
-    }
-
-}
-
-function preNewGreeting03() {
-
-    $('#ok2').fadeIn( 1000 );
-
-    $('#ok2Btn').on( 'click', newGreeting03 );
-
-
-}
-
-function newGreeting03() {
-
-    $('#ok2').fadeOut( 1000 );
-    removeSpeechBubble();
-    speechBubbleObject.sentence = " Great, let's begin. How are you feeling today?."
-    synthesisObject.text = speechBubbleObject.sentence;
-    sendTTS( synthesisObject.text, true, "talk" );
-
-    setTimeout( function() {
-        displaySpeechBubble();
-        speakNewGreeting03()
-    }, 2000 );
-
-}
-
-function speakNewGreeting03() {
-
-    if ( synthesisObject.gotNewSpeech ) {
-        
-        synthesisObject.synthAudio.play();
-        synthesisObject.gotNewSpeech = false
-        initTalk();
-
-        setTimeout( function() {
-            
-            showInitEmotionQuestions();
-
-        }, 5000 );
-
-    } else {
-
-        console.log('waiting for speech synthesis to return audio')
-        setTimeout( speakNewGreeting03, 1000 );
-
-    }
-
 
 }
 
