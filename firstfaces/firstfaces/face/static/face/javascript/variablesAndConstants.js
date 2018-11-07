@@ -1,6 +1,6 @@
 ///////////// SINE ARRAYS
 
-const SINEARRAYSECONDS = [ 3, 6, 15, 30, 45, 60, 90, 120, 180, 210, 240, 270, 300, 360, 480, 600 ];
+const SINEARRAYSECONDS = [ 3, 6, 10, 15, 20, 30, 40, 50, 60, 90, 120, 180, 210, 240, 270, 300, 360, 480, 600 ];
 
 var sineArrays = {};
 var quickTurnaroundSineArrays = {};
@@ -108,9 +108,4 @@ function assignSinArrayForSpeed( speed, object, sArrays ) {
     
 }
 
-
-//////////////// VARIABLES
-
-var scene, camera, renderer, light;
-var mainCount = 0;
 

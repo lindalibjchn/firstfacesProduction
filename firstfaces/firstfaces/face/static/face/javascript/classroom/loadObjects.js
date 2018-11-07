@@ -1,27 +1,15 @@
+//////////////// LOAD SCENE AND OBJECTS \\\\\\\\\\\\\\\\\\\\\
 
+//////////////// VARIABLES
 
-//////// LOAD SCENE AND OBJECTS \\\\\\\\
-
-
-function init( skeleton=false ) {
-
+var scene, camera, renderer, light;
+var mFace, mHair, mEyes, mClassroom;
     
-    // MESH VARIABLES \\
-    
-    var mFace;
-    var mHair;
-    var mEyes;
 
-    
-    // SCENE \\
-    
-    scene = new THREE.Scene();
-    
-    
-    // WINDOW \\
+// this count increases by 1 after each frame refresh. 60 per second.
+var mainCount = 0;
 
-    var WIDTH = window.innerWidth;
-    var HEIGHT = window.innerHeight - 22;
+function dealWithResizing() {
 
     window.addEventListener('resize', function() {
         
@@ -33,66 +21,75 @@ function init( skeleton=false ) {
 
     });
 
+}
 
-    // RENDERER \\
+function renderScene() {
 
     renderer = new THREE.WebGLRenderer();
     renderer.setSize( WIDTH, HEIGHT );
     renderer.setClearColor(0x7ec0ee, 0.5);
-
     document.body.appendChild( renderer.domElement );
+
+}
+
+function addCamera() {
+
+    camera = new THREE.PerspectiveCamera( 55, WIDTH / HEIGHT, 0.1, 1000 );
+    scene.add( camera );
+
+}
+
+// load all the objects
+function init() {
+
+    
+    // SCENE \\
+    
+    scene = new THREE.Scene();
+    
+
+    // WINDOW \\
+
+    WIDTH = window.innerWidth;
+    HEIGHT = window.innerHeight - 22;
+    dealWithResizing();
+
+
+    // RENDERER \\
+
+    renderScene();
 
 
     // CAMERA \\
 
-    camera = new THREE.PerspectiveCamera( 55, WIDTH / HEIGHT, 0.1, 1000 );
-    
-    //camera.position.set( 
-            //CAMERA_DESK_POSITION_X, 
-            //CAMERA_DESK_POSITION_Y, 
-            //CAMERA_DESK_POSITION_Z 
-        //);
-    //camera.rotation.x = CAMERA_DESK_ROTATION_X;
-    //camera.rotation.y = CAMERA_DESK_ROTATION_Y;
-    
-    scene.add( camera );
 
+    // CAMERA CONTROLS \\
+
+    // uncomment this to have manual control over the camera
     //controls = new THREE.OrbitControls( camera, renderer.domElement );
 
 
     // LIGHTS \\
 
-    var pointLight = new THREE.PointLight( 0xe0fffa, 0.7, 0, 2 );
-    pointLight.position.set( 100, 10, 60 );
+    var pointLight = new THREE.PointLight( 0xe0fffa, 0.5, 0 );
+    pointLight.position.set( 50, 10, 60 );
     scene.add( pointLight );
 
-    var pointLightLowLeft = new THREE.PointLight( 0xe0fffa, 0.5, 0, 2 );
-    pointLightLowLeft.position.set( -100, -10, 60 );
-    scene.add( pointLightLowLeft );
-
-    var ambientLight = new THREE.AmbientLight( 0xffffff, 0.4 );
+    var ambientLight = new THREE.AmbientLight( 0xffffff, 1.0 );
     scene.add( ambientLight )
-
-    var hemiLight = new THREE.HemisphereLight( 0xf9f8ed, 0xf9f8ed, 0.4);
-    scene.add( hemiLight );
 
 
     // LOAD OBJECTS \\
 
     var loader = new THREE.JSONLoader();
-    
     loader.load( classroom, addClassroom );
 
     function addClassroom( geom, mat ) {
 
-        // global center
-        //var globalCentre = new THREE.Mesh( new THREE.BoxGeometry(10, 10, 10), new THREE.MeshBasicMaterial( {color: 0x00ff00} ) )
-        //scene.add( globalCentre );   
-
         mClassroom = new THREE.Mesh( geom, mat );
         mClassroom.scale.set(12,12,12);
 
-        // classroom is ate weird height and angle to the avatar. Avatar contains many pieces and so it is easier to change positiona and rotation of the space
+        // classroom is at weird height and angle to the avatar. Avatar contains many pieces and so it is easier to change positiona and rotation of the space
         mClassroom.position.set(-40,-40,10)
         mClassroom.rotation.y += 1.2;
 
@@ -137,16 +134,6 @@ function init( skeleton=false ) {
         mat[2].morphtargets = true;
 
         tiaObject.mFace = new THREE.SkinnedMesh( geom, mat );
-
-
-        // SKELETON HELPER \\
-        
-        if ( skeleton ) {
-            
-            faceSkeletonHelper = new THREE.SkeletonHelper( tiaObject.mFace )
-            scene.add( faceSkeletonHelper );
-
-        };
 
         // iterate over the bones in the JSON file and put them into the global faceBones object. Call bones with faceBones["<bone name>"] 
         for (var i=0; i<tiaObject.mFace.skeleton.bones.length; i++) {
