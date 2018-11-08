@@ -2,12 +2,28 @@
 
 function movementController( movementTo, saccDur, bodyDur ) {
 
-    console.log(
-            "\nmovement initiated\n"
-    );
-    movementNow = getAbsoluteCoordsOfMovementNow();
-    let relativeMovement = createRelativeMovement( movementTo );
-    initMovement( relativeMovement, saccDur, bodyDur );
+    //// check if previous movement has already finished. If not, try again for 2 seconds
+    let count = 0;
+    if ( count < 2 && movementObject.bool ) {
+
+        console.log( 'previous movement has not finished: ' + count.toString() + '\nTrying agian in 1 second.' );
+        count += 1;
+
+        setTimeout( function() {
+
+            movementController( movementTo, saccDur, bodyDur );
+
+        }, 1000 );
+
+    } else {
+
+        console.log( "\nmovement initiated\n" );
+        movementObject.bool = false;
+        movementNow = getAbsoluteCoordsOfMovementNow();
+        let relativeMovement = createRelativeMovement( movementTo );
+        initMovement( relativeMovement, saccDur, bodyDur );
+
+    }
 
 }
 
@@ -29,17 +45,9 @@ function createRelativeMovement( moveTo ){
                     let change = moveTo.AUs[AU][bone][ j ][ k ] - movementNow.AUs[AU][bone][ j ][ k ]
                     relativeMovement.AUs[AU][bone][ j ][ k ] = change;
 
-                    //masterMovementState.AUs[AU][bone][ j ][ k ] += change;
-                    
                 }
 
             }
-
-            //if ( masterMovementState.AUs[AU][bone] === [[0,0,0],[0,0,0]] ) {
-
-                //delete masterMovementState.AUs[AU][bone];
-
-            //}
 
         })
 
@@ -83,34 +91,11 @@ function movement( main ) {
 
         Object.keys( movementObject.AUs.AU2 ).forEach( function( key ) {
 
-            // don't need pos now for bones just rotating
-            //// pos x
-           
-            //tiaObject.faceBones[ key + '.L'].position.x += sinAmount * movementObject.AUs.AU2[ key ][ 0 ][ 0 ];
-            //tiaObject.faceBones[ key + '.R'].position.x -= sinAmount * movementObject.AUs.AU2[ key ][ 0 ][ 0 ];
-
-            //// pos y
-            
-            //tiaObject.faceBones[ key + '.L'].position.y += sinAmount * movementObject.AUs.AU2[ key ][ 0 ][ 1 ];
-            //tiaObject.faceBones[ key + '.R'].position.y += sinAmount * movementObject.AUs.AU2[ key ][ 0 ][ 1 ];
-
-            //// pos z
-            
-            //tiaObject.faceBones[ key + '.L'].position.z += sinAmount * movementObject.AUs.AU2[ key ][ 0 ][ 2 ];
-            //tiaObject.faceBones[ key + '.R'].position.z += sinAmount * movementObject.AUs.AU2[ key ][ 0 ][ 2 ];
-
-
-            // rot x 
-            
             tiaObject.faceBones[ key + '.L'].rotation.x += sinAmount * movementObject.AUs.AU2[ key ][ 1 ][ 0 ];
             tiaObject.faceBones[ key + '.R'].rotation.x += sinAmount * movementObject.AUs.AU2[ key ][ 1 ][ 0 ];
-
-            // rot y 
             
             tiaObject.faceBones[ key + '.L'].rotation.y += sinAmount * movementObject.AUs.AU2[ key ][ 1 ][ 1 ];
             tiaObject.faceBones[ key + '.R'].rotation.y -= sinAmount * movementObject.AUs.AU2[ key ][ 1 ][ 1 ];
-
-            // rot z
 
             tiaObject.faceBones[ key + '.L'].rotation.z += sinAmount * movementObject.AUs.AU2[ key ][ 1 ][ 2 ];
             tiaObject.faceBones[ key + '.R'].rotation.z -= sinAmount * movementObject.AUs.AU2[ key ][ 1 ][ 2 ];
@@ -118,35 +103,12 @@ function movement( main ) {
         })
             
         Object.keys( movementObject.AUs.AU2b ).forEach( function( key ) {
-
-
-            //// pos x
-           
-            //tiaObject.bodyBones[ key + '.L'].position.x += sinAmount * movementObject.AUs.AU2b[ key ][ 0 ][ 0 ];
-            //tiaObject.bodyBones[ key + '.R'].position.x -= sinAmount * movementObject.AUs.AU2b[ key ][ 0 ][ 0 ];
-
-            //// pos y
-            
-            //tiaObject.bodyBones[ key + '.L'].position.y += sinAmount * movementObject.AUs.AU2b[ key ][ 0 ][ 1 ];
-            //tiaObject.bodyBones[ key + '.R'].position.y += sinAmount * movementObject.AUs.AU2b[ key ][ 0 ][ 1 ];
-
-            //// pos z
-            
-            //tiaObject.bodyBones[ key + '.L'].position.z += sinAmount * movementObject.AUs.AU2b[ key ][ 0 ][ 2 ];
-            //tiaObject.bodyBones[ key + '.R'].position.z += sinAmount * movementObject.AUs.AU2b[ key ][ 0 ][ 2 ];
-
-
-            // rot x 
             
             tiaObject.bodyBones[ key + '.L'].rotation.x += sinAmount * movementObject.AUs.AU2b[ key ][ 1 ][ 0 ];
             tiaObject.bodyBones[ key + '.R'].rotation.x += sinAmount * movementObject.AUs.AU2b[ key ][ 1 ][ 0 ];
 
-            // rot y 
-            
             tiaObject.bodyBones[ key + '.L'].rotation.y += sinAmount * movementObject.AUs.AU2b[ key ][ 1 ][ 1 ];
             tiaObject.bodyBones[ key + '.R'].rotation.y -= sinAmount * movementObject.AUs.AU2b[ key ][ 1 ][ 1 ];
-
-            // rot z
 
             tiaObject.bodyBones[ key + '.L'].rotation.z += sinAmount * movementObject.AUs.AU2b[ key ][ 1 ][ 2 ];
             tiaObject.bodyBones[ key + '.R'].rotation.z -= sinAmount * movementObject.AUs.AU2b[ key ][ 1 ][ 2 ];
@@ -155,29 +117,8 @@ function movement( main ) {
             
         Object.keys( movementObject.AUs.AU1 ).forEach( function( key ) {
 
-            //// pos x
-            
-            //tiaObject.faceBones[ key ].position.x += sinAmount * movementObject.AUs.AU1[ key ][ 0 ][ 0 ];
-            
-            //// pos y
-            
-            //tiaObject.faceBones[ key ].position.y += sinAmount * movementObject.AUs.AU1[ key ][ 0 ][ 1 ];
-
-            //// pos z
-            
-            //tiaObject.faceBones[ key ].position.z += sinAmount * movementObject.AUs.AU1[ key ][ 0 ][ 2 ];
-
-
-            // rot x 
-            
             tiaObject.faceBones[ key ].rotation.x += sinAmount * movementObject.AUs.AU1[ key ][ 1 ][ 0 ];
-
-            // rot y 
-            
             tiaObject.faceBones[ key ].rotation.y += sinAmount * movementObject.AUs.AU1[ key ][ 1 ][ 1 ];
-
-            // rot z
-
             tiaObject.faceBones[ key ].rotation.z += sinAmount * movementObject.AUs.AU1[ key ][ 1 ][ 2 ];
             
         })
@@ -185,29 +126,8 @@ function movement( main ) {
         //Mouth Jaw Inner is part of a different object and so needs to be done separately
         Object.keys( movementObject.AUs.AU1b ).forEach( function( key ) {
 
-            //// pos x
-            
-            //tiaObject.bodyBones[ key ].position.x += sinAmount * movementObject.AUs.AU1b[ key ][ 0 ][ 0 ];
-
-            //// pos y
-            
-            //tiaObject.bodyBones[ key ].position.y += sinAmount * movementObject.AUs.AU1b[ key ][ 0 ][ 1 ];
-
-            //// pos z
-            
-            //tiaObject.bodyBones[ key ].position.z += sinAmount * movementObject.AUs.AU1b[ key ][ 0 ][ 2 ];
-
-
-            // rot x 
-            
             tiaObject.bodyBones[ key ].rotation.x += sinAmount * movementObject.AUs.AU1b[ key ][ 1 ][ 0 ];
-
-            // rot y 
-            
             tiaObject.bodyBones[ key ].rotation.y += sinAmount * movementObject.AUs.AU1b[ key ][ 1 ][ 1 ];
-
-            // rot z
-
             tiaObject.bodyBones[ key ].rotation.z += sinAmount * movementObject.AUs.AU1b[ key ][ 1 ][ 2 ];
             
         })
@@ -222,44 +142,44 @@ function movement( main ) {
 }
 
 
-function createCombinedCalculatedMovement( movementsArray, mult, surp ){
+//function createCombinedCalculatedMovement( movementsArray, mult, surp ){
 
-    calculatedMovement = $.extend(true, {}, movementProt);
+    //calculatedMovement = $.extend(true, {}, movementProt);
 
-    for ( var singleMove in movementsArray ) {
+    //for ( var singleMove in movementsArray ) {
      
-        // loops through every pos and rot a,y,z of each bone and assigns mix of two movements in proportion to currentMovement. negativeMasterMovement is for returning to neutral
-        Object.keys( movementsArray[singleMove].AUs ).forEach( function( AU ) {
+        //// loops through every pos and rot a,y,z of each bone and assigns mix of two movements in proportion to currentMovement. negativeMasterMovement is for returning to neutral
+        //Object.keys( movementsArray[singleMove].AUs ).forEach( function( AU ) {
 
-            Object.keys( movementsArray[singleMove].AUs[AU] ).forEach( function( bone ) {
+            //Object.keys( movementsArray[singleMove].AUs[AU] ).forEach( function( bone ) {
 
-                if ( calculatedMovement.AUs[AU][bone] === undefined ) {
+                //if ( calculatedMovement.AUs[AU][bone] === undefined ) {
 
-                    calculatedMovement.AUs[AU][bone] = movementsArray[singleMove].AUs[AU][bone];
+                    //calculatedMovement.AUs[AU][bone] = movementsArray[singleMove].AUs[AU][bone];
 
-                } else {
+                //} else {
 
-                    // dont need pos now
-                    //for ( var j=0; j < 2; j++ ) {
+                    //// dont need pos now
+                    ////for ( var j=0; j < 2; j++ ) {
 
-                        for ( var k=0; k < 3; k++ ) {
+                        //for ( var k=0; k < 3; k++ ) {
                             
-                            calculatedMovement.AUs[AU][bone][ 1 ][ k ] += movementsArray[singleMove].AUs[AU][bone][ 1 ][ k ];
+                            //calculatedMovement.AUs[AU][bone][ 1 ][ k ] += movementsArray[singleMove].AUs[AU][bone][ 1 ][ k ];
                             
-                        }
+                        //}
 
-                    //}
+                    ////}
 
-                }
+                //}
 
-            })
+            //})
 
-        })
+        //})
 
-    }
+    //}
 
-    createRelativeMovement( calculatedMovement );
-}
+    //createRelativeMovement( calculatedMovement );
+//}
 
 
 function getAbsoluteCoordsOfMovementNow() {
@@ -268,48 +188,24 @@ function getAbsoluteCoordsOfMovementNow() {
 
     Object.keys( absMovement.AUs.AU2 ).forEach( function( key ) {
 
-        // rot x
-       
         absMovement.AUs.AU2[ key ][ 1 ][ 0 ] = tiaObject.faceBones[ key + '.L'  ].rotation.x;
-
-        // rot y
-        
         absMovement.AUs.AU2[ key ][ 1 ][ 1 ] = tiaObject.faceBones[ key + '.L'  ].rotation.y;
-
-        // rot z
-        
         absMovement.AUs.AU2[ key ][ 1 ][ 2 ] = tiaObject.faceBones[ key + '.L'  ].rotation.z;
 
     })
         
     Object.keys( absMovement.AUs.AU2b ).forEach( function( key ) {
 
-        // rot x
-       
         absMovement.AUs.AU2b[ key ][ 1 ][ 0 ] = tiaObject.bodyBones[ key + '.L'  ].rotation.x;
-
-        // rot y
-        
         absMovement.AUs.AU2b[ key ][ 1 ][ 1 ] = tiaObject.bodyBones[ key + '.L' ].rotation.y;
-
-        // rot z
-        
         absMovement.AUs.AU2b[ key ][ 1 ][ 2 ] = tiaObject.bodyBones[ key + '.L'  ].rotation.z;
 
     })
         
     Object.keys( absMovement.AUs.AU1 ).forEach( function( key ) {
-
-        // rot x
        
         absMovement.AUs.AU1[ key ][ 1 ][ 0 ] = tiaObject.faceBones[ key ].rotation.x;
-
-        // rot y
-        
         absMovement.AUs.AU1[ key ][ 1 ][ 1 ] = tiaObject.faceBones[ key ].rotation.y;
-
-        // rot z
-        
         absMovement.AUs.AU1[ key ][ 1 ][ 2 ] = tiaObject.faceBones[ key ].rotation.z;
 
     })
@@ -317,36 +213,15 @@ function getAbsoluteCoordsOfMovementNow() {
     //Mouth Jaw Inner is part of a different object and so needs to be done separately
     Object.keys( absMovement.AUs.AU1b ).forEach( function( key ) {
 
-        // rot x
-       
         absMovement.AUs.AU1b[ key ][ 1 ][ 0 ] = tiaObject.bodyBones[ key ].rotation.x;
-
-        // rot y
-        
         absMovement.AUs.AU1b[ key ][ 1 ][ 1 ] = tiaObject.bodyBones[ key ].rotation.y;
-
-        // rot z
-        
         absMovement.AUs.AU1b[ key ][ 1 ][ 2 ] = tiaObject.bodyBones[ key ].rotation.z;
         
     })
 
-    //absMovement.sacc = [[0,0,0],[tiaObject.eyeBones['eyeL'].rotation.x, tiaObject.eyeBones['eyeL'].rotation.y, 0 ]]
-
     return absMovement;
 
 }
-
-//function resetMovement() {
-
-    //absCurMovement = getAbsoluteCoordsOfMovementNow();
-    //masterMovementState = $.extend( true, {}, absCurMovement );
-    //createRelativeMovement( studentMovement );
-    //initMovement( relativeMovement, '0.5', '1.5' );
-    //masterMovementState = $.extend( true, {}, studentMovement );
-
-//}
-
 
 function newTilt( boneObject ) {
 

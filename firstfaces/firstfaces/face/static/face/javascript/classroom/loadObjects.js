@@ -56,11 +56,11 @@ function addClassroom( geom, mat ) {
 
 function addLights() {
 
-    pointLight = new THREE.PointLight( 0xe0fffa, 0.5, 0 );
+    pointLight = new THREE.PointLight( 0xe0fffa, 0.55, 0 );
     pointLight.position.set( POINTLIGHT_POS.x,  POINTLIGHT_POS.y, POINTLIGHT_POS.z );
     scene.add( pointLight );
 
-    ambientLight = new THREE.AmbientLight( 0xffffff, 1.0 );
+    ambientLight = new THREE.AmbientLight( 0xffffff, 0.9 );
     scene.add( ambientLight )
 
 }
@@ -86,10 +86,13 @@ function addTia() {
 
         tiaObject.mBody.position.set( BODY_POS.x, BODY_POS.y, BODY_POS.z );
 
+        loader.load( face, addFace) 
+    
     }
 
     function addFace( geom, mat ) {
 
+        console.log(' in addface ');
         // load the materials for the skin, lips and eyebrows
         mat[0].skinning = true;
         mat[1].skinning = true;
@@ -98,23 +101,26 @@ function addTia() {
         mat[1].morphtargets = true;
         mat[2].morphtargets = true;
 
-        tiaObject.mFace = new THREE.SkinnedMesh( geom, mat );
+        let mFace = new THREE.SkinnedMesh( geom, mat );
 
         // iterate over the bones in the JSON file and put them into the global faceBones object. Call bones with faceBones["<bone name>"] 
-        for (var i=0; i<tiaObject.mFace.skeleton.bones.length; i++) {
+        for (var i=0; i<mFace.skeleton.bones.length; i++) {
             
-            tiaObject.faceBones[tiaObject.mFace.skeleton.bones[i].name] = tiaObject.mFace.skeleton.bones[i];
+            tiaObject.faceBones[mFace.skeleton.bones[i].name] = mFace.skeleton.bones[i];
 
         }
         
-        tiaObject.mFace.position.set( FACE_POS.x, FACE_POS.y, FACE_POS.z );
-        tiaObject.mFace.rotation.set( FACE_ROT.x, FACE_ROT.y, FACE_ROT.z );
-        tiaObject.bodyBones.spineUpperInner.add( tiaObject.mFace );
+        mFace.position.set( FACE_POS.x, FACE_POS.y, FACE_POS.z );
+        mFace.rotation.set( FACE_ROT.x, FACE_ROT.y, FACE_ROT.z );        
+        tiaObject.bodyBones.spineUpperInner.add( mFace );
 
+        loader.load( mouth, addMouth ) 
+    
     }
 
     function addMouth( geom, mat ) {
 
+        console.log(' in addMouth ');
         // load the materials for the skin, lips and eyebrows
         mat[0].skinning = true;
         mat[1].skinning = true;
@@ -134,6 +140,7 @@ function addTia() {
 
         tiaObject.faceBones.head.add( tiaObject.mMouth );
 
+        loader.load( eye, addEyes)
 
     }
 
@@ -164,6 +171,8 @@ function addTia() {
         tiaObject.eyeBones.eyeL.rotation.set( EYEL_ROT.x, EYEL_ROT.y, EYEL_ROT.z );
         tiaObject.eyeBones.eyeR.rotation.set( EYER_ROT.x, EYER_ROT.y, EYER_ROT.z );
 
+        loader.load( hair, addHair)
+    
     }
 
     function addHair( geom, mat ) {
@@ -176,31 +185,12 @@ function addTia() {
         // again, parent to headbone
         tiaObject.faceBones.head.add( tiaObject.mHair );
 
-        //addHeadBodyToScene();
+        scene.add( tiaObject.mBody );
+        setBaseExpressionsMovements(); // do this after all of Tia is loaded
+
     }
         
-      
-    loader.load( body, addBody, function() {
-        
-        loader.load( face, addFace, function() {
-            
-            loader.load( mouth, addMouth, function() {
-             
-                loader.load( eye, addEyes, function() {
-                    
-                    loader.load( hair, addHair, function() {
-                     
-                        scene.add( tiaObject.mBody );
-                        
-                    });
-                    
-                });
-                
-            });
-        
-        });
-        
-    });
+    loader.load( body, addBody);    
 
 }
 
@@ -322,9 +312,9 @@ function loadAllTextElements() {
 
 function setBaseExpressionsMovements() {
 
-    expressionBase = getAbsoluteCoordsOfExpressionNow(); // get absolute position of base expression
-    expressionNow = $.extend( true, {}, expressionBase ); // create a copy of this for expression now
-    getAbsoluteCoordsOfMainExpressions(); // gets coordinates for all main expressions
+    //expressionBase = getAbsoluteCoordsOfExpressionNow(); // get absolute position of base expression
+    //expressionNow = $.extend( true, {}, expressionBase ); // create a copy of this for expression now
+    //getAbsoluteCoordsOfMainExpressions(); // gets coordinates for all main expressions
     
     movementBase = getAbsoluteCoordsOfMovementNow(); // same as above for movements
     movementNow = $.extend( true, {}, movementBase );
@@ -464,15 +454,9 @@ function init() {
     //showQuestionStreak();
 
 
-    //// SET BASE EXPRESSIONS AND MOVEMENTS \\\\
-
-    //setBaseExpressionsMovements();
-
-
     //// SET CAMERAS AND TIA UP DEPENDING ON ENTER OR REENTER \\\\
 
     enterOrReEnter();
-
 
     animate();
 

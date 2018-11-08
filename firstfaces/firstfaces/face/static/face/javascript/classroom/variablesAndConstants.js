@@ -17,7 +17,7 @@ const CAMERA_SIT_TO_BOARD_ROT = { x: 0.1, y: 0.6, z: 0 };
 
 //// LIGHT \\\\
 
-const POINTLIGHT_POS = { x: 50, y: 10, z: 60 };
+const POINTLIGHT_POS = { x: 50, y: 30, z: 60 };
 
 
 //// TIA BODY PARTS POSITIONS AND ROTATIONS \\\\
@@ -26,8 +26,8 @@ const BODY_POS = { x: 0, y: -18.5, z: 7.2 };
 const FACE_POS = { x: 0, y: 18.9, z: 2.7 };
 const FACE_ROT = { x: 0.0925, y: 0, z: 0 };
 const MOUTH_ROT = { x: 0, y: 5.53, z: 1.93 };
-const EYEL_POS = { x: 0.02, y: 5.6, z: 1.92 };
-const EYER_POS = { x: -3.08, y: 5.6, z: 1.92 };
+const EYEL_POS = { x: 0.03, y: 5.57, z: 1.92 };
+const EYER_POS = { x: -3.09, y: 5.57, z: 1.92 };
 const EYEL_ROT = { x: -0.02, y: -0.055, z: 0 };
 const EYER_ROT = { x: -0.02, y: 0.055, z: 0 };
 
@@ -43,7 +43,6 @@ function eyeLineOfSightHelper() {
     tiaObject.eyeBones.eyeR.add( cube2 );
 
 }
-
 
 //// SENTENCE BACKGROUND \\\\
 
@@ -77,11 +76,6 @@ const charY = 2.8; // length (y) of one char on board
 const lineX = -28;
 const lineY = [ 10, 4, -2, -8, -14 ];
 const speechLineY = [ 10, 6, 2, -2, -6, -10, -14 ];
-
-
-//// TIA'S EYE ROTATION SO NOT STARING BLANKLY INTO DISTANCE \\\\
-
-const TIA_EYES_NON_PARALLEL_OFFSET = 0.025;
 
 
 //// MOVEMENTS \\\\
@@ -241,8 +235,8 @@ var movements = {
         'sacc': [[0,0,0],[0,0,0]]
     },
 
-    'confused01': {
-        'name': 'confused01',
+    'confused': {
+        'name': 'confused',
         'AUs': {
             'AU1': {
                 'head': [[0, 0, 0], [0.15, 0.25, 0]],

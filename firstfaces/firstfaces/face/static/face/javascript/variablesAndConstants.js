@@ -1,10 +1,44 @@
 ///////////// SINE ARRAYS
 
-const SINEARRAYSECONDS = [ 3, 6, 10, 15, 20, 30, 40, 50, 60, 90, 120, 180, 210, 240, 270, 300, 360, 480, 600 ];
+const SINEARRAYFRAMES = [ 3, 6, 9, 12, 15, 18, 21, 25, 30, 40, 50, 60, 75, 90, 120, 180, 210, 240, 270, 300, 360, 420, 480, 540, 600 ];
+
+//// converts seconds to the number of frames
+function secsToFrames( secs ) {
+
+    let frames =  Math.floor( secs * 60 );
+
+    var difference;
+    let finalFrames = 3;
+    let index = 0;
+    SINEARRAYFRAMES.forEach( function( f ) {
+
+        if ( index === 0 ) {
+
+            difference = Math.abs( f - frames );
+            index = 1;
+
+        } else {
+
+            tempDiff = Math.abs( f - frames );
+            
+            if ( tempDiff < difference ) {
+
+                difference = tempDiff;
+                finalFrames = f;
+
+            }
+
+        }
+
+    })
+
+    return finalFrames;
+
+}
 
 var sineArrays = {};
-var quickTurnaroundSineArrays = {};
-var cumSineArrays = {}
+var quickTurnaroundSineArrays = {};// for nodding
+var cumSineArrays = {}// for camera
 
 function sinCalc(amount, total_frames, this_frame) {
     return (amount / total_frames) * Math.sin((2 * Math.PI * this_frame / total_frames) - Math.PI / 2) + (amount / total_frames);
@@ -14,7 +48,7 @@ function sinCalcQuickTurnaround(amount, total_frames, this_frame) {
     return (amount / total_frames) * Math.sin(Math.PI * this_frame / total_frames);
 }
 
-for ( let secs of SINEARRAYSECONDS ) {
+for ( let secs of SINEARRAYFRAMES ) {
 
     let singleSineArray = [];
     let singleCumSineArray = [];
@@ -40,69 +74,12 @@ for ( let secs of SINEARRAYSECONDS ) {
 
 };
 
-function assignSinArrayForSpeed( speed, object, sArrays ) {
+function assignSinArrayForSpeed( secs, object, sArrays ) {
 
-    if ( speed === "0.05" ) {
+    //// get no of frames from the seconds input
+    let frames = secsToFrames( secs );
 
-        object[ 'sin' ] = sArrays[ '3' ];
-
-    } else if ( speed === "0.1" ) {
-
-        object[ 'sin' ] = sArrays[ '6' ];
-
-    } else if ( speed === "0.25" ) {
-
-        object[ 'sin' ] = sArrays[ '15' ];
-
-    } else if ( speed === "0.5" ) {
-
-        object[ 'sin' ] = sArrays[ '30' ];
-
-    } else if ( speed === "0.75" ) {
-
-        object[ 'sin' ] = sArrays[ '45' ];
-        
-    } else if ( speed === "1" ) {
-
-        object[ 'sin' ] = sArrays[ '60' ];
-
-    } else if ( speed === "1.5" ) {
-
-        object[ 'sin' ] = sArrays[ '90' ];
-
-    } else if ( speed === "2" ) {
-
-        object[ 'sin' ] = sArrays[ '120' ];
-
-    } else if ( speed === "3" ) {
-
-        object[ 'sin' ] = sArrays[ '180' ];
-
-    } else if ( speed === "4" ) {
-
-        object[ 'sin' ] = sArrays[ '240' ];
-
-    } else if ( speed === "5" ) {
-
-        object[ 'sin' ] = sArrays[ '300' ];
-
-    } else if ( speed === "6" ) {
-
-        object[ 'sin' ] = sArrays[ '360' ];
-
-    } else if ( speed === "8" ) {
-
-        object[ 'sin' ] = sArrays[ '480' ];
-
-    } else if ( speed === "10" ) {
-
-        object[ 'sin' ] = sArrays[ '600' ];
-
-    } else {
-
-        alert( "That is not a proper speed!");
-
-    }
+    object[ 'sin' ] = sArrays[ frames.toString() ];
 
     object.sinLength = object.sin.length;
     
