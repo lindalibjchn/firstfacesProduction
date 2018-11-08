@@ -5,10 +5,10 @@ $(window).on( 'load', function() {
     init();
 
     //get audio ready
-    readyBtns();
+    //readyBtns();
 
     //fill prevSents
-    loadPrevSents( scrollBottom );
+    //loadPrevSents( scrollBottom );
     
 });
 

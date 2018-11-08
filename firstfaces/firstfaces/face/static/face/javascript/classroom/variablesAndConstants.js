@@ -1,45 +1,90 @@
-var classTimeMinutes = 30;
+const CLASS_TIME_MINUTES = 30;
 
-//////////////////// MOVEMENTS //////////////////////////
+//// CAMERA \\\\
 
+const CAMERA_ENTER_POS = { x: -48, y: 5, z: 120 }
+const CAMERA_ENTER_ROT = { x: -0.1, y: 0.3, z: 0 }
 
-////////// CAMERA
+const CAMERA_DESK_POS = { x: -10, y: 5, z: 49 }
+const CAMERA_DESK_ROT = { x: -0.15, y: -0.2, z: 0 }
 
-const CAMERA_ENTER_POSITION_X = -48;
-const CAMERA_ENTER_POSITION_Y = 5;
-const CAMERA_ENTER_POSITION_Z = 120;
+const CAMERA_SIT_POS = { x: 0, y: -2, z: 39 };
 
-const CAMERA_ENTER_ROTATION_X = -0.1;
-const CAMERA_ENTER_ROTATION_Y = -0.3;
-
-const CAMERA_DESK_POSITION_X = -10;
-const CAMERA_DESK_POSITION_Y = 5;
-const CAMERA_DESK_POSITION_Z = 49;
-
-const CAMERA_DESK_ROTATION_X = -0.15;
-const CAMERA_DESK_ROTATION_Y = -0.2;
-
-const CAMERA_POSITION_X = 0;
-const CAMERA_POSITION_Y = -2;
-const CAMERA_POSITION_Z = 39;
-
-const CAMERA_ROTATION_LAPTOP_X = -0.25;
-const CAMERA_ROTATION_LAPTOP_Y = 0;
-
-const CAMERA_ROTATION_TIA_X = 0;
-const CAMERA_ROTATION_TIA_Y = 0;
-
-const CAMERA_ROTATION_BOARD_X = 0.1;
-const CAMERA_ROTATION_BOARD_Y = 0.6;
+const CAMERA_SIT_TO_LAPTOP_ROT = { x: -0.25, y: 0, z: 0 };
+const CAMERA_SIT_TO_TIA_ROT = { x: 0, y: 0, z: 0 };
+const CAMERA_SIT_TO_BOARD_ROT = { x: 0.1, y: 0.6, z: 0 };
 
 
-// Tia rotate eyes, head and body between board laptop and student
+//// LIGHT \\\\
+
+const POINTLIGHT_POS = { x: 50, y: 10, z: 60 };
+
+
+//// TIA BODY PARTS POSITIONS AND ROTATIONS \\\\
+
+const BODY_POS = { x: 0, y: -18.5, z: 7.2 };
+const FACE_POS = { x: 0, y: 18.9, z: 2.7 };
+const FACE_ROT = { x: 0.0925, y: 0, z: 0 };
+const MOUTH_ROT = { x: 0, y: 5.53, z: 1.93 };
+const EYEL_POS = { x: 0.02, y: 5.6, z: 1.92 };
+const EYER_POS = { x: -3.08, y: 5.6, z: 1.92 };
+const EYEL_ROT = { x: -0.02, y: -0.055, z: 0 };
+const EYER_ROT = { x: -0.02, y: 0.055, z: 0 };
+
+
+//// if this is called then it adds lines for each eyeball to show the line of sight
+function eyeLineOfSightHelper() {
+
+    var geometry = new THREE.BoxGeometry( 0.1, 0.1, 80 );
+    var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+    var cube = new THREE.Mesh( geometry, material );
+    var cube2 = new THREE.Mesh( geometry, material );
+    tiaObject.eyeBones.eyeL.add( cube );
+    tiaObject.eyeBones.eyeR.add( cube2 );
+
+}
+
+
+//// SENTENCE BACKGROUND \\\\
+
+//// 56 chars per line with one extra space at the beginning sent and correction take 3 each, gap of 1 between sent and correct, and gap of 2 between corr and next sent
+const sentBackLen = { x: 57, y: 26, z: 0 };
+const sentBackPOS = { x: -32, y: 3, z: 0 };
+const sentBackROT = { x: 0, y: 1.2, z: 0 };
+
+const correctionBackPOSY = 0.5;
+
+
+//// SPEECH BUBBLE \\\\
+
+const speechBubblePOS = { x: -13, y: 2, z: 14 };
+const speechBubbleSCALE = { x: 5, y: 6, z: 1 };
+const speechBubbleROT = { x: 0, y: 0.2, z: 0 };
+
+
+//// SPEECH BUBBLE BACKGROUND \\\\
+
+const speechBubbleBackLen = { x: 10.5, y: 6.5, z: 0 };
+const speechBubbleBackPOS = { x: 0, y: 0, z: 0.01 }; // slightly appear in front of the actual bubble
+const speechBubbleBackSCALE = { x: 0.28, y: 0.32, z: 1 };
+
+
+//// CHARACTER POSITIONS \\\\
+
+const charsInOneLine = 44;
+const charX = 1.3; // length (x) of one char on beard
+const charY = 2.8; // length (y) of one char on board
+const lineX = -28;
+const lineY = [ 10, 4, -2, -8, -14 ];
+const speechLineY = [ 10, 6, 2, -2, -6, -10, -14 ];
+
+
+//// TIA'S EYE ROTATION SO NOT STARING BLANKLY INTO DISTANCE \\\\
 
 const TIA_EYES_NON_PARALLEL_OFFSET = 0.025;
 
 
-
-//////// BODY
+//// MOVEMENTS \\\\
 
 var movementObject = {
     'bool': false,
@@ -49,21 +94,6 @@ var movementObject = {
     'sinLength': 0,
 }
 
-//var movementProt = {
-    //'AUs': {
-        //'AU1': {},
-        //'AU1b': {},
-        //'AU2': {},
-        //'AU2b': {},
-    //},
-    //'sacc': [[0,0,0],[0,0,0]],
-//};
-
-//var masterMovementState = $.extend(true, {}, blankMovement);
-////var calculatedMovement = $.extend(true, {}, blankMovement);
-//var relativeMovement = $.extend(true, {}, blankMovement);
-//var absNeutralMovement;
-//var absCurMovement;
 
 var movements = {
 
@@ -842,316 +872,11 @@ var calculatedTalkExpression;
 const secsOneBreath = 180;
 
 
-///////////// SENTENCE ON BOARD
-
-//56 chars per line with one extra space at the beginning
-const sentBackLenX = 57;
-
-// sent and correction take 3 each, gap of 1 between sent and correct, and gap of 2 between corr and next sent
-const sentBackLenY = 26;
-
-const speechBubbleBackLenX = 58;
-const speechBubbleBackLenY = 26;
-
-const sentBackVisiblePOSX = -32;
-const sentBackNotVisiblePOSX = -33;
-const sentBackPOSY = 3;
-const correctionBackPOSY = 0.5;
-const sentBackPOSZ = 0;
-const sentBackRotY = 1.2;
-const speechBubbleBackPOSX = -13;
-const speechBubbleBackPOSY = 1.5;
-const speechBubbleBackPOSZ = 13;
-const speechBubbleBackRotY = 0.2;
-
-const charsInOneLine = 44;
-const charX = 1.3;
-const charY = 2.8;
-const lineX = -28;
-const lineY = [ 10, 4, -2, -8, -14 ];
-const speechLineY = [ 10, 6, 2, -2, -6, -10, -14 ];
-
 ///////////// SINE ARRAYS
 
 //const SINETYPEARRAYSECONDS = [ 30, 45, 60 ];
 const SINEARRAYFORBREATHESECONDS = [ 180, 210, 240, 270, 300 ]
 
-
-
-/////////////////// OBJECTS
-
-
-// sentence stuff
-
-var sentenceObject = {
-    alphabetDict: {},
-    background: {},
-    sentence: "",
-    splitIndexes: [],
-    cloneLetters: [],
-    wrongIndexes: [],
-}
-
-var correctionObject = {
-    correctionBackground: {},
-    highlightBackground: {},
-    cloneLetters: [],
-    splitIndexes: [],
-    correctionsIndexes: [],
-    corrections: [],
-    correctionString: ""
-}
-
-var speechBubbleObject = {
-    bubble: {},
-    background: {},
-    cloneLetters: [],
-    splitIndexes: [],
-    sentence: " Yo hey this is gonna be my speech which will be coming out at a rate of fifty million words per second and that may be a a a difficult to understand." 
-}
-// movement stuff
-
-// controls all movements on first entry to class
-var mainEnterObject = {
-    bool: false
-}
-
-var cameraObject = {
-    'currentState': 'tia',
-    'bool': false,
-    'startCount': 0,
-    'sin': cumSineArrays[ '120' ],
-    'sinLength': 0,
-};
-
-//second cameraObject for entry
-var enterCameraObject = {
-    'currentState': 'door',
-    'bool': false,
-    'startCount': 0,
-    'sin': cumSineArrays[ '120' ],
-    'sinLength': 0,
-};
-
-
-var tiaObject = {
-    'currentState': 'student',
-    'bool': false,
-    'startCount': 0,
-    'sin': cumSineArrays[ '60' ],
-    'sinLength': 0,
-    'faceBones': {},
-    'hairBones': {},
-    'bodyBones': {},
-    'eyeBones': {}
-};
-
-//var headObject = {
-    //'rotationY': 0,
-    //'rotationYAmount': 0,
-    //'rotationYMult': 0,
-    //'bool': false,
-    //'startCount': 0,
-    //'sin': [],
-    //'sinLength': 0,
-//}
-
-var mouthObject = {
-    'bool': false,
-    'startCount': 0,
-    'sin': sineArrays[ '60' ],
-    'sinLength': 0,
-    'mouthBones': {},
-    'jawRotation': 0,
-    'jawRotationAmount': 0,
-    'rotationMult': 0,
-    'opening': true,
-};
-
-///// CONSTRUCTOR FUNCTION
-
-function MoveObj() {
-
-    this.neutralCoords = [[0,0,0],[0,0,0]];
-    this.currentCoords = [[0,0,0],[0,0,0]];
-    this.movementCoords = [[0,0,0],[0,0,0]];
-    this.bool = false;
-    this.dir = 1;
-    this.startCount = 0;
-    this.sin = [];
-    this.sinLengh = 0;
-
-}
-
-var eyeObject = new MoveObj();
-eyeObject.name = 'eye'
-
-var eyelidObject = new MoveObj();
-eyelidObject.coords = {
-    close: 1,
-    beforeBlinkUpper: 0,
-    beforeBlinkLower: 0,
-    currentUpper: 0,
-    currentLower: 0,
-    movementUpper: 0,
-    movementLower: 0
-}
-eyelidObject.name = 'eyelid';
-
-var eyebrowObject = new MoveObj();
-eyebrowObject.coords = {
-    raised: [[1, 1, 0], [0, 0, 0]]
-}
-eyebrowObject.name = 'eyebrow';
-
-var leanObject = new MoveObj();
-leanObject.coords = {
-    middle: [[0, 0, 0], [0, 0, 0]],
-    close: [[0, 0, 0], [0.1, 0, 0]],
-    far: [[0, 0, 0], [-0.1, 0, 0]]
-}
-leanObject.name = 'lean';
-
-
-
-//////// EXPRESSION OBJECTS
-
-function ExpressionObj() {
-
-    this.bool = false;
-    this.dir = 1;
-    this.startCount = 0;
-    this.sin = [];
-    this.sinLengh = 0
-
-}
-
-var happyObject = new ExpressionObj();
-
-var contentObject = new ExpressionObj();
-
-var sadObject = new ExpressionObj();
-
-var fearObject = new ExpressionObj();
-
-var disgustObject = new ExpressionObj();
-
-var confusedObject = new ExpressionObj();
-
-
-
-var normalBlinkObject = {
-    'bool': false,
-    'nextBlinkCount': 60, 
-}
-
-var blinkNowObject = {
-    'bool': false,
-    'countdown': 8,
-}
-
-var breatheObject = {
-    'sin': sineArrays[ secsOneBreath.toString() ],
-    'scaleMult': 0.4 / secsOneBreath,
-    // from experimenting the y position of shoulder is 13 times greater than scale of upperspine
-    'yPosMult': 40 / secsOneBreath,
-    'direction': -1,
-};
-
-var spineRandomTiltObject = {
-    'startCount': 0,
-    'sin': sineArrays[ '120' ],
-    'sinLength': 120,
-    'mult': 0.3, 
-    'direction': Math.random() < 0.5 ? -1 : 1,
-    // call the sway to and fro
-    'to': true,
-}
-
-var neckRandomTiltObject = {
-    'startCount': 0,
-    'sin': sineArrays[ '180' ],
-    'sinLength': 180,
-    'mult': 0.2, 
-    'direction': Math.random() < 0.5 ? -1 : 1,
-    // call the sway to and fro
-    'to': true,
-}
-
-var purseLipsObject = {
-    'bool': false,
-    'startCount': 0,
-    'sin': [ ],
-    'sinLength': 0,
-    'amount': 0,
-};
-
-var mouthOpenObject = {
-    'bool': false,
-    'startCount': 0,
-    'sin': [ ],
-    'sinLength': 0,
-    'amount': 0,
-};
-
-var nodObject = {
-    'bool': false,
-    'startCount': 0,
-    'sin': [ ],
-    'sinLength': 0,
-    'amount': 0,
-    'decay': [ 0.3, -0.35, 0.3, -0.275, 0.2, -0.175 ],
-    'iter': 0,
-};
-
-var shakeObject = {
-    'bool': false,
-    'startCount': 0,
-    'sin': [ ],
-    'sinLength': 0,
-    'amount': 0,
-    'decay': [ 0.2, -0.4, 0.35, -0.3, 0.225, -0.075 ],
-    'iter': 0,
-};
-
-var armIndicateObject = {
-    'currentState': 0,
-    'startCount': 0,
-    'sin': [],
-    'sinLength': 0,
-    'bool': false,
-}
-
-var talkObject = {
-}
-
-// FULL MOVEMENT OBJECTS
-
-//var backNReadALineObject = {
-    //// states 0,1,2,3,4 for middle, start and 3 saccades to end of line
-    //'state': 0,
-    //'bool': false
-//}
-
-
-// SPEECH STUFF
-
-var synthesisObject = {
-    textFromSpeech: "",
-    text: "",
-    pitch: 0,
-    speaking_rate: 0.85,
-}
-
-var tiaThinkingObject = {
-
-    thinking: false,
-    startX: - 0.1,
-    startY: 0.2,
-    maxX: 0.075,
-    maxY: 0.15,
-
-}
 
 
 

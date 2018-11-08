@@ -1,13 +1,14 @@
 //////////////// LOAD SCENE AND OBJECTS \\\\\\\\\\\\\\\\\\\\\
 
-//////////////// VARIABLES
-
-var scene, camera, renderer, light;
-var mFace, mHair, mEyes, mClassroom;
-    
+var scene, renderer, camera;
+var pointLight, ambientLight;
+var loader, fontloader;
 
 // this count increases by 1 after each frame refresh. 60 per second.
 var mainCount = 0;
+
+
+//// FUNCTIONS TO BE CALLED IN INIT() \\\\
 
 function dealWithResizing() {
 
@@ -39,69 +40,36 @@ function addCamera() {
 
 }
 
-// load all the objects
-function init() {
+function addClassroom( geom, mat ) {
 
-    
-    // SCENE \\
-    
-    scene = new THREE.Scene();
-    
+    mClassroom = new THREE.Mesh( geom, mat );
+    mClassroom.scale.set(12,12,12);
 
-    // WINDOW \\
+    // classroom is at weird height and angle to the avatar. Avatar contains many pieces and so it is easier to change positiona and rotation of the space
+    mClassroom.position.set(-40,-40,10)
+    mClassroom.rotation.y += 1.2;
 
-    WIDTH = window.innerWidth;
-    HEIGHT = window.innerHeight - 22;
-    dealWithResizing();
+    scene.add( mClassroom );
 
 
-    // RENDERER \\
+}
 
-    renderScene();
+function addLights() {
 
-
-    // CAMERA \\
-
-
-    // CAMERA CONTROLS \\
-
-    // uncomment this to have manual control over the camera
-    //controls = new THREE.OrbitControls( camera, renderer.domElement );
-
-
-    // LIGHTS \\
-
-    var pointLight = new THREE.PointLight( 0xe0fffa, 0.5, 0 );
-    pointLight.position.set( 50, 10, 60 );
+    pointLight = new THREE.PointLight( 0xe0fffa, 0.5, 0 );
+    pointLight.position.set( POINTLIGHT_POS.x,  POINTLIGHT_POS.y, POINTLIGHT_POS.z );
     scene.add( pointLight );
 
-    var ambientLight = new THREE.AmbientLight( 0xffffff, 1.0 );
+    ambientLight = new THREE.AmbientLight( 0xffffff, 1.0 );
     scene.add( ambientLight )
 
+}
 
-    // LOAD OBJECTS \\
-
-    var loader = new THREE.JSONLoader();
-    loader.load( classroom, addClassroom );
-
-    function addClassroom( geom, mat ) {
-
-        mClassroom = new THREE.Mesh( geom, mat );
-        mClassroom.scale.set(12,12,12);
-
-        // classroom is at weird height and angle to the avatar. Avatar contains many pieces and so it is easier to change positiona and rotation of the space
-        mClassroom.position.set(-40,-40,10)
-        mClassroom.rotation.y += 1.2;
-
-        scene.add( mClassroom );
-
-        loader.load( body, addBody );
-
-    }
+function addTia() {
 
     function addBody( geom, mat ) {
 
-        // load the materials for the hair and hair-tie. Only need 2 materials but JSON has all.
+        //// load the materials for the skin and jumper. Only need 2 materials but JSON has all.
         mat[0].skinning = true;
         mat[1].skinning = true;
         mat[0].morphtargets = true;
@@ -116,10 +84,7 @@ function init() {
 
         }
 
-        tiaObject.mBody.position.set( 0, -18.5, 7.2 );
-        // finish to callback to add next object
-        loader.load( face, addFace );
-
+        tiaObject.mBody.position.set( BODY_POS.x, BODY_POS.y, BODY_POS.z );
 
     }
 
@@ -142,11 +107,9 @@ function init() {
 
         }
         
-        tiaObject.mFace.position.set( 0, 18.9, 1.7 );
-        tiaObject.mFace.rotation.set( 0.05, 0, 0 );
+        tiaObject.mFace.position.set( FACE_POS.x, FACE_POS.y, FACE_POS.z );
+        tiaObject.mFace.rotation.set( FACE_ROT.x, FACE_ROT.y, FACE_ROT.z );
         tiaObject.bodyBones.spineUpperInner.add( tiaObject.mFace );
-        // finish to callback to next add object
-        loader.load( mouth, addMouth );
 
     }
 
@@ -158,21 +121,19 @@ function init() {
         mat[0].morphtargets = true;
         mat[1].morphtargets = true;
 
-        mouthObject.mMouth = new THREE.SkinnedMesh( geom, mat );
+        tiaObject.mMouth = new THREE.SkinnedMesh( geom, mat );
 
         // iterate over the bones in the JSON file and put them into the global faceBones object. Call bones with faceBones["<bone name>"] 
-        for (var i=0; i<mouthObject.mMouth.skeleton.bones.length; i++) {
+        for (var i=0; i<tiaObject.mMouth.skeleton.bones.length; i++) {
             
-            mouthObject.mouthBones[mouthObject.mMouth.skeleton.bones[i].name] = mouthObject.mMouth.skeleton.bones[i];
+            tiaObject.mouthBones[tiaObject.mMouth.skeleton.bones[i].name] = tiaObject.mMouth.skeleton.bones[i];
 
         }
 
-        mouthObject.mMouth.position.set( 0, 5.53, 1.93 );
+        tiaObject.mMouth.position.set( MOUTH_ROT.x, MOUTH_ROT.y, MOUTH_ROT.z );
 
-        tiaObject.faceBones.head.add( mouthObject.mMouth );
+        tiaObject.faceBones.head.add( tiaObject.mMouth );
 
-        // finish to callback to next add object
-        loader.load( eye, addEyes );
 
     }
 
@@ -192,86 +153,72 @@ function init() {
         tiaObject.faceBones.head.add( tiaObject.mEyeR );
 
         // manually set position
-        tiaObject.mEyeL.position.set( 0.02, 5.6, 1.92 );
-        tiaObject.mEyeR.position.set( -3.08, 5.6, 1.92 );
+        tiaObject.mEyeL.position.set( EYEL_POS.x, EYEL_POS.y, EYEL_POS.z );
+        tiaObject.mEyeR.position.set( EYER_POS.x, EYER_POS.y, EYER_POS.z  );
 
         // attach bones to global variables
         tiaObject.eyeBones.eyeL = tiaObject.mEyeL.skeleton.bones[0];
         tiaObject.eyeBones.eyeR = tiaObject.mEyeR.skeleton.bones[0];
 
         // rotate inwards so not staring inifinitely into distance
-        tiaObject.eyeBones.eyeL.rotation.y = -TIA_EYES_NON_PARALLEL_OFFSET;
-        tiaObject.eyeBones.eyeR.rotation.y = TIA_EYES_NON_PARALLEL_OFFSET;
-    
-        // finish to callback to add next object
-        loader.load( hair, addHair );
+        tiaObject.eyeBones.eyeL.rotation.set( EYEL_ROT.x, EYEL_ROT.y, EYEL_ROT.z );
+        tiaObject.eyeBones.eyeR.rotation.set( EYER_ROT.x, EYER_ROT.y, EYER_ROT.z );
 
     }
 
     function addHair( geom, mat ) {
 
-        // load the materials for the hair and hair-tie. Only need 2 materials but JSON has all.
-        //mat[0].skinning = true;
-        //mat[1].skinning = true;
-        //mat[0].morphtargets = true;
-        //mat[1].morphtargets = true;
-
-        //tiaObject.mHair = new THREE.SkinnedMesh( geom, mat );
         tiaObject.mHair = new THREE.Mesh( geom, mat );
 
-
-        // SKELETON HELPER \\
-        
-        //if ( skeleton ) {
-        
-            //hairSkeletonHelper = new THREE.SkeletonHelper( tiaObject.mHair );
-            //scene.add( hairSkeletonHelper );
-
-        //};
-        //// iterate over the bones in the JSON file and put them into the global hairBones object. Call bones with hairBones["<bone name>"] 
-        //for (var i=0; i<tiaObject.mHair.skeleton.bones.length; i++) {
-            
-            //tiaObject.hairBones[ tiaObject.mHair.skeleton.bones[i].name ] = tiaObject.mHair.skeleton.bones[i];
-
-        //}
-        
         // need to manually assign position again
         tiaObject.mHair.position.set( -0.1, 5.5, 1.9 );
         
         // again, parent to headbone
         tiaObject.faceBones.head.add( tiaObject.mHair );
 
-        addHeadBodyToScene();
+        //addHeadBodyToScene();
     }
         
-    function addHeadBodyToScene() {
+      
+    loader.load( body, addBody, function() {
+        
+        loader.load( face, addFace, function() {
+            
+            loader.load( mouth, addMouth, function() {
+             
+                loader.load( eye, addEyes, function() {
+                    
+                    loader.load( hair, addHair, function() {
+                     
+                        scene.add( tiaObject.mBody );
+                        
+                    });
+                    
+                });
+                
+            });
+        
+        });
+        
+    });
 
-        //scene.add( tiaObject.mFace );
-        scene.add( tiaObject.mBody );
+}
 
-        loadText();
+function loadAllTextElements() {
 
-    }
+    function loadAlphabet() {
 
-    function loadText() {
-
-        loadAlphabetNBackgrounds();
-
-        cameraAndTiaLookAt();
-
-    }
-
-    function loadAlphabetNBackgrounds() {
-
+        //// define all characters in the alphabet in a list - ['a', 'b', 'c',... ,'\t']
         let alphabet = ' abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890,.-_:?/#~()*&^%$@!£[<`||>]{}=+\\;\'\"\n\t'.split('');
-        let alphabetSet = new Set(alphabet);
 
-        let fontloader = new THREE.FontLoader();
+        fontloader = new THREE.FontLoader();
         
+        //// load the board_font from the template
         fontloader.load( board_font, function( font ) {
             
             let textGeom;
 
+            //// create a geom for every letter in the alphabet list
             for ( l=0; l<alphabet.length; l++ ) {
                 
                 textGeom = new THREE.TextGeometry( alphabet[l], {
@@ -279,433 +226,257 @@ function init() {
                     font: font,
                     size: 1.8,
                     height: 0.0,
-                    curveSegments: 1,
+                    curveSegments: 1, // keep this low for less vertices
 
                 });
 
                 let materials = [
-                    new THREE.MeshLambertMaterial( { color: 0xff0000, transparent:true, opacity: 0 } ),
+                    new THREE.MeshLambertMaterial( { color: 0xffffff, transparent:true, opacity: 0 } ),
                 ];
 
-                sentenceObject.alphabetDict[alphabet[l]] = new THREE.Mesh( textGeom, materials )
-                //scene.add( sentenceObject.alphabetDict[alphabet[l]] );
+                alphabetDict[alphabet[l]] = new THREE.Mesh( textGeom, materials )
 
             };
 
-            //parseText( sentenceObject, true, 0x2d2d2d );
-            //addCloneLettersToTextBackground( sentenceObject, lineY );
         });
 
-        //////////////////////    FONT BACKGROUND
-       
-        let fontBackgroundGeom = new THREE.PlaneGeometry( sentBackLenX, sentBackLenY );
-        let fontBackgroundMat = new THREE.MeshBasicMaterial( { color: 0x0000ff, transparent: true, opacity: 0 } );
-        sentenceObject.background = new THREE.Mesh(fontBackgroundGeom, fontBackgroundMat);
-        sentenceObject.background.position.set( sentBackVisiblePOSX, sentBackPOSY, sentBackPOSZ );
-        sentenceObject.background.rotation.set( 0, sentBackRotY, 0 );
-        scene.add( sentenceObject.background );
+    }
 
-        //////////////////////    WRONG HIGHLIGHTS
+    function loadSentenceBackground() {
+
+        let backgroundGeom = new THREE.PlaneGeometry( sentBackLen.x, sentBackLen.y );
+        let backgroundMat = new THREE.MeshBasicMaterial( { color: 0x0000ff, transparent: true, opacity: 0 } );
+        sentenceObject.background = new THREE.Mesh(backgroundGeom, backgroundMat);
+        sentenceObject.background.position.set( sentBackPOS.x, sentBackPOS.y, sentBackPOS.z );
+        sentenceObject.background.rotation.set( sentBackROT.x, sentBackROT.y, sentBackROT.z );
+
+    }
+
+    function loadWrongHighlights() {
        
         let highlightBackgroundGeom = new THREE.PlaneGeometry( charX, charY );
         let highlightBackgroundMat = new THREE.MeshBasicMaterial( { color: 0xffc4c4 } );
         correctionObject.highlight = new THREE.Mesh(highlightBackgroundGeom, highlightBackgroundMat);
-        scene.add( correctionObject.highlight );
 
+    }
 
-        /////////////////////    CORRECTION BACKGROUND
+    function loadCorrectionBackground() {
         
-        let correctionBackgroundGeom = new THREE.PlaneGeometry( sentBackLenX, sentBackLenY );
-        let correctionBackgroundMat = new THREE.MeshLambertMaterial( { /*color: 0x007f00,*/ transparent: true, opacity: 0 } );
-        correctionObject.correctionBackground = new THREE.Mesh(correctionBackgroundGeom, correctionBackgroundMat);
-        correctionObject.correctionBackground.position.set( sentBackVisiblePOSX, correctionBackPOSY, sentBackPOSZ );
-        correctionObject.correctionBackground.rotation.set( 0, sentBackRotY, 0 );
-        scene.add( correctionObject.correctionBackground );
+        let backgroundGeom = new THREE.PlaneGeometry( sentBackLen.x, sentBackLen.y );
+        let backgroundMat = new THREE.MeshLambertMaterial( { transparent: true, opacity: 0 } );
+        correctionObject.correctionBackground = new THREE.Mesh(backgroundGeom, backgroundMat);
+        correctionObject.correctionBackground.position.set( sentBackPOS.x, correctionBackPOSY, sentBackPOS.z );//just y position changes for sentenceObject.background as the correction shifts lower
+        correctionObject.correctionBackground.rotation.set( sentBackROT.x, sentBackROT.y, sentBackROT.z );
 
-        /////////////////////    SPEECH BUBBLE BACKGROUND
+    }
         
-        loader.load( speechBubble, addSpeechBubble );
+    function loadSpeechBubble() {
 
-        function addSpeechBubble( geom, mat ) {
+        loader.load( speechBubble, addSpeechBubbleJSON );
+
+        function addSpeechBubbleJSON( geom, mat ) {
+
+            //// this adds the actual bubble from the JSON file
 
             mat[0].transparent = true;
-            mat[0].opacity = 0;
+            mat[0].opacity = 1;
             mat[1].transparent = true;
-            mat[1].opacity = 0;
+            mat[1].opacity = 1;
             speechBubbleObject.bubble = new THREE.Mesh( geom, mat );
-            speechBubbleObject.bubble.scale.set(17,15,1);
-
-            let backgroundGeom = new THREE.PlaneGeometry( speechBubbleBackLenX, speechBubbleBackLenY );
-            let backgroundMat = new THREE.MeshBasicMaterial( { color: 0x000000, transparent: true, opacity: 0 } );
-            speechBubbleObject.background = new THREE.Mesh( backgroundGeom, backgroundMat );
-
-            speechBubbleObject.background.position.set(speechBubbleBackPOSX, speechBubbleBackPOSY, speechBubbleBackPOSZ )
-            speechBubbleObject.background.rotation.y += speechBubbleBackRotY;
-
-            speechBubbleObject.background.scale.set( 0.28, 0.32, 1 );
-            speechBubbleObject.bubble.material[0].opacity = 0.95; 
-            speechBubbleObject.bubble.material[1].opacity = 0.95; 
-
-            
-            speechBubbleObject.background.add( speechBubbleObject.bubble );
-            speechBubbleObject.bubble.position.set( 1.5, 0, -0.3);
+            speechBubbleObject.bubble.scale.set( speechBubbleSCALE.x, speechBubbleSCALE.y, speechBubbleSCALE.z );
+            speechBubbleObject.bubble.position.set( speechBubblePOS.x, speechBubblePOS.y, speechBubblePOS.z );
+            speechBubbleObject.bubble.rotation.set( speechBubbleROT.x, speechBubbleROT.y, speechBubbleROT.z )
+            addSpeechBubbleTextBackground();
 
         }
+
+        function addSpeechBubbleTextBackground() {
+
+            //// this adds the background where the letters can be added
+
+            let backgroundGeom = new THREE.PlaneGeometry( speechBubbleBackLen.x, speechBubbleBackLen.y, speechBubbleBackLen.z );
+            let backgroundMat = new THREE.MeshBasicMaterial( { transparent: true, opacity: 0 } );
+            
+            let background = new THREE.Mesh( backgroundGeom, backgroundMat );
+
+            background.position.set( speechBubbleBackPOS.x, speechBubbleBackPOS.y, speechBubbleBackPOS.z )
+
+            background.scale.set( speechBubbleBackSCALE.x, speechBubbleBackSCALE.x, speechBubbleBackSCALE.x );
+            
+            //// add this background to the main bubble
+            speechBubbleObject.bubble.add( background );
+
+            //scene.add( speechBubbleObject.bubble )
+
+        }
+
+    }
+
+    loadAlphabet();
+    loadSentenceBackground();
+    loadWrongHighlights();
+    loadCorrectionBackground();
+    loadSpeechBubble();
+
+};
+
+function setBaseExpressionsMovements() {
+
+    expressionBase = getAbsoluteCoordsOfExpressionNow(); // get absolute position of base expression
+    expressionNow = $.extend( true, {}, expressionBase ); // create a copy of this for expression now
+    getAbsoluteCoordsOfMainExpressions(); // gets coordinates for all main expressions
+    
+    movementBase = getAbsoluteCoordsOfMovementNow(); // same as above for movements
+    movementNow = $.extend( true, {}, movementBase );
+
+}
+
+function enterOrReEnter() {
+
+    //// on first enter the camera starts at the door and entrance sequence is run
+    function firstEnter() {
+
+        //movementController( movements.laptop, '0.1', '0.1' );
+
+        //initMainEnter();
+
+        camera.position.set( CAMERA_ENTER_POS );
+        camera.rotation.set( CAMERA_ENTER_ROT );
+
+    }
+
+    function reEnter( lookingAt ) {
+ 
+        camera.position.set( CAMERA_SIT_POS.x, CAMERA_SIT_POS.y, CAMERA_SIT_POS.z );
+        
+        if ( lookingAt === "tia" ) {
+
+            camera.rotation.set( CAMERA_SIT_TO_TIA_ROT.x, CAMERA_SIT_TO_TIA_ROT.y, CAMERA_SIT_TO_TIA_ROT.z );
+
+        } else if ( lookingAt === "laptop" ) {
+
+            camera.rotation.set( CAMERA_SIT_TO_LAPTOP_ROT.x, CAMERA_SIT_TO_LAPTOP_ROT.y, CAMERA_SIT_TO_LAPTOP_ROT.z );
+
+        } else if ( lookingAt === "board" ) {
+
+            camera.rotation.set( CAMERA_SIT_TO_BOARD_ROT.x, CAMERA_SIT_TO_BOARD_ROT.y, CAMERA_SIT_TO_BOARD_ROT.z );
+
+        }
+
+        //talkObject.learning = true;
+        //movementController( movements.student, '0.1', '0.1' );
+
+        // change these while making facial expressions
+        //initSmile('0.5', '0.1', smileClosedObject);
+        //setTimeout( function() {
+            
+            //whenAllMovFinished( function(){
+
+                //expressionController( expressionsAbs.neutral, '0.1', false );
+
+            //})
+
+            //if ( classVariableDict.classOver === false ) {
+            
+                //setTimeout( function() {
+                    
+                    //initInputReady('');
+                    //normalBlinkObject.bool = true;
+
+                //}, 1000)
+
+            //}
+
+        //}, 200 );
 
     };
 
-    function cameraAndTiaLookAt() {
-
-        // get absolute position of eyelids for blink
-        //eyelidsAbs.upperMiddle.open = tiaObject.faceBones[ 'eyelid_upper_middle.L' ].position.y
-        //eyelidsAbs.lowerMiddle.open = tiaObject.faceBones[ 'eyelid_lower_middle.L' ].position.y
-        //eyelidsAbs.upperMiddle.closed = eyelidsAbs.upperMiddle.open - 0.45;
-        //eyelidsAbs.lowerMiddle.closed = eyelidsAbs.lowerMiddle.open + 0.2;
-
-        // get absolute position of base expression
-        expressionBase = getAbsoluteCoordsOfExpressionNow();
-        expressionNow = $.extend( true, {}, expressionBase );
-        getAbsoluteCoordsOfMainExpressions();
+    //if first enter then run entrance animation else sitting at chair
+    if ( classVariableDict.first_enter ) {
         
-        movementBase = getAbsoluteCoordsOfMovementNow();
-        movementNow = $.extend( true, {}, movementBase );
+        firstEnter();
 
-        // put time remaining on screen
-        showTimeRemaining();
+    } else {
 
-        // show questionStreak
-        showQuestionStreak();
-
-        //if first enter then run entrance animation else sitting at chair
-        if ( classVariableDict.first_enter ) {
-            
-            movementController( movements.laptop, '0.1', '0.1' );
-
-            initMainEnter();
-
-            camera.position.set( 
-                    CAMERA_ENTER_POSITION_X, 
-                    CAMERA_ENTER_POSITION_Y, 
-                    CAMERA_ENTER_POSITION_Z 
-                );
-            camera.rotation.x = CAMERA_ENTER_ROTATION_X;
-            camera.rotation.y = CAMERA_ENTER_ROTATION_Y;
-
-        } else {
-
-            camera.position.set( 
-                    CAMERA_POSITION_X, 
-                    CAMERA_POSITION_Y, 
-                    CAMERA_POSITION_Z 
-                );
-            camera.rotation.x = CAMERA_ROTATION_TIA_X;
-            camera.rotation.y = CAMERA_ROTATION_TIA_Y;
-            
-            // camera looking at place in main.js - should be laptop
-            cameraLookingAt( 'laptop' );
-
-            talkObject.learning = true;
-            movementController( movements.student, '0.1', '0.1' );
-
-            // change these while making facial expressions
-            //initSmile('0.5', '0.1', smileClosedObject);
-            setTimeout( function() {
-                
-                whenAllMovFinished( function(){
-
-                    expressionController( expressionsAbs.neutral, '0.1', false );
-
-                })
-
-                if ( classVariableDict.classOver === false ) {
-                
-                    setTimeout( function() {
-                        
-                        initInputReady('');
-                        normalBlinkObject.bool = true;
-
-                    }, 1000)
-
-                }
-
-            }, 200 );
-
-        }
-
-        setTimeout( function() {
-            
-            $("#foreground").fadeOut( 1500 );
-            //absNeutralExpression = getAbsoluteCoordsOfExpressionNow();
-        
-        }, 1250 );
-
-        animate();
+        reEnter();
 
     }
 
+    //setTimeout( function() {
+        
+        //$("#foreground").fadeOut( 1500 );
+    
+    //}, 1250 );
 
-    function cameraLookingAt( cameraFocus ) {
+}
 
-        /**
 
-            Directs student's head toward focus of attention.
-            Arguments indicate place where looking.
+// load all the objects
+function init() {
+    
+    //// SCENE \\\\
+    
+    scene = new THREE.Scene();
+    
 
-            Called from loadObjects.js
+    //// WINDOW \\\\
 
-        **/
+    WIDTH = window.innerWidth;
+    HEIGHT = window.innerHeight - 22;
 
-        if ( cameraFocus === "tia" ) {
 
-            camera.rotation.x = CAMERA_ROTATION_TIA_X;
-            camera.rotation.y = CAMERA_ROTATION_TIA_Y;
+    //// RENDERER \\\\
 
-            cameraCurrentlyLookingAt = "tia";
-            cameraObject.currentState = "tia";
+    renderScene();
+    dealWithResizing();
 
-        } else if ( cameraFocus === "laptop" ) {
 
-            camera.rotation.x = CAMERA_ROTATION_LAPTOP_X;
-            camera.rotation.y = CAMERA_ROTATION_LAPTOP_Y;
+    //// CAMERA \\\\
 
-            cameraCurrentlyLookingAt = "laptop";
-            cameraObject.currentState = "laptop";
+    addCamera();
 
-        } else if ( cameraFocus === "board" ) {
 
-            camera.rotation.x = CAMERA_ROTATION_BOARD_X;
-            camera.rotation.y = CAMERA_ROTATION_BOARD_Y;
+    //// CAMERA CONTROLS \\\\
 
-            cameraCurrentlyLookingAt = "board";
-            cameraObject.currentState = "board";
+    controls = new THREE.OrbitControls( camera, renderer.domElement );
 
-        }
 
-    }
+    //// LIGHTS \\\\
+
+    addLights();
+
+
+    //// CREATE JSON LOADER \\\\
+
+    loader = new THREE.JSONLoader();
+    
+    
+    //// LOAD JSON OBJECTS \\\\
+    
+    loader.load( classroom, addClassroom );
+    addTia(); // contains all the loaders for head, body etc.
+    loadAllTextElements(); // loads all text and backgrounds for text
+
+
+    //// CALCULATE STUFF FOR SIDE PANEL \\\\
+    
+    //showTimeRemaining();
+    //showQuestionStreak();
+
+
+    //// SET BASE EXPRESSIONS AND MOVEMENTS \\\\
+
+    //setBaseExpressionsMovements();
+
+
+    //// SET CAMERAS AND TIA UP DEPENDING ON ENTER OR REENTER \\\\
+
+    enterOrReEnter();
+
+
+    animate();
 
 }
 
    
-
-function animate () {
-
-    if ( cameraObject[ 'bool' ] ) {
-
-        rotateCamera( mainCount );
-
-    }
-
-    if ( enterCameraObject[ 'bool' ] ) {
-
-        enterCameraMove( mainCount );
-
-    }
-
-    if ( expressionObject.bool ) {
-
-        expression( mainCount );
-
-    }
-
-    if ( movementObject.bool ) {
-
-        movement( mainCount );
-
-    }
-
-    if ( eyelidObject.bool ) {
-
-        moveEyelids( mainCount );
-
-    }
-
-    if ( eyeObject[ 'bool' ] ) {
-
-        moveEyes( mainCount );
-
-    }
-
-    if ( mouthOpenObject.bool ) {
-
-        openMouth( mainCount )
-
-    }
-
-    if ( purseLipsObject.bool ) {
-
-        purseLips( mainCount )
-
-    }
-
-    if ( nodObject.bool ) {
-
-        nod( mainCount )
-
-    }
-
-    if ( shakeObject.bool ) {
-
-        shake( mainCount )
-
-    }
-
-    if ( leanObject.bool ) {
-
-        lean( mainCount )
-
-    }
-
-    if ( armIndicateObject.bool ) {
-
-        armIndicate( mainCount );
-
-    }
-
-    // Full movements
-
-    if ( mainEnterObject.bool ) {
-
-        mainEnter();
-
-    }
-
-    // CONTINUOUS AND RANDOM MOVEMENTS
-    
-
-    // normal breathing
-    let breatheRemaining = mainCount % secsOneBreath;
-
-    // change breathing direction
-    if ( breatheRemaining === 0 ) {
-
-        breatheObject.direction *= -1;
-
-    }
-
-    breathe( breatheRemaining )
-
-    
-    //normal blinking
-    
-    if ( normalBlinkObject.bool ) {
-
-        let untilNextBlink = normalBlinkObject.nextBlinkCount - mainCount;
-
-        if ( untilNextBlink <= 0 ) {
-
-            blinkNowObject.bool = true;
-            normalBlinkObject.bool = false;
-            normalBlinkObject.nextBlinkCount = mainCount + Math.floor( 200 + Math.random() * 240 );
-
-            //call the show time remaining to reload it and keep it up to pace
-            showTimeRemaining();
-        }
-
-    }
-
-    if ( blinkNowObject.bool ) {
-
-        if ( blinkNowObject.countdown === 7 ) {
-            
-            eyelidObject.coords.beforeBlinkUpper = eyelidObject.coords.currentUpper;
-            eyelidObject.coords.beforeBlinkLower = eyelidObject.coords.currentLower;
-            initMoveEyelids( -1, 1, '0.1', false); 
-            blinkNowObject.countdown -= 1;
-
-        } else if ( blinkNowObject.countdown === 0 ) {
-
-            initMoveEyelids( eyelidObject.coords.beforeBlinkUpper, eyelidObject.coords.beforeBlinkLower, '0.1', false); 
-            blinkNowObject.countdown -= 1;
-
-        } else if ( blinkNowObject.countdown <= -7 ) {
-
-            blinkNowObject.bool = false;
-            blinkNowObject.countdown = 8;
-            normalBlinkObject.bool = true;
-
-        } else {
-
-            blinkNowObject.countdown -= 1;
-
-        }
-
-    }
-
-    // Random tilt spine and neck
-    let randomTiltSpineRemaining = mainCount - spineRandomTiltObject.startCount;
-
-    if ( randomTiltSpineRemaining === spineRandomTiltObject.sinLength ) {
-        
-        newTilt( spineRandomTiltObject );
-
-    } else {
-        
-        randomTiltSpine( randomTiltSpineRemaining )
-
-    }
-    
-    let randomTiltNeckRemaining = mainCount - neckRandomTiltObject.startCount;
-
-    if ( randomTiltNeckRemaining === neckRandomTiltObject.sinLength ) {
-        
-        newTilt( neckRandomTiltObject );
-
-    } else {
-        
-        randomTiltNeck( randomTiltNeckRemaining )
-
-    }
-
-
-
-    mainCount += 1;
-
-    requestAnimationFrame( animate );
-    
-    renderer.render(scene, camera);
-
-};
-
-function newTilt( boneObject ) {
-
-    boneObject.startCount = mainCount;
-
-    if ( boneObject.to ) {
-
-        boneObject.direction *= -1;
-        boneObject.to = false;
-    
-
-    } else {
-        
-        let newSinAmount = SINEARRAYFORBREATHESECONDS[ Math.floor( Math.random() *  SINEARRAYFORBREATHESECONDS.length ) ];
-        boneObject.sin = sineArrays[ newSinAmount.toString() ];
-        boneObject.sinLength = boneObject.sin.length;
-        boneObject.direction *= Math.random() < 0.5 ? -1 : 1;
-        if ( boneObject === neckRandomTiltObject ) {
-         
-            boneObject.mult =  2 * Math.random();
-
-        } else {
-
-            boneObject.mult = Math.random();
-        
-        }
-
-        boneObject.to = true;
-
-    }
-
-}
-
-    
-
-
-
-
-
-
-
-
-
 

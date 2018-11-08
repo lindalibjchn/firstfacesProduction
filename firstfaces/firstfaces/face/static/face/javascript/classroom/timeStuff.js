@@ -6,7 +6,7 @@ function calcTimeRemaining() {
     console.log('time passed minutes:', timePassedMinutes);
 
     // this classTimeMinutes is defined in variables
-    let timeRemainingMinutes = classTimeMinutes - timePassedMinutes;
+    let timeRemainingMinutes = classTimeMinutes - timePassedMinutes + 999999;
 
     return timeRemainingMinutes
 
