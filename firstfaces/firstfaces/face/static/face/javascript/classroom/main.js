@@ -320,7 +320,7 @@ function makeAllBoolsFalse() {
     movementObject.bool = false;
     eyelidObject.bool = false;
     eyeObject.bool = false;
-    blinkNowObject.bool = false;
+    blinkObject.bool = false;
     normalBlinkObject.bool = false;
     nodObject.bool = false;
     shakeObject.bool = false;

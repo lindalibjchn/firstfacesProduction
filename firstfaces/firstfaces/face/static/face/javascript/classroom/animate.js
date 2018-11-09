@@ -1,3 +1,69 @@
+function blink() {
+
+    if ( blinkObject.countdown === 15 ) {
+        
+        eyelidObject.coords.beforeBlinkUpper = eyelidObject.coords.currentUpper;
+        eyelidObject.coords.beforeBlinkLower = eyelidObject.coords.currentLower;
+        initMoveEyelids( -1, 1, 0.1); 
+        blinkObject.countdown -= 1;
+
+    } else if ( blinkObject.countdown === 6 ) {
+
+        initMoveEyelids( eyelidObject.coords.beforeBlinkUpper, eyelidObject.coords.beforeBlinkLower, 0.1 ); 
+        blinkObject.countdown -= 1;
+
+    } else if ( blinkObject.countdown <= 0 ) {
+
+        blinkObject.bool = false;
+        blinkObject.countdown = 16;
+        blinkControllerObject.bool = true;
+
+    } else {
+
+        blinkObject.countdown -= 1; // incase the count gets larger than 12 for some reason
+
+    }
+
+}
+
+function blinkController() {
+
+    // this is set randomly below to sometime between 3-6 seconds
+    let untilNextBlink = blinkControllerObject.nextBlinkCount - mainCount;
+
+    if ( untilNextBlink <= 0 ) {
+
+        //first check if eyelids are already moving, if so, don't blink!!
+        if ( eyelidObject.bool ) {
+
+            // first time print out to let know that blink was cancelled
+            if ( untilNextBlink === 0 ) {
+
+                console.log('eyelids moving when blinking called, so no blink initiated');
+
+            }
+
+        } else {
+
+            // if first was cancelled, then when this is called, print out to let know that blink has happened
+            if ( untilNextBlink < 0 ) {
+
+                console.log('late blink initiated');
+
+            }
+
+            blinkObject.bool = true; // makes the actual blinking run
+            blinkControllerObject.bool = false; // don't run the countdown agian until the blink has completed
+            blinkControllerObject.nextBlinkCount = mainCount + Math.floor( 200 + Math.random() * 240 ); // new countdown until next blink
+
+            // call the show time remaining to reload it and keep it up to pace
+            //showTimeRemaining();
+    
+        }
+
+    }
+
+}
 
 function animate () {
 
@@ -13,11 +79,11 @@ function animate () {
 
     //}
 
-    //if ( expressionObject.bool ) {
+    if ( expressionObject.bool ) {
 
-        //expression( mainCount );
+        expression( mainCount );
 
-    //}
+    }
 
     if ( movementObject.bool ) {
 
@@ -25,17 +91,17 @@ function animate () {
 
     }
 
-    //if ( eyelidObject.bool ) {
+    if ( eyelidObject.bool ) {
 
-        //moveEyelids( mainCount );
+        moveEyelids( mainCount );
 
-    //}
+    }
 
-    //if ( eyeObject[ 'bool' ] ) {
+    if ( eyeObject[ 'bool' ] ) {
 
-        //moveEyes( mainCount );
+        moveEyes( mainCount );
 
-    //}
+    }
 
     //if ( mouthOpenObject.bool ) {
 
@@ -81,92 +147,58 @@ function animate () {
 
     //}
 
-    //// CONTINUOUS AND RANDOM MOVEMENTS
+    // CONTINUOUS AND RANDOM MOVEMENTS
     
 
-    //// normal breathing
-    //let breatheRemaining = mainCount % secsOneBreath;
+    // normal breathing
+    let breatheRemaining = mainCount % secsOneBreath;
 
-    //// change breathing direction
-    //if ( breatheRemaining === 0 ) {
+    // change breathing direction
+    if ( breatheRemaining === 0 ) {
 
-        //breatheObject.direction *= -1;
+        breatheObject.direction *= -1;
 
-    //}
+    }
 
-    //breathe( breatheRemaining )
+    breathe( breatheRemaining )
 
     
     ////normal blinking
     
-    //if ( normalBlinkObject.bool ) {
+    if ( blinkControllerObject.bool ) {
 
-        //let untilNextBlink = normalBlinkObject.nextBlinkCount - mainCount;
+        blinkController();
 
-        //if ( untilNextBlink <= 0 ) {
+    }
 
-            //blinkNowObject.bool = true;
-            //normalBlinkObject.bool = false;
-            //normalBlinkObject.nextBlinkCount = mainCount + Math.floor( 200 + Math.random() * 240 );
+    if ( blinkObject.bool ) {
 
-            ////call the show time remaining to reload it and keep it up to pace
-            //showTimeRemaining();
-        //}
+    }
 
-    //}
+    // Random tilt spine and neck
+    let randomTiltSpineRemaining = mainCount - spineRandomTiltObject.startCount;
 
-    //if ( blinkNowObject.bool ) {
-
-        //if ( blinkNowObject.countdown === 7 ) {
-            
-            //eyelidObject.coords.beforeBlinkUpper = eyelidObject.coords.currentUpper;
-            //eyelidObject.coords.beforeBlinkLower = eyelidObject.coords.currentLower;
-            //initMoveEyelids( -1, 1, '0.1', false); 
-            //blinkNowObject.countdown -= 1;
-
-        //} else if ( blinkNowObject.countdown === 0 ) {
-
-            //initMoveEyelids( eyelidObject.coords.beforeBlinkUpper, eyelidObject.coords.beforeBlinkLower, '0.1', false); 
-            //blinkNowObject.countdown -= 1;
-
-        //} else if ( blinkNowObject.countdown <= -7 ) {
-
-            //blinkNowObject.bool = false;
-            //blinkNowObject.countdown = 8;
-            //normalBlinkObject.bool = true;
-
-        //} else {
-
-            //blinkNowObject.countdown -= 1;
-
-        //}
-
-    //}
-
-    //// Random tilt spine and neck
-    //let randomTiltSpineRemaining = mainCount - spineRandomTiltObject.startCount;
-
-    //if ( randomTiltSpineRemaining === spineRandomTiltObject.sinLength ) {
+    if ( randomTiltSpineRemaining === spineRandomTiltObject.sinLength ) {
         
-        //newTilt( spineRandomTiltObject );
+        newTilt( spineRandomTiltObject );
 
-    //} else {
+    } else {
         
-        //randomTiltSpine( randomTiltSpineRemaining )
+        randomTiltSpine( randomTiltSpineRemaining )
 
-    //}
+    }
     
-    //let randomTiltNeckRemaining = mainCount - neckRandomTiltObject.startCount;
+    let randomTiltNeckRemaining = mainCount - neckRandomTiltObject.startCount;
 
-    //if ( randomTiltNeckRemaining === neckRandomTiltObject.sinLength ) {
+    if ( randomTiltNeckRemaining === neckRandomTiltObject.sinLength ) {
         
-        //newTilt( neckRandomTiltObject );
+        newTilt( neckRandomTiltObject );
 
-    //} else {
+    } else {
         
-        //randomTiltNeck( randomTiltNeckRemaining )
+        randomTiltNeck( randomTiltNeckRemaining )
 
-    //}
+    }
 
 
 

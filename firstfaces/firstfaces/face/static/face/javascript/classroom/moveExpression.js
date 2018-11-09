@@ -1,27 +1,51 @@
 // CONTAINS THE EXPRESSIONS FOR THE EMOTION WHEEL AND THE LOGIC FOR TURNING THE WHEEL INTO THE EXPRESSIONS //
 
 // if eyelids is false, then the absolute coordinates in AUs is used
-function expressionController( expressionTo, duration, eyelids=true ) {
+function expressionController( expressionTo, duration ) {
 
-    console.log(
-            "\nexpression initiated\n"
-    );
+    //// check if blinking, dont want to move mid blink or eyelids wont function
+    if ( blinkObject.bool ) {
 
-    if ( eyelids === false ) {
+        setTimeout( function() {
 
-        updateEyelids( expressionTo.eyelids, -expressionTo.eyelids );
+            expressionController( expressionTo, duration );
+            console.log( 'tried to express while blinking so retry in 200ms' );
+
+        }, 200 );
+
+    } else {
+
+        //// check if previous expression has already finished. If not, try again for 2 seconds
+        let count = 0;
+        if ( count < 2 && expressionObject.bool ) {
+
+            console.log( 'previous expression has not finished: ' + count.toString() + '\nTrying agian in 1 second.' );
+            count += 1;
+
+            setTimeout( function() {
+
+                expressionController( expressionTo, duration );
+
+            }, 1000 );
+
+        } else {
+
+            console.log( "\nexpression initiated\n" );
+
+            expressionObject.now = getAbsoluteCoordsOfExpressionNow();
+            expressionObject.thisExp = createRelativeExpression( expressionTo );
+            initExpression( expressionObject.thisExp, duration );
+
+        }
 
     }
-    expressionNow = getAbsoluteCoordsOfExpressionNow();
-    let relativeExpressionMovement = createRelativeExpression( expressionTo );
-    initExpression( relativeExpressionMovement, duration, eyelids );
 
 }
 
 // create the relative expression and store the masterExpressionState
 function createRelativeExpression( expTo ){
 
-    relativeExpression = $.extend( true, {}, expTo );
+    let relativeExpression = $.extend( true, {}, expTo );
      
     Object.keys( relativeExpression.AUs ).forEach( function( AU ) {
 
@@ -31,7 +55,7 @@ function createRelativeExpression( expTo ){
 
                 for ( var k=0; k < 3; k++ ) {
                     
-                    relativeExpression.AUs[AU][bone][ j ][ k ] -= expressionNow.AUs[AU][bone][ j ][ k ];
+                    relativeExpression.AUs[AU][bone][ j ][ k ] -= expressionObject.now.AUs[AU][bone][ j ][ k ];
                     
                 }
 
@@ -41,30 +65,23 @@ function createRelativeExpression( expTo ){
 
     })
 
-    let eyelidChange = expTo.eyelids - expressionNow.eyelids;
+    let eyelidChange = expTo.eyelids - expressionObject.now.eyelids;
     relativeExpression.eyelids = eyelidChange;
-    //eyelidObject.currentCoords[ 1 ][ 0 ] += eyelidChange;
 
     return relativeExpression;
 
 }
 
 //// general all-purpose method for all expressions
-function initExpression( obj, speed, eyelids ) {
+function initExpression( obj, secs ) {
 
-    expressionObject = obj;
-    expressionObject.eyelidsTrue = eyelids;
+    expressionObject.thisExp = obj;
 
-    assignSinArrayForSpeed( speed, expressionObject, sineArrays );
+    assignSinArrayForSpeed( secs, expressionObject.thisExp, sineArrays );
     expressionObject.startCount = mainCount;
     expressionObject.bool = true;
 
-    if ( eyelids ) {
-
-        console.log('in eyelids')
-        initMoveEyelids( expressionObject.eyelids, -expressionObject.eyelids, speed, eyelids );
-
-    }
+    initMoveEyelids( expressionObject.thisExp.eyelids, -expressionObject.thisExp.eyelids, secs );
 
 }
 
@@ -73,123 +90,88 @@ function expression( main ) {
     let main_start = main - expressionObject[ 'startCount' ];
     let sinAmount = expressionObject.sin[ main_start ]
     
+    console.log(' in expression ');
+
     if ( main_start < expressionObject.sinLength ) {
 
         Object.keys( expressionObject.AUs.AU2 ).forEach( function( key ) {
 
             // pos x
            
-            tiaObject.faceBones[ key + '.L'].position.x += sinAmount * expressionObject.AUs.AU2[ key ][ 0 ][ 0 ];
-            tiaObject.faceBones[ key + '.R'].position.x -= sinAmount * expressionObject.AUs.AU2[ key ][ 0 ][ 0 ];
+            tiaObject.faceBones[ key + '.L'].position.x += sinAmount * expressionObject.thisExp.AUs.AU2[ key ][ 0 ][ 0 ];
+            tiaObject.faceBones[ key + '.R'].position.x -= sinAmount * expressionObject.thisExp.AUs.AU2[ key ][ 0 ][ 0 ];
 
             // pos y
             
-            tiaObject.faceBones[ key + '.L'].position.y += sinAmount * expressionObject.AUs.AU2[ key ][ 0 ][ 1 ];
-            tiaObject.faceBones[ key + '.R'].position.y += sinAmount * expressionObject.AUs.AU2[ key ][ 0 ][ 1 ];
+            tiaObject.faceBones[ key + '.L'].position.y += sinAmount * expressionObject.thisExp.AUs.AU2[ key ][ 0 ][ 1 ];
+            tiaObject.faceBones[ key + '.R'].position.y += sinAmount * expressionObject.thisExp.AUs.AU2[ key ][ 0 ][ 1 ];
 
             // pos z
             
-            tiaObject.faceBones[ key + '.L'].position.z += sinAmount * expressionObject.AUs.AU2[ key ][ 0 ][ 2 ];
-            tiaObject.faceBones[ key + '.R'].position.z += sinAmount * expressionObject.AUs.AU2[ key ][ 0 ][ 2 ];
+            tiaObject.faceBones[ key + '.L'].position.z += sinAmount * expressionObject.thisExp.AUs.AU2[ key ][ 0 ][ 2 ];
+            tiaObject.faceBones[ key + '.R'].position.z += sinAmount * expressionObject.thisExp.AUs.AU2[ key ][ 0 ][ 2 ];
 
 
             // rot x 
             
-            tiaObject.faceBones[ key + '.L'].rotation.x += sinAmount * expressionObject.AUs.AU2[ key ][ 1 ][ 0 ];
-            tiaObject.faceBones[ key + '.R'].rotation.x += sinAmount * expressionObject.AUs.AU2[ key ][ 1 ][ 0 ];
+            tiaObject.faceBones[ key + '.L'].rotation.x += sinAmount * expressionObject.thisExp.AUs.AU2[ key ][ 1 ][ 0 ];
+            tiaObject.faceBones[ key + '.R'].rotation.x += sinAmount * expressionObject.thisExp.AUs.AU2[ key ][ 1 ][ 0 ];
 
             // rot y 
             
-            tiaObject.faceBones[ key + '.L'].rotation.y += sinAmount * expressionObject.AUs.AU2[ key ][ 1 ][ 1 ];
-            tiaObject.faceBones[ key + '.R'].rotation.y -= sinAmount * expressionObject.AUs.AU2[ key ][ 1 ][ 1 ];
+            tiaObject.faceBones[ key + '.L'].rotation.y += sinAmount * expressionObject.thisExp.AUs.AU2[ key ][ 1 ][ 1 ];
+            tiaObject.faceBones[ key + '.R'].rotation.y -= sinAmount * expressionObject.thisExp.AUs.AU2[ key ][ 1 ][ 1 ];
 
             // rot z
 
-            tiaObject.faceBones[ key + '.L'].rotation.z += sinAmount * expressionObject.AUs.AU2[ key ][ 1 ][ 2 ];
-            tiaObject.faceBones[ key + '.R'].rotation.z -= sinAmount * expressionObject.AUs.AU2[ key ][ 1 ][ 2 ];
+            tiaObject.faceBones[ key + '.L'].rotation.z += sinAmount * expressionObject.thisExp.AUs.AU2[ key ][ 1 ][ 2 ];
+            tiaObject.faceBones[ key + '.R'].rotation.z -= sinAmount * expressionObject.thisExp.AUs.AU2[ key ][ 1 ][ 2 ];
             
         })
             
-        if ( expressionObject.eyelidsTrue === false ) {
+        if ( expressionObject.thisExp.eyelidsTrue === false ) {
 
-            Object.keys( expressionObject.AUs.eyelids ).forEach( function( key ) {
+            Object.keys( expressionObject.thisExp.AUs.eyelids ).forEach( function( key ) {
 
                 // pos y
                 
-                tiaObject.faceBones[ key + '.L'].position.y += sinAmount * expressionObject.AUs.eyelids[ key ][ 0 ][ 1 ];
-                tiaObject.faceBones[ key + '.R'].position.y += sinAmount * expressionObject.AUs.eyelids[ key ][ 0 ][ 1 ];
+                tiaObject.faceBones[ key + '.L'].position.y += sinAmount * expressionObject.thisExp.AUs.eyelids[ key ][ 0 ][ 1 ];
+                tiaObject.faceBones[ key + '.R'].position.y += sinAmount * expressionObject.thisExp.AUs.eyelids[ key ][ 0 ][ 1 ];
 
             })
             
         }
 
-        Object.keys( expressionObject.AUs.AU1 ).forEach( function( key ) {
+        Object.keys( expressionObject.thisExp.AUs.AU1 ).forEach( function( key ) {
 
-            // pos x
-            
-            tiaObject.faceBones[ key ].position.x += sinAmount * expressionObject.AUs.AU1[ key ][ 0 ][ 0 ];
-            
-            // pos y
-            
-            tiaObject.faceBones[ key ].position.y += sinAmount * expressionObject.AUs.AU1[ key ][ 0 ][ 1 ];
+            tiaObject.faceBones[ key ].position.x += sinAmount * expressionObject.thisExp.AUs.AU1[ key ][ 0 ][ 0 ];
+            tiaObject.faceBones[ key ].position.y += sinAmount * expressionObject.thisExp.AUs.AU1[ key ][ 0 ][ 1 ];
+            tiaObject.faceBones[ key ].position.z += sinAmount * expressionObject.thisExp.AUs.AU1[ key ][ 0 ][ 2 ];
 
-            // pos z
-            
-            tiaObject.faceBones[ key ].position.z += sinAmount * expressionObject.AUs.AU1[ key ][ 0 ][ 2 ];
-
-
-            // rot x 
-            
-            tiaObject.faceBones[ key ].rotation.x += sinAmount * expressionObject.AUs.AU1[ key ][ 1 ][ 0 ];
-
-            // rot y 
-            
-            tiaObject.faceBones[ key ].rotation.y += sinAmount * expressionObject.AUs.AU1[ key ][ 1 ][ 1 ];
-
-            // rot z
-
-            tiaObject.faceBones[ key ].rotation.z += sinAmount * expressionObject.AUs.AU1[ key ][ 1 ][ 2 ];
+            tiaObject.faceBones[ key ].rotation.x += sinAmount * expressionObject.thisExp.AUs.AU1[ key ][ 1 ][ 0 ];
+            tiaObject.faceBones[ key ].rotation.y += sinAmount * expressionObject.thisExp.AUs.AU1[ key ][ 1 ][ 1 ];
+            tiaObject.faceBones[ key ].rotation.z += sinAmount * expressionObject.thisExp.AUs.AU1[ key ][ 1 ][ 2 ];
             
         })
 
         //Mouth Jaw Inner is part of a different object and so needs to be done separately
-        Object.keys( expressionObject.AUs.AU1m ).forEach( function( key ) {
+        Object.keys( expressionObject.thisExp.AUs.AU1m ).forEach( function( key ) {
 
-            // pos x
-            
-            mouthObject.mouthBones[ key ].position.x += sinAmount * expressionObject.AUs.AU1m[ key ][ 0 ][ 0 ];
+            tiaObject.mouthBones[ key ].position.x += sinAmount * expressionObject.thisExp.AUs.AU1m[ key ][ 0 ][ 0 ];
+            tiaObject.mouthBones[ key ].position.y += sinAmount * expressionObject.thisExp.AUs.AU1m[ key ][ 0 ][ 1 ];
+            tiaObject.mouthBones[ key ].position.z += sinAmount * expressionObject.thisExp.AUs.AU1m[ key ][ 0 ][ 2 ];
 
-            // pos y
-            
-            mouthObject.mouthBones[ key ].position.y += sinAmount * expressionObject.AUs.AU1m[ key ][ 0 ][ 1 ];
-
-            // pos z
-            
-            mouthObject.mouthBones[ key ].position.z += sinAmount * expressionObject.AUs.AU1m[ key ][ 0 ][ 2 ];
-
-
-            // rot x 
-            
-            mouthObject.mouthBones[ key ].rotation.x += sinAmount * expressionObject.AUs.AU1m[ key ][ 1 ][ 0 ];
-
-            // rot y 
-            
-            mouthObject.mouthBones[ key ].rotation.y += sinAmount * expressionObject.AUs.AU1m[ key ][ 1 ][ 1 ];
-
-            // rot z
-
-            mouthObject.mouthBones[ key ].rotation.z += sinAmount * expressionObject.AUs.AU1m[ key ][ 1 ][ 2 ];
+            tiaObject.mouthBones[ key ].rotation.x += sinAmount * expressionObject.thisExp.AUs.AU1m[ key ][ 1 ][ 0 ];
+            tiaObject.mouthBones[ key ].rotation.y += sinAmount * expressionObject.thisExp.AUs.AU1m[ key ][ 1 ][ 1 ];
+            tiaObject.mouthBones[ key ].rotation.z += sinAmount * expressionObject.thisExp.AUs.AU1m[ key ][ 1 ][ 2 ];
             
         })
 
     } else {
 
         expressionObject.bool = false;
-        expressionNow = getAbsoluteCoordsOfExpressionNow();
-
-        console.log(
-                "\nexpression movement complete\n"
-        );
+        expressionObject.now = getAbsoluteCoordsOfExpressionNow();
+        console.log( "\nexpression movement complete\n" );
 
     }
 
@@ -382,7 +364,7 @@ function createCalculatedExpression( twoExpressions, ratio, mult, surp ){
 
     })
 
-    let eyelidMovementAmount = expression01.eyelids * expression01Amount + expression02.eyelids * expression02Amount + expressionsAbs.surprise.eyelids * surp
+    let eyelidMovementAmount = expression01.eyelids * expression01Amount + expression02.eyelids * expression02Amount + expressionObject.abs.surprise.eyelids * surp
     calcExp.eyelids = eyelidMovementAmount;
     calcTalkExp.eyelids = 0.5 * expression01.eyelids * expression01Amount + 0.5 * expression02.eyelids * expression02Amount;
 
@@ -442,66 +424,31 @@ function getAbsoluteCoordsOfExpressionNow() {
 
     Object.keys( absExpression.AUs.AU2 ).forEach( function( key ) {
 
-        // pos x
-       
         absExpression.AUs.AU2[ key ][ 0 ][ 0 ] = tiaObject.faceBones[ key + '.L'].position.x;
-
-        // pos y
-        
         absExpression.AUs.AU2[ key ][ 0 ][ 1 ] = tiaObject.faceBones[ key + '.L'].position.y;
-
-        // pos z
-        
         absExpression.AUs.AU2[ key ][ 0 ][ 2 ] = tiaObject.faceBones[ key + '.L'].position.z;
 
-
-        // rot x
-       
         absExpression.AUs.AU2[ key ][ 1 ][ 0 ] = tiaObject.faceBones[ key + '.L'].rotation.x;
-
-        // rot y
-        
         absExpression.AUs.AU2[ key ][ 1 ][ 1 ] = tiaObject.faceBones[ key + '.L'].rotation.y;
-
-        // rot z
-        
         absExpression.AUs.AU2[ key ][ 1 ][ 2 ] = tiaObject.faceBones[ key + '.L'].rotation.z;
 
     })
         
     Object.keys( absExpression.AUs.eyelids ).forEach( function( key ) {
 
-        // pos y
-        
         absExpression.AUs.eyelids[ key ][ 0 ][ 1 ] = tiaObject.faceBones[ key + '.L'].position.y;
 
     })
 
     Object.keys( absExpression.AUs.AU1 ).forEach( function( key ) {
 
-        // pos x
-       
         absExpression.AUs.AU1[ key ][ 0 ][ 0 ] = tiaObject.faceBones[ key ].position.x;
-
-        // pos y
-        
         absExpression.AUs.AU1[ key ][ 0 ][ 1 ] = tiaObject.faceBones[ key ].position.y;
-
-        // pos z
-        
         absExpression.AUs.AU1[ key ][ 0 ][ 2 ] = tiaObject.faceBones[ key ].position.z;
 
 
-        // rot x
-       
         absExpression.AUs.AU1[ key ][ 1 ][ 0 ] = tiaObject.faceBones[ key ].rotation.x;
-
-        // rot y
-        
         absExpression.AUs.AU1[ key ][ 1 ][ 1 ] = tiaObject.faceBones[ key ].rotation.y;
-
-        // rot z
-        
         absExpression.AUs.AU1[ key ][ 1 ][ 2 ] = tiaObject.faceBones[ key ].rotation.z;
 
     })
@@ -509,34 +456,16 @@ function getAbsoluteCoordsOfExpressionNow() {
     //Mouth Jaw Inner is part of a different object and so needs to be done separately
     Object.keys( absExpression.AUs.AU1m ).forEach( function( key ) {
 
-        // pos x
-       
-        absExpression.AUs.AU1m[ key ][ 0 ][ 0 ] = mouthObject.mouthBones[ key ].position.x;
-
-        // pos y
-        
-        absExpression.AUs.AU1m[ key ][ 0 ][ 1 ] = mouthObject.mouthBones[ key ].position.y;
-
-        // pos z
-        
-        absExpression.AUs.AU1m[ key ][ 0 ][ 2 ] = mouthObject.mouthBones[ key ].position.z;
+        absExpression.AUs.AU1m[ key ][ 0 ][ 0 ] = tiaObject.mouthBones[ key ].position.x;
+        absExpression.AUs.AU1m[ key ][ 0 ][ 1 ] = tiaObject.mouthBones[ key ].position.y;
+        absExpression.AUs.AU1m[ key ][ 0 ][ 2 ] = tiaObject.mouthBones[ key ].position.z;
 
 
-        // rot x
-       
-        absExpression.AUs.AU1m[ key ][ 1 ][ 0 ] = mouthObject.mouthBones[ key ].rotation.x;
-
-        // rot y
-        
-        absExpression.AUs.AU1m[ key ][ 1 ][ 1 ] = mouthObject.mouthBones[ key ].rotation.y;
-
-        // rot z
-        
-        absExpression.AUs.AU1m[ key ][ 1 ][ 2 ] = mouthObject.mouthBones[ key ].rotation.z;
+        absExpression.AUs.AU1m[ key ][ 1 ][ 0 ] = tiaObject.mouthBones[ key ].rotation.x;
+        absExpression.AUs.AU1m[ key ][ 1 ][ 1 ] = tiaObject.mouthBones[ key ].rotation.y;
+        absExpression.AUs.AU1m[ key ][ 1 ][ 2 ] = tiaObject.mouthBones[ key ].rotation.z;
         
     })
-
-    //absExpression.eyelids = ( eyelidsAbs.upperMiddle.open - tiaObject.faceBones['eyelid_upper_middle.L'].position.y ) / 0.45;
 
     return absExpression;
 
@@ -548,97 +477,44 @@ function getAbsoluteCoordsOfExpressionTo( exp ) {
 
     Object.keys( expression.AUs.AU2 ).forEach( function( key ) {
 
-        // pos x
-       
-        expression.AUs.AU2[ key ][ 0 ][ 0 ] += expressionBase.AUs.AU2[ key ][ 0 ][ 0 ];
+        expression.AUs.AU2[ key ][ 0 ][ 0 ] += expressionObject.base.AUs.AU2[ key ][ 0 ][ 0 ];
+        expression.AUs.AU2[ key ][ 0 ][ 1 ] += expressionObject.base.AUs.AU2[ key ][ 0 ][ 1 ];
+        expression.AUs.AU2[ key ][ 0 ][ 2 ] += expressionObject.base.AUs.AU2[ key ][ 0 ][ 2 ];
 
-        // pos y
-        
-        expression.AUs.AU2[ key ][ 0 ][ 1 ] += expressionBase.AUs.AU2[ key ][ 0 ][ 1 ];
-
-        // pos z
-        
-        expression.AUs.AU2[ key ][ 0 ][ 2 ] += expressionBase.AUs.AU2[ key ][ 0 ][ 2 ];
-
-
-        // rot x
-       
-        expression.AUs.AU2[ key ][ 1 ][ 0 ] += expressionBase.AUs.AU2[ key ][ 1 ][ 0 ];
-
-        // rot y
-        
-        expression.AUs.AU2[ key ][ 1 ][ 1 ] += expressionBase.AUs.AU2[ key ][ 1 ][ 1 ];
-
-        // rot z
-        
-        expression.AUs.AU2[ key ][ 1 ][ 2 ] += expressionBase.AUs.AU2[ key ][ 1 ][ 2 ];
+        expression.AUs.AU2[ key ][ 1 ][ 0 ] += expressionObject.base.AUs.AU2[ key ][ 1 ][ 0 ];
+        expression.AUs.AU2[ key ][ 1 ][ 1 ] += expressionObject.base.AUs.AU2[ key ][ 1 ][ 1 ];
+        expression.AUs.AU2[ key ][ 1 ][ 2 ] += expressionObject.base.AUs.AU2[ key ][ 1 ][ 2 ];
 
     })
         
     Object.keys( expression.AUs.eyelids ).forEach( function( key ) {
 
-        // pos y
-       
-        expression.AUs.eyelids[ key ][ 0 ][ 1 ] += expressionBase.AUs.eyelids[ key ][ 0 ][ 1 ];
+        expression.AUs.eyelids[ key ][ 0 ][ 1 ] += expressionObject.base.AUs.eyelids[ key ][ 0 ][ 1 ];
 
     })
 
     Object.keys( expression.AUs.AU1 ).forEach( function( key ) {
 
-        // pos x
-       
-        expression.AUs.AU1[ key ][ 0 ][ 0 ] += expressionBase.AUs.AU1[ key ][ 0 ][ 0 ];
+        expression.AUs.AU1[ key ][ 0 ][ 0 ] += expressionObject.base.AUs.AU1[ key ][ 0 ][ 0 ];
+        expression.AUs.AU1[ key ][ 0 ][ 1 ] += expressionObject.base.AUs.AU1[ key ][ 0 ][ 1 ];
+        expression.AUs.AU1[ key ][ 0 ][ 2 ] += expressionObject.base.AUs.AU1[ key ][ 0 ][ 2 ];
 
-        // pos y
-        
-        expression.AUs.AU1[ key ][ 0 ][ 1 ] += expressionBase.AUs.AU1[ key ][ 0 ][ 1 ];
-
-        // pos z
-        
-        expression.AUs.AU1[ key ][ 0 ][ 2 ] += expressionBase.AUs.AU1[ key ][ 0 ][ 2 ];
-
-
-        // rot x
-       
-        expression.AUs.AU1[ key ][ 1 ][ 0 ] += expressionBase.AUs.AU1[ key ][ 1 ][ 0 ];
-
-        // rot y
-        
-        expression.AUs.AU1[ key ][ 1 ][ 1 ] += expressionBase.AUs.AU1[ key ][ 1 ][ 1 ];
-
-        // rot z
-        
-        expression.AUs.AU1[ key ][ 1 ][ 2 ] += expressionBase.AUs.AU1[ key ][ 1 ][ 2 ];
+        expression.AUs.AU1[ key ][ 1 ][ 0 ] += expressionObject.base.AUs.AU1[ key ][ 1 ][ 0 ];
+        expression.AUs.AU1[ key ][ 1 ][ 1 ] += expressionObject.base.AUs.AU1[ key ][ 1 ][ 1 ];
+        expression.AUs.AU1[ key ][ 1 ][ 2 ] += expressionObject.base.AUs.AU1[ key ][ 1 ][ 2 ];
 
     })
 
     //Mouth Jaw Inner is part of a different object and so needs to be done separately
     Object.keys( expression.AUs.AU1m ).forEach( function( key ) {
 
-        // pos x
-       
-        expression.AUs.AU1m[ key ][ 0 ][ 0 ] += expressionBase.AUs.AU1m[ key ][ 0 ][ 0 ];
+        expression.AUs.AU1m[ key ][ 0 ][ 0 ] += expressionObject.base.AUs.AU1m[ key ][ 0 ][ 0 ];
+        expression.AUs.AU1m[ key ][ 0 ][ 1 ] += expressionObject.base.AUs.AU1m[ key ][ 0 ][ 1 ];
+        expression.AUs.AU1m[ key ][ 0 ][ 2 ] += expressionObject.base.AUs.AU1m[ key ][ 0 ][ 2 ];
 
-        // pos y
-        
-        expression.AUs.AU1m[ key ][ 0 ][ 1 ] += expressionBase.AUs.AU1m[ key ][ 0 ][ 1 ];
-
-        // pos z
-        
-        expression.AUs.AU1m[ key ][ 0 ][ 2 ] += expressionBase.AUs.AU1m[ key ][ 0 ][ 2 ];
-
-
-        // rot x
-       
-        expression.AUs.AU1m[ key ][ 1 ][ 0 ] += expressionBase.AUs.AU1m[ key ][ 1 ][ 0 ];
-
-        // rot y
-        
-        expression.AUs.AU1m[ key ][ 1 ][ 1 ] += expressionBase.AUs.AU1m[ key ][ 1 ][ 1 ];
-
-        // rot z
-        
-        expression.AUs.AU1m[ key ][ 1 ][ 2 ] += expressionBase.AUs.AU1m[ key ][ 1 ][ 2 ];
+        expression.AUs.AU1m[ key ][ 1 ][ 0 ] += expressionObject.base.AUs.AU1m[ key ][ 1 ][ 0 ];
+        expression.AUs.AU1m[ key ][ 1 ][ 1 ] += expressionObject.base.AUs.AU1m[ key ][ 1 ][ 1 ];
+        expression.AUs.AU1m[ key ][ 1 ][ 2 ] += expressionObject.base.AUs.AU1m[ key ][ 1 ][ 2 ];
         
     });
 
@@ -655,112 +531,52 @@ function getAbsoluteCoordsOfMainExpressions() {
 
         Object.keys( indExpRel.AUs.AU2 ).forEach( function( key ) {
 
-            // pos x
-           
-            expression.AUs.AU2[ key ][ 0 ][ 0 ] += expressionBase.AUs.AU2[ key ][ 0 ][ 0 ];
+            expression.AUs.AU2[ key ][ 0 ][ 0 ] += expressionObject.base.AUs.AU2[ key ][ 0 ][ 0 ];
+            expression.AUs.AU2[ key ][ 0 ][ 1 ] += expressionObject.base.AUs.AU2[ key ][ 0 ][ 1 ];
+            expression.AUs.AU2[ key ][ 0 ][ 2 ] += expressionObject.base.AUs.AU2[ key ][ 0 ][ 2 ];
 
-            // pos y
-            
-            expression.AUs.AU2[ key ][ 0 ][ 1 ] += expressionBase.AUs.AU2[ key ][ 0 ][ 1 ];
-
-            // pos z
-            
-            expression.AUs.AU2[ key ][ 0 ][ 2 ] += expressionBase.AUs.AU2[ key ][ 0 ][ 2 ];
-
-
-            // rot x
-           
-            expression.AUs.AU2[ key ][ 1 ][ 0 ] += expressionBase.AUs.AU2[ key ][ 1 ][ 0 ];
-
-            // rot y
-            
-            expression.AUs.AU2[ key ][ 1 ][ 1 ] += expressionBase.AUs.AU2[ key ][ 1 ][ 1 ];
-
-            // rot z
-            
-            expression.AUs.AU2[ key ][ 1 ][ 2 ] += expressionBase.AUs.AU2[ key ][ 1 ][ 2 ];
+            expression.AUs.AU2[ key ][ 1 ][ 0 ] += expressionObject.base.AUs.AU2[ key ][ 1 ][ 0 ];
+            expression.AUs.AU2[ key ][ 1 ][ 1 ] += expressionObject.base.AUs.AU2[ key ][ 1 ][ 1 ];
+            expression.AUs.AU2[ key ][ 1 ][ 2 ] += expressionObject.base.AUs.AU2[ key ][ 1 ][ 2 ];
 
         })
             
         Object.keys( expression.AUs.eyelids ).forEach( function( key ) {
 
-            // pos y
-           
-            expression.AUs.eyelids[ key ][ 0 ][ 1 ] += expressionBase.AUs.eyelids[ key ][ 0 ][ 1 ];
+            expression.AUs.eyelids[ key ][ 0 ][ 1 ] += expressionObject.base.AUs.eyelids[ key ][ 0 ][ 1 ];
 
         })
 
-        Object.keys( expressionBase.AUs.AU1 ).forEach( function( key ) {
+        Object.keys( expressionObject.base.AUs.AU1 ).forEach( function( key ) {
 
-            // pos x
-           
-            expression.AUs.AU1[ key ][ 0 ][ 0 ] += expressionBase.AUs.AU1[ key ][ 0 ][ 0 ];
-
-            // pos y
-            
-            expression.AUs.AU1[ key ][ 0 ][ 1 ] += expressionBase.AUs.AU1[ key ][ 0 ][ 1 ];
-
-            // pos z
-            
-            expression.AUs.AU1[ key ][ 0 ][ 2 ] += expressionBase.AUs.AU1[ key ][ 0 ][ 2 ];
+            expression.AUs.AU1[ key ][ 0 ][ 0 ] += expressionObject.base.AUs.AU1[ key ][ 0 ][ 0 ];
+            expression.AUs.AU1[ key ][ 0 ][ 1 ] += expressionObject.base.AUs.AU1[ key ][ 0 ][ 1 ];
+            expression.AUs.AU1[ key ][ 0 ][ 2 ] += expressionObject.base.AUs.AU1[ key ][ 0 ][ 2 ];
 
 
-            // rot x
-           
-            expression.AUs.AU1[ key ][ 1 ][ 0 ] += expressionBase.AUs.AU1[ key ][ 1 ][ 0 ];
-
-            // rot y
-            
-            expression.AUs.AU1[ key ][ 1 ][ 1 ] += expressionBase.AUs.AU1[ key ][ 1 ][ 1 ];
-
-            // rot z
-            
-            expression.AUs.AU1[ key ][ 1 ][ 2 ] += expressionBase.AUs.AU1[ key ][ 1 ][ 2 ];
+            expression.AUs.AU1[ key ][ 1 ][ 0 ] += expressionObject.base.AUs.AU1[ key ][ 1 ][ 0 ];
+            expression.AUs.AU1[ key ][ 1 ][ 1 ] += expressionObject.base.AUs.AU1[ key ][ 1 ][ 1 ];
+            expression.AUs.AU1[ key ][ 1 ][ 2 ] += expressionObject.base.AUs.AU1[ key ][ 1 ][ 2 ];
 
         })
 
         //Mouth Jaw Inner is part of a different object and so needs to be done separately
-        Object.keys( expressionBase.AUs.AU1m ).forEach( function( key ) {
+        Object.keys( expressionObject.base.AUs.AU1m ).forEach( function( key ) {
 
-            // pos x
-           
-            expression.AUs.AU1m[ key ][ 0 ][ 0 ] += expressionBase.AUs.AU1m[ key ][ 0 ][ 0 ];
-
-            // pos y
-            
-            expression.AUs.AU1m[ key ][ 0 ][ 1 ] += expressionBase.AUs.AU1m[ key ][ 0 ][ 1 ];
-
-            // pos z
-            
-            expression.AUs.AU1m[ key ][ 0 ][ 2 ] += expressionBase.AUs.AU1m[ key ][ 0 ][ 2 ];
+            expression.AUs.AU1m[ key ][ 0 ][ 0 ] += expressionObject.base.AUs.AU1m[ key ][ 0 ][ 0 ];
+            expression.AUs.AU1m[ key ][ 0 ][ 1 ] += expressionObject.base.AUs.AU1m[ key ][ 0 ][ 1 ];
+            expression.AUs.AU1m[ key ][ 0 ][ 2 ] += expressionObject.base.AUs.AU1m[ key ][ 0 ][ 2 ];
 
 
-            // rot x
-           
-            expression.AUs.AU1m[ key ][ 1 ][ 0 ] += expressionBase.AUs.AU1m[ key ][ 1 ][ 0 ];
-
-            // rot y
-            
-            expression.AUs.AU1m[ key ][ 1 ][ 1 ] += expressionBase.AUs.AU1m[ key ][ 1 ][ 1 ];
-
-            // rot z
-            
-            expression.AUs.AU1m[ key ][ 1 ][ 2 ] += expressionBase.AUs.AU1m[ key ][ 1 ][ 2 ];
+            expression.AUs.AU1m[ key ][ 1 ][ 0 ] += expressionObject.base.AUs.AU1m[ key ][ 1 ][ 0 ];
+            expression.AUs.AU1m[ key ][ 1 ][ 1 ] += expressionObject.base.AUs.AU1m[ key ][ 1 ][ 1 ];
+            expression.AUs.AU1m[ key ][ 1 ][ 2 ] += expressionObject.base.AUs.AU1m[ key ][ 1 ][ 2 ];
             
         });
 
-        expressionsAbs[ indExpRel.name ] = expression;
+        expressionObject.abs[ indExpRel.name ] = expression;
 
     });
-
-}
-function resetExpression() {
-
-    absCurExpression = getAbsoluteCoordsOfExpressionNow();
-    masterExpressionState = $.extend( true, {}, absCurExpression );
-    createRelativeExpression( absNeutralExpression );
-    initExpression( relativeExpression, '1' );
-    masterExpressionState = $.extend( true, {}, neutralExpression );
 
 }
 

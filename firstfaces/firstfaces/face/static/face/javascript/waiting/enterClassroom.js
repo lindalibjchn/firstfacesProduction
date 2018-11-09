@@ -1,5 +1,5 @@
 
-function initCameraMove( to, speed ) {
+function initCameraMove( to, secs ) {
 
     let from = cameraObject.currentState;
 
@@ -7,7 +7,7 @@ function initCameraMove( to, speed ) {
 
         if ( from === "enter" ) {
 
-            assignSinArrayForSpeed( speed, cameraObject, sineArrays );
+            assignSinArrayForSpeed( secs, cameraObject, sineArrays );
 
             cameraObject[ 'startCount' ] = mainCount;
             cameraObject[ 'bool' ] = true;
@@ -24,7 +24,7 @@ function initCameraMove( to, speed ) {
 
             if ( to === "class" ) {
 
-                assignSinArrayForSpeed( speed, cameraObject, sineArrays );
+                assignSinArrayForSpeed( secs, cameraObject, sineArrays );
 
                 cameraObject[ 'startCount' ] = mainCount;
                 cameraObject[ 'bool' ] = true;
@@ -49,7 +49,7 @@ function initCameraMove( to, speed ) {
 
 }    
 
-function initBookMove( book, to, speed ) {
+function initBookMove( book, to, secs ) {
 
     let bookObj = {}
     $('#testsBook').hide(); 
@@ -92,7 +92,7 @@ function initBookMove( book, to, speed ) {
 
         }
             
-        assignSinArrayForSpeed( speed, bookObj, sineArrays );
+        assignSinArrayForSpeed( secs, bookObj, sineArrays );
 
         bookObj[ 'startCount' ] = mainCount;
         bookObj[ 'bool' ] = true;
@@ -115,9 +115,9 @@ function initBookMove( book, to, speed ) {
 
 }    
 
-function initDoorOpen( speed ) {
+function initDoorOpen( secs ) {
 
-    assignSinArrayForSpeed( speed, doorObject, sineArrays );
+    assignSinArrayForSpeed( secs, doorObject, sineArrays );
 
     doorObject[ 'startCount' ] = mainCount;
     doorObject[ 'bool' ] = true;

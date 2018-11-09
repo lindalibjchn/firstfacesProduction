@@ -148,21 +148,21 @@ var confusedObject = new ExpressionObj();
 
 
 
-var normalBlinkObject = {
+var blinkControllerObject = {
     'bool': false,
-    'nextBlinkCount': 60, 
+    'nextBlinkCount': 60,//frames until next blink. set at 60 for first but random afterward 
 }
 
-var blinkNowObject = {
+var blinkObject = {
     'bool': false,
-    'countdown': 8,
+    'countdown': 16,
 }
 
 var breatheObject = {
     'sin': sineArrays[ secsOneBreath.toString() ],
     'scaleMult': 0.4 / secsOneBreath,
     // from experimenting the y position of shoulder is 13 times greater than scale of upperspine
-    'yPosMult': 40 / secsOneBreath,
+    'yPosMult': 20 / secsOneBreath,
     'direction': -1,
 };
 

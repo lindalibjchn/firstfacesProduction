@@ -139,13 +139,13 @@ function speakOpening() {
 
 }
 
-function initEnterCameraMove( to, speed ) {
+function initEnterCameraMove( to, secs ) {
 
     let from = enterCameraObject.currentState;
 
     if ( from !== to ) {
 
-            assignSinArrayForSpeed( speed, enterCameraObject, sineArrays );
+            assignSinArrayForSpeed( secs, enterCameraObject, sineArrays );
 
             enterCameraObject[ 'startCount' ] = mainCount;
             enterCameraObject[ 'bool' ] = true;
@@ -440,7 +440,7 @@ function storeTopic( topicChoice ) {
         success: function(json) {
 
             normalBlinkObject.bool = false;
-            blinkNowObject.bool = false;    
+            blinkObject.bool = false;    
 
             $('#topicChoices').fadeOut( 500 );
 
@@ -493,7 +493,7 @@ function finalSpeak() {
             
                 setTimeout( function() {
                     
-                    expressionController( expressionsAbs.neutral, '0.75' );
+                    expressionController( expressionObject.abs.neutral, '0.75' );
                     talkObject.learning = true;
 
                     setTimeout( function() {

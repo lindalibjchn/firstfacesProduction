@@ -82,7 +82,7 @@ function talkToTia() {
 function tiaLeanToListen() {
 
     initMove( leanObject, leanObject.coords.close, '1.5' );
-    expressionController( expressionsAbs.listening, '0.5', false ) 
+    expressionController( expressionObject.abs.listening, '0.5', false ) 
     
     synthesisObject.waitingForSynthCount = 0;
     setTimeout( speakWords, 2000 );
@@ -150,7 +150,7 @@ function tiaThinkAboutSentence() {
 
                 whenAllMovFinished( function() { 
      
-                    expressionController( expressionsAbs.neutral, '1', eyelids=false );
+                    expressionController( expressionObject.abs.neutral, '1', eyelids=false );
                     setTimeout( goToThinkOrChangeExp, 2000 );
                 
                 })
@@ -181,7 +181,7 @@ function goToThinkingPos() {
 
 function setThinkingFace() {
 
-    expressionController( expressionsAbs.thinking, '1.5', false );
+    expressionController( expressionObject.abs.thinking, '1.5', false );
 
     $('#thinkingLoading').show();
 
@@ -234,7 +234,7 @@ function thinkingEyes() {
         // get random sacc time between 1-4seconds
         let saccInterval = Math.floor(Math.random() * 3000) + 1000;
 
-        if ( blinkNowObject.bool === false ) {
+        if ( blinkObject.bool === false ) {
 
             var plusOrMinus = Math.random() < 0.5 ? -1 : 1;
             let randomSaccX = tiaThinkingObject.startX + plusOrMinus * Math.random() * tiaThinkingObject.maxX;
@@ -243,7 +243,7 @@ function thinkingEyes() {
             let saccCoords = [[0,0,0],[randomSaccX, randomSaccY, 0]];
 
             movementNow.sacc = saccCoords;
-            initSaccNew( saccCoords, '0.75', false );
+            initSacc( saccCoords, '0.75', false );
 
         }
 

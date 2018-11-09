@@ -2,26 +2,40 @@
 
 function movementController( movementTo, saccDur, bodyDur ) {
 
-    //// check if previous movement has already finished. If not, try again for 2 seconds
-    let count = 0;
-    if ( count < 2 && movementObject.bool ) {
-
-        console.log( 'previous movement has not finished: ' + count.toString() + '\nTrying agian in 1 second.' );
-        count += 1;
+    //// check if blinking, dont want to move mid blink or eyelids wont function
+    if ( blinkObject.bool ) {
 
         setTimeout( function() {
 
             movementController( movementTo, saccDur, bodyDur );
+            console.log( 'tried to move while blinking so retry in 200ms' );
 
-        }, 1000 );
+        }, 200 );
 
     } else {
 
-        console.log( "\nmovement initiated\n" );
-        movementObject.bool = false;
-        movementNow = getAbsoluteCoordsOfMovementNow();
-        let relativeMovement = createRelativeMovement( movementTo );
-        initMovement( relativeMovement, saccDur, bodyDur );
+        //// check if previous movement has already finished. If not, try again for 2 seconds
+        let count = 0;
+        if ( count < 2 && movementObject.bool ) {
+
+            console.log( 'previous movement has not finished: ' + count.toString() + '\nTrying agian in 1 second.' );
+            count += 1;
+
+            setTimeout( function() {
+
+                movementController( movementTo, saccDur, bodyDur );
+
+            }, 1000 );
+
+        } else {
+
+            console.log( "\nmovement initiated\n" );
+            movementObject.bool = false;
+            movementNow = getAbsoluteCoordsOfMovementNow();
+            let relativeMovement = createRelativeMovement( movementTo );
+            initMovement( relativeMovement, saccDur, bodyDur );
+
+        }
 
     }
 
@@ -76,7 +90,7 @@ function initMovement( obj, saccDur, bodyDur ) {
 
     if ( obj.sacc !== undefined ) {
         
-        initSaccNew( obj.sacc, saccDur );
+        initSacc( obj.sacc, saccDur );
 
     }
 

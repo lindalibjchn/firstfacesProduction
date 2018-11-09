@@ -8,7 +8,7 @@ function addGUI( place ) {
         var jawRotXGUI = gui.addFolder( 'jawRotX' );
 
         jawRotXGUI.add(tiaObject.faceBones['jaw'].rotation, 'x', tiaObject.faceBones['jaw'].rotation.x - 1, tiaObject.faceBones['jaw'].rotation.x + 1).name('jaw');
-        jawRotXGUI.add(mouthObject.mouthBones['jaw_inner'].rotation, 'x', mouthObject.mouthBones['jaw_inner'].rotation.x - 1, mouthObject.mouthBones['jaw_inner'].rotation.x + 1).name('jaw_inner');
+        jawRotXGUI.add(tiaObject.mouthBones['jaw_inner'].rotation, 'x', tiaObject.mouthBones['jaw_inner'].rotation.x - 1, tiaObject.mouthBones['jaw_inner'].rotation.x + 1).name('jaw_inner');
 
         jawRotXGUI.open();
 

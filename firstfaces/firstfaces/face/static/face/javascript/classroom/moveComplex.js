@@ -143,9 +143,9 @@ function purseLipsLoop() {
 
 
 //PURSE LIPS
-function initPurseLips( to, speed ) {
+function initPurseLips( to, secs ) {
 
-    assignSinArrayForSpeed( speed, purseLipsObject, sineArrays ) 
+    assignSinArrayForSpeed( secs, purseLipsObject, sineArrays ) 
 
     purseLipsObject.startCount = mainCount;
     purseLipsObject.amount = to;
@@ -214,9 +214,9 @@ function purseLips( main ) {
 
 // OPEN MOUTH
 
-function initOpenMouth( to, speed ) {
+function initOpenMouth( to, secs ) {
 
-    assignSinArrayForSpeed( speed, mouthOpenObject, sineArrays ) 
+    assignSinArrayForSpeed( secs, mouthOpenObject, sineArrays ) 
 
     mouthOpenObject.startCount = mainCount;
     mouthOpenObject.rotationMult = to;
@@ -240,7 +240,7 @@ function openMouth( main ) {
         // jaw rotate x-axis
 
         tiaObject.faceBones['jaw'].rotation.x += sinAmount * rotationMult * 0.2;
-        mouthObject.mouthBones['jaw_inner'].rotation.x += sinAmount * rotationMult * 0.2;
+        tiaObject.mouthBones['jaw_inner'].rotation.x += sinAmount * rotationMult * 0.2;
 
 
         // Pos y-axis 
@@ -347,37 +347,24 @@ function openMouth( main ) {
 
 /////////// EYELIDS
 
-function initMoveEyelids( upperPos, lowerPos, speed, rel ) {
-
-    // rel is if the movement is relative to the current position. false means it is absolute
+function initMoveEyelids( upperPos, lowerPos, secs ) {
 
     if ( eyelidObject.bool ) {
 
+        console.log( 'initMoveEyelids called when the bool is true. What gives?')
 
     } else {
-    
+
         eyelidObject.bool = true;
-        assignSinArrayForSpeed( speed, eyelidObject, sineArrays ) 
-        eyelidObject.speed = speed;
+        assignSinArrayForSpeed( secs, eyelidObject, sineArrays ) 
+        eyelidObject.secs = secs;
         eyelidObject.startCount = mainCount;
 
-        if ( rel ) {
+        eyelidObject.coords.movementUpper = upperPos - eyelidObject.coords.currentUpper;
+        eyelidObject.coords.movementLower = lowerPos - eyelidObject.coords.currentLower;
 
-            eyelidObject.coords.movementUpper = upperPos;
-            eyelidObject.coords.movementLower = lowerPos;
-            
-            eyelidObject.coords.currentUpper += upperPos;
-            eyelidObject.coords.currentLower += lowerPos;
-
-        } else {
-
-            eyelidObject.coords.movementUpper = upperPos - eyelidObject.coords.currentUpper;
-            eyelidObject.coords.movementLower = lowerPos - eyelidObject.coords.currentLower;
-            
-            eyelidObject.coords.currentUpper = upperPos;
-            eyelidObject.coords.currentLower = lowerPos;
-
-        }
+        eyelidObject.coords.currentUpper = upperPos;
+        eyelidObject.coords.currentLower = lowerPos;
 
     }
 
@@ -388,20 +375,20 @@ function moveEyelids( main ) {
     let main_start = main - eyelidObject.startCount;
     let sinAmount = eyelidObject.sin[ main_start ]
 
-
     if ( main_start < eyelidObject.sinLength ) {
 
         // upper eyelid
-        let upperMultMiddle = sinAmount * 0.45 * eyelidObject.coords.movementUpper;
-        let upperMultInnerOuter = sinAmount * 0.35 * eyelidObject.coords.movementUpper;
-        tiaObject.faceBones['eyelid_upper_inner.L'].position.y += upperMultInnerOuter;
-        tiaObject.faceBones['eyelid_upper_inner.R'].position.y += upperMultInnerOuter;
+        let upperMultInner = sinAmount * 0.25 * eyelidObject.coords.movementUpper;
+        let upperMultMiddle = sinAmount * 0.4 * eyelidObject.coords.movementUpper;
+        let upperMultOuter = sinAmount * 0.25 * eyelidObject.coords.movementUpper;
+        tiaObject.faceBones['eyelid_upper_inner.L'].position.y += upperMultInner;
+        tiaObject.faceBones['eyelid_upper_inner.R'].position.y += upperMultInner;
         tiaObject.faceBones['eyelid_upper_middle.L'].position.y += upperMultMiddle;
         tiaObject.faceBones['eyelid_upper_middle.R'].position.y += upperMultMiddle;
-        tiaObject.faceBones['eyelid_upper_outer.L'].position.y += upperMultInnerOuter;
-        tiaObject.faceBones['eyelid_upper_outer.R'].position.y += upperMultInnerOuter;
+        tiaObject.faceBones['eyelid_upper_outer.L'].position.y += upperMultOuter;
+        tiaObject.faceBones['eyelid_upper_outer.R'].position.y += upperMultOuter;
 
-        let lowerMult = sinAmount * 0.2 * eyelidObject.coords.movementLower;
+        let lowerMult = sinAmount * 0.15 * eyelidObject.coords.movementLower;
         tiaObject.faceBones['eyelid_lower_inner.L'].position.y += lowerMult;
         tiaObject.faceBones['eyelid_lower_inner.R'].position.y += lowerMult;
         tiaObject.faceBones['eyelid_lower_middle.L'].position.y += lowerMult;
@@ -417,16 +404,16 @@ function moveEyelids( main ) {
 
 }
 
-function updateEyelids( upperPos, lowerPos ) {
+//function updateEyelids( upperPos, lowerPos ) {
 
-    eyelidObject.coords.currentUpper += upperPos;
-    eyelidObject.coords.currentLower += lowerPos;
+    //eyelidObject.coords.currentUpper += upperPos;
+    //eyelidObject.coords.currentLower += lowerPos;
 
-}
+//}
 
 //////////////// NOD AND SHAKE VHEAD
 
-function initNod( depth, speed ) {
+function initNod( depth, secs ) {
 
     // EX: initNod(0.1, '0.5')
 
@@ -440,8 +427,8 @@ function initNod( depth, speed ) {
         
         if ( nodObject.iter === 0 ) {
          
-            assignSinArrayForSpeed( speed, nodObject, quickTurnaroundSineArrays ) 
-            nodObject.speed = speed;
+            assignSinArrayForSpeed( secs, nodObject, quickTurnaroundSineArrays ) 
+            nodObject.secs = secs;
             nodObject.depth = depth;
             nodObject.amount = nodObject.decay[ 0 ] * depth;
         
@@ -453,7 +440,7 @@ function initNod( depth, speed ) {
 
         nodObject.startCount = mainCount;
 
-        initSaccNew( [[0,0,0],[ -nodObject.amount / 3, 0, 0]], speed, true );
+        initSacc( [[0,0,0],[ -nodObject.amount / 3, 0, 0]], secs, true );
         
     }
 
@@ -478,7 +465,7 @@ function nod( main ) {
         if ( nodObject.iter < 5 ) {
 
             nodObject.iter += 1;
-            initNod( nodObject.depth, nodObject.speed );
+            initNod( nodObject.depth, nodObject.secs );
 
         } else {
 
@@ -491,7 +478,7 @@ function nod( main ) {
 }
 
 
-function initShake( depth, speed ) {
+function initShake( depth, secs ) {
 
     if ( shakeObject.bool ) {
 
@@ -503,8 +490,8 @@ function initShake( depth, speed ) {
         
         if ( shakeObject.iter === 0 ) {
          
-            assignSinArrayForSpeed( speed, shakeObject, sineArrays ) 
-            shakeObject.speed = speed;
+            assignSinArrayForSpeed( secs, shakeObject, sineArrays ) 
+            shakeObject.secs = secs;
             shakeObject.depth = depth;
             shakeObject.amount = shakeObject.decay[ 0 ] * depth;
         
@@ -516,7 +503,7 @@ function initShake( depth, speed ) {
 
         shakeObject.startCount = mainCount;
 
-        initMove( eyeObject, [[0,0,0],[0, -shakeObject.amount / 2, 0]], speed );
+        initMove( eyeObject, [[0,0,0],[0, -shakeObject.amount / 2, 0]], secs );
         
     }
 
@@ -539,7 +526,7 @@ function shake( main ) {
         if ( shakeObject.iter < 5 ) {
 
             shakeObject.iter += 1;
-            initShake( shakeObject.depth, shakeObject.speed );
+            initShake( shakeObject.depth, shakeObject.secs );
 
         } else {
 
@@ -553,15 +540,23 @@ function shake( main ) {
 
 /////////// SACC
 
-function initSaccNew( coords, speed, rel ) {
+function initSacc( coords, secs ) {
 
-    //console.log('\ninitSaccNew called by\n\n' + initSaccNew.caller.name )
+    //console.log('\ninitSacc called by\n\n' + initSacc.caller.name )
     
-    initMove( eyeObject, coords, speed );
+    // rotate eye
+    initMove( eyeObject, coords, secs );
    
-    //eyelid relative move amount
-    eyelidRelAmount = 2*coords[1][0]
-    initMoveEyelids( -eyelidRelAmount, -eyelidRelAmount, speed, rel );
+    //eyelid relative move amount from y axis rotation
+    let eyelidRelAmount = 2*coords[1][0];
+
+    if ( eyelidRelAmount <= 0 ) {
+
+        eyelidRelAmount /= 2;
+
+    }
+
+    initMoveEyelids( -eyelidRelAmount, -eyelidRelAmount, secs );
 
 }
 

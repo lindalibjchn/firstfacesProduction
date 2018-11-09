@@ -7,13 +7,13 @@ function runAfterJudgement() {
 
     if ( classVariableDict.last_sent.judgement === "C" ) {
 
-        //this delay is for nod and shake changing speed
+        //this delay is for nod and shake changing secs
         var delay = 3000 + parseFloat( getNodSpeedInString() ) * 6500;
         if ( classVariableDict.last_sent.prompt === null ) {
 
             if ( classVariableDict.last_sent.nod !== null ) {
 
-                //this changes with the speed of nod and shake
+                //this changes with the secs of nod and shake
 
                 setTimeout( function() {
 
@@ -76,7 +76,7 @@ function runAfterJudgement() {
             
             whenAllMovFinished( function() { 
          
-                expressionController( expressionsAbs.confused, '1.5', true );
+                expressionController( expressionObject.abs.confused, '1.5', true );
         
             })
 
@@ -183,7 +183,7 @@ whenAllMovFinishedCount = 0;
 var whenAllMovFinished = function( funcToCall ) {
 
     console.log( 'in whenAllMovFinished:', whenAllMovFinishedCount );
-    if ( expressionObject.bool || cameraObject.bool || movementObject.bool || eyelidObject.bool || eyeObject.bool || blinkNowObject.bool || normalBlinkObject.bool || nodObject.bool || shakeObject.bool ) {
+    if ( expressionObject.bool || cameraObject.bool || movementObject.bool || eyelidObject.bool || eyeObject.bool || blinkObject.bool || normalBlinkObject.bool || nodObject.bool || shakeObject.bool ) {
       
         if ( whenAllMovFinishedCount < 3000 ) {
 
@@ -320,7 +320,7 @@ function returnToLaptop( sent ) {
 
     normalBlinkObject.bool = false;
 
-    if ( blinkNowObject.bool ) {
+    if ( blinkObject.bool ) {
 
         setTimeout( function() {
 
@@ -360,7 +360,7 @@ function returnToLaptop( sent ) {
                     
                     whenAllMovFinished( function() { 
          
-                        expressionController( expressionsAbs.neutral, '2', eyelids=false );
+                        expressionController( expressionObject.abs.neutral, '2', eyelids=false );
                     
                     })
 
@@ -420,7 +420,7 @@ function tryAgain() {
 
     normalBlinkObject.bool = false;
     // avoid moving for a fraction of a second if mid-blink
-    if ( blinkNowObject.bool ) {
+    if ( blinkObject.bool ) {
 
         setTimeout( tryAgain, 50 );
 
@@ -461,7 +461,7 @@ function tryAgain() {
 function whatsWrong() {
 
     // avoid moving for a fraction of a second if mid-blink
-    if ( blinkNowObject.bool ) {
+    if ( blinkObject.bool ) {
 
         setTimeout( whatsWrong, 50 );
 
@@ -540,7 +540,7 @@ function showCorrection() {
 function nextSentence() {
 
     normalBlinkObject.bool = false;
-    if ( blinkNowObject.bool ) {
+    if ( blinkObject.bool ) {
 
         setTimeout( nextSentence, 50 );
 
@@ -653,7 +653,7 @@ function turnToBoardToShowErrors() {
 
                     whenAllMovFinished( function() { 
          
-                        expressionController( expressionsAbs.neutral, '1', true );
+                        expressionController( expressionObject.abs.neutral, '1', true );
                     
                     });
                     

@@ -4,13 +4,13 @@
 
 // CAMERA
 
-function initCameraMove( to, speed ) {
+function initCameraMove( to, secs ) {
 
     let from = cameraObject.currentState;
 
     if ( from !== to ) { 
 
-        assignSinArrayForSpeed( speed, cameraObject, cumSineArrays );
+        assignSinArrayForSpeed( secs, cameraObject, cumSineArrays );
 
         cameraObject[ 'startCount' ] = mainCount;
         cameraObject[ 'bool' ] = true;

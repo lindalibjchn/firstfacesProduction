@@ -1,5 +1,5 @@
 
-function initCameraMove( to, speed ) {
+function initCameraMove( to, secs ) {
 
     let from = cameraObject.currentState;
 
@@ -8,7 +8,7 @@ function initCameraMove( to, speed ) {
 
         if ( from === "path" ) {
 
-            assignSinArrayForSpeed( speed, cameraObject, sineArrays );
+            assignSinArrayForSpeed( secs, cameraObject, sineArrays );
 
             cameraObject[ 'startCount' ] = mainCount;
             cameraObject[ 'bool' ] = true;
@@ -20,7 +20,7 @@ function initCameraMove( to, speed ) {
 
         } else if ( from === "door" ) {
 
-            assignSinArrayForSpeed( speed, cameraObject, sineArrays );
+            assignSinArrayForSpeed( secs, cameraObject, sineArrays );
 
             cameraObject[ 'startCount' ] = mainCount;
             cameraObject[ 'bool' ] = true;
@@ -40,9 +40,9 @@ function initCameraMove( to, speed ) {
 
 }    
 
-function initDoorsOpen( speed ) {
+function initDoorsOpen( secs ) {
 
-    assignSinArrayForSpeed( speed, doorsObject, sineArrays );
+    assignSinArrayForSpeed( secs, doorsObject, sineArrays );
 
     doorsObject[ 'startCount' ] = mainCount;
     doorsObject[ 'bool' ] = true;

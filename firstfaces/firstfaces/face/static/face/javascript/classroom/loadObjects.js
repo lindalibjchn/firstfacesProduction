@@ -187,6 +187,7 @@ function addTia() {
 
         scene.add( tiaObject.mBody );
         setBaseExpressionsMovements(); // do this after all of Tia is loaded
+        animate();
 
     }
         
@@ -312,9 +313,9 @@ function loadAllTextElements() {
 
 function setBaseExpressionsMovements() {
 
-    //expressionBase = getAbsoluteCoordsOfExpressionNow(); // get absolute position of base expression
-    //expressionNow = $.extend( true, {}, expressionBase ); // create a copy of this for expression now
-    //getAbsoluteCoordsOfMainExpressions(); // gets coordinates for all main expressions
+    expressionObject.base = getAbsoluteCoordsOfExpressionNow(); // get absolute position of base expression
+    expressionObject.now = $.extend( true, {}, expressionObject.base ); // create a copy of this for expression now
+    getAbsoluteCoordsOfMainExpressions(); // gets coordinates for all main expressions
     
     movementBase = getAbsoluteCoordsOfMovementNow(); // same as above for movements
     movementNow = $.extend( true, {}, movementBase );
@@ -362,7 +363,7 @@ function enterOrReEnter() {
             
             //whenAllMovFinished( function(){
 
-                //expressionController( expressionsAbs.neutral, '0.1', false );
+                //expressionController( expressionObject.abs.neutral, '0.1', false );
 
             //})
 
@@ -457,8 +458,6 @@ function init() {
     //// SET CAMERAS AND TIA UP DEPENDING ON ENTER OR REENTER \\\\
 
     enterOrReEnter();
-
-    animate();
 
 }
 

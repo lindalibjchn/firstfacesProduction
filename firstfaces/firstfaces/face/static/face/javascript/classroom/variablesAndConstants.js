@@ -23,7 +23,7 @@ const POINTLIGHT_POS = { x: 50, y: 30, z: 60 };
 //// TIA BODY PARTS POSITIONS AND ROTATIONS \\\\
 
 const BODY_POS = { x: 0, y: -18.5, z: 7.2 };
-const FACE_POS = { x: 0, y: 18.9, z: 2.7 };
+const FACE_POS = { x: 0, y: 18.7, z: 2.7 };
 const FACE_ROT = { x: 0.0925, y: 0, z: 0 };
 const MOUTH_ROT = { x: 0, y: 5.53, z: 1.93 };
 const EYEL_POS = { x: 0.03, y: 5.57, z: 1.92 };
@@ -310,7 +310,13 @@ var expressionObject = {
     'mult': 0,
     'sin': [],
     'sinLength': 0,
+    'now': {},
+    'abs': {},//all abs 
+    'base': {},//abs coordinates on enter with no movement
+    'calculated': {},//from mix of two expressions possibly
+    'talk': {}, //to begin talking,
 }
+
 
 const expressionsRel = {
     
@@ -840,17 +846,6 @@ const expressionsRel = {
 
 }
 
-// dict of above but Abs rather than Rel will calculate this on enter
-var expressionsAbs = {};
-
-// abs coords of expression on enter - completely blank
-var expressionBase;
-
-// abs coords of expression at current moment
-var expressionNow;
-
-var calculatedExpression;
-var calculatedTalkExpression;
 
 //var masterExpressionState = $.extend(true, {}, blankExpression);
 //var calculatedExpression = $.extend(true, {}, blankExpression);

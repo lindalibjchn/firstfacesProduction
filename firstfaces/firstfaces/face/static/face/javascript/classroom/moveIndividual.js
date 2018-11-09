@@ -1,14 +1,14 @@
 //////////////// MOVE ANYTHING 
 
-function initMove( obj, coords, speed, direction ) {
+function initMove( obj, coords, secs, direction ) {
 
     if ( obj.bool ) {
 
         console.log(' initMove cant move: ' + obj.name + '. Still moving previous one!!\n\nCalled by' + initMove.caller.name )
+
     } else {
 
-        //console.log(' initMove object moving is: ', obj.name);
-        assignSinArrayForSpeed( speed, obj, sineArrays ) 
+        assignSinArrayForSpeed( secs, obj, sineArrays ) 
         obj.startCount = mainCount;
 
         for (var i=0; i<2; i++) {
@@ -119,7 +119,7 @@ function lean( main ) {
 //////////////// MOVE ARM TO INDICATE 
 
 
-function initArmIndicate( arm, to, height, speed ) {
+function initArmIndicate( arm, to, height, secs ) {
 
     if ( armIndicateObject.bool ) {
 
@@ -131,7 +131,7 @@ function initArmIndicate( arm, to, height, speed ) {
 
         if ( from !== to ) {
 
-            assignSinArrayForSpeed( speed, armIndicateObject, sineArrays ) 
+            assignSinArrayForSpeed( secs, armIndicateObject, sineArrays ) 
 
             armIndicateObject.startCount = mainCount;
             var armDir;
@@ -212,7 +212,7 @@ function armIndicate( main ) {
 
 }
 
-// special one off blink where it is possible to set speed and pause when closed
+// special one off blink where it is possible to set secs and pause when closed
 function initSelectBlink( len, pauseClosed ) {
 
     if ( normalBlinkObject.bool !== true ) {
