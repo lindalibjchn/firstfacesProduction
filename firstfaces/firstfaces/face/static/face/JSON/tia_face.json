@@ -356,7 +356,7 @@
         "DbgIndex":1,
         "colorDiffuse":[0.8,0.425932,0.470575],
         "specularCoef":50,
-        "colorSpecular":[0.113138,0.0769071,0.0719551]
+        "colorSpecular":[0.2,0.135952,0.127199]
     },{
         "colorEmissive":[0,0,0],
         "shading":"phong",

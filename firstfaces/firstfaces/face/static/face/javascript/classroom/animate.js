@@ -103,6 +103,12 @@ function animate () {
 
     }
 
+    if ( armTapObject[ 'bool' ] ) {
+
+        armTap( mainCount );
+
+    }
+
     //if ( mouthOpenObject.bool ) {
 
         //openMouth( mainCount )
@@ -172,6 +178,8 @@ function animate () {
     }
 
     if ( blinkObject.bool ) {
+
+        blink();
 
     }
 

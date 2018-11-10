@@ -560,6 +560,85 @@ function initSacc( coords, secs ) {
 
 }
 
+/////////// TAP KEY MOVEMENT OUT DOWN AND UP
+
+function tapKeyFull() {
+
+        let state = 0;
+        initMove( armTapObject, [[0,0,0],[0,0.2,-0.2]], 0.5 );
+
+        function checkIfArmDone() {
+
+            if ( armTapObject.bool ) {
+
+                setTimeout( checkIfArmDone, 100 );
+
+            } else {
+
+                if ( state === 0 ) {
+                    
+                    initMove( armTapObject, [[0,0,0],[0,0.2,-0.15]], 0.1 )
+                    state = 1;   
+                    setTimeout( checkIfArmDone, 150 );
+
+                } else if ( state === 1 ) {
+
+                    initMove( armTapObject, [[0,0,0],[0,0.2,-0.2]], 0.1 )
+                    state = 2;
+                    setTimeout( checkIfArmDone, 150 );
+            
+                } else {
+
+                    initMove( armTapObject, [[0,0,0],[0,0,0]], 0.8 )
+
+                }
+
+            }
+
+        }
+
+        setTimeout( checkIfArmDone, 550 );
+
+}
+
+/////////// LISTEN TO SPEECH SYNTHESIS
+
+function listenToSpeechSynthesis( intensity ) {
+
+    if ( intensity === 1 ) {
+
+        movementController( movements.speechRecognitionInput01, 1, 1 )
+
+    } else if ( intensity === 2 ) {
+
+        movementController( movements.speechRecognitionInput02, 1.25, 1.25 )
+
+    } else {
+
+        movementController( movements.speechRecognitionInput03, 1.5, 1.5 )
+
+    }
+
+    expressionController( expressionObject.abs.speechRecognition, 0.3 )
+
+}
+
+function returnFormListenToSpeechSynthesis() {
+
+    movementController( movements.blank, 1.5, 1.5 );
+    setTimeout( function() {
+        
+        tapKeyFull();
+    
+        setTimeout( function() {
+
+            expressionController( expressionObject.abs.neutral, 0.5 )
+        
+        }, 300);
+
+    }, 200 );
+
+}
 
 /////////// RANDOM MOVEMENTS ALL THE TIME
 

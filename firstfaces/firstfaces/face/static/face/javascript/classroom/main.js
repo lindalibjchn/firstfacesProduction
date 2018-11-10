@@ -5,7 +5,7 @@ $(window).on( 'load', function() {
     init();
 
     //get audio ready
-    //readyBtns();
+    readyBtns();
 
     //fill prevSents
     //loadPrevSents( scrollBottom );
@@ -109,17 +109,72 @@ function readyBtns() {
 
     //// THIS SECOND BIT SENDS THE AUDIO FILE TO THE SERVER
 
+
+    //// FOR VOLUME BAR
+    var audioContext = null;
+    var meter = null;
+    var canvasContext = null;
+    var WIDTH_VOL=250;
+    var HEIGHT_VOL=50;
+    var rafID = null;
+
+    canvasContext = document.getElementById( "meter" ).getContext("2d");
+    var mediaStreamSource = null;
+    audioContext = new AudioContext();
+    
+    function gotStream(stream) {
+        // Create an AudioNode from the stream.
+        mediaStreamSource = audioContext.createMediaStreamSource(stream);
+
+        // Create a new volume meter and connect it.
+        meter = createAudioMeter(audioContext, 0.95, 0.95, 1000);
+        mediaStreamSource.connect(meter);
+
+        // kick off the visual updating
+        drawLoop();
+    }
+
+    function drawLoop( time ) {
+        // clear the background
+        canvasContext.clearRect(0,0,WIDTH_VOL,HEIGHT_VOL);
+
+        // check if we're currently clipping
+        if (meter.checkClipping())
+            canvasContext.fillStyle = "red";
+        else
+            canvasContext.fillStyle = "green";
+
+        console.log( 'in drawloop')
+        // draw a bar based on the current volume
+        canvasContext.fillRect(0, 0, meter.volume*WIDTH_VOL*1.4, HEIGHT_VOL);
+
+        // set up the next visual callback
+        rafID = window.requestAnimationFrame( drawLoop );
+    }
+
+
 	if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
         navigator.mediaDevices.getUserMedia (
             // constraints - only audio needed for this app
             {
-                audio: true,
+                audio: {
+
+                    "mandatory": {
+                        "googEchoCancellation": "false",
+                        "googAutoGainControl": "true",
+                        "googNoiseSuppression": "true",
+                        "googHighpassFilter": "false",
+                    },    
+                    
+                },
                 video: false
             })
 
             // Success callback
             .then(function(stream) {
      
+                gotStream( stream );
+
                 var mediaRecorder = new MediaRecorder(stream);
 
                 var recorder15sTimeout;

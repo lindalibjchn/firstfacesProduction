@@ -94,6 +94,9 @@ function MoveObj() {
 var eyeObject = new MoveObj();
 eyeObject.name = 'eye'
 
+var armTapObject = new MoveObj();
+armTapObject.name = 'armTap'
+
 var eyelidObject = new MoveObj();
 eyelidObject.coords = {
     close: 1,
@@ -149,13 +152,13 @@ var confusedObject = new ExpressionObj();
 
 
 var blinkControllerObject = {
-    'bool': false,
+    'bool': true,
     'nextBlinkCount': 60,//frames until next blink. set at 60 for first but random afterward 
 }
 
 var blinkObject = {
     'bool': false,
-    'countdown': 16,
+    'countdown': 15,
 }
 
 var breatheObject = {

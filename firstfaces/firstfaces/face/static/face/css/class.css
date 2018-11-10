@@ -140,14 +140,16 @@ button:active {
     left: -150;
     right: 0;
     margin: auto;
-    display: none;
+    /*for development of volume bar*/
+    /*display: none;*/
+    border: 3px red solid;
 
 }
 
 #textInputBox {
 
     width: 100%;
-    height: 90%;
+    height: 80%;
     /*border: 3px dashed red;*/
 
 }
@@ -171,6 +173,29 @@ button:active {
     outline-style: none;
     box-shadow: none;
     border: none;
+
+}
+
+#meterCont {
+
+    height: 10%;
+    width: 90%;
+
+}
+
+#volumeMic {
+
+    position: absolute;
+    margin-top: 5px;
+
+}
+
+#meter {
+
+    border: 2px solid blue;
+    height: 100%;
+    position: relative;
+    left: 20px;
 
 }
 

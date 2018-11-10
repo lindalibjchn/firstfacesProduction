@@ -79,7 +79,7 @@ function assignSinArrayForSpeed( secs, object, sArrays ) {
     //// get no of frames from the seconds input
     let frames = secsToFrames( secs );
 
-    object[ 'sin' ] = sArrays[ frames.toString() ];
+    object.sin = sArrays[ frames.toString() ];
 
     object.sinLength = object.sin.length;
     
