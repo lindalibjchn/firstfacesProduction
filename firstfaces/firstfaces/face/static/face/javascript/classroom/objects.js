@@ -254,6 +254,11 @@ var synthesisObject = {
     speaking_rate: 0.85,
 }
 
+var volumeObject = {
+    bool: true,
+    display: false,
+}
+
 var tiaThinkingObject = {
 
     thinking: false,

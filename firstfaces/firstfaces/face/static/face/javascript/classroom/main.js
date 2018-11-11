@@ -111,12 +111,6 @@ function readyBtns() {
 
 
     //// FOR VOLUME BAR
-    var audioContext = null;
-    var meter = null;
-    var canvasContext = null;
-    var WIDTH_VOL=250;
-    var HEIGHT_VOL=50;
-    var rafID = null;
 
     canvasContext = document.getElementById( "meter" ).getContext("2d");
     var mediaStreamSource = null;
@@ -127,29 +121,12 @@ function readyBtns() {
         mediaStreamSource = audioContext.createMediaStreamSource(stream);
 
         // Create a new volume meter and connect it.
-        meter = createAudioMeter(audioContext, 0.95, 0.95, 1000);
+        meter = createAudioMeter(audioContext, 0.95, 0.98, 1000);
+
         mediaStreamSource.connect(meter);
 
         // kick off the visual updating
         drawLoop();
-    }
-
-    function drawLoop( time ) {
-        // clear the background
-        canvasContext.clearRect(0,0,WIDTH_VOL,HEIGHT_VOL);
-
-        // check if we're currently clipping
-        if (meter.checkClipping())
-            canvasContext.fillStyle = "red";
-        else
-            canvasContext.fillStyle = "green";
-
-        console.log( 'in drawloop')
-        // draw a bar based on the current volume
-        canvasContext.fillRect(0, 0, meter.volume*WIDTH_VOL*1.4, HEIGHT_VOL);
-
-        // set up the next visual callback
-        rafID = window.requestAnimationFrame( drawLoop );
     }
 
 
@@ -302,6 +279,116 @@ function readyBtns() {
 
 }
 
+//// for drawing the volume bar
+var audioContext = null;
+var meter = null;
+var canvasContext = null;
+var WIDTH_VOL=250;
+var HEIGHT_VOL=50;
+var rafID = null;
+var micIntAud = document.getElementById('micInterferenceClip')
+micIntAud.src = "http://127.0.0.1:8000/media/mic_interference.mp3";
+//micIntAud.src = "media/mic_interference.mp3";
+
+
+function drawLoop() {
+
+    function drawVolumeBar() {
+
+        canvasContext.clearRect(0,0,WIDTH_VOL,HEIGHT_VOL);
+
+        // check if we're currently clipping
+        if (meter.checkClipping()) {
+
+            canvasContext.fillRect(0, 0, WIDTH_VOL*1.4, HEIGHT_VOL);
+            if ( mainCount % 2 === 0 ) {
+                canvasContext.fillStyle = "red";
+            } else {
+                canvasContext.fillStyle = "yellow";
+            }
+            
+        } else {
+            canvasContext.fillStyle = "green";
+            // draw a bar based on the current volume
+            canvasContext.fillRect(0, 0, meter.volume*WIDTH_VOL*1.4, HEIGHT_VOL);
+
+        }
+
+    }
+
+    function tiaConfusedAfterClipping( firstTime) {
+
+        micIntAud.play();//play interference
+
+        //// delay the expression and movement by a bit to create more realistic encounter
+        setTimeout( function() {
+
+            expressionController( expressionObject.abs.confused, 0.3 )//express confusion 
+            movementController( movements.blank, 1.5, 1.5);
+            
+            setTimeout( function() {
+
+                //expressionController( expressionObject.abs.neutral, 1 )//express confusion 
+
+                setTimeout( function() {
+
+                    if ( firstTime ) {
+
+                        // tia says something
+                        showVolumeBar();
+
+                    } else {
+
+                        // tia says something more severe
+
+                    }
+
+                }, 1000 ) 
+
+            }, 350 )
+
+        }, 300 );
+
+    }
+
+    // no need to dispay if user is inputting at good volume
+    if ( volumeObject.display ) {
+
+        if (meter.checkClipping()) {
+
+            tiaConfusedAfterClipping( false );
+
+        }
+
+        drawVolumeBar();
+
+    } else {
+
+        // if not displayed,pond through interference and Tia's expression
+
+        if (meter.checkClipping()) {
+
+            tiaConfusedAfterClipping( true );
+
+        }
+
+    }
+
+}
+
+function showVolumeBar() {
+
+    volumeObject.display = true;
+    $('#meterCont').show(); 
+
+}
+
+function hideVolumeBar() {
+
+    volumeObject.display = true;
+    $('#meterCont').hide(); 
+
+}
 
 function checkIfSentIsQuestion( s ) {
 

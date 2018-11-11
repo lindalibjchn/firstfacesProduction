@@ -270,6 +270,8 @@ def class_time(request, session_id):
 
                 blob_no_text = False
                 blob_no_text_sent_id = None
+                interference_count = 0
+                interference_count_this_sent = 0
 
                 #check if learner entered a topic. If so then it is not first entry
                 first_enter = True 
@@ -306,6 +308,12 @@ def class_time(request, session_id):
 
                                 float_surprise = float(s.surprise)
 
+                            #count the interference
+                            audio_files = s.audiofile_set.all()
+                            for a in audio_files:
+                                if a.interference:
+                                    interference_count += 1;
+
                             sentences[i] = {
                                 'sent_id': s.id,
                                 'sentence': s.sentence,
@@ -330,7 +338,7 @@ def class_time(request, session_id):
                             blob_no_text_sent_id = last_sent.id
 
                         last_sent = sentences[id_of_last_sent]
-
+                        
                 # check if class is over
                 class_over = False
                 if sess.end_time != None:
@@ -355,6 +363,7 @@ def class_time(request, session_id):
                     'prev_score': prev_score,
                     'first_ever_class': first_ever_class,
                     'prev_emotion': prev_emotion,
+                    'interference_count': interference_count,
 
                 }
 

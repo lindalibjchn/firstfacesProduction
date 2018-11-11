@@ -30,7 +30,8 @@ function expressionController( expressionTo, duration ) {
             }, 1000 );
 
         } else {
-
+            
+            expressionObject.bool = false;//if other expression delayed, just stop it before calculating absolute position
             console.log( "expression initiated\n" );
 
             expressionObject.now = getAbsoluteCoordsOfExpressionNow();

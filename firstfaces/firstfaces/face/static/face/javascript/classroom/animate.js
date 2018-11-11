@@ -79,6 +79,12 @@ function animate () {
 
     //}
 
+    if ( volumeObject.bool ) {
+
+        drawLoop( mainCount );
+
+    }
+
     if ( expressionObject.bool ) {
 
         expression( mainCount );

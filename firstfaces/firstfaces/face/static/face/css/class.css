@@ -142,7 +142,7 @@ button:active {
     margin: auto;
     /*for development of volume bar*/
     /*display: none;*/
-    border: 3px red solid;
+    /*border: 3px red solid;*/
 
 }
 
@@ -180,6 +180,7 @@ button:active {
 
     height: 10%;
     width: 90%;
+    display: none;
 
 }
 
@@ -192,7 +193,7 @@ button:active {
 
 #meter {
 
-    border: 2px solid blue;
+    border: 2px solid orange;
     height: 100%;
     position: relative;
     left: 20px;
