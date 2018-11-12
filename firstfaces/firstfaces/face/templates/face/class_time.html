@@ -7,15 +7,15 @@
 <link rel="stylesheet" type="text/css" href="{% static 'face/css/class.css' %}" />
 
 <!-- black screen which disappears after loading -->
-<!--<div id="foreground" style="opacity: 1">-->
+<div id="foreground" style="opacity: 1">
 
-    <!--<div id="loadingIcon">-->
+    <div id="loadingIcon">
 
-        <!--<i class="fa fa-5x fa-spinner fa-pulse"></i>-->
+        <i class="fa fa-5x fa-spinner fa-pulse"></i>
 
-    <!--</div>-->
+    </div>
 
-<!--</div>-->
+</div>
 
 <!--will fill this tutorial button with confirmations from tutorial.js-->
 <div class="init-questions-container" id="tutorialBtnSingleCont">
@@ -155,6 +155,28 @@
 
 <div id="textInputContainer">
 
+    <div id="alternativesCont">
+
+        <div class="w3-row sent-scores-row" id="altCont00">
+
+            <div id="alt00" class="sent-scores">1</div>
+            
+        </div>
+
+        <div class="w3-row sent-scores-row" id="altCont01">
+            
+            <div id="alt01" class="sent-scores">2</div>
+            
+        </div>
+            
+        <div class="w3-row sent-scores-row" id="altCont02">
+
+            <div id="alt02" class="sent-scores">3</div>
+
+        </div>
+
+    </div>
+
     <div id="textInputBox">
 
         <textarea id="textInput" maxlength="299"></textarea>
@@ -163,7 +185,7 @@
     
     <div id="meterCont">
                         
-        <i class="fa fa-microphone inputfa" id="volumeMic"></i>
+        <i class="fa fa-microphone inputfa fa-2x" id="volumeMic"></i>
     
         <canvas id="meter" width="250" height="50"></canvas>
 
@@ -322,6 +344,7 @@
 <script>var body = "{% static 'face/JSON/tia_body.json' %}"</script>
 <script>var classroom = "{% static 'face/JSON/classroom.json' %}"</script>
 <script>var speechBubble = "{% static 'face/JSON/speechBubble.json' %}"</script>
+<script>var speechBubble2 = "{% static 'face/JSON/speechBubble2.json' %}"</script>
 <script>var classVariableDict = {{ class_variable_dict|safe }}</script>;
 
 <!-- fonts -->

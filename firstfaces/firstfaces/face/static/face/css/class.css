@@ -148,8 +148,11 @@ button:active {
 
 #textInputBox {
 
-    width: 100%;
+    position: absolute;
+    width: 90%;
     height: 80%;
+    right: 0;
+    top: 0;
     /*border: 3px dashed red;*/
 
 }
@@ -176,25 +179,101 @@ button:active {
 
 }
 
+#alternativesCont {
+
+    position: absolute;
+    height: 170px;
+    width: 10%;
+    left: 0;
+    top: -10px;
+    display: none;
+    /*border: 2px solid blue;*/
+
+}
+
+.sent-scores-row {
+
+    width: 100%;
+    height: 33%;
+    position: relative;
+
+}
+
+.sent-scores {
+
+    width: 45px;
+    height: 45px;
+    font-size: 1.7vw;
+    text-align: center;
+    color: white;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    border-radius: 50%;
+
+}
+
+#alt00 {
+
+    background-color: #ffa500;
+    color: yellow;
+
+}
+
+#alt01 {
+
+    background-color: #c0c0c0;
+
+}
+
+#alt02 {
+
+    background-color: #cd7f32;
+
+}
+
+.sent-scores:hover {
+
+    cursor: pointer;
+    background-color: white !important;
+    color: black !important;
+
+}
+
 #meterCont {
 
-    height: 10%;
-    width: 90%;
+    height: 40px;
+    width: 70%;
     display: none;
+    /*border: 2px solid white;*/
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto;
+    bottom: 20px;
 
 }
 
 #volumeMic {
 
     position: absolute;
-    margin-top: 5px;
+    padding: 5px;
+    left: -10px;
+    /*margin-top: 5px;*/
 
 }
 
 #meter {
 
-    border: 2px solid orange;
+    border: 2px solid white;
     height: 100%;
+    width: 90%;
     position: relative;
     left: 20px;
 

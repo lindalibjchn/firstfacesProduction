@@ -60,6 +60,7 @@ const speechBubblePOS = { x: -13, y: 2, z: 14 };
 const speechBubbleSCALE = { x: 5, y: 6, z: 1 };
 const speechBubbleROT = { x: 0, y: 0.2, z: 0 };
 
+const speechBubble2POS = { x: -13, y: -4, z: 14 };
 
 //// SPEECH BUBBLE BACKGROUND \\\\
 

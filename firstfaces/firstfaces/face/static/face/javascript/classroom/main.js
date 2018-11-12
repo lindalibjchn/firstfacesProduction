@@ -9,9 +9,12 @@ $(window).on( 'load', function() {
 
     //fill prevSents
     //loadPrevSents( scrollBottom );
+
+
     
 });
 
+var recognition// put here so can call in cliiping occurs
 function readyBtns() {
     
     $('#tryAgainBtn').on( 'click', tryAgain );
@@ -19,6 +22,7 @@ function readyBtns() {
     $('#showCorrectionBtn').on( 'click', showCorrection );
     $('#nextSentenceBtn').on( 'click', nextSentence );
     $('#talkBtn').on( 'click', sendSentToServer );
+    $('.sent-scores').on( 'click', viewAlternateTranscription );
 
     $('#finishClassBtn').on( 'click', function() {
         
@@ -36,7 +40,8 @@ function readyBtns() {
     try {
 
         var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-        var recognition = new SpeechRecognition();
+        recognition = new SpeechRecognition();
+        recognition.maxAlternatives = 3;
         recognition.continuous = true;
         recognition.lang = 'en';
 
@@ -45,8 +50,6 @@ function readyBtns() {
         console.error(e);
 
     }
-
-    let sentence = "";
 
     var record = document.getElementById( 'recordVoiceBtn' );
     var stop = document.getElementById( 'stopRecordVoiceBtn' );
@@ -138,8 +141,8 @@ function readyBtns() {
 
                     "mandatory": {
                         "googEchoCancellation": "false",
-                        "googAutoGainControl": "true",
-                        "googNoiseSuppression": "true",
+                        "googAutoGainControl": "false",
+                        "googNoiseSuppression": "false",
                         "googHighpassFilter": "false",
                     },    
                     
@@ -159,13 +162,22 @@ function readyBtns() {
                 function onRecord() {
 
                     mediaRecorder.start();
+                    listenToSpeechSynthesis( classVariableDict.blobs );// tia leans to listen
+                    classVariableDict.blobs += 1;
+                    volumeObject.bool = true;// detect volume and be ready to show volume bar
+        
+                    $('#alternativesCont').fadeOut( 500 );
+
+                    // show volume bar if display is true
+                    if ( volumeObject.display ) {
+
+                        showVolumeBar();
+
+                    }
 
                     // will check that the user has clicked the stop button by timing them and using this boolean
                     classVariableDict.recording = true;
                     recorder15sTimeout = setTimeout( checkIfClickedStop, 20000 );
-
-                    // this is the live stuff
-                    sentence = "";
 
                     // hide the microphone button
                     $(this).hide();
@@ -220,6 +232,9 @@ function readyBtns() {
                     
                 function onMediaRecorderStop() {
 
+                    volumeObject.bool = false;// stop measuring volume and hide volume bar
+                    hideVolumeBar();//always hide it even if not shown, same as if statement
+
                     $('#talkBtn').prop( "disabled", true )
                     classVariableDict.blob = new Blob(chunks, { type : 'audio/ogg; codecs: opus' });
 
@@ -252,22 +267,12 @@ function readyBtns() {
             
         recognition.onresult = function(event) {
 
-            var current = event.resultIndex;
-            var transcript = event.results[current][0].transcript;
-            sentence += transcript + " ";
-            
-            // avoid sending sentence which is too long to server
-            if ( sentence.length >= 300 ) {
+            console.log('event:', event);
+            orderedAlternatives = createArrayOfAlternatives( event.results[0] );
 
-                alert('Your sentence was too long and will be shortened. Please check it before sending.')
-
-                synthesisObject.textFromSpeech = sentence.slice(0, 299);
-
-            } else {
-
-                synthesisObject.textFromSpeech = sentence.slice(0,sentence.length -1);
-
-            }
+            synthesisObject.alternatives = event.results[0].length
+            console.log('orderedList:', orderedAlternatives);
+            fillTranscriptsAndConfidences( synthesisObject.alternatives );
 
         }
 
@@ -279,6 +284,74 @@ function readyBtns() {
 
 }
 
+// for sorting
+function compare(a,b) {
+  if (a.confidence > b.confidence)
+    return -1;
+  if (a.confidence < b.confidence)
+    return 1;
+  return 0;
+}
+
+// put all transcriptions into an array
+function createArrayOfAlternatives( unorderedDict ) {
+
+    let sentencesList = [];
+    
+    // get list of scores
+    for (let i=0; i<unorderedDict.length; i++) {
+
+        sentencesList.push( unorderedDict[i] )
+
+    }
+
+    sentencesList.sort(compare)
+
+    return sentencesList
+
+}
+
+function fillTranscriptsAndConfidences( alts ) {
+
+    synthesisObject.transcript0 = "";
+    synthesisObject.transcript1 = "";
+    synthesisObject.transcript2 = "";
+
+    //// confidence ratings
+    synthesisObject.confidence0 = 0;
+    synthesisObject.confidence1 = 0;
+    synthesisObject.confidence2 = 0;
+
+    for ( let i=0; i<alts; i++ ) {
+
+        console.log('i:', i);
+        synthesisObject[ 'transcript' + i.toString() ] = clipLongTranscripts( orderedAlternatives[i].transcript );
+        synthesisObject[ 'confidence' + i.toString() ] = parseInt( 100 * orderedAlternatives[i].confidence );
+
+    }
+
+}
+
+function clipLongTranscripts( t ) {
+
+    console.log('t', t);
+    // avoid sending sentence which is too long to server
+    if ( t.length >= 300 ) {
+
+        alert('Your sentence was too long and will be shortened. Please check it before sending.')
+
+        newT = t.slice(0, 299);
+
+    } else {
+
+        newT = t.slice(0,t.length);
+
+    }
+
+    return newT
+
+}
+
 //// for drawing the volume bar
 var audioContext = null;
 var meter = null;
@@ -287,7 +360,7 @@ var WIDTH_VOL=250;
 var HEIGHT_VOL=50;
 var rafID = null;
 var micIntAud = document.getElementById('micInterferenceClip')
-micIntAud.src = "http://127.0.0.1:8000/media/mic_interference.mp3";
+micIntAud.src = "http://127.0.0.1:8000/media/00micInterference02.mp3";
 //micIntAud.src = "media/mic_interference.mp3";
 
 
@@ -295,17 +368,14 @@ function drawLoop() {
 
     function drawVolumeBar() {
 
+        console.log(' in draw volume bar ')
         canvasContext.clearRect(0,0,WIDTH_VOL,HEIGHT_VOL);
 
         // check if we're currently clipping
         if (meter.checkClipping()) {
 
             canvasContext.fillRect(0, 0, WIDTH_VOL*1.4, HEIGHT_VOL);
-            if ( mainCount % 2 === 0 ) {
-                canvasContext.fillStyle = "red";
-            } else {
-                canvasContext.fillStyle = "yellow";
-            }
+            canvasContext.fillStyle = "red";
             
         } else {
             canvasContext.fillStyle = "green";
@@ -316,7 +386,7 @@ function drawLoop() {
 
     }
 
-    function tiaConfusedAfterClipping( firstTime) {
+    function tiaConfusedAfterClipping( firstTime ) {
 
         micIntAud.play();//play interference
 
@@ -335,7 +405,6 @@ function drawLoop() {
                     if ( firstTime ) {
 
                         // tia says something
-                        showVolumeBar();
 
                     } else {
 
@@ -378,15 +447,24 @@ function drawLoop() {
 
 function showVolumeBar() {
 
-    volumeObject.display = true;
     $('#meterCont').show(); 
 
 }
 
 function hideVolumeBar() {
 
-    volumeObject.display = true;
     $('#meterCont').hide(); 
+
+}
+
+function viewAlternateTranscription() {
+
+    let id = this.id[4]//gets the number (0-2)
+    synthesisObject.transcriptCur = id;
+    $('#textInput').val( synthesisObject['transcript' + id ] )
+    $('.sent-scores' ).css( 'border', 'none' )
+    $('#alt0' + id ).css( 'border', '3px solid yellow' )
+    sendTranscriptViewToAjax( synthesisObject.transcriptCur );
 
 }
 

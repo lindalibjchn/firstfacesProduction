@@ -248,15 +248,15 @@ var talkObject = {
 // SPEECH STUFF
 
 var synthesisObject = {
-    textFromSpeech: "",
+    textFromSpeech0: "",
     text: "",
     pitch: 0,
     speaking_rate: 0.85,
 }
 
 var volumeObject = {
-    bool: true,
-    display: false,
+    bool: false,
+    display: true,
 }
 
 var tiaThinkingObject = {

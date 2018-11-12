@@ -268,6 +268,7 @@ def class_time(request, session_id):
                 except:
                     pass
 
+                blobs = 0;
                 blob_no_text = False
                 blob_no_text_sent_id = None
                 interference_count = 0
@@ -337,6 +338,14 @@ def class_time(request, session_id):
                             blob_no_text = True
                             blob_no_text_sent_id = last_sent.id
 
+                            # interference for last sentence
+                            last_sent_audio_files = last_sent.audiofile_set.all()
+                            for b in audio_files:
+                                blobs += 1
+                                if b.interference:
+                                    interference_count_this_sent += 1;
+
+
                         last_sent = sentences[id_of_last_sent]
                         
                 # check if class is over
@@ -364,7 +373,8 @@ def class_time(request, session_id):
                     'first_ever_class': first_ever_class,
                     'prev_emotion': prev_emotion,
                     'interference_count': interference_count,
-
+                    'interference_count_this_sent': interference_count_this_sent,
+                    'blobs': blobs,
                 }
 
                 context = {
@@ -478,7 +488,15 @@ def store_blob(request):
     # get session
     blob_no_text = json.loads(request.POST['blob_no_text'])
     sess = Session.objects.get( pk=request.POST['sessionID'] )
-    text_from_speech = request.POST['textFromSpeech']
+    text_from_speech0 = request.POST['transcript0']
+    text_from_speech1 = request.POST['transcript1']
+    text_from_speech2 = request.POST['transcript2']
+    text_from_speech_conf0 = request.POST['confidence0']
+    text_from_speech_conf1 = request.POST['confidence1']
+    text_from_speech_conf2 = request.POST['confidence2']
+
+    print('text_from_speech2:', text_from_speech2)
+    print('text_from_speech_conf2:', text_from_speech_conf2)
 
     #check if this recording is a retry
     #get prev sents for this user in this session
@@ -499,7 +517,16 @@ def store_blob(request):
     blob.name = filename
 
     #and then link the recording
-    a = AudioFile(sentence=s, audio=blob, speech_to_text=text_from_speech)
+    a = AudioFile(
+            sentence=s, 
+            audio=blob, 
+            transcription0=text_from_speech0,
+            transcription1=text_from_speech1,
+            transcription2=text_from_speech2,
+            confidence0=text_from_speech_conf0,
+            confidence1=text_from_speech_conf1,
+            confidence2=text_from_speech_conf2,
+            )
     a.save()
 
     response_data = {
@@ -944,6 +971,36 @@ def update_session_object(request):
     };
 
     return JsonResponse(response_data)    
+
+def add_transcription_choice_view(request):
+
+    # code.interact(local=locals());
+    blob_no_text_sent_id = request.GET['blob_no_text_sent_id']
+    choice = int(request.GET['choice'])
+    print('choice:', type(choice))
+
+    s = Sentence.objects.get(pk=int(blob_no_text_sent_id))
+    a = AudioFile.objects.filter(sentence=s).latest('pk')
+    
+    choices_already = json.loads(a.transcriptionChoicesView)
+    choices_already.append( choice )
+
+    a.transcriptionChoicesView = choices_already
+    a.save();
+    
+    response_data = {
+
+    }
+
+    return JsonResponse(response_data)    
+
+
+
+
+
+
+
+
 
 
 

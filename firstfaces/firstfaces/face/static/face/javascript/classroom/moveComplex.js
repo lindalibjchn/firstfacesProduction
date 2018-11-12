@@ -589,6 +589,10 @@ function tapKeyFull() {
             
                 } else {
 
+                    calculateAlternatives();
+                    //show play buttons below
+                    $('.play-btn').prop( "disabled", false);
+
                     initMove( armTapObject, [[0,0,0],[0,0,0]], 0.8 )
 
                 }
@@ -605,11 +609,11 @@ function tapKeyFull() {
 
 function listenToSpeechSynthesis( intensity ) {
 
-    if ( intensity === 1 ) {
+    if ( intensity === 0 ) {
 
         movementController( movements.speechRecognitionInput01, 1, 1 )
 
-    } else if ( intensity === 2 ) {
+    } else if ( intensity === 1 ) {
 
         movementController( movements.speechRecognitionInput02, 1.25, 1.25 )
 
@@ -623,7 +627,7 @@ function listenToSpeechSynthesis( intensity ) {
 
 }
 
-function returnFormListenToSpeechSynthesis() {
+function returnFromListenToSpeechSynthesis() {
 
     movementController( movements.blank, 1.5, 1.5 );
     setTimeout( function() {
@@ -634,6 +638,12 @@ function returnFormListenToSpeechSynthesis() {
 
             expressionController( expressionObject.abs.neutral, 0.5 )
         
+            setTimeout( function() {
+
+                $('#recordVoiceBtn').show();
+            
+            }, 1000 );
+
         }, 300);
 
     }, 200 );

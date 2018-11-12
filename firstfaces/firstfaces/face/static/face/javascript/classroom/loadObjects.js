@@ -10,6 +10,24 @@ var mainCount = 0;
 
 //// FUNCTIONS TO BE CALLED IN INIT() \\\\
 
+// start random movements and calculate stuff after bodyparts loaded
+function engineRunning() {
+
+    setBaseExpressionsMovements(); // do this after all of Tia is loaded
+    animate();
+    blinkControllerObject.bool = true;
+    initInputReady('');
+    initCameraMove('laptop', 0.1);
+    expressionController( expressionObject.abs.neutral, 0.1 );
+
+    setTimeout( function() {
+        
+        $("#foreground").fadeOut( 1500 );
+    
+    }, 500 );
+
+}
+
 function dealWithResizing() {
 
     window.addEventListener('resize', function() {
@@ -185,10 +203,9 @@ function addTia() {
         // again, parent to headbone
         tiaObject.faceBones.head.add( tiaObject.mHair );
 
-        scene.add( tiaObject.mBody );
-        setBaseExpressionsMovements(); // do this after all of Tia is loaded
-        animate();
+        engineRunning();
 
+        scene.add( tiaObject.mBody );
     }
         
     loader.load( body, addBody);    
@@ -261,9 +278,9 @@ function loadAllTextElements() {
 
     }
         
-    function loadSpeechBubble() {
+    function loadSpeechBubble( bubble ) {
 
-        loader.load( speechBubble, addSpeechBubbleJSON );
+        loader.load( bubble, addSpeechBubbleJSON );
 
         function addSpeechBubbleJSON( geom, mat ) {
 
@@ -275,7 +292,17 @@ function loadAllTextElements() {
             mat[1].opacity = 1;
             speechBubbleObject.bubble = new THREE.Mesh( geom, mat );
             speechBubbleObject.bubble.scale.set( speechBubbleSCALE.x, speechBubbleSCALE.y, speechBubbleSCALE.z );
-            speechBubbleObject.bubble.position.set( speechBubblePOS.x, speechBubblePOS.y, speechBubblePOS.z );
+            
+            if ( bubble === speechBubble ) {
+
+                speechBubbleObject.bubble.position.set( speechBubblePOS.x, speechBubblePOS.y, speechBubblePOS.z );
+            
+            } else if ( bubble === speechBubble2 ) {
+
+                speechBubbleObject.bubble.position.set( speechBubble2POS.x, speechBubble2POS.y, speechBubble2POS.z );
+            
+            }
+
             speechBubbleObject.bubble.rotation.set( speechBubbleROT.x, speechBubbleROT.y, speechBubbleROT.z )
             addSpeechBubbleTextBackground();
 
@@ -307,7 +334,8 @@ function loadAllTextElements() {
     loadSentenceBackground();
     loadWrongHighlights();
     loadCorrectionBackground();
-    loadSpeechBubble();
+    loadSpeechBubble(speechBubble);
+    loadSpeechBubble(speechBubble2);
 
 };
 
@@ -392,12 +420,6 @@ function enterOrReEnter() {
         reEnter();
 
     }
-
-    //setTimeout( function() {
-        
-        //$("#foreground").fadeOut( 1500 );
-    
-    //}, 1250 );
 
 }
 

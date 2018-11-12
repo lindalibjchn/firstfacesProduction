@@ -67,11 +67,11 @@ function blinkController() {
 
 function animate () {
 
-    //if ( cameraObject[ 'bool' ] ) {
+    if ( cameraObject[ 'bool' ] ) {
 
-        //rotateCamera( mainCount );
+        rotateCamera( mainCount );
 
-    //}
+    }
 
     //if ( enterCameraObject[ 'bool' ] ) {
 

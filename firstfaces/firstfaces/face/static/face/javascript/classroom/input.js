@@ -40,7 +40,7 @@ function talkToTia() {
     synthesisObject.delayToThinkAndTurn = 1500 + finalTextInBox.length * 65;
     
     //no change from audio
-    if ( finalTextInBox === synthesisObject.textFromSpeech ) {
+    if ( finalTextInBox === synthesisObject.textFromSpeech0 ) {
 
         synthesisObject.synthAudio = document.getElementById('soundClip');
         synthesisObject.originalVoice = true;

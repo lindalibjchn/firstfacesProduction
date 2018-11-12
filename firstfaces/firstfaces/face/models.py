@@ -121,14 +121,26 @@ class PermSentence(models.Model):
 # may need multiple audio files per sentence as student attempts and re-attempts
 class AudioFile(models.Model):
     sentence = models.ForeignKey(Sentence, on_delete=models.CASCADE)
-    speech_to_text = models.CharField(max_length=300, blank=True, null=True)
+    transcription0 = models.CharField(max_length=300, blank=True, null=True)
+    transcription1 = models.CharField(max_length=300, blank=True, null=True)
+    transcription2 = models.CharField(max_length=300, blank=True, null=True)
+    confidence0 = models.SmallIntegerField(blank=True, null=True)
+    confidence1 = models.SmallIntegerField(blank=True, null=True)
+    confidence2 = models.SmallIntegerField(blank=True, null=True)
     interference = models.NullBooleanField(null=True)
+    transcriptionChoicesView = models.CharField(max_length=300, default='[]')
     audio = models.FileField(upload_to="")
     created_at = models.DateTimeField(auto_now_add=True)
 
 class PermAudioFile(models.Model):
     sentence = models.ForeignKey(PermSentence, on_delete=models.CASCADE)
-    speech_to_text = models.CharField(max_length=300, blank=True, null=True)
+    transcription0 = models.CharField(max_length=300, blank=True, null=True)
+    transcription1 = models.CharField(max_length=300, blank=True, null=True)
+    transcription2 = models.CharField(max_length=300, blank=True, null=True)
+    confidence0 = models.SmallIntegerField(blank=True, null=True)
+    confidence1 = models.SmallIntegerField(blank=True, null=True)
+    confidence2 = models.SmallIntegerField(blank=True, null=True)
+    transcriptionChoicesView = models.CharField(max_length=300, default='[]')
     interference = models.NullBooleanField(null=True)
     audio = models.FileField(upload_to="")
     created_at = models.DateTimeField(auto_now_add=True)

@@ -17,20 +17,20 @@ function initCameraMove( to, secs ) {
 
         if ( from === "laptop" ) {
 
-            cameraObject[ 'startPointX' ] = CAMERA_ROTATION_LAPTOP_X;
-            cameraObject[ 'startPointY' ] = CAMERA_ROTATION_LAPTOP_Y;
+            cameraObject[ 'startPointX' ] = CAMERA_SIT_TO_LAPTOP_ROT.x;
+            cameraObject[ 'startPointY' ] = CAMERA_SIT_TO_LAPTOP_ROT.y;
             
             if ( to === "tia" ) {
 
-                cameraObject[ 'rotationX' ] = CAMERA_ROTATION_TIA_X - CAMERA_ROTATION_LAPTOP_X;
-                cameraObject[ 'rotationY' ] = CAMERA_ROTATION_TIA_Y - CAMERA_ROTATION_LAPTOP_Y;
+                cameraObject[ 'rotationX' ] = CAMERA_SIT_TO_TIA_ROT.x - CAMERA_SIT_TO_LAPTOP_ROT.x;
+                cameraObject[ 'rotationY' ] = CAMERA_SIT_TO_TIA_ROT.y - CAMERA_SIT_TO_LAPTOP_ROT.y;
                 
                 cameraObject.currentState = "tia";
             
             } else if ( to === "board" ) {
 
-                cameraObject[ 'rotationX' ] = CAMERA_ROTATION_BOARD_X - CAMERA_ROTATION_LAPTOP_X;
-                cameraObject[ 'rotationY' ] = CAMERA_ROTATION_BOARD_Y - CAMERA_ROTATION_LAPTOP_Y;
+                cameraObject[ 'rotationX' ] = CAMERA_SIT_TO_BOARD_ROT.x - CAMERA_SIT_TO_LAPTOP_ROT.x;
+                cameraObject[ 'rotationY' ] = CAMERA_SIT_TO_BOARD_ROT.y - CAMERA_SIT_TO_LAPTOP_ROT.y;
 
                 cameraObject.currentState = "board";
 
@@ -38,20 +38,20 @@ function initCameraMove( to, secs ) {
 
         } else if ( from === "tia" ) {
 
-            cameraObject[ 'startPointX' ] = CAMERA_ROTATION_TIA_X;
-            cameraObject[ 'startPointY' ] = CAMERA_ROTATION_TIA_Y;
+            cameraObject[ 'startPointX' ] = CAMERA_SIT_TO_TIA_ROT.x;
+            cameraObject[ 'startPointY' ] = CAMERA_SIT_TO_TIA_ROT.y;
             
             if ( to === "laptop" ) {
 
-                cameraObject[ 'rotationX' ] = CAMERA_ROTATION_LAPTOP_X - CAMERA_ROTATION_TIA_X;
-                cameraObject[ 'rotationY' ] = CAMERA_ROTATION_LAPTOP_Y - CAMERA_ROTATION_TIA_Y;
+                cameraObject[ 'rotationX' ] = CAMERA_SIT_TO_LAPTOP_ROT.x - CAMERA_SIT_TO_TIA_ROT.x;
+                cameraObject[ 'rotationY' ] = CAMERA_SIT_TO_LAPTOP_ROT.y - CAMERA_SIT_TO_TIA_ROT.y;
 
                 cameraObject.currentState = "laptop";
 
             } else if ( to === "board" ) {
 
-                cameraObject[ 'rotationX' ] = CAMERA_ROTATION_BOARD_X - CAMERA_ROTATION_TIA_X;
-                cameraObject[ 'rotationY' ] = CAMERA_ROTATION_BOARD_Y - CAMERA_ROTATION_TIA_Y;
+                cameraObject[ 'rotationX' ] = CAMERA_SIT_TO_BOARD_ROT.x - CAMERA_SIT_TO_TIA_ROT.x;
+                cameraObject[ 'rotationY' ] = CAMERA_SIT_TO_BOARD_ROT.y - CAMERA_SIT_TO_TIA_ROT.y;
 
                 cameraObject.currentState = "board";
 
@@ -59,20 +59,20 @@ function initCameraMove( to, secs ) {
 
         } else if ( from === "board" ) {
 
-            cameraObject[ 'startPointX' ] = CAMERA_ROTATION_BOARD_X;
-            cameraObject[ 'startPointY' ] = CAMERA_ROTATION_BOARD_Y;
+            cameraObject[ 'startPointX' ] = CAMERA_SIT_TO_BOARD_ROT.x;
+            cameraObject[ 'startPointY' ] = CAMERA_SIT_TO_BOARD_ROT.y;
             
             if ( to === "laptop" ) {
 
-                cameraObject[ 'rotationX' ] = CAMERA_ROTATION_LAPTOP_X - CAMERA_ROTATION_BOARD_X;
-                cameraObject[ 'rotationY' ] = CAMERA_ROTATION_LAPTOP_Y - CAMERA_ROTATION_BOARD_Y;
+                cameraObject[ 'rotationX' ] = CAMERA_SIT_TO_LAPTOP_ROT.x - CAMERA_SIT_TO_BOARD_ROT.x;
+                cameraObject[ 'rotationY' ] = CAMERA_SIT_TO_LAPTOP_ROT.y - CAMERA_SIT_TO_BOARD_ROT.y;
 
                 cameraObject.currentState = "laptop";
 
             } else if ( to === "tia" ) {
 
-                cameraObject[ 'rotationX' ] = CAMERA_ROTATION_TIA_X - CAMERA_ROTATION_BOARD_X;
-                cameraObject[ 'rotationY' ] = CAMERA_ROTATION_TIA_Y - CAMERA_ROTATION_BOARD_Y;
+                cameraObject[ 'rotationX' ] = CAMERA_SIT_TO_TIA_ROT.x - CAMERA_SIT_TO_BOARD_ROT.x;
+                cameraObject[ 'rotationY' ] = CAMERA_SIT_TO_TIA_ROT.y - CAMERA_SIT_TO_BOARD_ROT.y;
 
                 cameraObject.currentState = "tia";
 

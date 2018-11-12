@@ -11,6 +11,7 @@ urlpatterns = [
     path('store_topic', views.store_topic, name='store_topic'),
     path('store_blob', views.store_blob, name='store_blob'),
     path('tts', views.tts, name='tts'),
+    path('add_transcription_choice_view', views.add_transcription_choice_view, name='add_transcription_choice_view'),
     path('sign_up', views.sign_up, name='sign_up'),
     path('sign_up_user', views.sign_up_user, name='sign_up_user'),
     path('store_sent', views.store_sent, name='store_sent'),

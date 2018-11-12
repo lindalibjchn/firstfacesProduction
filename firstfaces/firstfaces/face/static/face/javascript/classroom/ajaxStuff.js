@@ -68,12 +68,46 @@ function sendTTS( text, tiaSpeaker, caller ) {
 
 }
 
+function calculateAlternatives() {
+
+    $('#textInput').val( synthesisObject.transcript0 );
+    $('#textInput').focus();
+    $('#alt00').css( 'border', '3px solid yellow' );
+    
+    synthesisObject.transcriptCur = '0';
+
+    if ( synthesisObject.alternatives === 1 ) {
+
+        $('#alt01').hide();
+        $('#alt02').hide();
+
+    } else if ( synthesisObject.alternatives === 2 ) {
+    
+        $('#alt01').show();
+        $('#alt02').hide();
+
+    } else if ( synthesisObject.alternatives === 3 ) {
+    
+        $('#alt01').show();
+        $('#alt02').show();
+
+    }
+
+    $('#alternativesCont').show();
+
+}
+
 function sendBlobToServer( blob_to_send ) {
 
     let fd = new FormData();
     fd.append('data', blob_to_send);
     fd.append('sessionID', classVariableDict.session_id);
-    fd.append('textFromSpeech', synthesisObject.textFromSpeech);
+    fd.append('transcript0', synthesisObject.transcript0);
+    fd.append('transcript1', synthesisObject.transcript1);
+    fd.append('transcript2', synthesisObject.transcript2);
+    fd.append('confidence0', synthesisObject.confidence0);
+    fd.append('confidence1', synthesisObject.confidence1);
+    fd.append('confidence2', synthesisObject.confidence2);
     fd.append('blob_no_text', classVariableDict.blob_no_text);
     fd.append('blob_no_text_sent_id', classVariableDict.blob_no_text_sent_id);
 
@@ -89,13 +123,8 @@ function sendBlobToServer( blob_to_send ) {
             classVariableDict.blob_no_text_sent_id = json.sent_id;
             console.log('got response from sending blob to server');
 
-            $('#textInput').val( synthesisObject.textFromSpeech );
-            $('#textInput').focus();
+            returnFromListenToSpeechSynthesis();
 
-            //show play buttons below
-            $('#recordVoiceBtn').show();
-            $('.play-btn').prop( "disabled", false);
-            
             // dont want to send sentence while doing tutorial
             if ( classVariableDict.tutorial === false ) {
 
@@ -122,6 +151,9 @@ function sendBlobToServer( blob_to_send ) {
 }
 
 function sendSentToServer() {
+
+    // reset the number of recordings for the sentence to 0.
+    classVariableDict.blobs = 0;
 
     let sent = $('#textInput').val();
 
@@ -228,6 +260,29 @@ function checkJudgement( sentId ) {
         },
         error: function() {
             alert("error awaiting judgement");
+        },
+
+    });
+
+}
+
+function sendTranscriptViewToAjax( choice ) {
+
+    console.log('choice:', choice);
+    $.ajax({
+        url: "/add_transcription_choice_view",
+        type: "GET",
+        data: { 
+            'choice': choice,
+            'blob_no_text_sent_id': classVariableDict.blob_no_text_sent_id,
+        },
+        success: function(json) {
+            
+            console.log('added transcription choice view');
+
+        },
+        error: function() {
+            alert("error adding transcription choice view");
         },
 
     });
