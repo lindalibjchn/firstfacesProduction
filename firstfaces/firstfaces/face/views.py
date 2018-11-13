@@ -8,7 +8,7 @@ from django.http import JsonResponse
 from .utils import *
 from django.utils import timezone
 import json
-from .models import Session, Sentence, AudioFile, Profile, NewsArticle, PronunciationRequest
+from .models import Session, Sentence, AudioFile, Profile, NewsArticle
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 import code
@@ -353,6 +353,9 @@ def class_time(request, session_id):
                 if sess.end_time != None:
                     class_over = True
 
+                prof = Profile.objects.get(learner=request.user)
+                gender = prof.gender
+
                 class_variable_dict = {
 
                     'classOver': class_over,
@@ -375,6 +378,7 @@ def class_time(request, session_id):
                     'interference_count': interference_count,
                     'interference_count_this_sent': interference_count_this_sent,
                     'blobs': blobs,
+                    'gender': gender,
                 }
 
                 context = {
@@ -547,6 +551,7 @@ def tts(request):
     caller = request.GET['caller']
     blob_no_text = json.loads(request.GET['blob_no_text'])
     blob_no_text_sent_id = request.GET['blob_no_text_sent_id']
+    gender = request.GET['gender']
 
     if tia_speaker:
 
@@ -554,31 +559,13 @@ def tts(request):
     
     else:
 
-        prof = Profile.objects.get(learner=request.user)
-        if prof.gender == 'M':
+        if gender == 'M':
 
             speaking_voice = 'en-GB-Wavenet-B'
     
         else:
 
             speaking_voice = 'en-GB-Wavenet-A'
-
-    # if the request is from the students text to listen to pronunciation, need to save it in the PronunciationRequest model
-    sent_id = None
-    if caller == "listen":
-        
-        # if a blob exists with no text, then sentence id will already exist
-        if blob_no_text:
-            s = Sentence.objects.get(pk=int(blob_no_text_sent_id))
-        else:
-            sess = Session.objects.get(pk=int(session_id))
-            s = Sentence(learner=request.user, session=sess)
-            s.save()
-
-        p = PronunciationRequest(sentence=s, text_to_speech=text)
-        p.save()
-        sent_id = s.id
-
 
     client = texttospeech.TextToSpeechClient()
     input_text = texttospeech.types.SynthesisInput(text=text)
@@ -608,8 +595,6 @@ def tts(request):
     response_data = {
 
         'synthURL': synthURL,
-        'sent_id': sent_id,
-        'caller': caller
 
     }
 
@@ -976,17 +961,20 @@ def add_transcription_choice_view(request):
 
     # code.interact(local=locals());
     blob_no_text_sent_id = request.GET['blob_no_text_sent_id']
-    choice = int(request.GET['choice'])
-    print('choice:', type(choice))
+    choice = request.GET['choice']
 
     s = Sentence.objects.get(pk=int(blob_no_text_sent_id))
     a = AudioFile.objects.filter(sentence=s).latest('pk')
     
-    choices_already = json.loads(a.transcriptionChoicesView)
-    choices_already.append( choice )
+    time_now = int(time.mktime((timezone.now()).timetuple()))
 
-    a.transcriptionChoicesView = choices_already
-    a.save();
+    if len(a.clicks) < 1700:
+
+        clicks_already = json.loads(a.clicks)
+        clicks_already.append( [choice, time_now] )
+
+        a.clicks = json.dumps(clicks_already)
+        a.save();
     
     response_data = {
 
@@ -994,8 +982,88 @@ def add_transcription_choice_view(request):
 
     return JsonResponse(response_data)    
 
+def add_listen_synth_data(request):
+
+    # code.interact(local=locals());
+    blob_no_text = json.loads(request.GET['blob_no_text'])
+    blob_no_text_sent_id = request.GET['blob_no_text_sent_id']
+    session_id = int(request.GET['sessId'])
+    diffSent = request.GET['diffSent']
+    transcriptCur = request.GET['transcriptCur']
+    listenTranscript = json.loads(request.GET['listenTranscript'])
+    repeat = json.loads(request.GET['repeat'])
+
+    if blob_no_text:
+        s = Sentence.objects.get(pk=int(blob_no_text_sent_id))
+        a = AudioFile.objects.filter(sentence=s).latest('pk')
+        clicks_already = json.loads( a.clicks )
+    else:
+        sess = Session.objects.get(pk=int(session_id))
+        s = Sentence(learner=request.user, session=sess)
+        s.save()
+        a = AudioFile(sentence=s)
+        clicks_already = []
+
+    #don't store it if too long
+    if len(a.clicks) < 1700:
+
+        time_now = int(time.mktime((timezone.now()).timetuple()))
+
+        #if it's a repeat
+        if json.loads( request.GET['repeat'] ):
+
+            clicks_already.append( ['r', time_now] )
+
+        else:
+
+            if listenTranscript:
+
+                clicks_already.append( [transcriptCur + 's', time_now] )
+
+            else:
+
+                clicks_already.append( [diffSent, time_now] )
 
 
+        a.clicks = json.dumps(clicks_already)
+        a.save();
+
+    response_data = {
+
+        'sent_id': s.id,
+
+    }
+
+    return JsonResponse(response_data)    
+
+def add_voice_data(request):
+
+    # code.interact(local=locals());
+    blob_no_text_sent_id = request.GET['blob_no_text_sent_id']
+    transcriptCur = request.GET['transcriptCur']
+
+    s = Sentence.objects.get(pk=int(blob_no_text_sent_id))
+    a = AudioFile.objects.filter(sentence=s).latest('pk')
+
+    #don't store it if too long
+    if len(a.clicks) < 1700:
+
+        clicks_already = json.loads( a.clicks )
+
+        time_now = int(time.mktime((timezone.now()).timetuple()))
+
+        clicks_already.append( [transcriptCur + 'v', time_now] )
+
+        a.clicks = json.dumps(clicks_already)
+        a.save();
+
+    response_data = {
+
+        'sent_id': s.id,
+
+    }
+
+    return JsonResponse(response_data)    
 
 
 

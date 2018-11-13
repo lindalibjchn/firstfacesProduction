@@ -14,28 +14,11 @@ function movementController( movementTo, saccDur, bodyDur ) {
 
     } else {
 
-        //// check if previous movement has already finished. If not, try again for 2 seconds
-        let count = 0;
-        if ( count < 2 && movementObject.bool ) {
-
-            console.log( 'previous movement has not finished: ' + count.toString() + '\nTrying agian in 1 second.' );
-            count += 1;
-
-            setTimeout( function() {
-
-                movementController( movementTo, saccDur, bodyDur );
-
-            }, 1000 );
-
-        } else {
-
-            console.log( "\nmovement initiated\n" );
-            movementObject.bool = false;
-            movementNow = getAbsoluteCoordsOfMovementNow();
-            let relativeMovement = createRelativeMovement( movementTo );
-            initMovement( relativeMovement, saccDur, bodyDur );
-
-        }
+        console.log( "\nmovement initiated\n" );
+        movementObject.bool = false;
+        movementNow = getAbsoluteCoordsOfMovementNow();
+        let relativeMovement = createRelativeMovement( movementTo );
+        initMovement( relativeMovement, saccDur, bodyDur );
 
     }
 

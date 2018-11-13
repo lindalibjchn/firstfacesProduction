@@ -605,6 +605,36 @@ function tapKeyFull() {
 
 }
 
+function calculateAlternatives() {
+
+    $('#textInput').val( synthesisObject.transcript0 );
+    $('.sent-scores').css( 'border', 'none' );
+    $('#alt00').css( 'border', '3px solid yellow' );
+    
+    synthesisObject.transcriptCur = '0';
+
+    if ( synthesisObject.alternatives === 1 ) {
+
+        $('#alt01').hide();
+        $('#alt02').hide();
+
+    } else if ( synthesisObject.alternatives === 2 ) {
+    
+        $('#alt01').show();
+        $('#alt02').hide();
+
+    } else if ( synthesisObject.alternatives === 3 ) {
+    
+        $('#alt01').show();
+        $('#alt02').show();
+
+    }
+
+    $('#alternativesCont').show();
+    $('#textInput').focus();
+
+}
+
 /////////// LISTEN TO SPEECH SYNTHESIS
 
 function listenToSpeechSynthesis( intensity ) {
@@ -632,19 +662,34 @@ function returnFromListenToSpeechSynthesis() {
     movementController( movements.blank, 1.5, 1.5 );
     setTimeout( function() {
         
-        tapKeyFull();
-    
-        setTimeout( function() {
-
-            expressionController( expressionObject.abs.neutral, 0.5 )
+        // if no sound comes through, don't tap or show empty transcripts
+        if ( synthesisObject.transcript0 === "" ) {
         
+            expressionController( expressionObject.abs.confused, 0.5 );
+
             setTimeout( function() {
 
-                $('#recordVoiceBtn').show();
-            
-            }, 1000 );
+                //tell user couldn't hear anything and ask to check the mic
 
-        }, 300);
+            }
+        
+        } else {
+            
+            tapKeyFull();
+    
+            setTimeout( function() {
+
+                expressionController( expressionObject.abs.neutral, 0.5 )
+            
+                setTimeout( function() {
+
+                    $('#recordVoiceBtn').show();
+                
+                }, 1000 );
+
+            }, 300);
+
+        }
 
     }, 200 );
 

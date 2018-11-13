@@ -1,4 +1,4 @@
-from .models import Available, Sentence, Session, PermSentence, PermAudioFile, PermPronunciationRequest
+from .models import Available, Sentence, Session, PermSentence, PermAudioFile
 from django.contrib.auth.models import User
 import datetime
 import time
@@ -361,12 +361,6 @@ def save_to_perm_db( sents_tbcopied ):
         for a in audiofile_set.reverse():
             pa = PermAudioFile.objects.create(sentence=ps, audio=a.audio, speech_to_text=a.speech_to_text, created_at=a.created_at)
             pa.save()
-
-        # change pronunciation requests to perm also
-        pronunciation_request_set = s.pronunciationrequest_set.all().order_by('-pk')
-        for p in pronunciation_request_set.reverse():
-            ppr = PermPronunciationRequest.objects.create(sentence=ps, text_to_speech=p.text_to_speech, created_at=p.created_at)
-            ppr.save()
 
         Sentence.objects.get(pk=s.pk).delete()
 

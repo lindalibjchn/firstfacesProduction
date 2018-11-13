@@ -14,6 +14,15 @@ $(window).on( 'load', function() {
     
 });
 
+synthesisObject.transcript0 = "";
+synthesisObject.transcript1 = "";
+synthesisObject.transcript2 = "";
+
+//// confidence ratings
+synthesisObject.confidence0 = 0;
+synthesisObject.confidence1 = 0;
+synthesisObject.confidence2 = 0;
+
 var recognition// put here so can call in cliiping occurs
 function readyBtns() {
     
@@ -58,6 +67,7 @@ function readyBtns() {
     $('#listenVoiceBtn').on( 'click', function() {
 
         aud.play();
+        sendListenVoice();
 
         // for tutorial
         if ( classVariableDict.tutorialStep === 0 ) {
@@ -77,9 +87,11 @@ function readyBtns() {
 
             synthesisObject.synthAudio.play();
             console.log('repeating play');
+            sendListenSynth( true );
 
         } else {
 
+            sendListenSynth( false );
             sendTTS( textInBox, false, "listen" );
 
         }
@@ -267,11 +279,8 @@ function readyBtns() {
             
         recognition.onresult = function(event) {
 
-            console.log('event:', event);
             orderedAlternatives = createArrayOfAlternatives( event.results[0] );
-
             synthesisObject.alternatives = event.results[0].length
-            console.log('orderedList:', orderedAlternatives);
             fillTranscriptsAndConfidences( synthesisObject.alternatives );
 
         }
@@ -312,15 +321,6 @@ function createArrayOfAlternatives( unorderedDict ) {
 }
 
 function fillTranscriptsAndConfidences( alts ) {
-
-    synthesisObject.transcript0 = "";
-    synthesisObject.transcript1 = "";
-    synthesisObject.transcript2 = "";
-
-    //// confidence ratings
-    synthesisObject.confidence0 = 0;
-    synthesisObject.confidence1 = 0;
-    synthesisObject.confidence2 = 0;
 
     for ( let i=0; i<alts; i++ ) {
 
@@ -465,6 +465,7 @@ function viewAlternateTranscription() {
     $('.sent-scores' ).css( 'border', 'none' )
     $('#alt0' + id ).css( 'border', '3px solid yellow' )
     sendTranscriptViewToAjax( synthesisObject.transcriptCur );
+    $('#textInput').focus();
 
 }
 

@@ -12,6 +12,7 @@ function sendTTS( text, tiaSpeaker, caller ) {
         url: "/tts",
         type: "GET",
         data: {
+            'gender': classVariableDict.gender,
             'sentence': text,
             'tiaSpeaker': tiaSpeaker,
             'pitch': synthesisObject.pitch,
@@ -22,13 +23,6 @@ function sendTTS( text, tiaSpeaker, caller ) {
             'blob_no_text_sent_id': classVariableDict.blob_no_text_sent_id,
         },
         success: function(json) {
-
-            if ( json.caller === "listen" ) {
-
-                classVariableDict.blob_no_text = true;
-                classVariableDict.blob_no_text_sent_id = json.sent_id;
-
-            }
 
             //var synthAudioURL = "https://erle.ucd.ie/" + json.synthURL;
             var synthAudioURL = "http://127.0.0.1:8000/" + json.synthURL;
@@ -65,35 +59,6 @@ function sendTTS( text, tiaSpeaker, caller ) {
         },
 
     });
-
-}
-
-function calculateAlternatives() {
-
-    $('#textInput').val( synthesisObject.transcript0 );
-    $('#textInput').focus();
-    $('#alt00').css( 'border', '3px solid yellow' );
-    
-    synthesisObject.transcriptCur = '0';
-
-    if ( synthesisObject.alternatives === 1 ) {
-
-        $('#alt01').hide();
-        $('#alt02').hide();
-
-    } else if ( synthesisObject.alternatives === 2 ) {
-    
-        $('#alt01').show();
-        $('#alt02').hide();
-
-    } else if ( synthesisObject.alternatives === 3 ) {
-    
-        $('#alt01').show();
-        $('#alt02').show();
-
-    }
-
-    $('#alternativesCont').show();
 
 }
 
@@ -283,6 +248,78 @@ function sendTranscriptViewToAjax( choice ) {
         },
         error: function() {
             alert("error adding transcription choice view");
+        },
+
+    });
+
+}
+
+function sendListenSynth( repeat ) {
+
+    listenTranscript = false;
+    diffSent = "";
+    transcriptCur = "3";
+    // if not a repeat then something different - is it one of the transcripts?
+    if ( repeat === false ) {
+
+        if ( synthesisObject['transcript' + synthesisObject.transcriptCur ] === $('#textInput').val() ) {
+        
+            listenTranscript = true;
+            transcriptCur = synthesisObject.transcriptCur;
+
+        } else {
+
+            // something typed by the learner
+            diffSent = $('#textInput').val();
+
+        }
+
+    }
+
+    $.ajax({
+        url: "/add_listen_synth_data",
+        type: "GET",
+        data: { 
+            'sessId': classVariableDict.session_id,
+            'diffSent': diffSent,
+            'transcriptCur': transcriptCur,
+            'listenTranscript': listenTranscript,
+            'repeat': repeat,
+            'blob_no_text': classVariableDict.blob_no_text,
+            'blob_no_text_sent_id': classVariableDict.blob_no_text_sent_id,
+        },
+        success: function(json) {
+            
+            classVariableDict.blob_no_text = true;
+            classVariableDict.blob_no_text_sent_id = json.sent_id;
+
+            console.log('added pronunciation data');
+
+        },
+        error: function() {
+            alert("error adding pronunciation data");
+        },
+
+    });
+
+}
+
+function sendListenVoice() {
+
+    $.ajax({
+        url: "/add_voice_data",
+        type: "GET",
+        data: { 
+            'blob_no_text_sent_id': classVariableDict.blob_no_text_sent_id,
+            'transcriptCur': synthesisObject.transcriptCur,
+        },
+        success: function(json) {
+            
+            console.log('added voice data');
+
+        },
+        error: function() {
+            alert("error adding pronunciation data");
         },
 
     });

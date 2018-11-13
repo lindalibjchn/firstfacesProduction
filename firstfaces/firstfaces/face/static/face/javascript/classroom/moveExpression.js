@@ -16,29 +16,12 @@ function expressionController( expressionTo, duration ) {
 
     } else {
 
-        //// check if previous expression has already finished. If not, try again for 2 seconds
-        let count = 0;
-        if ( count < 2 && expressionObject.bool ) {
+        expressionObject.bool = false;//if other expression delayed, just stop it before calculating absolute position
+        console.log( "expression initiated\n" );
 
-            console.log( 'previous expression has not finished: ' + count.toString() + '\nTrying agian in 1 second.' );
-            count += 1;
-
-            setTimeout( function() {
-
-                expressionController( expressionTo, duration );
-
-            }, 1000 );
-
-        } else {
-            
-            expressionObject.bool = false;//if other expression delayed, just stop it before calculating absolute position
-            console.log( "expression initiated\n" );
-
-            expressionObject.now = getAbsoluteCoordsOfExpressionNow();
-            expressionObject.movement = createRelativeExpression( expressionTo );
-            initExpression( expressionObject.movement, duration );
-
-        }
+        expressionObject.now = getAbsoluteCoordsOfExpressionNow();
+        expressionObject.movement = createRelativeExpression( expressionTo );
+        initExpression( expressionObject.movement, duration );
 
     }
 

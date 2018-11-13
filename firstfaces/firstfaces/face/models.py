@@ -128,7 +128,7 @@ class AudioFile(models.Model):
     confidence1 = models.SmallIntegerField(blank=True, null=True)
     confidence2 = models.SmallIntegerField(blank=True, null=True)
     interference = models.NullBooleanField(null=True)
-    transcriptionChoicesView = models.CharField(max_length=300, default='[]')
+    clicks = models.CharField(max_length=2000, default='[]')
     audio = models.FileField(upload_to="")
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -140,19 +140,9 @@ class PermAudioFile(models.Model):
     confidence0 = models.SmallIntegerField(blank=True, null=True)
     confidence1 = models.SmallIntegerField(blank=True, null=True)
     confidence2 = models.SmallIntegerField(blank=True, null=True)
-    transcriptionChoicesView = models.CharField(max_length=300, default='[]')
+    clicks = models.CharField(max_length=2000, default='[]')
     interference = models.NullBooleanField(null=True)
     audio = models.FileField(upload_to="")
-    created_at = models.DateTimeField(auto_now_add=True)
-
-class PronunciationRequest(models.Model):
-    sentence = models.ForeignKey(Sentence, on_delete=models.CASCADE)
-    text_to_speech = models.CharField(max_length=300, blank=True, null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-
-class PermPronunciationRequest(models.Model):
-    sentence = models.ForeignKey(PermSentence, on_delete=models.CASCADE)
-    text_to_speech = models.CharField(max_length=300, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
 with open( settings.BASE_DIR + '/face/text_files/countries.txt', 'r') as f:
