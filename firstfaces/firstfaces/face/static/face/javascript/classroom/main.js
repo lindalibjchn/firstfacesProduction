@@ -24,8 +24,20 @@ synthesisObject.confidence1 = 0;
 synthesisObject.confidence2 = 0;
 
 var recognition// put here so can call in cliiping occurs
+var recorder15sTimeout;
+var mediaRecorder;
+var chunks;
+var record;
+var stop;
+var aud;
 function readyBtns() {
     
+    if ( classVariableDict.interference_count_this_sent > 0 ) {
+
+        volumeObject.display = true;
+
+    }
+
     $('#tryAgainBtn').on( 'click', tryAgain );
     $('#whatsWrongBtn').on( 'click', whatsWrong );
     $('#showCorrectionBtn').on( 'click', showCorrection );
@@ -60,9 +72,9 @@ function readyBtns() {
 
     }
 
-    var record = document.getElementById( 'recordVoiceBtn' );
-    var stop = document.getElementById( 'stopRecordVoiceBtn' );
-    var aud = document.getElementById('soundClip')
+    record = document.getElementById( 'recordVoiceBtn' );
+    stop = document.getElementById( 'stopRecordVoiceBtn' );
+    aud = document.getElementById('soundClip')
 
     $('#listenVoiceBtn').on( 'click', function() {
 
@@ -79,7 +91,7 @@ function readyBtns() {
 
     });
 
-    $('#listenSynthesisBtn').on( 'click', function() {
+    $('.sent-scores').on( 'click', function() {
 
         // checks if play is repeat - dont need to send to server again
         let textInBox = $('#textInput').val();
@@ -167,9 +179,7 @@ function readyBtns() {
      
                 gotStream( stream );
 
-                var mediaRecorder = new MediaRecorder(stream);
-
-                var recorder15sTimeout;
+                mediaRecorder = new MediaRecorder(stream);
 
                 function onRecord() {
 
@@ -177,6 +187,7 @@ function readyBtns() {
                     listenToSpeechSynthesis( classVariableDict.blobs );// tia leans to listen
                     classVariableDict.blobs += 1;
                     volumeObject.bool = true;// detect volume and be ready to show volume bar
+                    synthesisObject.interference = false; // start with no interference which can change if clipping occurs
         
                     $('#alternativesCont').fadeOut( 500 );
 
@@ -199,6 +210,8 @@ function readyBtns() {
 
                 }
 
+                stop.onclick = onStopClick;
+    
                 // this function checks that the user clicked stop after speaking one sentence. If not, it automatically finishes.
                 function checkIfClickedStop() {
 
@@ -216,53 +229,11 @@ function readyBtns() {
 
                 record.onclick = onRecord;
 
-                var chunks = [];
+                chunks = [];
 
                 mediaRecorder.ondataavailable = function( e ) {
 
                     chunks.push( e.data );
-
-                }
-
-                // put this in a function so that I can call it later if the user doesn't click stop after X seconds.
-                function onStopClick() {
-
-                    clearTimeout( recorder15sTimeout );
-
-                    mediaRecorder.stop();
-                    console.log( mediaRecorder.state );
-                    console.log( "recorder stopped" );
-
-                    classVariableDict.recording = false;
-
-                    $('#stopRecordVoiceBtn').hide();
-                    recognition.stop();
-
-                }
-
-                stop.onclick = onStopClick;
-                    
-                function onMediaRecorderStop() {
-
-                    volumeObject.bool = false;// stop measuring volume and hide volume bar
-                    hideVolumeBar();//always hide it even if not shown, same as if statement
-
-                    $('#talkBtn').prop( "disabled", true )
-                    classVariableDict.blob = new Blob(chunks, { type : 'audio/ogg; codecs: opus' });
-
-                    // create audiourl for easy replay
-                    var audioURL = window.URL.createObjectURL(classVariableDict.blob);
-                    aud.src = audioURL;
-
-                    // reset chunks
-                    chunks = [];
-
-                    // send blob to server to be stored, but wait a bit to make sure it has come through
-                    setTimeout( function() {
-                        
-                        sendBlobToServer( classVariableDict.blob );
-
-                    }, 1000);
 
                 }
 
@@ -290,6 +261,46 @@ function readyBtns() {
         console.log('getUserMedia not supported on your browser!');
     
     }
+
+}
+
+// put this in a function so that I can call it later if the user doesn't click stop after X seconds.
+function onStopClick() {
+
+    clearTimeout( recorder15sTimeout );
+
+    mediaRecorder.stop();
+    console.log( mediaRecorder.state );
+    console.log( "recorder stopped" );
+
+    classVariableDict.recording = false;
+
+    $('#stopRecordVoiceBtn').hide();
+    recognition.stop();
+
+}
+
+function onMediaRecorderStop() {
+
+    volumeObject.bool = false;// stop measuring volume and hide volume bar
+    hideVolumeBar();//always hide it even if not shown, same as if statement
+
+    $('#talkBtn').prop( "disabled", true )
+    classVariableDict.blob = new Blob(chunks, { type : 'audio/ogg; codecs: opus' });
+
+    // create audiourl for easy replay
+    var audioURL = window.URL.createObjectURL(classVariableDict.blob);
+    aud.src = audioURL;
+
+    // reset chunks
+    chunks = [];
+
+    // send blob to server to be stored, but wait a bit to make sure it has come through
+    setTimeout( function() {
+        
+        sendBlobToServer( classVariableDict.blob );
+
+    }, 1000);
 
 }
 
@@ -360,8 +371,9 @@ var WIDTH_VOL=250;
 var HEIGHT_VOL=50;
 var rafID = null;
 var micIntAud = document.getElementById('micInterferenceClip')
-micIntAud.src = "http://127.0.0.1:8000/media/00micInterference02.mp3";
-//micIntAud.src = "media/mic_interference.mp3";
+var micIntAudSources = ["http://127.0.0.1:8000/media/00micInterference04.mp3","http://127.0.0.1:8000/media/00micInterference01.mp3","http://127.0.0.1:8000/media/00micInterference02.mp3","http://127.0.0.1:8000/media/00micInterference03.mp3"];
+
+//var micIntAudSources = ["http://erle.ucd.ie/media/00micInterference04.mp3","http://erle.ucd.ie/media/00micInterference01.mp3","http://erle.ucd.ie/media/00micInterference02.mp3","http://erle.ucd.ie/media/00micInterference03.mp3"];
 
 
 function drawLoop() {
@@ -388,33 +400,90 @@ function drawLoop() {
 
     function tiaConfusedAfterClipping( firstTime ) {
 
+        
+        micIntAud.src = micIntAudSources[Math.floor(Math.random()*4)]
         micIntAud.play();//play interference
+        onStopClick();
 
-        //// delay the expression and movement by a bit to create more realistic encounter
+        // depending on how far forward Tia is, change the duration of the flinch movement
+        function getTimingForFlinch() {
+
+            let leanNo = classVariableDict.blobs
+            let dur = 0.5;
+
+            if ( leanNo >= 2 ) {
+
+                dur = 0.75;
+
+            } else if ( leanNo === 1 ) {
+
+                dur = 0.6;
+
+            }
+
+            return dur;
+
+        }
+
+        let dur = getTimingForFlinch();
+
+        //// first flinch
         setTimeout( function() {
 
-            expressionController( expressionObject.abs.confused, 0.3 )//express confusion 
-            movementController( movements.blank, 1.5, 1.5);
+            expressionController( expressionObject.abs.confused, dur )//express confusion 
+            movementController( movements.flinch, dur, dur);
             
+            //// delay the expression and movement by a bit to create more realistic encounter
             setTimeout( function() {
 
-                //expressionController( expressionObject.abs.neutral, 1 )//express confusion 
+                movementController( movements.blank, 1.5, 1.5);
+                expressionController( expressionObject.abs.blank, 1.5 )//express confusion 
 
                 setTimeout( function() {
 
                     if ( firstTime ) {
+                    
+                        volumeObject.display = true;
+                        let del = tiaSpeak( "That was a very loud sound. Keep your microphone away from your mouth and try again. I will show you the volume of your speech on the screen to help." );
 
-                        // tia says something
+                        $('#textInputContainer').hide();
+
+                        setTimeout( function() {
+
+                            showSingleBtn( "I will pay attention to the volume", function() {
+
+                                removeSingleBtn();
+                                $('#textInputContainer').show();
+                                $('#recordVoiceBtn').show();
+                                $('.listenAndSynthBtns').prop('disabled', 'false');
+                            });
+
+                        }, del ); 
 
                     } else {
 
-                        // tia says something more severe
+                        let del = tiaSpeak( "That was a very loud sound again. Can you check your microphone settings and turn down the input volume?" );
+
+                        $('#textInputContainer').hide();
+
+                        setTimeout( function() {
+
+                            showSingleBtn( "I checked it", function() {
+
+                                removeSingleBtn();
+                                $('#textInputContainer').show();
+                                $('#recordVoiceBtn').show();
+                                $('.listenAndSynthBtns').prop('disabled', 'false');
+                                
+                            });
+
+                        }, del ); 
 
                     }
 
-                }, 1000 ) 
+                }, 1500 )
 
-            }, 350 )
+            }, 2000 );
 
         }, 300 );
 
@@ -425,7 +494,9 @@ function drawLoop() {
 
         if (meter.checkClipping()) {
 
+            volumeObject.bool = false;
             tiaConfusedAfterClipping( false );
+            synthesisObject.interference = true;
 
         }
 
@@ -437,7 +508,9 @@ function drawLoop() {
 
         if (meter.checkClipping()) {
 
+            volumeObject.bool = false;
             tiaConfusedAfterClipping( true );
+            synthesisObject.interference = true;
 
         }
 

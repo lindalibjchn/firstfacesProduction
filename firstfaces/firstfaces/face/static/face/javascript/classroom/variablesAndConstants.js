@@ -56,18 +56,21 @@ const correctionBackPOSY = 0.5;
 
 //// SPEECH BUBBLE \\\\
 
-const speechBubblePOS = { x: -13, y: 2, z: 14 };
-const speechBubbleSCALE = { x: 5, y: 6, z: 1 };
-const speechBubbleROT = { x: 0, y: 0.2, z: 0 };
+const speechBubblePOS = { x: 0, y: 0, z: 0 };
+const speechBubbleSCALE = { x: 17, y: 18, z: 1 };
+//const speechBubbleROT = { x: 0, y: 0.2, z: 0 };
 
-const speechBubble2POS = { x: -13, y: -4, z: 14 };
+//const speechBubble2POS = { x: -12, y: -4, z: 14 };
 
 //// SPEECH BUBBLE BACKGROUND \\\\
 
 const speechBubbleBackLen = { x: 10.5, y: 6.5, z: 0 };
-const speechBubbleBackPOS = { x: 0, y: 0, z: 0.01 }; // slightly appear in front of the actual bubble
-const speechBubbleBackSCALE = { x: 0.28, y: 0.32, z: 1 };
+const speechBubbleBackPOS = { x: -9.5, y: 1, z: 15 }; // slightly appear in front of the actual bubble
+const speechBubbleBackROT = { x: 0, y: 0.2, z: 0 };
+const speechBubbleBackSCALE = { x: 0.22, y: 0.5, z: 1 };
 
+const speechBubbleBackLowPOS = { x: -9.5, y: -3, z: 14 }; // slightly appear in front of the actual bubble
+const speechBubbleBackLowROT = { x: -0.1, y: 0.2, z: 0 };
 
 //// CHARACTER POSITIONS \\\\
 
@@ -285,7 +288,7 @@ var movements = {
     },
  
     'speechRecognitionInput01': {
-        'name': 'speechRecognitionInput',
+        'name': 'speechRecognitionInput01',
         'AUs': {
             'AU1': {
                 'head': [[0, 0, 0], [-0.05, -0.1, 0]],
@@ -309,7 +312,7 @@ var movements = {
     },
  
     'speechRecognitionInput02': {
-        'name': 'speechRecognitionInput',
+        'name': 'speechRecognitionInput02',
         'AUs': {
             'AU1': {
                 'head': [[0, 0, 0], [-0.1, -0.2, 0]],
@@ -333,7 +336,7 @@ var movements = {
     },
  
     'speechRecognitionInput03': {
-        'name': 'speechRecognitionInput',
+        'name': 'speechRecognitionInput03',
         'AUs': {
             'AU1': {
                 'head': [[0, 0, 0], [-0.15, -0.3, 0]],
@@ -356,6 +359,29 @@ var movements = {
         'sacc': [[0,0,0],[0,0.24,0]]
     },
  
+    'flinch': {
+        'name': 'flinch',
+        'AUs': {
+            'AU1': {
+                'head': [[0, 0, 0], [0, -0.2, 0]],
+                'neck': [[0, 0, 0], [0, 0, 0]],
+            },
+            'AU1b': {
+                'spineLower': [[0, 0, 0], [0, 0, 0]],
+                'spineUpper': [[0, 0, 0], [0, 0, 0]],
+                'spineUpperInner': [[0, 0, 0], [0, -0.04, 0.01]],
+            },
+            'AU2': {
+                'shoulder': [[0, 0, 0], [0, 0, 0]],
+            },
+            'AU2b': {
+                'hand': [[0, 0, 0], [0, 0, 0]],
+                'upperArm': [[0, 0, 0], [0, 0, 0]],
+                'lowerArm': [[0, 0, 0], [0, 0, 0]],
+            },
+        },
+        'sacc': [[0,0,0],[0,0.24,0]]
+    },
 }
 
 // abs coords of expression on enter - completely blank
@@ -395,6 +421,7 @@ var expressionObject = {
 const expressionsRel = {
     
     'blank': {
+        'name': 'blank',
         'AUs': {
             'AU1': {
                 'nose': [[0, 0, 0], [0, 0, 0]],

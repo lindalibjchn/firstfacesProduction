@@ -1,8 +1,8 @@
 /////////////////// OBJECTS
 
-var alphabetDict = {}
 
 var sentenceObject = {
+    alphabetDict: {},
     background: {},
     sentence: "",
     splitIndexes: [],
@@ -22,6 +22,7 @@ var correctionObject = {
 
 var speechBubbleObject = {
     bubble: {},
+    bubble2: {},
     background: {},
     cloneLetters: [],
     splitIndexes: [],
@@ -256,7 +257,7 @@ var synthesisObject = {
 
 var volumeObject = {
     bool: false,
-    display: true,
+    display: false,
 }
 
 var tiaThinkingObject = {

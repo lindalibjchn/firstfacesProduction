@@ -1,15 +1,29 @@
+function calculateLengthOfSpeakingTime( sent ) {
+
+    let delay = 1500 + sent.length * 65;
+
+    return delay;
+}
 
 function tiaSpeak( tiaSays ) {
 
     speechBubbleObject.sentence = " " + tiaSays;
     synthesisObject.text = speechBubbleObject.sentence;
     sendTTS( synthesisObject.text, true, "talk" );
-    let delay = 1500 + tiaSays.length * 65;
 
-    setTimeout( function() {
-        displaySpeechBubble();
-        speakSent()
-    }, 2500 );
+    delay = calculateLengthOfSpeakingTime( tiaSays )
+
+    if ( cameraObject.currentState === "laptop" ) {
+
+        displaySpeechBubble( "low" );
+
+    } else {
+
+        displaySpeechBubble( "high" );
+
+    }
+
+    speakSent()
 
     function speakSent() {
 

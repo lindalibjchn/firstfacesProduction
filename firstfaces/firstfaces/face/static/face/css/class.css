@@ -148,12 +148,12 @@ button:active {
 
 #textInputBox {
 
-    position: absolute;
-    width: 90%;
-    height: 80%;
+    position: relative;
+    width: 100%;
+    height: 70%;
     right: 0;
     top: 0;
-    /*border: 3px dashed red;*/
+    border: 5px solid #33ff00;
 
 }
 
@@ -179,62 +179,61 @@ button:active {
 
 }
 
-#alternativesCont {
+#altCont {
 
-    position: absolute;
-    height: 170px;
-    width: 10%;
-    left: 0;
-    top: -10px;
-    display: none;
+    position: relative;
+    height: 10%;
+    width: 100%;
+    /*left: 0;*/
+    /*top: 0;*/
+    /*display: none;*/
     /*border: 2px solid blue;*/
 
 }
 
 .sent-scores-row {
 
-    width: 100%;
-    height: 33%;
-    position: relative;
+    /*width: 100%;*/
+    /*height: 100%;*/
+    /*position: relative;*/
 
 }
 
 .sent-scores {
 
-    width: 45px;
-    height: 45px;
+    /*width: 45px;*/
+    height: 100%;
     font-size: 1.7vw;
+    font-weight: bold;
     text-align: center;
-    color: white;
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    margin: auto;
+    background-color: #33ff00;
+    /*position: absolute;*/
+    /*left: 0;*/
+    /*top: 0;*/
+    /*bottom: 0;*/
+    /*margin: auto;*/
     display: flex;
     justify-content: center;
     align-items: center;
-    color: white;
-    border-radius: 50%;
+    /*color: white;*/
 
 }
 
 #alt00 {
 
-    background-color: #ffa500;
-    color: yellow;
+    background-color: #33ff00;
 
 }
 
 #alt01 {
 
-    background-color: #c0c0c0;
+    background-color: #1b8900;
 
 }
 
 #alt02 {
 
-    background-color: #cd7f32;
+    background-color: #1b8900;
 
 }
 
@@ -250,13 +249,13 @@ button:active {
 
     height: 40px;
     width: 70%;
-    display: none;
-    /*border: 2px solid white;*/
+    /*display: none;*/
+    border: 3px solid white;
     position: absolute;
     left: 0;
     right: 0;
     margin: auto;
-    bottom: 20px;
+    bottom: 10px;
 
 }
 
@@ -504,9 +503,9 @@ button:active {
 
 #talkBtn {
 
-    position: absolute;
-    width: 80%;
-    font-size: 2vw !important;
+    /*position: absolute;*/
+    /*width: 80%;*/
+    font-size: 1.6vw !important;
     font-weight: bold;
     color: yellow !important;
 
@@ -527,8 +526,10 @@ button:active {
 .record-btn {
 
     left: 0;
-    right: 0;
+    ridht: 0;
     margin: auto;
+    height: 75px;
+    width: 75px;
 
 }
 

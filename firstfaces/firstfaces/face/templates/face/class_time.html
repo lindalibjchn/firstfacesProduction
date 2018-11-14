@@ -155,23 +155,23 @@
 
 <div id="textInputContainer">
 
-    <div id="alternativesCont">
+    <div class="w3-row sent-scores-row" id="altCont">
 
-        <div class="w3-row sent-scores-row" id="altCont00">
+        <div id="alt00" class="w3-col w3-third sent-scores">
+        
+            <div class="alt-no">1</div>
 
-            <div id="alt00" class="sent-scores">1</div>
-            
         </div>
 
-        <div class="w3-row sent-scores-row" id="altCont01">
-            
-            <div id="alt01" class="sent-scores">2</div>
-            
+        <div id="alt01" class="w3-col w3-third sent-scores">
+        
+            <div class="alt-no">2</div>
+        
         </div>
-            
-        <div class="w3-row sent-scores-row" id="altCont02">
-
-            <div id="alt02" class="sent-scores">3</div>
+        
+        <div id="alt02" class="w3-col w3-third sent-scores">
+        
+            <div class="alt-no">3</div>
 
         </div>
 
@@ -180,6 +180,12 @@
     <div id="textInputBox">
 
         <textarea id="textInput" maxlength="299"></textarea>
+
+        <div id="playRobot">
+        
+            <i class="fa fa-play inputfa"></i>
+
+        </div>
 
     </div>
     
@@ -245,13 +251,13 @@
 
                 <div id="recordAndStopBtns">
 
-                    <button class="w3-btn w3-circle w3-xxxlarge w3-blue input-btn-large record-btn w3-padding-large" id="recordVoiceBtn">
+                    <button class="w3-btn w3-circle w3-xxxlarge w3-blue input-btn-large record-btn w3-padding-small" id="recordVoiceBtn">
                      
                         <i class="fa fa-microphone inputfa"></i>
 
                     </button>
 
-                    <button class="w3-btn w3-circle w3-xxxlarge w3-red input-btn-large record-btn w3-padding-large" id="stopRecordVoiceBtn">
+                    <button class="w3-btn w3-circle w3-xxxlarge w3-red input-btn-large record-btn w3-padding-small" id="stopRecordVoiceBtn">
                      
                         <i class="fa fa-stop inputfa"></i>
 
@@ -265,16 +271,10 @@
                  
                 <div id="listenAndSynthBtns">
 
-                    <button class="w3-btn w3-circle w3-xxlarge w3-indigo input-btn record-btn w3-padding-large play-btn" id="listenVoiceBtn">
+                    <button class="w3-btn w3-circle w3-xxxlarge w3-indigo input-btn-large record-btn w3-padding-large play-btn" id="listenVoiceBtn">
                     
                         <i class="fa fa-play inputfa">
                         </i>
-
-                    </button>
-
-                    <button class="w3-btn w3-circle w3-xxlarge w3-indigo input-btn record-btn w3-padding-large play-btn" id="listenSynthesisBtn">
-                    
-                        <i class="fa fa-volume-up inputfa"></i>
 
                     </button>
 
@@ -286,7 +286,7 @@
 
                 <div id="talkBtnCont">
 
-                    <button class="w3-btn w3-green w3-large inputfa input-btn record-btn" id="talkBtn">talk</button>
+                    <button class="w3-btn w3-circle w3-xxxlarge w3-green inputfa record-btn w3-padding-large play-btn" id="talkBtn">t</button>
 
                 </div>
 

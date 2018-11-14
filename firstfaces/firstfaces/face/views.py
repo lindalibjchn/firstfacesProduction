@@ -491,6 +491,7 @@ def store_blob(request):
 
     # get session
     blob_no_text = json.loads(request.POST['blob_no_text'])
+    interference = json.loads(request.POST['interference'])
     sess = Session.objects.get( pk=request.POST['sessionID'] )
     text_from_speech0 = request.POST['transcript0']
     text_from_speech1 = request.POST['transcript1']
@@ -530,6 +531,7 @@ def store_blob(request):
             confidence0=text_from_speech_conf0,
             confidence1=text_from_speech_conf1,
             confidence2=text_from_speech_conf2,
+            interference=interference,
             )
     a.save()
 

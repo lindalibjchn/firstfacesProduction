@@ -67,6 +67,7 @@ function sendBlobToServer( blob_to_send ) {
     let fd = new FormData();
     fd.append('data', blob_to_send);
     fd.append('sessionID', classVariableDict.session_id);
+    fd.append('interference', synthesisObject.interference);
     fd.append('transcript0', synthesisObject.transcript0);
     fd.append('transcript1', synthesisObject.transcript1);
     fd.append('transcript2', synthesisObject.transcript2);
@@ -75,6 +76,7 @@ function sendBlobToServer( blob_to_send ) {
     fd.append('confidence2', synthesisObject.confidence2);
     fd.append('blob_no_text', classVariableDict.blob_no_text);
     fd.append('blob_no_text_sent_id', classVariableDict.blob_no_text_sent_id);
+
 
     $.ajax({
         url: "/store_blob",
@@ -88,19 +90,25 @@ function sendBlobToServer( blob_to_send ) {
             classVariableDict.blob_no_text_sent_id = json.sent_id;
             console.log('got response from sending blob to server');
 
-            returnFromListenToSpeechSynthesis();
-
-            // dont want to send sentence while doing tutorial
-            if ( classVariableDict.tutorial === false ) {
-
-                $('#talkBtn').prop( "disabled", false);
+            if ( synthesisObject.interference ) {
 
             } else {
 
-                if (classVariableDict.tutorialStep === 0 ) {
+                returnFromListenToSpeechSynthesis();
 
-                    $('#recordVoiceBtn').prop( 'disabled', true );
-                    greeting06();
+                // dont want to send sentence while doing tutorial
+                if ( classVariableDict.tutorial === false ) {
+
+                    $('#talkBtn').prop( "disabled", false);
+
+                } else {
+
+                    if (classVariableDict.tutorialStep === 0 ) {
+
+                        $('#recordVoiceBtn').prop( 'disabled', true );
+                        greeting06();
+
+                    }
 
                 }
 
@@ -164,6 +172,10 @@ function sendSentToServer() {
                         
                         console.log('sentence successfully sent to server');
                         checkJudgement( json.sent_id );
+
+                        // for interference stuff, need to reset
+                        classVariableDict.interference_count_this_sent = 0;
+                        volumeObject.display = false;
 
                     },
                     error: function() {

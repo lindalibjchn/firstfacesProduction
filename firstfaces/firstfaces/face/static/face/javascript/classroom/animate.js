@@ -115,17 +115,17 @@ function animate () {
 
     }
 
-    //if ( mouthOpenObject.bool ) {
+    if ( mouthOpenObject.bool ) {
 
-        //openMouth( mainCount )
+        openMouth( mainCount )
 
-    //}
+    }
 
-    //if ( purseLipsObject.bool ) {
+    if ( purseLipsObject.bool ) {
 
-        //purseLips( mainCount )
+        purseLips( mainCount )
 
-    //}
+    }
 
     //if ( nodObject.bool ) {
 

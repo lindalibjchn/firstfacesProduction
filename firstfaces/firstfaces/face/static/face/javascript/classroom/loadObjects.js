@@ -242,7 +242,7 @@ function loadAllTextElements() {
                     new THREE.MeshLambertMaterial( { color: 0xffffff, transparent:true, opacity: 0 } ),
                 ];
 
-                alphabetDict[alphabet[l]] = new THREE.Mesh( textGeom, materials )
+                sentenceObject.alphabetDict[alphabet[l]] = new THREE.Mesh( textGeom, materials )
 
             };
 
@@ -278,11 +278,28 @@ function loadAllTextElements() {
 
     }
         
-    function loadSpeechBubble( bubble ) {
+    function loadSpeechBubbles() {
 
-        loader.load( bubble, addSpeechBubbleJSON );
+        function addSpeechBubbleTextBackground() {
 
-        function addSpeechBubbleJSON( geom, mat ) {
+            //// this adds the background where the letters can be added
+            console.log('loading speech bubbles');
+
+            let backgroundGeom = new THREE.PlaneGeometry( speechBubbleBackLen.x, speechBubbleBackLen.y, speechBubbleBackLen.z );
+            let backgroundMat = new THREE.MeshBasicMaterial( { /*color: 0xffc4c4*/ transparent: true, opacity: 0 } );
+            
+            let background = new THREE.Mesh( backgroundGeom, backgroundMat );
+
+            background.scale.set( speechBubbleBackSCALE.x, speechBubbleBackSCALE.x, speechBubbleBackSCALE.x );
+            
+            speechBubbleObject.background = background;
+
+        }
+
+        loader.load( speechBubble, addSpeechBubble1JSON );
+        loader.load( speechBubble2, addSpeechBubble2JSON );
+        
+        function addSpeechBubble1JSON( geom, mat ) {
 
             //// this adds the actual bubble from the JSON file
 
@@ -290,43 +307,35 @@ function loadAllTextElements() {
             mat[0].opacity = 1;
             mat[1].transparent = true;
             mat[1].opacity = 1;
-            speechBubbleObject.bubble = new THREE.Mesh( geom, mat );
-            speechBubbleObject.bubble.scale.set( speechBubbleSCALE.x, speechBubbleSCALE.y, speechBubbleSCALE.z );
-            
-            if ( bubble === speechBubble ) {
 
-                speechBubbleObject.bubble.position.set( speechBubblePOS.x, speechBubblePOS.y, speechBubblePOS.z );
-            
-            } else if ( bubble === speechBubble2 ) {
-
-                speechBubbleObject.bubble.position.set( speechBubble2POS.x, speechBubble2POS.y, speechBubble2POS.z );
-            
-            }
-
-            speechBubbleObject.bubble.rotation.set( speechBubbleROT.x, speechBubbleROT.y, speechBubbleROT.z )
-            addSpeechBubbleTextBackground();
+            let bubble = new THREE.Mesh( geom, mat );
+            bubble.scale.set( speechBubbleSCALE.x, speechBubbleSCALE.y, speechBubbleSCALE.z );
+            bubble.position.y -= 4;
+            bubble.position.z -= 0.02;
+        
+            speechBubbleObject.bubble = bubble;
 
         }
 
-        function addSpeechBubbleTextBackground() {
+        function addSpeechBubble2JSON( geom, mat ) {
 
-            //// this adds the background where the letters can be added
+            //// this adds the actual bubble from the JSON file
 
-            let backgroundGeom = new THREE.PlaneGeometry( speechBubbleBackLen.x, speechBubbleBackLen.y, speechBubbleBackLen.z );
-            let backgroundMat = new THREE.MeshBasicMaterial( { transparent: true, opacity: 0 } );
-            
-            let background = new THREE.Mesh( backgroundGeom, backgroundMat );
+            mat[0].transparent = true;
+            mat[0].opacity = 1;
+            mat[1].transparent = true;
+            mat[1].opacity = 1;
 
-            background.position.set( speechBubbleBackPOS.x, speechBubbleBackPOS.y, speechBubbleBackPOS.z )
+            let bubble2 = new THREE.Mesh( geom, mat );
+            bubble2.scale.set( speechBubbleSCALE.x, speechBubbleSCALE.y, speechBubbleSCALE.z );
+            bubble2.position.y -= 4;
+            bubble2.position.z -= 0.02;
 
-            background.scale.set( speechBubbleBackSCALE.x, speechBubbleBackSCALE.x, speechBubbleBackSCALE.x );
-            
-            //// add this background to the main bubble
-            speechBubbleObject.bubble.add( background );
-
-            //scene.add( speechBubbleObject.bubble )
+            speechBubbleObject.bubble2 = bubble2;
 
         }
+
+        addSpeechBubbleTextBackground();
 
     }
 
@@ -334,8 +343,7 @@ function loadAllTextElements() {
     loadSentenceBackground();
     loadWrongHighlights();
     loadCorrectionBackground();
-    loadSpeechBubble(speechBubble);
-    loadSpeechBubble(speechBubble2);
+    loadSpeechBubbles();
 
 };
 

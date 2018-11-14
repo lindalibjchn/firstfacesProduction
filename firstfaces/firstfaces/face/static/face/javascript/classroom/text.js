@@ -307,12 +307,31 @@ function displayCorrection() {
     //displaySpeechBubble();
 }
 
-function displaySpeechBubble() {
+function displaySpeechBubble( highLow ) {
     
     getIndexesOfSplit( speechBubbleObject ); 
     speechBubbleObject.cloneLetters = putCloneLettersInList( speechBubbleObject.sentence, 0x193b70 )
     addCloneLettersToTextBackground( speechBubbleObject, speechLineY );
-    scene.add( speechBubbleObject.background );
+
+    if ( highLow === "high" ) {
+
+        speechBubbleObject.background.position.set( speechBubbleBackPOS.x, speechBubbleBackPOS.y, speechBubbleBackPOS.z )
+
+        speechBubbleObject.background.rotation.set( speechBubbleBackROT.x, speechBubbleBackROT.y, speechBubbleBackROT.z )
+
+        speechBubbleObject.background.add( speechBubbleObject.bubble );
+        
+    } else if ( highLow === "low" ) {
+
+        speechBubbleObject.background.position.set( speechBubbleBackLowPOS.x, speechBubbleBackLowPOS.y, speechBubbleBackLowPOS.z )
+
+        speechBubbleObject.background.rotation.set( speechBubbleBackLowROT.x, speechBubbleBackLowROT.y, speechBubbleBackLowROT.z )
+
+        speechBubbleObject.background.add( speechBubbleObject.bubble2 );
+
+    }
+
+    scene.add( speechBubbleObject.background )
 
 }
 

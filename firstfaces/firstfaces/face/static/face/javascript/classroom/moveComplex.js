@@ -671,7 +671,7 @@ function returnFromListenToSpeechSynthesis() {
 
                 //tell user couldn't hear anything and ask to check the mic
 
-            }
+            }, 1000);
         
         } else {
             
