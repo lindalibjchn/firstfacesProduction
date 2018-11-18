@@ -608,8 +608,8 @@ function tapKeyFull() {
 function calculateAlternatives() {
 
     $('#textInput').val( synthesisObject.transcript0 );
-    $('.sent-scores').css( 'border', 'none' );
-    $('#alt00').css( 'border', '3px solid yellow' );
+    //$('.sent-scores').css( 'border', 'none' );
+    //$('#alt00').css( 'border', '3px solid yellow' );
     
     synthesisObject.transcriptCur = '0';
 
@@ -630,7 +630,7 @@ function calculateAlternatives() {
 
     }
 
-    $('#alternativesCont').show();
+    $('#altCont').show();
     $('#textInput').focus();
 
 }

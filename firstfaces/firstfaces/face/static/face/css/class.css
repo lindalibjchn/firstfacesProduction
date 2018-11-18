@@ -168,6 +168,7 @@ button:active {
     outline-style: none;
     box-shadow: none;
     border: none;
+    resize: none;
 
 }
 
@@ -176,6 +177,24 @@ button:active {
     outline-style: none;
     box-shadow: none;
     border: none;
+
+}
+
+#playRobot {
+
+    height: 55px;
+    width: 120px;
+    background-color: #1b8900;
+    position: absolute;
+    right: -5px;
+    bottom: -60;
+
+}
+
+#playRobot:hover {
+
+    background-color: #33ff00;
+    cursor: pointer;
 
 }
 
@@ -219,29 +238,40 @@ button:active {
 
 }
 
+.sent-scores:hover {
+
+    cursor: pointer;
+    background-color: #33ff00 !important;
+    /*color: black !important;*/
+
+}
+
 #alt00 {
 
     background-color: #33ff00;
+    cursor: default;
+    border-right: 1px solid black;
+
+}
+
+#alt00:hover {
+
+    background-color: #33ff00; !important
 
 }
 
 #alt01 {
 
     background-color: #1b8900;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
 
 }
 
 #alt02 {
 
     background-color: #1b8900;
-
-}
-
-.sent-scores:hover {
-
-    cursor: pointer;
-    background-color: white !important;
-    color: black !important;
+    border-left: 1px solid black;
 
 }
 
@@ -250,7 +280,7 @@ button:active {
     height: 40px;
     width: 70%;
     /*display: none;*/
-    border: 3px solid white;
+    /*border: 3px solid white;*/
     position: absolute;
     left: 0;
     right: 0;
@@ -264,17 +294,18 @@ button:active {
     position: absolute;
     padding: 5px;
     left: -10px;
+    color: #33ff00;
     /*margin-top: 5px;*/
 
 }
 
 #meter {
 
-    border: 2px solid white;
+    border: 2px solid #33ff00;
     height: 100%;
     width: 90%;
     position: relative;
-    left: 20px;
+    left: 30px;
 
 }
 
@@ -505,8 +536,8 @@ button:active {
 
     /*position: absolute;*/
     /*width: 80%;*/
-    font-size: 1.6vw !important;
-    font-weight: bold;
+    /*font-size: 1.6vw !important;*/
+    /*font-weight: bold;*/
     color: yellow !important;
 
 }

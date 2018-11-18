@@ -318,10 +318,29 @@ function createArrayOfAlternatives( unorderedDict ) {
 
     let sentencesList = [];
     
+    //store leading confidence and remove lower one if more than 20 points below
+    var prevConf;
+
     // get list of scores
     for (let i=0; i<unorderedDict.length; i++) {
 
-        sentencesList.push( unorderedDict[i] )
+        if ( i === 0 ) {
+
+            prevConf = unorderedDict[i].confidence;
+        
+            sentencesList.push( unorderedDict[i] )
+
+        } else {
+
+            if ( i > prevConf - 20 ) {
+
+                prevConf = unorderedDict[i].confidence;
+            
+                sentencesList.push( unorderedDict[i] )
+
+            }
+
+        }
 
     }
 
@@ -335,7 +354,6 @@ function fillTranscriptsAndConfidences( alts ) {
 
     for ( let i=0; i<alts; i++ ) {
 
-        console.log('i:', i);
         synthesisObject[ 'transcript' + i.toString() ] = clipLongTranscripts( orderedAlternatives[i].transcript );
         synthesisObject[ 'confidence' + i.toString() ] = parseInt( 100 * orderedAlternatives[i].confidence );
 
@@ -390,7 +408,7 @@ function drawLoop() {
             canvasContext.fillStyle = "red";
             
         } else {
-            canvasContext.fillStyle = "green";
+            canvasContext.fillStyle = "#1b8900";
             // draw a bar based on the current volume
             canvasContext.fillRect(0, 0, meter.volume*WIDTH_VOL*1.4, HEIGHT_VOL);
 
@@ -402,8 +420,19 @@ function drawLoop() {
 
         
         micIntAud.src = micIntAudSources[Math.floor(Math.random()*4)]
+
+        // reduced volume if second time
+        if ( firstTime === false ) {
+
+            micIntAud.volume == 0.5;
+
+        } else {
+
+            micIntAud.volume == 1.0;
+
+        }
+
         micIntAud.play();//play interference
-        onStopClick();
 
         // depending on how far forward Tia is, change the duration of the flinch movement
         function getTimingForFlinch() {
@@ -428,23 +457,24 @@ function drawLoop() {
         let dur = getTimingForFlinch();
 
         //// first flinch
-        setTimeout( function() {
+        function firstFlinch() {
 
-            expressionController( expressionObject.abs.confused, dur )//express confusion 
-            movementController( movements.flinch, dur, dur);
-            
-            //// delay the expression and movement by a bit to create more realistic encounter
+            onStopClick();
             setTimeout( function() {
 
-                movementController( movements.blank, 1.5, 1.5);
-                expressionController( expressionObject.abs.blank, 1.5 )//express confusion 
-
+                expressionController( expressionObject.abs.confused, dur )//express confusion 
+                movementController( movements.flinch, dur, dur);
+                
+                //// delay the expression and movement by a bit to create more realistic encounter
                 setTimeout( function() {
 
-                    if ( firstTime ) {
-                    
+                    movementController( movements.blank, 1.5, 1.5);
+                    expressionController( expressionObject.abs.blank, 1.5 )//express confusion 
+
+                    setTimeout( function() {
+
                         volumeObject.display = true;
-                        let del = tiaSpeak( "That was a very loud sound. Keep your microphone away from your mouth and try again. I will show you the volume of your speech on the screen to help." );
+                        let del = tiaSpeak( "That was a very loud sound. Can you try keeping your microphone away from your mouth or try speaking a little bit more quietly." );
 
                         $('#textInputContainer').hide();
 
@@ -460,61 +490,57 @@ function drawLoop() {
 
                         }, del ); 
 
-                    } else {
+                    }, 1500 )
 
-                        let del = tiaSpeak( "That was a very loud sound again. Can you check your microphone settings and turn down the input volume?" );
+                }, 2000 );
 
-                        $('#textInputContainer').hide();
-
-                        setTimeout( function() {
-
-                            showSingleBtn( "I checked it", function() {
-
-                                removeSingleBtn();
-                                $('#textInputContainer').show();
-                                $('#recordVoiceBtn').show();
-                                $('.listenAndSynthBtns').prop('disabled', 'false');
-                                
-                            });
-
-                        }, del ); 
-
-                    }
-
-                }, 1500 )
-
-            }, 2000 );
-
-        }, 300 );
-
-    }
-
-    // no need to dispay if user is inputting at good volume
-    if ( volumeObject.display ) {
-
-        if (meter.checkClipping()) {
-
-            volumeObject.bool = false;
-            tiaConfusedAfterClipping( false );
-            synthesisObject.interference = true;
+            }, 300 );
 
         }
 
-        drawVolumeBar();
+        // actually just face contorting a bit
+        function secondFlinch() {
 
-    } else {
+            setTimeout( function() {
 
-        // if not displayed,pond through interference and Tia's expression
+                expressionController( expressionObject.abs.confused, 0.5 )//express confusion 
 
-        if (meter.checkClipping()) {
+            }, 300 );
+            // don't return to normal face cause the setTimeout could conflict with the students clicking of the stop button
 
-            volumeObject.bool = false;
+        }
+
+        if ( firstTime ) {
+
+            firstFlinch();
+
+        } else {
+
+            secondFlinch();
+
+        }
+
+    }
+
+    if (meter.checkClipping()) {
+
+        volumeObject.bool = false;
+
+        if ( classVariableDict.interference_count === 0 ) {
+
             tiaConfusedAfterClipping( true );
-            synthesisObject.interference = true;
+
+        } else {
+
+            tiaConfusedAfterClipping( false );
 
         }
 
+        synthesisObject.interference = true;
+
     }
+
+    drawVolumeBar();
 
 }
 
@@ -535,8 +561,13 @@ function viewAlternateTranscription() {
     let id = this.id[4]//gets the number (0-2)
     synthesisObject.transcriptCur = id;
     $('#textInput').val( synthesisObject['transcript' + id ] )
-    $('.sent-scores' ).css( 'border', 'none' )
-    $('#alt0' + id ).css( 'border', '3px solid yellow' )
+    //$('.sent-scores' ).css( 'border', 'none' )
+    //make all backgrounds of the tabs dark green
+    $('.sent-scores' ).css( 'background-color', '#1b8900' )
+    $('.sent-scores' ).mouseover( function() { $('.sent-scores').css('cursor', 'pointer')});
+    //then highlight the one clicked
+    $('#alt0' + id ).css( 'background-color', '#33ff00' )
+    $('#alt0' + id ).mouseover( function() { $('#alt0' + id).css('cursor', 'default')})
     sendTranscriptViewToAjax( synthesisObject.transcriptCur );
     $('#textInput').focus();
 
