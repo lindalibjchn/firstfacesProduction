@@ -253,6 +253,7 @@ var synthesisObject = {
     text: "",
     pitch: 0,
     speaking_rate: 0.85,
+    firstClip: false,
 }
 
 var volumeObject = {

@@ -1,6 +1,8 @@
 function initInputReady( boxVal ) {
 
     $('#textInputContainer').show();
+    hideTextStuff();
+    hideVolumeBar();
     $('#textInput').val( boxVal );
     $('#textInput').focus();
     $('#recordBtnsContainer').show();

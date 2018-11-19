@@ -630,7 +630,8 @@ function calculateAlternatives() {
 
     }
 
-    $('#altCont').show();
+    showTextStuff();
+    hideVolumeBar();
     $('#textInput').focus();
 
 }
@@ -657,6 +658,28 @@ function listenToSpeechSynthesis( intensity ) {
 
 }
 
+function noAltsAskAboutMic() {
+
+
+    let del = tiaSpeak( "I didn't hear anything. Could you try again?" );
+
+    $('#textInputContainer').hide();
+
+    setTimeout( function() {
+
+        showSingleBtn( "Ok", function() {
+
+            removeSingleBtn();
+            //$('#textInputContainer').show();
+            $('#recordVoiceBtn').show();
+            $('.listenAndSynthBtns').prop('disabled', 'false');
+            $('#textInputContainer').show();
+        });
+
+    }, del ); 
+
+}
+
 function returnFromListenToSpeechSynthesis() {
 
     movementController( movements.blank, 1.5, 1.5 );
@@ -665,13 +688,12 @@ function returnFromListenToSpeechSynthesis() {
         // if no sound comes through, don't tap or show empty transcripts
         if ( synthesisObject.transcript0 === "" ) {
         
-            expressionController( expressionObject.abs.confused, 0.5 );
-
             setTimeout( function() {
 
-                //tell user couldn't hear anything and ask to check the mic
+                noAltsAskAboutMic();
+                hideVolumeBar();
 
-            }, 1000);
+            }, 1500);
         
         } else {
             

@@ -14,14 +14,18 @@ $(window).on( 'load', function() {
     
 });
 
-synthesisObject.transcript0 = "";
-synthesisObject.transcript1 = "";
-synthesisObject.transcript2 = "";
+function resetTranscripts() {
 
-//// confidence ratings
-synthesisObject.confidence0 = 0;
-synthesisObject.confidence1 = 0;
-synthesisObject.confidence2 = 0;
+    synthesisObject.transcript0 = "";
+    synthesisObject.transcript1 = "";
+    synthesisObject.transcript2 = "";
+
+    //// confidence ratings
+    synthesisObject.confidence0 = 0;
+    synthesisObject.confidence1 = 0;
+    synthesisObject.confidence2 = 0;
+
+}
 
 var recognition// put here so can call in cliiping occurs
 var recorder15sTimeout;
@@ -31,12 +35,8 @@ var record;
 var stop;
 var aud;
 function readyBtns() {
-    
-    if ( classVariableDict.interference_count_this_sent > 0 ) {
-
-        volumeObject.display = true;
-
-    }
+ 
+    resetTranscripts();
 
     $('#tryAgainBtn').on( 'click', tryAgain );
     $('#whatsWrongBtn').on( 'click', whatsWrong );
@@ -44,6 +44,7 @@ function readyBtns() {
     $('#nextSentenceBtn').on( 'click', nextSentence );
     $('#talkBtn').on( 'click', sendSentToServer );
     $('.sent-scores').on( 'click', viewAlternateTranscription );
+    $('#playRobot').on( 'click', prepareSynthPlay );
 
     $('#finishClassBtn').on( 'click', function() {
         
@@ -91,55 +92,13 @@ function readyBtns() {
 
     });
 
-    $('.sent-scores').on( 'click', function() {
-
-        // checks if play is repeat - dont need to send to server again
-        let textInBox = $('#textInput').val();
-        if ( textInBox === synthesisObject.text ) {
-
-            synthesisObject.synthAudio.play();
-            console.log('repeating play');
-            sendListenSynth( true );
-
-        } else {
-
-            sendListenSynth( false );
-            sendTTS( textInBox, false, "listen" );
-
-        }
-
-        if ( classVariableDict.tutorialStep === 0 ) {
-
-            $('#listenSynthesisBtn').prop( 'disabled', true );
-            setTimeout( greeting08, 3000 );
-
-        } else if ( classVariableDict.tutorialStep === 1 ) {
-
-            let textOnLaptop = $.trim($('#textInput').val().toLowerCase());
-            console.log('text on laptop');
-
-            if ( textOnLaptop === "this is my first class" || textOnLaptop === "this is my first class." ) {
-
-                $('#listenSynthesisBtn').prop( 'disabled', true );
-                setTimeout( greeting10, 3000 );
-
-            } else {
-    
-                setTimeout( greeting28, 3000 );
-
-            }
-
-
-        }
-
-    });
-
     //// THIS SECOND BIT SENDS THE AUDIO FILE TO THE SERVER
 
 
     //// FOR VOLUME BAR
 
     canvasContext = document.getElementById( "meter" ).getContext("2d");
+    canvasContext.transform(1, 0, 0, -1, 0, HEIGHT_VOL)
     var mediaStreamSource = null;
     audioContext = new AudioContext();
     
@@ -183,20 +142,16 @@ function readyBtns() {
 
                 function onRecord() {
 
+                    resetTranscripts();
+
                     mediaRecorder.start();
                     listenToSpeechSynthesis( classVariableDict.blobs );// tia leans to listen
                     classVariableDict.blobs += 1;
                     volumeObject.bool = true;// detect volume and be ready to show volume bar
                     synthesisObject.interference = false; // start with no interference which can change if clipping occurs
         
-                    $('#alternativesCont').fadeOut( 500 );
-
-                    // show volume bar if display is true
-                    if ( volumeObject.display ) {
-
-                        showVolumeBar();
-
-                    }
+                    hideTextStuff();
+                    showVolumeBar();
 
                     // will check that the user has clicked the stop button by timing them and using this boolean
                     classVariableDict.recording = true;
@@ -283,7 +238,6 @@ function onStopClick() {
 function onMediaRecorderStop() {
 
     volumeObject.bool = false;// stop measuring volume and hide volume bar
-    hideVolumeBar();//always hide it even if not shown, same as if statement
 
     $('#talkBtn').prop( "disabled", true )
     classVariableDict.blob = new Blob(chunks, { type : 'audio/ogg; codecs: opus' });
@@ -301,6 +255,49 @@ function onMediaRecorderStop() {
         sendBlobToServer( classVariableDict.blob );
 
     }, 1000);
+
+}
+
+function prepareSynthPlay() {
+
+    // checks if play is repeat - dont need to send to server again
+    let textInBox = $('#textInput').val();
+    if ( textInBox === synthesisObject.text ) {
+
+        synthesisObject.synthAudio.play();
+        console.log('repeating play');
+        sendListenSynth( true );
+
+    } else {
+
+        sendListenSynth( false );
+        sendTTS( textInBox, false, "listen" );
+
+    }
+
+    //if ( classVariableDict.tutorialStep === 0 ) {
+
+        //$('#listenSynthesisBtn').prop( 'disabled', true );
+        //setTimeout( greeting08, 3000 );
+
+    //} else if ( classVariableDict.tutorialStep === 1 ) {
+
+        //let textOnLaptop = $.trim($('#textInput').val().toLowerCase());
+        //console.log('text on laptop');
+
+        //if ( textOnLaptop === "this is my first class" || textOnLaptop === "this is my first class." ) {
+
+            //$('#listenSynthesisBtn').prop( 'disabled', true );
+            //setTimeout( greeting10, 3000 );
+
+        //} else {
+
+            //setTimeout( greeting28, 3000 );
+
+        //}
+
+
+    //}
 
 }
 
@@ -352,12 +349,20 @@ function createArrayOfAlternatives( unorderedDict ) {
 
 function fillTranscriptsAndConfidences( alts ) {
 
+    if ( alts === 0 ) {
+
+        console.log('no transcripts');
+
+    }
+
     for ( let i=0; i<alts; i++ ) {
 
         synthesisObject[ 'transcript' + i.toString() ] = clipLongTranscripts( orderedAlternatives[i].transcript );
         synthesisObject[ 'confidence' + i.toString() ] = parseInt( 100 * orderedAlternatives[i].confidence );
 
     }
+
+    resetAllTabs();
 
 }
 
@@ -386,7 +391,7 @@ var audioContext = null;
 var meter = null;
 var canvasContext = null;
 var WIDTH_VOL=250;
-var HEIGHT_VOL=50;
+var HEIGHT_VOL=25;
 var rafID = null;
 var micIntAud = document.getElementById('micInterferenceClip')
 var micIntAudSources = ["http://127.0.0.1:8000/media/00micInterference04.mp3","http://127.0.0.1:8000/media/00micInterference01.mp3","http://127.0.0.1:8000/media/00micInterference02.mp3","http://127.0.0.1:8000/media/00micInterference03.mp3"];
@@ -404,135 +409,134 @@ function drawLoop() {
         // check if we're currently clipping
         if (meter.checkClipping()) {
 
-            canvasContext.fillRect(0, 0, WIDTH_VOL*1.4, HEIGHT_VOL);
+            canvasContext.fillRect(0, 0, WIDTH_VOL, 100);
             canvasContext.fillStyle = "red";
+            $('#meter').css('border', '3px solid orange')
+            $('#volumeMic').css('color', 'orange')
             
         } else {
             canvasContext.fillStyle = "#1b8900";
             // draw a bar based on the current volume
-            canvasContext.fillRect(0, 0, meter.volume*WIDTH_VOL*1.4, HEIGHT_VOL);
+            canvasContext.fillRect(0, 0, WIDTH_VOL, meter.volume*HEIGHT_VOL);
+            $('#meter').css('border', '2px solid #1b8900')
+            $('#volumeMic').css('color', '#1b8900')
 
         }
 
     }
 
     function tiaConfusedAfterClipping( firstTime ) {
-
         
         micIntAud.src = micIntAudSources[Math.floor(Math.random()*4)]
 
         // reduced volume if second time
-        if ( firstTime === false ) {
+        if ( firstTime ) {
 
-            micIntAud.volume == 0.5;
+            micIntAud.play();//play interference
 
-        } else {
+            // depending on how far forward Tia is, change the duration of the flinch movement
+            function getTimingForFlinch() {
 
-            micIntAud.volume == 1.0;
+                let leanNo = classVariableDict.blobs
+                let dur = 0.5;
 
-        }
+                if ( leanNo >= 2 ) {
 
-        micIntAud.play();//play interference
+                    dur = 0.75;
 
-        // depending on how far forward Tia is, change the duration of the flinch movement
-        function getTimingForFlinch() {
+                } else if ( leanNo === 1 ) {
 
-            let leanNo = classVariableDict.blobs
-            let dur = 0.5;
+                    dur = 0.6;
 
-            if ( leanNo >= 2 ) {
+                }
 
-                dur = 0.75;
-
-            } else if ( leanNo === 1 ) {
-
-                dur = 0.6;
+                return dur;
 
             }
 
-            return dur;
+            let dur = getTimingForFlinch();
 
-        }
+            //// first flinch
+            function firstFlinch() {
 
-        let dur = getTimingForFlinch();
-
-        //// first flinch
-        function firstFlinch() {
-
-            onStopClick();
-            setTimeout( function() {
-
-                expressionController( expressionObject.abs.confused, dur )//express confusion 
-                movementController( movements.flinch, dur, dur);
-                
-                //// delay the expression and movement by a bit to create more realistic encounter
+                onStopClick();
                 setTimeout( function() {
 
-                    movementController( movements.blank, 1.5, 1.5);
-                    expressionController( expressionObject.abs.blank, 1.5 )//express confusion 
-
+                    expressionController( expressionObject.abs.confused, dur )//express confusion 
+                    movementController( movements.flinch, dur, dur);
+                    
+                    //// delay the expression and movement by a bit to create more realistic encounter
                     setTimeout( function() {
 
-                        volumeObject.display = true;
-                        let del = tiaSpeak( "That was a very loud sound. Can you try keeping your microphone away from your mouth or try speaking a little bit more quietly." );
+                        $('textInputContainer').hide();
+                        hideVolumeBar();//always hide it even if not shown, same as if statement
 
-                        $('#textInputContainer').hide();
+                        movementController( movements.blank, 1.5, 1.5);
+                        expressionController( expressionObject.abs.blank, 1.5 )//express confusion 
 
                         setTimeout( function() {
 
-                            showSingleBtn( "I will pay attention to the volume", function() {
+                            let del = tiaSpeak( "That was a very loud sound. Can you try keeping your microphone away from your mouth and speaking a little bit more quietly." );
 
-                                removeSingleBtn();
-                                $('#textInputContainer').show();
-                                $('#recordVoiceBtn').show();
-                                $('.listenAndSynthBtns').prop('disabled', 'false');
-                            });
+                            $('#textInputContainer').hide();
 
-                        }, del ); 
+                            setTimeout( function() {
 
-                    }, 1500 )
+                                showSingleBtn( "I will pay attention to the volume", function() {
 
-                }, 2000 );
+                                    removeSingleBtn();
+                                    //$('#textInputContainer').show();
+                                    $('#recordVoiceBtn').show();
+                                    $('.listenAndSynthBtns').prop('disabled', 'false');
+                                    $('#textInputContainer').show();
+                                });
 
-            }, 300 );
+                            }, del ); 
 
-        }
+                        }, 1500 )
 
-        // actually just face contorting a bit
-        function secondFlinch() {
+                    }, 2000 );
 
-            setTimeout( function() {
+                }, 300 );
 
-                expressionController( expressionObject.abs.confused, 0.5 )//express confusion 
-
-            }, 300 );
-            // don't return to normal face cause the setTimeout could conflict with the students clicking of the stop button
-
-        }
-
-        if ( firstTime ) {
+            }
 
             firstFlinch();
 
         } else {
 
-            secondFlinch();
+            // actually just face contorting a bit
+            expressionController( expressionObject.abs.blank, 0.5 )//express confusion 
+            // don't return to normal face cause the setTimeout could conflict with the students clicking of the stop button
 
         }
+
+        setTimeout( function() { synthesisObject.firstClip = false; }, 2000 );
 
     }
 
     if (meter.checkClipping()) {
 
-        volumeObject.bool = false;
-
         if ( classVariableDict.interference_count === 0 ) {
 
-            tiaConfusedAfterClipping( true );
+            if ( synthesisObject.firstClip === false ) {
+
+                classVariableDict.interference_count += 1;
+                classVariableDict.interference_count_this_sent += 1;
+                synthesisObject.firstClip = true;
+                tiaConfusedAfterClipping( true );
+
+            }
 
         } else {
 
-            tiaConfusedAfterClipping( false );
+            if ( synthesisObject.firstClip === false ) {
+
+                tiaConfusedAfterClipping( false );
+                classVariableDict.interference_count_this_sent += 1;
+                synthesisObject.firstClip = true;
+
+            }
 
         }
 
@@ -553,6 +557,32 @@ function showVolumeBar() {
 function hideVolumeBar() {
 
     $('#meterCont').hide(); 
+
+}
+
+function showTextStuff() {
+
+    $('#altCont').show(); 
+    $('#textInputBox').show(); 
+    $('#playRobot').show(); 
+
+}
+
+function hideTextStuff() {
+
+    $('#altCont').hide(); 
+    $('#textInputBox').hide(); 
+    $('#playRobot').hide(); 
+
+}
+
+function resetAllTabs() {
+
+    $('.sent-scores' ).css( 'background-color', '#1b8900' )
+    $('.sent-scores' ).mouseover( function() { $('.sent-scores').css('cursor', 'pointer')});
+    //also reset tab colours so that the 1st one is bright
+    $('#alt00' ).css( 'background-color', '#33ff00' )
+    $('#alt00' ).mouseover( function() { $('#alt00').css('cursor', 'default')})
 
 }
 

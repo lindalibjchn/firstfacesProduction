@@ -90,25 +90,19 @@ function sendBlobToServer( blob_to_send ) {
             classVariableDict.blob_no_text_sent_id = json.sent_id;
             console.log('got response from sending blob to server');
 
-            if ( synthesisObject.interference ) {
+            returnFromListenToSpeechSynthesis();
+
+            // dont want to send sentence while doing tutorial
+            if ( classVariableDict.tutorial === false ) {
+
+                $('#talkBtn').prop( "disabled", false);
 
             } else {
 
-                returnFromListenToSpeechSynthesis();
+                if (classVariableDict.tutorialStep === 0 ) {
 
-                // dont want to send sentence while doing tutorial
-                if ( classVariableDict.tutorial === false ) {
-
-                    $('#talkBtn').prop( "disabled", false);
-
-                } else {
-
-                    if (classVariableDict.tutorialStep === 0 ) {
-
-                        $('#recordVoiceBtn').prop( 'disabled', true );
-                        greeting06();
-
-                    }
+                    $('#recordVoiceBtn').prop( 'disabled', true );
+                    greeting06();
 
                 }
 
@@ -175,7 +169,6 @@ function sendSentToServer() {
 
                         // for interference stuff, need to reset
                         classVariableDict.interference_count_this_sent = 0;
-                        volumeObject.display = false;
 
                     },
                     error: function() {
