@@ -562,16 +562,15 @@ function hideVolumeBar() {
 
 function showTextStuff() {
 
-    $('#altCont').show(); 
-    $('#textInputBox').show(); 
+    $('#altCont').css('visibility', 'visible'); 
     $('#playRobot').show(); 
 
 }
 
 function hideTextStuff() {
 
-    $('#altCont').hide(); 
-    $('#textInputBox').hide(); 
+    $('#altCont').css('visibility', 'hidden'); 
+    $('#textInput').val(''); 
     $('#playRobot').hide(); 
 
 }
@@ -647,7 +646,7 @@ function JudgementReceived( sentMeta ) {
         tiaThinkingObject.thinking = false;
 
         // just incase there is a blink underway
-        whenAllMovFinished( function() {
+        //whenAllMovFinished( function() {
 
             // need to return to laptop only if not incorrect
             if ( sentMeta.judgement === "I" ) {
@@ -662,22 +661,22 @@ function JudgementReceived( sentMeta ) {
 
             }
 
-        });
+        //});
 
     }
                 
 }
 
-function makeAllBoolsFalse() {
+//function makeAllBoolsFalse() {
 
-    expressionObject.bool = false;
-    cameraObject.bool = false;
-    movementObject.bool = false;
-    eyelidObject.bool = false;
-    eyeObject.bool = false;
-    blinkObject.bool = false;
-    normalBlinkObject.bool = false;
-    nodObject.bool = false;
-    shakeObject.bool = false;
+    //expressionObject.bool = false;
+    //cameraObject.bool = false;
+    //movementObject.bool = false;
+    //eyelidObject.bool = false;
+    //eyeObject.bool = false;
+    //blinkObject.bool = false;
+    //normalBlinkObject.bool = false;
+    //nodObject.bool = false;
+    //shakeObject.bool = false;
 
-}
+//}

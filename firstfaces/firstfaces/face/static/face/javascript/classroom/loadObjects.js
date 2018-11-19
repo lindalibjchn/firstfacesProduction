@@ -16,7 +16,6 @@ function engineRunning() {
     setBaseExpressionsMovements(); // do this after all of Tia is loaded
     animate();
     blinkControllerObject.bool = true;
-    initInputReady('');
     initCameraMove('laptop', 0.1);
     expressionController( expressionObject.abs.neutral, 0.1 );
 
@@ -390,7 +389,8 @@ function enterOrReEnter() {
 
         }
 
-        //talkObject.learning = true;
+        talkObject.learning = true;
+        initInputReady('');
         //movementController( movements.student, '0.1', '0.1' );
 
         // change these while making facial expressions

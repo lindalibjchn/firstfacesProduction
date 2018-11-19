@@ -17,6 +17,22 @@
 
 </div>
 
+<!--thought bubbles-->
+<div id="thoughtBubbleCont">
+
+    <img class="thought-bubbles" id="thoughtBubble03" src="{% static 'face/images/wide-thought-bubble-03.png' %}">
+    <img class="thought-bubbles" id="thoughtBubble02" src="{% static 'face/images/wide-thought-bubble-02.png' %}">
+    <img class="thought-bubbles" id="thoughtBubble01" src="{% static 'face/images/wide-thought-bubble-01.png' %}">
+    <img class="thought-bubbles" id="thoughtBubble00" src="{% static 'face/images/wide-thought-bubble-00.png' %}">
+
+    <div id="thinkingLoading">
+
+        <p class="thinking"> <span>.</span><span>.</span><span>.</span></p>
+
+    </div>
+
+</div>
+
 <!--will fill this tutorial button with confirmations from tutorial.js-->
 <div class="init-questions-container" id="tutorialBtnSingleCont">
 
@@ -193,6 +209,8 @@
 
     <div id="playRobot">
 
+        <img id="robot" src="{% static 'face/images/robot_speech.svg' %}">
+
     </div>
 
 </div>
@@ -237,12 +255,6 @@
 
     <div id="inputButtonsContainer">
 
-        <div id="thinkingLoading">
-
-            <p class="thinking">thinking<span>.</span><span>.</span><span>.</span></p>
-
-        </div>
-
         <div id="recordBtnsContainer">
 
             <div class="w3-container" id="recordAndStopBtnsContainer">
@@ -269,8 +281,9 @@
                  
                 <div id="listenAndSynthBtns">
 
-                    <button class="w3-btn w3-circle w3-xxxlarge w3-indigo input-btn-large record-btn w3-padding-large play-btn" id="listenVoiceBtn">
+                    <button class="w3-btn w3-circle w3-xxxlarge w3-indigo input-btn-large record-btn play-btn" id="listenVoiceBtn">
                     
+                        <img id="human" src="{% static 'face/images/human_speech.svg' %}">
 
                     </button>
 

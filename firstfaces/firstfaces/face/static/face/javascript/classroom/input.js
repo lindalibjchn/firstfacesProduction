@@ -15,7 +15,7 @@ function initInputReady( boxVal ) {
 
     $('#textInput').bind('input propertychange', function() {
 
-        $('#listenSynthesisBtn').prop( "disabled", false );
+        $('#playRobot').show();
 
         if ( classVariableDict.tutorial ) {
 
@@ -29,53 +29,79 @@ function initInputReady( boxVal ) {
 
 }
 
+function delayForListening( text ) {
+
+    var speechDuration;
+    if ( synthesisObject.originalVoice ) {
+
+        speechDuration = aud.duration;
+    
+    } else {
+
+        speechDuration = synthesisObject.synthAudio.duration;
+
+    }
+
+    if ( speechDuration !== Infinity ) {
+
+        delay = speechDuration * 1000 + tiaTimings.delayAfterStudentSpeech; // cause it's in seconds
+        console.log('real delay:', delay)
+
+    } else {
+
+        // if the above is infinity it means it hasn't read it and need to calc by length of characters
+        delay = text.length * 90 + tiaTimings.delayAfterStudentSpeech;
+        console.log('calc delay:', delay)
+
+    }
+
+    return delay;
+
+}
+
 
 // after press talk button this does the logic, deciding whether to use synthesized voice or not depending on changes to the textbox
 
 function talkToTia() {
 
-    // stop blinking
-    normalBlinkObject.bool = false;
     // check that final text box has been changed or not from recording
-    let finalTextInBox = $('#textInput').val();
+    synthesisObject.finalTextInBox = $('#textInput').val();
 
-    synthesisObject.delayToThinkAndTurn = 1500 + finalTextInBox.length * 65;
-    
     //no change from audio
-    if ( finalTextInBox === synthesisObject.textFromSpeech0 ) {
+    if ( synthesisObject.finalTextInBox === synthesisObject[ 'transcript' + synthesisObject.transcriptCur ] ) {
 
-        synthesisObject.synthAudio = document.getElementById('soundClip');
         synthesisObject.originalVoice = true;
 
     } else {
 
         synthesisObject.originalVoice = false;
-        
         synthesisObject.pitch = 0;
         synthesisObject.speaking_rate = 0.85;
-        synthesisObject.text = finalTextInBox;
-        sendTTS( finalTextInBox, false, "talk" ); 
+        synthesisObject.text = synthesisObject.finalTextInBox;
+        sendTTS( synthesisObject.finalTextInBox, false, "talk" ); 
 
     }
+
 
     // fadeOut all prev sentences - this is to stop learners reading prev sents while should be looking at tia
     $('#prevSents').fadeTo( 500, 0.1 );
     $('#textInputContainer').hide();
     $('.record-btn').prop("disabled", true);
-    $('#recordBtnsContainer').fadeOut( 1000 );
+    $('#recordBtnsContainer').fadeOut( 500 );
     
     setTimeout( function(){
         
-        initCameraMove('tia', '2');
+        initCameraMove('tia', tiaTimings.cameraMoveUpDuration);
     
         setTimeout( function() {
             
-            whenAllMovFinished( tiaLeanToListen )
+            //whenAllMovFinished( tiaLeanToListen )
+            tiaLeanToListen();
                 
-        }, 3000 );
+        }, tiaTimings.cameraMoveUpDuration * 1000 );
 
     
-    }, 1500 );
+    }, tiaTimings.delayAfterClickPlayUntilCameraMovesUp );
     
     // get expression ready beforehand
 
@@ -83,24 +109,31 @@ function talkToTia() {
 
 function tiaLeanToListen() {
 
-    initMove( leanObject, leanObject.coords.close, '1.5' );
+    initMove( leanObject, leanObject.coords.close, tiaTimings.tiaLeanDuration );
     expressionController( expressionObject.abs.listening, '0.5', false ) 
     
     synthesisObject.waitingForSynthCount = 0;
-    setTimeout( speakWords, 2000 );
+    setTimeout( speakWords, tiaTimings.tiaLeanDuration + tiaTimings.delayUntilSpeakWords );
 
 }
 
 function speakWords() {
 
-    // stop normal blinking
+    if ( synthesisObject.originalVoice ) {
 
-    if ( synthesisObject.gotNewSpeech || synthesisObject.originalVoice ) {
-        
+        synthesisObject.speechDuration = delayForListening( synthesisObject.finalTextInBox );
+        aud.play();
+        synthesisObject.gotNewSpeech = false;
         synthesisObject.waitingForSynthCount = 0;
+        setTimeout( tiaThinkAboutSentence, synthesisObject.speechDuration );
+        
+    } else if ( synthesisObject.gotNewSpeech ) {
+
+        synthesisObject.speechDuration = delayForListening( synthesisObject.finalTextInBox );
         synthesisObject.synthAudio.play();
-        synthesisObject.gotNewSpeech = false
-        setTimeout( tiaThinkAboutSentence, synthesisObject.delayToThinkAndTurn );
+        synthesisObject.waitingForSynthCount = 0;
+        synthesisObject.gotNewSpeech = false;
+        setTimeout( tiaThinkAboutSentence, synthesisObject.speechDuration );
 
     } else {
 
@@ -127,11 +160,11 @@ function goToThinkOrChangeExp() {
 
     if( classVariableDict.awaitingJudgement ) {
 
-        whenAllMovFinished( goToThinkingPos );
+        goToThinkingPos();
         
     } else {
 
-        whenAllMovFinished( runAfterJudgement );
+        runAfterJudgement();
         
     }
     
@@ -139,29 +172,21 @@ function goToThinkOrChangeExp() {
 
 function tiaThinkAboutSentence() {
     
-    initMove( leanObject, leanObject.coords.middle, '3' );
-    setTimeout( function() {
+    // check if quick judgement has come
+    if ( classVariableDict.awaitingJudgement === false ) {
 
-        initSelectBlink( '0.1', 0.05 );
+        runAfterJudgement();
 
+    } else {
+
+        initMove( leanObject, leanObject.coords.middle, tiaTimings.tiaLeanDuration );
         setTimeout( function() {
+         
+            goToThinkOrChangeExp();
 
-            initSelectBlink( '0.1', 0.05 );
+        }, tiaTimings.tiaLeanDuration * 1000 + tiaTimings.delayBeforeGoingToThinkingPos );
 
-            setTimeout( function() {
-
-                whenAllMovFinished( function() { 
-     
-                    expressionController( expressionObject.abs.neutral, '1', eyelids=false );
-                    setTimeout( goToThinkOrChangeExp, 2000 );
-                
-                })
-
-            }, 1000)
-
-        }, 1000 );
-
-    }, 1000 );
+    }
 
 }
 
@@ -171,54 +196,96 @@ function goToThinkingPos() {
     // don't want to run runAfterJudgement if Tia is turning to think
     classVariableDict.goingToThinking = true;
 
-    movementController( movements.think, '0.5', '2' );
+    movementController( movements.think, tiaTimings.toThinkDuration / 3, tiaTimings.toThinkDuration );
 
     setTimeout( function() {
         
-       whenAllMovFinished( setThinkingFace );
+       //whenAllMovFinished( setThinkingFace );
+       addThoughtBubbles();
        
-    }, 2100 );
+    }, tiaTimings.toThinkDuration * 1000 + tiaTimings.delayToAddThoughtBubbles );
 
 }
 
-function setThinkingFace() {
-
-    expressionController( expressionObject.abs.thinking, '1.5', false );
-
-    $('#thinkingLoading').show();
-
-    setTimeout( function() {
-
-        whenAllMovFinished( firstCheckAfterThinking );
-
-    }, 2500)
-
-}
-
-function firstCheckAfterThinking() {
-
-    classVariableDict.goingToThinking = false;
+function addThoughtBubble( no ) {
 
     if ( classVariableDict.awaitingJudgement === false ) {
-
-        tiaThinkingObject.thinking = false;
-        
-        if ( classVariableDict.last_sent.judgement === "I" ) {
-
-            $('#thinkingLoading').hide();
-            setTimeout(runAfterJudgement, 600);
-
-        } else {
-
-            initReturnFromThinking();
-
-        }
+    
+        removeThoughtBubbles();
+        judgementReceivedInThinkingPos();
 
     } else {
 
-        tiaThinkingObject.thinking = true;
-        //normalBlinkObject.bool = true;
-        setTimeout( thinkingEyes, 1000 );
+        if ( no === 0 ) {
+
+            $('#thoughtBubble00').show();
+
+        } else if ( no === 1 ) {
+
+            $('#thoughtBubble00').hide();
+            $('#thoughtBubble01').show();
+            
+        } else if ( no === 2 ) {
+
+            $('#thoughtBubble01').hide();
+            $('#thoughtBubble02').show();
+            
+        } else if ( no === 3 ) {
+
+            $('#thoughtBubble02').hide();
+            $('#thoughtBubble03').show();
+            $('#thinkingLoading').css('display', 'flex'); 
+
+        } else {
+
+            //keep checking move eyes
+
+        }
+
+        setTimeout( function() {
+
+            addThoughtBubble( no + 1 );
+
+        }, tiaTimings.thoughtBubbleAddDelay )
+
+    }
+
+}
+
+function removeThoughtBubbles() {
+
+    $('.thought-bubbles').fadeOut( 500 );
+    $('#thinkingLoading').css('display', 'none'); 
+
+}
+
+function addThoughtBubbles() {
+
+    //expressionController( expressionObject.abs.thinking, '1.5', false );
+    //$('#thinkingLoading').show();
+
+
+    classVariableDict.goingToThinking = false;
+    tiaThinkingObject.thinking = true;
+
+    addThoughtBubble( 0 );
+
+    //whenAllMovFinished( firstCheckAfterThinking );
+
+}
+
+function judgementReceivedInThinkingPos() {
+
+    tiaThinkingObject.thinking = false;
+    
+    if ( classVariableDict.last_sent.judgement === "I" ) {
+
+        $('#thinkingLoading').hide();
+        setTimeout(runAfterJudgement, 600);
+
+    } else {
+
+        initReturnFromThinking();
 
     }
 
@@ -229,7 +296,7 @@ function thinkingEyes() {
     //init solo talk like thinking
     //initTalk( true );
     
-    normalBlinkObject.bool = false;
+    //normalBlinkObject.bool = false;
 
     if ( tiaThinkingObject.thinking ) {
         
@@ -251,7 +318,7 @@ function thinkingEyes() {
 
         setTimeout( function() {
 
-            normalBlinkObject.bool = true;
+            //normalBlinkObject.bool = true;
             setTimeout( function() {
                 
                 thinkingEyes()
@@ -270,7 +337,8 @@ function initReturnFromThinking() {
     //tiaThinkingObject.thinkingEyes = false;
     $('#thinkingLoading').hide();
      
-    whenAllMovFinished( returnFromThinking );
+    //whenAllMovFinished( returnFromThinking );
+    returnFromThinking();
 
 }
 
@@ -279,10 +347,11 @@ function returnFromThinking() {
     //initMove( eyeObject, [[0,0,0],[tiaThinkingObject.startX, tiaThinkingObject.startY, 0]], '0.5' );
     movementController( movements.student, '0.5', '1.5' );
     
-    normalBlinkObject.bool = false;
+    //normalBlinkObject.bool = false;
     setTimeout( function () {
         
-        whenAllMovFinished( runAfterJudgement ); 
+        //whenAllMovFinished( runAfterJudgement ); 
+        runAfterJudgement(); 
         
     }, 1600 );
 

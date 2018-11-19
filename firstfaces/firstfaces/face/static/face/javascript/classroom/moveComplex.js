@@ -663,7 +663,8 @@ function noAltsAskAboutMic() {
 
     let del = tiaSpeak( "I didn't hear anything. Could you try again?" );
 
-    $('#textInputContainer').hide();
+    $('#textInput').val( '' );
+    hideTextStuff();
 
     setTimeout( function() {
 
@@ -674,6 +675,7 @@ function noAltsAskAboutMic() {
             $('#recordVoiceBtn').show();
             $('.listenAndSynthBtns').prop('disabled', 'false');
             $('#textInputContainer').show();
+            $('#textInput').focus();
         });
 
     }, del ); 

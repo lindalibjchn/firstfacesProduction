@@ -50,35 +50,36 @@ function runAfterJudgement() {
 
         }
 
-        whenAllMovFinished( function() { 
+        //whenAllMovFinished( function() { 
          
             expressionController( calculatedExpression, '1', false );
         
-        })
+        //})
         
         setTimeout( function() {
             
-            whenAllMovFinished( nodOrShakeHead );
+            //whenAllMovFinished( nodOrShakeHead );
+            nodOrShakeHead()
             
         }, 1100 ); 
 
     } else if ( classVariableDict.last_sent.judgement === "I" ) {
 
-        whenAllMovFinished( function() { 
+        //whenAllMovFinished( function() { 
          
             movementController( movements.confused01, '0.5', '1.5' );
 
-        })
+        //})
 
         addToPrevSents(classVariableDict.last_sent);
         
         setTimeout( function() {
             
-            whenAllMovFinished( function() { 
+            //whenAllMovFinished( function() { 
          
                 expressionController( expressionObject.abs.confused, '1.5', true );
         
-            })
+            //})
 
             setTimeout( showOptionBtns, 2000 );
 
@@ -95,11 +96,11 @@ function runAfterJudgement() {
             text = " " + createBetterTextForPromptBox( classVariableDict.last_sent );
             sendTTS( text, true, "talk");
             
-            whenAllMovFinished( function() { 
+            //whenAllMovFinished( function() { 
          
                 expressionController( calculatedExpression, '1', false );
             
-            })
+            //})
 
             //no nod or shak efor better as it may interfere with speech
             setTimeout( displaySpeechBubblePrompt, 2000 );
@@ -115,11 +116,11 @@ function runAfterJudgement() {
             calculatedExpression = getAbsoluteCoordsOfExpressionTo( singleCalculatedExpressions[ 0 ] )
             calculatedTalkExpression = getAbsoluteCoordsOfExpressionTo( singleCalculatedExpressions[ 1 ] )
 
-            whenAllMovFinished( function() { 
+            //whenAllMovFinished( function() { 
          
                 expressionController( calculatedExpression, '1', false );
             
-            })
+            //})
                 
             setTimeout( displaySpeechBubblePrompt, 1500 );
         
@@ -134,13 +135,14 @@ function runAfterJudgement() {
             calculatedExpression = getAbsoluteCoordsOfExpressionTo( singleCalculatedExpressions[ 0 ] )
             calculatedTalkExpression = getAbsoluteCoordsOfExpressionTo( singleCalculatedExpressions[ 1 ] )
 
-            whenAllMovFinished( function() {
+            //whenAllMovFinished( function() {
          
                 expressionController( calculatedExpression, '1', false );
             
-            })
+            //})
 
-            setTimeout( function() { whenAllMovFinished( displaySpeechBubblePrompt ) }, 1500 );
+            //setTimeout( function() { whenAllMovFinished( displaySpeechBubblePrompt ) }, 1500 );
+            setTimeout( displaySpeechBubblePrompt, 1500 );
         
         } else {
 
@@ -155,16 +157,17 @@ function runAfterJudgement() {
             calculatedTalkExpression = getAbsoluteCoordsOfExpressionTo( singleCalculatedExpressions[ 1 ] )
 
             
-            whenAllMovFinished( function() { 
+            //whenAllMovFinished( function() { 
          
                 expressionController( calculatedExpression, '1', false );
             
-            })
+            //})
 
             setTimeout( function() {
                 
-                whenAllMovFinished( nodOrShakeHead ); 
-                setTimeout( function() { whenAllMovFinished( displaySpeechBubblePrompt )}, 5000 );
+                //whenAllMovFinished( nodOrShakeHead ); 
+                nodOrShakeHead()
+                setTimeout( displaySpeechBubblePrompt, 5000 );
 
             }, 1100 );
 
@@ -179,45 +182,45 @@ function runAfterJudgement() {
 }
 
 // check if expression has finished running
-whenAllMovFinishedCount = 0;
-var whenAllMovFinished = function( funcToCall ) {
+//whenAllMovFinishedCount = 0;
+//var whenAllMovFinished = function( funcToCall ) {
 
-    console.log( 'in whenAllMovFinished:', whenAllMovFinishedCount );
-    if ( expressionObject.bool || cameraObject.bool || movementObject.bool || eyelidObject.bool || eyeObject.bool || blinkObject.bool || normalBlinkObject.bool || nodObject.bool || shakeObject.bool ) {
+    //console.log( 'in whenAllMovFinished:', whenAllMovFinishedCount );
+    //if ( expressionObject.bool || cameraObject.bool || movementObject.bool || eyelidObject.bool || eyeObject.bool || blinkObject.bool || normalBlinkObject.bool || nodObject.bool || shakeObject.bool ) {
       
-        if ( whenAllMovFinishedCount < 3000 ) {
+        //if ( whenAllMovFinishedCount < 3000 ) {
 
-            whenAllMovFinishedCount += 500;
+            //whenAllMovFinishedCount += 500;
 
-            setTimeout( function() {
+            //setTimeout( function() {
                  
-                whenAllMovFinished( funcToCall );
+                //whenAllMovFinished( funcToCall );
 
-            }, 500 );
+            //}, 500 );
 
-            console.log( 
-                    "movementObject.bool : ", movementObject.bool.toString() + 
-                    "\neyelidObject.bool : ", eyelidObject.bool.toString() + 
-                    "\neyeObject.bool : ", eyeObject.bool.toString()
-                    );
+            //console.log( 
+                    //"movementObject.bool : ", movementObject.bool.toString() + 
+                    //"\neyelidObject.bool : ", eyelidObject.bool.toString() + 
+                    //"\neyeObject.bool : ", eyeObject.bool.toString()
+                    //);
         
-        } else {
+        //} else {
 
-            makeAllBoolsFalse();
-            whenAllMovFinishedCount = 0;
-            funcToCall();
+            //makeAllBoolsFalse();
+            //whenAllMovFinishedCount = 0;
+            //funcToCall();
 
-        }
+        //}
 
-    } else {
+    //} else {
 
-        console.log( 'in whenAllMovFinished funcToCall' );
-        whenAllMovFinishedCount = 0;
-        funcToCall();
+        //console.log( 'in whenAllMovFinished funcToCall' );
+        //whenAllMovFinishedCount = 0;
+        //funcToCall();
 
-    }
+    //}
 
-}
+//}
 
 
 function getNodSpeedInString() {
@@ -339,11 +342,11 @@ function returnToLaptop( sent ) {
 
                 if ( classVariableDict.tiaLookingAtStudent === false ) {
 
-                    whenAllMovFinished( function() { 
+                    //whenAllMovFinished( function() { 
              
                         movementController( movements.student, '2', '1.5' );
                     
-                    })
+                    //})
 
                 }
 
@@ -358,11 +361,11 @@ function returnToLaptop( sent ) {
                         
                 setTimeout( function() { 
                     
-                    whenAllMovFinished( function() { 
+                    //whenAllMovFinished( function() { 
          
                         expressionController( expressionObject.abs.neutral, '2', eyelids=false );
                     
-                    })
+                    //})
 
                     setTimeout( function() {
 
@@ -483,11 +486,11 @@ function whatsWrong() {
         $('.option-btn').prop( "disabled", true);
         $('#optionBtns').fadeOut( 500 )
         
-        whenAllMovFinished( function() {
+        //whenAllMovFinished( function() {
 
             movementController( movements.laptop, '0.5', '1.5' );
 
-        });
+        //});
 
         setTimeout( function() {
         
@@ -608,7 +611,8 @@ function waitForWrongSlices() {
                 normalBlinkObject.bool = false;
                 // avoid moving for a fraction of a second if mid-blink
                 
-                whenAllMovFinished( turnToBoardToShowErrors );
+                //whenAllMovFinished( turnToBoardToShowErrors );
+                turnToBoardToShowErrors();
 
             } else {
 
@@ -639,11 +643,11 @@ function turnToBoardToShowErrors() {
         setTimeout( function() {
 
 
-            whenAllMovFinished( function() { 
+            //whenAllMovFinished( function() { 
          
                 initCameraMove('board', '2');
 
-            })
+            //})
 
             setTimeout( function() {
 
@@ -651,11 +655,11 @@ function turnToBoardToShowErrors() {
 
                 setTimeout( function() {
 
-                    whenAllMovFinished( function() { 
+                    //whenAllMovFinished( function() { 
          
                         expressionController( expressionObject.abs.neutral, '1', true );
                     
-                    });
+                    //});
                     
                     highlightWrong(); 
                     

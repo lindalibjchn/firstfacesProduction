@@ -1,5 +1,30 @@
 const CLASS_TIME_MINUTES = 30;
 
+//// TIMINGS FOR TIAS WHILE WAITING
+
+const TIA_SPEED = 'slow'
+
+var tiaTimings = {}
+   
+if ( TIA_SPEED === 'slow' ) {
+
+    tiaTimings.delayAfterClickPlayUntilCameraMovesUp = 1000;
+    tiaTimings.cameraMoveUpDuration = 2.5;
+    tiaTimings.tiaLeanDuration = 1.5;
+    tiaTimings.delayUntilSpeakWords = 500;
+    tiaTimings.delayAfterStudentSpeech = 2000;
+    tiaTimings.delayBeforeGoingToThinkingPos = 1000;
+    tiaTimings.toThinkDuration = 2;
+    tiaTimings.delayToAddThoughtBubbles = 2000;
+    tiaTimings.thoughtBubbleAddDelay = 2000;
+    
+} else if ( TIA_SPEED === 'medium' ) {
+   
+
+} else if ( TIA_SPEED === 'fast' ) {
+
+}
+
 //// CAMERA \\\\
 
 const CAMERA_ENTER_POS = { x: -48, y: 5, z: 120 }

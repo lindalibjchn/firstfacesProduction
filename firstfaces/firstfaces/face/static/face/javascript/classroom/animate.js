@@ -127,29 +127,29 @@ function animate () {
 
     }
 
-    //if ( nodObject.bool ) {
+    if ( nodObject.bool ) {
 
-        //nod( mainCount )
+        nod( mainCount )
 
-    //}
+    }
 
-    //if ( shakeObject.bool ) {
+    if ( shakeObject.bool ) {
 
-        //shake( mainCount )
+        shake( mainCount )
 
-    //}
+    }
 
-    //if ( leanObject.bool ) {
+    if ( leanObject.bool ) {
 
-        //lean( mainCount )
+        lean( mainCount )
 
-    //}
+    }
 
-    //if ( armIndicateObject.bool ) {
+    if ( armIndicateObject.bool ) {
 
-        //armIndicate( mainCount );
+        armIndicate( mainCount );
 
-    //}
+    }
 
     //// Full movements
 

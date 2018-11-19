@@ -195,7 +195,7 @@ function armIndicate( main ) {
 // special one off blink where it is possible to set secs and pause when closed
 function initSelectBlink( len, pauseClosed ) {
 
-    if ( normalBlinkObject.bool !== true ) {
+    //if ( normalBlinkObject.bool !== true ) {
 
         eyelidObject.coords.beforeBlinkUpper = eyelidObject.coords.currentUpper;
         eyelidObject.coords.beforeBlinkLower = eyelidObject.coords.currentLower;
@@ -208,11 +208,11 @@ function initSelectBlink( len, pauseClosed ) {
             initMoveEyelids( eyelidObject.coords.beforeBlinkUpper, eyelidObject.coords.beforeBlinkLower, '0.1', false); 
         }, pause );             
 
-    } else {
+    //} else {
 
-        console.log("can't blink while normal blinking is running!")
+        //console.log("can't blink while normal blinking is running!")
 
-    }
+    //}
 
 }
     

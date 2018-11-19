@@ -647,7 +647,7 @@ def check_judgement(request):
     while True:
 
         print('in while loop')
-        time.sleep(2)
+        time.sleep(1)
         count += 1
 
         s_new = Sentence.objects.get(pk=sent_id)
@@ -657,7 +657,7 @@ def check_judgement(request):
             received_judgement = True
             break
 
-        elif count == 5:
+        elif count == 10:
 
             received_judgement = False
             break
