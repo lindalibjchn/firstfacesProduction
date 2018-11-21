@@ -1,17 +1,9 @@
-function calculateLengthOfSpeakingTime( sent ) {
-
-    let delay = 1500 + sent.length * 65;
-
-    return delay;
-}
-
-function tiaSpeak( tiaSays ) {
+var tiaSpeakCount = 0;
+function tiaSpeak( tiaSays, callback ) {
 
     speechBubbleObject.sentence = " " + tiaSays;
     synthesisObject.text = speechBubbleObject.sentence;
     sendTTS( synthesisObject.text, true, "talk" );
-
-    delay = calculateLengthOfSpeakingTime( tiaSays )
 
     if ( cameraObject.currentState === "laptop" ) {
 
@@ -23,26 +15,39 @@ function tiaSpeak( tiaSays ) {
 
     }
 
-    speakSent()
+    speakSent( tiaSays )
 
-    function speakSent() {
+    function speakSent( s ) {
 
         if ( synthesisObject.gotNewSpeech ) {
             
+            synthesisObject.delay = delayForListening( s )
             synthesisObject.synthAudio.play();
             synthesisObject.gotNewSpeech = false
             initTalk();
+            tiaSpeakCount = 0;
+
+            setTimeout( callback, synthesisObject.delay );
 
         } else {
 
-            console.log('waiting for speech synthesis to return audio')
-            setTimeout( speakSent, 1000 );
+            if ( tiaSpeakCount < 5 ) {
+
+                console.log('waiting for speech synthesis to return audio')
+                setTimeout( function() { speakSent( s ) }, 1000 );
+                tiaSpeakCount += 1;
+
+            } else {
+
+                tiaSpeakCount = 0;
+                synthesisObject.delay = delayForListening( s )
+                setTimeout( callback, synthesisObject.delay );
+
+            }
 
         }
 
     }
-
-    return delay;
 
 }
 

@@ -2,7 +2,7 @@ const CLASS_TIME_MINUTES = 30;
 
 //// TIMINGS FOR TIAS WHILE WAITING
 
-const TIA_SPEED = 'slow'
+const TIA_SPEED = 'medium'
 
 var tiaTimings = {}
    
@@ -11,15 +11,24 @@ if ( TIA_SPEED === 'slow' ) {
     tiaTimings.delayAfterClickPlayUntilCameraMovesUp = 1000;
     tiaTimings.cameraMoveUpDuration = 2.5;
     tiaTimings.tiaLeanDuration = 1.5;
-    tiaTimings.delayUntilSpeakWords = 500;
+    tiaTimings.delayUntilSpeakWords = 1500;
     tiaTimings.delayAfterStudentSpeech = 2000;
-    tiaTimings.delayBeforeGoingToThinkingPos = 1000;
+    tiaTimings.delayBeforeGoingToThinkingPos = 2000;
     tiaTimings.toThinkDuration = 2;
     tiaTimings.delayToAddThoughtBubbles = 2000;
-    tiaTimings.thoughtBubbleAddDelay = 2000;
+    tiaTimings.thoughtBubbleAddDelay = 750;
     
 } else if ( TIA_SPEED === 'medium' ) {
    
+    tiaTimings.delayAfterClickPlayUntilCameraMovesUp = 500;
+    tiaTimings.cameraMoveUpDuration = 2.0;
+    tiaTimings.tiaLeanDuration = 1.25;
+    tiaTimings.delayUntilSpeakWords = 1000;
+    tiaTimings.delayAfterStudentSpeech = 1500;
+    tiaTimings.delayBeforeGoingToThinkingPos = 1500;
+    tiaTimings.toThinkDuration = 1.5;
+    tiaTimings.delayToAddThoughtBubbles = 1500;
+    tiaTimings.thoughtBubbleAddDelay = 500;
 
 } else if ( TIA_SPEED === 'fast' ) {
 
@@ -220,11 +229,11 @@ var movements = {
         'name': 'think',
         'AUs': {
             'AU1': {
-                'head': [[0, 0, 0], [-0.025, 0.25, 0]],
+                'head': [[0, 0, 0], [-0.05, 0.125, 0]],
                 'neck': [[0, 0, 0], [0, 0, 0]],
             },
             'AU1b': {
-                'spineUpperInner': [[0, 0, 0], [0, 0.2, 0]],
+                'spineUpperInner': [[0, 0, 0], [0, 0.1, 0]],
                 'spineLower': [[0, 0, 0], [0, 0, 0]],
                 'spineUpper': [[0, 0, 0], [0, 0, 0]],
             },
@@ -237,7 +246,7 @@ var movements = {
                 'lowerArm': [[0, 0, 0], [0, 0, 0]],
             },
         },
-        'sacc': [[0,0,0],[-0.025,0.15,0]]
+        'sacc': [[0,0,0],[-0.035,0.2,0]]
     },
 
     'standingStudent': {

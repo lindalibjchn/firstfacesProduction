@@ -631,7 +631,6 @@ function calculateAlternatives() {
     }
 
     showTextStuff();
-    hideVolumeBar();
     $('#textInput').focus();
 
 }
@@ -661,12 +660,12 @@ function listenToSpeechSynthesis( intensity ) {
 function noAltsAskAboutMic() {
 
 
-    let del = tiaSpeak( "I didn't hear anything. Could you try again?" );
-
+    tiaSpeak( "I didn't hear anything. Could you try again?", showBtnThatCanHear );
+    initShake(0.2, 0.5)
     $('#textInput').val( '' );
     hideTextStuff();
 
-    setTimeout( function() {
+    function showBtnThatCanHear() {
 
         showSingleBtn( "Ok", function() {
 
@@ -678,7 +677,7 @@ function noAltsAskAboutMic() {
             $('#textInput').focus();
         });
 
-    }, del ); 
+    }
 
 }
 
@@ -693,7 +692,6 @@ function returnFromListenToSpeechSynthesis() {
             setTimeout( function() {
 
                 noAltsAskAboutMic();
-                hideVolumeBar();
 
             }, 1500);
         

@@ -90,7 +90,17 @@ function sendBlobToServer( blob_to_send ) {
             classVariableDict.blob_no_text_sent_id = json.sent_id;
             console.log('got response from sending blob to server');
 
-            returnFromListenToSpeechSynthesis();
+            // if first interference, then want the flinch not to be interfered with by the return motions
+            if ( classVariableDict.interference_count === 1 && synthesisObject.interference ) {
+
+                console.log('no return');
+
+            } else {
+
+                console.log('return');
+                returnFromListenToSpeechSynthesis();
+
+            }
 
             // dont want to send sentence while doing tutorial
             if ( classVariableDict.tutorial === false ) {

@@ -98,7 +98,7 @@ function talkToTia() {
             //whenAllMovFinished( tiaLeanToListen )
             tiaLeanToListen();
                 
-        }, tiaTimings.cameraMoveUpDuration * 1000 );
+        }, tiaTimings.cameraMoveUpDuration * 700 );//2/3 of camera move up duration
 
     
     }, tiaTimings.delayAfterClickPlayUntilCameraMovesUp );
@@ -110,10 +110,11 @@ function talkToTia() {
 function tiaLeanToListen() {
 
     initMove( leanObject, leanObject.coords.close, tiaTimings.tiaLeanDuration );
-    expressionController( expressionObject.abs.listening, '0.5', false ) 
+    expressionController( expressionObject.abs.listening, '0.3') 
     
     synthesisObject.waitingForSynthCount = 0;
-    setTimeout( speakWords, tiaTimings.tiaLeanDuration + tiaTimings.delayUntilSpeakWords );
+    let leanAndSpeakDelay = tiaTimings.tiaLeanDuration * 1000 + tiaTimings.delayUntilSpeakWords;
+    setTimeout( speakWords, leanAndSpeakDelay );
 
 }
 
@@ -161,6 +162,8 @@ function goToThinkOrChangeExp() {
     if( classVariableDict.awaitingJudgement ) {
 
         goToThinkingPos();
+
+        setTimeout( addThoughtBubbles, 1500 );
         
     } else {
 
@@ -198,12 +201,70 @@ function goToThinkingPos() {
 
     movementController( movements.think, tiaTimings.toThinkDuration / 3, tiaTimings.toThinkDuration );
 
-    setTimeout( function() {
+}
+
+var wordThinkingCount = 0;
+function showTiaThinkingOverWords() {
+
+    let delay = 1000;
+    let fade = 300;
+
+    if ( wordThinkingCount % 2 === 0 ) {
+
+        if (wordThinkingCount === 0 ) {
+
+            $('#thinkingWords').hide();
+            $('#thinkingWords1').hide();
+            $('#thinkingWords').text( synthesisObject.wordList[ wordThinkingCount ] );
+            $('#thinkingWords').fadeIn( fade );
+
+        } else {
+
+            $('#thinkingWords').text( synthesisObject.wordList[ wordThinkingCount ] );
+
+            $('#thinkingWords1').fadeOut( fade );
+            setTimeout( function() {
+
+                $('#thinkingWords').fadeIn( fade );
+
+            }, 50 );
+
+        }
+
+    } else {
+
+        $('#thinkingWords1').text( synthesisObject.wordList[ wordThinkingCount ] );
+
+        $('#thinkingWords').fadeOut( fade );
+        setTimeout( function() {
+
+            $('#thinkingWords1').fadeIn( fade );
+
+        }, 50 );
+
+    }
+
+    let wordLength = synthesisObject.wordList[ wordThinkingCount ].length
+    let wordDelay = fade + wordLength * 150;
+    wordThinkingCount += 1;
+
+    if ( wordThinkingCount < synthesisObject.wordList.length ) {
         
-       //whenAllMovFinished( setThinkingFace );
-       addThoughtBubbles();
-       
-    }, tiaTimings.toThinkDuration * 1000 + tiaTimings.delayToAddThoughtBubbles );
+        setTimeout( showTiaThinkingOverWords, wordDelay );
+
+    } else {
+
+        wordThinkingCount = 0;
+        setTimeout( function() {
+
+            $('#thinkingWords').fadeOut( fade );
+            $('#thinkingWords1').fadeOut( fade );
+
+            setTimeout( showTiaThinkingOverWords, 2500 );
+
+        }, wordDelay )
+
+    }
 
 }
 
@@ -218,33 +279,51 @@ function addThoughtBubble( no ) {
 
         if ( no === 0 ) {
 
-            $('#thoughtBubble00').show();
+            $('#thoughtBubble00').fadeIn( 250 );
 
         } else if ( no === 1 ) {
 
-            $('#thoughtBubble00').hide();
-            $('#thoughtBubble01').show();
+            $('#thoughtBubble01').fadeIn( 250 );
             
         } else if ( no === 2 ) {
 
-            $('#thoughtBubble01').hide();
-            $('#thoughtBubble02').show();
+            $('#thoughtBubble00').hide();
+            $('#thoughtBubble02').fadeIn( 250 );
             
         } else if ( no === 3 ) {
 
-            $('#thoughtBubble02').hide();
-            $('#thoughtBubble03').show();
+            $('#thoughtBubble01').hide();
+            $('#thoughtBubble03').fadeIn( 1000 );
+            $('#thinkingWords').text( '' )
+            $('#thinkingWords1').text( '' )
             $('#thinkingLoading').css('display', 'flex'); 
+            synthesisObject.wordList = synthesisObject.finalTextInBox.split(" ");
+            classVariableDict.showThoughtBubble = true;
+            
+            setTimeout( function() {
+                
+                showTiaThinkingOverWords();
+
+            }, 1500 );
 
         } else {
 
+            $('#thoughtBubble02').hide();
             //keep checking move eyes
 
         }
 
         setTimeout( function() {
 
-            addThoughtBubble( no + 1 );
+            if ( no < 4 ) {
+
+                addThoughtBubble( no + 1 );
+
+            } else {
+
+                thinkingEyes();
+
+            }
 
         }, tiaTimings.thoughtBubbleAddDelay )
 

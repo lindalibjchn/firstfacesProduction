@@ -238,6 +238,7 @@ function onStopClick() {
 function onMediaRecorderStop() {
 
     volumeObject.bool = false;// stop measuring volume and hide volume bar
+    hideVolumeBar();
 
     $('#talkBtn').prop( "disabled", true )
     classVariableDict.blob = new Blob(chunks, { type : 'audio/ogg; codecs: opus' });
@@ -411,15 +412,15 @@ function drawLoop() {
 
             canvasContext.fillRect(0, 0, WIDTH_VOL, 100);
             canvasContext.fillStyle = "red";
-            $('#meter').css('border', '3px solid orange')
-            $('#volumeMic').css('color', 'orange')
+            $('#meter').css('border', '3px solid red')
+            $('#volumeMic').css('color', 'red')
             
         } else {
-            canvasContext.fillStyle = "#1b8900";
+            canvasContext.fillStyle = "#33ff00";
             // draw a bar based on the current volume
             canvasContext.fillRect(0, 0, WIDTH_VOL, meter.volume*HEIGHT_VOL);
-            $('#meter').css('border', '2px solid #1b8900')
-            $('#volumeMic').css('color', '#1b8900')
+            $('#meter').css('border', '2px solid #33ff00')
+            $('#volumeMic').css('color', '#33ff00')
 
         }
 
@@ -427,11 +428,9 @@ function drawLoop() {
 
     function tiaConfusedAfterClipping( firstTime ) {
         
-        micIntAud.src = micIntAudSources[Math.floor(Math.random()*4)]
-
-        // reduced volume if second time
         if ( firstTime ) {
 
+            micIntAud.src = micIntAudSources[Math.floor(Math.random()*4)]
             micIntAud.play();//play interference
 
             // depending on how far forward Tia is, change the duration of the flinch movement
@@ -476,13 +475,13 @@ function drawLoop() {
 
                         setTimeout( function() {
 
-                            let del = tiaSpeak( "That was a very loud sound. Can you try keeping your microphone away from your mouth and speaking a little bit more quietly." );
+                            tiaSpeak( "That was very loud. Be careful with the microphone volume. If the volume bar turns red, it means the sound is too loud.", showButtonToConfirm );
 
-                            $('#textInputContainer').hide();
+                            function showButtonToConfirm() {
 
-                            setTimeout( function() {
+                                $('#textInputContainer').hide();
 
-                                showSingleBtn( "I will pay attention to the volume", function() {
+                                showSingleBtn( "I will check the volume bar", function() {
 
                                     removeSingleBtn();
                                     //$('#textInputContainer').show();
@@ -491,7 +490,7 @@ function drawLoop() {
                                     $('#textInputContainer').show();
                                 });
 
-                            }, del ); 
+                            }
 
                         }, 1500 )
 
@@ -534,6 +533,7 @@ function drawLoop() {
 
                 tiaConfusedAfterClipping( false );
                 classVariableDict.interference_count_this_sent += 1;
+                classVariableDict.interference_count += 1;
                 synthesisObject.firstClip = true;
 
             }
@@ -564,6 +564,7 @@ function showTextStuff() {
 
     $('#altCont').css('visibility', 'visible'); 
     $('#playRobot').show(); 
+    $('#textInputBox').css('border', '3px solid #33ff00');
 
 }
 
@@ -572,6 +573,7 @@ function hideTextStuff() {
     $('#altCont').css('visibility', 'hidden'); 
     $('#textInput').val(''); 
     $('#playRobot').hide(); 
+    $('#textInputBox').css('border', 'none');
 
 }
 
@@ -677,6 +679,10 @@ function JudgementReceived( sentMeta ) {
     //blinkObject.bool = false;
     //normalBlinkObject.bool = false;
     //nodObject.bool = false;
-    //shakeObject.bool = false;
+  	 //shakeObject.bool = false;
 
-//}
+
+
+
+
+

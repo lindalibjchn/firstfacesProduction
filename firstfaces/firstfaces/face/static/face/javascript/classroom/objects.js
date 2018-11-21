@@ -249,6 +249,7 @@ var talkObject = {
 // SPEECH STUFF
 
 var synthesisObject = {
+    finalTextInBox : "this is a humongous one",
     text: "",
     pitch: 0,
     speaking_rate: 0.85,
