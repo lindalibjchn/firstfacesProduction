@@ -47,6 +47,8 @@ $(window).on( 'load', function() {
     });
 
     $('.judgement-btns').on( 'click', sendJudgementToServer )
+    $('.prompt-btns').on( 'click', highlightPrompt )
+    $('#confirmPromptBtn').on( 'click', sendPromptToServer )
     $('#sendCorrectionsBtn').on( 'click', sendCorrectionToServer )
 
     checkForChange.count = 0;
@@ -102,6 +104,26 @@ function updateSentenceObjects() {
 
                     sentencesNeedJudgement.push( sessions[ key ].sentences[0] );
 
+                }
+
+                // push sentence which has been judged but awaiting prompt
+                if ( sessions[ key ].sentences[ 0 ].judgement === "P" && sessions[ key ].sentences[ 0 ].sentence !== null && sessions[ key ].sentences[ 0 ].prompt === null) {
+
+                    $('.judgement-btns').prop('disabled', 'true');
+                    $('#PBM').css( 'border', '7px solid teal' );
+                    sentencesNeedJudgement.push( sessions[ key ].sentences[0] );
+
+                } else if ( sessions[ key ].sentences[ 0 ].judgement === "B" && sessions[ key ].sentences[ 0 ].sentence !== null && sessions[ key ].sentences[ 0 ].prompt === null) {
+
+                    $('.judgement-btns').prop('disabled', 'true');
+                    $('#PBM').css( 'border', '7px solid blue' );
+                    sentencesNeedJudgement.push( sessions[ key ].sentences[0] );
+
+                } else if ( sessions[ key ].sentences[ 0 ].judgement === "M" && sessions[ key ].sentences[ 0 ].sentence !== null && sessions[ key ].sentences[ 0 ].indexes === null) {
+
+                    $('.judgement-btns').prop('disabled', 'true');
+                    $('#PBM').css( 'border', '7px solid orange' );
+                    sentencesNeedJudgement.push( sessions[ key ].sentences[0] );
                 }
 
                 // push all sentences which need correction to their own array. On array for urgent and two for non-urgent.

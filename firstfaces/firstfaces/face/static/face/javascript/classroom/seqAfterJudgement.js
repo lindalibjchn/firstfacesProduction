@@ -3,7 +3,7 @@ function runAfterJudgement() {
     // logic for different types of judgement
     
     // in return to laptop, movement will only be needed if tia not looking straight at student
-    classVariableDict.tiaLookingAtStudent = true;
+    //classVariableDict.tiaLookingAtStudent = true;
 
     if ( classVariableDict.last_sent.judgement === "C" ) {
 

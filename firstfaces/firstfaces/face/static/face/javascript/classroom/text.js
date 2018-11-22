@@ -309,29 +309,29 @@ function displayCorrection() {
 
 function displaySpeechBubble( highLow ) {
     
-    getIndexesOfSplit( speechBubbleObject ); 
-    speechBubbleObject.cloneLetters = putCloneLettersInList( speechBubbleObject.sentence, 0x193b70 )
-    addCloneLettersToTextBackground( speechBubbleObject, speechLineY );
+    //getIndexesOfSplit( speechBubbleObject ); 
+    //speechBubbleObject.cloneLetters = putCloneLettersInList( speechBubbleObject.sentence, 0x193b70 )
+    //addCloneLettersToTextBackground( speechBubbleObject, speechLineY );
 
     if ( highLow === "high" ) {
 
-        speechBubbleObject.background.position.set( speechBubbleBackPOS.x, speechBubbleBackPOS.y, speechBubbleBackPOS.z )
+        //speechBubbleObject.background.position.set( speechBubbleBackPOS.x, speechBubbleBackPOS.y, speechBubbleBackPOS.z )
 
-        speechBubbleObject.background.rotation.set( speechBubbleBackROT.x, speechBubbleBackROT.y, speechBubbleBackROT.z )
+        //speechBubbleObject.background.rotation.set( speechBubbleBackROT.x, speechBubbleBackROT.y, speechBubbleBackROT.z )
 
-        speechBubbleObject.background.add( speechBubbleObject.bubble );
+        //speechBubbleObject.background.add( speechBubbleObject.bubble );
         
     } else if ( highLow === "low" ) {
 
-        speechBubbleObject.background.position.set( speechBubbleBackLowPOS.x, speechBubbleBackLowPOS.y, speechBubbleBackLowPOS.z )
+        //speechBubbleObject.background.position.set( speechBubbleBackLowPOS.x, speechBubbleBackLowPOS.y, speechBubbleBackLowPOS.z )
 
-        speechBubbleObject.background.rotation.set( speechBubbleBackLowROT.x, speechBubbleBackLowROT.y, speechBubbleBackLowROT.z )
+        //speechBubbleObject.background.rotation.set( speechBubbleBackLowROT.x, speechBubbleBackLowROT.y, speechBubbleBackLowROT.z )
 
-        speechBubbleObject.background.add( speechBubbleObject.bubble2 );
+        //speechBubbleObject.background.add( speechBubbleObject.bubble2 );
 
     }
 
-    scene.add( speechBubbleObject.background )
+    //scene.add( speechBubbleObject.background )
 
 }
 
@@ -341,15 +341,15 @@ function removeSpeechBubble() {
 
     // c=1 cuz don't delete the speech bubble itself which is the first child
 
-    let sBLen = speechBubbleObject.background.children.length
-    for (let c=1; c<sBLen; c++ ) {
+    //let sBLen = speechBubbleObject.background.children.length
+    //for (let c=1; c<sBLen; c++ ) {
 
-        // as objects are deleted the list shortens, so always delete object at position 1
-        speechBubbleObject.background.remove( speechBubbleObject.background.children[ 1 ] );
+        //// as objects are deleted the list shortens, so always delete object at position 1
+        //speechBubbleObject.background.remove( speechBubbleObject.background.children[ 1 ] );
 
-    }
+    //}
 
-    scene.remove( speechBubbleObject.background );
+    //scene.remove( speechBubbleObject.background );
 
 }
 

@@ -761,8 +761,8 @@ def store_judgement(request):
     sent = Sentence.objects.get(pk=sent_id)
     sent.judgement = sent_meta['judgement']
     sent.judgement_timestamp = time_now
-    sent.indexes = sent_meta['indexes']
-    sent.prompt = sent_meta['prompt']
+    # sent.indexes = sent_meta['indexes']
+    # sent.prompt = sent_meta['prompt']
 
     # if correct or better then need to store expression data too
     if sent_meta['judgement'] in ['C', 'B']:
@@ -782,6 +782,37 @@ def store_judgement(request):
     response_data = {
 
         'sent_meta': json.dumps(sent_meta),
+
+    }
+
+    return JsonResponse(response_data)    
+
+def store_prompt(request):
+
+    time_now = timezone.now();
+
+    sent_id = int(request.POST['sentId'])
+    prompt = request.POST['promptText']
+    wrongIndexes = json.loads(request.POST['wrongIndexesForServer'])
+    
+    print('promptText:', prompt)
+    print('wrongIndexes:', wrongIndexes)
+    sent = Sentence.objects.get(pk=sent_id)
+    sent.prompt = prompt
+    sent.indexes = wrongIndexes
+
+    # code.interact(local=locals());
+
+    sent.save()
+
+    #need to update to get the corrent bloody timestamp for judgement, HUMPH!
+    # updated_sent = Sentence.objects.get(pk=sent_id)
+    # need to add timestamp
+    # sent_meta[ "judgement_timestamp" ] = int(time.mktime((updated_sent.judgement_timestamp).timetuple()))
+
+    response_data = {
+
+        # 'sent_meta': json.dumps(sent_meta),
 
     }
 

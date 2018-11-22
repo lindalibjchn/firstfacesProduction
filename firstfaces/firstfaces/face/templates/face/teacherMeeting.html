@@ -4,7 +4,7 @@
 
 <div class="w3-row" id="topRow">
 
-    <div class="w3-col w3-half" id="judgementCol">
+    <div class="w3-col m5" id="judgementCol">
 
         <div class="content-container w3-light-green" id="judgementOuter">
 
@@ -84,19 +84,19 @@
 
                         <div class="w3-col m2 judgement-btn-col">
                         
-                            <button class="w3-btn w3-xlarge w3-orange judgement-btns" id="meanByBtn">M</button>
+                            <button class="w3-btn w3-xlarge w3-teal judgement-btns prompt-btns" id="promptBtn">P</button>
                 
                         </div>
 
                         <div class="w3-col m2 judgement-btn-col">
                         
-                            <button class="w3-btn w3-xlarge w3-blue judgement-btns" id="betterBtn">B</button>
+                            <button class="w3-btn w3-xlarge w3-blue judgement-btns prompt-btns" id="betterBtn">B</button>
                 
                         </div>
 
                         <div class="w3-col m2 judgement-btn-col">
                             
-
+                            <button class="w3-btn w3-xlarge w3-orange judgement-btns prompt-btns" id="meanByBtn">M</button>
                         
                         </div>
                             
@@ -130,25 +130,25 @@
 
             </div>
 
-            <div class="w3-row" id="promptInputRow">
+        </div>
+
+    </div>
+
+    <div class="w3-col m3" id="PBM">
+
+        <div id="selectedSections"></div>
+
+        <div id="promptInput">
         
-                <div class="w3-col w3-half" id="promptInput">
-                
-                    <textarea id="promptText"></textarea>
+            <textarea id="promptText"></textarea>
 
-                </div>
-
-                <div class="w3-col w3-half" id="selectedSections">
-                
-                </div>
-
-            </div>
+            <button class="w3-btn w3-xlarge w3-black" id="confirmPromptBtn">C</button>
 
         </div>
 
     </div>
 
-    <div class="w3-col w3-half">
+    <div class="w3-col m4">
 
         <div class="w3-orange" id="sentForCorrectionNow">
         

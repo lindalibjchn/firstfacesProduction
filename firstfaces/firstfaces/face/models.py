@@ -39,6 +39,7 @@ class Sentence(models.Model):
 
     JUDGEMENT_CHOICES = (
         ('C', 'correct'),
+        ('P', 'prompt'),
         ('B', 'better'),
         ('M', 'mean_by'),
         ('I', 'incorrect'),
@@ -55,6 +56,7 @@ class Sentence(models.Model):
     nodAmount = models.DecimalField(max_digits=2, decimal_places=1, default=0.0)
     surprise = models.DecimalField(max_digits=2, decimal_places=1, default=0.0)
     indexes = models.CharField(max_length=30, null=True, blank=True)
+    indexes_timestamp = models.DateTimeField(null=True, blank=True)
     correction = models.CharField(max_length=300, blank=True)
     correction_timestamp = models.DateTimeField(null=True, blank=True)
     #this was for checking if correction has come in previous version. could be removed if not needed later
@@ -68,6 +70,7 @@ class Sentence(models.Model):
     next_sentence_timestamp = models.DateTimeField(null=True, blank=True)
     #if native wants to say something in speech bubble
     prompt = models.CharField(max_length=300, null=True, blank=True, default=None)
+    prompt_timestamp = models.DateTimeField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -99,6 +102,7 @@ class PermSentence(models.Model):
     nodAmount = models.DecimalField(max_digits=2, decimal_places=1, default=0.0)
     surprise = models.DecimalField(max_digits=2, decimal_places=1, default=0.0)
     indexes = models.CharField(max_length=30, null=True, blank=True)
+    indexes_timestamp = models.DateTimeField(null=True, blank=True)
     correction = models.CharField(max_length=300, blank=True)
     correction_timestamp = models.DateTimeField(null=True, blank=True)
     #this was for checking if correction has come in previous version. could be removed if not needed later
@@ -112,6 +116,7 @@ class PermSentence(models.Model):
     next_sentence_timestamp = models.DateTimeField(null=True, blank=True)
     #if native wants to say something in speech bubble
     prompt = models.CharField(max_length=300, null=True, blank=True, default=None)
+    prompt_timestamp = models.DateTimeField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

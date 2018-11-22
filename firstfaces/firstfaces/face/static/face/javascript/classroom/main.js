@@ -643,29 +643,27 @@ function JudgementReceived( sentMeta ) {
     }
 
     // if tia is thinking then need to come back immediately
-    if ( tiaThinkingObject.thinking ) {
+    //if ( tiaThinkingObject.thinking ) {
 
-        tiaThinkingObject.thinking = false;
+        //tiaThinkingObject.thinking = false;
 
         // just incase there is a blink underway
         //whenAllMovFinished( function() {
 
             // need to return to laptop only if not incorrect
-            if ( sentMeta.judgement === "I" ) {
+            //if ( sentMeta.judgement === "I" ) {
 
-                //return eyes to original thinking position
-                $('#thinkingLoading').hide();
-                runAfterJudgement();
+                //runAfterJudgement();
 
-            } else {
+            //} else {
 
-                initReturnFromThinking();
+                //returnFromThinking();
 
-            }
+            //}
 
         //});
 
-    }
+    //}
                 
 }
 

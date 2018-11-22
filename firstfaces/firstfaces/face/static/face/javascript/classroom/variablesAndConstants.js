@@ -9,8 +9,8 @@ var tiaTimings = {}
 if ( TIA_SPEED === 'slow' ) {
 
     tiaTimings.delayAfterClickPlayUntilCameraMovesUp = 1000;
-    tiaTimings.cameraMoveUpDuration = 2.5;
-    tiaTimings.tiaLeanDuration = 1.5;
+    tiaTimings.cameraMoveUpDuration = 4.0;
+    tiaTimings.tiaLeanDuration = 2.0;
     tiaTimings.delayUntilSpeakWords = 1500;
     tiaTimings.delayAfterStudentSpeech = 2000;
     tiaTimings.delayBeforeGoingToThinkingPos = 3000;
@@ -18,12 +18,14 @@ if ( TIA_SPEED === 'slow' ) {
     tiaTimings.delayToAddThoughtBubbles = 2500;
     tiaTimings.thoughtBubbleAddDelay = 1000;
     tiaTimings.wordFade = 750;
+    tiaTimings.returnFromThinking = 2.0;
+    tiaTimings.removeThoughtBubble = 2000;
     
 } else if ( TIA_SPEED === 'medium' ) {
    
     tiaTimings.delayAfterClickPlayUntilCameraMovesUp = 500;
-    tiaTimings.cameraMoveUpDuration = 2.0;
-    tiaTimings.tiaLeanDuration = 1.25;
+    tiaTimings.cameraMoveUpDuration = 3.0;
+    tiaTimings.tiaLeanDuration = 1.5;
     tiaTimings.delayUntilSpeakWords = 1000;
     tiaTimings.delayAfterStudentSpeech = 1500;
     tiaTimings.delayBeforeGoingToThinkingPos = 2000;
@@ -31,11 +33,13 @@ if ( TIA_SPEED === 'slow' ) {
     tiaTimings.delayToAddThoughtBubbles = 2000;
     tiaTimings.thoughtBubbleAddDelay = 750;
     tiaTimings.wordFade = 500;
+    tiaTimings.returnFromThinking = 1.5;
+    tiaTimings.removeThoughtBubble = 1500;
 
 } else if ( TIA_SPEED === 'fast' ) {
 
     tiaTimings.delayAfterClickPlayUntilCameraMovesUp = 0;
-    tiaTimings.cameraMoveUpDuration = 1.5;
+    tiaTimings.cameraMoveUpDuration = 2.0;
     tiaTimings.tiaLeanDuration = 1.0;
     tiaTimings.delayUntilSpeakWords = 500;
     tiaTimings.delayAfterStudentSpeech = 1000;
@@ -44,6 +48,8 @@ if ( TIA_SPEED === 'slow' ) {
     tiaTimings.delayToAddThoughtBubbles = 1500;
     tiaTimings.thoughtBubbleAddDelay = 500;
     tiaTimings.wordFade = 250;
+    tiaTimings.returnFromThinking = 1.0;
+    tiaTimings.removeThoughtBubble = 1000;
 
 }
 
@@ -103,21 +109,21 @@ const correctionBackPOSY = 0.5;
 
 //// SPEECH BUBBLE \\\\
 
-const speechBubblePOS = { x: 0, y: 0, z: 0 };
-const speechBubbleSCALE = { x: 17, y: 18, z: 1 };
+//const speechBubblePOS = { x: 0, y: 0, z: 0 };
+//const speechBubbleSCALE = { x: 17, y: 18, z: 1 };
 //const speechBubbleROT = { x: 0, y: 0.2, z: 0 };
 
 //const speechBubble2POS = { x: -12, y: -4, z: 14 };
 
 //// SPEECH BUBBLE BACKGROUND \\\\
 
-const speechBubbleBackLen = { x: 10.5, y: 6.5, z: 0 };
-const speechBubbleBackPOS = { x: -9.5, y: 1, z: 15 }; // slightly appear in front of the actual bubble
-const speechBubbleBackROT = { x: 0, y: 0.2, z: 0 };
-const speechBubbleBackSCALE = { x: 0.22, y: 0.5, z: 1 };
+//const speechBubbleBackLen = { x: 10.5, y: 6.5, z: 0 };
+//const speechBubbleBackPOS = { x: -9.5, y: 1, z: 15 }; // slightly appear in front of the actual bubble
+//const speechBubbleBackROT = { x: 0, y: 0.2, z: 0 };
+//const speechBubbleBackSCALE = { x: 0.22, y: 0.5, z: 1 };
 
-const speechBubbleBackLowPOS = { x: -9.5, y: -3, z: 14 }; // slightly appear in front of the actual bubble
-const speechBubbleBackLowROT = { x: -0.1, y: 0.2, z: 0 };
+//const speechBubbleBackLowPOS = { x: -9.5, y: -3, z: 14 }; // slightly appear in front of the actual bubble
+//const speechBubbleBackLowROT = { x: -0.1, y: 0.2, z: 0 };
 
 //// CHARACTER POSITIONS \\\\
 

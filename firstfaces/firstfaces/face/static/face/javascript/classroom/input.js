@@ -376,7 +376,7 @@ function addThoughtBubble( no ) {
 
 function removeThoughtBubbles() {
 
-    $('.thought-bubbles').fadeOut( 500 );
+    $('.thought-bubbles').fadeOut( tiaTimings.removeThoughtBubble );
     $('#thinkingLoading').css('display', 'none'); 
 
 }
@@ -399,17 +399,21 @@ function addThoughtBubbles() {
 function judgementReceivedInThinkingPos() {
 
     tiaThinkingObject.thinking = false;
+    removeThoughtBubbles();
     
-    if ( classVariableDict.last_sent.judgement === "I" ) {
+    setTimeout( function() {
 
-        $('#thinkingLoading').hide();
-        setTimeout(runAfterJudgement, 600);
+        //if ( classVariableDict.last_sent.judgement === "I" ) {
 
-    } else {
+            runAfterJudgement();
 
-        initReturnFromThinking();
+        //} else {
 
-    }
+            setTimeout( returnFromThinking, tiaTimings.removeThoughtBubble / 2 );
+
+        //}
+
+    }, tiaTimings.removeThoughtBubble );
 
 }
 
@@ -453,21 +457,10 @@ function thinkingEyes() {
 
 }
 
-
-function initReturnFromThinking() {
-
-    //tiaThinkingObject.thinkingEyes = false;
-    $('#thinkingLoading').hide();
-     
-    //whenAllMovFinished( returnFromThinking );
-    returnFromThinking();
-
-}
-
 function returnFromThinking() {
 
     //initMove( eyeObject, [[0,0,0],[tiaThinkingObject.startX, tiaThinkingObject.startY, 0]], '0.5' );
-    movementController( movements.student, '0.5', '1.5' );
+    movementController( movements.blank, tiaTimings.returnFromThinking / 2, tiaTimings.returnFromThinking );
     
     //normalBlinkObject.bool = false;
     setTimeout( function () {

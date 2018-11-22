@@ -277,72 +277,72 @@ function loadAllTextElements() {
 
     }
         
-    function loadSpeechBubbles() {
+    //function loadSpeechBubbles() {
 
-        function addSpeechBubbleTextBackground() {
+        //function addSpeechBubbleTextBackground() {
 
-            //// this adds the background where the letters can be added
-            console.log('loading speech bubbles');
+            ////// this adds the background where the letters can be added
+            //console.log('loading speech bubbles');
 
-            let backgroundGeom = new THREE.PlaneGeometry( speechBubbleBackLen.x, speechBubbleBackLen.y, speechBubbleBackLen.z );
-            let backgroundMat = new THREE.MeshBasicMaterial( { /*color: 0xffc4c4*/ transparent: true, opacity: 0 } );
+            //let backgroundGeom = new THREE.PlaneGeometry( speechBubbleBackLen.x, speechBubbleBackLen.y, speechBubbleBackLen.z );
+            //let backgroundMat = new THREE.MeshBasicMaterial( { [>color: 0xffc4c4<] transparent: true, opacity: 0 } );
             
-            let background = new THREE.Mesh( backgroundGeom, backgroundMat );
+            //let background = new THREE.Mesh( backgroundGeom, backgroundMat );
 
-            background.scale.set( speechBubbleBackSCALE.x, speechBubbleBackSCALE.x, speechBubbleBackSCALE.x );
+            //background.scale.set( speechBubbleBackSCALE.x, speechBubbleBackSCALE.x, speechBubbleBackSCALE.x );
             
-            speechBubbleObject.background = background;
+            //speechBubbleObject.background = background;
 
-        }
+        //}
 
-        loader.load( speechBubble, addSpeechBubble1JSON );
-        loader.load( speechBubble2, addSpeechBubble2JSON );
+        //loader.load( speechBubble, addSpeechBubble1JSON );
+        //loader.load( speechBubble2, addSpeechBubble2JSON );
         
-        function addSpeechBubble1JSON( geom, mat ) {
+        //function addSpeechBubble1JSON( geom, mat ) {
 
-            //// this adds the actual bubble from the JSON file
+            ////// this adds the actual bubble from the JSON file
 
-            mat[0].transparent = true;
-            mat[0].opacity = 1;
-            mat[1].transparent = true;
-            mat[1].opacity = 1;
+            //mat[0].transparent = true;
+            //mat[0].opacity = 1;
+            //mat[1].transparent = true;
+            //mat[1].opacity = 1;
 
-            let bubble = new THREE.Mesh( geom, mat );
-            bubble.scale.set( speechBubbleSCALE.x, speechBubbleSCALE.y, speechBubbleSCALE.z );
-            bubble.position.y -= 4;
-            bubble.position.z -= 0.02;
+            //let bubble = new THREE.Mesh( geom, mat );
+            //bubble.scale.set( speechBubbleSCALE.x, speechBubbleSCALE.y, speechBubbleSCALE.z );
+            //bubble.position.y -= 4;
+            //bubble.position.z -= 0.02;
         
-            speechBubbleObject.bubble = bubble;
+            //speechBubbleObject.bubble = bubble;
 
-        }
+        //}
 
-        function addSpeechBubble2JSON( geom, mat ) {
+        //function addSpeechBubble2JSON( geom, mat ) {
 
-            //// this adds the actual bubble from the JSON file
+            ////// this adds the actual bubble from the JSON file
 
-            mat[0].transparent = true;
-            mat[0].opacity = 1;
-            mat[1].transparent = true;
-            mat[1].opacity = 1;
+            //mat[0].transparent = true;
+            //mat[0].opacity = 1;
+            //mat[1].transparent = true;
+            //mat[1].opacity = 1;
 
-            let bubble2 = new THREE.Mesh( geom, mat );
-            bubble2.scale.set( speechBubbleSCALE.x, speechBubbleSCALE.y, speechBubbleSCALE.z );
-            bubble2.position.y -= 4;
-            bubble2.position.z -= 0.02;
+            //let bubble2 = new THREE.Mesh( geom, mat );
+            //bubble2.scale.set( speechBubbleSCALE.x, speechBubbleSCALE.y, speechBubbleSCALE.z );
+            //bubble2.position.y -= 4;
+            //bubble2.position.z -= 0.02;
 
-            speechBubbleObject.bubble2 = bubble2;
+            //speechBubbleObject.bubble2 = bubble2;
 
-        }
+        //}
 
-        addSpeechBubbleTextBackground();
+        //addSpeechBubbleTextBackground();
 
-    }
+    //}
 
     loadAlphabet();
     loadSentenceBackground();
     loadWrongHighlights();
     loadCorrectionBackground();
-    loadSpeechBubbles();
+    //loadSpeechBubbles();
 
 };
 

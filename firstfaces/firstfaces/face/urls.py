@@ -19,6 +19,7 @@ urlpatterns = [
     path('store_sent', views.store_sent, name='store_sent'),
     path('check_judgement', views.check_judgement, name='check_judgement'),
     path('store_judgement', views.store_judgement, name='store_judgement'),
+    path('store_prompt', views.store_prompt, name='store_prompt'),
     path('store_correction', views.store_correction, name='store_correction'),
     path('store_show_correction', views.store_show_correction, name='store_show_correction'),
     path('store_whats_wrong', views.store_whats_wrong, name='store_whats_wrong'),
