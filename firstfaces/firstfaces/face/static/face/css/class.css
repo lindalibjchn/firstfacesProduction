@@ -622,7 +622,7 @@ button:active {
     position: absolute;
     width: 100%;
     height: 100%;
-    display: none;*
+    display: none;
 
 }
 
@@ -668,6 +668,55 @@ button:active {
     left: 12%;
     bottom: 45%;
     /*border: 2px dashed blue;*/
+
+}
+
+#speechBubbleCont {
+
+    position: absolute;
+    width: 60%;
+    height: 50%;
+    right: 47%;
+    top: 10%;
+    /*opacity: 0.7;*/
+
+}
+
+.speech-bubbles {
+
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    /*display: none;*/
+
+}
+
+#speechBubbleTia {
+
+    top: 35%;
+
+}
+
+.speaking-words {
+
+    position: absolute;
+    background-color: red;
+    height: 75%;
+    width: 45%;
+    left: 29%;
+    font-size: 1.6vw;
+
+}
+
+#speakingWordsLaptop {
+
+    top: 12%;
+
+}
+
+#speakingWordsTia {
+
+    top: 47%;
 
 }
 

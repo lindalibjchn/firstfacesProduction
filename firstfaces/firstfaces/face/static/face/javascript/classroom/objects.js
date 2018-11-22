@@ -119,8 +119,8 @@ eyebrowObject.name = 'eyebrow';
 var leanObject = new MoveObj();
 leanObject.coords = {
     middle: [[0, 0, 0], [0, 0, 0]],
-    close: [[0, 0, 0], [0.1, 0, 0]],
-    far: [[0, 0, 0], [-0.1, 0, 0]]
+    close: [[0, 0, 0], [0.05, 0, 0]],
+    far: [[0, 0, 0], [-0.05, 0, 0]]
 }
 leanObject.name = 'lean';
 

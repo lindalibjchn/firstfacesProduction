@@ -157,6 +157,46 @@ function speakWords() {
 
 }
 
+function tiaThinkAboutSentence() {
+    
+    // check if quick judgement has come
+    if ( classVariableDict.awaitingJudgement === false ) {
+
+        runAfterJudgement();
+
+    } else {
+
+        initMove( leanObject, leanObject.coords.middle, tiaTimings.tiaLeanDuration * 2 );
+        setTimeout( function() {
+         
+            if ( classVariableDict.awaitingJudgement === false ) {
+
+                runAfterJudgement();
+
+            } else {
+
+                setTimeout( function() {
+
+                    if ( classVariableDict.awaitingJudgement === false ) {
+
+                        runAfterJudgement();
+
+                    } else {
+
+                        goToThinkOrChangeExp();
+
+                    }
+
+                }, tiaTimings.delayBeforeGoingToThinkingPos )
+            
+            }
+
+        }, tiaTimings.tiaLeanDuration * 2000 );
+
+    }
+
+}
+
 function goToThinkOrChangeExp() {
 
     if( classVariableDict.awaitingJudgement ) {
@@ -173,26 +213,6 @@ function goToThinkOrChangeExp() {
     
 }
 
-function tiaThinkAboutSentence() {
-    
-    // check if quick judgement has come
-    if ( classVariableDict.awaitingJudgement === false ) {
-
-        runAfterJudgement();
-
-    } else {
-
-        initMove( leanObject, leanObject.coords.middle, tiaTimings.tiaLeanDuration );
-        setTimeout( function() {
-         
-            goToThinkOrChangeExp();
-
-        }, tiaTimings.tiaLeanDuration * 1000 + tiaTimings.delayBeforeGoingToThinkingPos );
-
-    }
-
-}
-
 
 function goToThinkingPos() {
 
@@ -206,8 +226,7 @@ function goToThinkingPos() {
 var wordThinkingCount = 0;
 function showTiaThinkingOverWords() {
 
-    let delay = 1000;
-    let fade = 300;
+    tiaTimings.wordFade = 300;
 
     if ( wordThinkingCount % 2 === 0 ) {
 
@@ -216,16 +235,16 @@ function showTiaThinkingOverWords() {
             $('#thinkingWords').hide();
             $('#thinkingWords1').hide();
             $('#thinkingWords').text( synthesisObject.wordList[ wordThinkingCount ] );
-            $('#thinkingWords').fadeIn( fade );
+            $('#thinkingWords').fadeIn( tiaTimings.wordFade );
 
         } else {
 
             $('#thinkingWords').text( synthesisObject.wordList[ wordThinkingCount ] );
 
-            $('#thinkingWords1').fadeOut( fade );
+            $('#thinkingWords1').fadeOut( tiaTimings.wordFade );
             setTimeout( function() {
 
-                $('#thinkingWords').fadeIn( fade );
+                $('#thinkingWords').fadeIn( tiaTimings.wordFade );
 
             }, 50 );
 
@@ -235,17 +254,17 @@ function showTiaThinkingOverWords() {
 
         $('#thinkingWords1').text( synthesisObject.wordList[ wordThinkingCount ] );
 
-        $('#thinkingWords').fadeOut( fade );
+        $('#thinkingWords').fadeOut( tiaTimings.wordFade );
         setTimeout( function() {
 
-            $('#thinkingWords1').fadeIn( fade );
+            $('#thinkingWords1').fadeIn( tiaTimings.wordFade );
 
         }, 50 );
 
     }
 
     let wordLength = synthesisObject.wordList[ wordThinkingCount ].length
-    let wordDelay = fade + wordLength * 150;
+    let wordDelay = tiaTimings.wordFade + wordLength * tiaTimings.wordFade / 2;
     wordThinkingCount += 1;
 
     if ( wordThinkingCount < synthesisObject.wordList.length ) {
@@ -257,10 +276,30 @@ function showTiaThinkingOverWords() {
         wordThinkingCount = 0;
         setTimeout( function() {
 
-            $('#thinkingWords').fadeOut( fade );
-            $('#thinkingWords1').fadeOut( fade );
+            $('#thinkingWords').fadeOut( tiaTimings.wordFade );
+            $('#thinkingWords1').fadeOut( tiaTimings.wordFade );
 
-            setTimeout( showTiaThinkingOverWords, 2500 );
+            if ( classVariableDict.awaitingJudgement ) {
+
+                setTimeout( function() {
+                    
+                    if ( classVariableDict.awaitingJudgement ) {
+                    
+                        showTiaThinkingOverWords();
+                        
+                    } else {
+
+                        judgementReceivedInThinkingPos();
+
+                    }
+
+                }, 2500 );
+
+            } else {
+
+                judgementReceivedInThinkingPos();
+
+            }
 
         }, wordDelay )
 
@@ -284,32 +323,36 @@ function addThoughtBubble( no ) {
         } else if ( no === 1 ) {
 
             $('#thoughtBubble01').fadeIn( 250 );
+            $('#thoughtBubble00').fadeOut( 250 );
             
         } else if ( no === 2 ) {
 
-            $('#thoughtBubble00').hide();
+            $('#thoughtBubble01').fadeOut( 250 );
             $('#thoughtBubble02').fadeIn( 250 );
             
         } else if ( no === 3 ) {
 
-            $('#thoughtBubble01').hide();
+            $('#thoughtBubble02').fadeOut( 1000 );
             $('#thoughtBubble03').fadeIn( 1000 );
             $('#thinkingWords').text( '' )
             $('#thinkingWords1').text( '' )
             $('#thinkingLoading').css('display', 'flex'); 
             synthesisObject.wordList = synthesisObject.finalTextInBox.split(" ");
             classVariableDict.showThoughtBubble = true;
-            
-            setTimeout( function() {
-                
-                showTiaThinkingOverWords();
+         
+            if ( classVariableDict.awaitingJudgement ) {
 
-            }, 1500 );
+                setTimeout( function() {
+                    
+                    showTiaThinkingOverWords();
 
-        } else {
+                }, 1500 );
 
-            $('#thoughtBubble02').hide();
-            //keep checking move eyes
+            } else {
+
+                judgementReceivedInThinkingPos();
+
+            }
 
         }
 
