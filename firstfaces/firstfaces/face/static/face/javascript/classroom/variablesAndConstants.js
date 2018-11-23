@@ -48,8 +48,11 @@ if ( TIA_SPEED === 'slow' ) {
     tiaTimings.delayToAddThoughtBubbles = 1500;
     tiaTimings.thoughtBubbleAddDelay = 500;
     tiaTimings.wordFade = 250;
-    tiaTimings.returnFromThinking = 1.0;
+    tiaTimings.returnFromThinking = 1.5;
     tiaTimings.removeThoughtBubble = 1000;
+    tiaTimings.changeExpression = 0.75;
+    tiaTimings.movementToConfused = 1.0;
+    tiaTimings.delayBeforeReturnToLaptop = 2000;
 
 }
 

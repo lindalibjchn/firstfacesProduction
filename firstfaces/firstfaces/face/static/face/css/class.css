@@ -678,7 +678,7 @@ button:active {
     height: 50%;
     right: 47%;
     top: 10%;
-    /*opacity: 0.7;*/
+    opacity: 0.4;
     display: none;
 
 }
@@ -689,6 +689,7 @@ button:active {
     width: 100%;
     height: 100%;
     display: none;
+    right: 0;
 
 }
 
@@ -701,7 +702,8 @@ button:active {
 .speaking-words {
 
     position: absolute;
-    background-color: red;
+    display: none;
+    /*background-color: red;*/
     height: 75%;
     width: 45%;
     left: 29%;
@@ -720,6 +722,94 @@ button:active {
     top: 47%;
 
 }
+
+.thinkingOfSpeaking {
+
+    font-size: 30px;
+    left: 10%;
+    display: none;
+
+}
+
+@keyframes blink {
+    /**
+     * At the start of the animation the dot
+     * has an opacity of .2
+     */
+    0% {
+      opacity: 0;
+    }
+    /**
+     * At 20% the dot is fully visible and
+     * then fades out slowly
+     */
+    20% {
+      opacity: 0;
+    }
+    35% {
+      opacity: 1;
+    }
+    /**
+     * Until it reaches an opacity of .2 and
+     * the animation can start again
+     */
+    70% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+}
+
+.thinkingOfSpeaking span {
+    /**
+     * Use the blink animation, which is defined above
+     */
+    animation-name: blink;
+    /**
+     * The animation should take 4 seconds
+     */
+    animation-duration: 4s;
+    /**
+     * It will repeat itself forever
+     */
+    animation-iteration-count: infinite;
+    /**
+     * This makes sure that the starting style (opacity: .2)
+     * of the animation is applied before the animation starts.
+     * Otherwise we would see a short flash or would have
+     * to set the default styling of the dots to the same
+     * as the animation. Same applies for the ending styles.
+     */
+    animation-fill-mode: both;
+}
+
+.thinkingOfSpeaking span:nth-child(2) {
+    /**
+     * Starts the animation of the third dot
+     * with a delay of .2s, otherwise all dots
+     * would animate at the same time
+     */
+    animation-delay: 0.5s;
+}
+
+.thinkingOfSpeaking span:nth-child(3) {
+    /**
+     * Starts the animation of the third dot
+     * with a delay of .4s, otherwise all dots
+     * would animate at the same time
+     */
+    animation-delay: 1s;
+}
+
+/*.thinkingOfSpeaking span:nth-child(4) {*/
+    /**
+     * Starts the animation of the third dot
+     * with a delay of .4s, otherwise all dots
+     * would animate at the same time
+     */
+    /*animation-delay: 1.5s;*/
+/*}*/
 
 /* SUCCESSFULLY CENTERED DIVS HORIZONTALLY ADN VERTICALLY */
 .option-row {

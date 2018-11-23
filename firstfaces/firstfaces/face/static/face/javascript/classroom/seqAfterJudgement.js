@@ -5,38 +5,33 @@ function runAfterJudgement() {
     // in return to laptop, movement will only be needed if tia not looking straight at student
     //classVariableDict.tiaLookingAtStudent = true;
 
+    // get duration of nod or shake. Can also be 0o
+    let nodShakeDur = 0;
+    if ( classVariableDict.last_sent.nod !== null ) {
+    
+        nodShakeDur = parseFloat( getNodSpeedInString() ) * 1000;
+
+    }
+
     if ( classVariableDict.last_sent.judgement === "C" ) {
 
+        expressionController( calculatedExpression, tiaTimings.changeExpression );
+
         //this delay is for nod and shake changing secs
-        var delay = 3000 + parseFloat( getNodSpeedInString() ) * 6500;
         if ( classVariableDict.last_sent.prompt === null ) {
 
-            if ( classVariableDict.last_sent.nod !== null ) {
+            setTimeout( function() {
 
-                //this changes with the secs of nod and shake
+                returnToLaptop( '' )
 
-                setTimeout( function() {
-
-                    returnToLaptop( '' )
-
-                }, delay );
-
-            } else {
-
-                setTimeout( function() {
-
-                    returnToLaptop( '' )
-
-                }, 3000);
-
-            }
+            }, nodShakeDur + tiaTimings.delayBeforeReturnToLaptop );
                     
         } else {
 
             synthesisObject.text = classVariableDict.last_sent.prompt;
-            sendTTS( classVariableDict.last_sent.prompt, true, "talk" );
+            sendTTS( synthesisObject.text, true, "talk" );
 
-            speechBubbleObject.sentence = " " + classVariableDict.last_sent.prompt;
+            speechBubbleObject.sentence = classVariableDict.last_sent.prompt;
 
             if ( classVariableDict.last_sent.nod !== null ) {
 
@@ -49,37 +44,23 @@ function runAfterJudgement() {
             }
 
         }
-
-        //whenAllMovFinished( function() { 
          
-            expressionController( calculatedExpression, '1', false );
-        
-        //})
         
         setTimeout( function() {
             
-            //whenAllMovFinished( nodOrShakeHead );
             nodOrShakeHead()
             
         }, 1100 ); 
 
     } else if ( classVariableDict.last_sent.judgement === "I" ) {
 
-        //whenAllMovFinished( function() { 
-         
-            movementController( movements.confused01, '0.5', '1.5' );
-
-        //})
+        movementController( movements.confused01, tiaTimings.movementToConfused / 2, tiaTimings.movementToConfused );
 
         addToPrevSents(classVariableDict.last_sent);
         
         setTimeout( function() {
             
-            //whenAllMovFinished( function() { 
-         
-                expressionController( expressionObject.abs.confused, '1.5', true );
-        
-            //})
+            expressionController( expressionObject.abs.confused, tiaTimings.changeExpression );
 
             setTimeout( showOptionBtns, 2000 );
 
@@ -96,11 +77,7 @@ function runAfterJudgement() {
             text = " " + createBetterTextForPromptBox( classVariableDict.last_sent );
             sendTTS( text, true, "talk");
             
-            //whenAllMovFinished( function() { 
-         
-                expressionController( calculatedExpression, '1', false );
-            
-            //})
+           expressionController( calculatedExpression, tiaTimings.changeExpression );
 
             //no nod or shak efor better as it may interfere with speech
             setTimeout( displaySpeechBubblePrompt, 2000 );
@@ -116,11 +93,7 @@ function runAfterJudgement() {
             calculatedExpression = getAbsoluteCoordsOfExpressionTo( singleCalculatedExpressions[ 0 ] )
             calculatedTalkExpression = getAbsoluteCoordsOfExpressionTo( singleCalculatedExpressions[ 1 ] )
 
-            //whenAllMovFinished( function() { 
-         
-                expressionController( calculatedExpression, '1', false );
-            
-            //})
+            expressionController( calculatedExpression, tiaTimings.changeExpression );
                 
             setTimeout( displaySpeechBubblePrompt, 1500 );
         
@@ -135,13 +108,8 @@ function runAfterJudgement() {
             calculatedExpression = getAbsoluteCoordsOfExpressionTo( singleCalculatedExpressions[ 0 ] )
             calculatedTalkExpression = getAbsoluteCoordsOfExpressionTo( singleCalculatedExpressions[ 1 ] )
 
-            //whenAllMovFinished( function() {
-         
-                expressionController( calculatedExpression, '1', false );
-            
-            //})
-
-            //setTimeout( function() { whenAllMovFinished( displaySpeechBubblePrompt ) }, 1500 );
+            expressionController( calculatedExpression, tiaTimings.changeExpression );
+           
             setTimeout( displaySpeechBubblePrompt, 1500 );
         
         } else {
@@ -155,17 +123,11 @@ function runAfterJudgement() {
             let singleCalculatedExpressions = createSingleExpression( expressionsRel.confused, 1 )
             calculatedExpression = getAbsoluteCoordsOfExpressionTo( singleCalculatedExpressions[ 0 ] )
             calculatedTalkExpression = getAbsoluteCoordsOfExpressionTo( singleCalculatedExpressions[ 1 ] )
-
-            
-            //whenAllMovFinished( function() { 
          
-                expressionController( calculatedExpression, '1', false );
-            
-            //})
+            expressionController( calculatedExpression, tiaTimings.changeExpression );
 
             setTimeout( function() {
                 
-                //whenAllMovFinished( nodOrShakeHead ); 
                 nodOrShakeHead()
                 setTimeout( displaySpeechBubblePrompt, 5000 );
 

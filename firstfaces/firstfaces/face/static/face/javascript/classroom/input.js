@@ -217,7 +217,7 @@ function goToThinkOrChangeExp() {
 function goToThinkingPos() {
 
     // don't want to run runAfterJudgement if Tia is turning to think
-    classVariableDict.goingToThinking = true;
+    //classVariableDict.goingToThinking = true;
 
     movementController( movements.think, tiaTimings.toThinkDuration / 3, tiaTimings.toThinkDuration );
 
@@ -403,15 +403,15 @@ function judgementReceivedInThinkingPos() {
     
     setTimeout( function() {
 
-        //if ( classVariableDict.last_sent.judgement === "I" ) {
+        if ( classVariableDict.last_sent.judgement === "I" ) {
 
             runAfterJudgement();
 
-        //} else {
+        } else {
 
-            setTimeout( returnFromThinking, tiaTimings.removeThoughtBubble / 2 );
+            returnFromThinking();
 
-        //}
+        }
 
     }, tiaTimings.removeThoughtBubble );
 
@@ -459,16 +459,13 @@ function thinkingEyes() {
 
 function returnFromThinking() {
 
-    //initMove( eyeObject, [[0,0,0],[tiaThinkingObject.startX, tiaThinkingObject.startY, 0]], '0.5' );
-    movementController( movements.blank, tiaTimings.returnFromThinking / 2, tiaTimings.returnFromThinking );
-    
-    //normalBlinkObject.bool = false;
-    setTimeout( function () {
-        
-        //whenAllMovFinished( runAfterJudgement ); 
-        runAfterJudgement(); 
-        
-    }, 1600 );
+    runAfterJudgement(); 
+
+    setTimeout( function() {
+
+        movementController( movements.blank, tiaTimings.returnFromThinking / 2, tiaTimings.returnFromThinking );
+
+    }, tiaTimings.changeExpression * 250 );
 
 } 
 

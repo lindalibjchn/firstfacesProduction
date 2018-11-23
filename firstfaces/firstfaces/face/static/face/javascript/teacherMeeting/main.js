@@ -109,19 +109,19 @@ function updateSentenceObjects() {
                 // push sentence which has been judged but awaiting prompt
                 if ( sessions[ key ].sentences[ 0 ].judgement === "P" && sessions[ key ].sentences[ 0 ].sentence !== null && sessions[ key ].sentences[ 0 ].prompt === null) {
 
-                    $('.judgement-btns').prop('disabled', 'true');
+                    $('.judgement-btns').prop('disabled', true);
                     $('#PBM').css( 'border', '7px solid teal' );
                     sentencesNeedJudgement.push( sessions[ key ].sentences[0] );
 
                 } else if ( sessions[ key ].sentences[ 0 ].judgement === "B" && sessions[ key ].sentences[ 0 ].sentence !== null && sessions[ key ].sentences[ 0 ].prompt === null) {
 
-                    $('.judgement-btns').prop('disabled', 'true');
+                    $('.judgement-btns').prop('disabled', true);
                     $('#PBM').css( 'border', '7px solid blue' );
                     sentencesNeedJudgement.push( sessions[ key ].sentences[0] );
 
                 } else if ( sessions[ key ].sentences[ 0 ].judgement === "M" && sessions[ key ].sentences[ 0 ].sentence !== null && sessions[ key ].sentences[ 0 ].indexes === null) {
 
-                    $('.judgement-btns').prop('disabled', 'true');
+                    $('.judgement-btns').prop('disabled', true);
                     $('#PBM').css( 'border', '7px solid orange' );
                     sentencesNeedJudgement.push( sessions[ key ].sentences[0] );
                 }
@@ -705,7 +705,7 @@ function checkForChange() {
 
 }
 
-function updateSessionsDictFromServer( correction=false) {
+function updateSessionsDictFromServer( correction=false ) {
 
     //if comes from send correction to server then correction=true and update sentence for correction too.
     

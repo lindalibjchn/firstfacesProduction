@@ -1,6 +1,6 @@
 function sendJudgementToServer( e ) {
 
-    $('.judgement-btns').prop('disabled', 'true');
+    $('.judgement-btns').prop('disabled', true);
     let btnId = e.target.id;
 
     if ( btnId === "correctBtn" ) {
@@ -41,6 +41,11 @@ function sendJudgementToServer( e ) {
     } else if ( btnId === "promptBtn" ) {
 
         sentencesNeedJudgement[ 0 ].judgement = "P";
+        sentencesNeedJudgement[ 0 ].emotion = teacherVars.emotionState;
+        sentencesNeedJudgement[ 0 ].nod = teacherVars.nodShakeBool;
+        sentencesNeedJudgement[ 0 ].nodAmount = teacherVars.triangleState[ 0 ];
+        sentencesNeedJudgement[ 0 ].nodSpeed = teacherVars.triangleState[ 1 ];
+        sentencesNeedJudgement[ 0 ].surprise = teacherVars.surpriseAmount;
 
     }
 
@@ -59,12 +64,16 @@ function sendJudgementToServer( e ) {
             // remove sentence from array
             //sentencesNeedJudgement.shift();
 
+            console.log('s.judgement:', s.judgement);
+
             if ( s.judgement === "I" || s.judgement === "D" || s.judgement === "3" || s.judgement === "C" ) {
 
                 updateSentenceObjects();
                 updatePrevSentences();
                 updateWrongSentences();
                 loadNextSentenceNeedingJudgement();
+                $('.judgement-btns').prop('disabled', false);
+                console.log('s.judgement inside:', s.judgement);
 
                 if ( sentForCorrection === undefined ) { 
                 
@@ -161,6 +170,7 @@ function sendPromptToServer() {
             loadNextSentenceNeedingJudgement();
 
             $('#PBM').css( 'border', 'none' );
+            $('.judgement-btns').prop('disabled', false);
 
             if ( sentForCorrection === undefined ) { 
             
