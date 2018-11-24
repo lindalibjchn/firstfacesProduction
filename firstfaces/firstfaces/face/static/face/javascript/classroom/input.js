@@ -162,8 +162,9 @@ function tiaThinkAboutSentence() {
     // check if quick judgement has come
     if ( classVariableDict.awaitingJudgement === false ) {
 
-        runAfterJudgement();
-
+        //runAfterJudgement();
+        runAfterJudgementWithoutBeingAtTurnToThink()
+    
     } else {
 
         initMove( leanObject, leanObject.coords.middle, tiaTimings.tiaLeanDuration * 2 );
@@ -171,7 +172,7 @@ function tiaThinkAboutSentence() {
          
             if ( classVariableDict.awaitingJudgement === false ) {
 
-                runAfterJudgement();
+                runAfterJudgementWithoutBeingAtTurnToThink()
 
             } else {
 
@@ -179,7 +180,7 @@ function tiaThinkAboutSentence() {
 
                     if ( classVariableDict.awaitingJudgement === false ) {
 
-                        runAfterJudgement();
+                        runAfterJudgementWithoutBeingAtTurnToThink()
 
                     } else {
 
@@ -207,7 +208,7 @@ function goToThinkOrChangeExp() {
         
     } else {
 
-        runAfterJudgement();
+        runAfterJudgementWithoutBeingAtTurnToThink();
         
     }
     
@@ -457,14 +458,28 @@ function thinkingEyes() {
 
 }
 
+function runAfterJudgementWithoutBeingAtTurnToThink() {
+
+    expressionController( calculatedExpression, tiaTimings.changeExpression );
+    
+    setTimeout( function() {
+        
+        runAfterJudgement();
+
+    }, tiaTimings.changeExpression * 750 ) // want nod/move to confused to happen before expression change ends
+
+}
+
 function returnFromThinking() {
 
-    runAfterJudgement(); 
+    expressionController( calculatedExpression, tiaTimings.changeExpression );
 
     setTimeout( function() {
 
         movementController( movements.blank, tiaTimings.returnFromThinking / 2, tiaTimings.returnFromThinking );
 
+        setTimeout( runAfterJudgement, tiaTimings.returnFromThinking * 750 ); // want nod to happen before movement back ends
+    
     }, tiaTimings.changeExpression * 250 );
 
 } 

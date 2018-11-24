@@ -129,6 +129,8 @@ function sendBlobToServer( blob_to_send ) {
 
 function sendSentToServer() {
 
+    // reset to false
+    classVariableDict.promptNIndexesReceived = false;
     // reset the number of recordings for the sentence to 0.
     classVariableDict.blobs = 0;
 
@@ -175,6 +177,7 @@ function sendSentToServer() {
                     success: function(json) {
                         
                         console.log('sentence successfully sent to server');
+                        //console.log('json.sent_id:', json.sent_id);
                         checkJudgement( json.sent_id );
 
                         // for interference stuff, need to reset
@@ -240,6 +243,43 @@ function checkJudgement( sentId ) {
         },
         error: function() {
             alert("error awaiting judgement");
+        },
+
+    });
+
+}
+
+function checkForPromptNIndexes( sentId ) {
+
+    $.ajax({
+        url: "/check_prompt_indexes",
+        type: "GET",
+        data: { 
+            'sentId': sentId,
+        },
+        success: function(json) {
+            
+            if ( json.sent_meta.receivedPromptNIndexes ) {
+
+                console.log('got prompt n indexes');
+                promptNIndexesReceived( json.sent_meta )
+
+                if ( classVariableDict.lastSentToBeSent ) {
+
+                    classVariableDict.classOver = true;
+
+                }
+            
+            } else {
+
+                console.log('checking for prompt n indexes again');
+                checkForPromptNIndexes( sentId );
+
+            }
+
+        },
+        error: function() {
+            alert("error awaiting prompt n indexes");
         },
 
     });

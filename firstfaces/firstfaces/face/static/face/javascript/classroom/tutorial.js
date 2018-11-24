@@ -1,17 +1,24 @@
 var tiaSpeakCount = 0;
-function tiaSpeak( tiaSays, callback ) {
+function tiaSpeak( tiaSays, needSendTTS=true, callback ) {
 
     speechBubbleObject.sentence = " " + tiaSays;
-    synthesisObject.text = speechBubbleObject.sentence;
-    sendTTS( synthesisObject.text, true, "talk" );
+    $('.speaking-words').text( tiaSays );
+    
+    // only false if TTS can be sent in advance so no need to do it again
+    if ( needSendTTS ) {
+
+        synthesisObject.text = tiaSays;
+        sendTTS( synthesisObject.text, true, "talk" );
+
+    }
 
     if ( cameraObject.currentState === "laptop" ) {
 
-        displaySpeechBubble( "low" );
+        displaySpeechBubble( "low", tiaTimings.speechBubbleFadeInDuration, 0.9 );
 
     } else {
 
-        displaySpeechBubble( "high" );
+        displaySpeechBubble( "high", tiaTimings.speechBubbleFadeInDuration, 0.9 );
 
     }
 
@@ -76,7 +83,7 @@ function removeSingleBtn() {
     $('#tutorialBtnSingle').off( 'click' )
     $('#tutorialBtnSingle').prop( 'disabled', true )
     $('#tutorialBtnSingleCont').fadeOut( 1000 );
-    setTimeout( removeSpeechBubble, 1000 );
+    removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
 
 }
 
@@ -86,7 +93,7 @@ function removeDoubleBtn() {
     $('#tutorialBtnDouble1').off( 'click' )
     $('.tut-double-btn').prop( 'disabled', true )
     $('#tutorialBtnDoubleCont').fadeOut( 1000 );
-    setTimeout( removeSpeechBubble, 1000 );
+    removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
 
 }
 

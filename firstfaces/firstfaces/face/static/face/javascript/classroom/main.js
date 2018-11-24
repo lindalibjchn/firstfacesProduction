@@ -8,7 +8,7 @@ $(window).on( 'load', function() {
     readyBtns();
 
     //fill prevSents
-    //loadPrevSents( scrollBottom );
+    loadPrevSents( scrollBottom );
 
 
     
@@ -637,50 +637,51 @@ function JudgementReceived( sentMeta ) {
     classVariableDict.awaitingJudgement = false;
 
     // do this here to change voices too
-    if ( classVariableDict.last_sent.judgement === "B" || classVariableDict.last_sent.judgement === "C" || classVariableDict.last_sent.judgement === "P" ) {
-        changeExpression();
+    if ( classVariableDict.last_sent.judgement === "B" || classVariableDict.last_sent.judgement === "C" || classVariableDict.last_sent.judgement === "P" || classVariableDict.last_sent.judgement === "M" ) {
+
+        checkForPromptNIndexes( sentMeta.sent_id );
+
+        // calculate changes in expression for these
+        if ( classVariableDict.last_sent.judgement === "M" ) {
+
+            let singleCalculatedExpressions = createSingleExpression( expressions.abs.confused, 0.5 )
+            calculatedExpression = getAbsoluteCoordsOfExpressionTo( singleCalculatedExpressions[ 0 ] )
+            calculatedTalkExpression = getAbsoluteCoordsOfExpressionTo( singleCalculatedExpressions[ 1 ] )
+
+        } else {
+
+            changeExpression();
+
+        }
+
+    } else if ( classVariableDict.last_sent.judgement === "D" ) {
+
+        let singleCalculatedExpressions = createSingleExpression( expressions.abs.confused, 1 )
+        calculatedExpression = getAbsoluteCoordsOfExpressionTo( singleCalculatedExpressions[ 0 ] )
+        calculatedTalkExpression = getAbsoluteCoordsOfExpressionTo( singleCalculatedExpressions[ 1 ] )
+
+    } else if ( classVariableDict.last_sent.judgement === "3" ) {
+
+        let singleCalculatedExpressions = createSingleExpression( expressions.abs.confused, 0.75 )
+        calculatedExpression = getAbsoluteCoordsOfExpressionTo( singleCalculatedExpressions[ 0 ] )
+        calculatedTalkExpression = getAbsoluteCoordsOfExpressionTo( singleCalculatedExpressions[ 1 ] )
 
     }
-
-    // if tia is thinking then need to come back immediately
-    //if ( tiaThinkingObject.thinking ) {
-
-        //tiaThinkingObject.thinking = false;
-
-        // just incase there is a blink underway
-        //whenAllMovFinished( function() {
-
-            // need to return to laptop only if not incorrect
-            //if ( sentMeta.judgement === "I" ) {
-
-                //runAfterJudgement();
-
-            //} else {
-
-                //returnFromThinking();
-
-            //}
-
-        //});
-
-    //}
                 
 }
 
-//function makeAllBoolsFalse() {
+function promptNIndexesReceived( sentMeta ) {
 
-    //expressionObject.bool = false;
-    //cameraObject.bool = false;
-    //movementObject.bool = false;
-    //eyelidObject.bool = false;
-    //eyeObject.bool = false;
-    //blinkObject.bool = false;
-    //normalBlinkObject.bool = false;
-    //nodObject.bool = false;
-  	 //shakeObject.bool = false;
+    console.log('new sent meta:', sentMeta);
 
+    classVariableDict.promptNIndexesReceived = true;
 
+    classVariableDict.sentences[ classVariableDict.id_of_last_sent ].prompt = sentMeta.prompt;
+    classVariableDict.last_sent.prompt = sentMeta.prompt;
 
+    classVariableDict.sentences[ classVariableDict.id_of_last_sent ].indexes = sentMeta.indexes;
+    classVariableDict.last_sent.indexes = sentMeta.indexes;
 
+}
 
 

@@ -661,7 +661,6 @@ function noAltsAskAboutMic() {
 
 
     tiaSpeak( "I didn't hear anything. Could you try again?", showBtnThatCanHear );
-    initShake(0.2, 0.5)
     $('#textInput').val( '' );
     hideTextStuff();
 
@@ -691,9 +690,10 @@ function returnFromListenToSpeechSynthesis() {
         
             setTimeout( function() {
 
-                noAltsAskAboutMic();
+                initShake(0.2, 0.5)
+                setTimeout( noAltsAskAboutMic, 500 );
 
-            }, 1500);
+            }, 1000);
         
         } else {
             
