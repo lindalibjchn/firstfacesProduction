@@ -9,7 +9,11 @@ function runAfterJudgement() {
     let nodShakeDur = 0;
     if ( classVariableDict.last_sent.nod !== null ) {
     
-        nodShakeDur = parseFloat( getNodSpeedInString() ) * 1000;
+        nodShakeDur = 5 * parseFloat( getNodSpeedInString() ) * 1000;
+
+    } else if ( classVariableDict.last_sent.judgement === "D" ) {
+
+        nodShakeDur = 5 * 0.75 * 1000;
 
     }
 
@@ -38,7 +42,7 @@ function runAfterJudgement() {
 
         } else {
 
-            prePrepareForPromptSpeech();
+            setTimeout( prePrepareForPromptSpeech, tiaTimings.delyUntilToTalkPos );
 
         }
 
@@ -76,7 +80,7 @@ function runAfterJudgement() {
         
         } else if ( classVariableDict.last_sent.judgement === "D" ) {
 
-            nodOrShakeHead()
+            nodOrShakeHead();
             setTimeout( displaySpeechBubblePrompt, nodShakeDur - 500 );
 
         }
@@ -186,6 +190,9 @@ function prePrepareForPromptSpeech() {
     // return to talking pos
     expressionController( calculatedTalkExpression, tiaTimings.toTalkExpressionDuration );
 
+    //display waiting bubble
+    speechBubbleObject.dotsAppear = false;
+
     function checkIfPromptReturned() {
 
         if ( classVariableDict.promptNIndexesReceived ) {
@@ -194,13 +201,25 @@ function prePrepareForPromptSpeech() {
 
         } else {
 
-            setTimeout( checkIfPromptReturned, 1000 );
+            setTimeout( checkIfPromptReturned, 2000 );
+            
+            if ( speechBubbleObject.dotsAppear === false ) {
+
+                $('.thinkingOfSpeaking').fadeIn( 2000 );
+                speechBubbleObject.dotsAppear = true;
+
+            }
 
         }
 
     }
 
-    setTimeout( checkIfPromptReturned, tiaTimings.toTalkExpressionDuration * 750 );
+    setTimeout( function() {
+
+        checkIfPromptReturned();
+        displaySpeechBubble( "high", tiaTimings.toTalkExpressionDuration * 1000, 0.5 )
+    
+    }, tiaTimings.toTalkExpressionDuration * 1000 );
 
 }
 
@@ -208,6 +227,9 @@ function displaySpeechBubblePrompt() {
 
     // actually delay to return to laptop
     //synthesisObject.delayToReturnToLaptop = 3000 + synthesisObject.text.length * 60 * ( 1 / synthesisObject.speaking_rate );
+
+    $('.thinkingOfSpeaking').fadeOut( 500 );
+    speechBubbleObject.dotsAppear = false;
 
     if ( classVariableDict.last_sent.judgement === "P" ) {
             
@@ -240,7 +262,7 @@ function displaySpeechBubblePrompt() {
         synthesisObject.text = text;
         speechBubbleObject.sentence = text;
 
-    } else if ( classVariableDict.last_sent.judgement === "3" ) {
+    } else if ( classVariableDict.last_sent.judgement === "D" ) {
 
         let text = "I'm sorry but I don't understand what you said.";
         synthesisObject.speaking_rate = 0.8;
@@ -251,9 +273,24 @@ function displaySpeechBubblePrompt() {
     
     }
 
+    // display text
+    $('#speakingWordsTia').hide();
+    $('.speaking-words').text( speechBubbleObject.sentence );
+    $('#speakingWordsTia').fadeIn( 1000 );
+   
+
     setTimeout( function() {
 
-        tiaSpeak( synthesisObject.text, needTTS=false )
+        tiaSpeak( synthesisObject.text, needTTS=false, function() {
+         
+            setTimeout( function() {
+                
+                returnToLaptop( ' ' );
+
+            }, tiaTimings.delayBeforeReturnToLaptop );
+
+        })
+
         classVariableDict.promptSpeaking = true;
         
     }, tiaTimings.toTalkExpressionDuration * 750 );
@@ -284,9 +321,13 @@ function displaySpeechBubblePrompt() {
     
 function returnToLaptop( sent ) {
 
+    console.log( 'in return to laptop');
+    removeSpeechBubble( tiaTimings.changeExpression * 2000 );                   
+    expressionController( expressionObject.abs.neutral, tiaTimings.changeExpression * 2 );
     addToPrevSents();
     setTimeout( function() {
 
+        $('.speaking-words').text( '' );
         initCameraMove('laptop', tiaTimings.cameraMoveUpDuration );
 
         setTimeout( function() {
@@ -304,11 +345,8 @@ function returnToLaptop( sent ) {
 
             }
             
-            removeSpeechBubble();
-                    
             setTimeout( function() { 
                 
-                expressionController( expressionObject.abs.neutral, tiaTimings.changeExpression );
 
                 setTimeout( function() {
 
@@ -324,7 +362,7 @@ function returnToLaptop( sent ) {
 
         }, 2300 )
 
-    }, 500);
+    }, tiaTimings.changeExpression * 2000 );
 
 }
 
@@ -479,48 +517,39 @@ function showCorrection() {
 
 function nextSentence() {
 
-    normalBlinkObject.bool = false;
-    if ( blinkObject.bool ) {
+    $('#optionBtns').fadeOut( 500 );
+    $('.option-btn').prop( "disabled", true);
 
-        setTimeout( nextSentence, 50 );
+    if ( classVariableDict.lastSentToBeSent ) {
 
-    } else {
-    
-        $('#optionBtns').fadeOut( 500 );
-        $('.option-btn').prop( "disabled", true);
-
-        if ( classVariableDict.lastSentToBeSent ) {
-
-            classVariableDict.classOver = true;
-
-        }
-
-        classVariableDict.tiaLookingAtStudent = false;
-        returnToLaptop( '' );
-
-        let sentId = classVariableDict.last_sent.sent_id
-        $.ajax({
-            url: "/store_next_sentence",
-            type: "GET",
-            data: {'sentId': sentId},
-            success: function(json) {
-            },
-            error: function() {
-                console.log("that's wrong");
-            },
-            
-        });
-
-        setTimeout( function() {
-
-            removeCorrection();
-            removeSentence();
-
-            $('#prevSents').fadeTo( 500, 1 );
-            
-        }, 1000 )
+        classVariableDict.classOver = true;
 
     }
+
+    classVariableDict.tiaLookingAtStudent = false;
+    returnToLaptop( '' );
+
+    let sentId = classVariableDict.last_sent.sent_id
+    $.ajax({
+        url: "/store_next_sentence",
+        type: "GET",
+        data: {'sentId': sentId},
+        success: function(json) {
+        },
+        error: function() {
+            console.log("that's wrong");
+        },
+        
+    });
+
+    setTimeout( function() {
+
+        removeCorrection();
+        removeSentence();
+
+        $('#prevSents').fadeTo( 500, 1 );
+        
+    }, 1000 )
 
 }
 

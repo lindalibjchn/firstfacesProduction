@@ -24,6 +24,10 @@ function appendExchange( sentenceMeta, node ) {
 
             sentenceBox.className += " correctSent";
         
+        } else if ( sentenceMeta.judgement === "P" ) {
+
+            sentenceBox.className += " correctSent";
+        
         } else if ( sentenceMeta.judgement === "I" ) {
 
             sentenceBox.className += " incorrectSent";
@@ -50,6 +54,11 @@ function appendExchange( sentenceMeta, node ) {
             sentenceBox.className += " meanBySent";
             exchange.appendChild( createPromptBox( "I'm sorry but I don't understand what you said." ) );
 
+        } else if ( sentenceMeta.judgement === "3" ) {
+
+            sentenceBox.className += " meanBySent";
+            exchange.appendChild( createPromptBox( "There are more than 3 mistakes in your sentence. Could you simplify and try again?" ) );
+
         } else if ( sentenceMeta.judgement === null ) {
 
             sentenceBox.className += " noCorrectionYetSent";
@@ -58,7 +67,7 @@ function appendExchange( sentenceMeta, node ) {
 
         if ( sentenceMeta.prompt !== null ) {
 
-            if ( sentenceMeta.judgement !== "B" ) {
+            if ( sentenceMeta.judgement !== "B" && sentenceMeta.judgement !== "M" ) {
 
                 exchange.appendChild( createPromptBox( sentenceMeta.prompt ) );
 

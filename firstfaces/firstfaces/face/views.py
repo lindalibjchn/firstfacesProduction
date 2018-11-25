@@ -819,7 +819,7 @@ def store_judgement(request):
     # sent.prompt = sent_meta['prompt']
 
     # if correct or better then need to store expression data too
-    if sent_meta['judgement'] in ['C', 'B']:
+    if sent_meta['judgement'] in ['C', 'B', 'P']:
         sent.emotion = str(sent_meta['emotion'])
         sent.nod = sent_meta['nod']
         sent.nodAmount = sent_meta['nodAmount']
