@@ -306,16 +306,7 @@ function createCalculatedExpression( twoExpressions, ratio, mult, surp ){
             expression02ThisBone = expression02.AUs[ AU ][ bone ];
 
             //maybe no surprise at all
-            var surpriseExpressionThisBone;
-            if ( surp === 0 ) { 
-
-                surpriseExpressionThisBone = zeroMovement;
-
-            } else {
-
-                surpriseExpressionThisBone = expressionsRel.surprise.AUs[ AU ][ bone ];
-
-            }
+            var surpriseExpressionThisBone = expressionsRel.surprise.AUs[ AU ][ bone ];
 
             if ( expression01ThisBone === zeroMovement && expression02ThisBone === zeroMovement && surpriseExpressionThisBone === zeroMovement ) { 
 
@@ -329,7 +320,7 @@ function createCalculatedExpression( twoExpressions, ratio, mult, surp ){
                     for ( var k=0; k < 3; k++ ) {
 
                         let movementAmount = expression01ThisBone[ j ][ k ] * expression01Amount + expression02ThisBone[ j ][ k ] * expression02Amount + surpriseExpressionThisBone[ j ][ k ] * surp;
-                        let talkAmount = 0.5 * expression01ThisBone[ j ][ k ] * expression01Amount + 0.5 * expression02ThisBone[ j ][ k ] * expression02Amount;
+                        let talkAmount = 0.5 * expression01ThisBone[ j ][ k ] * expression01Amount + 0.5 * expression02ThisBone[ j ][ k ] * expression02Amount + surpriseExpressionThisBone[ j ][ k ] * 0.05; // small surprise to open mouth a wee bit
 
                         calcExp.AUs[ AU ][ bone ][ j ][ k ] = movementAmount;
                         calcTalkExp.AUs[ AU ][ bone ][ j ][ k ] = talkAmount;

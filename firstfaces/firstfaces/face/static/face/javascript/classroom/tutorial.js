@@ -1,8 +1,10 @@
 var tiaSpeakCount = 0;
 function tiaSpeak( tiaSays, needSendTTS=true, callback ) {
 
-    speechBubbleObject.sentence = " " + tiaSays;
-    $('.speaking-words').text( tiaSays );
+    // display text
+    speechBubbleObject.sentence = tiaSays;
+    $('#speaking-words').hide();
+    $('.speaking-words').text( speechBubbleObject.sentence );
     
     // only false if TTS can be sent in advance so no need to do it again
     if ( needSendTTS ) {
@@ -15,14 +17,20 @@ function tiaSpeak( tiaSays, needSendTTS=true, callback ) {
     if ( cameraObject.currentState === "laptop" ) {
 
         displaySpeechBubble( "low", tiaTimings.speechBubbleFadeInDuration, 0.9 );
+        $('#speakingWordsLaptop').fadeIn( tiaTimings.speechBubbleFadeInDuration );
 
     } else {
 
         displaySpeechBubble( "high", tiaTimings.speechBubbleFadeInDuration, 0.9 );
+        $('#speakingWordsTia').fadeIn( tiaTimings.speechBubbleFadeInDuration );
 
     }
 
-    speakSent( tiaSays )
+    setTimeout( function() {
+
+        speakSent( tiaSays )
+
+    }, tiaTimings.delayAfterBubbleShowUntilSpeak );
 
     function speakSent( s ) {
 

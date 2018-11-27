@@ -339,62 +339,10 @@ button:active {
 
     position: absolute;
     width: 100%;
-    height: 40%;
+    height: 56.5%;
     right: 0;
-    top: 5%;
+    top: 30px;
     background-color: rgba( 0, 0, 0, 0.3 );
-
-}
-
-#timeInfoContainer {
-
-    position: absolute;
-    width: 100%;
-    height: 10%;
-    right: 0;
-    top: 45%;
-    background-color: rgba( 0, 0, 0, 0 );
-
-}
-
-#timeInfoRow {
-
-    height: 100%;
-
-}
-
-.timeInfoCols {
-
-    height: 100%;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-}
-
-#timeDiv {
-
-    /*height: 100%;*/
-    font-size: 1.3vw;
-    color: yellow;
-    font-weight: bold;
-
-}
-
-#questionStreakDiv {
-
-    border-radius: 50%;
-    width: 30%;
-    height: 60%;
-    font-size: 1.3vw;
-    background-color: red;
-    color: white;
-    font-weight: bold;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 
 }
 
@@ -412,11 +360,12 @@ button:active {
 
     background-color: white;
     border-radius: 7px 0px 7px 7px;
-    width: 85%;
+    min-width: 51%;
+    max-width: 90%;
     margin: 4px;
-    padding: 1%;
+    padding: 3%;
     float: right;
-    font-size: 1.0vw;
+    font-size: 1.1vw;
     
 }
 
@@ -492,23 +441,25 @@ button:active {
 
     position: absolute;
     width: 100%;
-    height: 45%;
+    height: 40%;
     right: 0;
     bottom: 0;
     background-color: rgba( 256, 256, 256, 0.8 );
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
 }
 
 #recordBtnsContainer {
 
-    /*for checking option buttons after wrong*/
-    /*display: none;*/
+    height: 93%;
 
 }
 
 #recordAndStopBtnsContainer {
 
-    height: 40%;
+    height: 33%;
 }
 
 #recordAndStopBtns {
@@ -516,12 +467,13 @@ button:active {
     height: 100%;
     display: flex;
     align-items: center;
+    justify-content: center;
 
 }
 
 #listenAndSynthBtnsContainer {
 
-    height: 20%;
+    height: 33%;
 
 }
 
@@ -544,7 +496,7 @@ button:active {
 
 #talkBtnContainer {
 
-    height: 40%
+    height: 33%
 
 }
 

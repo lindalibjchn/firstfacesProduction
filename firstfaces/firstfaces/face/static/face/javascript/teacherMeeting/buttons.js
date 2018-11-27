@@ -1,17 +1,25 @@
 function sendJudgementToServer( e ) {
 
-    $('.judgement-btns').prop('disabled', true);
     let btnId = e.target.id;
 
     if ( btnId === "correctBtn" ) {
 
-        sentencesNeedJudgement[ 0 ].judgement = "C";
-        sentencesNeedJudgement[ 0 ].emotion = teacherVars.emotionState;
-        sentencesNeedJudgement[ 0 ].nod = teacherVars.nodShakeBool;
-        sentencesNeedJudgement[ 0 ].nodAmount = teacherVars.triangleState[ 0 ];
-        sentencesNeedJudgement[ 0 ].nodSpeed = teacherVars.triangleState[ 1 ];
-        sentencesNeedJudgement[ 0 ].surprise = teacherVars.surpriseAmount;
+        if ( emotionClicked() ) {
+
+            sentencesNeedJudgement[ 0 ].judgement = "C";
+            sentencesNeedJudgement[ 0 ].emotion = teacherVars.emotionState;
+            sentencesNeedJudgement[ 0 ].nod = teacherVars.nodShakeBool;
+            sentencesNeedJudgement[ 0 ].nodAmount = teacherVars.triangleState[ 0 ];
+            sentencesNeedJudgement[ 0 ].nodSpeed = teacherVars.triangleState[ 1 ];
+            sentencesNeedJudgement[ 0 ].surprise = teacherVars.surpriseAmount;
         
+        } else {
+
+            alert('click somethin ye eejit!');
+            return;
+
+        }
+
     } else if ( btnId === "wrongBtn" ) {
 
         sentencesNeedJudgement[ 0 ].judgement = "I";
@@ -27,12 +35,21 @@ function sendJudgementToServer( e ) {
 
     } else if ( btnId === "betterBtn" ) {
 
-        sentencesNeedJudgement[ 0 ].judgement = "B";
-        sentencesNeedJudgement[ 0 ].emotion = teacherVars.emotionState;
-        sentencesNeedJudgement[ 0 ].nod = teacherVars.nodShakeBool;
-        sentencesNeedJudgement[ 0 ].nodAmount = teacherVars.triangleState[ 0 ];
-        sentencesNeedJudgement[ 0 ].nodSpeed = teacherVars.triangleState[ 1 ];
-        sentencesNeedJudgement[ 0 ].surprise = teacherVars.surpriseAmount;
+        if ( emotionClicked() ) {
+
+            sentencesNeedJudgement[ 0 ].judgement = "B";
+            sentencesNeedJudgement[ 0 ].emotion = teacherVars.emotionState;
+            sentencesNeedJudgement[ 0 ].nod = teacherVars.nodShakeBool;
+            sentencesNeedJudgement[ 0 ].nodAmount = teacherVars.triangleState[ 0 ];
+            sentencesNeedJudgement[ 0 ].nodSpeed = teacherVars.triangleState[ 1 ];
+            sentencesNeedJudgement[ 0 ].surprise = teacherVars.surpriseAmount;
+
+        } else {
+
+            alert('click somethin ye eejit!');
+            return
+
+        }
 
     } else if ( btnId === "meanByBtn" ) {
 
@@ -40,15 +57,25 @@ function sendJudgementToServer( e ) {
 
     } else if ( btnId === "promptBtn" ) {
 
-        sentencesNeedJudgement[ 0 ].judgement = "P";
-        sentencesNeedJudgement[ 0 ].emotion = teacherVars.emotionState;
-        sentencesNeedJudgement[ 0 ].nod = teacherVars.nodShakeBool;
-        sentencesNeedJudgement[ 0 ].nodAmount = teacherVars.triangleState[ 0 ];
-        sentencesNeedJudgement[ 0 ].nodSpeed = teacherVars.triangleState[ 1 ];
-        sentencesNeedJudgement[ 0 ].surprise = teacherVars.surpriseAmount;
+        if ( emotionClicked() ) {
+
+            sentencesNeedJudgement[ 0 ].judgement = "P";
+            sentencesNeedJudgement[ 0 ].emotion = teacherVars.emotionState;
+            sentencesNeedJudgement[ 0 ].nod = teacherVars.nodShakeBool;
+            sentencesNeedJudgement[ 0 ].nodAmount = teacherVars.triangleState[ 0 ];
+            sentencesNeedJudgement[ 0 ].nodSpeed = teacherVars.triangleState[ 1 ];
+            sentencesNeedJudgement[ 0 ].surprise = teacherVars.surpriseAmount;
+
+        } else {
+
+            alert('click somethin ye eejit!');
+            return
+
+        }
 
     }
 
+    $('.judgement-btns').prop('disabled', true);
     
     $.ajax({
         url: "/store_judgement",
@@ -93,6 +120,20 @@ function sendJudgementToServer( e ) {
         },
 
     });
+
+}
+
+function emotionClicked() {
+
+    if ( teacherVars.emotionState[0] === 0 && teacherVars.emotionState[1] === 0 && teacherVars.nodShakeBool === null && teacherVars.surpriseAmount === 0 ) {
+
+        return false;
+
+    } else {
+
+        return true;
+
+    }
 
 }
 
@@ -193,7 +234,9 @@ function sendCorrectionToServer() {
     sentForCorrection.indexes = correctionIndexes;
     sentForCorrection.correction = $('#wrongText').val();
     
-    if ( sentForCorrection.correction === "" ) {
+    console.log(' sentForCorrection.indexes:', sentForCorrection.indexes );
+
+    if ( sentForCorrection.correction === "" || sentForCorrection.indexes.length === 0 ) {
 
         alert( 'correction is empty' );
         return

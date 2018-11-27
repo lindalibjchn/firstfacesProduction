@@ -51,13 +51,18 @@ if ( TIA_SPEED === 'slow' ) {
     tiaTimings.returnFromThinking = 1.5;
     tiaTimings.removeThoughtBubble = 1000;
     tiaTimings.changeExpression = 0.75;
-    tiaTimings.movementToConfused = 1.0;
+    tiaTimings.changeExpressionConfused = 1.0;
+    tiaTimings.movementToConfused = 1.5;
     tiaTimings.delayBeforeReturnToLaptop = 2000;
     tiaTimings.speechBubbleFadeInDuration = 500;
     tiaTimings.speechBubbleFadeOutDuration = 1000;
-    tiaTimings.toTalkExpressionDuration = 2;
+    tiaTimings.toTalkExpressionDuration = 0.75;
     tiaTimings.delyUntilToTalkPos = 1500;
     tiaTimings.delayBeforeReturnToLaptop = 1500;
+    tiaTimings.delayAfterBubbleShowUntilSpeak = 1000;
+    tiaTimings.turnToBoard = 2;
+    tiaTimings.cameraTurnToBoard = 2;
+    tiaTimings.armIndicate = 1;
 
 }
 
@@ -308,7 +313,7 @@ var movements = {
                 'neck': [[0, 0, 0], [0, 0, 0]],
             },
             'AU1b': {
-                'spineUpperInner': [[0, 0, 0], [0, 0.2, 0]],
+                'spineUpperInner': [[0, 0, 0], [-0.05, 0.15, 0]],
                 'spineLower': [[0, 0, 0], [0, 0, 0]],
                 'spineUpper': [[0, 0, 0], [0, 0, 0]],
             },
@@ -887,7 +892,7 @@ const expressionsRel = {
                 'lip_lower_inner': [[0, 0.05, 0], [-0.2, 0, 0]],
             },
         },
-        'eyelids': -0.1,
+        'eyelids': -0.2,
 
     },
 

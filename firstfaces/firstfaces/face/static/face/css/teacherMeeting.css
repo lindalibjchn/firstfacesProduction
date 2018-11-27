@@ -401,7 +401,7 @@
 
 #sentForCorrectionNow {
 
-    margin-top: 5%;
+    margin-top: 50px;
     height: 30%; 
     padding: 2%;
 
@@ -409,7 +409,7 @@
 
 #wrongSentForCorrectionNow {
 
-    font-size: 1.2vw;
+    font-size: 18px;
     font-weight: bold;
     color: white;
     letter-spacing: 0.4vw;

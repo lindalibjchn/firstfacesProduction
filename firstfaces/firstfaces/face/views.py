@@ -318,7 +318,6 @@ def class_time(request, session_id):
                             sentences[i] = {
                                 'sent_id': s.id,
                                 'sentence': s.sentence,
-                                'question': s.question,
                                 'judgement': s.judgement,
                                 'emotion': s.emotion,
                                 'nod': s.nod,
@@ -606,7 +605,7 @@ def store_sent(request):
 
     time_now = timezone.now();
     sentence_text = request.POST['sent']
-    q = json.loads(request.POST['isItQ'])
+    # q = json.loads(request.POST['isItQ'])
     #code.interact(local=locals());
     # print('q:', type(q))
 
@@ -621,12 +620,11 @@ def store_sent(request):
         s = Sentence.objects.get( pk=blob_no_text_sent_id )
         s.sentence = sentence_text
         s.sentence_timestamp = time_now
-        s.question = q
         s.save()
 
     else:
     
-        s = Sentence(learner=request.user, session=sess, sentence=sentence_text, question=q, sentence_timestamp=timezone.now())
+        s = Sentence(learner=request.user, session=sess, sentence=sentence_text, sentence_timestamp=timezone.now())
         s.sentence_timestamp = time_now
         s.save()
 
@@ -667,7 +665,6 @@ def check_judgement(request):
     sent_meta = {
         'sent_id': s_new.id,
         'sentence': s_new.sentence,
-        'question': s_new.question,
         'judgement': s_new.judgement,
         'emotion': s_new.emotion,
         'indexes': s_new.indexes,

@@ -481,7 +481,7 @@ function init() {
 
     //// CALCULATE STUFF FOR SIDE PANEL \\\\
     
-    //showTimeRemaining();
+    showTimeRemaining();
     //showQuestionStreak();
 
 

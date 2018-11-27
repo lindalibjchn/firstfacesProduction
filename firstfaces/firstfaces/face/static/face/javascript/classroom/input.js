@@ -460,13 +460,21 @@ function thinkingEyes() {
 
 function runAfterJudgementWithoutBeingAtTurnToThink() {
 
-    expressionController( calculatedExpression, tiaTimings.changeExpression );
+    if ( classVariableDict.last_sent.judgement === "I" ) {
     
-    setTimeout( function() {
-        
         runAfterJudgement();
 
-    }, tiaTimings.changeExpression * 750 ) // want nod/move to confused to happen before expression change ends
+    } else {
+
+        expressionController( calculatedExpression, tiaTimings.changeExpression );
+    
+        setTimeout( function() {
+            
+            runAfterJudgement();
+
+        }, tiaTimings.changeExpression * 750 ) // want nod/move to confused to happen before expression change ends
+
+    }
 
 }
 

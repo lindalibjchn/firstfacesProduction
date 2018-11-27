@@ -701,7 +701,7 @@ function checkForChange() {
 
     });
 
-    setTimeout( checkForChange, 2000 );
+    setTimeout( checkForChange, 1000 );
 
 }
 

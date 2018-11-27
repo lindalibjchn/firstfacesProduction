@@ -9,8 +9,6 @@ $(window).on( 'load', function() {
 
     //fill prevSents
     loadPrevSents( scrollBottom );
-
-
     
 });
 
@@ -604,21 +602,21 @@ function viewAlternateTranscription() {
 
 }
 
-function checkIfSentIsQuestion( s ) {
+//function checkIfSentIsQuestion( s ) {
 
-    isQ = false;
+    //isQ = false;
 
-    trimmed_s = ( s.trim() ).toLowerCase();
+    //trimmed_s = ( s.trim() ).toLowerCase();
     
-    if ( trimmed_s.substring( 0, 2 ) === "wh" || trimmed_s.substring( 0, 4 ) === "how " ) {
+    //if ( trimmed_s.substring( 0, 2 ) === "wh" || trimmed_s.substring( 0, 4 ) === "how " ) {
 
-        isQ = true;
+        //isQ = true;
 
-    }
+    //}
 
-    return isQ;
+    //return isQ;
 
-}
+//}
 
 function JudgementReceived( sentMeta ) {
 
@@ -639,7 +637,11 @@ function JudgementReceived( sentMeta ) {
     // do this here to change voices too
     if ( classVariableDict.last_sent.judgement === "B" || classVariableDict.last_sent.judgement === "C" || classVariableDict.last_sent.judgement === "P" || classVariableDict.last_sent.judgement === "M" ) {
 
-        checkForPromptNIndexes( sentMeta.sent_id );
+        if ( classVariableDict.last_sent.judgement !== "C" ) {
+
+            checkForPromptNIndexes( sentMeta.sent_id );
+
+        }
 
         // calculate changes in expression for these
         if ( classVariableDict.last_sent.judgement === "M" ) {
@@ -663,6 +665,12 @@ function JudgementReceived( sentMeta ) {
     } else if ( classVariableDict.last_sent.judgement === "3" ) {
 
         let singleCalculatedExpressions = createSingleExpression( expressionsRel.confused, 0.75 )
+        calculatedExpression = getAbsoluteCoordsOfExpressionTo( singleCalculatedExpressions[ 0 ] )
+        calculatedTalkExpression = getAbsoluteCoordsOfExpressionTo( singleCalculatedExpressions[ 1 ] )
+
+    } else if ( classVariableDict.last_sent.judgement === "I" ) {
+
+        let singleCalculatedExpressions = createSingleExpression( expressionsRel.confused, 1 )
         calculatedExpression = getAbsoluteCoordsOfExpressionTo( singleCalculatedExpressions[ 0 ] )
         calculatedTalkExpression = getAbsoluteCoordsOfExpressionTo( singleCalculatedExpressions[ 1 ] )
 

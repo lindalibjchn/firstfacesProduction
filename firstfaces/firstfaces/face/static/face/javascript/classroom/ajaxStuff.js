@@ -146,61 +146,61 @@ function sendSentToServer() {
         classVariableDict.awaitingJudgement = true;
 
         // if wh-question and if allowed. If not allowed, raise alert 
-        isItQ = checkIfSentIsQuestion( sent );
-        let allowed = true;
-        if ( isItQ ) {
+        //isItQ = checkIfSentIsQuestion( sent );
+        //let allowed = true;
+        //if ( isItQ ) {
 
-            if ( calculateQuestionStreak() !== 3 ) {
+            //if ( calculateQuestionStreak() !== 3 ) {
                
-                allowed = false;
+                //allowed = false;
             
-            }
+            //}
 
-        }
+        //}
 
-        if ( allowed ) { 
+        //if ( allowed ) { 
 
-            if ( sent.length > 2 ) {
-                
-                talkToTia(); 
+        if ( sent.length > 2 ) {
+            
+            talkToTia(); 
 
-                $.ajax({
-                    url: "/store_sent",
-                    type: "POST",
-                    data: { 
-                        'sent': sent,
-                        'isItQ': isItQ,
-                        'blob_no_text': classVariableDict.blob_no_text,
-                        'blob_no_text_sent_id': classVariableDict.blob_no_text_sent_id,
-                        'sessionID': classVariableDict.session_id
-                    },
-                    success: function(json) {
-                        
-                        console.log('sentence successfully sent to server');
-                        //console.log('json.sent_id:', json.sent_id);
-                        checkJudgement( json.sent_id );
+            $.ajax({
+                url: "/store_sent",
+                type: "POST",
+                data: { 
+                    'sent': sent,
+                    //'isItQ': isItQ,
+                    'blob_no_text': classVariableDict.blob_no_text,
+                    'blob_no_text_sent_id': classVariableDict.blob_no_text_sent_id,
+                    'sessionID': classVariableDict.session_id
+                },
+                success: function(json) {
+                    
+                    console.log('sentence successfully sent to server');
+                    //console.log('json.sent_id:', json.sent_id);
+                    checkJudgement( json.sent_id );
 
-                        // for interference stuff, need to reset
-                        classVariableDict.interference_count_this_sent = 0;
+                    // for interference stuff, need to reset
+                    classVariableDict.interference_count_this_sent = 0;
 
-                    },
-                    error: function() {
-                        alert("sentence failed to send to server");
-                    },
+                },
+                error: function() {
+                    alert("sentence failed to send to server");
+                },
 
-                });
-
-            } else {
-
-                alert('this is not a sentence');
-
-            }
+            });
 
         } else {
 
-            alert("you can only ask a 'Wh-' or 'How' question after 3 correct non-question sentences. The small red circle with the number in it will turn green when you can ask these questions.");
+            alert('this is not a sentence');
 
         }
+
+        //} else {
+
+            //alert("you can only ask a 'Wh-' or 'How' question after 3 correct non-question sentences. The small red circle with the number in it will turn green when you can ask these questions.");
+
+        //}
 
     }
 

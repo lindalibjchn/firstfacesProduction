@@ -3,7 +3,7 @@ function runAfterJudgement() {
     // logic for different types of judgement
     
     // in return to laptop, movement will only be needed if tia not looking straight at student
-    //classVariableDict.tiaLookingAtStudent = true;
+    classVariableDict.tiaLookingAtStudent = true;
 
     // get duration of nod or shake. Can also be 0o
     let nodShakeDur = 0;
@@ -22,6 +22,7 @@ function runAfterJudgement() {
         if ( classVariableDict.last_sent.nod !== null ) {
                 
             nodOrShakeHead()
+            setTimeout( function(){returnToLaptop('')}, nodShakeDur - 500 );//0.5s overlap for end of nod n talking
 
         } else {
 
@@ -38,7 +39,7 @@ function runAfterJudgement() {
         if ( classVariableDict.last_sent.nod !== null ) {
 
             nodOrShakeHead()
-            setTimeout( prePrepareForPromptSpeech, nodShakeDur - 500 );
+            setTimeout( prePrepareForPromptSpeech, nodShakeDur - 500 );//0.5s overlap for end of nod n talking
 
         } else {
 
@@ -48,17 +49,17 @@ function runAfterJudgement() {
 
     } else if ( classVariableDict.last_sent.judgement === "I" ) {
 
-        movementController( movements.confused01, tiaTimings.movementToConfused / 2, tiaTimings.movementToConfused );
+        movementController( movements.confused, tiaTimings.movementToConfused / 2, tiaTimings.movementToConfused );
 
         addToPrevSents(classVariableDict.last_sent);
         
         setTimeout( function() {
             
-            expressionController( expressionObject.abs.confused, tiaTimings.changeExpression );
+            expressionController( expressionObject.abs.confused, tiaTimings.changeExpressionConfused );
 
-            setTimeout( showOptionBtns, 2000 );
+            setTimeout( showOptionBtns, tiaTimings.changeExpressionConfused * 1500 );
 
-        }, 1600 )
+        }, tiaTimings.movementToConfused * 500 )
 
     } else if ( classVariableDict.last_sent.judgement === "B" || classVariableDict.last_sent.judgement === "M" || classVariableDict.last_sent.judgement === "D" || classVariableDict.last_sent.judgement === "3" ) {
 
@@ -85,53 +86,9 @@ function runAfterJudgement() {
 
         }
 
-
     }
     
-    
 }
-
-// check if expression has finished running
-//whenAllMovFinishedCount = 0;
-//var whenAllMovFinished = function( funcToCall ) {
-
-    //console.log( 'in whenAllMovFinished:', whenAllMovFinishedCount );
-    //if ( expressionObject.bool || cameraObject.bool || movementObject.bool || eyelidObject.bool || eyeObject.bool || blinkObject.bool || normalBlinkObject.bool || nodObject.bool || shakeObject.bool ) {
-      
-        //if ( whenAllMovFinishedCount < 3000 ) {
-
-            //whenAllMovFinishedCount += 500;
-
-            //setTimeout( function() {
-                 
-                //whenAllMovFinished( funcToCall );
-
-            //}, 500 );
-
-            //console.log( 
-                    //"movementObject.bool : ", movementObject.bool.toString() + 
-                    //"\neyelidObject.bool : ", eyelidObject.bool.toString() + 
-                    //"\neyeObject.bool : ", eyeObject.bool.toString()
-                    //);
-        
-        //} else {
-
-            //makeAllBoolsFalse();
-            //whenAllMovFinishedCount = 0;
-            //funcToCall();
-
-        //}
-
-    //} else {
-
-        //console.log( 'in whenAllMovFinished funcToCall' );
-        //whenAllMovFinishedCount = 0;
-        //funcToCall();
-
-    //}
-
-//}
-
 
 function getNodSpeedInString() {
 
@@ -273,9 +230,7 @@ function displaySpeechBubblePrompt() {
     
     }
 
-    // display text
-    $('#speakingWordsTia').hide();
-    $('.speaking-words').text( speechBubbleObject.sentence );
+    // may show the dots
     $('#speakingWordsTia').fadeIn( 1000 );
    
 
@@ -296,73 +251,71 @@ function displaySpeechBubblePrompt() {
     }, tiaTimings.toTalkExpressionDuration * 750 );
 
 }
-
-//function speakSpeechBubble() {
-
-    //if ( synthesisObject.gotNewSpeech ) {
-        
-        //synthesisObject.synthAudio.play();
-        //synthesisObject.gotNewSpeech = false
-        //initTalk();
-        //setTimeout( function() {
-
-		//returnToLaptop('');
-
-        //}, synthesisObject.delayToReturnToLaptop )
-
-    //} else {
-
-        //console.log('waiting for speech synthesis to return audio')
-        //setTimeout( speakSpeechBubble, 1000 );
-
-    //}
-
-//}
     
 function returnToLaptop( sent ) {
 
     console.log( 'in return to laptop');
-    removeSpeechBubble( tiaTimings.changeExpression * 2000 );                   
-    expressionController( expressionObject.abs.neutral, tiaTimings.changeExpression * 2 );
     addToPrevSents();
-    setTimeout( function() {
 
-        $('.speaking-words').text( '' );
-        initCameraMove('laptop', tiaTimings.cameraMoveUpDuration );
+    if ( classVariableDict.tiaLookingAtStudent ) {
+
+        removeSpeechBubble( tiaTimings.changeExpression * 2000 );                   
+        expressionController( expressionObject.abs.neutral, tiaTimings.changeExpression * 2 );
 
         setTimeout( function() {
 
-            if ( classVariableDict.tiaLookingAtStudent === false ) {
+            $('.speaking-words').text( '' );
+            initCameraMove('laptop', tiaTimings.cameraMoveUpDuration );
 
-                movementController( movements.student, 2, 1.5 );
+            setTimeout( function () {
 
-            }
+                if ( classVariableDict.classOver ) {
 
-            if ( classVariableDict.classOver === false ) {
+                    endClass();
 
-                initInputReady( sent )
-                showQuestionStreak();
+                } else {
 
-            }
+                    initInputReady( sent )
+                    //showQuestionStreak();
+
+                }
+        
+            }, tiaTimings.cameraMoveUpDuration * 1000 )
+
+        }, tiaTimings.changeExpression * 2000 );
+
+    } else {
+
+        initCameraMove('laptop', tiaTimings.cameraMoveUpDuration );
+
+        setTimeout( function() { 
             
-            setTimeout( function() { 
-                
+            movementController( movements.blank, tiaTimings.movementToConfused / 2, tiaTimings.movementToConfused );
+            
+            setTimeout( function() {
 
+                expressionController( expressionObject.abs.neutral, tiaTimings.changeExpression * 2 );
+                
                 setTimeout( function() {
 
                     if ( classVariableDict.classOver ) {
 
                         endClass();
 
+                    } else {
+
+                        initInputReady( sent )
+                        //showQuestionStreak();
+
                     }
+       
+                }, tiaTimings.changeExpression * 1500 )
 
-                }, 3500 )
+            }, tiaTimings.movementToConfused * 500 );
 
-            }, 1500 );
+        }, tiaTimings.cameraMoveUpDuration * 500 );
 
-        }, 2300 )
-
-    }, tiaTimings.changeExpression * 2000 );
+    }
 
 }
 
@@ -396,84 +349,66 @@ function showOptionBtns() {
 
 function tryAgain() {
 
-    normalBlinkObject.bool = false;
-    // avoid moving for a fraction of a second if mid-blink
-    if ( blinkObject.bool ) {
+    let sent = classVariableDict.sentences[ classVariableDict.id_of_last_sent ].sentence;
 
-        setTimeout( tryAgain, 50 );
+    classVariableDict.tiaLookingAtStudent = false;
+    returnToLaptop( sent );
 
-    } else {
-    
-        let sent = classVariableDict.sentences[ classVariableDict.id_of_last_sent ].sentence;
+    $('#prevSents').fadeTo( 500, 1 );
+    $('#optionBtns').fadeOut( 500 )
+    $('#recordBtnsContainer').fadeIn( 1000 )
 
-        classVariableDict.tiaLookingAtStudent = false;
-        returnToLaptop( sent );
+    let sentId = classVariableDict.last_sent.sent_id
+    $.ajax({
+        url: "/store_try_again",
+        type: "GET",
+        data: {'sentId': sentId},
+        success: function(json) {
+        },
+        error: function() {
+            console.log("that's wrong");
+        },
+        
+    });
 
-        $('#prevSents').fadeTo( 500, 1 );
-        $('#optionBtns').fadeOut( 500 )
-        $('#recordBtnsContainer').fadeIn( 1000 )
+    setTimeout( function() {
 
-        let sentId = classVariableDict.last_sent.sent_id
-        $.ajax({
-            url: "/store_try_again",
-            type: "GET",
-            data: {'sentId': sentId},
-            success: function(json) {
-            },
-            error: function() {
-                console.log("that's wrong");
-            },
-            
-        });
+        removeCorrection();
+        removeSentence();
 
-        setTimeout( function() {
-
-            removeCorrection();
-            removeSentence();
-
-        }, 1000 )
-    }
+    }, 1000 )
 
 }
 
 function whatsWrong() {
 
-    // avoid moving for a fraction of a second if mid-blink
-    if ( blinkObject.bool ) {
-
-        setTimeout( whatsWrong, 50 );
-
-    } else {
+    let sentId = classVariableDict.last_sent.sent_id
+    $.ajax({
+        url: "/store_whats_wrong",
+        type: "GET",
+        data: {'sentId': sentId},
+        success: function(json) {
+        },
+        error: function() {
+            console.log("that's wrong");
+        },
+        
+    });
+    // dont want user to click more buttons
+    $('.option-btn').prop( "disabled", true);
+    $('#optionBtns').fadeOut( 500 )
     
-        let sentId = classVariableDict.last_sent.sent_id
-        $.ajax({
-            url: "/store_whats_wrong",
-            type: "GET",
-            data: {'sentId': sentId},
-            success: function(json) {
-            },
-            error: function() {
-                console.log("that's wrong");
-            },
-            
-        });
-        // dont want user to click more buttons
-        $('.option-btn').prop( "disabled", true);
-        $('#optionBtns').fadeOut( 500 )
-        
-        //whenAllMovFinished( function() {
+    //whenAllMovFinished( function() {
 
-            movementController( movements.laptop, '0.5', '1.5' );
+        movementController( movements.laptop, '0.5', '1.5' );
 
-        //});
+    //});
 
-        setTimeout( function() {
-        
-            backNReadALine();
+    setTimeout( function() {
+    
+        backNReadALine();
 
-        }, 3500 );
-
-    }
+    }, 3500 );
 
 }
 
@@ -507,11 +442,11 @@ function showCorrection() {
 
                 initArmIndicate('right', 0, 'high', '1.5');
         
-            }, 1000 )
+            }, tiaTimings.armIndicate * 1000 )
 
-        }, 1000 )
+        }, tiaTimings.armIndicate * 1000 )
 
-    }, 1000 );
+    }, tiaTimings.armIndicate * 1000 );
 
 }
 
@@ -574,10 +509,6 @@ function waitForWrongSlices() {
                 classVariableDict.last_sent.correction = json.correction;
                 correctionObject.corrections = json.correction
                 
-                normalBlinkObject.bool = false;
-                // avoid moving for a fraction of a second if mid-blink
-                
-                //whenAllMovFinished( turnToBoardToShowErrors );
                 turnToBoardToShowErrors();
 
             } else {
@@ -597,64 +528,49 @@ function waitForWrongSlices() {
 
 function turnToBoardToShowErrors() {
 
-    setTimeout( function() {
-    
-        movementController( movements.board, '0.5', '2' );
+    movementController( movements.board, tiaTimings.turnToBoard / 2, tiaTimings.turnToBoard );
 
-        let newInd = Object.keys(classVariableDict.sentences).length - 1;
-        parseText( sentenceObject, true, 0x2d2d2d );
-        addCloneLettersToTextBackground( sentenceObject, lineY );
-        scene.add( sentenceObject.background );
+    let newInd = Object.keys(classVariableDict.sentences).length - 1;
+    parseText( sentenceObject, true, 0x2d2d2d );
+    addCloneLettersToTextBackground( sentenceObject, lineY );
+    scene.add( sentenceObject.background );
+
+    setTimeout( function() {
+
+        initCameraMove('board', tiaTimings.cameraTurnToBoard);
 
         setTimeout( function() {
 
+            initArmIndicate('right', 1, 'high', tiaTimings.armIndicate);
 
-            //whenAllMovFinished( function() { 
-         
-                initCameraMove('board', '2');
-
-            //})
-
+            expressionController( expressionObject.abs.neutral, tiaTimings.changeExpression * 2000 );
+            
             setTimeout( function() {
 
-                initArmIndicate('right', 1, 'high', '0.75');
+                highlightWrong(); 
 
                 setTimeout( function() {
 
-                    //whenAllMovFinished( function() { 
-         
-                        expressionController( expressionObject.abs.neutral, '1', true );
-                    
-                    //});
-                    
-                    highlightWrong(); 
-                    
+                    initArmIndicate('right', 0, 'high', tiaTimings.armIndicate * 2);
+    
+
                     setTimeout( function() {
 
-                        initArmIndicate('right', 0, 'high', '1.5');
+                        // show buttons again
+                        $('#whatsWrongBtn').hide();
+                        $('#showCorrectionBtn').show();
+                        $('.option-btn').prop( "disabled", false );
+                        $('#optionBtns').fadeIn( 500 )
 
-                        setTimeout( function() {
+                    }, tiaTimings.armIndicate * 1000 );
 
-                            // show buttons again
+                }, tiaTimings.armIndicate * 1000 );
 
-                            $('#whatsWrongBtn').hide();
-                            $('#showCorrectionBtn').show();
-                            $('.option-btn').prop( "disabled", false );
-                            $('#optionBtns').fadeIn( 500 )
+            }, tiaTimings.armIndicate * 1000 );
 
-                            normalBlinkObject.bool = true;
+        }, tiaTimings.cameraTurnToBoard * 1000 );
 
-                        }, 1000 );
-
-                    }, 1000 );
-
-                }, 1500 );
-
-            }, 3000 );
-
-        }, 1000 )
-
-    }, 500 );
+    }, tiaTimings.turnToBoard * 500 )
 
 }
 
