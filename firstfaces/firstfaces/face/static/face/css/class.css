@@ -58,6 +58,12 @@ button:active {
 
 }
 
+#continueNewChoices {
+
+    display: none;
+
+}
+
 #topicChoices {
 
     height: 25%;
@@ -78,11 +84,15 @@ button:active {
 
 .choice-btn {
 
-    width: 90%; 
+    color: white !important;
     height: 90%;
-    /*this is to vertically align the bottons*/
-    margin-top: 0.8%;
-    font-size: 1.8vw;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    /*padding: 10px;*/
+    font-size: 24px;
+
 
 }
 
@@ -183,8 +193,8 @@ button:active {
 
 #playRobot {
 
-    height: 25%;
-    width: 9%;
+    height: 50px;
+    width: 50px;
     background-color: #1b8900;
     position: absolute;
     right: 0.5%;

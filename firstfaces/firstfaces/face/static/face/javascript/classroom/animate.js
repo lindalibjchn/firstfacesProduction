@@ -73,11 +73,11 @@ function animate () {
 
     }
 
-    //if ( enterCameraObject[ 'bool' ] ) {
+    if ( enterCameraObject[ 'bool' ] ) {
 
-        //enterCameraMove( mainCount );
+        enterCameraMove( mainCount );
 
-    //}
+    }
 
     if ( volumeObject.bool ) {
 
@@ -153,11 +153,11 @@ function animate () {
 
     //// Full movements
 
-    //if ( mainEnterObject.bool ) {
+    if ( mainEnterObject.bool ) {
 
-        //mainEnter();
+        mainEnter();
 
-    //}
+    }
 
     // CONTINUOUS AND RANDOM MOVEMENTS
     

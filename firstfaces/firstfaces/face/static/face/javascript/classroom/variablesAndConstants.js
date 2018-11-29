@@ -68,8 +68,8 @@ if ( TIA_SPEED === 'slow' ) {
 
 //// CAMERA \\\\
 
-const CAMERA_ENTER_POS = { x: -48, y: 5, z: 120 }
-const CAMERA_ENTER_ROT = { x: -0.1, y: 0.3, z: 0 }
+const CAMERA_ENTER_POS = { x: -48, y: 15, z: 150 }
+const CAMERA_ENTER_ROT = { x: -0.1, y: 0.05, z: 0 }
 
 const CAMERA_DESK_POS = { x: -10, y: 5, z: 49 }
 const CAMERA_DESK_ROT = { x: -0.15, y: -0.2, z: 0 }
@@ -118,25 +118,6 @@ const sentBackPOS = { x: -32, y: 3, z: 0 };
 const sentBackROT = { x: 0, y: 1.2, z: 0 };
 
 const correctionBackPOSY = 0.5;
-
-
-//// SPEECH BUBBLE \\\\
-
-//const speechBubblePOS = { x: 0, y: 0, z: 0 };
-//const speechBubbleSCALE = { x: 17, y: 18, z: 1 };
-//const speechBubbleROT = { x: 0, y: 0.2, z: 0 };
-
-//const speechBubble2POS = { x: -12, y: -4, z: 14 };
-
-//// SPEECH BUBBLE BACKGROUND \\\\
-
-//const speechBubbleBackLen = { x: 10.5, y: 6.5, z: 0 };
-//const speechBubbleBackPOS = { x: -9.5, y: 1, z: 15 }; // slightly appear in front of the actual bubble
-//const speechBubbleBackROT = { x: 0, y: 0.2, z: 0 };
-//const speechBubbleBackSCALE = { x: 0.22, y: 0.5, z: 1 };
-
-//const speechBubbleBackLowPOS = { x: -9.5, y: -3, z: 14 }; // slightly appear in front of the actual bubble
-//const speechBubbleBackLowROT = { x: -0.1, y: 0.2, z: 0 };
 
 //// CHARACTER POSITIONS \\\\
 
@@ -285,7 +266,7 @@ var movements = {
         'name': 'standingStudent',
         'AUs': {
             'AU1': {
-                'head': [[0, 0, 0], [-0.07, -0.13, 0]],
+                'head': [[0, 0, 0], [-0.15, -0.13, 0]],
                 'neck': [[0, 0, 0], [0, 0, 0]],
             },
             'AU1b': {
@@ -333,7 +314,7 @@ var movements = {
         'name': 'lookChair',
         'AUs': {
             'AU1': {
-                'head': [[0, 0, 0], [0.015, 0.015, 0]],
+                'head': [[0, 0, 0], [0.01, 0.01, 0]],
                 'neck': [[0, 0, 0], [0, 0, 0]],
             },
             'AU1b': {

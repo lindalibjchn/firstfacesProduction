@@ -42,6 +42,8 @@ function tiaSpeak( tiaSays, needSendTTS=true, callback ) {
             initTalk();
             tiaSpeakCount = 0;
 
+            console.log('callback:', callback);
+
             setTimeout( callback, synthesisObject.delay );
 
         } else {
@@ -105,43 +107,27 @@ function removeDoubleBtn() {
 
 }
 
-function speechBubbleMove( direction ) {
-
-    if ( direction === "down" ) {
-
-        speechBubbleObject.background.position.y -= 5;
-        speechBubbleObject.background.position.x += 1;
-        speechBubbleObject.background.position.z += 2;
-        speechBubbleObject.background.rotation.x -= 0.2;
-
-    } else if ( direction === "up" ) {
-
-        speechBubbleObject.background.position.y += 5;
-        speechBubbleObject.background.position.x -= 1;
-        speechBubbleObject.background.position.z -= 2;
-        speechBubbleObject.background.rotation.x += 0.2;
-
-    }
-
-}
-
 function runTutorial() {
 
-    normalBlinkObject.bool = true;
-    showSingleBtn('Nice to meet you Tia.', greeting02);
+    showSingleBtn('Nice to meet you Tia.', function() {
+        
+        removeSingleBtn( tiaTimings.speechBubbleFadeOutDuration );
+        
+        setTimeout( greeting02, tiaTimings.speechBubbleFadeOutDuration * 2 );
+
+    })
 
 }
 
+function callback02() {
+
+    showSingleBtn( "ok", greeting03 );
+
+};
+
 function greeting02() {
-
-    removeSingleBtn();
-    let delay = tiaSpeak( "In this class, I will help you with your spoken English. Today, we will do a simple tutorial.");
-
-    setTimeout( function(){
-
-        showSingleBtn( "ok", greeting03 )
-
-    }, delay )
+    
+    tiaSpeak( "In this class, I will help you with your spoken English. Today, we will do a simple tutorial.", needSendTTS=true, callback02 );
 
 }
 

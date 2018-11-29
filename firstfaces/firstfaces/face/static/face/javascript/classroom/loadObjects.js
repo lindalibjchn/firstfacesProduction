@@ -10,14 +10,52 @@ var mainCount = 0;
 
 //// FUNCTIONS TO BE CALLED IN INIT() \\\\
 
+function enterOrReEnter() {
+
+    //// on first enter the camera starts at the door and entrance sequence is run
+    function firstEnter() {
+
+        initMainEnter();
+
+        camera.position.set( CAMERA_ENTER_POS.x, CAMERA_ENTER_POS.y, CAMERA_ENTER_POS.z  );
+        camera.rotation.set( CAMERA_ENTER_ROT.x, CAMERA_ENTER_ROT.y, CAMERA_ENTER_ROT.z,);
+        movementController( movements.laptop, 0.1, 0.1 );
+
+    }
+
+    function reEnter() {
+ 
+        camera.position.set( CAMERA_SIT_POS.x, CAMERA_SIT_POS.y, CAMERA_SIT_POS.z );
+        camera.rotation.set( CAMERA_SIT_TO_LAPTOP_ROT.x, CAMERA_SIT_TO_LAPTOP_ROT.y, CAMERA_SIT_TO_LAPTOP_ROT.z );
+
+
+        talkObject.learning = true;
+        //initCameraMove('laptop', 0.1);
+        initInputReady('');
+
+    };
+
+    //if first enter then run entrance animation else sitting at chair
+    if ( classVariableDict.first_enter ) {
+        
+        firstEnter();
+
+    } else {
+
+        reEnter();
+
+    }
+
+}
+
 // start random movements and calculate stuff after bodyparts loaded
 function engineRunning() {
 
     setBaseExpressionsMovements(); // do this after all of Tia is loaded
     animate();
     blinkControllerObject.bool = true;
-    initCameraMove('laptop', 0.1);
     expressionController( expressionObject.abs.neutral, 0.1 );
+    enterOrReEnter();
 
     setTimeout( function() {
         
@@ -202,9 +240,12 @@ function addTia() {
         // again, parent to headbone
         tiaObject.faceBones.head.add( tiaObject.mHair );
 
-        engineRunning();
+        //// SET CAMERAS AND TIA UP DEPENDING ON ENTER OR REENTER \\\\
 
         scene.add( tiaObject.mBody );
+
+        engineRunning();
+
     }
         
     loader.load( body, addBody);    
@@ -277,72 +318,10 @@ function loadAllTextElements() {
 
     }
         
-    //function loadSpeechBubbles() {
-
-        //function addSpeechBubbleTextBackground() {
-
-            ////// this adds the background where the letters can be added
-            //console.log('loading speech bubbles');
-
-            //let backgroundGeom = new THREE.PlaneGeometry( speechBubbleBackLen.x, speechBubbleBackLen.y, speechBubbleBackLen.z );
-            //let backgroundMat = new THREE.MeshBasicMaterial( { [>color: 0xffc4c4<] transparent: true, opacity: 0 } );
-            
-            //let background = new THREE.Mesh( backgroundGeom, backgroundMat );
-
-            //background.scale.set( speechBubbleBackSCALE.x, speechBubbleBackSCALE.x, speechBubbleBackSCALE.x );
-            
-            //speechBubbleObject.background = background;
-
-        //}
-
-        //loader.load( speechBubble, addSpeechBubble1JSON );
-        //loader.load( speechBubble2, addSpeechBubble2JSON );
-        
-        //function addSpeechBubble1JSON( geom, mat ) {
-
-            ////// this adds the actual bubble from the JSON file
-
-            //mat[0].transparent = true;
-            //mat[0].opacity = 1;
-            //mat[1].transparent = true;
-            //mat[1].opacity = 1;
-
-            //let bubble = new THREE.Mesh( geom, mat );
-            //bubble.scale.set( speechBubbleSCALE.x, speechBubbleSCALE.y, speechBubbleSCALE.z );
-            //bubble.position.y -= 4;
-            //bubble.position.z -= 0.02;
-        
-            //speechBubbleObject.bubble = bubble;
-
-        //}
-
-        //function addSpeechBubble2JSON( geom, mat ) {
-
-            ////// this adds the actual bubble from the JSON file
-
-            //mat[0].transparent = true;
-            //mat[0].opacity = 1;
-            //mat[1].transparent = true;
-            //mat[1].opacity = 1;
-
-            //let bubble2 = new THREE.Mesh( geom, mat );
-            //bubble2.scale.set( speechBubbleSCALE.x, speechBubbleSCALE.y, speechBubbleSCALE.z );
-            //bubble2.position.y -= 4;
-            //bubble2.position.z -= 0.02;
-
-            //speechBubbleObject.bubble2 = bubble2;
-
-        //}
-
-        //addSpeechBubbleTextBackground();
-
-    //}
-
     loadAlphabet();
     loadSentenceBackground();
     loadWrongHighlights();
     loadCorrectionBackground();
-    //loadSpeechBubbles();
 
 };
 
@@ -354,80 +333,6 @@ function setBaseExpressionsMovements() {
     
     movementBase = getAbsoluteCoordsOfMovementNow(); // same as above for movements
     movementNow = $.extend( true, {}, movementBase );
-
-}
-
-function enterOrReEnter() {
-
-    //// on first enter the camera starts at the door and entrance sequence is run
-    function firstEnter() {
-
-        //movementController( movements.laptop, '0.1', '0.1' );
-
-        //initMainEnter();
-
-        camera.position.set( CAMERA_ENTER_POS );
-        camera.rotation.set( CAMERA_ENTER_ROT );
-
-    }
-
-    function reEnter( lookingAt ) {
- 
-        camera.position.set( CAMERA_SIT_POS.x, CAMERA_SIT_POS.y, CAMERA_SIT_POS.z );
-        
-        if ( lookingAt === "tia" ) {
-
-            camera.rotation.set( CAMERA_SIT_TO_TIA_ROT.x, CAMERA_SIT_TO_TIA_ROT.y, CAMERA_SIT_TO_TIA_ROT.z );
-
-        } else if ( lookingAt === "laptop" ) {
-
-            camera.rotation.set( CAMERA_SIT_TO_LAPTOP_ROT.x, CAMERA_SIT_TO_LAPTOP_ROT.y, CAMERA_SIT_TO_LAPTOP_ROT.z );
-
-        } else if ( lookingAt === "board" ) {
-
-            camera.rotation.set( CAMERA_SIT_TO_BOARD_ROT.x, CAMERA_SIT_TO_BOARD_ROT.y, CAMERA_SIT_TO_BOARD_ROT.z );
-
-        }
-
-        talkObject.learning = true;
-        initInputReady('');
-        //movementController( movements.student, '0.1', '0.1' );
-
-        // change these while making facial expressions
-        //initSmile('0.5', '0.1', smileClosedObject);
-        //setTimeout( function() {
-            
-            //whenAllMovFinished( function(){
-
-                //expressionController( expressionObject.abs.neutral, '0.1', false );
-
-            //})
-
-            //if ( classVariableDict.classOver === false ) {
-            
-                //setTimeout( function() {
-                    
-                    //initInputReady('');
-                    //normalBlinkObject.bool = true;
-
-                //}, 1000)
-
-            //}
-
-        //}, 200 );
-
-    };
-
-    //if first enter then run entrance animation else sitting at chair
-    if ( classVariableDict.first_enter ) {
-        
-        firstEnter();
-
-    } else {
-
-        reEnter();
-
-    }
 
 }
 
@@ -484,10 +389,6 @@ function init() {
     showTimeRemaining();
     //showQuestionStreak();
 
-
-    //// SET CAMERAS AND TIA UP DEPENDING ON ENTER OR REENTER \\\\
-
-    enterOrReEnter();
 
 }
 

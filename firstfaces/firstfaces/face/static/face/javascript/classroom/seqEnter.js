@@ -2,21 +2,7 @@
 
 function initMainEnter() {
 
-    //put this in for now.
-    //$('#topicChoices').show(); 
-    //$('#chooseTopicTextContainer').show();
-    //$('#topicChoiceInput').focus();
-    //$('#submitOwnTopicBtn').on( 'click', getOwnTopicFromTextbox );
-    
-
     mainEnterObject.bool = true;
-
-    // for first entry, quickly move Tia to look at laptop
-    //initTiaMove('laptop', '0.1', '0.1');
-    
-    // type
-    //initArmsPrepareTyping(0.1, '0.1');
-    //initType();
 
 }
 
@@ -26,11 +12,9 @@ function mainEnter() {
         
         initEnterCameraMove( 'desk', '5' )
  
-    } else if ( mainCount === 300 ) {
+    } else if ( mainCount === 280 ) {
 
-        movementController( movements.standingStudent, '0.5', '1');
-        //initArmsPrepareTyping( 0, '0.5' );
-        //typeObject.bool = false;
+        movementController( movements.standingStudent, 0.5, 1.25 );
 
     } else if ( mainCount === 380 ) {
 
@@ -58,7 +42,7 @@ function mainEnter() {
             // if in tutorial, need this to be true so that responses from the recording and speech synthesis react in the correct way
             classVariableDict.tutorial = true;
             classVariableDict.tutorialStep = 0;
-            greeting = " Hello " + studentName + ", welcome to your first class at ERLE. My name is Tia and I am from Ireland.";
+            greeting = " Hello " + studentName + ", welcome to your first class at ERLE. My name is Tia.";
         
         } else if ( classVariableDict['prev_topic'] !== null ) {
 
@@ -84,21 +68,16 @@ function mainEnter() {
     } else if ( mainCount === 590 ) {
 
         initEnterCameraMove('chair', '3');
-        movementController( movements.student, '3', '3');
+        movementController( movements.blank, '3', '3');
 
-    }  else if ( mainCount === 830 ) {
+    }  else if ( mainCount === 730 ) {
 
         expressionController( calculatedTalkExpression, '1', false );
 
-        //display speechBubble with prompt
-        speechBubbleObject.bubble.material[0].opacity = 0.95; 
-        speechBubbleObject.bubble.material[1].opacity = 0.95; 
+    } else if ( mainCount === 800 ) {
 
-    } else if ( mainCount === 920 ) {
-
-        displaySpeechBubble();
+        tiaSpeak( speechBubbleObject.sentence, needSendTTS=false, speakOpening );
         classVariableDict.promptSpeaking = true;
-        speakOpening();
         
     }
 
@@ -106,34 +85,13 @@ function mainEnter() {
 
 function speakOpening() {
 
-    if ( synthesisObject.gotNewSpeech ) {
-        
-        synthesisObject.synthAudio.play();
-        synthesisObject.gotNewSpeech = false
-        initTalk();
+    if ( classVariableDict.first_ever_class ) {
 
-        if ( classVariableDict.first_ever_class ) {
-
-            setTimeout( runTutorial, 7000 );
-
-        } else {
-
-            if ( classVariableDict['prev_topic'] !== null ) {
-
-                setTimeout( showInitEmotionQuestions, 7500 );
-
-            } else {
-
-                setTimeout( showInitEmotionQuestions, 4500 );
-
-            }
-
-        }
+        runTutorial();
 
     } else {
 
-        console.log('waiting for speech synthesis to return audio')
-        setTimeout( speakOpening, 1000 );
+        showInitEmotionQuestions();
 
     }
 
@@ -152,23 +110,23 @@ function initEnterCameraMove( to, secs ) {
 
         if ( from === "door" ) {
 
-            enterCameraObject[ 'movementX' ] = CAMERA_DESK_POSITION_X - CAMERA_ENTER_POSITION_X;
-            enterCameraObject[ 'movementY' ] = CAMERA_DESK_POSITION_Y - CAMERA_ENTER_POSITION_Y;
-            enterCameraObject[ 'movementZ' ] = CAMERA_DESK_POSITION_Z - CAMERA_ENTER_POSITION_Z;
+            enterCameraObject[ 'movementX' ] = CAMERA_DESK_POS.x - CAMERA_ENTER_POS.x;
+            enterCameraObject[ 'movementY' ] = CAMERA_DESK_POS.y - CAMERA_ENTER_POS.y;
+            enterCameraObject[ 'movementZ' ] = CAMERA_DESK_POS.z - CAMERA_ENTER_POS.z;
 
-            enterCameraObject[ 'rotationX' ] = CAMERA_DESK_ROTATION_X - CAMERA_ENTER_ROTATION_X;
-            enterCameraObject[ 'rotationY' ] = CAMERA_DESK_ROTATION_Y - CAMERA_ENTER_ROTATION_Y;
+            enterCameraObject[ 'rotationX' ] = CAMERA_DESK_ROT.x - CAMERA_ENTER_ROT.x;
+            enterCameraObject[ 'rotationY' ] = CAMERA_DESK_ROT.y - CAMERA_ENTER_ROT.y;
                 
             enterCameraObject.currentState = "desk";
 
         } else if ( from === "desk" ) {
 
-            enterCameraObject[ 'movementX' ] = CAMERA_POSITION_X - CAMERA_DESK_POSITION_X;
-            enterCameraObject[ 'movementY' ] = CAMERA_POSITION_Y - CAMERA_DESK_POSITION_Y;
-            enterCameraObject[ 'movementZ' ] = CAMERA_POSITION_Z - CAMERA_DESK_POSITION_Z;
+            enterCameraObject[ 'movementX' ] = CAMERA_SIT_POS.x - CAMERA_DESK_POS.x;
+            enterCameraObject[ 'movementY' ] = CAMERA_SIT_POS.y - CAMERA_DESK_POS.y;
+            enterCameraObject[ 'movementZ' ] = CAMERA_SIT_POS.z - CAMERA_DESK_POS.z;
 
-            enterCameraObject[ 'rotationX' ] = CAMERA_ROTATION_TIA_X - CAMERA_DESK_ROTATION_X;
-            enterCameraObject[ 'rotationY' ] = CAMERA_ROTATION_TIA_Y - CAMERA_DESK_ROTATION_Y;
+            enterCameraObject[ 'rotationX' ] = CAMERA_SIT_TO_TIA_ROT.x - CAMERA_DESK_ROT.x;
+            enterCameraObject[ 'rotationY' ] = CAMERA_SIT_TO_TIA_ROT.y - CAMERA_DESK_ROT.y;
                 
             enterCameraObject.currentState = "chair";
 
@@ -208,10 +166,7 @@ function enterCameraMove( main ) {
 
 function showInitEmotionQuestions() {
 
-    normalBlinkObject.nextBlinkCount = 10 + mainCount;
-    normalBlinkObject.bool = true;
-
-    $('#emotionQuestionsContainer').fadeIn( 1500 );
+    $('#emotionQuestionsContainer').fadeIn( tiaTimings.speechBubbleFadeInDuration );
 
     // allow emotions to be clickable
     $('.init-emot').on( 'click', storeEmotion );
@@ -220,13 +175,16 @@ function showInitEmotionQuestions() {
 
 function goToAskTopic( emotion ) {
 
+    // remove speech bubble to ask which topic
+    removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
+
     if ( emotion === "happy" || emotion === "surprised" || emotion === "excited" ) {
 
         let calculatedExpressions = createCalculatedExpression([expressionsRel.happy, expressionsRel.content], 0.95, 0.6, 0.2)
         calculatedExpression = getAbsoluteCoordsOfExpressionTo( calculatedExpressions[ 0 ] );
         calculatedTalkExpression = getAbsoluteCoordsOfExpressionTo( calculatedExpressions[ 1 ] );
         
-        expressionController( calculatedExpression, '0.5');
+        expressionController( calculatedExpression, 0.5);
 
         synthesisObject.pitch = 1;
         synthesisObject.speaking_rate = 0.95;
@@ -280,9 +238,6 @@ function goToAskTopic( emotion ) {
 
     }
     
-    // remove speech bubble to ask which topic
-    removeSpeechBubble();
-
     synthesisObject.text = speechBubbleObject.sentence
     sendTTS( synthesisObject.text, true, "talk" );
 
@@ -303,8 +258,6 @@ function storeEmotion() {
 
             //add emotion to first topic button
             document.getElementById("myEmotion").innerHTML = "Why I feel " + emotion;
-
-            normalBlinkObject.bool = false;
 
             $('.init-emot').unbind();
             $('#emotionQuestionsContainer').fadeOut( 500 );
@@ -330,8 +283,7 @@ function askTopic() {
     expressionController( calculatedTalkExpression, '1');
     setTimeout( function() {
 
-        displaySpeechBubble();
-        speakTopic();
+        tiaSpeak( speechBubbleObject.sentence, needSendTTS=false, speakTopic );
         
     }, 1500 );
 
@@ -339,33 +291,15 @@ function askTopic() {
 
 function speakTopic() {
 
-    if ( synthesisObject.gotNewSpeech ) {
-        
-        synthesisObject.synthAudio.play();
-        synthesisObject.gotNewSpeech = false
-        initTalk();
+    if ( classVariableDict['prev_topic'] !== null ) {
 
-        setTimeout( function() {
-            
-            if ( classVariableDict['prev_topic'] !== null ) {
-
-                setTimeout( showContinueOrNew, 5000);
-
-            } else {
-
-                showTopicChoices();
-        
-            }
-
-        }, 3000 );
+        showContinueOrNew();
 
     } else {
 
-        console.log('waiting for speech synthesis to return audio')
-        setTimeout( speakTopic, 1000 );
+        showTopicChoices();
 
     }
-
 
 }
 
@@ -374,19 +308,19 @@ function showContinueOrNew() {
     // allow topics to be clickable and follow logic depending on their needs
     $('#continueBtn').on( 'click', function() { 
         
-        $('#continueNewChoices').fadeOut( 1000 );
+        $('#continueNewChoices').fadeOut( tiaTimings.speechBubbleFadeOutDuration );
         storeTopic( 'same' ) 
     
     } );
 
     $('#newBtn').on( 'click', function() { 
     
-        $('#continueNewChoices').fadeOut( 1000 );
-        setTimeout( showTopicChoices, 1000 );
+        $('#continueNewChoices').fadeOut( tiaTimings.speechBubbleFadeOutDuration );
+        setTimeout( showTopicChoices, tiaTimings.speechBubbleFadeInDuration );
 
     } );
 
-    $('#continueNewChoices').fadeIn( 1000 );
+    $('#continueNewChoices').fadeIn( tiaTimings.speechBubbleFadeInDuration );
 
 }
 
@@ -397,17 +331,17 @@ function showTopicChoices() {
     $('#myEmotion').on( 'click', function() { storeTopic( 'emotion' ) } );
     $('#todaysNewsArticle').on( 'click', function() { storeTopic( 'news: ' + classVariableDict['headline'] ) } );
 
-    $('#topicChoices').fadeIn( 1000 );
+    $('#topicChoices').fadeIn( tiaTimings.speechBubbleFadeInDuration );
 
 }
 
 function showChoiceTextInput() {
 
-    $('#topicChoices').fadeOut( 1000 );
+    $('#topicChoices').fadeOut( tiaTimings.speechBubbleFadeOutDuration );
 
     setTimeout( function(){ 
         
-        $('#chooseTopicTextContainer').fadeIn( 1000 );
+        $('#chooseTopicTextContainer').fadeIn( tiaTimings.speechBubbleFadeInDuration );
         $('#topicChoiceInput').focus();
 
         $('#submitOwnTopicBtn').on( 'click', getOwnTopicFromTextbox );
@@ -422,7 +356,7 @@ function getOwnTopicFromTextbox() {
 
     let ownTopic = document.getElementById( "topicChoiceInput" ).value
     
-    $('#chooseTopicTextContainer').fadeOut( 1000 );
+    $('#chooseTopicTextContainer').fadeOut( tiaTimings.speechBubbleFadeOutDuration );
 
     setTimeout( function() { storeTopic( ownTopic ) }, 1000 );
 
@@ -439,14 +373,11 @@ function storeTopic( topicChoice ) {
         },
         success: function(json) {
 
-            normalBlinkObject.bool = false;
-            blinkObject.bool = false;    
-
             $('#topicChoices').fadeOut( 500 );
 
             setTimeout( function(){ 
                 
-                removeSpeechBubble();
+                removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
                 initNod( 0.4, '0.5' )
                 
                 let startTalkSent = " Ok, please begin when you are ready.";
@@ -469,50 +400,33 @@ function storeTopic( topicChoice ) {
 function beginTalking() {
 
     initArmIndicate('right', 1.2, 'low', '0.75');
-    displaySpeechBubble();
-    finalSpeak();
+    
+    tiaSpeak( speechBubbleObject.sentence, needSendTTS=false, finalSpeak );
 
 }
 
 function finalSpeak() {
 
-    if ( synthesisObject.gotNewSpeech ) {
+    initArmIndicate('right', 0, 'low', '0.75');
+    removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
+    initCameraMove( 'laptop', '2' );      
+    setTimeout( function() {
         
-        synthesisObject.synthAudio.play();
-        synthesisObject.gotNewSpeech = false
-        initTalk();
+        initInputReady('');
     
         setTimeout( function() {
-
-            initArmIndicate('right', 0, 'low', '0.75');
-            removeSpeechBubble();
-            initCameraMove( 'laptop', '2' );      
-            setTimeout( function() {
-                
-                initInputReady('');
             
-                setTimeout( function() {
-                    
-                    expressionController( expressionObject.abs.neutral, '0.75' );
-                    talkObject.learning = true;
+            expressionController( expressionObject.abs.neutral, 0.75 );
+            talkObject.learning = true;
 
-                    setTimeout( function() {
+        }, 3500);
 
-                        normalBlinkObject.bool = true;
-                
-                    }, 2000 );
-
-                }, 3500);
-
-            }, 2500);
-
-        }, 3000 )
-
-    } else {
-
-        console.log('waiting for speech synthesis to return audio')
-        setTimeout( finalSpeak, 1000 );
-
-    }
+    }, 2500);
 
 }
+
+
+
+
+
+
