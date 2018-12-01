@@ -591,7 +591,13 @@ function tapKeyFull() {
 
                     calculateAlternatives();
                     //show play buttons below
-                    $('.play-btn').prop( "disabled", false);
+                    if ( classVariableDict.tutorial ) {
+
+                    } else {
+
+                        $('.play-btn').prop( "disabled", false);
+
+                    }
 
                     initMove( armTapObject, [[0,0,0],[0,0,0]], 0.8 )
 
@@ -674,6 +680,7 @@ function noAltsAskAboutMic() {
             $('.listenAndSynthBtns').prop('disabled', 'false');
             $('#textInputContainer').show();
             $('#textInput').focus();
+
         });
 
     }
@@ -688,13 +695,19 @@ function returnFromListenToSpeechSynthesis() {
         // if no sound comes through, don't tap or show empty transcripts
         if ( synthesisObject.transcript0 === "" ) {
         
-            setTimeout( function() {
+            if ( classVariableDict.tutorial ) {
 
-                initShake(0.2, 0.5)
-                setTimeout( noAltsAskAboutMic, 500 );
+            } else {
 
-            }, 1000);
+                setTimeout( function() {
+
+                    initShake(0.2, 0.5)
+                    setTimeout( noAltsAskAboutMic, 500 );
+
+                }, 1000);
         
+            }
+
         } else {
             
             tapKeyFull();

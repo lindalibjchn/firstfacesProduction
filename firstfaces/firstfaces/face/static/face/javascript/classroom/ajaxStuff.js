@@ -112,7 +112,9 @@ function sendBlobToServer( blob_to_send ) {
                 if (classVariableDict.tutorialStep === 0 ) {
 
                     $('#recordVoiceBtn').prop( 'disabled', true );
-                    greeting06();
+                    $('#talkBtn').prop( 'disabled', true );
+
+                    setTimeout( greeting06, 2000 );
 
                 }
 

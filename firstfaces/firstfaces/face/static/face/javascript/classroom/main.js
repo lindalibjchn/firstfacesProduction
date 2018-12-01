@@ -203,9 +203,9 @@ function readyBtns() {
             
         recognition.onresult = function(event) {
 
-            orderedAlternatives = createArrayOfAlternatives( event.results[0] );
-            synthesisObject.alternatives = event.results[0].length
-            fillTranscriptsAndConfidences( synthesisObject.alternatives );
+            synthesisObject.orderedAlternatives = createArrayOfAlternatives( event.results[0] );
+            synthesisObject.alternatives = synthesisObject.orderedAlternatives.length
+            fillTranscriptsAndConfidences();
 
         }
 
@@ -238,7 +238,7 @@ function onMediaRecorderStop() {
     volumeObject.bool = false;// stop measuring volume and hide volume bar
     hideVolumeBar();
 
-    $('#talkBtn').prop( "disabled", true )
+    //$('#talkBtn').prop( "disabled", true )
     classVariableDict.blob = new Blob(chunks, { type : 'audio/ogg; codecs: opus' });
 
     // create audiourl for easy replay
@@ -274,29 +274,33 @@ function prepareSynthPlay() {
 
     }
 
-    //if ( classVariableDict.tutorialStep === 0 ) {
+    if ( classVariableDict.tutorial ) {
 
-        //$('#listenSynthesisBtn').prop( 'disabled', true );
-        //setTimeout( greeting08, 3000 );
+        if ( classVariableDict.tutorialStep === 0 ) {
 
-    //} else if ( classVariableDict.tutorialStep === 1 ) {
+            $('#playRobot').prop( 'disabled', true );
+            setTimeout( greeting08, 3000 );
 
-        //let textOnLaptop = $.trim($('#textInput').val().toLowerCase());
-        //console.log('text on laptop');
+        } else if ( classVariableDict.tutorialStep === 1 ) {
 
-        //if ( textOnLaptop === "this is my first class" || textOnLaptop === "this is my first class." ) {
+            let textOnLaptop = $.trim($('#textInput').val().toLowerCase());
+            console.log('text on laptop');
 
-            //$('#listenSynthesisBtn').prop( 'disabled', true );
-            //setTimeout( greeting10, 3000 );
+            if ( textOnLaptop === "this is my first class." || textOnLaptop === "this is my first class" ) {
 
-        //} else {
+                $('#playRobot').prop( 'disabled', true );
+                setTimeout( greeting10, 3000 );
 
-            //setTimeout( greeting28, 3000 );
+            } else {
 
-        //}
+                classVariableDict.tutorialStep = 0;
+                setTimeout( greeting28, 3000 );
 
+            }
 
-    //}
+        }
+
+    }
 
 }
 
@@ -315,22 +319,20 @@ function createArrayOfAlternatives( unorderedDict ) {
     let sentencesList = [];
     
     //store leading confidence and remove lower one if more than 20 points below
-    var prevConf;
+    var topConf;
 
     // get list of scores
     for (let i=0; i<unorderedDict.length; i++) {
 
         if ( i === 0 ) {
 
-            prevConf = unorderedDict[i].confidence;
+            topConf = unorderedDict[i].confidence;
         
             sentencesList.push( unorderedDict[i] )
 
         } else {
 
-            if ( i > prevConf - 20 ) {
-
-                prevConf = unorderedDict[i].confidence;
+            if ( unorderedDict[ i ].confidence > topConf - 0.20 ) {
             
                 sentencesList.push( unorderedDict[i] )
 
@@ -346,18 +348,18 @@ function createArrayOfAlternatives( unorderedDict ) {
 
 }
 
-function fillTranscriptsAndConfidences( alts ) {
+function fillTranscriptsAndConfidences() {
 
-    if ( alts === 0 ) {
+    if ( synthesisObject.orderedAlternatives.length === 0 ) {
 
         console.log('no transcripts');
 
     }
 
-    for ( let i=0; i<alts; i++ ) {
+    for ( let i=0; i<synthesisObject.orderedAlternatives.length; i++ ) {
 
-        synthesisObject[ 'transcript' + i.toString() ] = clipLongTranscripts( orderedAlternatives[i].transcript );
-        synthesisObject[ 'confidence' + i.toString() ] = parseInt( 100 * orderedAlternatives[i].confidence );
+        synthesisObject[ 'transcript' + i.toString() ] = clipLongTranscripts( synthesisObject.orderedAlternatives[i].transcript );
+        synthesisObject[ 'confidence' + i.toString() ] = parseInt( 100 * synthesisObject.orderedAlternatives[i].confidence );
 
     }
 
@@ -381,9 +383,21 @@ function clipLongTranscripts( t ) {
 
     }
 
+    // lowercase all but first letter
+    //titled = makeTitle( newT )
+    
     return newT
 
 }
+
+//function makeTitle( s ) {
+
+    //let lowered = $.trim(s.toLowerCase())
+    //let titled = lowered.charAt(0).toUpperCase() + lowered.slice(1);
+
+    //return titled
+
+//}
 
 //// for drawing the volume bar
 var audioContext = null;
@@ -514,25 +528,40 @@ function drawLoop() {
 
     if (meter.checkClipping()) {
 
-        if ( classVariableDict.interference_count === 0 ) {
+        if ( classVariableDict.tutorial ) {
 
             if ( synthesisObject.firstClip === false ) {
 
                 classVariableDict.interference_count += 1;
                 classVariableDict.interference_count_this_sent += 1;
                 synthesisObject.firstClip = true;
-                tiaConfusedAfterClipping( true );
+                tiaConfusedAfterClipping( false );
 
             }
 
         } else {
 
-            if ( synthesisObject.firstClip === false ) {
+            if ( classVariableDict.interference_count === 0 ) {
 
-                tiaConfusedAfterClipping( false );
-                classVariableDict.interference_count_this_sent += 1;
-                classVariableDict.interference_count += 1;
-                synthesisObject.firstClip = true;
+                if ( synthesisObject.firstClip === false ) {
+
+                    classVariableDict.interference_count += 1;
+                    classVariableDict.interference_count_this_sent += 1;
+                    synthesisObject.firstClip = true;
+                    tiaConfusedAfterClipping( true );
+
+                }
+
+            } else {
+
+                if ( synthesisObject.firstClip === false ) {
+
+                    tiaConfusedAfterClipping( false );
+                    classVariableDict.interference_count_this_sent += 1;
+                    classVariableDict.interference_count += 1;
+                    synthesisObject.firstClip = true;
+
+                }
 
             }
 

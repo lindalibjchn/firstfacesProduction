@@ -1,4 +1,4 @@
-from .models import Available, Sentence, Session, PermSentence, PermAudioFile
+from .models import Available, Sentence, Session, PermSentence, PermAudioFile, Profile
 from django.contrib.auth.models import User
 import datetime
 import time
@@ -225,67 +225,71 @@ def fill_sessions_dict():
     sess_id_to_username = {}
     for s in cur_sessions:
         
-        sessions[s.pk] = {}
-        sessions[s.pk]["user_id"] = s.learner.pk
-        sessions[s.pk]["username"] = s.learner.username
-        # need to convert to basic time units for JS
-        sessions[s.pk]["start_time"] = int(time.mktime(timezone.localtime(s.start_time).timetuple())) * 1000
-        
+        # check that user has completed tutorial, or dont want session to be shown
+        prof = Profile.objects.get(learner=s.learner)
+        if prof.tutorial_complete:
 
-        # get prev sentences
-        this_sess_sents = Sentence.objects.filter(session=s)
-        sents = []
+            sessions[s.pk] = {}
+            sessions[s.pk]["user_id"] = s.learner.pk
+            sessions[s.pk]["username"] = s.learner.username
+            # need to convert to basic time units for JS
+            sessions[s.pk]["start_time"] = int(time.mktime(timezone.localtime(s.start_time).timetuple())) * 1000
+            
 
-        for sent in this_sess_sents:
+            # get prev sentences
+            this_sess_sents = Sentence.objects.filter(session=s)
+            sents = []
 
-            # timestamps only work if there is an actual time, else None
-            sent_time = None
-            judge_time = None
-            whats_wrong_time = None
-            try_again_time = None
-            next_sentence_time = None
-            if sent.sentence_timestamp != None:
+            for sent in this_sess_sents:
 
-                sent_time = int(time.mktime((sent.sentence_timestamp).timetuple()))
-                
-            if sent.judgement_timestamp != None:
+                # timestamps only work if there is an actual time, else None
+                sent_time = None
+                judge_time = None
+                whats_wrong_time = None
+                try_again_time = None
+                next_sentence_time = None
+                if sent.sentence_timestamp != None:
 
-                judge_time = int(time.mktime((sent.judgement_timestamp).timetuple()))
+                    sent_time = int(time.mktime((sent.sentence_timestamp).timetuple()))
+                    
+                if sent.judgement_timestamp != None:
 
-            if sent.whats_wrong_timestamp != None:
+                    judge_time = int(time.mktime((sent.judgement_timestamp).timetuple()))
 
-                whats_wrong_time = int(time.mktime((sent.whats_wrong_timestamp).timetuple()))
+                if sent.whats_wrong_timestamp != None:
 
-            if sent.try_again_timestamp != None:
+                    whats_wrong_time = int(time.mktime((sent.whats_wrong_timestamp).timetuple()))
 
-                try_again_time = int(time.mktime((sent.try_again_timestamp).timetuple()))
+                if sent.try_again_timestamp != None:
 
-            if sent.next_sentence_timestamp != None:
+                    try_again_time = int(time.mktime((sent.try_again_timestamp).timetuple()))
 
-                next_sentence_time = int(time.mktime((sent.next_sentence_timestamp).timetuple()))
+                if sent.next_sentence_timestamp != None:
 
-            sent_meta = {
-                "sess_id": s.pk,
-                "sent_id": sent.id, 
-                "sentence": sent.sentence,
-                "sentence_timestamp": sent_time,
-                "judgement": sent.judgement,
-                "judgement_timestamp": judge_time,
-                "indexes": sent.indexes,
-                "prompt": sent.prompt,
-                "correction": sent.correction,
-                "whats_wrong": sent.whats_wrong,
-                "whats_wrong_timestamp": whats_wrong_time,
-                "try_again": sent.try_again,
-                "try_again_timestamp": try_again_time,
-                "next_sentence": sent.next_sentence,
-                "next_sentence_timestamp": next_sentence_time,
-            }
-            sents.append(sent_meta)
+                    next_sentence_time = int(time.mktime((sent.next_sentence_timestamp).timetuple()))
 
-        sents = sorted(sents, key=itemgetter("sent_id"), reverse=True)
+                sent_meta = {
+                    "sess_id": s.pk,
+                    "sent_id": sent.id, 
+                    "sentence": sent.sentence,
+                    "sentence_timestamp": sent_time,
+                    "judgement": sent.judgement,
+                    "judgement_timestamp": judge_time,
+                    "indexes": sent.indexes,
+                    "prompt": sent.prompt,
+                    "correction": sent.correction,
+                    "whats_wrong": sent.whats_wrong,
+                    "whats_wrong_timestamp": whats_wrong_time,
+                    "try_again": sent.try_again,
+                    "try_again_timestamp": try_again_time,
+                    "next_sentence": sent.next_sentence,
+                    "next_sentence_timestamp": next_sentence_time,
+                }
+                sents.append(sent_meta)
 
-        sessions[s.pk]["sentences"]= sents
+            sents = sorted(sents, key=itemgetter("sent_id"), reverse=True)
+
+            sessions[s.pk]["sentences"]= sents
 
     return sessions
 
