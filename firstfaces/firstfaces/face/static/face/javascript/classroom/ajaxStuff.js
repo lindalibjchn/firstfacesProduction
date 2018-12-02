@@ -116,6 +116,21 @@ function sendBlobToServer( blob_to_send ) {
 
                     setTimeout( greeting06, 2000 );
 
+                } else if (classVariableDict.tutorialStep === 1 ) {
+
+                    $('#recordVoiceBtn').prop( 'disabled', true );
+                    $('#talkBtn').prop( 'disabled', true );
+
+                    setTimeout( greeting08, 2000 );
+
+                } else if (classVariableDict.tutorialStep === 2 ) {
+
+                    classVariableDict.tutorialStep = 3;
+                    $('#recordVoiceBtn').prop( 'disabled', true );
+                    $('#talkBtn').prop( 'disabled', true );
+
+                    setTimeout( greeting15, 2000 );
+
                 }
 
             }
@@ -331,6 +346,13 @@ function sendListenSynth( repeat ) {
 
         }
 
+    }
+
+    if ( classVariableDict.tutorialStep === 1 ) {
+
+        classVariableDict.tutorialStep += 1
+        setTimeout( greeting14, 4000 );
+        
     }
 
     $.ajax({
