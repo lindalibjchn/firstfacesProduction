@@ -235,6 +235,7 @@ var armIndicateObject = {
 }
 
 var talkObject = {
+    bool: false,
 }
 
 // FULL MOVEMENT OBJECTS

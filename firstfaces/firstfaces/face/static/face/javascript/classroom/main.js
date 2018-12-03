@@ -46,12 +46,20 @@ function readyBtns() {
 
     $('#finishClassBtn').on( 'click', function() {
         
-        if ( classVariableDict.awaitingJudgement ) {
-        
+        if ( classVariableDict.tutorial ) {
+
+            endTutorial();
+
         } else {
 
-            endClass();
+            if ( classVariableDict.awaitingJudgement ) {
             
+            } else {
+
+                endClass();
+                
+            }
+
         }
 
     });
@@ -81,7 +89,7 @@ function readyBtns() {
         sendListenVoice();
 
         // for tutorial
-        if ( classVariableDict.tutorialStep === 0 ) {
+        if ( classVariableDict.tutorialStep === 6 ) {
 
             $('#listenVoiceBtn').prop( 'disabled', true );
             setTimeout( greeting07, 3000 );
@@ -276,27 +284,13 @@ function prepareSynthPlay() {
 
     if ( classVariableDict.tutorial ) {
 
-        if ( classVariableDict.tutorialStep === 0 ) {
+        if ( classVariableDict.tutorialStep === 13 ) {
 
-            $('#playRobot').prop( 'disabled', true );
-            setTimeout( greeting08, 3000 );
+            setTimeout( greeting14, 2000 );
 
-        } else if ( classVariableDict.tutorialStep === 1 ) {
+        } else if ( classVariableDict.tutorialStep === 513 ) {
 
-            let textOnLaptop = $.trim($('#textInput').val().toLowerCase());
-            console.log('text on laptop');
-
-            if ( textOnLaptop === "this is my first class." || textOnLaptop === "this is my first class" ) {
-
-                $('#playRobot').prop( 'disabled', true );
-                setTimeout( greeting10, 3000 );
-
-            } else {
-
-                classVariableDict.tutorialStep = 0;
-                setTimeout( greeting28, 3000 );
-
-            }
+            setTimeout( greeting0514, 2000 );
 
         }
 
@@ -517,12 +511,13 @@ function drawLoop() {
         } else {
 
             // actually just face contorting a bit
-            expressionController( expressionObject.abs.blank, 0.5 )//express confusion 
+            //expressionController( expressionObject.abs.blank, 0.5 )//express confusion 
             // don't return to normal face cause the setTimeout could conflict with the students clicking of the stop button
 
         }
 
         setTimeout( function() { synthesisObject.firstClip = false; }, 2000 );
+        synthesisObject.interference = false;
 
     }
 
@@ -532,8 +527,6 @@ function drawLoop() {
 
             if ( synthesisObject.firstClip === false ) {
 
-                classVariableDict.interference_count += 1;
-                classVariableDict.interference_count_this_sent += 1;
                 synthesisObject.firstClip = true;
                 tiaConfusedAfterClipping( false );
 
@@ -590,7 +583,13 @@ function hideVolumeBar() {
 function showTextStuff() {
 
     $('#altCont').css('visibility', 'visible'); 
-    $('#playRobot').show(); 
+    
+    if ( classVariableDict.tutorial === false ) {
+
+        $('#playRobot').show(); 
+    
+    }
+
     $('#textInputBox').css('border', '3px solid #33ff00');
 
 }

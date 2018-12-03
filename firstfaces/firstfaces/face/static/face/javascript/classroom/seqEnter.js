@@ -42,7 +42,7 @@ function mainEnter() {
             // if in tutorial, need this to be true so that responses from the recording and speech synthesis react in the correct way
             classVariableDict.tutorial = true;
             classVariableDict.tutorialStep = 0;
-            greeting = " Hello " + studentName + ", welcome to your first class at ERLE. My name is Tia.";
+            greeting = " Hello " + studentName + ", my name is Tia. Welcome to the ERLE tutorial. Click the green 'ok' button to get started.";
         
         } else if ( classVariableDict['prev_topic'] !== null ) {
 

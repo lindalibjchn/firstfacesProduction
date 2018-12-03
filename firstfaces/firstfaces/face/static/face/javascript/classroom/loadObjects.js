@@ -56,6 +56,13 @@ function engineRunning() {
     blinkControllerObject.bool = true;
     expressionController( expressionObject.abs.neutral, 0.1 );
     enterOrReEnter();
+    if ( classVariableDict.tutorial === false ) {
+
+        showTimeRemaining();
+        //showQuestionStreak();
+
+    }
+
 
     setTimeout( function() {
         
@@ -364,7 +371,7 @@ function init() {
 
     //// CAMERA CONTROLS \\\\
 
-    controls = new THREE.OrbitControls( camera, renderer.domElement );
+    //controls = new THREE.OrbitControls( camera, renderer.domElement );
 
 
     //// LIGHTS \\\\
@@ -383,11 +390,6 @@ function init() {
     addTia(); // contains all the loaders for head, body etc.
     loadAllTextElements(); // loads all text and backgrounds for text
 
-
-    //// CALCULATE STUFF FOR SIDE PANEL \\\\
-    
-    showTimeRemaining();
-    //showQuestionStreak();
 
 
 }

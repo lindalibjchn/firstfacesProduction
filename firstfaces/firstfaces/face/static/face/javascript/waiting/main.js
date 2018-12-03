@@ -32,6 +32,10 @@ function onMouseMove(event) {
     
     if ( scheduleObject.availableNow ) {
     
+        if ( JSON.parse( scheduleObject.availableNow ) ) {
+
+            intersects = ray.intersectObjects( [ clickableObjects.laptop, clickableObjects.tests, clickableObjects.sentences, clickableObjects.doorSign ] );
+
         if ( JSON.parse( scheduleDict.class_already_done_today ) ) {
 
             intersects = ray.intersectObjects( [ clickableObjects.laptop, clickableObjects.tests, clickableObjects.sentences ] );

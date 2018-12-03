@@ -219,9 +219,13 @@ function init() {
         clickableObjects.doorSign.add( background );
 
         var signText;
-        if ( JSON.parse( scheduleDict.class_already_done_today ) ) {
+        if ( tutorialComplete === false ) {
 
-            signText = "finished";
+            signText = "TUTORIAL";
+
+        } else if ( JSON.parse( scheduleDict.class_already_done_today ) ) {
+
+            signText = "FINISHED";
 
         // this variable doesn't need to be JSONed as the logic to create is is don in js in enterClassroom.js
         } else if ( scheduleObject.availableNow ) {
@@ -241,7 +245,7 @@ function init() {
             let textGeom = new THREE.TextGeometry( signText, {
 
                 font: font,
-                size: 0.3,
+                size: 0.25,
                 height: 0,
                 curveSegments: 2,
 
@@ -269,8 +273,8 @@ function init() {
 
             let textMesh = new THREE.Mesh( textGeom, material );
       
-            textMesh.position.x -= signText.length / 10;
-            textMesh.position.y -= 0.15;
+            textMesh.position.x -= signText.length / 12;
+            textMesh.position.y -= 0.1;
             textMesh.position.z += 0.01;
 
             clickableObjects.doorSign.text = textMesh;

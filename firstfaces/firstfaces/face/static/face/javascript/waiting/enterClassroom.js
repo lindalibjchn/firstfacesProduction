@@ -314,6 +314,12 @@ function putTimetableUp() {
 
     }
 
+    if ( tutorialComplete === false ) {
+
+        scheduleObject.availableNow = true;
+
+    }
+
 }
 
 function blink() {

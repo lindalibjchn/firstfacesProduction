@@ -46,6 +46,17 @@ button:active {
 
 }
 
+#tutorialBtnSingleCont {
+
+    width: 60%;
+
+}
+#tutorialBtnDoubleCont {
+
+    width: 70%;
+
+}
+
 .init-emot {
 
     color: white !important;
@@ -799,7 +810,11 @@ button:active {
 
 }
 
+.tut-double-btn {
 
+    width: 98%;
+
+}
 
 
 

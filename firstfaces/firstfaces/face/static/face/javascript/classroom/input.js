@@ -13,19 +13,23 @@ function initInputReady( boxVal ) {
     $('.play-btn').prop( "disabled", true);
     $('#talkBtn').prop( "disabled", true);
 
-    $('#textInput').bind('input propertychange', function() {
+    if ( classVariableDict.tutorial === false ) {
 
-        $('#playRobot').show();
+        $('#textInput').bind('input propertychange', function() {
 
-        if ( classVariableDict.tutorial ) {
+            $('#playRobot').show();
 
-        } else {
+            if ( classVariableDict.tutorial ) {
 
-            $('#talkBtn').prop( "disabled", false );
+            } else {
 
-        }
+                $('#talkBtn').prop( "disabled", false );
 
-    });
+            }
+
+        });
+
+    }
 
 }
 
@@ -50,7 +54,7 @@ function delayForListening( text ) {
     } else {
 
         // if the above is infinity it means it hasn't read it and need to calc by length of characters
-        delay = text.length * 90 + tiaTimings.delayAfterStudentSpeech;
+        delay = text.length * 90 * ( 1 / synthesisObject.speaking_rate ) + tiaTimings.delayAfterStudentSpeech;
         console.log('calc delay:', delay)
 
     }
@@ -124,7 +128,7 @@ function speakWords() {
 
         synthesisObject.speechDuration = delayForListening( synthesisObject.finalTextInBox );
         aud.play();
-        synthesisObject.gotNewSpeech = false;
+        //synthesisObject.gotNewSpeech = false;
         synthesisObject.waitingForSynthCount = 0;
         setTimeout( tiaThinkAboutSentence, synthesisObject.speechDuration );
         
@@ -133,7 +137,7 @@ function speakWords() {
         synthesisObject.speechDuration = delayForListening( synthesisObject.finalTextInBox );
         synthesisObject.synthAudio.play();
         synthesisObject.waitingForSynthCount = 0;
-        synthesisObject.gotNewSpeech = false;
+        //synthesisObject.gotNewSpeech = false;
         setTimeout( tiaThinkAboutSentence, synthesisObject.speechDuration );
 
     } else {
@@ -144,7 +148,7 @@ function speakWords() {
         if ( synthesisObject.waitingForSynthCount > 6 ) {
 
             synthesisObject.waitingForSynthCount = 0;
-            synthesisObject.gotNewSpeech = false
+            //synthesisObject.gotNewSpeech = false
             tiaThinkAboutSentence();
 
         } else {

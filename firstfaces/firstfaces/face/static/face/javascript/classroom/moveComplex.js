@@ -24,19 +24,27 @@ function backNReadALine() {
 
 function initTalk() {
    
-    talkObject.endCount = mainCount + synthesisObject.endCount;
+    if ( talkObject.bool === false ) {
 
-    // start mouth pursed when talking
-    talkObject.bool = true;
-    talkObject.startCount = mainCount;
-    initPurseLips( 0.4, '0.5' );
+        talkObject.endCount = mainCount + synthesisObject.endCount;
 
-    setTimeout( function() {
+        // start mouth pursed when talking
+        talkObject.bool = true;
+        talkObject.startCount = mainCount;
+        initPurseLips( 0.4, '0.5' );
 
-        mouthOpenLoop();
-        purseLipsLoop();
+        setTimeout( function() {
 
-    }, 600 );
+            mouthOpenLoop();
+            purseLipsLoop();
+
+        }, 600 );
+
+    } else {
+
+        console.log( "can't talk while still talking!" );
+
+    }
 
 }
 
@@ -79,8 +87,8 @@ function whenOpenMouthEnds( funcToCall ) {
 
 function mouthOpenLoop() {
 
-    mouthOpenObject.dur = [ '0.1', '0.25' ][Math.floor(Math.random() * 2)];
-    mouthOpenObject.amount = Math.random() * 0.25;
+    mouthOpenObject.dur = [ 0.1, 0.2, 0.3 ][Math.floor(Math.random() * 3)];
+    mouthOpenObject.amount = Math.random() * 0.2;
 
     initOpenMouth( mouthOpenObject.amount, mouthOpenObject.dur );
 
@@ -104,8 +112,8 @@ function mouthOpenLoop() {
 
 function purseLipsLoop() {
 
-    purseLipsObject.dur = [ '0.1', '0.25' ][Math.floor(Math.random() * 2)];
-    purseLipsObject.amount = Math.random();
+    purseLipsObject.dur = [ 0.1, 0.2, 0.3 ][Math.floor(Math.random() * 3)];
+    purseLipsObject.amount = Math.random() * 0.75;
 
     initPurseLips( purseLipsObject.amount, purseLipsObject.dur );
 

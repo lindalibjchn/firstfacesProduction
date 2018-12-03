@@ -209,7 +209,7 @@ class Profile(models.Model):
     english_level = models.CharField(max_length=1, choices=LEVEL_CHOICES, null=True, blank=False)
     lived_in_english_speaking_country = models.CharField(max_length=1, choices=LIVED_CHOICES, null=True, blank=False)
     consent = models.BooleanField(default=True)
-    tutorial_complete = models.BooleanField(default=True)
+    tutorial_complete = models.BooleanField(default=False)
 
 class NewsArticle(models.Model):
     title = models.CharField(max_length=100, null=False, blank=False)

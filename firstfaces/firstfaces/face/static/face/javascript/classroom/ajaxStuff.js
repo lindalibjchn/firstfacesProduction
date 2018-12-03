@@ -6,7 +6,6 @@ function sendTTS( text, tiaSpeaker, caller ) {
     synthesisObject.gotNewSpeech = false;
 
     synthesisObject.text = text;
-    synthesisObject.endCount = 30 + text.length * 2.5 * ( 1 / synthesisObject.speaking_rate );
 
     $.ajax({
         url: "/tts",
@@ -109,27 +108,35 @@ function sendBlobToServer( blob_to_send ) {
 
             } else {
 
-                if (classVariableDict.tutorialStep === 0 ) {
+                if (classVariableDict.tutorialStep === 5 ) {
 
                     $('#recordVoiceBtn').prop( 'disabled', true );
                     $('#talkBtn').prop( 'disabled', true );
 
                     setTimeout( greeting06, 2000 );
 
-                } else if (classVariableDict.tutorialStep === 1 ) {
+                } else if (classVariableDict.tutorialStep === 7 ) {
 
                     $('#recordVoiceBtn').prop( 'disabled', true );
                     $('#talkBtn').prop( 'disabled', true );
 
                     setTimeout( greeting08, 2000 );
 
-                } else if (classVariableDict.tutorialStep === 2 ) {
+                } else if (classVariableDict.tutorialStep === 14 ) {
 
                     classVariableDict.tutorialStep = 3;
                     $('#recordVoiceBtn').prop( 'disabled', true );
                     $('#talkBtn').prop( 'disabled', true );
 
                     setTimeout( greeting15, 2000 );
+
+                } else if (classVariableDict.tutorialStep === 15 ) {
+
+                    classVariableDict.tutorialStep = 4;
+                    $('#recordVoiceBtn').prop( 'disabled', true );
+                    $('#talkBtn').prop( 'disabled', true );
+
+                    setTimeout( greeting1601, 2000 );
 
                 }
 
@@ -346,13 +353,6 @@ function sendListenSynth( repeat ) {
 
         }
 
-    }
-
-    if ( classVariableDict.tutorialStep === 1 ) {
-
-        classVariableDict.tutorialStep += 1
-        setTimeout( greeting14, 4000 );
-        
     }
 
     $.ajax({

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from .forms import UserForm, SignUpForm, SignUpUserForm
 from django.contrib.auth.password_validation import validate_password
 from django.http import JsonResponse
@@ -113,6 +113,10 @@ def sign_up_user(request):
             validate_password( password, u )
    
             u.save();
+            
+            group_all = Group.objects.get(name='all')
+            group_all.user_set.add(u)
+
             login(request, u)
 
         except:
@@ -200,6 +204,10 @@ def waiting(request):
         # get dictionary of all previous sessions
         sessions_dict = get_prev_sessions( request.user )
 
+        # check if user has completed tutorial
+        user_profile = Profile.objects.get(learner=request.user)
+        tutorial_complete = user_profile.tutorial_complete
+
         try:
             todays_news_article = NewsArticle.objects.get(date=date_now)
             headline = todays_news_article.title
@@ -213,6 +221,7 @@ def waiting(request):
             'schedule_dict': json.dumps(schedule_dict),
             'schedule_now': json.dumps(schedule_now),
             'sessions_dict': json.dumps(sessions_dict),
+            'tutorial_complete': json.dumps(tutorial_complete),
             'waiting': True,
             'timeNow': time_now,
             'headline': headline,
@@ -452,6 +461,28 @@ def my_login(request):
         response_data = {
             'loggedIn': False,
         }
+
+    return JsonResponse(response_data)    
+
+def store_tutorial_end(request):
+
+    session_id = request.POST['sessionID']
+    sess = Session.objects.get(pk=session_id)
+    sess.learner_emotion = "tutorial"
+    sess.topic = "tutorial"
+    time_now = timezone.now();
+    sess.end_time = time_now
+    sess.save()
+
+    tutorial_step = int(request.POST['tutorialStep'])
+    if tutorial_step == 99:
+        prof = Profile.objects.get(learner=request.user)
+        prof.tutorial_complete = True;
+        prof.save()
+
+    response_data = {
+
+    }
 
     return JsonResponse(response_data)    
 

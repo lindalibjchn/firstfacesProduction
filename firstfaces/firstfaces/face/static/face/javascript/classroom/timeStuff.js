@@ -150,7 +150,7 @@ function goodbyeSpeak() {
     if ( synthesisObject.gotNewSpeech ) {
         
         synthesisObject.synthAudio.play();
-        synthesisObject.gotNewSpeech = false
+        //synthesisObject.gotNewSpeech = false
         initTalk();
 
     } else {
@@ -160,7 +160,28 @@ function goodbyeSpeak() {
     }
 
 }
-    
+
+function endTutorial() {
+
+    $.ajax({
+        url: "/store_tutorial_end",
+        type: "POST",
+        data: {
+            'tutorialStep': classVariableDict.tutorialStep,
+            'sessionID': classVariableDict[ 'session_id' ],
+        },
+        success: function(json) {
+
+            location.reload( true );
+
+        },
+        error: function() {
+            alert("failed tutorial end");
+        },
+    });
+
+}
+
 /////////QUESTION STREAK
 
 //function calculateQuestionStreak() {

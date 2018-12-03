@@ -57,8 +57,13 @@ function blinkController() {
             blinkControllerObject.nextBlinkCount = mainCount + Math.floor( 200 + Math.random() * 240 ); // new countdown until next blink
 
             // call the show time remaining to reload it and keep it up to pace
-            //showTimeRemaining();
+            
+            if ( classVariableDict.tutorial === false ) {
+
+                showTimeRemaining();
     
+            }
+
         }
 
     }
