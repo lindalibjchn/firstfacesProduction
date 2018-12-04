@@ -262,18 +262,23 @@ def class_time(request, session_id):
                 prev_topic = None
                 prev_score = None
                 prev_emotion = None
-                first_ever_class = False
+                first_full_class = False
+                tutorial_complete = False
                 try:
                     all_sesss = Session.objects.filter(learner=request.user)
                     recent_sesss = all_sesss.filter(start_time__gte=sess.start_time-datetime.timedelta(days=14)).order_by('-pk')
                     if len(recent_sesss) > 1:
+                        if Profile.objects.tutorial_complete:
+                            tutorial_complete = True
                         prev_topic = recent_sesss[1].topic
-                        prev_emotion = recent_sesss[1].learner_emotion
-                        if prev_topic == 'emotion':
-                            prev_topic = 'feeling ' + prev_emotion
-                        prev_score = recent_sesss[1].score
-                    if len(all_sesss) == 1:
-                        first_ever_class = True
+                        if prev_topic == "tutorial":
+                            first_full_class = True
+                        else:
+                            prev_emotion = recent_sesss[1].learner_emotion
+                            if prev_topic == 'emotion':
+                                prev_topic = 'feeling ' + prev_emotion
+                            prev_score = recent_sesss[1].score
+
                 except:
                     pass
 
@@ -381,12 +386,13 @@ def class_time(request, session_id):
                     'article_link': article_link,
                     'prev_topic': prev_topic,
                     'prev_score': prev_score,
-                    'first_ever_class': first_ever_class,
                     'prev_emotion': prev_emotion,
                     'interference_count': interference_count,
                     'interference_count_this_sent': interference_count_this_sent,
                     'blobs': blobs,
                     'gender': gender,
+                    'first_full_class': first_full_class,
+                    'tutorial_complete': tutorial_complete,
                 }
 
                 context = {

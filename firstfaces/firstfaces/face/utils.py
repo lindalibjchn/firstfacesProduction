@@ -376,35 +376,37 @@ def get_prev_sessions( user ):
 
     for sess in all_sessions:
 
-        sents = PermSentence.objects.filter(session=sess).order_by('pk')
-        sentences = []
+        if sess.topic != "tutorial":
 
-        for s in sents:
+            sents = PermSentence.objects.filter(session=sess).order_by('pk')
+            sentences = []
 
-            a_s = s.permaudiofile_set.all().order_by('pk')
-            a_s_ids = [[a.id, a.transcription0, a.audio.name] for a in a_s]
+            for s in sents:
 
-            sentences.append({
-                'sent_id': s.id,
-                'sess_id': sess.id,
-                'sentence': s.sentence, 
-                'judgement': s.judgement, 
-                'correction': s.correction, 
-                'indexes': s.indexes,
-                'try_again': s.try_again, 
-                'prompt': s.prompt,
-                'audio_files': a_s_ids
-            })
+                a_s = s.permaudiofile_set.all().order_by('pk')
+                a_s_ids = [[a.id, a.transcription0, a.audio.name] for a in a_s]
 
-        sessions_dict[ sess.id ] = {
+                sentences.append({
+                    'sent_id': s.id,
+                    'sess_id': sess.id,
+                    'sentence': s.sentence, 
+                    'judgement': s.judgement, 
+                    'correction': s.correction, 
+                    'indexes': s.indexes,
+                    'try_again': s.try_again, 
+                    'prompt': s.prompt,
+                    'audio_files': a_s_ids
+                })
 
-            'score': sess.score,
-            'start_time': int(time.mktime((sess.start_time).timetuple())),
-            'topic': sess.topic,
-            'emotion': sess.learner_emotion,
-            'sentences': sentences
+            sessions_dict[ sess.id ] = {
 
-        }
+                'score': sess.score,
+                'start_time': int(time.mktime((sess.start_time).timetuple())),
+                'topic': sess.topic,
+                'emotion': sess.learner_emotion,
+                'sentences': sentences
+
+            }
                 
     return sessions_dict 
 

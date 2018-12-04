@@ -255,13 +255,13 @@ function init() {
 
             if ( scheduleObject.availableNow ) {
 
-                if ( JSON.parse( scheduleDict.class_already_done_today ) ) {
-
-                    material = new THREE.MeshLambertMaterial( { color: 0xffffff } );
-
-                } else {
+                if ( tutorialComplete === false ) {
 
                     material = scheduleObject.blinkingBlockMat;
+                
+                } else if ( JSON.parse( scheduleDict.class_already_done_today ) ) {
+
+                    material = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 
                 }
 
@@ -363,7 +363,16 @@ function animate () {
 
     if ( scheduleObject.availableNow ) {
 
-        if ( scheduleDict.class_already_done_today ) {
+        if ( tutorialComplete === false ) {
+
+            if ( mainCount % 60 === 0 ) {
+
+                console.log('here');
+                blink();
+
+            }
+
+        } else if ( scheduleDict.class_already_done_today ) {
     
             if ( mainCount % 60 === 0 ) {
 

@@ -278,7 +278,7 @@ function greeting0503() {
 
     classVariableDict.tutorialStep = 502;
     removeDoubleBtn();
-    classVariableDict.tutorialStep = 99;
+    //classVariableDict.tutorialStep = 99;
 
     setTimeout( function(){
 

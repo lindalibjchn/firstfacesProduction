@@ -37,12 +37,16 @@ function mainEnter() {
         let greeting = ""
             
         classVariableDict.tutorial = false;
-        if ( classVariableDict.first_ever_class ) {
+        if ( classVariableDict.tutorial_complete === false ) {
 
             // if in tutorial, need this to be true so that responses from the recording and speech synthesis react in the correct way
             classVariableDict.tutorial = true;
             classVariableDict.tutorialStep = 0;
             greeting = " Hello " + studentName + ", my name is Tia. Welcome to the ERLE tutorial. Click the green 'ok' button to get started.";
+        
+        } else if ( classVariableDict.first_full_class ) {
+
+            greeting = " Hello " + studentName + ", welcome to your first class at ERLE! How are you feeling today?";
         
         } else if ( classVariableDict['prev_topic'] !== null ) {
 
@@ -50,7 +54,7 @@ function mainEnter() {
         
         } else {
             
-            greeting = " Hello " + studentName + ", nice to see you again! It's been a while. How are you feeling today?";
+            greeting = " Hello " + studentName + ", nice to see you again! It's been a while since we last met. How are you feeling today?";
 
         }
         
@@ -85,7 +89,7 @@ function mainEnter() {
 
 function speakOpening() {
 
-    if ( classVariableDict.first_ever_class ) {
+    if ( classVariableDict.tutorial_complete === false ) {
 
         runTutorial();
 

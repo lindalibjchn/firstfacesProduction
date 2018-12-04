@@ -51,18 +51,24 @@ function insertChart() {
                 }]
             },
             onClick: function(evt, activeElements) {
-                var elementIndex = activeElements[0]._index;
 
-                lenPoints = this.data.datasets[0].pointBackgroundColor.length;
+                if ( activeElements[0]._index !== undefined ) {
 
-                for(i=0; i<lenPoints; i++) {
+                    var elementIndex = activeElements[0]._index;
 
-                    this.data.datasets[0].pointBackgroundColor[i] = 'white';
+                    lenPoints = this.data.datasets[0].pointBackgroundColor.length;
 
-                };
+                    for(i=0; i<lenPoints; i++) {
 
-                this.data.datasets[0].pointBackgroundColor[elementIndex] = 'yellow';
-                this.update();
+                        this.data.datasets[0].pointBackgroundColor[i] = 'white';
+
+                    };
+
+                    this.data.datasets[0].pointBackgroundColor[elementIndex] = 'yellow';
+                    this.update();
+
+                }
+
             },
         }
     });

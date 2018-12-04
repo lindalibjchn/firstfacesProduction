@@ -30,13 +30,13 @@ function onMouseMove(event) {
     
     var intersects
     
-    if ( scheduleObject.availableNow ) {
-    
-        if ( JSON.parse( scheduleObject.availableNow ) ) {
+    if ( tutorialComplete === false ) {
 
             intersects = ray.intersectObjects( [ clickableObjects.laptop, clickableObjects.tests, clickableObjects.sentences, clickableObjects.doorSign ] );
 
-        if ( JSON.parse( scheduleDict.class_already_done_today ) ) {
+    } else if ( scheduleObject.availableNow ) {
+
+        if ( scheduleDict.class_already_done_today ) {
 
             intersects = ray.intersectObjects( [ clickableObjects.laptop, clickableObjects.tests, clickableObjects.sentences ] );
 
@@ -46,11 +46,11 @@ function onMouseMove(event) {
 
         }
 
-    } else {
+   } else {
 
-        intersects = ray.intersectObjects( [ clickableObjects.laptop, clickableObjects.tests, clickableObjects.sentences ] );
-    
-    }
+            intersects = ray.intersectObjects( [ clickableObjects.laptop, clickableObjects.tests, clickableObjects.sentences, clickableObjects.doorSign ] );
+
+   }
 
     if ( intersects.length > 0 ) {
 
@@ -89,8 +89,8 @@ function onMouseMove(event) {
 
         }
 
-            clickableObjects.intersectedObj = { material: "nope" };
-            document.body.style.cursor = 'default';
+        clickableObjects.intersectedObj = { material: "nope" };
+        document.body.style.cursor = 'default';
 
     }
 
@@ -107,9 +107,13 @@ function onClick(event) {
 
     var intersects
     
-    if ( scheduleObject.availableNow ) {
-    
-        if ( JSON.parse( scheduleDict.class_already_done_today ) ) {
+    if ( tutorialComplete === false ) {
+
+            intersects = ray.intersectObjects( [ clickableObjects.laptop, clickableObjects.tests, clickableObjects.sentences, clickableObjects.doorSign ] );
+
+    } else if ( scheduleObject.availableNow ) {
+
+        if ( scheduleDict.class_already_done_today ) {
 
             intersects = ray.intersectObjects( [ clickableObjects.laptop, clickableObjects.tests, clickableObjects.sentences ] );
 
@@ -119,11 +123,11 @@ function onClick(event) {
 
         }
 
-    } else {
+   } else {
 
-        intersects = ray.intersectObjects( [ clickableObjects.laptop, clickableObjects.tests, clickableObjects.sentences ] );
-    
-    }
+            intersects = ray.intersectObjects( [ clickableObjects.laptop, clickableObjects.tests, clickableObjects.sentences, clickableObjects.doorSign ] );
+
+   }
 
 
     if ( intersects.length > 0 ) {
