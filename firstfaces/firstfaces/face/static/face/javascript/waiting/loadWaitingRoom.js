@@ -223,14 +223,17 @@ function init() {
 
             signText = "TUTORIAL";
 
-        } else if ( JSON.parse( scheduleDict.class_already_done_today ) ) {
-
-            signText = "FINISHED";
-
-        // this variable doesn't need to be JSONed as the logic to create is is don in js in enterClassroom.js
         } else if ( scheduleObject.availableNow ) {
 
-            signText = "OPEN"
+            if ( sessionsDict.IDList.length === 0 || JSON.parse( scheduleDict.class_already_done_today ) === false ) { //means the tutorial only was done
+
+                signText = "OPEN"
+
+            } else if ( JSON.parse( scheduleDict.class_already_done_today ) ) {
+
+                signText = "FINISHED";
+
+            }
 
         } else {
 
@@ -253,15 +256,27 @@ function init() {
 
             var material;
 
-            if ( scheduleObject.availableNow ) {
+            if ( tutorialComplete === false ) {
 
-                if ( tutorialComplete === false ) {
-
-                    material = scheduleObject.blinkingBlockMat;
+                material = scheduleObject.blinkingBlockMat;
                 
-                } else if ( JSON.parse( scheduleDict.class_already_done_today ) ) {
+            } else if ( scheduleObject.availableNow ) {
 
-                    material = new THREE.MeshLambertMaterial( { color: 0xffffff } );
+               if ( JSON.parse( scheduleDict.class_already_done_today ) ) {
+                    
+                    if ( sessionsDict.IDList.length === 0 ) {
+
+                        material = scheduleObject.blinkingBlockMat;
+
+                    } else {
+
+                        material = new THREE.MeshLambertMaterial( { color: 0xffffff } );
+
+                    }
+
+                } else {
+                 
+                    material = scheduleObject.blinkingBlockMat;
 
                 }
 
@@ -367,12 +382,11 @@ function animate () {
 
             if ( mainCount % 60 === 0 ) {
 
-                console.log('here');
                 blink();
 
             }
 
-        } else if ( scheduleDict.class_already_done_today ) {
+        } else if ( sessionsDict.IDList.length === 0 || JSON.parse( scheduleDict.class_already_done_today ) === false ) {
     
             if ( mainCount % 60 === 0 ) {
 
