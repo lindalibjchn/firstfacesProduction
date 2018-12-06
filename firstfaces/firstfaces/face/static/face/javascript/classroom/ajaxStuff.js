@@ -102,7 +102,7 @@ function sendBlobToServer( blob_to_send ) {
             }
 
             // dont want to send sentence while doing tutorial
-            if ( classVariableDict.tutorial === false ) {
+            if ( classVariableDict.tutorial_complete ) {
 
                 $('#talkBtn').prop( "disabled", false);
 
@@ -187,6 +187,8 @@ function sendSentToServer() {
         if ( sent.length > 2 ) {
             
             talkToTia(); 
+            recTimes = {};
+            recTimes.clickTalkBtn = Date.now() / 1000;
 
             $.ajax({
                 url: "/store_sent",
@@ -405,3 +407,26 @@ function sendListenVoice() {
 
 }
 
+function sendTimesToServer() {
+
+    let sentID = classVariableDict.last_sent.sent_id
+
+    $.ajax({
+        url: "/timings",
+        type: "GET",
+        data: { 
+            'sent_id': sentID,
+            'timing_dict': JSON.stringify( recTimes ),
+        },
+        success: function(json) {
+            
+            console.log('added timings');
+
+        },
+        error: function() {
+            alert("error adding timings");
+        },
+
+    });
+
+}

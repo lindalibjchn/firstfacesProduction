@@ -1,5 +1,6 @@
 function runAfterJudgement() {
 
+    recTimes.runAfterJudgement =  Date.now() / 1000;
     // logic for different types of judgement
     
     // in return to laptop, movement will only be needed if tia not looking straight at student
@@ -111,7 +112,8 @@ function getNodSpeedInString() {
 }
 
 function nodOrShakeHead() {
-
+    
+    recTimes.nodOrShakeHead =  Date.now() / 1000;
     if ( classVariableDict.last_sent.judgement === "D" ) {
 
         initShake( 0.5, '0.75' );
@@ -144,6 +146,7 @@ function nodOrShakeHead() {
 
 function prePrepareForPromptSpeech() {
 
+    recTimes.prePrepareForPromptSpeech =  Date.now() / 1000;
     // return to talking pos
     expressionController( calculatedTalkExpression, tiaTimings.toTalkExpressionDuration );
 
@@ -182,6 +185,7 @@ function prePrepareForPromptSpeech() {
 
 function displaySpeechBubblePrompt() {
 
+    recTimes.displaySpeechBubblePrompt = Date.now() / 1000;
     // actually delay to return to laptop
     //synthesisObject.delayToReturnToLaptop = 3000 + synthesisObject.text.length * 60 * ( 1 / synthesisObject.speaking_rate );
 
@@ -236,7 +240,8 @@ function displaySpeechBubblePrompt() {
 
     setTimeout( function() {
 
-        tiaSpeak( synthesisObject.text, needTTS=false, function() {
+        recTimes.tiaStartTalking = Date.now() / 1000;
+        tiaSpeak( synthesisObject.text, needSendTTS=false, function() {
          
             setTimeout( function() {
                 
@@ -254,6 +259,7 @@ function displaySpeechBubblePrompt() {
     
 function returnToLaptop( sent ) {
 
+    recTimes.returnToLaptop = Date.now() / 1000;
     console.log( 'in return to laptop');
     addToPrevSents();
 
@@ -277,6 +283,8 @@ function returnToLaptop( sent ) {
 
                     initInputReady( sent )
                     //showQuestionStreak();
+                    recTimes.initInputReady = Date.now() / 1000;
+                    sendTimesToServer();
 
                 }
         
@@ -335,6 +343,7 @@ function addToPrevSents() {
 
 function showOptionBtns() {
 
+    recTimes.showOptionBtns = Date.now() / 1000;
     $('.option-btn').prop( "disabled", false);
 
     // incase not reset from previous time
@@ -349,6 +358,7 @@ function showOptionBtns() {
 
 function tryAgain() {
 
+    recTimes.clickOptionBtn = Date.now() / 1000;
     let sent = classVariableDict.sentences[ classVariableDict.id_of_last_sent ].sentence;
 
     classVariableDict.tiaLookingAtStudent = false;
@@ -382,6 +392,7 @@ function tryAgain() {
 
 function whatsWrong() {
 
+    recTimes.clickOptionBtn = Date.now() / 1000;
     let sentId = classVariableDict.last_sent.sent_id
     $.ajax({
         url: "/store_whats_wrong",
@@ -414,6 +425,7 @@ function whatsWrong() {
 
 function showCorrection() {
 
+    recTimes.clickShowCorrectionBtn = Date.now() / 1000;
     $('#showCorrectionBtn').prop( "disabled", true).fadeOut( 500 );
     $('#tryAgainBtn').prop( "disabled", true).fadeOut( 500 );
 
@@ -452,6 +464,7 @@ function showCorrection() {
 
 function nextSentence() {
 
+    recTimes.clickNextSentenceBtn = Date.now() / 1000;
     $('#optionBtns').fadeOut( 500 );
     $('.option-btn').prop( "disabled", true);
 
@@ -528,6 +541,7 @@ function waitForWrongSlices() {
 
 function turnToBoardToShowErrors() {
 
+    recTimes.turnToBoardToShowErrors = Date.now() / 1000;
     movementController( movements.board, tiaTimings.turnToBoard / 2, tiaTimings.turnToBoard );
 
     let newInd = Object.keys(classVariableDict.sentences).length - 1;
@@ -552,7 +566,6 @@ function turnToBoardToShowErrors() {
                 setTimeout( function() {
 
                     initArmIndicate('right', 0, 'high', tiaTimings.armIndicate * 2);
-    
 
                     setTimeout( function() {
 

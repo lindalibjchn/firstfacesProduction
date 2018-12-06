@@ -12,6 +12,7 @@ urlpatterns = [
     path('store_tutorial_end', views.store_tutorial_end, name='store_tutorial_end'),
     path('store_blob', views.store_blob, name='store_blob'),
     path('tts', views.tts, name='tts'),
+    path('timings', views.timings, name='timings'),
     path('add_transcription_choice_view', views.add_transcription_choice_view, name='add_transcription_choice_view'),
     path('add_listen_synth_data', views.add_listen_synth_data, name='add_listen_synth_data'),
     path('add_voice_data', views.add_voice_data, name='add_voice_data'),

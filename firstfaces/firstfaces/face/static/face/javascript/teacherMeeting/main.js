@@ -94,7 +94,7 @@ function updateSentenceObjects() {
     for ( var key in sessions ) {
 
         //check that key is not 'totalSentences'
-        if ( key !== 'totalSentences' ) {
+        if ( key !== 'totalSentences' && key !== "numberOf" ) {
 
             //check that there is a sentence in a session - if not it is anew session
             if ( sessions[ key ].sentences[ 0 ] !== undefined ) {
@@ -216,7 +216,7 @@ function updatePrevSentences() {
     for (key in sessions) {
         
         //check that key is not 'totalSentences'
-        if ( key !== 'totalSentences' ) {
+        if ( key !== 'totalSentences' & key !== 'numberOf' ) {
 
             // make id number for boxes
             let id = '#studentBox0' + count.toString();

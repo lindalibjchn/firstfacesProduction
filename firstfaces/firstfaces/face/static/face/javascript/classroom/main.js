@@ -46,11 +46,7 @@ function readyBtns() {
 
     $('#finishClassBtn').on( 'click', function() {
         
-        if ( classVariableDict.tutorial ) {
-
-            endTutorial();
-
-        } else {
+        if ( classVariableDict.tutorial_complete ) {
 
             if ( classVariableDict.awaitingJudgement ) {
             
@@ -59,6 +55,20 @@ function readyBtns() {
                 endClass();
                 
             }
+
+        } else {
+
+            if ( classVariableDict.tutorialStep === 99 ) {
+
+                endTutorial();
+
+            } else {
+    
+                //window.location = "https://erle.ucd.ie/waiting"
+                window.location.href = "http://127.0.0.1:8000/waiting"
+
+            }
+
 
         }
 
@@ -282,7 +292,7 @@ function prepareSynthPlay() {
 
     }
 
-    if ( classVariableDict.tutorial ) {
+    if ( classVariableDict.tutorial_complete === false ) {
 
         if ( classVariableDict.tutorialStep === 13 ) {
 
@@ -481,7 +491,7 @@ function drawLoop() {
 
                         setTimeout( function() {
 
-                            tiaSpeak( "That was very loud. Be careful with the microphone volume. If the volume bar turns red, it means the sound is too loud.", showButtonToConfirm );
+                            tiaSpeak( "That was very loud. Be careful with the microphone volume. If the volume bar turns red, it means the sound is too loud.", needSendTTS=true, showButtonToConfirm );
 
                             function showButtonToConfirm() {
 
@@ -523,7 +533,7 @@ function drawLoop() {
 
     if (meter.checkClipping()) {
 
-        if ( classVariableDict.tutorial ) {
+        if ( classVariableDict.tutorial_complete === false ) {
 
             if ( synthesisObject.firstClip === false ) {
 
@@ -584,7 +594,7 @@ function showTextStuff() {
 
     $('#altCont').css('visibility', 'visible'); 
     
-    if ( classVariableDict.tutorial === false ) {
+    if ( classVariableDict.tutorial_complete ) {
 
         $('#playRobot').show(); 
     

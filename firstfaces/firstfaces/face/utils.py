@@ -1,4 +1,4 @@
-from .models import Available, Sentence, Session, PermSentence, PermAudioFile, Profile
+from .models import Available, Sentence, Session, PermSentence, PermAudioFile, Profile, PermPostTalkTimings
 from django.contrib.auth.models import User
 import datetime
 import time
@@ -211,6 +211,16 @@ def has_user_clicked_option_btn(s_id):
 
         # return False
 
+def get_number_of_current_live_sessions():
+
+    # get all sessions currently underway
+    sessions_no_end_time = Session.objects.filter(end_time=None)
+    remove_those_not_ended_by_user = sessions_no_end_time.filter(start_time__lte=timezone.now()-datetime.timedelta(hours=1))
+    # remove_tutorials = 
+    
+
+
+
 def fill_sessions_dict():
 
     # create JSON object containing all info for teacher meeting
@@ -222,6 +232,7 @@ def fill_sessions_dict():
     # get total sentences in db in order to check later if this has increased
     total_sentences = Sentence.objects.count()
     sessions[ 'totalSentences' ] = total_sentences
+    sessions[ 'numberOf' ] = 0
     sess_id_to_username = {}
     for s in cur_sessions:
         
@@ -229,67 +240,70 @@ def fill_sessions_dict():
         prof = Profile.objects.get(learner=s.learner)
         if prof.tutorial_complete:
 
-            sessions[s.pk] = {}
-            sessions[s.pk]["user_id"] = s.learner.pk
-            sessions[s.pk]["username"] = s.learner.username
-            # need to convert to basic time units for JS
-            sessions[s.pk]["start_time"] = int(time.mktime(timezone.localtime(s.start_time).timetuple())) * 1000
+            if s.start_time > timezone.now() - datetime.timedelta(hours=1):
             
+                sessions[ 'numberOf' ] += 1
+                sessions[s.pk] = {}
+                sessions[s.pk]["user_id"] = s.learner.pk
+                sessions[s.pk]["username"] = s.learner.username
+                # need to convert to basic time units for JS
+                sessions[s.pk]["start_time"] = int(time.mktime(timezone.localtime(s.start_time).timetuple())) * 1000
+                
 
-            # get prev sentences
-            this_sess_sents = Sentence.objects.filter(session=s)
-            sents = []
+                # get prev sentences
+                this_sess_sents = Sentence.objects.filter(session=s)
+                sents = []
 
-            for sent in this_sess_sents:
+                for sent in this_sess_sents:
 
-                # timestamps only work if there is an actual time, else None
-                sent_time = None
-                judge_time = None
-                whats_wrong_time = None
-                try_again_time = None
-                next_sentence_time = None
-                if sent.sentence_timestamp != None:
+                    # timestamps only work if there is an actual time, else None
+                    sent_time = None
+                    judge_time = None
+                    whats_wrong_time = None
+                    try_again_time = None
+                    next_sentence_time = None
+                    if sent.sentence_timestamp != None:
 
-                    sent_time = int(time.mktime((sent.sentence_timestamp).timetuple()))
-                    
-                if sent.judgement_timestamp != None:
+                        sent_time = int(time.mktime((sent.sentence_timestamp).timetuple()))
+                        
+                    if sent.judgement_timestamp != None:
 
-                    judge_time = int(time.mktime((sent.judgement_timestamp).timetuple()))
+                        judge_time = int(time.mktime((sent.judgement_timestamp).timetuple()))
 
-                if sent.whats_wrong_timestamp != None:
+                    if sent.whats_wrong_timestamp != None:
 
-                    whats_wrong_time = int(time.mktime((sent.whats_wrong_timestamp).timetuple()))
+                        whats_wrong_time = int(time.mktime((sent.whats_wrong_timestamp).timetuple()))
 
-                if sent.try_again_timestamp != None:
+                    if sent.try_again_timestamp != None:
 
-                    try_again_time = int(time.mktime((sent.try_again_timestamp).timetuple()))
+                        try_again_time = int(time.mktime((sent.try_again_timestamp).timetuple()))
 
-                if sent.next_sentence_timestamp != None:
+                    if sent.next_sentence_timestamp != None:
 
-                    next_sentence_time = int(time.mktime((sent.next_sentence_timestamp).timetuple()))
+                        next_sentence_time = int(time.mktime((sent.next_sentence_timestamp).timetuple()))
 
-                sent_meta = {
-                    "sess_id": s.pk,
-                    "sent_id": sent.id, 
-                    "sentence": sent.sentence,
-                    "sentence_timestamp": sent_time,
-                    "judgement": sent.judgement,
-                    "judgement_timestamp": judge_time,
-                    "indexes": sent.indexes,
-                    "prompt": sent.prompt,
-                    "correction": sent.correction,
-                    "whats_wrong": sent.whats_wrong,
-                    "whats_wrong_timestamp": whats_wrong_time,
-                    "try_again": sent.try_again,
-                    "try_again_timestamp": try_again_time,
-                    "next_sentence": sent.next_sentence,
-                    "next_sentence_timestamp": next_sentence_time,
-                }
-                sents.append(sent_meta)
+                    sent_meta = {
+                        "sess_id": s.pk,
+                        "sent_id": sent.id, 
+                        "sentence": sent.sentence,
+                        "sentence_timestamp": sent_time,
+                        "judgement": sent.judgement,
+                        "judgement_timestamp": judge_time,
+                        "indexes": sent.indexes,
+                        "prompt": sent.prompt,
+                        "correction": sent.correction,
+                        "whats_wrong": sent.whats_wrong,
+                        "whats_wrong_timestamp": whats_wrong_time,
+                        "try_again": sent.try_again,
+                        "try_again_timestamp": try_again_time,
+                        "next_sentence": sent.next_sentence,
+                        "next_sentence_timestamp": next_sentence_time,
+                    }
+                    sents.append(sent_meta)
 
-            sents = sorted(sents, key=itemgetter("sent_id"), reverse=True)
+                sents = sorted(sents, key=itemgetter("sent_id"), reverse=True)
 
-            sessions[s.pk]["sentences"]= sents
+                sessions[s.pk]["sentences"]= sents
 
     return sessions
 
@@ -363,8 +377,18 @@ def save_to_perm_db( sents_tbcopied ):
         # change audio files over to PermSentence
         audiofile_set = s.audiofile_set.all().order_by('-pk')
         for a in audiofile_set.reverse():
-            pa = PermAudioFile.objects.create(sentence=ps, audio=a.audio, speech_to_text=a.speech_to_text, created_at=a.created_at)
+            pa = PermAudioFile.objects.create(sentence=ps, transcription0=a.transcription0, transcription1=a.transcription1, transcription2=a.transcription2, confidence0=a.confidence0, confidence1=a.confidence1, confidence2=a.confidence2, interference=a.interference, clicks=a.clicks, audio=a.audio, created_at=a.created_at)
             pa.save()
+
+        # change audio files over to PermSentence
+        talk_timings_set = s.posttalktimings_set.all().order_by('-pk')
+        for t in talk_timings_set.reverse():
+            pt = PermPostTalkTimings.objects.create(
+                    sentence=ps,
+                    timings=t.timings, 
+                    created_at=t.created_at
+                )
+            pt.save()
 
         Sentence.objects.get(pk=s.pk).delete()
 

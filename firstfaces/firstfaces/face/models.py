@@ -150,6 +150,16 @@ class PermAudioFile(models.Model):
     audio = models.FileField(upload_to="")
     created_at = models.DateTimeField(auto_now_add=True)
 
+class PostTalkTimings(models.Model):
+    sentence = models.ForeignKey(Sentence, on_delete=models.CASCADE)
+    timings = models.CharField(max_length=1000, blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+class PermPostTalkTimings(models.Model):
+    sentence = models.ForeignKey(PermSentence, on_delete=models.CASCADE)
+    timings = models.CharField(max_length=1000, blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
 with open( settings.BASE_DIR + '/face/text_files/countries.txt', 'r') as f:
     
     COUNTRY_CHOICES = json.loads(f.read())

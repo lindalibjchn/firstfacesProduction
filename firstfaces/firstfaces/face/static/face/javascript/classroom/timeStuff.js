@@ -15,6 +15,8 @@ function calcTimeRemaining() {
 // will call this with every blink, cuz nothing else goin on when blinking and relatively frequent :-)
 function showTimeRemaining() {
 
+    console.log('in showTimeRemaining');
+
     let timeRemainingMinutes = calcTimeRemaining();
 
     if ( timeRemainingMinutes > 0 ) {

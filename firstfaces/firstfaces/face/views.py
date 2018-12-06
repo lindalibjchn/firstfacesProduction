@@ -8,7 +8,7 @@ from django.http import JsonResponse
 from .utils import *
 from django.utils import timezone
 import json
-from .models import Session, Sentence, AudioFile, Profile, NewsArticle
+from .models import Session, Sentence, AudioFile, Profile, NewsArticle, PostTalkTimings
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 import code
@@ -263,13 +263,12 @@ def class_time(request, session_id):
                 prev_score = None
                 prev_emotion = None
                 first_full_class = False
-                tutorial_complete = False
+                tutorial_complete = Profile.objects.get(learner=request.user).tutorial_complete
                 try:
                     all_sesss = Session.objects.filter(learner=request.user)
                     recent_sesss = all_sesss.filter(start_time__gte=sess.start_time-datetime.timedelta(days=14)).order_by('-pk')
                     if len(recent_sesss) > 1:
-                        if Profile.objects.tutorial_complete:
-                            tutorial_complete = True
+                        
                         prev_topic = recent_sesss[1].topic
                         if prev_topic == "tutorial":
                             first_full_class = True
@@ -669,6 +668,24 @@ def store_sent(request):
     response_data = {
 
         'sent_id': s.id,
+
+    }
+
+    return JsonResponse(response_data)    
+
+from django.utils.dateparse import parse_datetime
+def timings(request):
+
+    # code.interact(local=locals());
+    sent_id = int(request.GET['sent_id'])
+    sent = Sentence.objects.get(pk=sent_id)
+    timings = json.loads(request.GET['timing_dict'])
+
+    t = PostTalkTimings.objects.create(sentence=sent, timings=timings)
+
+    t.save()
+
+    response_data = {
 
     }
 

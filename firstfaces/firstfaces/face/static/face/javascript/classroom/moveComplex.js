@@ -22,6 +22,7 @@ function backNReadALine() {
 
 }
 
+var talkRootExp;
 function initTalk() {
    
     if ( talkObject.bool === false ) {
@@ -31,6 +32,8 @@ function initTalk() {
         // start mouth pursed when talking
         talkObject.bool = true;
         talkObject.startCount = mainCount;
+
+        talkRootExp = getAbsoluteCoordsOfExpressionNow();
         initPurseLips( 0.4, '0.5' );
 
         setTimeout( function() {
@@ -599,9 +602,7 @@ function tapKeyFull() {
 
                     calculateAlternatives();
                     //show play buttons below
-                    if ( classVariableDict.tutorial ) {
-
-                    } else {
+                    if ( classVariableDict.tutorial_complete ) {
 
                         $('.play-btn').prop( "disabled", false);
 
@@ -674,7 +675,7 @@ function listenToSpeechSynthesis( intensity ) {
 function noAltsAskAboutMic() {
 
 
-    tiaSpeak( "I didn't hear anything. Could you try again?", showBtnThatCanHear );
+    tiaSpeak( "I didn't hear anything. Could you try again?", needSendTTS=true, showBtnThatCanHear );
     $('#textInput').val( '' );
     hideTextStuff();
 
@@ -703,9 +704,7 @@ function returnFromListenToSpeechSynthesis() {
         // if no sound comes through, don't tap or show empty transcripts
         if ( synthesisObject.transcript0 === "" ) {
         
-            if ( classVariableDict.tutorial ) {
-
-            } else {
+            if ( classVariableDict.tutorial_complete ) {
 
                 setTimeout( function() {
 

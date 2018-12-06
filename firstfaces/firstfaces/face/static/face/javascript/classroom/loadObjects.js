@@ -27,6 +27,7 @@ function enterOrReEnter() {
  
         camera.position.set( CAMERA_SIT_POS.x, CAMERA_SIT_POS.y, CAMERA_SIT_POS.z );
         camera.rotation.set( CAMERA_SIT_TO_LAPTOP_ROT.x, CAMERA_SIT_TO_LAPTOP_ROT.y, CAMERA_SIT_TO_LAPTOP_ROT.z );
+        cameraObject.currentState = "laptop";
 
 
         talkObject.learning = true;
@@ -56,7 +57,7 @@ function engineRunning() {
     blinkControllerObject.bool = true;
     expressionController( expressionObject.abs.neutral, 0.1 );
     enterOrReEnter();
-    if ( classVariableDict.tutorial === false ) {
+    if ( classVariableDict.tutorial_complete ) {
 
         showTimeRemaining();
         //showQuestionStreak();

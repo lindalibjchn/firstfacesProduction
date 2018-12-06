@@ -46,6 +46,10 @@ function onMouseMove(event) {
    
                 intersects = ray.intersectObjects( [ clickableObjects.laptop, clickableObjects.tests, clickableObjects.sentences ] );
 
+            } else {
+   
+                intersects = ray.intersectObjects( [ clickableObjects.laptop, clickableObjects.tests, clickableObjects.sentences, clickableObjects.doorSign ] );
+
             }
 
         } else {
@@ -126,6 +130,10 @@ function onClick(event) {
             } else if ( JSON.parse( scheduleDict.class_already_done_today ) ) {
    
                 intersects = ray.intersectObjects( [ clickableObjects.laptop, clickableObjects.tests, clickableObjects.sentences ] );
+
+            } else {
+   
+                intersects = ray.intersectObjects( [ clickableObjects.laptop, clickableObjects.tests, clickableObjects.sentences, clickableObjects.doorSign ] );
 
             }
 
