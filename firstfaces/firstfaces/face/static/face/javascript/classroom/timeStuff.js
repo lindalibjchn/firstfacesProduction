@@ -115,9 +115,9 @@ function endClass() {
 
             expressionController( calculatedExpression, '1', false );
 
-            setTimeout( goodbyeTalk, 2000 ); 
+            setTimeout( goodbyeTalk, 1500 ); 
 
-        }, 2100 );
+        }, 1600 );
 
     }, 600 );
 
@@ -139,11 +139,11 @@ function goodbyeTalk() {
                 
                 location.reload( true );
                 
-            }, 8000 )
+            }, 2000 )
 
         });
         
-    }, 1500);
+    }, 1000);
 
 }
 

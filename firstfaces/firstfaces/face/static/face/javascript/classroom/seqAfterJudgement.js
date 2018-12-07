@@ -23,7 +23,7 @@ function runAfterJudgement() {
         if ( classVariableDict.last_sent.nod !== null ) {
                 
             nodOrShakeHead()
-            setTimeout( function(){returnToLaptop('')}, nodShakeDur - 500 );//0.5s overlap for end of nod n talking
+            setTimeout( function(){returnToLaptop('')}, nodShakeDur + 500 );//0.5s overlap for end of nod n talking
 
         } else {
 
@@ -40,7 +40,7 @@ function runAfterJudgement() {
         if ( classVariableDict.last_sent.nod !== null ) {
 
             nodOrShakeHead()
-            setTimeout( prePrepareForPromptSpeech, nodShakeDur - 500 );//0.5s overlap for end of nod n talking
+            setTimeout( prePrepareForPromptSpeech, nodShakeDur + 500 );
 
         } else {
 
@@ -176,7 +176,7 @@ function prePrepareForPromptSpeech() {
 
     setTimeout( function() {
 
-        checkIfPromptReturned();
+        setTimeout( checkIfPromptReturned, tiaTimings.toTalkExpressionDuration * 1000 );
         displaySpeechBubble( "high", tiaTimings.toTalkExpressionDuration * 1000, 0.5 )
     
     }, tiaTimings.toTalkExpressionDuration * 1000 );
@@ -234,9 +234,6 @@ function displaySpeechBubblePrompt() {
     
     }
 
-    // may show the dots
-    $('#speakingWordsTia').fadeIn( 1000 );
-   
 
     setTimeout( function() {
 
@@ -266,11 +263,10 @@ function returnToLaptop( sent ) {
     if ( classVariableDict.tiaLookingAtStudent ) {
 
         removeSpeechBubble( tiaTimings.changeExpression * 2000 );                   
-        expressionController( expressionObject.abs.neutral, tiaTimings.changeExpression * 2 );
+        expressionController( expressionObject.abs.neutral, tiaTimings.changeExpression * 6 );
 
         setTimeout( function() {
 
-            $('.speaking-words').text( '' );
             initCameraMove('laptop', tiaTimings.cameraMoveUpDuration );
 
             setTimeout( function () {

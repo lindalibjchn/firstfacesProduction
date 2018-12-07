@@ -223,6 +223,10 @@ function init() {
 
             signText = "TUTORIAL";
 
+        } else if ( scheduleDict.in_class_now ) {
+
+                signText = "CONTINUE";
+
         } else if ( scheduleObject.availableNow ) {
 
             if ( sessionsDict.IDList.length === 0 || JSON.parse( scheduleDict.class_already_done_today ) === false ) { //means the tutorial only was done
@@ -237,7 +241,15 @@ function init() {
 
         } else {
 
-            signText = scheduleDict.upcomingClass;
+            if ( noLiveSessions >= 8 ) {
+
+                signText = "Class Full";
+
+            } else {
+
+                signText = scheduleDict.upcomingClass;
+
+            }
 
         }
 
@@ -260,6 +272,10 @@ function init() {
 
                 material = scheduleObject.blinkingBlockMat;
                 
+            } else if ( scheduleDict.in_class_now ) {
+
+                material = scheduleObject.blinkingBlockMat;
+
             } else if ( scheduleObject.availableNow ) {
 
                if ( JSON.parse( scheduleDict.class_already_done_today ) ) {

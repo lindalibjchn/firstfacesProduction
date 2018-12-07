@@ -58,10 +58,10 @@ function setTimings() {
         tiaTimings.changeExpression = 0.75;
         tiaTimings.changeExpressionConfused = 1.0;
         tiaTimings.movementToConfused = 1.5;
-        tiaTimings.delayBeforeReturnToLaptop = 2000;
+        tiaTimings.delayBeforeReturnToLaptop = 3000;
         tiaTimings.speechBubbleFadeInDuration = 500;
         tiaTimings.speechBubbleFadeOutDuration = 1000;
-        tiaTimings.toTalkExpressionDuration = 0.75;
+        tiaTimings.toTalkExpressionDuration = 1.5;
         tiaTimings.delyUntilToTalkPos = 1500;
         tiaTimings.delayBeforeReturnToLaptop = 1500;
         tiaTimings.delayAfterBubbleShowUntilSpeak = 1000;

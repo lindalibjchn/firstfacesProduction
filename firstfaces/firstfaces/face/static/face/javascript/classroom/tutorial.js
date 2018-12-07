@@ -3,8 +3,8 @@ function tiaSpeak( tiaSays, needSendTTS=true, callback ) {
 
     // display text
     speechBubbleObject.sentence = tiaSays;
-    $('.speaking-words').hide();
-    $('.speaking-words').text( speechBubbleObject.sentence );
+    $('.speaking-words-inside').show();
+    $('.speaking-words-inside').text( speechBubbleObject.sentence );
     
     // only false if TTS can be sent in advance so no need to do it again
     if ( needSendTTS ) {

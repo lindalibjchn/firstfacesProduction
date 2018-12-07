@@ -36,7 +36,11 @@ function onMouseMove(event) {
 
     } else {
         
-        if ( scheduleObject.availableNow ) {
+        if ( scheduleDict.in_class_now ) {
+
+            intersects = ray.intersectObjects( [ clickableObjects.laptop, clickableObjects.tests, clickableObjects.sentences, clickableObjects.doorSign ] );
+
+        } else if ( scheduleObject.availableNow ) {
 
             if ( sessionsDict.IDList.length === 0 ) { //means the tutorial only was done
             
@@ -121,7 +125,11 @@ function onClick(event) {
 
     } else {
         
-        if ( scheduleObject.availableNow ) {
+        if ( scheduleDict.in_class_now ) {
+
+            intersects = ray.intersectObjects( [ clickableObjects.laptop, clickableObjects.tests, clickableObjects.sentences, clickableObjects.doorSign ] );
+
+        } else if ( scheduleObject.availableNow ) {
 
             if ( sessionsDict.IDList.length === 0 ) { //means the tutorial only was done
             

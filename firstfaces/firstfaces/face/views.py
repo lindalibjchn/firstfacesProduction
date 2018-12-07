@@ -190,6 +190,9 @@ def waiting(request):
 
         # in utils.py, for schedule on board
         schedule_dict, schedule_now = make_schedule_dict( availables )
+    
+        # no of current live sessions
+        no_live_sessions = get_number_of_current_live_sessions()
 
         # in "Monday 18:00" format
         next_class, next_class_after_today = get_upcoming_class( availables )
@@ -226,6 +229,7 @@ def waiting(request):
             'timeNow': time_now,
             'headline': headline,
             'article_link': article_link,
+            'no_live_sessions': no_live_sessions,
 
         }
 

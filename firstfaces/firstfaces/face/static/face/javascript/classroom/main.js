@@ -176,6 +176,8 @@ function readyBtns() {
                     // hide the microphone button
                     $(this).hide();
                     $('#stopRecordVoiceBtn').show();
+                    $('.play-btn').prop( "disabled", true);
+                    $('#talkBtn').prop( "disabled", true);
                     recognition.start();
                     console.log('Voice recognition activated. Try speaking into the microphone.');
 

@@ -257,14 +257,18 @@ function putTimetableUp() {
 
                     } else if ( intKey === scheduleNow[ 0 ] ) {
 
-                        console.log('yo');
                         if ( scheduleDict[ key ][ i ][ 0 ] <= scheduleNow[ 1 ] ) {
 
                             if ( scheduleDict[ key ][ i ][ 1 ] > scheduleNow[ 1 ] ) {
 
                                 hourBlockClone.material = new THREE.MeshBasicMaterial( { color: 0x53ef59, transparent: true, opacity: 0.5 } );
                                 scheduleObject.blinkingBlock = hourBlockClone;
-                                scheduleObject.availableNow = true;
+
+                                if ( noLiveSessions < 8 ) {
+
+                                    scheduleObject.availableNow = true;
+
+                                }
 
                             } else {
 

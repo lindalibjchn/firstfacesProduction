@@ -605,6 +605,8 @@ function tapKeyFull() {
                     if ( classVariableDict.tutorial_complete ) {
 
                         $('.play-btn').prop( "disabled", false);
+                        $('#talkBtn').prop( "disabled", false);
+                        $('#recordVoiceBtn').show();
 
                     }
 
@@ -723,11 +725,11 @@ function returnFromListenToSpeechSynthesis() {
 
                 expressionController( expressionObject.abs.neutral, 0.5 )
             
-                setTimeout( function() {
+                //setTimeout( function() {
 
-                    $('#recordVoiceBtn').show();
+                    //$('#recordVoiceBtn').show();
                 
-                }, 1000 );
+                //}, 1000 );
 
             }, 300);
 

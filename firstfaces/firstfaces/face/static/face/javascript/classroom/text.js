@@ -369,7 +369,8 @@ function removeSpeechBubble( dur ) {
     setTimeout( function() {
 
         $('.speech-bubbles').hide();
-        $('.speaking-words').hide();
+        $('.speaking-words-inside').text('');
+        $('.speaking-words-inside').hide();
     
     }, dur )
 

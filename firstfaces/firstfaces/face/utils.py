@@ -213,13 +213,12 @@ def has_user_clicked_option_btn(s_id):
 
 def get_number_of_current_live_sessions():
 
+    print('time now:', timezone.now())
     # get all sessions currently underway
     sessions_no_end_time = Session.objects.filter(end_time=None)
-    remove_those_not_ended_by_user = sessions_no_end_time.filter(start_time__lte=timezone.now()-datetime.timedelta(hours=1))
-    # remove_tutorials = 
-    
-
-
+    remove_those_not_ended_by_user = sessions_no_end_time.filter(start_time__gte=timezone.now()-datetime.timedelta(hours=2))
+    remove_tutorials = remove_those_not_ended_by_user.filter(learner__profile__tutorial_complete=True)
+    return remove_tutorials.count()
 
 def fill_sessions_dict():
 
