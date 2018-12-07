@@ -93,7 +93,7 @@ def sign_up(request):
 
 def sign_up_user(request):
 
-    # code.interact(local=locals());
+    code.interact(local=locals());
     username = request.POST['username']
     email = request.POST['email']
     password = request.POST['password1']

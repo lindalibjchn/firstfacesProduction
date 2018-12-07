@@ -21,7 +21,7 @@ function mainEnter() {
         let calculatedExpressions = createSingleExpression( expressionsRel.happy, 0.75 );
         calculatedExpression = getAbsoluteCoordsOfExpressionTo( calculatedExpressions[0] );
         calculatedTalkExpression = getAbsoluteCoordsOfExpressionTo( calculatedExpressions[1] );
-        expressionController( calculatedExpression, '0.5');
+        expressionController( calculatedExpression, tiaTimings.changeExpression );
 
     } else if ( mainCount === 430 ) {
 
@@ -40,7 +40,7 @@ function mainEnter() {
 
             // if in tutorial, need this to be true so that responses from the recording and speech synthesis react in the correct way
             classVariableDict.tutorialStep = 0;
-            greeting = " Hello " + studentName + ", my name is Tia. Welcome to the ERLE tutorial. Click the green 'ok' button to get started.";
+            greeting = " Hello " + studentName + ", my name is Tia. Welcome to the ERLE tutorial. It will take 10 to 15 minutes to complete. Click the green 'ok' button to get started.";
         
         } else if ( classVariableDict.first_full_class ) {
 

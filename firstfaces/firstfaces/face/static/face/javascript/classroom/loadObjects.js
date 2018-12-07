@@ -29,7 +29,6 @@ function enterOrReEnter() {
         camera.rotation.set( CAMERA_SIT_TO_LAPTOP_ROT.x, CAMERA_SIT_TO_LAPTOP_ROT.y, CAMERA_SIT_TO_LAPTOP_ROT.z );
         cameraObject.currentState = "laptop";
 
-
         talkObject.learning = true;
         //initCameraMove('laptop', 0.1);
         initInputReady('');
@@ -140,6 +139,14 @@ function addTia() {
 
         tiaObject.mBody = new THREE.SkinnedMesh( geom, mat );
         
+        let randColor00 = Math.floor( 44 + Math.random() * 55).toString()
+        let randColor01 = Math.floor( 44 + Math.random() * 55).toString()
+        let randColor02 = Math.floor( 44 + Math.random() * 55).toString()
+
+        let hexCol = "0x" + randColor00 + randColor01 + randColor02;
+
+        mat[0].color.setHex( hexCol );
+
         // iterate over the bones in the JSON file and put them into the global bodyBones object. Call bones with bodyBones["<bone name>"] 
         for (var i=0; i<tiaObject.mBody.skeleton.bones.length; i++) {
             
@@ -163,6 +170,12 @@ function addTia() {
         mat[0].morphtargets = true;
         mat[1].morphtargets = true;
         mat[2].morphtargets = true;
+
+        let lipRandColor00 = Math.floor( 44 + Math.random() * 22).toString()
+        let lipRandColor01 = Math.floor( Math.random() * 44).toString()
+        let lipRandColor02 = Math.floor( Math.random() * 44).toString()
+        let lipHexCol = "0x" + lipRandColor00 + lipRandColor01 + lipRandColor02;
+        mat[1].color.setHex( lipHexCol );
 
         let mFace = new THREE.SkinnedMesh( geom, mat );
 
@@ -234,7 +247,7 @@ function addTia() {
         tiaObject.eyeBones.eyeL.rotation.set( EYEL_ROT.x, EYEL_ROT.y, EYEL_ROT.z );
         tiaObject.eyeBones.eyeR.rotation.set( EYER_ROT.x, EYER_ROT.y, EYER_ROT.z );
 
-        loader.load( hair, addHair)
+        loader.load( hair00, addHair)
     
     }
 
@@ -256,7 +269,8 @@ function addTia() {
 
     }
         
-    loader.load( body, addBody);    
+    let randBody = [ body, body00, body01, body02, body03 ][ Math.floor( Math.random() * 5 ) ]
+    loader.load( randBody, addBody);    
 
 }
 
