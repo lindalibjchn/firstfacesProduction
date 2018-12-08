@@ -175,7 +175,7 @@ def get_in_class_now( sessions ):
         print('s:', s)
 
         # if no end time then session is currently running
-        if s.end_time == None:
+        if s.end_time == None and s.start_time > timezone.now() - datetime.timedelta(hours=1):
 
             return True, s.id
 

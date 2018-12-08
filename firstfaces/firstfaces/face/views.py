@@ -77,12 +77,13 @@ def sign_up(request):
 
     nationality = request.GET['nationality']
     language = request.GET['language']
+    living_now = request.GET['language']
     born = request.GET['born']
     gender = request.GET['gender']
     education = request.GET['education']
     english_level = request.GET['english_level']
     lived_in_english_speaking_country = request.GET['lived_in_english_speaking_country']
-    p = Profile(learner=request.user, nationality=nationality, language=language, born=born, gender=gender, education=education, english_level=english_level, lived_in_english_speaking_country=lived_in_english_speaking_country)   
+    p = Profile(learner=request.user, nationality=nationality, living_now=living_now, language=language, born=born, gender=gender, education=education, english_level=english_level, lived_in_english_speaking_country=lived_in_english_speaking_country)   
     p.save()
 
     response_data = {
@@ -93,7 +94,7 @@ def sign_up(request):
 
 def sign_up_user(request):
 
-    code.interact(local=locals());
+    # code.interact(local=locals());
     username = request.POST['username']
     email = request.POST['email']
     password = request.POST['password1']
@@ -473,6 +474,28 @@ def my_login(request):
 
     return JsonResponse(response_data)    
 
+def store_sound_mic(request):
+
+    device = request.GET['device']
+    t_f = json.loads(request.GET['TF'])
+
+    prof = Profile.objects.get(learner=request.user)
+
+    if device == "sound":
+
+        prof.sound = t_f
+
+    elif device == "mic":
+
+        prof.mic = t_f
+
+    prof.save()
+
+    response_data = {
+
+    }
+
+    return JsonResponse(response_data)    
 def store_tutorial_end(request):
 
     session_id = request.POST['sessionID']

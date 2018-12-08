@@ -190,6 +190,25 @@
 
 }
 
+.information-sheet-pb {
+
+    font-weight: bold;
+
+}
+
+.profileTag {
+
+    margin: 0px !important;
+
+}
+
+.form-select {
+
+    margin: 0px !important;
+    margin-bottom: 8px !important;
+
+}
+
 #info {
 
     /*display: none;*/

@@ -171,24 +171,43 @@ function addTia() {
         mat[1].morphtargets = true;
         mat[2].morphtargets = true;
 
-        let lipRandColor00 = Math.floor( 44 + Math.random() * 22).toString()
-        let lipRandColor01 = Math.floor( Math.random() * 44).toString()
-        let lipRandColor02 = Math.floor( Math.random() * 44).toString()
-        let lipHexCol = "0x" + lipRandColor00 + lipRandColor01 + lipRandColor02;
-        mat[1].color.setHex( lipHexCol );
+        //function componentToHex(c) {
+            //var hex = c.toString(16);
+            //return hex.length == 1 ? "0" + hex : hex;
+        //}
 
-        let mFace = new THREE.SkinnedMesh( geom, mat );
+        //function rgbToHex(r, g, b) {
+            //return "0x" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+        //}
+
+        //function randLipstickRGBGenerator() {
+            //let randRed = 200 + Math.floor( Math.random() * 55 );
+            //let randGreen = 90 + Math.floor( Math.random() * 100 );
+            //let randBlue = 100 + Math.floor( Math.random() * 70 );
+
+            //return [ randRed, randGreen, randBlue ]
+        //}
+
+        //let randLipstickRGB = randLipstickRGBGenerator();
+        //console.log( 'randLipstickRGB:', randLipstickRGB );
+
+        //let randLipstickHex = rgbToHex( randLipstickRGB[0], randLipstickRGB[1], randLipstickRGB[2] );
+
+        //mat[1].color.setHex( randLipstickHex );
+        //console.log( 'randLipstickHex:', randLipstickHex );
+
+        tiaObject.mFace = new THREE.SkinnedMesh( geom, mat );
 
         // iterate over the bones in the JSON file and put them into the global faceBones object. Call bones with faceBones["<bone name>"] 
-        for (var i=0; i<mFace.skeleton.bones.length; i++) {
+        for (var i=0; i<tiaObject.mFace.skeleton.bones.length; i++) {
             
-            tiaObject.faceBones[mFace.skeleton.bones[i].name] = mFace.skeleton.bones[i];
+            tiaObject.faceBones[tiaObject.mFace.skeleton.bones[i].name] = tiaObject.mFace.skeleton.bones[i];
 
         }
         
-        mFace.position.set( FACE_POS.x, FACE_POS.y, FACE_POS.z );
-        mFace.rotation.set( FACE_ROT.x, FACE_ROT.y, FACE_ROT.z );        
-        tiaObject.bodyBones.spineUpperInner.add( mFace );
+        tiaObject.mFace.position.set( FACE_POS.x, FACE_POS.y, FACE_POS.z );
+        tiaObject.mFace.rotation.set( FACE_ROT.x, FACE_ROT.y, FACE_ROT.z );        
+        tiaObject.bodyBones.spineUpperInner.add( tiaObject.mFace );
 
         loader.load( mouth, addMouth ) 
     

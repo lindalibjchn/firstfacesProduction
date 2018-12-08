@@ -158,7 +158,7 @@
                 <!--<p class="information-sheet-p">您是一名18歲以上的中級英語學習者。 您的老師/教授表示您的英語水平適合此項目。</p>-->
                 <p class="information-sheet-pb">What will happen if I decide to take part in this research study? </p>
                 <!--<p class="information-sheet-pb"> 如果我決定參加這項研究，會發生什麼i事？ </p>-->
-                <p class="information-sheet-p">If you decide to participate, you will be able to practice your English with the avatar for 30 minutes in each class. You will be able to join classes for 12 weeks. You may choose to type or speak to input sentences. You will receive feedback from a native English speaker. This feedback will be shown in the facial expressions of the avatar. If you make mistakes, you will be able to see where the errors are and what the correction is.</p>
+                <p class="information-sheet-p">If you decide to participate, you will be able to practice your English with the avatar for 30 minutes in each class. You may choose to type or speak to input sentences. You will receive feedback from a native English speaker. This feedback will be shown in the facial expressions of the avatar. If you make mistakes, you will be able to see where the errors are and what the correction is.</p>
                 <!--<p class="information-sheet-p">如果您決定參加，您將能夠在每堂課中使用頭像練習英語30分鐘。你可以加入課程12週。您可以選擇輸入或說出輸入句子。您將收到母語為英語的人的反饋。該反饋將顯示在化身的面部表情中。如果您犯了錯誤，您將能夠看到錯誤的位置以及更正的內容。</p>-->
                 <p class="information-sheet-pb"> How will the data be used? </p>
                 <!--<p class="information-sheet-pb"> 該數據將如何被使用？ </p>-->
@@ -258,26 +258,29 @@
 
                 <h2 class="w3-text-indigo w3-center">Profile</h2>
 
-                <p class="formLabelTag w3-text-indigo">Your nationality</p>
-                <p>{{ signUpForm.nationality }}</p>
+                <p class="formLabelTag profileTag w3-text-indigo">Where are you from?</p>
+                <p class="form-select">{{ signUpForm.nationality }}</p>
                         
-                <p class="formLabelTag w3-text-indigo">Your native language</p>
-                <p>{{ signUpForm.language }}</p>
+                <p class="formLabelTag profileTag w3-text-indigo">What is your native language?</p>
+                <p class="form-select">{{ signUpForm.language }}</p>
                         
-                <p class="formLabelTag w3-text-indigo">{{ signUpForm.born.label_tag }}</p>
-                <p>{{ signUpForm.born }}</p>
+                <p class="formLabelTag profileTag w3-text-indigo">Where do you live now?</p>
+                <p class="form-select">{{ signUpForm.living_now }}</p>
                         
-                <p class="formLabelTag w3-text-indigo">{{ signUpForm.gender.label_tag }}</p>
-                <p>{{ signUpForm.gender }}</p>
+                <p class="formLabelTag profileTag w3-text-indigo">{{ signUpForm.born.label_tag }}</p>
+                <p class="form-select">{{ signUpForm.born }}</p>
                         
-                <p class="formLabelTag w3-text-indigo">{{ signUpForm.education.label_tag }}</p>
-                <p>{{ signUpForm.education }}</p>
+                <p class="formLabelTag profileTag w3-text-indigo">{{ signUpForm.gender.label_tag }}</p>
+                <p class="form-select">{{ signUpForm.gender }}</p>
                         
-                <p class="formLabelTag w3-text-indigo">{{ signUpForm.english_level.label_tag }}</p>
-                <p>{{ signUpForm.english_level }}</p>
+                <p class="formLabelTag profileTag w3-text-indigo">{{ signUpForm.education.label_tag }}</p>
+                <p class="form-select">{{ signUpForm.education }}</p>
                         
-                <p class="formLabelTag w3-text-indigo">How long have you lived in an English speaking country?</p>
-                <p>{{ signUpForm.lived_in_english_speaking_country }}</p>
+                <p class="formLabelTag profileTag w3-text-indigo">{{ signUpForm.english_level.label_tag }}</p>
+                <p class="form-select">{{ signUpForm.english_level }}</p>
+                        
+                <p class="formLabelTag profileTag w3-text-indigo">How long have you lived in an English speaking country?</p>
+                <p class="form-select">{{ signUpForm.lived_in_english_speaking_country }}</p>
                         
                 <div class="w3-center w3-container">
                     <input id="profileBtn" class="w3-button w3-padding-large w3-xlarge w3-blue w3-hover-indigo w3-ripple" type="submit" value="next" style="margin: 20px;"/>

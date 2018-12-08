@@ -213,12 +213,16 @@ class Profile(models.Model):
     learner = models.ForeignKey(User, on_delete=models.CASCADE)
     nationality = models.CharField(max_length=40, choices=COUNTRY_CHOICES, null=True, blank=False)
     language = models.CharField(max_length=10, choices=LANGUAGE_CHOICES, null=True, blank=False)
+    living_now = models.CharField(max_length=40, choices=COUNTRY_CHOICES, null=True, blank=False)
+    language = models.CharField(max_length=10, choices=LANGUAGE_CHOICES, null=True, blank=False)
     born = models.CharField(max_length=10, choices=BORN_CHOICES, null=True, blank=False)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, null=True, blank=False)
     education = models.CharField(max_length=1, choices=EDUCATION_CHOICES, null=True, blank=False)
     english_level = models.CharField(max_length=1, choices=LEVEL_CHOICES, null=True, blank=False)
     lived_in_english_speaking_country = models.CharField(max_length=1, choices=LIVED_CHOICES, null=True, blank=False)
     consent = models.BooleanField(default=True)
+    sound = models.BooleanField(default=True)
+    microphone = models.BooleanField(default=True)
     tutorial_complete = models.BooleanField(default=False)
 
 class NewsArticle(models.Model):

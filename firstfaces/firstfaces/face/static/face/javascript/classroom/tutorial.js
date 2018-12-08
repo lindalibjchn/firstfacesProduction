@@ -70,6 +70,28 @@ function tiaSpeak( tiaSays, needSendTTS=true, callback ) {
 
 }
 
+function sendSoundMicToServer( device, TF ) {
+
+    $.ajax({
+        url: "/timings",
+        type: "GET",
+        data: { 
+            'device': device,
+            'TF': JSON.stringify( TF ),
+        },
+        success: function(json) {
+            
+            console.log('added device status');
+
+        },
+        error: function() {
+            alert("error adding device status");
+        },
+
+    });
+
+}
+
 function showSingleBtn( response, callback ) {
 
     $('#tutorialBtnSingle').prop( 'disabled', false )
@@ -207,6 +229,8 @@ function greeting0403() {
 
     classVariableDict.tutorialStep = 403;
     removeDoubleBtn();
+
+    sendSoundMicToServer( "sound", false );
     
     setTimeout( function() {
 
@@ -294,6 +318,7 @@ function greeting0503() {
 
 function greeting0513() {
 
+    sendSoundMicToServer( "mic", false );
     classVariableDict.tutorialStep = 513;
     removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
     removeDoubleBtn();
@@ -521,11 +546,11 @@ function greeting09() {
     
     setTimeout( function() {
 
-        tiaSpeak( "The computer's speech recognition is not perfect. Sometimes it is confused. You can correct it by trying again, or typing.", needSendTTS=true, function() {
+        tiaSpeak( "If two words have similar sounds, like 'have' and 'half', or 'whole' and 'hole', the computer may not be sure which one you said. If this happens, and the computer is wrong, you can correct it by trying again, or typing.", needSendTTS=true, function() {
 
             hideTextStuff();
             $('#textInput').blur();
-            showSingleBtn( "Why does it get confused?", greeting10 )
+            showSingleBtn( "English pronunciation can be difficult!?", greeting11 )
 
         } )
 
@@ -533,23 +558,23 @@ function greeting09() {
 
 }
 
-function greeting10() {
+//function greeting10() {
 
-    classVariableDict.tutorialStep = 10;
-    removeSingleBtn();
-    removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
+    //classVariableDict.tutorialStep = 10;
+    //removeSingleBtn();
+    //removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
     
-    setTimeout( function() {
+    //setTimeout( function() {
 
-        tiaSpeak( "If two words have similar sounds, like 'have' and 'half', or 'whole' and 'hole', the computer may not be sure which one you said.", needSendTTS=true, function() {
+        //tiaSpeak( ".", needSendTTS=true, function() {
 
-            showSingleBtn( "Hmmm, English pronunciation can be difficult!", greeting11 )
+            //showSingleBtn( "Hmmm, English pronunciation can be difficult!", greeting11 )
 
-        } )
+        //} )
 
-    }, tiaTimings.speechBubbleFadeOutDuration * 2 )
+    //}, tiaTimings.speechBubbleFadeOutDuration * 2 )
 
-}
+//}
 
 function greeting11() {
 
@@ -559,7 +584,7 @@ function greeting11() {
     
     setTimeout( function() {
 
-        tiaSpeak( "Yes it can! Also, the quality of the sound from your microphone is important. If you are in a noisy room, or speak too loudly, the sound can confuse the computer.", needSendTTS=true, function() {
+        tiaSpeak( "Yes it can! Also, the sound from your microphone is important. If you are in a noisy room, or speak too loudly, it can confuse the computer.", needSendTTS=true, function() {
 
             showSingleBtn( "What can I do?", greeting12 )
 
@@ -821,7 +846,8 @@ function greeting21() {
 
         tiaSpeak( "Look at the schedule in the waiting room. It will show you the available times. This tutorial is finished now. I hope to see you again soon!", needSendTTS=true, function() {
          
-            let calculatedExpression = createSingleExpression( expressionsRel.happy, 0.75 )[0];
+            let finalExpression = createSingleExpression( expressions.happy, 0.75 );
+            calculatedExpression = getAbsoluteCoordsOfExpressionTo( finalExpressions[ 0 ] )
             expressionController( calculatedExpression, tiaTimings.changeExpression );
             setTimeout( endTutorial, 2000 )
             
