@@ -70,28 +70,6 @@ function tiaSpeak( tiaSays, needSendTTS=true, callback ) {
 
 }
 
-function sendSoundMicToServer( device, TF ) {
-
-    $.ajax({
-        url: "/timings",
-        type: "GET",
-        data: { 
-            'device': device,
-            'TF': JSON.stringify( TF ),
-        },
-        success: function(json) {
-            
-            console.log('added device status');
-
-        },
-        error: function() {
-            alert("error adding device status");
-        },
-
-    });
-
-}
-
 function showSingleBtn( response, callback ) {
 
     $('#tutorialBtnSingle').prop( 'disabled', false )
@@ -318,9 +296,10 @@ function greeting0503() {
 
 function greeting0513() {
 
-    sendSoundMicToServer( "mic", false );
+    sendSoundMicToServer( "microphone", false );
     classVariableDict.tutorialStep = 513;
     removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
+    removeSingleBtn();
     removeDoubleBtn();
     
     setTimeout( function() {
@@ -444,7 +423,7 @@ function greeting06() {
 
                 } );
 
-            } else if ( classVariableDict.tutorialNoMicCount = 1 ) {
+            } else if ( classVariableDict.tutorialNoMicCount === 1 ) {
 
                 classVariableDict.tutorialStep = 5;
                 classVariableDict.tutorialNoMicCount += 1;
@@ -461,7 +440,9 @@ function greeting06() {
 
                 tiaSpeak( "Ok, it seems that your microphone is not working. Let's try typing.", needSendTTS=true, function() { 
 
-                    showSingleBtn( "ok, what's next?", greeting0513 )
+                    $('#recordVoiceBtn').prop( 'disabled', true );
+
+                    showSingleBtn( "ok, let's do it", greeting0513 )
 
                 } );
 
@@ -550,7 +531,7 @@ function greeting09() {
 
             hideTextStuff();
             $('#textInput').blur();
-            showSingleBtn( "English pronunciation can be difficult!?", greeting11 )
+            showSingleBtn( "English pronunciation can be difficult!", greeting11 )
 
         } )
 
@@ -744,6 +725,7 @@ function greeting15() {
 
 function greeting16() {
 
+    $('#recordVoiceBtn').prot( 'disabled', true );
     classVariableDict.tutorialStep = 16;
     removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
     removeSingleBtn();
@@ -846,10 +828,10 @@ function greeting21() {
 
         tiaSpeak( "Look at the schedule in the waiting room. It will show you the available times. This tutorial is finished now. I hope to see you again soon!", needSendTTS=true, function() {
          
-            let finalExpression = createSingleExpression( expressions.happy, 0.75 );
-            calculatedExpression = getAbsoluteCoordsOfExpressionTo( finalExpressions[ 0 ] )
+            let finalExpression = createSingleExpression( expressionsRel.happy, 0.75 );
+            calculatedExpression = getAbsoluteCoordsOfExpressionTo( finalExpression[ 0 ] )
             expressionController( calculatedExpression, tiaTimings.changeExpression );
-            setTimeout( endTutorial, 2000 )
+            setTimeout( endTutorial, 3000 )
             
         })
 

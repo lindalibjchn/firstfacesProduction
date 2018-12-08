@@ -408,6 +408,29 @@ function sendListenVoice() {
 
 }
 
+function sendSoundMicToServer( device, TF ) {
+
+    console.log('in sendSoundMicToServer:', device + " " + TF.toString());
+    $.ajax({
+        url: "/store_sound_mic",
+        type: "GET",
+        data: { 
+            'device': device,
+            'TF': JSON.stringify( TF ),
+        },
+        success: function(json) {
+            
+            console.log('added device status');
+
+        },
+        error: function() {
+            alert("error adding device status");
+        },
+
+    });
+
+}
+
 function sendTimesToServer() {
 
     let sentID = classVariableDict.last_sent.sent_id

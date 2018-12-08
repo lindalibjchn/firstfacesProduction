@@ -479,15 +479,17 @@ def store_sound_mic(request):
     device = request.GET['device']
     t_f = json.loads(request.GET['TF'])
 
+    print('device:', device)
+    print('t_f:', t_f)
     prof = Profile.objects.get(learner=request.user)
 
     if device == "sound":
 
         prof.sound = t_f
 
-    elif device == "mic":
+    elif device == "microphone":
 
-        prof.mic = t_f
+        prof.microphone = t_f
 
     prof.save()
 
