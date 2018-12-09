@@ -161,7 +161,7 @@ function greeting03() {
 
         tiaSpeak( "Fantastic! Let's check that your sound is on. Can you hear my voice?", needSendTTS=true, function() { 
             
-            showDoubleBtn( "yes I can", "no I can't",  greeting04, greeting0401 ) 
+            showDoubleBtn( "yes I can", "no I can't",  function(){greeting04();sendSoundMicToServer( "sound", true );}, greeting0401 ) 
         
         } );
 
@@ -195,7 +195,7 @@ function greeting0402() {
 
         tiaSpeak( "How about now? Can you hear my voice?", needSendTTS=true, function() { 
             
-            showDoubleBtn( "yes", "no",  greeting04, greeting0403 ) 
+            showDoubleBtn( "yes", "no", function(){greeting04();sendSoundMicToServer( "sound", true );}, greeting0403 ) 
         
         } );
 
@@ -268,7 +268,7 @@ function greeting0502() {
 
         tiaSpeak( "That's ok, you can talk to me by just typing. Is typing ok?", needSendTTS=true, function() {
             
-            showDoubleBtn( "Yes it is", "No, I wan't to speak", greeting0513, greeting0503 )
+            showDoubleBtn( "Yes, typing is ok", "No, I wan't to speak", greeting0513, greeting0503 )
     
         });
 
@@ -368,9 +368,9 @@ function greeting05() {
 
         returnToLaptop('');
 
-        $('#recordVoiceBtn').prop( 'disabled', true );
-
         setTimeout( function(){
+
+            $('#recordVoiceBtn').prop( 'disabled', true );
 
             tiaSpeak( "Click the blue microphone button and say 'nice to meet you'. Then click the red stop button.", needSendTTS=true, function() {
                 
@@ -470,6 +470,7 @@ function greeting07() {
     removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
     classVariableDict.tutorialStep = 7;
     hideTextStuff();
+    sendSoundMicToServer( "microphone", true );
 
     setTimeout( function() {
 
@@ -601,7 +602,7 @@ function greeting13() {
     
     setTimeout( function() {
 
-        tiaSpeak( "The computer can help you with difficult pronunciation. Type 'she sells seashells by the seashore' and then click the robot button.", needSendTTS=true, function() {
+        tiaSpeak( "Your pronunciation is also very important. The computer can help you with difficult words. Type 'she sells seashells by the seashore' and then click the robot button.", needSendTTS=true, function() {
 
             $('#altCont').css( 'visibility', 'hidden' );
             $('#textInput').val('').focus();
@@ -725,7 +726,7 @@ function greeting15() {
 
 function greeting16() {
 
-    $('#recordVoiceBtn').prot( 'disabled', true );
+    $('#recordVoiceBtn').prop( 'disabled', true );
     classVariableDict.tutorialStep = 16;
     removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
     removeSingleBtn();
@@ -753,7 +754,7 @@ function greeting17() {
     
     setTimeout( function() {
 
-        tiaSpeak( "In your next class, when you click that button, a native English speaker will check your sentence. You will see if you made any mistakes.", needSendTTS=true, function() {
+        tiaSpeak( "In your next class, when you click that button, a native English speaker will check your sentence. You will see if you made any mistakes in vocabulary or grammar.", needSendTTS=true, function() {
 
             $('#talkBtn').prop( 'disabled', true );
             showSingleBtn( "So, will I talk to a robot or a human?", greeting19 );
@@ -790,7 +791,7 @@ function greeting19() {
     
     setTimeout( function() {
 
-        tiaSpeak( "You will talk to a REAL person - a native English speaker from Ireland. But, you will see and hear me, in this classroom.", needSendTTS=true, function() {
+        tiaSpeak( "You will talk to a real person - a native English speaker from Ireland. But, you will see and hear me, in this classroom.", needSendTTS=true, function() {
 
             showSingleBtn( "Does it take a long time to correct my sentences?", greeting20 );
 

@@ -186,12 +186,12 @@ function goToAskTopic( emotion ) {
         calculatedExpression = getAbsoluteCoordsOfExpressionTo( calculatedExpressions[ 0 ] );
         calculatedTalkExpression = getAbsoluteCoordsOfExpressionTo( calculatedExpressions[ 1 ] );
         
-        expressionController( calculatedExpression, 0.5);
+        expressionController( calculatedExpression, tiaTimings.changeExpression );
 
         synthesisObject.pitch = 1;
         synthesisObject.speaking_rate = 0.95;
 
-        if ( classVariableDict['prev_topic'] !== null ) {
+        if ( classVariableDict['prev_topic'] !== null && classVariableDict.first_full_class !== true ) {
 
             speechBubbleObject.sentence = " That's great! Last time you talked about '" + classVariableDict['prev_topic'] + "' and your score was " + classVariableDict.prev_score.toString() + ". Would you like to continue with the same topic, or choose something different?";
 
@@ -214,12 +214,12 @@ function goToAskTopic( emotion ) {
         calculatedExpressions = createCalculatedExpression([expressionsRel.sad, expressionsRel.fear], 0.98, 0.5, 0);
         calculatedExpression = getAbsoluteCoordsOfExpressionTo( calculatedExpressions[0] );
         calculatedTalkExpression = getAbsoluteCoordsOfExpressionTo( calculatedExpressions[1] );
-        expressionController( calculatedExpression, '0.75');
+        expressionController( calculatedExpression, tiaTimings.changeExpression );
     
         synthesisObject.pitch = -3;
         synthesisObject.speaking_rate = 0.8;
 
-        if ( classVariableDict['prev_topic'] !== null ) {
+        if ( classVariableDict['prev_topic'] !== null && classVariableDict.first_full_class !== true ) {
 
             speechBubbleObject.sentence = " I'm sorry to hear that! Last time you talked about '" + classVariableDict['prev_topic'] + "' and your score was " + classVariableDict.prev_score.toString() + ". Would you like to continue with the same topic, or choose something different?";
 
@@ -293,7 +293,7 @@ function askTopic() {
 
 function speakTopic() {
 
-    if ( classVariableDict['prev_topic'] !== null ) {
+    if ( classVariableDict['prev_topic'] !== null && classVariableDict.first_full_class !== true ) {
 
         showContinueOrNew();
 
@@ -411,19 +411,24 @@ function finalSpeak() {
 
     initArmIndicate('right', 0, 'low', '0.75');
     removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
-    initCameraMove( 'laptop', '2' );      
+
     setTimeout( function() {
-        
-        initInputReady('');
-    
+
+        initCameraMove( 'laptop', tiaTimings.cameraMoveUpDuration );      
         setTimeout( function() {
             
-            expressionController( expressionObject.abs.neutral, 0.75 );
-            talkObject.learning = true;
+            initInputReady('');
+        
+            setTimeout( function() {
+                
+                expressionController( expressionObject.abs.neutral, 0.75 );
+                talkObject.learning = true;
 
-        }, 3500);
+            }, 3500);
 
-    }, 2500);
+        }, 2500);
+
+    } tiaTimings.speechBubbleFadeOutDuration );
 
 }
 
