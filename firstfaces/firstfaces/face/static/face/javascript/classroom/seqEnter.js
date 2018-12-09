@@ -428,7 +428,7 @@ function finalSpeak() {
 
         }, 2500);
 
-    } tiaTimings.speechBubbleFadeOutDuration );
+    }, tiaTimings.speechBubbleFadeOutDuration );
 
 }
 

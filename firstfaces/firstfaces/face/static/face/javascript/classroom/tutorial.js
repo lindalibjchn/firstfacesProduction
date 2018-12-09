@@ -50,7 +50,7 @@ function tiaSpeak( tiaSays, needSendTTS=true, callback ) {
 
         } else {
 
-            if ( tiaSpeakCount < 5 ) {
+            if ( tiaSpeakCount < 4 ) {
 
                 console.log('waiting for speech synthesis to return audio')
                 setTimeout( function() { speakSent( s ) }, 1000 );
