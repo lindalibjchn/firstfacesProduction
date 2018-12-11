@@ -152,6 +152,8 @@ function readyBtns() {
             // Success callback
             .then(function(stream) {
      
+                classVariableDict.audio = true;
+                console.log( 'audio working' );
                 gotStream( stream );
 
                 mediaRecorder = new MediaRecorder(stream);
@@ -217,7 +219,9 @@ function readyBtns() {
             // Error callback
             .catch(function(err) {
                 console.log('The following getUserMedia error occured: ' + err);
-                alert("If you want to speak to Tia, you must allow Chrome to use your microphone. Click the small 'i' next to the web address and then change the settings to allow the microphone.");
+                classVariableDict.audio = false;
+                console.log( 'audio not working' );
+                alert("If you want to speak to Tia, you must allow Chrome to use your microphone. Click the lock, or small 'i' next to the web address and then change the settings to allow the microphone.");
             }
         );
             

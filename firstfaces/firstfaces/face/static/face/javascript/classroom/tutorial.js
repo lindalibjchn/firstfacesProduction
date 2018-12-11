@@ -161,7 +161,22 @@ function greeting03() {
 
         tiaSpeak( "Fantastic! Let's check that your sound is on. Can you hear my voice?", needSendTTS=true, function() { 
             
-            showDoubleBtn( "yes I can", "no I can't",  function(){greeting04();sendSoundMicToServer( "sound", true );}, greeting0401 ) 
+            showDoubleBtn( "yes I can", "no I can't",  function(){
+                
+                sendSoundMicToServer( "sound", true );
+
+                // if mic is not enabled
+                if ( classVariableDict.audio ) {
+                
+                    greeting04();                
+                
+                } else {
+
+                    greeting0411();
+
+                }
+                
+            }, greeting0401 ) 
         
         } );
 
@@ -216,6 +231,39 @@ function greeting0403() {
             
             showSingleBtn( "ok, let's do that", greeting04 )
         
+        } );
+
+    }, tiaTimings.speechBubbleFadeOutDuration * 2 );
+
+}
+
+function greeting0411() {
+
+    classVariableDict.tutorialStep = 411;
+    removeDoubleBtn();
+    removeSingleBtn();
+
+    setTimeout( function() {
+
+        tiaSpeak( "You have not allowed Google Chrome to use the microphone. So, you can only type. Is that ok?", needSendTTS=true, function() {
+
+            showDoubleBtn( "Yes, typing is ok", "No, I want to speak", greeting0513, greeting0412 )
+
+        } );
+
+    }, tiaTimings.speechBubbleFadeOutDuration * 2 );
+
+}
+
+function greeting0412() {
+
+    classVariableDict.tutorialStep = 412;
+    removeDoubleBtn();
+
+    setTimeout( function() {
+
+        tiaSpeak( "Click the lock, or small 'i' next to the web address and then change the settings to allow the microphone. Then refresh this page and the tutorial will start again.", needSendTTS=true, function() {
+
         } );
 
     }, tiaTimings.speechBubbleFadeOutDuration * 2 );
@@ -301,6 +349,7 @@ function greeting0513() {
     removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
     removeSingleBtn();
     removeDoubleBtn();
+    $('#recordVoiceBtn').prop( 'disabled', true );
     
     setTimeout( function() {
 
@@ -308,6 +357,7 @@ function greeting0513() {
 
         setTimeout( function() {
 
+            $('#recordVoiceBtn').prop( 'disabled', true );
             tiaSpeak( "Type 'nice to meet you' and then click the green robot button.", needSendTTS=true, function() {
 
                 $('#altCont').css( 'visibility', 'hidden' );
