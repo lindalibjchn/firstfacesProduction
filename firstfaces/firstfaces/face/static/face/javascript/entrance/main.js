@@ -3,17 +3,21 @@ $(window).on( 'load', function() {
 
     if ( !!window.chrome !== true ) {
 
-        alert( "Erle is currently optomised for Google Chrome only. On other browsers, it may not work as expected. If you wish to use Erle, please consider downloading and using Chrome.");
+        alert( "Erle currently works on Google Chrome only. You will not be able to sign up or log in on this browser. Apologies for the inconvenience.");
 
     }
 
     // begins the loading of objects
     init();
     
-    // login dropdown
-    $("#logInDropdown").on( "click", showLogInDropdown )
-    $("#signUpBtn").on( "click", showSignUpForm )
+    if ( !!window.chrome ) {
+        
+        // login dropdown
+        $("#logInDropdown").on( "click", showLogInDropdown )
+        $("#signUpBtn").on( "click", showSignUpForm )
     
+    }
+
     // log in
     $( "#loginForm" ).on( "submit", function( event ) {
      
