@@ -12,6 +12,7 @@ class Session(models.Model):
     learner_emotion = models.CharField(max_length=12, null=True, blank=True)
     topic = models.CharField(max_length=100, null=True, blank=True)
     score = models.SmallIntegerField(null=True, blank=True)
+    tutorial = models.BooleanField(default=False)
                          
     def __str__(self):
         return  str(self.pk) + "___" + self.learner.username + '___' + str(self.start_time.strftime("%a %d %b %H:%M")) + '___' + str(self.score)

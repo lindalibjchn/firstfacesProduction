@@ -56,7 +56,7 @@ function engineRunning() {
     blinkControllerObject.bool = true;
     expressionController( expressionObject.abs.neutral, 0.1 );
     enterOrReEnter();
-    if ( classVariableDict.tutorial_complete ) {
+    if ( classVariableDict.tutorial === false ) {
 
         showTimeRemaining();
         //showQuestionStreak();

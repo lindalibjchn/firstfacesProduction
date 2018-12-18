@@ -46,7 +46,7 @@ function readyBtns() {
 
     $('#finishClassBtn').on( 'click', function() {
         
-        if ( classVariableDict.tutorial_complete ) {
+        if ( classVariableDict.tutorial === false ) {
 
             if ( classVariableDict.awaitingJudgement ) {
             
@@ -298,7 +298,7 @@ function prepareSynthPlay() {
 
     }
 
-    if ( classVariableDict.tutorial_complete === false ) {
+    if ( classVariableDict.tutorial ) {
 
         if ( classVariableDict.tutorialStep === 13 ) {
 
@@ -539,7 +539,7 @@ function drawLoop() {
 
     if (meter.checkClipping()) {
 
-        if ( classVariableDict.tutorial_complete === false ) {
+        if ( classVariableDict.tutorial ) {
 
             if ( synthesisObject.firstClip === false ) {
 
@@ -600,7 +600,7 @@ function showTextStuff() {
 
     $('#altCont').css('visibility', 'visible'); 
     
-    if ( classVariableDict.tutorial_complete ) {
+    if ( classVariableDict.tutorial === false ) {
 
         $('#playRobot').show(); 
     

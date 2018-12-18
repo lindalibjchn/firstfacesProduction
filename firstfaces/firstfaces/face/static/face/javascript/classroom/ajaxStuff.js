@@ -102,12 +102,7 @@ function sendBlobToServer( blob_to_send ) {
             }
 
             // dont want to send sentence while doing tutorial
-            if ( classVariableDict.tutorial_complete ) {
-
-                // put this in keytap
-                //$('#talkBtn').prop( "disabled", false);
-
-            } else {
+            if ( classVariableDict.tutorial ) {
 
                 if (classVariableDict.tutorialStep === 5 ) {
 

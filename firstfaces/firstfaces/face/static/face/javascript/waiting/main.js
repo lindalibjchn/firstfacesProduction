@@ -17,6 +17,8 @@ $(window).on( 'load', function() {
 
     $('#whatIsScoresBtn').hover( showScoresExpl, hideScoresExpl );
 
+    $('#tutorialBtn').on( 'click', function(){doDoor(true)} );
+
 });
 
 function onMouseMove(event) {
@@ -169,8 +171,16 @@ function onClick(event) {
 
             if ( clickedName === "doorSign" ) {
              
-                doDoor();   
+                if ( tutorialComplete === false ) {
+
+                    doDoor( true );
+
+                } else {
+
+                    doDoor( false );
                 
+                }
+
             } else {
 
                 initBookMove( clickedName, "face", '1.5' );
@@ -196,13 +206,16 @@ function bookBackToDesk() {
 
 }
 
-function doDoor() {
+function doDoor( enterTutorial ) {
 
     if ( scheduleDict.in_class_now === false ) {
 
         $.ajax({
             url: "/book_session",
             type: "POST",
+            data: {
+                'tutorial': enterTutorial,
+            },
             success: function(json) {
                 if ( json.sessionCreated ) {
                     

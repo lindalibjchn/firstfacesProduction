@@ -6,14 +6,20 @@ function initInputReady( boxVal ) {
     $('#textInput').val( boxVal );
     $('#textInput').focus();
     $('#recordBtnsContainer').show();
-    $('.record-btn').prop( "disabled", false );
+
+    if ( classVariableDict.tutorial === false ) {
+
+        $('.record-btn').prop( "disabled", false );
+    
+    }
+
     $('#controllerContainer').fadeIn( 1000 );
 
     //playback buttons disabled until recording done
     $('.play-btn').prop( "disabled", true);
     $('#talkBtn').prop( "disabled", true);
 
-    if ( classVariableDict.tutorial_complete ) {
+    if ( classVariableDict.tutorial === false ) {
 
         $('#textInput').bind('input propertychange', function() {
 

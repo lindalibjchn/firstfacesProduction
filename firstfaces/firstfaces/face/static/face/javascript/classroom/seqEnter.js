@@ -36,11 +36,11 @@ function mainEnter() {
         
         let greeting = ""
             
-        if ( classVariableDict.tutorial_complete === false ) {
+        if ( classVariableDict.tutorial ) {
 
             // if in tutorial, need this to be true so that responses from the recording and speech synthesis react in the correct way
             classVariableDict.tutorialStep = 0;
-            greeting = " Hello " + studentName + ", my name is Tia. Welcome to the ERLE tutorial. It will take about 10 minutes to complete. Click the green 'ok' button to get started.";
+            greeting = " Hello " + studentName + ", my name is Tia. Welcome to the ERLE tutorial. It will take 5 to 10 minutes to complete. I will speak, and then buttons will appear for you to click.";
         
         } else if ( classVariableDict.first_full_class ) {
 
@@ -87,7 +87,7 @@ function mainEnter() {
 
 function speakOpening() {
 
-    if ( classVariableDict.tutorial_complete === false ) {
+    if ( classVariableDict.tutorial ) {
 
         runTutorial();
 

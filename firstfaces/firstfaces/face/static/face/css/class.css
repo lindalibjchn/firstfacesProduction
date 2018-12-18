@@ -57,6 +57,13 @@ button:active {
 
 }
 
+#tutorialBtnQuadCont {
+
+    width: 70%;
+    bottom: 10%;
+
+}
+
 .init-emot {
 
     color: white !important;
@@ -102,7 +109,10 @@ button:active {
     margin-right: auto;
     display: block;
     /*padding: 10px;*/
-    font-size: 24px;
+    font-size: 1.6vw;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
 
 
 }
@@ -823,6 +833,18 @@ button:active {
 .tut-double-btn {
 
     width: 98%;
+
+}
+
+.nice-row-quad {
+
+    height: 45px;
+
+}
+.tut-quad-btn {
+
+    width: 80%;
+    height: 40px;
 
 }
 

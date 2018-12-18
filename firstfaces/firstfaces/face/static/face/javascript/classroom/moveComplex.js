@@ -602,7 +602,7 @@ function tapKeyFull() {
 
                     calculateAlternatives();
                     //show play buttons below
-                    if ( classVariableDict.tutorial_complete ) {
+                    if ( classVariableDict.tutorial === false ) {
 
                         $('.play-btn').prop( "disabled", false);
                         $('#talkBtn').prop( "disabled", false);
@@ -706,7 +706,7 @@ function returnFromListenToSpeechSynthesis() {
         // if no sound comes through, don't tap or show empty transcripts
         if ( synthesisObject.transcript0 === "" ) {
         
-            if ( classVariableDict.tutorial_complete ) {
+            if ( classVariableDict.tutorial === false ) {
 
                 setTimeout( function() {
 

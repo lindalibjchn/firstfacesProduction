@@ -396,6 +396,7 @@ def class_time(request, session_id):
                     'blobs': blobs,
                     'gender': gender,
                     'first_full_class': first_full_class,
+                    'tutorial': sess.tutorial,
                     'tutorial_complete': tutorial_complete,
                 }
 
@@ -431,10 +432,11 @@ def book_session(request):
 
     user = request.user
     time_now = timezone.now()
+    tutorial = json.loads(request.POST['tutorial'])
     
     if user is not None:
         
-        session = Session(learner=user, start_time=time_now) 
+        session = Session(learner=user, start_time=time_now, tutorial=tutorial) 
         session.save()
 
         send_mail('Class booked by: ' + request.user.username, 'starts soon', 'ucd.erle@gmail.com', ['john.sloan.1@ucdconnect.ie'])
