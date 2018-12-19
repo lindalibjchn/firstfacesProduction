@@ -40,8 +40,18 @@ function mainEnter() {
 
             // if in tutorial, need this to be true so that responses from the recording and speech synthesis react in the correct way
             classVariableDict.tutorialStep = 0;
-            greeting = " Hello " + studentName + ", my name is Tia. Welcome to the ERLE tutorial. It will take 5 to 10 minutes to complete. I will speak, and then buttons will appear for you to click.";
+
+            // if user has completed tutorial before, don't need to introduce name
+            if ( classVariableDict.tutorial_complete ) {
+
+                greeting = " Hello " + studentName + ". Welcome to the ERLE tutorial. It will take 5 to 10 minutes to complete. I will speak, and then buttons will appear for you to click.";
         
+            } else {
+
+                greeting = " Hello " + studentName + ", my name is Tia. Welcome to the ERLE tutorial. It will take 5 to 10 minutes to complete. I will speak, and then buttons will appear for you to click.";
+        
+            }
+
         } else if ( classVariableDict.first_full_class ) {
 
             greeting = " Hello " + studentName + ", welcome to your first full class at ERLE! How are you feeling today?";
@@ -78,7 +88,7 @@ function mainEnter() {
 
     } else if ( mainCount === 800 ) {
 
-        tiaSpeak( speechBubbleObject.sentence, needSendTTS=false, speakOpening );
+        tiaSpeak( synthesisObject.text, needSendTTS=false, speakOpening );
         classVariableDict.promptSpeaking = true;
         
     }

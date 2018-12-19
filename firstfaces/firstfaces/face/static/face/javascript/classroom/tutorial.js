@@ -37,14 +37,17 @@ function tiaSpeak( tiaSays, needSendTTS=true, callback ) {
 
         if ( synthesisObject.gotNewSpeech ) {
             
+            if ( synthesisObject.ttsServerFault === false ) {
+
+                synthesisObject.synthAudio.play();
+
+            }
+
             synthesisObject.delay = delayForListening( s )
             synthesisObject.endCount =  ( synthesisObject.delay * 60 / 1000 ) * 0.75 //dunno why the delay needs to be curtailed, but has to be
-            synthesisObject.synthAudio.play();
-            synthesisObject.gotNewSpeech = false
+            synthesisObject.gotNewSpeech = false;
             initTalk();
             tiaSpeakCount = 0;
-
-            //console.log('callback:', callback);
 
             let delayForCallback = Math.max( 1000, synthesisObject.delay - 500 );
             setTimeout( callback, delayForCallback );
@@ -684,7 +687,7 @@ function greeting13() {
     
     setTimeout( function() {
 
-        tiaSpeak( "Your pronunciation is also very important. The computer can help you with difficult words. Type 'she sells seashells by the seashore' and then click the robot button.", needSendTTS=true, function() {
+        tiaSpeak( "Your pronunciation is also very important. The computer can help you with difficult words and phrases. Type 'she sells seashells by the seashore' and then click the robot button.", needSendTTS=true, function() {
 
             $('#altCont').css( 'visibility', 'hidden' );
             $('#textInput').prop('disabled', false);
@@ -891,7 +894,7 @@ function greeting18() {
     
     setTimeout( function() {
 
-        tiaSpeak( "This tutorial is nearly over, but you can ask some questions now. When you are finished, click the 'finish class' button on the top right?", needSendTTS=true, quadBtnFunc )
+        tiaSpeak( "This tutorial is nearly over, but you can ask some questions now. When you are finished, click the 'finish class' button on the top right.", needSendTTS=true, quadBtnFunc )
 
     }, tiaTimings.speechBubbleFadeOutDuration * 2 )
 

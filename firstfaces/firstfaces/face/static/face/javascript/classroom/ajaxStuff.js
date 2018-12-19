@@ -2,6 +2,9 @@
 // text is string and tiaSpeaker is true if it is tia speaking, false if student
 function sendTTS( text, tiaSpeaker, caller ) {
 
+    synthesisObject.ttsServerFault = false;
+    console.log('text:', text);
+
     // checks if speech has arrived from server
     synthesisObject.gotNewSpeech = false;
 
@@ -23,30 +26,39 @@ function sendTTS( text, tiaSpeaker, caller ) {
         },
         success: function(json) {
 
-            //var synthAudioURL = "https://erle.ucd.ie/" + json.synthURL;
-            var synthAudioURL = "http://127.0.0.1:8000/" + json.synthURL;
-            synthesisObject.synthAudio = document.getElementById( 'synthClip' );
-            synthesisObject.synthAudio.src = synthAudioURL;
+            if ( json.synthURL === 'fault' ) {
 
-            // now this is true, other functions waiting on it can continue
-            synthesisObject.gotNewSpeech = true;
-            
-            if ( tiaSpeaker ) {
+                synthesisObject.gotNewSpeech = true;
+                synthesisObject.ttsServerFault = true;
 
             } else {
 
-                // listen is when the user click the listen button so want the audio to play asap
-                if ( caller === "listen" ) {
+                //var synthAudioURL = "https://erle.ucd.ie/" + json.synthURL;
+                var synthAudioURL = "http://127.0.0.1:8000/" + json.synthURL;
+                synthesisObject.synthAudio = document.getElementById( 'synthClip' );
+                synthesisObject.synthAudio.src = synthAudioURL;
 
-                    setTimeout( function() {
-
-                        synthesisObject.synthAudio.play();
-
-                    }, 500 );
+                // now this is true, other functions waiting on it can continue
+                synthesisObject.gotNewSpeech = true;
+                
+                if ( tiaSpeaker ) {
 
                 } else {
-                
-                    console.log('talk speech synth made');
+
+                    // listen is when the user click the listen button so want the audio to play asap
+                    if ( caller === "listen" ) {
+
+                        setTimeout( function() {
+
+                            synthesisObject.synthAudio.play();
+
+                        }, 500 );
+
+                    } else {
+                    
+                        console.log('talk speech synth made');
+
+                    }
 
                 }
 

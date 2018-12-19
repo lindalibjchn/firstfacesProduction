@@ -200,7 +200,7 @@ def waiting(request):
         schedule_dict[ 'upcomingClass' ] = next_class
         schedule_dict[ 'upcomingClassAfterToday' ] = next_class_after_today
         # check if in class or during class
-        sessions = Session.objects.filter( learner=request.user )
+        sessions = Session.objects.filter( learner=request.user ).filter( tutorial=False )
         # returns boolean
         schedule_dict[ 'class_already_done_today' ] = json.dumps( get_class_already_done_today( sessions ) )
         schedule_dict[ 'in_class_now' ], schedule_dict[ 'session_id' ] = get_in_class_now( sessions )
@@ -652,12 +652,17 @@ def tts(request):
         speaking_rate = speaking_rate_designated,
         )
 
-    response = client.synthesize_speech(input_text, voice, audio_config)
+    try:
+        response = client.synthesize_speech(input_text, voice, audio_config)
 
-    synthURL = 'media/synths/session' + session_id + '_' + str(int(time.mktime((timezone.now()).timetuple()))) + '.wav'
-    with open( os.path.join(settings.BASE_DIR, synthURL ), 'wb') as out:
-        out.write(response.audio_content)
+        synthURL = 'media/synths/session' + session_id + '_' + str(int(time.mktime((timezone.now()).timetuple()))) + '.wav'
+        with open( os.path.join(settings.BASE_DIR, synthURL ), 'wb') as out:
+            out.write(response.audio_content)
     
+    # if problem at Google's server end
+    except:
+        synthURL = 'fault'
+
     # if they are listening to something they typed, want to keep note of it. If they listen and try to speak again, then the change in pronunciation could be useful for pronunciation training
 
     response_data = {

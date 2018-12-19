@@ -217,7 +217,7 @@ def get_number_of_current_live_sessions():
     # get all sessions currently underway
     sessions_no_end_time = Session.objects.filter(end_time=None)
     remove_those_not_ended_by_user = sessions_no_end_time.filter(start_time__gte=timezone.now()-datetime.timedelta(hours=2))
-    remove_tutorials = remove_those_not_ended_by_user.filter(learner__profile__tutorial_complete=True)
+    remove_tutorials = remove_those_not_ended_by_user.filter(tutorial=False)
     return remove_tutorials.count()
 
 def fill_sessions_dict():
@@ -235,9 +235,7 @@ def fill_sessions_dict():
     sess_id_to_username = {}
     for s in cur_sessions:
         
-        # check that user has completed tutorial, or dont want session to be shown
-        prof = Profile.objects.get(learner=s.learner)
-        if prof.tutorial_complete:
+        if s.tutorial == False:
 
             if s.start_time > timezone.now() - datetime.timedelta(hours=1):
             
@@ -399,7 +397,7 @@ def get_prev_sessions( user ):
 
     for sess in all_sessions:
 
-        if sess.topic != "tutorial":
+        if not sess.tutorial:
 
             sents = PermSentence.objects.filter(session=sess).order_by('pk')
             sentences = []

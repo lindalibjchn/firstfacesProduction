@@ -41,7 +41,15 @@ function delayForListening( text ) {
     
     } else {
 
-        speechDuration = synthesisObject.synthAudio.duration;
+        if ( synthesisObject.ttsServerFault ) {
+         
+            speechDuration = Infinity;
+
+        } else {
+
+            speechDuration = synthesisObject.synthAudio.duration;
+
+        }
 
     }
 
