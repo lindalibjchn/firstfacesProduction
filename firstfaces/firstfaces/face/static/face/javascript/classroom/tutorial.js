@@ -771,6 +771,8 @@ function greeting15() {
 
                 tiaSpeak( "It is a difficult sentence isn't it! Ok, now look at the green 'play' button on the bottom right.", needSendTTS=true, function() {
                     
+                    $('#talkBtn').prop( 'disabled', false );
+                    $('#talkBtn').off( 'click' );
                     hideTextStuff();
 
                     setTimeout( function() {
