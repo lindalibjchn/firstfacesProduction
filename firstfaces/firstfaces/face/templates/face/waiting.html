@@ -96,7 +96,15 @@
 
                 <h2 class="book-title">Today's News Article</h2>
 
-                <h4 id="articleTitleCont"><a href="{{ article_link }}" target="_blank" id="articleLink" >{{ headline }}</a></h4>
+                {% if news_article %}
+
+                    <h4 id="articleTitleCont"><a href="{{ article_link }}" target="_blank" id="articleLink" >{{ headline }}</a></h4>
+
+                {% else %}
+
+                    <h4 id="articleTitleCont"><p id="articleLink" >{{ headline }}</p></h4>
+
+                {% endif %}
 
             </div> 
 

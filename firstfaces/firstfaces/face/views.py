@@ -212,6 +212,7 @@ def waiting(request):
         user_profile = Profile.objects.get(learner=request.user)
         tutorial_complete = user_profile.tutorial_complete
 
+        news_article = True
         try:
             todays_news_article = NewsArticle.objects.get(date=date_now)
             headline = todays_news_article.title
@@ -219,6 +220,7 @@ def waiting(request):
         except:
             headline = "no article today"
             article_link = "#"
+            news_article = False
 
         context = {
 
@@ -231,6 +233,7 @@ def waiting(request):
             'headline': headline,
             'article_link': article_link,
             'no_live_sessions': no_live_sessions,
+            'news_article': news_article,
 
         }
 
