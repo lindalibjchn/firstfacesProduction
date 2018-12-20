@@ -271,17 +271,23 @@ def class_time(request, session_id):
                 tutorial_complete = Profile.objects.get(learner=request.user).tutorial_complete
                 try:
                     all_sesss = Session.objects.filter(learner=request.user)
-                    recent_sesss = all_sesss.filter(start_time__gte=sess.start_time-datetime.timedelta(days=14)).order_by('-pk')
+                    recent_sesss = all_sesss.filter(start_time__gte=sess.start_time-datetime.timedelta(days=30)).filter(tutorial=False).order_by('-pk')
+                    print('recent_sesss:', recent_sesss)
                     if len(recent_sesss) > 1:
                         
                         prev_topic = recent_sesss[1].topic
-                        if prev_topic == "tutorial":
-                            first_full_class = True
-                        else:
-                            prev_emotion = recent_sesss[1].learner_emotion
-                            if prev_topic == 'emotion':
-                                prev_topic = 'feeling ' + prev_emotion
-                            prev_score = recent_sesss[1].score
+                        prev_emotion = recent_sesss[1].learner_emotion
+                        if prev_topic == 'emotion':
+                            prev_topic = 'feeling ' + prev_emotion
+                        prev_score = recent_sesss[1].score
+                    elif len( recent_sesss ) == 1:
+                        prev_topic = recent_sesss[0].topic
+                        prev_emotion = recent_sesss[0].learner_emotion
+                        if prev_topic == 'emotion':
+                            prev_topic = 'feeling ' + prev_emotion
+                        prev_score = recent_sesss[0].score
+                    else:
+                        first_full_class = True
 
                 except:
                     pass

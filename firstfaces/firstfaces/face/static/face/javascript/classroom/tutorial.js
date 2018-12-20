@@ -751,7 +751,7 @@ function greeting15() {
         if ( textOnLaptop === "she sells seashells by the seashore" || textOnLaptop === "she sells seashells by the seashore." ) {
             
             hideTextStuff();
-            tiaSpeak( "That was brilliant! Well done. Ok, now look at the green 'play' button on the bottom right.", needSendTTS=true, function() {
+            tiaSpeak( "That was brilliant! If you have trouble with a word or phrase, use the robot button to hear the computer's voice, and then try it yourself. Ok, now look at the green 'play' button on the bottom right.", needSendTTS=true, function() {
 
                 $('#talkBtn').prop( 'disabled', false );
                 $('#talkBtn').off( 'click' );

@@ -4,7 +4,7 @@ function appendExchange( sentenceMeta, node ) {
     createExchange( sentenceMeta );
 
     // change background colour iand other stuf if correct/wrongetc.
-    if ( sentenceMeta.judgement === "C" ) {
+    if ( sentenceMeta.judgement === "C" || sentenceMeta.judgement === "P"  ) {
 
         sentenceBox.className += " correctSent";
 

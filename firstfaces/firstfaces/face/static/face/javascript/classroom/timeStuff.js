@@ -6,7 +6,7 @@ function calcTimeRemaining() {
     console.log('time passed minutes:', timePassedMinutes);
 
     // this classTimeMinutes is defined in variables
-    let timeRemainingMinutes = CLASS_TIME_MINUTES - timePassedMinutes + 999999999;
+    let timeRemainingMinutes = CLASS_TIME_MINUTES - timePassedMinutes;
 
     return timeRemainingMinutes;
 
@@ -26,6 +26,7 @@ function showTimeRemaining() {
     } else if ( timeRemainingMinutes > -5 ) {
 
         $('#timeLeft').text( "last sentence" );
+        $('#timeLeft').css( "color", "red" );
         classVariableDict.lastSentToBeSent = true;
 
     } else {

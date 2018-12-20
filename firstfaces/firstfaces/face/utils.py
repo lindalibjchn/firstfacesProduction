@@ -316,7 +316,7 @@ def get_scores( sess_id ):
     if no_sentences == 0:
         return [0,0,0]
 
-    correct_sentences = [s for s in sentences if s.judgement in ['C', 'B']]
+    correct_sentences = [s for s in sentences if s.judgement in ['C', 'B', 'P']]
     no_correct_sentences = len(correct_sentences)
 
     if no_correct_sentences == 0:
@@ -345,7 +345,7 @@ def get_scores( sess_id ):
             
             if i != 0:
 
-                if t_s.judgement in ['C', 'B']:
+                if t_s.judgement in ['C', 'B', 'P']:
 
                     if sentences[i-1].try_again:
 

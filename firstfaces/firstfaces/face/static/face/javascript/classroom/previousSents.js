@@ -3,14 +3,18 @@ function loadPrevSents( callback ) {
     let node = document.getElementById("prevSents");
     node.innerHTML = '';
 
-    for ( var i in classVariableDict.sentences ) {
+    if ( Object.keys( classVariableDict.sentences ).length > 0 ) {
 
-        appendExchange( classVariableDict.sentences[ i ], node );
+        for ( var i in classVariableDict.sentences ) {
+
+            appendExchange( classVariableDict.sentences[ i ], node );
+
+        }
+
+        // have to delay so page loads to get scroll height in the callback function
+        setTimeout(callback, 2000);
 
     }
-
-    // have to delay so page loads to get scroll height in the callback function
-    setTimeout(callback, 2000);
 
 }
 
@@ -20,11 +24,7 @@ function appendExchange( sentenceMeta, node ) {
         createExchange( sentenceMeta );
 
         // change background colour iand other stuf if correct/wrongetc.
-        if ( sentenceMeta.judgement === "C" ) {
-
-            sentenceBox.className += " correctSent";
-        
-        } else if ( sentenceMeta.judgement === "P" ) {
+        if ( sentenceMeta.judgement === "C" || sentenceMeta.judgement === "P" ) {
 
             sentenceBox.className += " correctSent";
         

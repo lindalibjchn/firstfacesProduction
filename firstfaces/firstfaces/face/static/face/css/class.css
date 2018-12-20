@@ -706,12 +706,14 @@ button:active {
 
 #speakingWordsLaptop {
 
+    display: none;
     top: 12%;
 
 }
 
 #speakingWordsTia {
 
+    display: none;
     top: 47%;
 
 }

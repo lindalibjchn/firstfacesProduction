@@ -168,9 +168,11 @@ function sendPromptToServer() {
 
     } else if ( sentencesNeedJudgement[ 0 ].judgement === "B" ) {
 
-        if ( wrongIndexesForServer === null || promptText === "" ) {
+        console.log( 'wrongIndexesForServer.length:', wrongIndexesForServer.length );
 
-            alert( "need to input indexes and prompt for Better" );
+        if ( wrongIndexesForServer === null || promptText === "" || wrongIndexesForServer.length > 1 ) {
+
+            alert( "need to input one set of indexes and a prompt for Better" );
             return false;
 
         }

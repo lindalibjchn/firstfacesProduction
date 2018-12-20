@@ -88,6 +88,7 @@ class PermSentence(models.Model):
     JUDGEMENT_CHOICES = (
         ('C', 'correct'),
         ('B', 'better'),
+        ('P', 'prompt'),
         ('M', 'mean_by'),
         ('I', 'incorrect'),
         ('D', 'dunno'),
