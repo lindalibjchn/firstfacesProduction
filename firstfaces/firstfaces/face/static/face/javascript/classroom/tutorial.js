@@ -871,7 +871,7 @@ function greeting17() {
 
 function quadBtnFunc() {
 
-    classVariableDict.quadBtnFuncCount += 1;
+    //classVariableDict.quadBtnFuncCount += 1;
 
     showQuadBtn( 
 
@@ -892,7 +892,7 @@ function greeting18() {
 
     removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
     removeSingleBtn();
-    classVariableDict.tutorialStep = 18;
+    classVariableDict.tutorialStep = 99;
     
     setTimeout( function() {
 

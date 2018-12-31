@@ -317,6 +317,9 @@ def get_scores( sess_id ):
         return [0,0,0]
 
     correct_sentences = [s for s in sentences if s.judgement in ['C', 'B', 'P']]
+
+    print('correct_sentences:', correct_sentences);
+
     no_correct_sentences = len(correct_sentences)
 
     if no_correct_sentences == 0:
@@ -356,6 +359,8 @@ def get_scores( sess_id ):
     raw_score = ratio_correct * av_correct_sent_length * 10;
     try_again_bonus = math.ceil(ratio_successful_try_again * 5)
     emotion_bonus = math.ceil(av_correct_emotion * 5)
+
+    print('raw score in utils:', raw_score)
 
     return [raw_score, try_again_bonus, emotion_bonus]
         

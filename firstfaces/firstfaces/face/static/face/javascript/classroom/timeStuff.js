@@ -3,7 +3,7 @@ function calcTimeRemaining() {
     let timeNow = new Date();
     let timePassed = timeNow - classVariableDict.start_time;
     let timePassedMinutes = Math.ceil( -60 + timePassed / 60000  );	
-    console.log('time passed minutes:', timePassedMinutes);
+    //console.log('time passed minutes:', timePassedMinutes);
 
     // this classTimeMinutes is defined in variables
     let timeRemainingMinutes = CLASS_TIME_MINUTES - timePassedMinutes;
@@ -15,7 +15,7 @@ function calcTimeRemaining() {
 // will call this with every blink, cuz nothing else goin on when blinking and relatively frequent :-)
 function showTimeRemaining() {
 
-    console.log('in showTimeRemaining');
+    //console.log('in showTimeRemaining');
 
     let timeRemainingMinutes = calcTimeRemaining();
 
@@ -33,13 +33,47 @@ function showTimeRemaining() {
 
         classVariableDict.classOver = true;
         $('#timeLeft').text( "class finished" );
-        endClass();
+
+        // just delete class if no sentences when finished
+        if ( classVariableDict.id_of_last_sent === null ) {
+
+            endClassNoSentences()
+
+        } else {
+
+            endClass();
+
+        }
 
     }
 
 }
 
+function endClassNoSentences() {
+
+    $('#finishClassBtn').off('click');
+
+    let sessId = classVariableDict.session_id;
+    $.ajax({
+        url: "/delete_session",
+        type: "GET",
+        data: {'sessId': sessId},
+        success: function(json) {
+
+            location.reload( true );
+
+        },
+        error: function() {
+            console.log("that's wrong");
+        },
+        
+    });
+
+}
+
 function endClass() {
+
+    $('#finishClassBtn').off('click');
 
     let sessId = classVariableDict.session_id;
     $.ajax({
@@ -50,36 +84,36 @@ function endClass() {
 
             classVariableDict.score = json.score
 
-	    if ( classVariableDict.first_ever_class ) {
+            if ( classVariableDict.first_ever_class ) {
 
-		synthesisObject.text = "Well done today! Your first ever score is " + ( classVariableDict.score ).toString() + ". I hope to see you again for a second class!";
+                synthesisObject.text = "Well done today! Your first ever score is " + ( classVariableDict.score ).toString() + ". I hope to see you again for a second class!";
 
-	    } else {
+            } else {
 
-		    if ( classVariableDict.score > classVariableDict.prev_score ) {
-		    
-			let improvement = classVariableDict.score - classVariableDict.prev_score;
-			
-			let praise = "";
-			if ( improvement >= 5 ) {
+                if ( classVariableDict.score > classVariableDict.prev_score ) {
+                
+                    let improvement = classVariableDict.score - classVariableDict.prev_score;
+                    
+                    let praise = "";
+                    if ( improvement >= 5 ) {
 
-			    praise = " You are improving a lot! ";
+                        praise = " You are improving a lot! ";
 
-			} else if ( improvement >= 10 ) {
+                    } else if ( improvement >= 10 ) {
 
-			    praise = " You have improved so much! ";
-			
-			}
+                        praise = " You have improved so much! ";
+                    
+                    }
 
-			synthesisObject.text = "Well done today! your score is " + ( classVariableDict.score ).toString() + ". That is better than last time by " + improvement.toString() + " points." + praise + "I look forward to seeing you again soon!";
-		    
-		    } else {
+                    synthesisObject.text = "Well done today! your score is " + ( classVariableDict.score ).toString() + ". That is better than last time by " + improvement.toString() + " points." + praise + "I look forward to seeing you again soon!";
+                    
+                } else {
 
-			synthesisObject.text = "Well done today! your score is " + ( classVariableDict.score ).toString() +  ". I look forward to seeing you again soon!";
-		    
-		    }
+                    synthesisObject.text = "Well done today! your score is " + ( classVariableDict.score ).toString() +  ". I look forward to seeing you again soon!";
+                
+                }
 
-	    }
+            }
 
             // prepare speech 
             synthesisObject.pitch = 0;
@@ -140,11 +174,11 @@ function goodbyeTalk() {
                 
                 location.reload( true );
                 
-            }, 2000 )
+            }, 5000 )
 
         });
         
-    }, 1000);
+    }, 1500);
 
 }
 

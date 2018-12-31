@@ -40,6 +40,10 @@ def out_or_in(request):
 
 def entrance(request):
 
+    if request.user.is_authenticated:
+
+        return redirect('waiting')
+
     form = UserForm()
     sign_up_form = SignUpForm()
     sign_up_user_form = SignUpUserForm()
@@ -262,9 +266,11 @@ def class_time(request, session_id):
                     todays_news_article = NewsArticle.objects.get(date=date_now)
                     headline = todays_news_article.title
                     article_link = todays_news_article.link
+                    article = True
                 except:
                     headline = "no article today"
                     article_link = "#"
+                    article = False
 
                 # get previous session details
                 prev_topic = None
@@ -412,7 +418,8 @@ def class_time(request, session_id):
                 context = {
 
                     'class_variable_dict': json.dumps(class_variable_dict), 
-                    'class': True # for the navbar to know we are in class
+                    'class': True, # for the navbar to know we are in class
+                    'article': article
 
                 }
 
@@ -628,7 +635,10 @@ def tts(request):
     caller = request.GET['caller']
     blob_no_text = json.loads(request.GET['blob_no_text'])
     blob_no_text_sent_id = request.GET['blob_no_text_sent_id']
-    gender = request.GET['gender']
+    try:
+        gender = request.GET['gender']
+    except:
+        gender = 'F'
 
     if tia_speaker:
 
@@ -839,6 +849,24 @@ def check_prompt_indexes(request):
 
     return JsonResponse(response_data)    
 
+def delete_session(request):
+
+    try:
+
+        session_id = int(request.GET['sessId'])
+
+        sess = Session.objects.get(pk=session_id)
+        sess.delete()
+
+    except:
+
+        pass
+
+    response_data = {
+
+    }
+
+    return JsonResponse(response_data)    
 def store_class_over(request):
 
     session_id = int(request.GET['sessId'])

@@ -25,7 +25,7 @@ function resetTranscripts() {
 
 }
 
-var recognition// put here so can call in cliiping occurs
+var recognition// put here so can call in clipping occurs
 var recorder15sTimeout;
 var mediaRecorder;
 var chunks;
@@ -52,7 +52,15 @@ function readyBtns() {
             
             } else {
 
-                endClass();
+                if ( classVariableDict.id_of_last_sent === null ) {
+                
+                    endClassNoSentences()
+
+                } else {
+
+                    endClass();
+
+                }
                 
             }
 
@@ -64,7 +72,7 @@ function readyBtns() {
 
             } else {
     
-                //window.location = "https://erle.ucd.ie/waiting"
+                //window.location.href = "https://erle.ucd.ie/waiting"
                 window.location.href = "http://127.0.0.1:8000/waiting"
 
             }

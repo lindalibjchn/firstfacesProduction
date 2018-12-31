@@ -328,7 +328,7 @@ function showContinueOrNew() {
     $('#newBtn').on( 'click', function() { 
     
         $('#continueNewChoices').fadeOut( tiaTimings.speechBubbleFadeOutDuration );
-        setTimeout( showTopicChoices, tiaTimings.speechBubbleFadeInDuration );
+        setTimeout( showTopicChoices, tiaTimings.speechBubbleFadeInDuration * 2 );
 
     } );
 
@@ -341,7 +341,7 @@ function showTopicChoices() {
     // allow topics to be clickable and follow logic depending on their needs
     $('#myChoice').on( 'click', showChoiceTextInput );
     $('#myEmotion').on( 'click', function() { storeTopic( 'emotion' ) } );
-    $('#todaysNewsArticle').on( 'click', function() { storeTopic( 'news: ' + classVariableDict['headline'] ) } );
+    $('#todaysNewsArticle').on( 'click', askIfReadNews );
 
     $('#topicChoices').fadeIn( tiaTimings.speechBubbleFadeInDuration );
 
@@ -364,7 +364,7 @@ function showChoiceTextInput() {
 
 function getOwnTopicFromTextbox() {
 
-    removeSpeechBubble();
+    removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
 
     let ownTopic = document.getElementById( "topicChoiceInput" ).value
     
@@ -373,6 +373,46 @@ function getOwnTopicFromTextbox() {
     setTimeout( function() { storeTopic( ownTopic ) }, 1000 );
 
 }
+
+function askIfReadNews() {
+    
+    removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
+    $('#topicChoices').fadeOut( tiaTimings.speechBubbleFadeInDuration );
+
+    setTimeout( function() {
+
+        tiaSpeak( "Did you read today's article? It's title is: '" + classVariableDict.headline + "'", needSendTTS=true, function() { 
+            
+            showDoubleBtn( "Yes, I read it", "no, I didn't read it", 
+                    
+                function(){ 
+                    
+                    removeDoubleBtn();
+                    storeTopic( 'news: ' + classVariableDict.headline ) 
+                
+                },
+
+                function(){ tellNewsTitle() } ) 
+        
+        } );
+
+    }, tiaTimings.speechBubbleFadeOutDuration * 2 );
+
+}
+
+function tellNewsTitle() {
+
+    removeDoubleBtn();
+    removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
+
+    setTimeout( function() {
+
+        tiaSpeak( "You need to read the article before coming to class. In the waiting area, if you click the laptop, you can see today's article. Click 'finish class' on the top right to go back to the waiting area. Read the article and then start the class again.", needSendTTS=true )
+            
+    }, tiaTimings.speechBubbleFadeOutDuration * 2 );
+
+}
+
 
 function storeTopic( topicChoice ) {
 
