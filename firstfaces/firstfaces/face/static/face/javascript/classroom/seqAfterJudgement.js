@@ -67,7 +67,7 @@ function runAfterJudgement() {
         synthesisObject.speaking_rate = 0.8;
         // delay for moving back to laptop and showing sent in prevSents
         //let delay = 5000;
-        var text;
+        //var text;
         if ( classVariableDict.last_sent.judgement === "B" ) {
 
             prePrepareForPromptSpeech();

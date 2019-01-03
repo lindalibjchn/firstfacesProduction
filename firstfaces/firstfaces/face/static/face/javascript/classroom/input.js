@@ -226,7 +226,7 @@ function goToThinkingPos() {
 var wordThinkingCount = 0;
 function showTiaThinkingOverWords() {
 
-    tiaTimings.wordFade = 300;
+    tiaTimings.wordFade = 200;
 
     if ( wordThinkingCount % 2 === 0 ) {
 
@@ -264,7 +264,7 @@ function showTiaThinkingOverWords() {
     }
 
     let wordLength = synthesisObject.wordList[ wordThinkingCount ].length
-    let wordDelay = tiaTimings.wordFade + wordLength * tiaTimings.wordFade / 2;
+    let wordDelay = tiaTimings.wordFade + wordLength * tiaTimings.wordFade / 3;
     wordThinkingCount += 1;
 
     if ( wordThinkingCount < synthesisObject.wordList.length ) {
@@ -293,7 +293,7 @@ function showTiaThinkingOverWords() {
 
                     }
 
-                }, 2500 );
+                }, 1000 );
 
             } else {
 
@@ -301,7 +301,7 @@ function showTiaThinkingOverWords() {
 
             }
 
-        }, wordDelay )
+        }, wordDelay * 2 )
 
     }
 

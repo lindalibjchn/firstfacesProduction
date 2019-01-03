@@ -81,7 +81,7 @@ def sign_up(request):
 
     nationality = request.GET['nationality']
     language = request.GET['language']
-    living_now = request.GET['language']
+    living_now = request.GET['living_now']
     born = request.GET['born']
     gender = request.GET['gender']
     education = request.GET['education']
