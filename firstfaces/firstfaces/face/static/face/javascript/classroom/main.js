@@ -8,8 +8,8 @@ $(window).on( 'load', function() {
     readyBtns();
 
     //fill prevSents
-    loadPrevSents( scrollBottom );
-    
+    loadPrevSents( scrollBottom );   
+
 });
 
 function resetTranscripts() {

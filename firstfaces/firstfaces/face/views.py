@@ -753,7 +753,7 @@ def check_judgement(request):
     count = 0;
     while True:
 
-        print('in while loop')
+        print('in check judgement while loop')
         time.sleep(1)
         count += 1
 
@@ -799,40 +799,42 @@ def check_prompt_indexes(request):
 
     sent_id = int(request.GET['sentId'])
 
-    p_count = 0;
-    while True:
+    received_prompt_n_ind = False
 
-        print('in while loop')
-        time.sleep(1)
-        p_count += 1
+    # p_count = 0;
+    # while True:
 
-        s_new = Sentence.objects.get(pk=sent_id)
-        
-        if s_new.judgement == "B":
+        # print('in while loop')
+        # time.sleep(1)
+        # p_count += 1
 
-            if s_new.indexes != None:
+    s_new = Sentence.objects.get(pk=sent_id)
+    
+    if s_new.judgement == "B":
 
-                received_prompt_n_ind = True
-                break
+        if s_new.indexes != None:
 
-        elif s_new.judgement == "P":
+            received_prompt_n_ind = True
+            # break
 
-            if s_new.prompt != None:
+    elif s_new.judgement == "P":
 
-                received_prompt_n_ind = True
-                break
+        if s_new.prompt != None:
 
-        elif s_new.judgement == "M":
+            received_prompt_n_ind = True
+            # break
 
-            if s_new.indexes != None:
+    elif s_new.judgement == "M":
 
-                received_prompt_n_ind = True
-                break
+        if s_new.indexes != None:
 
-        elif p_count == 10:
+            received_prompt_n_ind = True
+            # break
 
-            received_prompt_n_ind = False
-            break
+        # elif p_count == 10:
+
+            # received_prompt_n_ind = False
+            # break
 
     sent_meta = {
         'sent_id': s_new.id,

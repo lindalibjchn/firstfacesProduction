@@ -283,6 +283,7 @@ function checkJudgement( sentId ) {
 
 }
 
+classVariableDict.promptNINdexesCount = 0;
 function checkForPromptNIndexes( sentId ) {
 
     $.ajax({
@@ -295,25 +296,76 @@ function checkForPromptNIndexes( sentId ) {
             
             if ( json.sent_meta.receivedPromptNIndexes ) {
 
-                console.log('got prompt n indexes');
-                promptNIndexesReceived( json.sent_meta )
+                if ( classVariableDict.promptNIndexesReceived === false ) {
 
-                if ( classVariableDict.lastSentToBeSent ) {
+                    console.log('got prompt n indexes');
+                    promptNIndexesReceived( json.sent_meta )
 
-                    classVariableDict.classOver = true;
+                    if ( classVariableDict.lastSentToBeSent ) {
+
+                        classVariableDict.classOver = true;
+
+                    }
 
                 }
             
             } else {
 
                 console.log('checking for prompt n indexes again');
-                checkForPromptNIndexes( sentId );
+                classVariableDict.promptNINdexesCount += 1;
+
+                if ( classVariableDict.promptNINdexesCount < 15 ) {
+
+                    setTimeout( function() {
+
+                        checkForPromptNIndexes( sentId );
+
+                    }, 2000 );
+
+                } else {
+
+                    setTimeout( function() {
+
+                        synthesisObject.text = "Sorry, my message hasn't come across the internet quickly enough. Please continue."
+
+                        tiaSpeak( synthesisObject.text, needSendTTS=true, function() {
+                         
+                            setTimeout( function() {
+                                
+                                returnToLaptop( ' ' );
+
+                            }, tiaTimings.delayBeforeReturnToLaptop );
+
+                        })
+
+
+                    }, 2000 )
+
+                }
 
             }
 
         },
         error: function() {
-            alert("error awaiting prompt n indexes");
+
+            setTimeout( function(){
+            
+                console.log("error awaiting prompt n indexes");
+        
+                synthesisObject.text = "Sorry, my message hasn't come across the internet quickly enough. Please continue."
+
+                tiaSpeak( synthesisObject.text, needSendTTS=true, function() {
+                 
+                    setTimeout( function() {
+                        
+                        returnToLaptop( ' ' );
+
+                    }, tiaTimings.delayBeforeReturnToLaptop );
+
+                })
+
+            }, 10000 )
+
         },
 
     });
