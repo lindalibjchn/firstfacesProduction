@@ -1,12 +1,16 @@
 .fa-angle-double-left {
 
     float: right;
+    color: green;
+    margin-top: 10px;
 
 }
 
 .fa-angle-double-right {
 
     float: left;
+    color: green;
+    margin-top: 10px;
 
 }
 
@@ -25,7 +29,7 @@
     height: 100%;
     background: rgba( 0, 0, 0, 0.3 );
     position: absolute;
-    display: none;
+    /*display: none;*/
     
 }
 
@@ -72,7 +76,7 @@
 
 #sentencesBook {
 
-    display: none;
+    /*display: none;*/
 
 }
 

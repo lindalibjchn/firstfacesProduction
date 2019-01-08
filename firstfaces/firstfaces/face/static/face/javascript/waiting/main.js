@@ -6,7 +6,9 @@ $(window).on( 'load', function() {
 
     // gets session id's in lit to order the calling of sessions from the sessionsDict
     getSessionsIdList();
-    insertChart();
+    
+    // insert chart for last 3 months first (pos 0 in list"
+    insertChart( 0 );
     
     // this is for developing the sentences book
     //$('#bookContentBackground').fadeIn( 1000 ); 
@@ -18,6 +20,30 @@ $(window).on( 'load', function() {
     $('#whatIsScoresBtn').hover( showScoresExpl, hideScoresExpl );
 
     $('#tutorialBtn').on( 'click', function(){doDoor(true)} );
+
+
+    $('#leftScroll').on( 'click', function(){
+        
+        if ( earliestThreeMonths === false ) {
+
+            insertChart( sentencesMonthIndex + 1 );
+            sentencesMonthIndex += 1;
+
+        }
+
+    });
+
+    $('#rightScroll').on( 'click', function(){
+        
+        if ( sentencesMonthIndex > 0 ) {
+
+            insertChart( sentencesMonthIndex - 1 );
+            sentencesMonthIndex -= 1;
+
+        }
+
+    });
+
 
 });
 

@@ -424,11 +424,15 @@ def get_prev_sessions( user ):
                     'audio_files': a_s_ids
                 })
 
+            topic = sess.topic
+            if topic == 'emotion':
+                topic = 'feeling ' + sess.learner_emotion
+            
             sessions_dict[ sess.id ] = {
 
                 'score': sess.score,
                 'start_time': int(time.mktime((sess.start_time).timetuple())),
-                'topic': sess.topic,
+                'topic': topic,
                 'emotion': sess.learner_emotion,
                 'sentences': sentences
 

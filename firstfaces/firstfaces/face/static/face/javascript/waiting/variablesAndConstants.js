@@ -31,6 +31,8 @@ const doorSignPosZ = 0.02;
 const schedYMult = 0.11;
 
 var sessionId;
+var sentencesMonthIndex = 0;
+var earliestThreeMonths = false;
 
 var cameraObject = {
     currentState: "enter",

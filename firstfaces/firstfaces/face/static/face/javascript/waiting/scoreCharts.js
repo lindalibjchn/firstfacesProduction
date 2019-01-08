@@ -1,4 +1,13 @@
-function insertChart() {
+var resetCanvas = function(){
+ 	
+	$('#scoresChart').remove(); // this is my <canvas> element
+  	$('#chartOuterDiv').append('<canvas id="scoresChart"><canvas>');
+
+};
+
+function insertChart( period ) {
+
+    resetCanvas();
 
     var ctx = document.getElementById('scoresChart').getContext('2d');
     var chart = new Chart(ctx, {
@@ -7,7 +16,7 @@ function insertChart() {
 
         // The data for our dataset
         data: {
-            labels: getDates(),
+            labels: getDates( period ),
             datasets: [{
                 label: 'score',
                 backgroundColor: 'rgb(99, 255, 132)',
@@ -73,18 +82,41 @@ function insertChart() {
         }
     });
                 
-    function getDates() {
+    function getDates( indOfPeriod ) {
+
+        // indOfPeriod gives which 3 months to display. 0 is psat 3 months, 1 is 3-6- months previous etc.
+
+        let ThreeMonthsUnixTime = 90 * 24 * 60 * 60 * 1000; 
+
+        let curTime = new Date();
+        let timeEnd = curTime - indOfPeriod * ThreeMonthsUnixTime;
+        let timeStart = curTime - ( indOfPeriod + 1 ) * ThreeMonthsUnixTime;
+
+        let firstEverClassTime = sessionsDict[ sessionsDict.IDList[ sessionsDict.IDList.length - 1 ]].start_time * 1000;
+        console.log('firstEverClassTime:', firstEverClassTime);
+        if ( timeStart <= firstEverClassTime ) {
+
+            earliestThreeMonths = true;
+
+        }
+        
 
         dates = [];
         let ids = sessionsDict['IDList'];
         ids.forEach( function(e) {
         
-            let date = new Date(sessionsDict[e].start_time * 1000).toLocaleDateString("en-GB");
-            dates.unshift( date.substring(0, date.length - 5) );
-            console.log('dates:', dates);
+            let startTimeUnix = sessionsDict[e].start_time * 1000
+
+            if ( startTimeUnix <= timeEnd && startTimeUnix >= timeStart ) {
+
+                let date = new Date( startTimeUnix ).toLocaleDateString("en-GB");
+                dates.unshift( date.substring(0, date.length - 5) );
+
+            }
 
         })
 
+        console.log('dates:', dates);
         return dates;
 
     }
@@ -99,8 +131,8 @@ function insertChart() {
 
         })
 
+        console.log('scores:', scores);
         return scores;
-
 
     }
 
