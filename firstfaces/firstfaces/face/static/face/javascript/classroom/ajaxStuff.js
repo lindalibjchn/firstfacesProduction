@@ -324,9 +324,10 @@ function checkForPromptNIndexes( sentId ) {
 
                 } else {
 
+                    classVariableDict.promptNINdexesCount = 0;
                     setTimeout( function() {
 
-                        synthesisObject.text = "Sorry, my message hasn't come across the internet quickly enough. Please continue."
+                        synthesisObject.text = "Sorry, my message has take too long to come across the internet. Please continue."
 
                         tiaSpeak( synthesisObject.text, needSendTTS=true, function() {
                          
@@ -348,6 +349,7 @@ function checkForPromptNIndexes( sentId ) {
         },
         error: function() {
 
+            classVariableDict.promptNINdexesCount = 0;
             setTimeout( function(){
             
                 console.log("error awaiting prompt n indexes");

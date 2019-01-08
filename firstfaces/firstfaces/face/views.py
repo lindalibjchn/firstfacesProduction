@@ -413,6 +413,8 @@ def class_time(request, session_id):
                     'first_full_class': first_full_class,
                     'tutorial': sess.tutorial,
                     'tutorial_complete': tutorial_complete,
+                    'endClassSequenceStarted': False,
+
                 }
 
                 context = {

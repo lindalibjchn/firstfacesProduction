@@ -271,9 +271,11 @@ function returnToLaptop( sent ) {
 
             setTimeout( function () {
 
-                if ( classVariableDict.classOver ) {
+                if ( classVariableDict.classOver && classVariableDict.endClassSequenceStarted !== true ) {
 
+                    console.log('\n\n\nend class return to laptop tia looking at student\n\n\n');
                     endClass();
+                    classVariableDict.endClassSequenceStarted = true;
 
                 } else {
 
@@ -302,9 +304,11 @@ function returnToLaptop( sent ) {
                 
                 setTimeout( function() {
 
-                    if ( classVariableDict.classOver ) {
+                    if ( classVariableDict.classOver && classVariableDict.endClassSequenceStarted !== true ) {
 
+                        console.log('\n\n\nend class tia not looking at student\n\n\n');
                         endClass();
+                        classVariableDict.endClassSequenceStarted = true;
 
                     } else {
 

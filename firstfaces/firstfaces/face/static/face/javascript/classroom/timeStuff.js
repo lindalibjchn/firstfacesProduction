@@ -41,7 +41,12 @@ function showTimeRemaining() {
 
         } else {
 
-            endClass();
+            if ( classVariableDict.endClassSequenceStarted !== true ) {
+
+                endClass();
+                classVariableDict.endClassSequenceStarted = true;
+
+            }
 
         }
 

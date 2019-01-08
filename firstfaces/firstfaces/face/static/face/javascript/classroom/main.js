@@ -58,7 +58,13 @@ function readyBtns() {
 
                 } else {
 
-                    endClass();
+                    if ( classVariableDict.endClassSequenceStarted !== true ) {
+
+                        console.log('\n\n\nend class finish button\n\n\n');
+                        endClass();
+                        classVariableDict.endClassSequenceStarted = true;
+
+                    }
 
                 }
                 
