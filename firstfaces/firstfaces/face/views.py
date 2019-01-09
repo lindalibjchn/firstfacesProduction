@@ -212,6 +212,10 @@ def waiting(request):
         # get dictionary of all previous sessions
         sessions_dict = get_prev_sessions( request.user )
 
+        # get dictionary of all previous wrong sentences for test
+        error_dict = get_all_wrong_sentences( request.user )
+        print('error dict:', error_dict)
+
         # check if user has completed tutorial
         user_profile = Profile.objects.get(learner=request.user)
         tutorial_complete = user_profile.tutorial_complete
@@ -231,6 +235,7 @@ def waiting(request):
             'schedule_dict': json.dumps(schedule_dict),
             'schedule_now': json.dumps(schedule_now),
             'sessions_dict': json.dumps(sessions_dict),
+            'error_dict': json.dumps(error_dict),
             'tutorial_complete': json.dumps(tutorial_complete),
             'waiting': True,
             'timeNow': time_now,
