@@ -76,7 +76,7 @@
 
 #sentencesBook {
 
-    /*display: none;*/
+    display: none;
 
 }
 
@@ -209,7 +209,7 @@
 
 #testsBook {
 
-    display: none;
+    /*display: none;*/
 
 }
 

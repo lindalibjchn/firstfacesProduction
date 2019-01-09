@@ -12,7 +12,7 @@ $(window).on( 'load', function() {
     
     // this is for developing the sentences book
     //$('#bookContentBackground').fadeIn( 1000 ); 
-    showSentencesBook();
+    //showSentencesBook();
 
     //$('.fa-angle-double-left').on( 'click', sessionLeft );
     //$('.fa-angle-double-right').on( 'click', sessionRight );
