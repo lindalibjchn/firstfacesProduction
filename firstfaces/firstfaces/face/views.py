@@ -8,7 +8,7 @@ from django.http import JsonResponse
 from .utils import *
 from django.utils import timezone
 import json
-from .models import Session, Sentence, AudioFile, Profile, NewsArticle, PostTalkTimings
+from .models import Session, Sentence, AudioFile, Profile, NewsArticle, PostTalkTimings, Test
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 import code
@@ -212,9 +212,8 @@ def waiting(request):
         # get dictionary of all previous sessions
         sessions_dict = get_prev_sessions( request.user )
 
-        # get dictionary of all previous wrong sentences for test
-        error_dict = get_all_wrong_sentences( request.user )
-        print('error dict:', error_dict)
+        # get scores of previous tests
+        prev_test_scores = [[int(time.mktime((t.finished_at).timetuple())), t.score] for t in Test.objects.filter(learner=request.user) if t.stage == 10]
 
         # check if user has completed tutorial
         user_profile = Profile.objects.get(learner=request.user)
@@ -230,12 +229,13 @@ def waiting(request):
             article_link = "#"
             news_article = False
 
+        print('prev_test_scores:', prev_test_scores)
+
         context = {
 
             'schedule_dict': json.dumps(schedule_dict),
             'schedule_now': json.dumps(schedule_now),
             'sessions_dict': json.dumps(sessions_dict),
-            'error_dict': json.dumps(error_dict),
             'tutorial_complete': json.dumps(tutorial_complete),
             'waiting': True,
             'timeNow': time_now,
@@ -243,6 +243,7 @@ def waiting(request):
             'article_link': article_link,
             'no_live_sessions': no_live_sessions,
             'news_article': news_article,
+            'prev_test_scores': json.dumps(prev_test_scores)
 
         }
 

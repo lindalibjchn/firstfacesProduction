@@ -87,8 +87,34 @@
 
             <div class="which-book" id="testsBook">
 
-                <h3 class="book-title">Tests</h3>
-                <p>Not yet available</p>
+                <div class="w3-row">
+                
+                        <h3 class="book-title">Tests</h3>
+                </div>
+                
+                <div class="w3-row test-chart-row">
+
+                    <i class="fa fa-3x fa-angle-double-left fa-angle" id="leftTestScroll"></i>
+
+                    <div id="testChartCont">
+
+                        <div id="testChartOuterDiv">
+
+                            <canvas id="testChart"></canvas>
+
+                        </div>
+                    
+                    </div>
+
+                    <i class="fa fa-3x fa-angle-double-right fa-angle" id="rightTestScroll"></i>
+
+                </div>
+
+                <div id="testBtnCont">
+
+                    <button id="startTestBtn" class="w3-btn w3-green w3-xxlarge">Start Test</button>
+
+                </div>
 
             </div> 
 
@@ -129,6 +155,7 @@
     var sessionsDict = {{ sessions_dict|safe }};
     var tutorialComplete = {{ tutorial_complete|safe }};
     var noLiveSessions = {{ no_live_sessions }};
+    var prevTestScores = {{ prev_test_scores }};
 </script>
 
 <!-- my own scripts -->

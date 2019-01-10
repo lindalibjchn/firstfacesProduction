@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Session, Available, Sentence, PermSentence, AudioFile, PermAudioFile, Profile, NewsArticle, PostTalkTimings, PermPostTalkTimings
+from .models import Session, Available, Sentence, PermSentence, AudioFile, PermAudioFile, Profile, NewsArticle, PostTalkTimings, PermPostTalkTimings, Test
 
 admin.site.register( Session )
 admin.site.register( Available )
@@ -11,3 +11,4 @@ admin.site.register( Profile )
 admin.site.register( NewsArticle )
 admin.site.register( PostTalkTimings )
 admin.site.register( PermPostTalkTimings )
+admin.site.register( Test )

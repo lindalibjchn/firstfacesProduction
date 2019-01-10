@@ -207,11 +207,65 @@
 
 }
 
+
+
+/*TESTS BOOK*/
+
 #testsBook {
 
     /*display: none;*/
 
 }
+
+#testChartCont {
+
+    height: 90%;
+
+}
+
+.test-chart-row {
+
+    height: 50%;
+    position: relative;
+
+}
+
+#testChartOuterDiv {
+
+    width: 50%;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto;
+
+}
+
+#leftTestScroll {
+
+    position: absolute;
+    left: 0;
+    top 0;
+
+}
+
+#rightTestScroll {
+
+    position: absolute;
+    /*right: 0;*/
+    /*top 0;*/
+
+}
+
+#testBtnCont {
+
+    height: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+/*NEWS BOOK*/
 
 #newsBook {
 

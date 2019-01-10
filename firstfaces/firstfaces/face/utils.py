@@ -440,45 +440,6 @@ def get_prev_sessions( user ):
                 
     return sessions_dict 
 
-def get_all_wrong_sentences( user ):
-
-    all_sessions = Session.objects.filter(learner=user)
-
-    sessions_dict = {}
-
-    for sess in all_sessions:
-
-        if not sess.tutorial:
-
-            sents = PermSentence.objects.filter(session=sess).filter(judgement='I').order_by('pk')
-            sentences = []
-
-            for s in sents:
-
-                sentences.append({
-                    'sent_id': s.id,
-                    'sentence': s.sentence, 
-                    'correction': s.correction, 
-                    'indexes': s.indexes,
-                })
-
-            topic = sess.topic
-            if topic == 'emotion':
-                topic = 'feeling ' + sess.learner_emotion
-            
-            sessions_dict[ sess.id ] = {
-
-                'score': sess.score,
-                'start_time': int(time.mktime((sess.start_time).timetuple())),
-                'topic': topic,
-                'emotion': sess.learner_emotion,
-                'sentences': sentences
-
-            }
-                
-    return sessions_dict 
-
-
 def check_if_username_is_unique( name ):
 
     if User.objects.filter(username=name).exists():

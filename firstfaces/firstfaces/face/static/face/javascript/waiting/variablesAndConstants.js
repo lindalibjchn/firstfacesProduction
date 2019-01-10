@@ -33,6 +33,8 @@ const schedYMult = 0.11;
 var sessionId;
 var sentencesMonthIndex = 0;
 var earliestThreeMonths = false;
+var testSentencesMonthIndex = 0;
+var testEarliestThreeMonths = false;
 
 var cameraObject = {
     currentState: "enter",

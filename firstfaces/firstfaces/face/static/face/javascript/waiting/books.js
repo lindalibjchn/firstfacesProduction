@@ -19,7 +19,6 @@ function showTestsBook() {
 
     $('#testsBook').fadeIn( 1000 ); 
 
-
 };
 
 function showSentencesBook() {

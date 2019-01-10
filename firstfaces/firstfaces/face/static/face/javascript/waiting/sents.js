@@ -14,7 +14,6 @@ function appendExchange( sentenceMeta, node ) {
         a_btn.className = "listen-synth-btn w3-button w3-green w3-circle";
         a_btn.sessID = sentenceMeta.sess_id;
         sentenceBox.appendChild( a_btn );
-
     
     } else if ( sentenceMeta.judgement === "I" ) {
 

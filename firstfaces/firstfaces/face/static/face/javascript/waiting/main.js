@@ -44,6 +44,28 @@ $(window).on( 'load', function() {
 
     });
 
+    $('#leftTestScroll').on( 'click', function(){
+        
+        if ( testEarliestThreeMonths === false ) {
+
+            insertTestChart( testSentencesMonthIndex + 1 );
+            testSentencesMonthIndex += 1;
+
+        }
+
+    });
+
+    $('#rightTestScroll').on( 'click', function(){
+        
+        if ( testSentencesMonthIndex > 0 ) {
+
+            insertTestChart( testSentencesMonthIndex - 1 );
+            testSentencesMonthIndex -= 1;
+
+        }
+
+    });
+
 
 });
 
