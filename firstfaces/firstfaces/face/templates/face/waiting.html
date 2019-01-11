@@ -90,29 +90,67 @@
                 <div class="w3-row">
                 
                         <h3 class="book-title">Tests</h3>
+                        
                 </div>
                 
-                <div class="w3-row test-chart-row">
+                <div id="testsEntrance">
 
-                    <i class="fa fa-3x fa-angle-double-left fa-angle" id="leftTestScroll"></i>
+                    <div class="w3-row arrows-row">
 
-                    <div id="testChartCont">
+                        <i class="fa fa-3x fa-angle-double-left fa-angle" id="leftTestScroll"></i>
 
-                        <div id="testChartOuterDiv">
+                        <i class="fa fa-3x fa-angle-double-right fa-angle" id="rightTestScroll"></i>
 
-                            <canvas id="testChart"></canvas>
-
-                        </div>
-                    
                     </div>
 
-                    <i class="fa fa-3x fa-angle-double-right fa-angle" id="rightTestScroll"></i>
+                    <div class="w3-row test-chart-row">
+
+                        <div id="testChartCont">
+
+                            <div id="testChartOuterDiv">
+
+                                <canvas id="testChart"></canvas>
+
+                            </div>
+                        
+                        </div>
+
+                    </div>
+
+                    <div id="testBtnCont">
+
+                        <button id="startTestBtn" class="w3-btn w3-green w3-xxlarge">Start Test</button>
+
+                    </div>
 
                 </div>
 
-                <div id="testBtnCont">
+                <div id="testQuestionsCont">
 
-                    <button id="startTestBtn" class="w3-btn w3-green w3-xxlarge">Start Test</button>
+                    <div id="testQuestionOuter">
+
+                        <div class="test-box-outer">
+
+                            <button class="w3-btn w3-red w3-large" id="hintBtn">hint</button>
+
+                            <div class="sentenceWaitingBox incorrectSent" id="wrongSent"></div>
+
+                        </div>
+
+
+                        <div class="test-box-outer">
+
+                            <textarea id="inputAnswer"></textarea>
+
+                        </div>
+
+                        <div class="test-box-outer">
+
+                            <button class="w3-btn w3-green w3-large" id="submitBtn">submit</button>
+
+                        </div>
+
+                    </div>
 
                 </div>
 
@@ -166,6 +204,7 @@
 <script src="{% static 'face/javascript/waiting/books.js' %}"></script>
 <script src="{% static 'face/javascript/waiting/main.js' %}"></script>
 <script src="{% static 'face/javascript/waiting/sents.js' %}"></script>
+<script src="{% static 'face/javascript/waiting/test.js' %}"></script>
 <script src="{% static 'face/javascript/waiting/scoreCharts.js' %}"></script>
 
 <!-- fonts -->

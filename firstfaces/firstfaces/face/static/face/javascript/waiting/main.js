@@ -21,6 +21,16 @@ $(window).on( 'load', function() {
 
     $('#tutorialBtn').on( 'click', function(){doDoor(true)} );
 
+    setupScrollBtns();
+
+    $('#startTestBtn').on( 'click', startTest );
+
+    // while developing
+    startTest();
+
+});
+
+function setupScrollBtns() {
 
     $('#leftScroll').on( 'click', function(){
         
@@ -66,8 +76,7 @@ $(window).on( 'load', function() {
 
     });
 
-
-});
+}
 
 function onMouseMove(event) {
     
