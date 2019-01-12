@@ -9,15 +9,48 @@ function startTest() {
 
 function loadTest() {
 
-    let wrongSents = getRandomTenWrongSentences();
+    testDict.sentences = getRandomTenWrongSentences();
+    fillQuestion( 0 );
+    testDict.question = 0;
+    testDict.totalScore = 0;
+    testDict.scoreThisSent = 10;
+    fillQuestionNos();
+    setupHintBtnEvent();
+
+}
+
+function fillQuestionNos() {
+
+    $('#testQuestionNo').text( (testDict.question + 1).toString() );
+    $('#testQuestionScoreThisSent').text( testDict.scoreThisSent.toString() + "/10" );
+    $('#testQuestionScoreTotal').text( testDict.totalScore.toString() + "/100" );
+
+}
+
+function setupHintBtnEvent() {
+ 
+    $('#hintBtn').show();
+    $('#hintBtn').on( 'click', function() {
+
+        $('#hintBtn').hide();
+        let highlightedSent = makeHighlightedSent( testDict.sentences[ testDict.question ] );
+        
+        console.log( 'highlightedSent:', highlightedSent );
+
+        $('#wrongSent').html( highlightedSent );
+    
+    });
+    
+};
+
+function fillQuestion( q ) {
+
 
     let wrongSentDiv = document.getElementById('wrongSent');
-
-    wrongSent.innerHTML = wrongSents[ 0 ].sentence;
-    $('#inputAnswer').prop('placeholder', wrongSents[0].sentence);
+    wrongSent.innerHTML = testDict.sentences[ q ].sentence;
+    $('#inputAnswer').text(testDict.sentences[ q ].sentence);
     $('#inputAnswer').focus();
 
-    
 }
 
 function getRandomTenWrongSentences() {
@@ -64,7 +97,7 @@ function getAllWrongSentences() {
 
         allSents.forEach( function( s ) {
 
-            if ( s.judgement === "I" ) {
+            if ( s.judgement === "I" && s.try_again === null ) {
 
                 allWrongSents.push( s );
 

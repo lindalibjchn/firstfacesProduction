@@ -36,6 +36,8 @@ var earliestThreeMonths = false;
 var testSentencesMonthIndex = 0;
 var testEarliestThreeMonths = false;
 
+var testDict = {};
+
 var cameraObject = {
     currentState: "enter",
     startCount: 0,

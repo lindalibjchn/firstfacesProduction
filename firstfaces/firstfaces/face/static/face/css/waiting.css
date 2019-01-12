@@ -312,6 +312,29 @@
 
 }
 
+.test-titles {
+
+    height: 100%;
+    border: 2px dashed red;
+
+}
+
+#testQuestionNo {
+
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+    border: 5px solid white;
+    background-color: green;
+    color: yellow;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 50px;
+    
+
+}
+
 #wrongSent {
 
     
@@ -321,6 +344,8 @@
 #hintBtn {
 
     /*float: right;*/
+    margin: 5px;
+    margin-left: 4%;
 
 }
 
