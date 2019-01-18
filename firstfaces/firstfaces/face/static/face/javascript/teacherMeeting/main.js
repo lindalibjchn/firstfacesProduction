@@ -414,7 +414,7 @@ function loadNextSentenceNeedingCorrection() {
 
             "<div class='wrong-sents-individual-sent' id='wrongSentNOW'>" +
                 
-                sentForCorrection.sentence + 
+               "&nbsp" +  sentForCorrection.sentence.substring( 1 ) + 
         
             "</div>"
 
@@ -438,7 +438,7 @@ function updateWrongSentences() {
             
                 "<div class='wrong-sents-individual-sent'>" +
                     
-                    sentencesNeedUrgentCorrection[ urgentS ].sentence + 
+                    "&nbsp" + sentencesNeedUrgentCorrection[ urgentS ].sentence.substring( 1 ) + 
             
                 "</div>" +
 
@@ -456,7 +456,7 @@ function updateWrongSentences() {
 
                 "<div class='wrong-sents-individual'>" + 
             
-                    sentencesMaybeNeedUrgentCorrection[ maybeUrgentS ].sentence + 
+                    "&nbsp" + sentencesMaybeNeedUrgentCorrection[ maybeUrgentS ].sentence.substring( 1 ) + 
                 
                 "</div>" +
 
@@ -599,7 +599,7 @@ function putNextSentenceNeedingJudgementUpForViewing() {
         let sentNeedingJudgement = sentencesNeedJudgement[ 0 ].sentence;
 
         // put it in the 
-        $('#sentenceForJudgement').text( sentNeedingJudgement );
+        $('#sentenceForJudgement').html( "&nbsp" + sentNeedingJudgement.substring( 1 ) );
 
     }
 
@@ -632,7 +632,7 @@ var appendWrongSection = function() {
     let sent = sentencesNeedJudgement[ 0 ].sentence;
     let wrongText = sent.slice( index1, index2 );
 
-    $('#selectedSections').append( '<div class="selectedSection">' + wrongText + '</div>' );
+    $('#selectedSections').append( '<div class="selectedSection">' + "_" + wrongText + '</div>' );
 
 } 
 
@@ -655,7 +655,7 @@ var appendCorrectionSection = function() {
 
     let correctionText = sent.slice( index1, index2 );
 
-    $('#wrongSelections').append( '<div class="selectedSection">' + correctionText + '</div>' );
+    $('#wrongSelections').append( '<div class="selectedSection">' + "_" + correctionText + '</div>' );
 
 } 
 

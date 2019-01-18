@@ -16,6 +16,7 @@ function loadTest() {
     testDict.scoreThisSent = 10;
     fillQuestionNos();
     setupHintBtnEvent();
+    setupSubmitBtnEvent();
 
 }
 
@@ -34,14 +35,82 @@ function setupHintBtnEvent() {
 
         $('#hintBtn').hide();
         let highlightedSent = makeHighlightedSent( testDict.sentences[ testDict.question ] );
-        
-        console.log( 'highlightedSent:', highlightedSent );
-
         $('#wrongSent').html( highlightedSent );
+
+        // reduce score for this sentence
+        testDict.scoreThisSent -= 3;
+        fillQuestionNos();
     
     });
     
 };
+
+function setupSubmitBtnEvent() {
+ 
+    $('#submitBtn').on( 'click', function() {
+
+        $('#submitBtn').hide();
+        checkIfCorrect();
+    
+    });
+    
+};
+
+function checkIfCorrect() {
+
+    let correctSentence = makeCorrectSentence();
+
+}
+
+function createArrayFromCorrectionsWithHash( c ) {
+
+    let correctionsArray = c.split( " # " );
+    return correctionsArray;
+
+}
+
+function makeCorrection( correctSent, correction, ind ) {
+
+    let preSplit = correctSent.substring( 0, ind[ 0 ] );
+    let postSplit = correctSent.substring( ind[ 1 ] );
+
+    let newSent = "";
+
+    // if error is a space then need to add spaces around it
+    if ( correctSent.substring( ind[ 0 ], ind[ 1 ] ) === " " ) {
+
+        newSent = preSplit + " " + correction + " " + postSplit;
+
+    } else if ( correctSent.substring( ind[ 0 ] === " " ) {
+
+
+
+    }
+
+
+    console.log( 'correctSent:', correctSent );
+    console.log( 'correction:', correction );
+    console.log( 'ind:', ind );
+
+}
+
+function makeCorrectSentence() {
+
+    // takes incorrect sentence + indexes and corrections and gives correct sentence
+    
+    let wrongSent = testDict.sentences[ testDict.question ].sentence;
+    let correctionsArray = createArrayFromCorrectionsWithHash( testDict.sentences[ testDict.question ].correction )
+
+    let correctSent = wrongSent;
+    let wrongIndexes = JSON.parse( testDict.sentences[ testDict.question ].indexes )
+
+    for (i=0; i<wrongIndexes.length; i++ ) {
+
+        makeCorrection( correctSent, correctionsArray[ i ], wrongIndexes[ i ] );
+
+    }
+
+}
 
 function fillQuestion( q ) {
 

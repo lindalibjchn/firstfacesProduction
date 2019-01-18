@@ -102,7 +102,7 @@ function createExchange( sM ) {
     sentenceBox = document.createElement("div");
     sentenceBox.className = "sentenceBox";
 
-    sentenceBox.innerHTML = sM.sentence;
+    sentenceBox.innerHTML =  "&nbsp" + sM.sentence.substring( 1 );
 
     exchange.appendChild( sentenceBox );
 
@@ -166,7 +166,7 @@ function makeHighlightedSent( sentenceMeta ) {
  
     } else {
 
-        sentWithColor = sentenceMeta.sentence
+        sentWithColor = "&nbsp" + sentenceMeta.sentence.substring( 1 );
 
     }
 
