@@ -94,7 +94,15 @@ function createExchange( sM ) {
     sentenceBox = document.createElement("div");
     sentenceBox.className = "sentenceWaitingBox";
 
-    sentenceBox.innerHTML = sM.sentence;
+    if ( sM.sentence[ 0 ] == " " ) {
+
+        sentenceBox.innerHTML =  "&nbsp" + sM.sentence.substring( 1 );
+
+    } else {
+
+        sentenceBox.innerHTML =  "&nbsp" + sM.sentence;
+
+    }
 
     exchange.appendChild( sentenceBox );
 
@@ -163,7 +171,7 @@ function makeHighlightedSent( sentenceMeta ) {
 
     }
 
-    return sentWithColor;
+    return "&nbsp" + sentWithColor.substring(1);
 
 }
 

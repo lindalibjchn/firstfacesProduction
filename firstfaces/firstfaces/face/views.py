@@ -22,6 +22,7 @@ import logging
 from google.cloud import texttospeech
 import math
 from django.core.mail import send_mail
+import re
 
 logger = logging.getLogger(__name__)
 # os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/johnsHDD/PhD_backup/erle-3666ad7eec71.json"
@@ -703,7 +704,27 @@ def tts(request):
 def store_sent(request):
 
     time_now = timezone.now();
-    sentence_text = request.POST['sent']
+
+    def buffer_text( raw ) :
+
+        #add a space at beginning and period at end if needed.
+        
+        stripped = raw.strip()
+        
+        # buffered left
+        buff = " " + stripped
+
+        # buffered right
+        if buff[-1] not in ['.', '?', '!']:
+            buff += "."
+        
+        # remove multiple spaces
+        buff = re.sub(' +', ' ', buff)
+
+        return buff
+
+    sentence_text = buffer_text(request.POST['sent'])
+
     # q = json.loads(request.POST['isItQ'])
     #code.interact(local=locals());
     # print('q:', type(q))

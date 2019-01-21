@@ -202,7 +202,7 @@ function sendSentToServer() {
                 url: "/store_sent",
                 type: "POST",
                 data: { 
-                    'sent': " " + sent,
+                    'sent': sent,
                     //'isItQ': isItQ,
                     'blob_no_text': classVariableDict.blob_no_text,
                     'blob_no_text_sent_id': classVariableDict.blob_no_text_sent_id,

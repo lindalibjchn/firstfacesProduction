@@ -15,6 +15,7 @@ function loadTest() {
     testDict.totalScore = 0;
     testDict.scoreThisSent = 10;
     fillQuestionNos();
+    setupNextQBtnEvent();
     setupHintBtnEvent();
     setupSubmitBtnEvent();
 
@@ -22,11 +23,23 @@ function loadTest() {
 
 function fillQuestionNos() {
 
-    $('#testQuestionNo').text( (testDict.question + 1).toString() );
-    $('#testQuestionScoreThisSent').text( testDict.scoreThisSent.toString() + "/10" );
+    $('#testQuestionNo').text( "Q" + (testDict.question + 1).toString() );
+    $('#testQuestionScoreThisSent').text( testDict.scoreThisSent.toString() );
     $('#testQuestionScoreTotal').text( testDict.totalScore.toString() + "/100" );
 
 }
+
+function setupNextQBtnEvent() {
+ 
+    $('#nextQBtn').hide();;
+    $('#nextQBtn').on( 'click', function() {
+
+        $('#nextQBtn').hide();
+        nextQuestion();
+
+    });
+    
+};
 
 function setupHintBtnEvent() {
  
@@ -50,15 +63,103 @@ function setupSubmitBtnEvent() {
     $('#submitBtn').on( 'click', function() {
 
         $('#submitBtn').hide();
-        checkIfCorrect();
-    
+        let learnerGuess = $('#inputAnswer').val()
+        checkIfCorrect( learnerGuess );
+
     });
     
 };
 
-function checkIfCorrect() {
+function checkIfCorrect( lG ) {
 
-    let correctSentence = makeCorrectSentence();
+    if ( testDict.sentences[ testDict.question ].correctSentence === undefined ) {
+
+       testDict.sentences[ testDict.question ].correctSentence = makeCorrectSentence();
+    
+    }
+
+    //console.log( 'lG:', lG );
+    //console.log( 'testDict.correctSentence:', testDict.correctSentence );
+
+    if ( lG === testDict.sentences[ testDict.question ].correctSentence ) {
+
+        $('#inputAnswer').css( 'background-color', 'green' );
+        setTimeout( nextQuestion, 1000 );
+
+    } else {
+
+        $('#inputAnswer').css( 'background-color', 'red' );
+        $('#testQuestionScoreThisSent' ).css( 'color', 'red' );
+        setTimeout( afterWrong, 1000 );
+
+    }
+
+}
+
+function afterWrong() {
+
+    testDict.scoreThisSent -= 5;
+
+    if ( testDict.scoreThisSent <= 0 ) {
+
+        testDict.scoreThisSent = 0;
+        showCorrect();
+
+    } else {
+
+        $('#submitBtn').show();
+        $('#inputAnswer').css( 'background-color', 'white' ).focus();
+        $('#testQuestionScoreThisSent' ).css( 'color', 'black' );
+        fillQuestionNos();
+
+    }
+
+}
+
+function showCorrect() {
+
+    fillQuestionNos();
+    $('#correctSent').html( testDict.sentences[ testDict.question ].correctSentence );
+    $('#correctSent').fadeIn( 500 );
+    $('#hintBtn').hide();
+    $('#nextQBtn').fadeIn( 500 );
+
+}
+
+function nextQuestion() {
+
+    testDict.totalScore += testDict.scoreThisSent;
+    
+    if ( testDict.question === 9 ) {
+
+        finishTest();
+
+    } else {
+
+        testDict.question += 1;
+        testDict.totalScore += testDict.scoreThisSent;
+        testDict.scoreThisSent = 10;
+        
+        $('#submitBtn').show();
+        $('#testQuestionScoreThisSent' ).css( 'color', 'black' );
+        $('#inputAnswer').css( 'background-color', 'white' );
+
+        $('.test-box-contents').fadeOut( 500 )
+        fillQuestionNos();
+
+        setTimeout( function() {
+            
+            fillQuestion( testDict.question );
+            $( '.test-box-contents' ).fadeIn( 500 );
+
+        }, 1000 );
+
+    }
+
+}
+
+function finishTest() {
+
 
 }
 
@@ -69,34 +170,50 @@ function createArrayFromCorrectionsWithHash( c ) {
 
 }
 
-function makeCorrection( correctSent, correction, ind ) {
-
-    let preSplit = correctSent.substring( 0, ind[ 0 ] );
-    let postSplit = correctSent.substring( ind[ 1 ] );
-
-    let newSent = "";
-
-    // if error is a space then need to add spaces around it
-    if ( correctSent.substring( ind[ 0 ], ind[ 1 ] ) === " " ) {
-
-        newSent = preSplit + " " + correction + " " + postSplit;
-
-    } else if ( correctSent.substring( ind[ 0 ] === " " ) {
-
-
-
-    }
-
-
-    console.log( 'correctSent:', correctSent );
-    console.log( 'correction:', correction );
-    console.log( 'ind:', ind );
-
-}
-
 function makeCorrectSentence() {
 
     // takes incorrect sentence + indexes and corrections and gives correct sentence
+    
+
+    // makes individual corrections
+    function makeCorrection( correctSent, correction, ind ) {
+
+        let preSplit = correctSent.substring( 0, ind[ 0 ] );
+        let postSplit = correctSent.substring( ind[ 1 ] );
+
+        let newSent = "";
+
+        if ( correction === "x" || correction === "[delete]" ) {
+
+            newSent = preSplit + postSplit.trim();
+
+        // if error is a space then need to add spaces around it
+        } else if ( correctSent.substring( ind[ 0 ], ind[ 1 ] -1 ) === " " ) {
+
+            newSent = preSplit + " " + correction + " " + postSplit;
+
+        } else if ( correctSent.substring( ind[ 0 ] ) === " " && correctSent.substring( ind[ 1 ] - 1 ) === " " ) {
+
+            newSent = preSplit + " " + correction + " " + postSplit;
+
+        } else if ( correctSent.substring( ind[ 0 ] ) === " " ) {
+
+            newSent = preSplit + " " + correction + postSplit;
+
+        } else if ( correctSent.substring( ind[ 1 ] - 1 ) === " " ) {
+
+            newSent = preSplit + correction + " " + postSplit;
+
+        } else {
+
+            newSent = preSplit + correction + postSplit;
+
+        }
+
+        return newSent
+
+    }
+
     
     let wrongSent = testDict.sentences[ testDict.question ].sentence;
     let correctionsArray = createArrayFromCorrectionsWithHash( testDict.sentences[ testDict.question ].correction )
@@ -106,17 +223,29 @@ function makeCorrectSentence() {
 
     for (i=0; i<wrongIndexes.length; i++ ) {
 
-        makeCorrection( correctSent, correctionsArray[ i ], wrongIndexes[ i ] );
+        correctSent = makeCorrection( correctSent, correctionsArray[ i ], wrongIndexes[ i ] );
 
     }
+
+    return correctSent;
 
 }
 
 function fillQuestion( q ) {
 
-
+    $('#correctSent').hide();
     let wrongSentDiv = document.getElementById('wrongSent');
-    wrongSent.innerHTML = testDict.sentences[ q ].sentence;
+
+    if ( testDict.sentences[ q ].sentence[ 0 ] == " " ) {
+
+        wrongSent.innerHTML =  "&nbsp" + testDict.sentences[ q ].sentence.substring( 1 );
+
+    } else {
+
+        wrongSent.innerHTML =  "&nbsp" + testDict.sentences[ q ].sentence;
+
+    }
+
     $('#inputAnswer').text(testDict.sentences[ q ].sentence);
     $('#inputAnswer').focus();
 
@@ -125,8 +254,9 @@ function fillQuestion( q ) {
 function getRandomTenWrongSentences() {
 
     let allWrongSents = getAllWrongSentences();
+    console.log( 'allWrongSents:', allWrongSents );
 
-    let lenAll = allWrongSents.length;
+    var lenAll = allWrongSents.length;
 
     let moreThanTenWrong = false;
     if ( lenAll >= 10 ) {
@@ -140,15 +270,16 @@ function getRandomTenWrongSentences() {
     for (i=0; i<10; i++) {
 
         let randomInt = Math.floor( Math.random() * lenAll );
+        lenAll -= 1;
 
         tenWrong.push( allWrongSents[ randomInt ] );
 
         // don't want repeat sentences if possible
-        if ( moreThanTenWrong ) {
+        //if ( moreThanTenWrong ) {
 
-            delete allWrongSents[ randomInt ];
+            //delete allWrongSents[ randomInt ];
 
-        }
+        //}
 
     };
 

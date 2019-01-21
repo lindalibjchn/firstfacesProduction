@@ -20,78 +20,76 @@ function loadPrevSents( callback ) {
 
 function appendExchange( sentenceMeta, node ) {
 
-        // this creates the boxes and sets the sentence variable
-        createExchange( sentenceMeta );
+    // this creates the boxes and sets the sentence variable
+    createExchange( sentenceMeta );
 
-        // change background colour iand other stuf if correct/wrongetc.
-        if ( sentenceMeta.judgement === "C" || sentenceMeta.judgement === "P" ) {
+    // change background colour iand other stuf if correct/wrongetc.
+    if ( sentenceMeta.judgement === "C" || sentenceMeta.judgement === "P" ) {
 
-            sentenceBox.className += " correctSent";
-        
-        } else if ( sentenceMeta.judgement === "I" ) {
-
-            sentenceBox.className += " incorrectSent";
-            sentenceBox.innerHTML = makeHighlightedSent( sentenceMeta );
-            
-        } else if ( sentenceMeta.judgement === "M" ) {
-
-            sentenceBox.className += " meanBySent";
-            sentenceBox.innerHTML = makeHighlightedSent( sentenceMeta );
+        sentenceBox.className += " correctSent";
     
-            let meanByText = createMeanByTextForPromptBox( sentenceMeta ); 
-            exchange.appendChild( createPromptBox( meanByText ) );
+    } else if ( sentenceMeta.judgement === "I" ) {
 
-        } else if ( sentenceMeta.judgement === "B" ) {
-
-            sentenceBox.className += " correctSent";
-            sentenceBox.innerHTML = makeHighlightedSent( sentenceMeta );
+        sentenceBox.className += " incorrectSent";
+        sentenceBox.innerHTML = makeHighlightedSent( sentenceMeta );
         
-            let betterText = createBetterTextForPromptBox( sentenceMeta ); 
-            exchange.appendChild( createPromptBox( betterText ) );
+    } else if ( sentenceMeta.judgement === "M" ) {
 
-        } else if ( sentenceMeta.judgement === "D" ) {
+        sentenceBox.className += " meanBySent";
+        sentenceBox.innerHTML = makeHighlightedSent( sentenceMeta );
 
-            sentenceBox.className += " meanBySent";
-            exchange.appendChild( createPromptBox( "I'm sorry but I don't understand what you said." ) );
+        let meanByText = createMeanByTextForPromptBox( sentenceMeta ); 
+        exchange.appendChild( createPromptBox( meanByText ) );
 
-        } else if ( sentenceMeta.judgement === "3" ) {
+    } else if ( sentenceMeta.judgement === "B" ) {
 
-            sentenceBox.className += " meanBySent";
-            exchange.appendChild( createPromptBox( "There are more than 3 mistakes in your sentence. Could you simplify and try again?" ) );
+        sentenceBox.className += " correctSent";
+        sentenceBox.innerHTML = makeHighlightedSent( sentenceMeta );
+    
+        let betterText = createBetterTextForPromptBox( sentenceMeta ); 
+        exchange.appendChild( createPromptBox( betterText ) );
 
-        } else if ( sentenceMeta.judgement === null ) {
+    } else if ( sentenceMeta.judgement === "D" ) {
 
-            sentenceBox.className += " noCorrectionYetSent";
-        
+        sentenceBox.className += " meanBySent";
+        exchange.appendChild( createPromptBox( "I'm sorry but I don't understand what you said." ) );
+
+    } else if ( sentenceMeta.judgement === "3" ) {
+
+        sentenceBox.className += " meanBySent";
+        exchange.appendChild( createPromptBox( "There are more than 3 mistakes in your sentence. Could you simplify and try again?" ) );
+
+    } else if ( sentenceMeta.judgement === null ) {
+
+        sentenceBox.className += " noCorrectionYetSent";
+    
+    }
+
+    if ( sentenceMeta.prompt !== null ) {
+
+        if ( sentenceMeta.judgement !== "B" && sentenceMeta.judgement !== "M" ) {
+
+            exchange.appendChild( createPromptBox( sentenceMeta.prompt ) );
+
         }
 
-        if ( sentenceMeta.prompt !== null ) {
+    }
 
-            if ( sentenceMeta.judgement !== "B" && sentenceMeta.judgement !== "M" ) {
+    if ( sentenceMeta.correction !== "" ) {
 
-                exchange.appendChild( createPromptBox( sentenceMeta.prompt ) );
+        if ( sentenceMeta.judgement === "I" ) {
 
+            if ( sentenceMeta.show_correction ) {
+
+                exchange.appendChild( createCorrectionsBox( sentenceMeta.correction ) );
+            
             }
 
         }
 
-        if ( sentenceMeta.correction !== "" ) {
+    }
 
-            if ( sentenceMeta.judgement === "I" ) {
-
-                if ( sentenceMeta.show_correction ) {
-
-                    exchange.appendChild( createCorrectionsBox( sentenceMeta.correction ) );
-                
-                }
-
-            }
-
-        }
-
-        
-
-        node.appendChild( exchange );
+    node.appendChild( exchange );
 
 }
 
@@ -102,7 +100,15 @@ function createExchange( sM ) {
     sentenceBox = document.createElement("div");
     sentenceBox.className = "sentenceBox";
 
-    sentenceBox.innerHTML =  "&nbsp" + sM.sentence.substring( 1 );
+    if ( sM.sentence[ 0 ] == " " ) {
+
+        sentenceBox.innerHTML =  "&nbsp" + sM.sentence.substring( 1 );
+
+    } else {
+
+        sentenceBox.innerHTML =  "&nbsp" + sM.sentence;
+
+    }
 
     exchange.appendChild( sentenceBox );
 
@@ -166,11 +172,11 @@ function makeHighlightedSent( sentenceMeta ) {
  
     } else {
 
-        sentWithColor = "&nbsp" + sentenceMeta.sentence.substring( 1 );
+        sentWithColor = sentenceMeta.sentence.substring( 1 );
 
     }
 
-    return sentWithColor;
+    return "&nbsp" + sentWithColor.substring( 1 );
 
 }
 
