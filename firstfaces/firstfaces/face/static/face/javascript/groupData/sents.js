@@ -171,7 +171,16 @@ function makeHighlightedSent( sentenceMeta ) {
 
     }
 
-    return "&nbsp" + sentWithColor.substring(1);
+    if ( sentWithColor[ 0 ] == " " ) {
+
+        return "&nbsp" + sentWithColor.substring(1);
+
+    } else {
+
+        return "&nbsp" + sentWithColor;
+
+    }
+
 
 }
 

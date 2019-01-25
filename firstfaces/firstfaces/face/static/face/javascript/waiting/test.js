@@ -84,10 +84,20 @@ function checkIfCorrect( lG ) {
     if ( lG === testDict.sentences[ testDict.question ].correctSentence ) {
 
         $('#inputAnswer').css( 'background-color', 'green' );
+        $('#testQuestionScoreThisSent' ).css( 'color', 'green' );
         setTimeout( nextQuestion, 1000 );
 
     } else {
 
+        testDict.scoreThisSent -= 5;
+
+        if ( testDict.scoreThisSent < 0 ) {
+
+            testDict.scoreThisSent = 0;
+
+        }
+
+        fillQuestionNos();
         $('#inputAnswer').css( 'background-color', 'red' );
         $('#testQuestionScoreThisSent' ).css( 'color', 'red' );
         setTimeout( afterWrong, 1000 );
@@ -97,8 +107,6 @@ function checkIfCorrect( lG ) {
 }
 
 function afterWrong() {
-
-    testDict.scoreThisSent -= 5;
 
     if ( testDict.scoreThisSent <= 0 ) {
 
@@ -137,20 +145,21 @@ function nextQuestion() {
     } else {
 
         testDict.question += 1;
-        testDict.totalScore += testDict.scoreThisSent;
         testDict.scoreThisSent = 10;
         
         $('#submitBtn').show();
-        $('#testQuestionScoreThisSent' ).css( 'color', 'black' );
         $('#inputAnswer').css( 'background-color', 'white' );
 
-        $('.test-box-contents').fadeOut( 500 )
-        fillQuestionNos();
+        $('.test-box-contents').fadeOut( 500 );
+        $('#testQuestionScoreThisSent').fadeOut( 500 );
 
         setTimeout( function() {
             
+            fillQuestionNos();
             fillQuestion( testDict.question );
             $( '.test-box-contents' ).fadeIn( 500 );
+            $('#testQuestionScoreThisSent').fadeIn( 500 );
+            $('#testQuestionScoreThisSent' ).css( 'color', 'black' );
 
         }, 1000 );
 
@@ -173,7 +182,6 @@ function createArrayFromCorrectionsWithHash( c ) {
 function makeCorrectSentence() {
 
     // takes incorrect sentence + indexes and corrections and gives correct sentence
-    
 
     // makes individual corrections
     function makeCorrection( correctSent, correction, ind ) {
@@ -188,7 +196,7 @@ function makeCorrectSentence() {
             newSent = preSplit + postSplit.trim();
 
         // if error is a space then need to add spaces around it
-        } else if ( correctSent.substring( ind[ 0 ], ind[ 1 ] -1 ) === " " ) {
+        } else if ( correctSent.substring( ind[ 0 ], ind[ 1 ] ) === " " ) {
 
             newSent = preSplit + " " + correction + " " + postSplit;
 
@@ -246,7 +254,7 @@ function fillQuestion( q ) {
 
     }
 
-    $('#inputAnswer').text(testDict.sentences[ q ].sentence);
+    $('#inputAnswer').val(testDict.sentences[ q ].sentence);
     $('#inputAnswer').focus();
 
 }
