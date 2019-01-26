@@ -184,41 +184,38 @@ function makeCorrectSentence() {
     // takes incorrect sentence + indexes and corrections and gives correct sentence
 
     // makes individual corrections
-    function makeCorrection( correctSent, correction, ind ) {
+    function cleanCorrection( wrongSection, correction ) {
 
-        let preSplit = correctSent.substring( 0, ind[ 0 ] );
-        let postSplit = correctSent.substring( ind[ 1 ] );
-
-        let newSent = "";
+        var newCorrection;
 
         if ( correction === "x" || correction === "[delete]" ) {
 
-            newSent = preSplit + postSplit.trim();
+            newCorrection = "x";
 
         // if error is a space then need to add spaces around it
-        } else if ( correctSent.substring( ind[ 0 ], ind[ 1 ] ) === " " ) {
+        } else if ( wrongSection === " " ) {
 
-            newSent = preSplit + " " + correction + " " + postSplit;
+            newCorrection = " " + correction + " ";
 
-        } else if ( correctSent.substring( ind[ 0 ] ) === " " && correctSent.substring( ind[ 1 ] - 1 ) === " " ) {
+        } else if ( wrongSection[ 0 ]  === " " && wrongSection[ wrongSection.length - 1 ] === " " ) {
 
-            newSent = preSplit + " " + correction + " " + postSplit;
+            newCorrection = " " + correction + " ";
 
-        } else if ( correctSent.substring( ind[ 0 ] ) === " " ) {
+        } else if ( wrongSection[ 0 ] === " " ) {
 
-            newSent = preSplit + " " + correction + postSplit;
+            newCorrection = " " + correction;
 
-        } else if ( correctSent.substring( ind[ 1 ] - 1 ) === " " ) {
+        } else if ( wrongSection[ wrongSection.length - 1 ] === " " ) {
 
-            newSent = preSplit + correction + " " + postSplit;
+            newCorrection = correction + " ";
 
         } else {
 
-            newSent = preSplit + correction + postSplit;
+            newCorrection = correction;
 
         }
 
-        return newSent
+        return newCorrection
 
     }
 
@@ -226,12 +223,81 @@ function makeCorrectSentence() {
     let wrongSent = testDict.sentences[ testDict.question ].sentence;
     let correctionsArray = createArrayFromCorrectionsWithHash( testDict.sentences[ testDict.question ].correction )
 
-    let correctSent = wrongSent;
     let wrongIndexes = JSON.parse( testDict.sentences[ testDict.question ].indexes )
 
-    for (i=0; i<wrongIndexes.length; i++ ) {
+    let correctSent = ""
 
-        correctSent = makeCorrection( correctSent, correctionsArray[ i ], wrongIndexes[ i ] );
+    let correctSections = [];
+    let wrongSections = [];
+
+    for ( i=0; i<wrongIndexes.length + 1; i++ ) {
+
+        var correctSection = "";
+        var wrongSection = "";
+        var cleanedCorrection = "";
+
+        if ( i < wrongIndexes.length ) {
+
+            wrongSection = wrongSent.substring( wrongIndexes[ i ][ 0 ], wrongIndexes[ i ][ 1 ] + 1 )
+            cleanedCorrection = cleanCorrection( wrongSection, correctionsArray[ i ] );
+
+            if ( i === 0 ) {
+
+                if ( cleanedCorrection === "x" ) {
+
+                    if ( wrongIndexes[ i ][ 0 ] === 0 ) {
+
+                        correctSent += correctSection + cleanedCorrection;
+
+                    } else {
+
+                        correctSection = wrongSent.substring( 0, wrongIndexes[ i ][ 0 ] );
+                       
+                        if ( correctSection[ correctSection.len - 1 ] === " " ) {
+
+                            correctSent = correctSection.substring( 0, correctSection.length - 1 );
+
+                        }
+                    
+                    }
+
+                } else {
+
+                    correctSection = wrongSent.substring( 0, wrongIndexes[ i ][ 0 ] )
+                    correctSent += correctSection + cleanedCorrection;
+               
+                }
+
+            } else {
+
+                correctSection = wrongSent.substring( wrongIndexes[ i - 1 ][ 1 ], wrongIndexes[ i ][ 0 ] )
+
+                if ( cleanedCorrection === "x" ) {
+
+                    if ( correctSection[ correctSection.len - 1 ] === " " ) {
+
+                        correctSent += correctSection.substring( 0, correctSection.length - 1 );
+
+                    }
+                    
+                } else {
+
+                    correctSent += correctSection + cleanedCorrection;
+
+                }
+
+            }
+
+        } else {
+
+            if ( wrongIndexes[ i - 1 ] !== wrongSent.length ) {
+
+                correctSection = wrongSent.substring( wrongIndexes[ i - 1 ][ 1 ] )
+                correctSent += correctSection;
+
+            }
+
+        }
 
     }
 
