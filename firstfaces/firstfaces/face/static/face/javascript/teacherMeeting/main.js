@@ -410,15 +410,31 @@ function loadNextSentenceNeedingCorrection() {
 
     if ( sentForCorrection !== undefined ) {
 
-        $('#wrongSentForCorrectionNow').append(
+        if ( sentForCorrection.sentence[ 0 ] == " " ) {
+            
+            $('#wrongSentForCorrectionNow').append(
 
-            "<div class='wrong-sents-individual-sent' id='wrongSentNOW'>" +
+                "<div class='wrong-sents-individual-sent' id='wrongSentNOW'>" +
                 
-               "&nbsp" +  sentForCorrection.sentence.substring( 1 ) + 
+                    "&nbsp" +  sentForCorrection.sentence.substring( 1 ) + 
         
-            "</div>"
+                "</div>"
 
-        )
+            )
+            
+        } else {
+
+            $('#wrongSentForCorrectionNow').append(
+
+                "<div class='wrong-sents-individual-sent' id='wrongSentNOW'>" +
+                
+                    "&nbsp" +  sentForCorrection.sentence + 
+        
+                "</div>"
+
+            )
+           
+        }
 
     }
 

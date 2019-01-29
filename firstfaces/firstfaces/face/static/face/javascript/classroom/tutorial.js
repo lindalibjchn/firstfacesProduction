@@ -73,7 +73,15 @@ function tiaSpeak( tiaSays, needSendTTS=true, callback ) {
                 synthesisObject.endCount =  ( synthesisObject.delay * 60 / 1000 ) * 0.75 //dunno why the delay needs to be curtailed, but has to be
                 initTalk();
                 let delayForCallback = Math.max( 1000, synthesisObject.delay - 500 );
-                setTimeout( callback, delayForCallback );
+
+                setTimeout( function() {
+                    
+                    callback();
+                    
+                    setTimeout( resetTalk, 800 );
+
+                }, delayForCallback );
+
 
             }
 
