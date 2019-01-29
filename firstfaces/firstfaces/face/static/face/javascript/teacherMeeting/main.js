@@ -632,7 +632,9 @@ var appendWrongSection = function() {
     let sent = sentencesNeedJudgement[ 0 ].sentence;
     let wrongText = sent.slice( index1, index2 );
 
-    $('#selectedSections').append( '<div class="selectedSection">' + "_" + wrongText + '</div>' );
+    let displayedWrongText = replaceSpacesWithUnderscores( wrongText );
+    
+    $('#selectedSections').append( '<div class="selectedSection">' + displayedWrongText + '</div>' );
 
 } 
 
@@ -653,11 +655,35 @@ var appendCorrectionSection = function() {
 
     var sent = sentForCorrection.sentence;
 
-    let correctionText = sent.slice( index1, index2 );
+    let incorrectText = sent.slice( index1, index2 );
 
-    $('#wrongSelections').append( '<div class="selectedSection">' + "_" + correctionText + '</div>' );
+    let displayedIncorrectText = replaceSpacesWithUnderscores( incorrectText );
+
+    $('#wrongSelections').append( '<div class="selectedSection">' + displayedIncorrectText + '</div>' );
 
 } 
+
+function replaceSpacesWithUnderscores( s ) {
+
+    var newString = ""
+
+    for ( var l in s ) {
+
+        if ( s[ l ] === " " ) {
+
+            newString += "_"
+
+        } else {
+
+            newString += s[ l ]
+
+        }
+
+    }
+
+    return newString;
+
+}
 
 function checkForChange() {
 

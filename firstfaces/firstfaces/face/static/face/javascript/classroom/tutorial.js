@@ -50,7 +50,13 @@ function tiaSpeak( tiaSays, needSendTTS=true, callback ) {
             tiaSpeakCount = 0;
 
             let delayForCallback = Math.max( 1000, synthesisObject.delay - 500 );
-            setTimeout( callback, delayForCallback );
+            setTimeout( function() {
+                
+                callback();
+                
+                setTimeout( resetTalk, 800 );
+
+            }, delayForCallback );
 
         } else {
 
@@ -613,7 +619,7 @@ function greeting09() {
     
     setTimeout( function() {
 
-        tiaSpeak( "'have' and 'half', or 'eat it whole' and 'eat at home' are words and phrases which sound similar. Sometimes, the computer may not be sure which one you said. If this happens, and the computer is wrong, you can correct it by trying again, or typing.", needSendTTS=true, function() {
+        tiaSpeak( "'have' and 'half', or 'eat it whole' and 'eat at home' sound similar. Sometimes, the computer may not be sure which one you said. If this happens, and the computer is wrong, you can correct it by trying again, or typing.", needSendTTS=true, function() {
 
             hideTextStuff();
             $('#textInput').blur();

@@ -120,15 +120,21 @@ function animate () {
 
     }
 
-    if ( mouthOpenObject.bool ) {
+    if ( mainCount % 2 === 0 ) {
 
-        openMouth( mainCount )
+        if ( mouthOpenObject.bool ) {
 
-    }
+            openMouth( mainCount )
 
-    if ( purseLipsObject.bool ) {
+        }
 
-        purseLips( mainCount )
+    } else {
+
+        if ( purseLipsObject.bool ) {
+
+            purseLips( mainCount )
+
+        }
 
     }
 

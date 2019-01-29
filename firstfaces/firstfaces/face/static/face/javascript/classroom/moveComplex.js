@@ -51,6 +51,16 @@ function initTalk() {
 
 }
 
+// to stop the lips from keeping moving after speech has stopped on slow computers
+function resetTalk() {
+
+    talkObject.bool = false;
+    mouthOpenObject.bool = false;
+    purseLipsObject.bool = false;
+    expressionController( talkRootExp, 0.5 )
+
+}
+
 function whenPurseLipsEnds( funcToCall ) {
 
     if ( purseLipsObject.bool ) {
@@ -107,9 +117,9 @@ function mouthOpenLoop() {
 
             }
 
-        }, mouthOpenObject.dur * 1000 + 50 )
+        }, mouthOpenObject.dur * 1000 + 100 )
 
-    }, mouthOpenObject.dur * 1000 + 50 );
+    }, mouthOpenObject.dur * 1000 + 100 );
 
 }
 
@@ -146,9 +156,9 @@ function purseLipsLoop() {
 
             }
 
-        }, purseLipsObject.dur * 1000 + 50 );
+        }, purseLipsObject.dur * 1000 + 100 );
 
-    }, purseLipsObject.dur * 1000 + Math.random() * 1000 );
+    }, purseLipsObject.dur * 1000 + 100 );
 
 }
 
@@ -156,7 +166,7 @@ function purseLipsLoop() {
 //PURSE LIPS
 function initPurseLips( to, secs ) {
 
-    assignSinArrayForSpeed( secs, purseLipsObject, sineArrays ) 
+    assignSinArrayForSpeed( secs / 2, purseLipsObject, sineArrays ) 
 
     purseLipsObject.startCount = mainCount;
     purseLipsObject.amount = to;
@@ -227,7 +237,7 @@ function purseLips( main ) {
 
 function initOpenMouth( to, secs ) {
 
-    assignSinArrayForSpeed( secs, mouthOpenObject, sineArrays ) 
+    assignSinArrayForSpeed( secs / 2, mouthOpenObject, sineArrays ) 
 
     mouthOpenObject.startCount = mainCount;
     mouthOpenObject.rotationMult = to;

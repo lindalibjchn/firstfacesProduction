@@ -172,11 +172,20 @@ function makeHighlightedSent( sentenceMeta ) {
  
     } else {
 
-        sentWithColor = sentenceMeta.sentence.substring( 1 );
+        sentWithColor = sentenceMeta.sentence;
 
     }
 
-    return "&nbsp" + sentWithColor.substring( 1 );
+    if ( sentWithColor[ 0 ] == " " ) {
+
+        return "&nbsp" + sentWithColor.substring(1);
+
+    } else {
+
+        return "&nbsp" + sentWithColor;
+
+    }
+
 
 }
 
