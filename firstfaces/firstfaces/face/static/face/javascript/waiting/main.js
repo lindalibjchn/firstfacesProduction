@@ -23,10 +23,11 @@ $(window).on( 'load', function() {
 
     setupScrollBtns();
 
+    insertTestChart(0);
     $('#startTestBtn').on( 'click', startTest );
 
     // while developing
-    startTest();
+    // startTest();
 
 });
 
@@ -91,33 +92,33 @@ function onMouseMove(event) {
     
     if ( tutorialComplete === false ) {
 
-        intersects = ray.intersectObjects( [ clickableObjects.laptop, /*clickableObjects.tests,*/ clickableObjects.sentences, clickableObjects.doorSign ] );
+        intersects = ray.intersectObjects( [ clickableObjects.laptop, clickableObjects.tests, clickableObjects.sentences, clickableObjects.doorSign ] );
 
     } else {
         
         if ( scheduleDict.in_class_now ) {
 
-            intersects = ray.intersectObjects( [ clickableObjects.laptop, /*clickableObjects.tests,*/ clickableObjects.sentences, clickableObjects.doorSign ] );
+            intersects = ray.intersectObjects( [ clickableObjects.laptop, clickableObjects.tests, clickableObjects.sentences, clickableObjects.doorSign ] );
 
         } else if ( scheduleObject.availableNow ) {
 
             if ( sessionsDict.IDList.length === 0 ) { //means the tutorial only was done
             
-                intersects = ray.intersectObjects( [ clickableObjects.laptop, /*clickableObjects.tests,*/ clickableObjects.sentences, clickableObjects.doorSign ] );
+                intersects = ray.intersectObjects( [ clickableObjects.laptop, clickableObjects.tests, clickableObjects.sentences, clickableObjects.doorSign ] );
 
             } else if ( JSON.parse( scheduleDict.class_already_done_today ) ) {
    
-                intersects = ray.intersectObjects( [ clickableObjects.laptop, /*clickableObjects.tests,*/ clickableObjects.sentences ] );
+                intersects = ray.intersectObjects( [ clickableObjects.laptop, clickableObjects.tests, clickableObjects.sentences ] );
 
             } else {
    
-                intersects = ray.intersectObjects( [ clickableObjects.laptop, /*clickableObjects.tests,*/ clickableObjects.sentences, clickableObjects.doorSign ] );
+                intersects = ray.intersectObjects( [ clickableObjects.laptop, clickableObjects.tests, clickableObjects.sentences, clickableObjects.doorSign ] );
 
             }
 
         } else {
 
-            intersects = ray.intersectObjects( [ clickableObjects.laptop, /*clickableObjects.tests,*/ clickableObjects.sentences ] );
+            intersects = ray.intersectObjects( [ clickableObjects.laptop, clickableObjects.tests, clickableObjects.sentences ] );
 
         }
 
@@ -180,33 +181,33 @@ function onClick(event) {
     
     if ( tutorialComplete === false ) {
 
-        intersects = ray.intersectObjects( [ clickableObjects.laptop, /*clickableObjects.tests,*/ clickableObjects.sentences, clickableObjects.doorSign ] );
+        intersects = ray.intersectObjects( [ clickableObjects.laptop, clickableObjects.tests, clickableObjects.sentences, clickableObjects.doorSign ] );
 
     } else {
         
         if ( scheduleDict.in_class_now ) {
 
-            intersects = ray.intersectObjects( [ clickableObjects.laptop, /*clickableObjects.tests,*/ clickableObjects.sentences, clickableObjects.doorSign ] );
+            intersects = ray.intersectObjects( [ clickableObjects.laptop, clickableObjects.tests, clickableObjects.sentences, clickableObjects.doorSign ] );
 
         } else if ( scheduleObject.availableNow ) {
 
             if ( sessionsDict.IDList.length === 0 ) { //means the tutorial only was done
             
-                intersects = ray.intersectObjects( [ clickableObjects.laptop, /*clickableObjects.tests,*/ clickableObjects.sentences, clickableObjects.doorSign ] );
+                intersects = ray.intersectObjects( [ clickableObjects.laptop, clickableObjects.tests, clickableObjects.sentences, clickableObjects.doorSign ] );
 
             } else if ( JSON.parse( scheduleDict.class_already_done_today ) ) {
    
-                intersects = ray.intersectObjects( [ clickableObjects.laptop, /*clickableObjects.tests,*/ clickableObjects.sentences ] );
+                intersects = ray.intersectObjects( [ clickableObjects.laptop, clickableObjects.tests, clickableObjects.sentences ] );
 
             } else {
    
-                intersects = ray.intersectObjects( [ clickableObjects.laptop, /*clickableObjects.tests,*/ clickableObjects.sentences, clickableObjects.doorSign ] );
+                intersects = ray.intersectObjects( [ clickableObjects.laptop, clickableObjects.tests, clickableObjects.sentences, clickableObjects.doorSign ] );
 
             }
 
         } else {
 
-            intersects = ray.intersectObjects( [ clickableObjects.laptop, /*clickableObjects.tests,*/ clickableObjects.sentences ] );
+            intersects = ray.intersectObjects( [ clickableObjects.laptop, clickableObjects.tests, clickableObjects.sentences ] );
 
         }
 

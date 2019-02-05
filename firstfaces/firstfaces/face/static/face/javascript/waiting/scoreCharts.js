@@ -76,8 +76,10 @@ function insertChart( period ) {
         }
     });
                 
+    var sessionIds = [];
     function getDates( indOfPeriod ) {
 
+        console.log( 'getDatesCalled' );
         // indOfPeriod gives which 3 months to display. 0 is psat 3 months, 1 is 3-6- months previous etc.
 
         let ThreeMonthsUnixTime = 90 * 24 * 60 * 60 * 1000; 
@@ -97,23 +99,30 @@ function insertChart( period ) {
             earliestThreeMonths = false;
 
         }
-        
 
         dates = [];
+        scores = [];
+        sessionsDict.graphSessionIds = [];
+        datesScoresDict = {}
         let ids = sessionsDict['IDList'];
         ids.forEach( function(e) {
         
-            let startTimeUnix = sessionsDict[e].start_time * 1000
+            let startTimeUnix = sessionsDict[e].start_time * 1000;
+            let sessionScore = sessionsDict[e].score;
 
             if ( startTimeUnix <= timeEnd && startTimeUnix >= timeStart ) {
 
                 let date = new Date( startTimeUnix ).toLocaleDateString("en-GB");
-                dates.unshift( date.substring(0, date.length - 5) );
+                let dateFormatted = date.substring(0, date.length - 5)
+                dates.unshift( dateFormatted );
+                scores.unshift( sessionScore )
+                sessionsDict.graphSessionIds.unshift( e )
 
             }
 
         })
 
+        prepareHolder();
         console.log('dates:', dates);
         return dates;
 
@@ -121,15 +130,15 @@ function insertChart( period ) {
 
     function getScores() {
 
-        scores = [];
-        let ids = sessionsDict['IDList'];
-        ids.forEach( function(e) {
+        //scores = [];
+        //let ids = sessionsDict['IDList'];
+        //ids.forEach( function(e) {
         
-            scores.unshift( sessionsDict[e].score );
+            //scores.unshift( sessionsDict[e].score );
 
-        })
+        //})
 
-        console.log('scores:', scores);
+        //console.log('scores:', scores);
         return scores;
 
     }
@@ -151,15 +160,23 @@ function insertChart( period ) {
 
     }
 
-    var holder = document.getElementById("scoresChart");
-    holder.onclick = function( e ) {
+    function prepareHolder() {
 
-        let activePoint = chart.getElementAtEvent( e );
-        let pointInd = activePoint[0]._index;
-        pointInd = sessionsDict.IDList.length - pointInd - 1;
-        showSession( pointInd );
+        var holder = document.getElementById("scoresChart");
 
-    };
+        holder.onclick = function( e ) {
+
+            let activePoint = chart.getElementAtEvent( e );
+            let pointInd = activePoint[0]._index;
+            let sessionID = sessionsDict.graphSessionIds[ pointInd ]
+
+            console.log('sessionID:', sessionID);
+            //pointInd = sessionsDict.IDList.length - pointInd - 1;
+            showSession( sessionID );
+
+        };
+
+    }
 
 }
 
@@ -270,17 +287,17 @@ function insertTestChart( period ) {
         prevTestScores.forEach( function(e) {
         
             let startTimeUnix = e[0] * 1000;
-            console.log('startTimeUnix:', startTimeUnix);
-            console.log('timeEnd:', timeEnd);
-            console.log('timeStart:', timeStart);
+            //console.log('startTimeUnix:', startTimeUnix);
+            //console.log('timeEnd:', timeEnd);
+            //console.log('timeStart:', timeStart);
 
-            if ( startTimeUnix <= timeEnd && startTimeUnix >= timeStart ) {
+            //if ( startTimeUnix <= timeEnd && startTimeUnix >= timeStart ) {
 
-                console.log('e:', e);
+                //console.log('e:', e);
                 let date = new Date( startTimeUnix ).toLocaleDateString("en-GB");
                 testDates.unshift( date.substring(0, date.length - 5) );
 
-            }
+            //}
 
         })
 
@@ -320,15 +337,15 @@ function insertTestChart( period ) {
 
     //}
 
-    var holder = document.getElementById("scoresChart");
-    holder.onclick = function( e ) {
+    //var holder = document.getElementById("scoresChart");
+    //holder.onclick = function( e ) {
 
-        let activePoint = chart.getElementAtEvent( e );
-        let pointInd = activePoint[0]._index;
-        pointInd = sessionsDict.IDList.length - pointInd - 1;
-        showSession( pointInd );
+        //let activePoint = chart.getElementAtEvent( e );
+        //let pointInd = activePoint[0]._index;
+        //pointInd = sessionsDict.IDList.length - pointInd - 1;
+        //showSession( pointInd );
 
-    };
+    //};
 
 }
 

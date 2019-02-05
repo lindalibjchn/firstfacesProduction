@@ -31,7 +31,7 @@
     position: absolute;
     min-width: 700px;
     min-height: 500px;
-    display: none;
+    /*display: none;*/
     
 }
 
@@ -209,8 +209,6 @@
 
 }
 
-
-
 /*TESTS BOOK*/
 
 #testsBook {
@@ -222,7 +220,7 @@
 
 #testsEntrance {
 
-    display: none;
+    /*display: none;*/
 
 }
 
@@ -284,11 +282,16 @@
 
 /* TEST QUESTIONS */
 
+#testQuestionsOuterCont {
+
+    display: none;
+
+}
+
 #testQuestionsCont {
 
-    /*display: none;*/
-    height: 88%;
     display: flex;
+    height: 88%;
     align-items: center;
     justify-content: center;
 
@@ -334,8 +337,7 @@
 
 #testQuestionScoreThisSent {
 
-    font-size: 4vw;
-    font-weight: bold;
+    font-size: 3vw;
 
 }
 
@@ -356,7 +358,8 @@
 #testQuestionScoreTotal {
 
     float: right;
-    font-size: 2vw;
+    font-size: 3vw;
+    font-weight: bold;
 
 }
 
@@ -376,7 +379,8 @@
 
 #nextQBtn {
 
-
+    display: none;
+    float: right;
 
 }
 

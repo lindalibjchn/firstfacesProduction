@@ -1,9 +1,30 @@
 function startTest() {
 
     $('#startTestBtn').prop( 'disable', true );
-    $('#testsEntrance').fadeOut( function(){ $('#testQuestionsCont').fadeIn() } );
+    $('#testsEntrance').fadeOut(); 
     
+    setTimeout( function(){ $('#testQuestionsOuterCont').fadeIn( 1000 ) }, 500 );
+
+    sendStartTestToServer()
     loadTest();
+
+}
+
+function sendStartTestToServer() {
+
+    $.ajax({
+        url: "/store_test_begin",
+        type: "GET",
+        success: function(json) {
+            
+            console.log( 'stored test start' );
+
+        },
+        error: function() {
+            alert("error adding test begin");
+        },
+
+    });
 
 }
 
@@ -11,7 +32,7 @@ function loadTest() {
 
     testDict.sentences = getRandomTenWrongSentences();
     fillQuestion( 0 );
-    testDict.question = 0;
+    testDict.question = 9;
     testDict.totalScore = 0;
     testDict.scoreThisSent = 10;
     fillQuestionNos();
@@ -25,6 +46,10 @@ function fillQuestionNos() {
 
     $('#testQuestionNo').text( "Q" + (testDict.question + 1).toString() );
     $('#testQuestionScoreThisSent').text( testDict.scoreThisSent.toString() );
+    $('#testQuestionScoreThisSent').css( {
+        'font-size': '3vw',
+        'font-weight': 'normal'
+    });
     $('#testQuestionScoreTotal').text( testDict.totalScore.toString() + "/100" );
 
 }
@@ -78,13 +103,17 @@ function checkIfCorrect( lG ) {
     
     }
 
-    //console.log( 'lG:', lG );
-    //console.log( 'testDict.correctSentence:', testDict.correctSentence );
+    console.log( 'lG:', lG );
+    console.log( 'testDict.correctSentence:', testDict.correctSentence );
 
     if ( lG === testDict.sentences[ testDict.question ].correctSentence ) {
 
         $('#inputAnswer').css( 'background-color', 'green' );
-        $('#testQuestionScoreThisSent' ).css( 'color', 'green' );
+        $('#testQuestionScoreThisSent' ).css( { 
+            'color': 'green', 
+            'font-weight': 'bold',
+            'font-size': '4vw',
+        });
         setTimeout( nextQuestion, 1000 );
 
     } else {
@@ -147,14 +176,15 @@ function nextQuestion() {
         testDict.question += 1;
         testDict.scoreThisSent = 10;
         
-        $('#submitBtn').show();
-        $('#inputAnswer').css( 'background-color', 'white' );
-
         $('.test-box-contents').fadeOut( 500 );
         $('#testQuestionScoreThisSent').fadeOut( 500 );
 
         setTimeout( function() {
             
+            $('#submitBtn').show();
+            $('#hintBtn').show();
+            $('#inputAnswer').css( 'background-color', 'white' );
+
             fillQuestionNos();
             fillQuestion( testDict.question );
             $( '.test-box-contents' ).fadeIn( 500 );
@@ -169,6 +199,47 @@ function nextQuestion() {
 
 function finishTest() {
 
+    $('#testQuestionsOuterCont').fadeOut( 500 );
+    setTimeout( function(){ 
+        
+        $('#testsEntrance').fadeIn( 1000 ); 
+    
+        $('#submitBtn').show();
+        $('#hintBtn').show();
+        $('#inputAnswer').css( 'background-color', 'white' );
+
+        $( '.test-box-contents' ).fadeIn( 500 );
+        $('#testQuestionScoreThisSent').fadeIn( 500 );
+        $('#testQuestionScoreThisSent' ).css( 'color', 'black' );
+
+    }, 600 );
+
+    sendFinishTestDataToServer();
+
+
+}
+
+function sendFinishTestDataToServer() {
+
+    $.ajax({
+        url: "/store_test_score",
+        type: "GET",
+        data: { 
+            'test_score': testDict.totalScore,
+        },
+        success: function(json) {
+            
+            //let date = new Date( startTimeUnix ).toLocaleDateString("en-GB");
+            //let dateFormatted = date.substring(0, date.length - 5)
+            prevTestScores.unshift( [ json.finishTime, testDict.totalScore ] );
+            insertTestChart( 0 );
+
+        },
+        error: function() {
+            alert("error adding test score");
+        },
+
+    });
 
 }
 
@@ -187,6 +258,7 @@ function makeCorrectSentence() {
     function cleanCorrection( wrongSection, correction ) {
 
         var newCorrection;
+        console.log('wrongSection:', wrongSection);
 
         if ( correction === "x" || correction === "[delete]" ) {
 
@@ -195,26 +267,32 @@ function makeCorrectSentence() {
         // if error is a space then need to add spaces around it
         } else if ( wrongSection === " " ) {
 
+            console.log('gap');
             newCorrection = " " + correction + " ";
 
         } else if ( wrongSection[ 0 ]  === " " && wrongSection[ wrongSection.length - 1 ] === " " ) {
 
+            console.log('both');
             newCorrection = " " + correction + " ";
 
         } else if ( wrongSection[ 0 ] === " " ) {
 
+            console.log('left');
             newCorrection = " " + correction;
 
         } else if ( wrongSection[ wrongSection.length - 1 ] === " " ) {
 
+            console.log('right');
             newCorrection = correction + " ";
 
         } else {
 
+            console.log('nowt');
             newCorrection = correction;
 
         }
 
+        console.log('new correction:', newCorrection );
         return newCorrection
 
     }
@@ -225,7 +303,7 @@ function makeCorrectSentence() {
 
     let wrongIndexes = JSON.parse( testDict.sentences[ testDict.question ].indexes )
 
-    let correctSent = ""
+    let correctSent = "";
 
     let correctSections = [];
     let wrongSections = [];
@@ -238,33 +316,44 @@ function makeCorrectSentence() {
 
         if ( i < wrongIndexes.length ) {
 
-            wrongSection = wrongSent.substring( wrongIndexes[ i ][ 0 ], wrongIndexes[ i ][ 1 ] + 1 )
+            wrongSection = wrongSent.substring( wrongIndexes[ i ][ 0 ], wrongIndexes[ i ][ 1 ] )
             cleanedCorrection = cleanCorrection( wrongSection, correctionsArray[ i ] );
 
             if ( i === 0 ) {
 
+                console.log( 'i===0' );
                 if ( cleanedCorrection === "x" ) {
 
+                    console.log( 'cleanedCorrection====x' );
                     if ( wrongIndexes[ i ][ 0 ] === 0 ) {
 
-                        correctSent += correctSection + cleanedCorrection;
+                        correctSent += cleanedCorrection;
 
                     } else {
 
                         correctSection = wrongSent.substring( 0, wrongIndexes[ i ][ 0 ] );
+                        console.log( 'correctSection:', correctSection );
                        
-                        if ( correctSection[ correctSection.len - 1 ] === " " ) {
+                        if ( correctSection[ correctSection.length - 1 ] === " " ) {
 
                             correctSent = correctSection.substring( 0, correctSection.length - 1 );
+                            console.log( 'with trailing whitespace' );
 
-                        }
+                        } else {
+
+                            correctSent += correctSection;
+                            console.log( 'without trailing whitespace' );
                     
+                        }
+
                     }
 
                 } else {
 
                     correctSection = wrongSent.substring( 0, wrongIndexes[ i ][ 0 ] )
+                    console.log( 'correctSection:', correctSection );
                     correctSent += correctSection + cleanedCorrection;
+                    console.log( 'correctSent:', correctSent );
                
                 }
 
@@ -301,6 +390,7 @@ function makeCorrectSentence() {
 
     }
 
+    console.log( 'correctSentFinal:', correctSent );
     return correctSent;
 
 }
@@ -331,7 +421,6 @@ function getRandomTenWrongSentences() {
     console.log( 'allWrongSents:', allWrongSents );
 
     var lenAll = allWrongSents.length;
-
     let moreThanTenWrong = false;
     if ( lenAll >= 10 ) {
 
@@ -343,17 +432,19 @@ function getRandomTenWrongSentences() {
 
     for (i=0; i<10; i++) {
 
-        let randomInt = Math.floor( Math.random() * lenAll );
-        lenAll -= 1;
+        if ( moreThanTenWrong ) {
 
-        tenWrong.push( allWrongSents[ randomInt ] );
+            // don't repeat sentences 
+            tenWrong.push( allWrongSents.splice( Math.floor( Math.random() * allWrongSents.length ), 1 )[ 0 ] );
 
-        // don't want repeat sentences if possible
-        //if ( moreThanTenWrong ) {
+        } else {
 
-            //delete allWrongSents[ randomInt ];
+            // repeating is possible
+            let randomInt = Math.floor( Math.random() * lenAll );
 
-        //}
+            tenWrong.push( allWrongSents[ randomInt ] );
+
+        }
 
     };
 

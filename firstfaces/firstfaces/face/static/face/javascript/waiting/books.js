@@ -24,7 +24,7 @@ function showTestsBook() {
 function showSentencesBook() {
     
     $('#sentencesBook').fadeIn( 1000 ); 
-    showSession( 0 )
+    showSession( sessionsDict.IDList[ 0 ] )
 
 };
         
@@ -34,17 +34,19 @@ function showNewsBook() {
 
 };
 
-function showSession( ind ) {
+function showSession( sessID ) {
 
-    if ( sessionsDict[ 'IDList' ].length === 0 ) {
+    //if ( sessionsDict[ 'IDList' ].length === 0 ) {
 
-    } else if ( ind < 0 || ind >= sessionsDict[ 'IDList' ].length ) {
+    //} else if ( ind < 0 || ind >= sessionsDict[ 'IDList' ].length ) {
 
-        alert( 'index for session out of range' )
+        //alert( 'index for session out of range' )
 
-    } else {
+    //} else {
 
-        let sess = sessionsDict[ sessionsDict[ 'IDList' ][ ind ] ]
+        //let sess = sessionsDict[ sessionsDict[ 'IDList' ][ ind ] ]
+        console.log('sessID:', sessID );
+        let sess = sessionsDict[ sessID ]
         let sT = new Date( sess.start_time * 1000 )
         let niceDate = sT.toLocaleDateString("en-GB"); 
         let topic = sess.topic
@@ -69,7 +71,7 @@ function showSession( ind ) {
         $('.listen-btn').on( 'click', getRecording );
         $('.listen-synth-btn').on( 'click', getSynth );
 
-    }
+    //}
 
 }
 

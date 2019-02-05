@@ -154,8 +154,8 @@ class PermAudioFile(models.Model):
 
 class Test(models.Model):
     learner = models.ForeignKey(User, on_delete=models.CASCADE)
-    stage = models.SmallIntegerField(blank=True, null=True)
     score = models.SmallIntegerField(blank=True, null=True)
+    started_at = models.DateTimeField(null=True, blank=True)
     finished_at = models.DateTimeField(null=True, blank=True)
 
 class PostTalkTimings(models.Model):

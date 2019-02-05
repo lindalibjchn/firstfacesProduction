@@ -214,7 +214,7 @@ def waiting(request):
         sessions_dict = get_prev_sessions( request.user )
 
         # get scores of previous tests
-        prev_test_scores = [[int(time.mktime((t.finished_at).timetuple())), t.score] for t in Test.objects.filter(learner=request.user) if t.stage == 10]
+        prev_test_scores = [[int(time.mktime((t.finished_at).timetuple())), t.score] for t in Test.objects.filter(learner=request.user) if t.finished_at != None]
 
         # check if user has completed tutorial
         user_profile = Profile.objects.get(learner=request.user)
@@ -1266,7 +1266,6 @@ def add_listen_synth_data(request):
 
                 clicks_already.append( [diffSent, time_now] )
 
-
         a.clicks = json.dumps(clicks_already)
         a.save();
 
@@ -1302,6 +1301,38 @@ def add_voice_data(request):
     response_data = {
 
         'sent_id': s.id,
+
+    }
+
+    return JsonResponse(response_data)    
+
+def store_test_begin(request):
+
+    time_now = timezone.now();
+
+    # code.interact(local=locals());
+    test = Test.objects.create(learner=request.user, started_at=time_now)
+
+    response_data = {
+    }
+
+    return JsonResponse(response_data)    
+
+def store_test_score(request):
+
+    time_now = timezone.now();
+
+    # code.interact(local=locals());
+    test = Test.objects.filter(learner=request.user).latest('pk');
+    test.score = request.GET['test_score']
+    test.finished_at = time_now
+    test.save()
+
+    finish_time = int(time.mktime((test.finished_at).timetuple()))
+
+    response_data = {
+
+        'finishTime': finish_time 
 
     }
 
