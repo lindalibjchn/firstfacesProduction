@@ -50,7 +50,7 @@ function fillQuestionNos() {
         'font-size': '3vw',
         'font-weight': 'normal'
     });
-    $('#testQuestionScoreTotal').text( testDict.totalScore.toString() + "/100" );
+    $('#testQuestionScoreTotal').text( testDict.totalScore.toString() + "/" + ( testDict.question * 10 ).toString() );
 
 }
 
@@ -108,7 +108,7 @@ function checkIfCorrect( lG ) {
 
     if ( lG === testDict.sentences[ testDict.question ].correctSentence ) {
 
-        $('#inputAnswer').css( 'background-color', 'green' );
+        $('#inputAnswer').css( 'background-color', 'lime' );
         $('#testQuestionScoreThisSent' ).css( { 
             'color': 'green', 
             'font-weight': 'bold',
@@ -184,6 +184,7 @@ function nextQuestion() {
             $('#submitBtn').show();
             $('#hintBtn').show();
             $('#inputAnswer').css( 'background-color', 'white' );
+            setTimeout( function(){ $('#inputAnswer').focus() }, 600 );
 
             fillQuestionNos();
             fillQuestion( testDict.question );
@@ -199,23 +200,42 @@ function nextQuestion() {
 
 function finishTest() {
 
-    $('#testQuestionsOuterCont').fadeOut( 500 );
-    setTimeout( function(){ 
-        
-        $('#testsEntrance').fadeIn( 1000 ); 
-    
-        $('#submitBtn').show();
-        $('#hintBtn').show();
-        $('#inputAnswer').css( 'background-color', 'white' );
-
-        $( '.test-box-contents' ).fadeIn( 500 );
-        $('#testQuestionScoreThisSent').fadeIn( 500 );
-        $('#testQuestionScoreThisSent' ).css( 'color', 'black' );
-
-    }, 600 );
-
     sendFinishTestDataToServer();
 
+    $('#hintBtn').off( 'click' );
+    $('#submitBtn').off( 'click' );
+    $('#nextBtn').off( 'click' );
+
+    $('#testQuestionOuter').fadeOut( 500 );
+    
+    setTimeout( function() {
+
+        $('#finalScore').text( "Final Score: " + testDict.totalScore.toString() + "/100" );
+        $('#finalScore').fadeIn( 500 );
+
+        setTimeout( function() {
+
+            $('#testQuestionsOuterCont').fadeOut( 500 );
+
+            setTimeout( function(){ 
+                
+                $('#finalScore').hide();
+                $('#testQuestionOuter').show();
+                $('#testsEntrance').fadeIn( 1000 ); 
+            
+                $('#submitBtn').show();
+                $('#hintBtn').show();
+                $('#inputAnswer').css( 'background-color', 'white' );
+
+                $( '.test-box-contents' ).fadeIn( 500 );
+                $('#testQuestionScoreThisSent').fadeIn( 500 );
+                $('#testQuestionScoreThisSent' ).css( 'color', 'black' );
+
+            }, 600 );
+
+        }, 3000 );
+
+    }, 500 );
 
 }
 
@@ -231,7 +251,7 @@ function sendFinishTestDataToServer() {
             
             //let date = new Date( startTimeUnix ).toLocaleDateString("en-GB");
             //let dateFormatted = date.substring(0, date.length - 5)
-            prevTestScores.unshift( [ json.finishTime, testDict.totalScore ] );
+            prevTestScores.push( [ json.finishTime, testDict.totalScore ] );
             insertTestChart( 0 );
 
         },
@@ -411,7 +431,7 @@ function fillQuestion( q ) {
     }
 
     $('#inputAnswer').val(testDict.sentences[ q ].sentence);
-    $('#inputAnswer').focus();
+    setTimeout( function() { $('#inputAnswer').focus() }, 600 );
 
 }
 

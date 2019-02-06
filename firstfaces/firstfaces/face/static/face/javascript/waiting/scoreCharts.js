@@ -201,10 +201,10 @@ function insertTestChart( period ) {
                 backgroundColor: 'rgb(99, 255, 132)',
                 borderColor: 'rgb(0, 150, 0)',
                 data: getTestScores(),
-                pointRadius: 8,
-                pointHitRadius: 12,
-                pointHoverRadius: 12,
-                pointHoverBorderWidth: 6,
+                pointRadius: 4,
+                pointHitRadius: 6,
+                pointHoverRadius: 6,
+                pointHoverBorderWidth: 3,
                 //pointBackgroundColor: getBackgroundColors(),
             }]
         },
@@ -215,19 +215,19 @@ function insertTestChart( period ) {
                 display: true,
             },
             tooltips: {
-                enabled: false,
-                //callbacks: {
+                enabled: true,
+                callbacks: {
                     
-                    //label: function( tooltipitem, data ) {
+                    label: function( tooltipitem, data ) {
 
                         //console.log('tooltipitem:', tooltipitem);
                         //console.log('data:', data.datasets[0].data)
 
-                        //var label = tooltipitem.yLabel;
-                        //return label;
+                        var label = tooltipitem.yLabel;
+                        return label;
 
-                    //}
-                //},
+                    }
+                },
             },
             scales: {
                 yAxes: [{
@@ -265,23 +265,23 @@ function insertTestChart( period ) {
 
         // indOfPeriod gives which 3 months to display. 0 is psat 3 months, 1 is 3-6- months previous etc.
 
-        let ThreeMonthsUnixTime = 90 * 24 * 60 * 60 * 1000; 
+        //let ThreeMonthsUnixTime = 90 * 24 * 60 * 60 * 1000; 
 
-        let curTime = new Date();
-        let timeEnd = curTime - indOfPeriod * ThreeMonthsUnixTime;
-        let timeStart = curTime - ( indOfPeriod + 1 ) * ThreeMonthsUnixTime;
+        //let curTime = new Date();
+        //let timeEnd = curTime - indOfPeriod * ThreeMonthsUnixTime;
+        //let timeStart = curTime - ( indOfPeriod + 1 ) * ThreeMonthsUnixTime;
 
-        let firstEverTestTime = prevTestScores[prevTestScores.length - 1][0] * 1000;
-        console.log('firstEverTestTime:', firstEverTestTime);
-        if ( timeStart <= firstEverTestTime ) {
+        //let firstEverTestTime = prevTestScores[prevTestScores.length - 1][0] * 1000;
+        //console.log('firstEverTestTime:', firstEverTestTime);
+        //if ( timeStart <= firstEverTestTime ) {
 
-            testEarliestThreeMonths = true;
+            //testEarliestThreeMonths = true;
 
-        } else {
+        //} else {
 
-            testEarliestThreeMonths = false;
+            //testEarliestThreeMonths = false;
 
-        }
+        //}
         
         testDates = [];
         prevTestScores.forEach( function(e) {
@@ -295,7 +295,7 @@ function insertTestChart( period ) {
 
                 //console.log('e:', e);
                 let date = new Date( startTimeUnix ).toLocaleDateString("en-GB");
-                testDates.unshift( date.substring(0, date.length - 5) );
+                testDates.push( date.substring(0, date.length - 5) );
 
             //}
 
@@ -311,7 +311,7 @@ function insertTestChart( period ) {
         testScores = [];
         prevTestScores.forEach( function(e) {
         
-            testScores.unshift( e[1] );
+            testScores.push( e[1] );
 
         })
 

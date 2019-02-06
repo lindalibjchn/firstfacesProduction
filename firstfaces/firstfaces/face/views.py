@@ -214,7 +214,7 @@ def waiting(request):
         sessions_dict = get_prev_sessions( request.user )
 
         # get scores of previous tests
-        prev_test_scores = [[int(time.mktime((t.finished_at).timetuple())), t.score] for t in Test.objects.filter(learner=request.user) if t.finished_at != None]
+        prev_test_scores = get_test_scores( request.user )
 
         # check if user has completed tutorial
         user_profile = Profile.objects.get(learner=request.user)

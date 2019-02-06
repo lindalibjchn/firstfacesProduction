@@ -1,4 +1,4 @@
-from .models import Available, Sentence, Session, PermSentence, PermAudioFile, Profile, PermPostTalkTimings
+from .models import Available, Sentence, Session, PermSentence, PermAudioFile, Profile, PermPostTalkTimings, Test
 from django.contrib.auth.models import User
 import datetime
 import time
@@ -450,7 +450,15 @@ def check_if_username_is_unique( name ):
 
         return True
 
+def get_test_scores( u ):
 
+    prev_test_scores = [[int(time.mktime((t.finished_at).timetuple())), t.score] for t in Test.objects.filter(learner=u) if t.finished_at != None]
+
+    prev_test_scores = sorted(prev_test_scores, key=itemgetter(0))    
+
+    print('prev_test_scores:', prev_test_scores)
+
+    return prev_test_scores
 
 
 
