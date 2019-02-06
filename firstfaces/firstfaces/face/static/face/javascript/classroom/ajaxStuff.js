@@ -299,6 +299,7 @@ function checkForPromptNIndexes( sentId ) {
                 if ( classVariableDict.promptNIndexesReceived === false ) {
 
                     console.log('got prompt n indexes');
+                    classVariableDict.promptNINdexesCount = 0;
                     promptNIndexesReceived( json.sent_meta )
 
                     if ( classVariableDict.lastSentToBeSent ) {
@@ -314,7 +315,7 @@ function checkForPromptNIndexes( sentId ) {
                 console.log('checking for prompt n indexes again');
                 classVariableDict.promptNINdexesCount += 1;
 
-                if ( classVariableDict.promptNINdexesCount < 15 ) {
+                if ( classVariableDict.promptNINdexesCount < 20 ) {
 
                     setTimeout( function() {
 

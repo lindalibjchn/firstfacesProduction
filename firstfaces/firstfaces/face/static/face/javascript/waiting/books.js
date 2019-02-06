@@ -19,12 +19,23 @@ function showTestsBook() {
 
     $('#testsBook').fadeIn( 1000 ); 
 
+    if ( sessionsDict.IDList.length === 0 ) {
+
+        $('#testBtnCont').hide();
+
+    }
+
 };
 
 function showSentencesBook() {
     
     $('#sentencesBook').fadeIn( 1000 ); 
-    showSession( sessionsDict.IDList[ 0 ] )
+
+    if ( sessionsDict.IDList.length !== 0 ) {
+
+        showSession( sessionsDict.IDList[ 0 ] )
+
+    }
 
 };
         

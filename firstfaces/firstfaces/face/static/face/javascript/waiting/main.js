@@ -8,8 +8,17 @@ $(window).on( 'load', function() {
     getSessionsIdList();
     
     // insert chart for last 3 months first (pos 0 in list"
-    insertChart( 0 );
+    if ( sessionsDict.IDList.length !== 0 ) {
+
+        insertChart( 0 );
     
+    } else {
+
+        $('#chartRow').html('<h5>Sentences will appear after your first class</h5>');
+        $('#testChartCont').html('<h5>Tests will appear after your first class</h5>');
+
+    }
+
     // this is for developing the sentences book
     //$('#bookContentBackground').fadeIn( 1000 ); 
     //showSentencesBook();
@@ -23,7 +32,12 @@ $(window).on( 'load', function() {
 
     setupScrollBtns();
 
-    insertTestChart(0);
+    if ( prevTestScores.length !== 0 ) {
+
+        insertTestChart(0);
+
+    }
+
     $('#startTestBtn').on( 'click', startTest );
 
     // while developing
