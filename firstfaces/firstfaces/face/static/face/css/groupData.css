@@ -10,17 +10,18 @@
 
     background-color: grey;
     height: 100%;
-    overflow-y: hidden;
+    overflow-y: scroll;
 
 }
 
 #studentNamesCont {
 
-    position: absolute;
+    /*position: absolute;*/
     top: 80px;
     padding: 10px;
     font-size: 22px;
     color: white;
+    height: 80%;
 
 }
 
