@@ -402,7 +402,7 @@ def get_prev_sessions( user ):
 
     for sess in all_sessions:
 
-        if not sess.tutorial:
+        if not sess.tutorial and sess.score != None:
 
             sents = PermSentence.objects.filter(session=sess).order_by('pk')
             sentences = []

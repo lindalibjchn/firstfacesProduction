@@ -262,20 +262,25 @@ function appendRecordings( sentData, n ) {
 
     for ( var a in sentData.audio_files ) {
 
-        let singleRecordingBox = document.createElement( "div" );
+        // if no audio file
+        if ( sentData.audio_files[ a ][ 1 ] !== "" && sentData.audio_files[ a ][ 1 ] !== null ) {
 
-        let text = document.createElement( "div" );
-        text.className = "speech-to-text";
-        text.innerHTML = sentData.audio_files[a][1]; 
-        singleRecordingBox.appendChild( text );
+            let singleRecordingBox = document.createElement( "div" );
 
-        let a_btn = document.createElement("button");
-        a_btn.id = sentData.audio_files[a][2];
-        a_btn.innerHTML = "<i class='fa fa-play inputfa'></i>";
-        a_btn.className = "listen-btn w3-xsmall w3-blue w3-btn w3-circle";
-        text.appendChild( a_btn );
+            let text = document.createElement( "div" );
+            text.className = "speech-to-text";
+            text.innerHTML = sentData.audio_files[a][1]; 
+            singleRecordingBox.appendChild( text );
 
-        recordingsBox.appendChild( singleRecordingBox );
+            let a_btn = document.createElement("button");
+            a_btn.id = sentData.audio_files[a][2];
+            a_btn.innerHTML = "<i class='fa fa-play inputfa'></i>";
+            a_btn.className = "listen-btn w3-xsmall w3-blue w3-btn w3-circle";
+            text.appendChild( a_btn );
+
+            recordingsBox.appendChild( singleRecordingBox );
+
+        }
 
     }
 

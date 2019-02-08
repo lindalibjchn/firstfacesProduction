@@ -32,7 +32,7 @@ function loadTest() {
 
     testDict.sentences = getRandomTenWrongSentences();
     fillQuestion( 0 );
-    testDict.question = 9;
+    testDict.question = 0;
     testDict.totalScore = 0;
     testDict.scoreThisSent = 10;
     fillQuestionNos();
