@@ -100,8 +100,8 @@ function whenOpenMouthEnds( funcToCall ) {
 
 function mouthOpenLoop() {
 
-    mouthOpenObject.dur = [ 0.1, 0.2, 0.3 ][Math.floor(Math.random() * 3)];
-    mouthOpenObject.amount = Math.random() * 0.2;
+    mouthOpenObject.dur = [ 0.3, 0.4, 0.5 ][Math.floor(Math.random() * 3)];
+    mouthOpenObject.amount = Math.random() * 0.25;
 
     initOpenMouth( mouthOpenObject.amount, mouthOpenObject.dur );
 
@@ -125,8 +125,8 @@ function mouthOpenLoop() {
 
 function purseLipsLoop() {
 
-    purseLipsObject.dur = [ 0.1, 0.2, 0.3 ][Math.floor(Math.random() * 3)];
-    purseLipsObject.amount = Math.random() * 0.75;
+    purseLipsObject.dur = [ 0.3, 0.4, 0.5 ][Math.floor(Math.random() * 3)];
+    purseLipsObject.amount = Math.random() * 1.25;
 
     initPurseLips( purseLipsObject.amount, purseLipsObject.dur );
 

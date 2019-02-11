@@ -479,7 +479,8 @@ function greeting05() {
     
             classVariableDict.tutorialNoMicCount = 0; // will increase if no audio detected
         
-        }, tiaTimings.speechBubbleFadeOutDuration * 2 )
+        // times 3 to allow time to return to laptop before speaking again
+        }, tiaTimings.speechBubbleFadeOutDuration * 3 )
 
     }, tiaTimings.speechBubbleFadeOutDuration * 2 )
 
