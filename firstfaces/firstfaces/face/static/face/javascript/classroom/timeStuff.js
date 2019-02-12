@@ -179,7 +179,7 @@ function goodbyeTalk() {
                 
                 location.reload( true );
                 
-            }, 5000 )
+            }, 7000 )
 
         });
         
