@@ -139,6 +139,9 @@ class AudioFile(models.Model):
     audio = models.FileField(upload_to="")
     created_at = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return  str(self.transcription0)
+
 class PermAudioFile(models.Model):
     sentence = models.ForeignKey(PermSentence, on_delete=models.CASCADE)
     transcription0 = models.CharField(max_length=300, blank=True, null=True)
@@ -152,11 +155,17 @@ class PermAudioFile(models.Model):
     audio = models.FileField(upload_to="")
     created_at = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return  str(self.transcription0)
+
 class Test(models.Model):
     learner = models.ForeignKey(User, on_delete=models.CASCADE)
     score = models.SmallIntegerField(blank=True, null=True)
     started_at = models.DateTimeField(null=True, blank=True)
     finished_at = models.DateTimeField(null=True, blank=True)
+
+    def __str__(self):
+        return  str(self.learner) + ": " + str(self.score)
 
 class PostTalkTimings(models.Model):
     sentence = models.ForeignKey(Sentence, on_delete=models.CASCADE)
@@ -232,6 +241,9 @@ class Profile(models.Model):
     sound = models.NullBooleanField()
     microphone = models.NullBooleanField()
     tutorial_complete = models.BooleanField(default=False)
+
+    def __str__(self):
+        return str(self.learner)
 
 class NewsArticle(models.Model):
     title = models.CharField(max_length=100, null=False, blank=False)
