@@ -18,11 +18,6 @@ function resetTranscripts() {
     synthesisObject.transcript1 = "";
     synthesisObject.transcript2 = "";
 
-    //// confidence ratings
-    synthesisObject.confidence0 = 0;
-    synthesisObject.confidence1 = 0;
-    synthesisObject.confidence2 = 0;
-
 }
 
 var recognition// put here so can call in clipping occurs
@@ -174,9 +169,12 @@ function readyBtns() {
 
                 function onRecord() {
 
+                    recognition.start();
+                    console.log('Voice recognition activated. Try speaking into the microphone.');
+                    mediaRecorder.start();
+
                     resetTranscripts();
 
-                    mediaRecorder.start();
                     listenToSpeechSynthesis( classVariableDict.blobs );// tia leans to listen
                     classVariableDict.blobs += 1;
                     volumeObject.bool = true;// detect volume and be ready to show volume bar
@@ -194,8 +192,6 @@ function readyBtns() {
                     $('#stopRecordVoiceBtn').show();
                     $('.play-btn').prop( "disabled", true);
                     $('#talkBtn').prop( "disabled", true);
-                    recognition.start();
-                    console.log('Voice recognition activated. Try speaking into the microphone.');
 
                 }
 
@@ -239,11 +235,76 @@ function readyBtns() {
             }
         );
             
+        var recordedSectionCount = 0;
+        var transcript0 = '';
+        var transcript1 = '';
+        var transcript2 = '';
         recognition.onresult = function(event) {
 
-            synthesisObject.orderedAlternatives = createArrayOfAlternatives( event.results[0] );
-            synthesisObject.alternatives = synthesisObject.orderedAlternatives.length
-            fillTranscriptsAndConfidences();
+            console.log( 'onresult' );
+            console.log( event );
+            var orderedAlternatesList = createArrayOfAlternatives( event.results[ recordedSectionCount ] );
+            console.log( 'orderedAlternatesList:', orderedAlternatesList );
+            console.log( 'orderedAlternatesList length:', orderedAlternatesList.length );
+
+            if ( orderedAlternatesList.length > 1 ) {
+
+                if ( orderedAlternatesList.length === 2 ) {
+
+                    transcript0 += orderedAlternatesList[ 0 ].transcript;
+                    transcript1 += orderedAlternatesList[ 1 ].transcript;
+                    transcript2 += orderedAlternatesList[ 1 ].transcript;
+            
+                } else if ( orderedAlternatesList.length === 3 ) {
+
+                    transcript0 += orderedAlternatesList[ 0 ].transcript;
+                    transcript1 += orderedAlternatesList[ 1 ].transcript;
+                    transcript2 += orderedAlternatesList[ 2 ].transcript;
+            
+                }
+
+            } else {
+
+                transcript0 += orderedAlternatesList[ 0 ].transcript;
+                transcript1 += orderedAlternatesList[ 0 ].transcript;
+                transcript2 += orderedAlternatesList[ 0 ].transcript;
+        
+            }
+            console.log( 'transcript0:', transcript0 );
+
+            recordedSectionCount += 1;
+
+        }
+
+        recognition.onend = function( event ) {
+
+            let listOfAlternatives = confirmAlternatives();
+            synthesisObject.alternatives = listOfAlternatives.length;
+            console.log('listOfAlternatives:', listOfAlternatives);
+            fillTranscriptsAndConfidences( listOfAlternatives );
+
+            recordedSectionCount = 0;
+            transcript0 = '';
+            transcript1 = '';
+            transcript2 = '';
+
+        }
+
+        function confirmAlternatives() {
+
+            if ( transcript1 === transcript0 ) {
+    
+                return [ transcript0 ];
+
+            } else if ( transcript2 !== transcript1 ) {
+
+                return [ transcript0,  transcript1, transcript2 ];
+
+            } else {
+
+                return [ transcript0, transcript1 ];
+
+            }
 
         }
 
@@ -254,6 +315,7 @@ function readyBtns() {
     }
 
 }
+
 
 // put this in a function so that I can call it later if the user doesn't click stop after X seconds.
 function onStopClick() {
@@ -267,7 +329,12 @@ function onStopClick() {
     classVariableDict.recording = false;
 
     $('#stopRecordVoiceBtn').hide();
-    recognition.stop();
+
+    setTimeout( function() { 
+        
+        recognition.stop();
+
+    }, 500 );
 
 }
 
@@ -372,18 +439,17 @@ function createArrayOfAlternatives( unorderedDict ) {
 
 }
 
-function fillTranscriptsAndConfidences() {
+function fillTranscriptsAndConfidences( alternatives ) {
 
-    if ( synthesisObject.orderedAlternatives.length === 0 ) {
+    if ( alternatives.length === 0 ) {
 
         console.log('no transcripts');
 
     }
 
-    for ( let i=0; i<synthesisObject.orderedAlternatives.length; i++ ) {
+    for ( let i=0; i<alternatives.length; i++ ) {
 
-        synthesisObject[ 'transcript' + i.toString() ] = clipLongTranscripts( synthesisObject.orderedAlternatives[i].transcript );
-        synthesisObject[ 'confidence' + i.toString() ] = parseInt( 100 * synthesisObject.orderedAlternatives[i].confidence );
+        synthesisObject[ 'transcript' + i.toString() ] = clipLongTranscripts( alternatives[i] );
 
     }
 

@@ -82,9 +82,6 @@ function sendBlobToServer( blob_to_send ) {
     fd.append('transcript0', synthesisObject.transcript0);
     fd.append('transcript1', synthesisObject.transcript1);
     fd.append('transcript2', synthesisObject.transcript2);
-    fd.append('confidence0', synthesisObject.confidence0);
-    fd.append('confidence1', synthesisObject.confidence1);
-    fd.append('confidence2', synthesisObject.confidence2);
     fd.append('blob_no_text', classVariableDict.blob_no_text);
     fd.append('blob_no_text_sent_id', classVariableDict.blob_no_text_sent_id);
 

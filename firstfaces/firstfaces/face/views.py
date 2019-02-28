@@ -587,12 +587,8 @@ def store_blob(request):
     text_from_speech0 = request.POST['transcript0']
     text_from_speech1 = request.POST['transcript1']
     text_from_speech2 = request.POST['transcript2']
-    text_from_speech_conf0 = request.POST['confidence0']
-    text_from_speech_conf1 = request.POST['confidence1']
-    text_from_speech_conf2 = request.POST['confidence2']
 
     print('text_from_speech2:', text_from_speech2)
-    print('text_from_speech_conf2:', text_from_speech_conf2)
 
     #check if this recording is a retry
     #get prev sents for this user in this session
@@ -619,9 +615,6 @@ def store_blob(request):
             transcription0=text_from_speech0,
             transcription1=text_from_speech1,
             transcription2=text_from_speech2,
-            confidence0=text_from_speech_conf0,
-            confidence1=text_from_speech_conf1,
-            confidence2=text_from_speech_conf2,
             interference=interference,
             )
     a.save()
