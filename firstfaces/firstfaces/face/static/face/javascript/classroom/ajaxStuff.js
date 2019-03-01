@@ -165,7 +165,7 @@ function sendSentToServer() {
 
     let sent = $('#textInput').val();
 
-    if ( sent.length >= 300 ) {
+    if ( sent.length >= 260 ) {
 
         alert( 'This sentence is too long. Please simplify and try again.')
 

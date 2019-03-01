@@ -14,6 +14,7 @@ $(window).on( 'load', function() {
 
 function resetTranscripts() {
 
+    synthesisObject.recordedSectionCount = 0;
     synthesisObject.transcript0 = "";
     synthesisObject.transcript1 = "";
     synthesisObject.transcript2 = "";
@@ -169,11 +170,11 @@ function readyBtns() {
 
                 function onRecord() {
 
+                    resetTranscripts();
+
                     recognition.start();
                     console.log('Voice recognition activated. Try speaking into the microphone.');
                     mediaRecorder.start();
-
-                    resetTranscripts();
 
                     listenToSpeechSynthesis( classVariableDict.blobs );// tia leans to listen
                     classVariableDict.blobs += 1;
@@ -235,44 +236,36 @@ function readyBtns() {
             }
         );
             
-        var recordedSectionCount = 0;
-        var transcript0 = '';
-        var transcript1 = '';
-        var transcript2 = '';
         recognition.onresult = function(event) {
 
-            console.log( 'onresult' );
-            console.log( event );
-            var orderedAlternatesList = createArrayOfAlternatives( event.results[ recordedSectionCount ] );
-            console.log( 'orderedAlternatesList:', orderedAlternatesList );
-            console.log( 'orderedAlternatesList length:', orderedAlternatesList.length );
+            var orderedAlternatesList = createArrayOfAlternatives( event.results[ synthesisObject.recordedSectionCount ] );
 
             if ( orderedAlternatesList.length > 1 ) {
 
                 if ( orderedAlternatesList.length === 2 ) {
 
-                    transcript0 += orderedAlternatesList[ 0 ].transcript;
-                    transcript1 += orderedAlternatesList[ 1 ].transcript;
-                    transcript2 += orderedAlternatesList[ 1 ].transcript;
+                    synthesisObject.transcript0 += orderedAlternatesList[ 0 ].transcript;
+                    synthesisObject.transcript1 += orderedAlternatesList[ 1 ].transcript;
+                    synthesisObject.transcript2 += orderedAlternatesList[ 1 ].transcript;
             
                 } else if ( orderedAlternatesList.length === 3 ) {
 
-                    transcript0 += orderedAlternatesList[ 0 ].transcript;
-                    transcript1 += orderedAlternatesList[ 1 ].transcript;
-                    transcript2 += orderedAlternatesList[ 2 ].transcript;
+                    synthesisObject.transcript0 += orderedAlternatesList[ 0 ].transcript;
+                    synthesisObject.transcript1 += orderedAlternatesList[ 1 ].transcript;
+                    synthesisObject.transcript2 += orderedAlternatesList[ 2 ].transcript;
             
                 }
 
             } else {
 
-                transcript0 += orderedAlternatesList[ 0 ].transcript;
-                transcript1 += orderedAlternatesList[ 0 ].transcript;
-                transcript2 += orderedAlternatesList[ 0 ].transcript;
+                synthesisObject.transcript0 += orderedAlternatesList[ 0 ].transcript;
+                synthesisObject.transcript1 += orderedAlternatesList[ 0 ].transcript;
+                synthesisObject.transcript2 += orderedAlternatesList[ 0 ].transcript;
         
             }
-            console.log( 'transcript0:', transcript0 );
 
-            recordedSectionCount += 1;
+            console.log( 'transcript0:', synthesisObject.transcript0 );
+            synthesisObject.recordedSectionCount += 1;
 
         }
 
@@ -280,29 +273,23 @@ function readyBtns() {
 
             let listOfAlternatives = confirmAlternatives();
             synthesisObject.alternatives = listOfAlternatives.length;
-            console.log('listOfAlternatives:', listOfAlternatives);
             fillTranscriptsAndConfidences( listOfAlternatives );
-
-            recordedSectionCount = 0;
-            transcript0 = '';
-            transcript1 = '';
-            transcript2 = '';
 
         }
 
         function confirmAlternatives() {
 
-            if ( transcript1 === transcript0 ) {
+            if ( synthesisObject.transcript1 === synthesisObject.transcript0 ) {
     
-                return [ transcript0 ];
+                return [ synthesisObject.transcript0 ];
 
-            } else if ( transcript2 !== transcript1 ) {
+            } else if ( synthesisObject.transcript2 !== synthesisObject.transcript1 ) {
 
-                return [ transcript0,  transcript1, transcript2 ];
+                return [ synthesisObject.transcript0,  synthesisObject.transcript1, synthesisObject.transcript2 ];
 
             } else {
 
-                return [ transcript0, transcript1 ];
+                return [ synthesisObject.transcript0, synthesisObject.transcript1 ];
 
             }
 

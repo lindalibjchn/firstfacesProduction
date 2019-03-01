@@ -379,7 +379,7 @@ def save_to_perm_db( sents_tbcopied ):
         # change audio files over to PermSentence
         audiofile_set = s.audiofile_set.all().order_by('-pk')
         for a in audiofile_set.reverse():
-            pa = PermAudioFile.objects.create(sentence=ps, transcription0=a.transcription0, transcription1=a.transcription1, transcription2=a.transcription2, confidence0=a.confidence0, confidence1=a.confidence1, confidence2=a.confidence2, interference=a.interference, clicks=a.clicks, audio=a.audio, created_at=a.created_at)
+            pa = PermAudioFile.objects.create(sentence=ps, transcription0=a.transcription0, transcription1=a.transcription1, transcription2=a.transcription2, interference=a.interference, clicks=a.clicks, audio=a.audio, created_at=a.created_at)
             pa.save()
 
         # change audio files over to PermSentence
