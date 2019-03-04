@@ -36,6 +36,15 @@ function showStudentData() {
 
     console.log('username: ', this.id);
 
+    $( '.student-names' ).css( {
+        'color': 'white',
+        'font-weight': 'normal',
+    });
+    $( '#' + this.id ).css( {
+        'color': 'yellow',
+        'font-weight': 'bold',
+    });
+
     sessionsDict = $.extend( true, {}, groupSessions[ this.id ] );
     getSessionsIdList();
 
