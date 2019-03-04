@@ -26,6 +26,7 @@ function enterOrReEnter() {
     function reEnter() {
  
         camera.position.set( CAMERA_SIT_POS.x, CAMERA_SIT_POS.y, CAMERA_SIT_POS.z );
+        //camera.rotation.set( CAMERA_SIT_TO_BOARD_ROT.x, CAMERA_SIT_TO_BOARD_ROT.y, CAMERA_SIT_TO_BOARD_ROT.z );
         camera.rotation.set( CAMERA_SIT_TO_LAPTOP_ROT.x, CAMERA_SIT_TO_LAPTOP_ROT.y, CAMERA_SIT_TO_LAPTOP_ROT.z );
         cameraObject.currentState = "laptop";
 
@@ -313,7 +314,7 @@ function loadAllTextElements() {
                 textGeom = new THREE.TextGeometry( alphabet[l], {
 
                     font: font,
-                    size: 1.8,
+                    size: 1.7,
                     height: 0.0,
                     curveSegments: 1, // keep this low for less vertices
 
@@ -405,7 +406,7 @@ function init() {
 
     //// CAMERA CONTROLS \\\\
 
-    //controls = new THREE.OrbitControls( camera, renderer.domElement );
+    controls = new THREE.OrbitControls( camera, renderer.domElement );
 
 
     //// LIGHTS \\\\

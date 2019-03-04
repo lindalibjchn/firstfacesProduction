@@ -4,10 +4,10 @@
 var sentenceObject = {
     alphabetDict: {},
     background: {},
-    sentence: "",
+    sentence: " this is a sentence 1 this is a sentence 2 this is a sentence 3 this is a sentence 4 this is a sentence 5 this is a sentence 6 this is a sentence 7 this is a sentence 8 this is a sentence 9 this is a sentence 10 this is a sentence 11 this is a sentence 13 this is a sentence 1 this is a sentence 2 this is a sentence 3 this is a sentence 4 this is a sentence 5 this is a sentence 6 this is a sentence 7 this is a sentence 8 this is a sentence 9 this is a sentence 10 this is a sentence 11 this is a sentence 13.",
     splitIndexes: [],
     cloneLetters: [],
-    wrongIndexes: [],
+    wrongIndexes: [[3,6]],
 }
 
 var correctionObject = {

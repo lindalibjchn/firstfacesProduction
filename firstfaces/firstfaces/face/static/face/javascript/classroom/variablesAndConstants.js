@@ -122,19 +122,19 @@ function eyeLineOfSightHelper() {
 //// SENTENCE BACKGROUND \\\\
 
 //// 56 chars per line with one extra space at the beginning sent and correction take 3 each, gap of 1 between sent and correct, and gap of 2 between corr and next sent
-const sentBackLen = { x: 57, y: 26, z: 0 };
-const sentBackPOS = { x: -32, y: 3, z: 0 };
+const sentBackLen = { x: 57, y: 29, z: 0 };
+const sentBackPOS = { x: -32, y: 4, z: 0 };
 const sentBackROT = { x: 0, y: 1.2, z: 0 };
 
-const correctionBackPOSY = 0.5;
+const correctionBackPOSY = 2;
 
 //// CHARACTER POSITIONS \\\\
 
 const charsInOneLine = 44;
 const charX = 1.3; // length (x) of one char on beard
-const charY = 2.8; // length (y) of one char on board
+const charY = 2.6; // length (y) of one char on board
 const lineX = -28;
-const lineY = [ 10, 4, -2, -8, -14 ];
+const lineY = [ 11, 6.5, 2, -2.5, -7, -11.5 ];
 const speechLineY = [ 10, 6, 2, -2, -6, -10, -14 ];
 
 

@@ -289,14 +289,10 @@ def class_time(request, session_id):
                     all_sesss = Session.objects.filter(learner=request.user).exclude(end_time=None)
                     recent_sesss = all_sesss.filter(start_time__gte=sess.start_time-datetime.timedelta(days=30)).filter(tutorial=False).order_by('-pk')
 
-                    if len(recent_sesss) > 1:
+                    print('recent_sesss:', recent_sesss)
+
+                    if len(recent_sesss) > 0:
                         
-                        prev_topic = recent_sesss[1].topic
-                        prev_emotion = recent_sesss[1].learner_emotion
-                        if prev_topic == 'emotion':
-                            prev_topic = 'feeling ' + prev_emotion
-                        prev_score = recent_sesss[1].score
-                    elif len( recent_sesss ) == 1:
                         prev_topic = recent_sesss[0].topic
                         prev_emotion = recent_sesss[0].learner_emotion
                         if prev_topic == 'emotion':

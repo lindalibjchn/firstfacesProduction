@@ -404,6 +404,7 @@
     margin-top: 50px;
     height: 30%; 
     padding: 2%;
+    overflow-y: scroll;
 
 }
 
