@@ -410,7 +410,7 @@ def get_prev_sessions( user ):
             for s in sents:
 
                 a_s = s.permaudiofile_set.all().order_by('pk')
-                a_s_ids = [[a.id, a.transcription0, a.audio.name] for a in a_s]
+                a_s_ids = [[a.id, [a.transcription0, a.transcription1, a.transcription2], a.audio.name, json.loads(a.clicks)] for a in a_s]
 
                 sentences.append({
                     'sent_id': s.id,

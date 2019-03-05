@@ -263,13 +263,13 @@ function appendRecordings( sentData, n ) {
     for ( var a in sentData.audio_files ) {
 
         // if no audio file
-        if ( sentData.audio_files[ a ][ 1 ] !== "" && sentData.audio_files[ a ][ 1 ] !== null ) {
+        if ( sentData.audio_files[ a ][ 1 ][ 0 ] !== "" && sentData.audio_files[ a ][ 1 ][ 0 ] !== null ) {
 
             let singleRecordingBox = document.createElement( "div" );
 
             let text = document.createElement( "div" );
             text.className = "speech-to-text";
-            text.innerHTML = sentData.audio_files[a][1]; 
+            text.innerHTML = sentData.audio_files[a][1][0]; 
             singleRecordingBox.appendChild( text );
 
             let a_btn = document.createElement("button");
@@ -277,6 +277,62 @@ function appendRecordings( sentData, n ) {
             a_btn.innerHTML = "<i class='fa fa-play inputfa'></i>";
             a_btn.className = "listen-btn w3-xsmall w3-blue w3-btn w3-circle";
             text.appendChild( a_btn );
+
+            let oneClick = document.createElement( "div" );
+            oneClick.class = "one-click";
+
+            console.log('audioFiles[a][3]:', sentData.audio_files[a][3])
+            if ( sentData.audio_files[ a ][ 3 ].length !== 0 ) {
+
+                let clicks = document.createElement( "div" );
+                clicks.id = "clicks";
+
+                sentData.audio_files[ a ][ 3 ].forEach( function(c) {
+
+                    console.log('c:', c)
+                    if ( c.length > 1 ) {
+
+                        // the first part of c is 0v, 2r. But if it is text, then it should be NaN
+                        if ( !isNaN( parseInt( c[ 0 ][ 0 ] ) ) ) {
+
+                            if ( c[ 0 ][ 1 ] === "v" ) {
+
+                                oneClick.class += " one-click-voice";
+
+                            } else if ( c[ 0 ][ 1 ] === "s" ) {
+
+                                oneClick.class += " one-click-synthesis";
+
+                            }
+
+                            oneClick.innerHTML = "<div class='one-click-inner'>" + c[ 0 ] + "</div>";
+                        
+                        } else {
+
+                            //must be text
+                            oneClick.class += " one-click-text";
+                            oneClick.innerHTML = "<div class='one-click-inner'>t</div>";
+
+                            // for hidden div to be revealed on hover
+                            let typedText = document.createElement( "div" );
+                            typedText.class = "typed-text";
+                            typedText.innerHTML = "<div class='typed-text-inner'>" + c[ 0 ] + "</div>";
+
+                            oneClick.appendChild( typedText );
+                        
+                        }
+
+                    } else {
+
+                        oneClick.class += "one-click-click"
+
+                    }
+
+                });
+
+            }
+
+            text.appendChild( oneClick );
 
             recordingsBox.appendChild( singleRecordingBox );
 

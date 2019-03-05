@@ -75,7 +75,6 @@ function insertChart() {
         
             let date = new Date(sessionsDict[e].start_time * 1000).toLocaleDateString("en-GB");
             dates.unshift( date.substring(0, date.length - 5) );
-            console.log('dates:', dates);
 
         })
 
