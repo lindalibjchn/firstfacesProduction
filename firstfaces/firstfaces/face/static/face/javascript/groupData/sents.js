@@ -260,6 +260,9 @@ function appendRecordings( sentData, n ) {
     let recordingsBox = document.createElement("div");
     recordingsBox.className = "recordingsBox";
 
+    $('.one-click').off( 'click' );
+    $('.one-click').click( toggleTypedText );
+
     for ( var a in sentData.audio_files ) {
 
         // if no audio file
@@ -363,8 +366,6 @@ function appendRecordings( sentData, n ) {
     }
 
     n.appendChild( recordingsBox );
-
-    $('.one-click').click( toggleTypedText );
 
 }
 
