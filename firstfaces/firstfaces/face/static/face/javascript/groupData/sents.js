@@ -278,9 +278,6 @@ function appendRecordings( sentData, n ) {
             a_btn.className = "listen-btn w3-xsmall w3-blue w3-btn w3-circle";
             text.appendChild( a_btn );
 
-            let oneClick = document.createElement( "div" );
-            oneClick.class = "one-click";
-
             console.log('audioFiles[a][3]:', sentData.audio_files[a][3])
             if ( sentData.audio_files[ a ][ 3 ].length !== 0 ) {
 
@@ -289,50 +286,75 @@ function appendRecordings( sentData, n ) {
 
                 sentData.audio_files[ a ][ 3 ].forEach( function(c) {
 
-                    console.log('c:', c)
-                    if ( c.length > 1 ) {
+                    console.log( 'c:', c )
+                    let oneClick = document.createElement( "div" );
+                    oneClick.classList.add( "one-click" );
+
+                    // for hidden div to be revealed on hover
+                    let typedText = document.createElement( "div" );
+                    typedText.classList.add( "typed-text" );
+
+                    if ( c[ 0 ].length > 1 ) {
 
                         // the first part of c is 0v, 2r. But if it is text, then it should be NaN
-                        if ( !isNaN( parseInt( c[ 0 ][ 0 ] ) ) ) {
+                        if ( !isNaN( parseInt( c[ 0 ][ 0 ] ) ) && isNaN( parseInt( c[ 0 ][ 1 ] ) ) ) {
 
                             if ( c[ 0 ][ 1 ] === "v" ) {
 
-                                oneClick.class += " one-click-voice";
+                                oneClick.classList.add( "one-click-voice" );
 
                             } else if ( c[ 0 ][ 1 ] === "s" ) {
 
-                                oneClick.class += " one-click-synthesis";
+                                oneClick.classList.add( "one-click-synthesis" );
 
                             }
 
-                            oneClick.innerHTML = "<div class='one-click-inner'>" + c[ 0 ] + "</div>";
+                            oneClick.innerHTML = c[ 0 ];
                         
+                            console.log( 'parseInt:', parseInt( c[ 0 ][ 0 ] ) );
+                            typedText.innerHTML = sentData.audio_files[ a ][ 1 ][ parseInt( c[ 0 ][ 0 ] ) ];
+                            oneClick.appendChild( typedText );
+
                         } else {
 
                             //must be text
-                            oneClick.class += " one-click-text";
-                            oneClick.innerHTML = "<div class='one-click-inner'>t</div>";
+                            oneClick.classList.add( "one-click-text" );
+                            oneClick.innerHTML = "t";
 
-                            // for hidden div to be revealed on hover
-                            let typedText = document.createElement( "div" );
-                            typedText.class = "typed-text";
-                            typedText.innerHTML = "<div class='typed-text-inner'>" + c[ 0 ] + "</div>";
+                            typedText.innerHTML = c[ 0 ];
 
                             oneClick.appendChild( typedText );
-                        
+
                         }
 
                     } else {
 
-                        oneClick.class += "one-click-click"
+                        if ( c[ 0 ][ 0 ] === "r" ) {
+
+                            oneClick.classList.add( "one-click-repeat" );
+                            oneClick.innerHTML = c[ 0 ];
+                            typedText.innerHTML = "same as previous";
+                            oneClick.appendChild( typedText );
+
+                        } else {
+
+                            oneClick.classList.add( "one-click-click" );
+                            oneClick.innerHTML = c[ 0 ];
+
+                            typedText.innerHTML = sentData.audio_files[ a ][ 1 ][ parseInt( c[ 0 ][ 0 ] ) ];
+                            oneClick.appendChild( typedText );
+
+                        }
 
                     }
 
+                    clicks.appendChild( oneClick );
+
                 });
 
-            }
+                text.appendChild( clicks );
 
-            text.appendChild( oneClick );
+            }
 
             recordingsBox.appendChild( singleRecordingBox );
 
@@ -341,6 +363,8 @@ function appendRecordings( sentData, n ) {
     }
 
     n.appendChild( recordingsBox );
+
+    $('.one-click').click( toggleTypedText );
 
 }
 

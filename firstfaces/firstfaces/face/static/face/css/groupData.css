@@ -189,3 +189,72 @@
 
 }
 
+.one-click {
+
+    display: inline-block;
+    position: relative;
+    border: 1px solid black;
+    height: 24px;
+    width: 24px;
+    font-size: 18px;
+    margin: 2px;
+    text-align: center;
+
+}
+
+.one-click:hover {
+
+    cursor: pointer;
+
+}
+
+.one-click-voice {
+
+    background-color: teal;
+
+}
+
+.one-click-synthesis {
+
+    background-color: orange;
+
+}
+
+.one-click-text {
+
+    background-color: white;
+
+}
+
+.one-click-repeat {
+
+    background-color: white;
+
+}
+
+.typed-text {
+
+    position: absolute;
+    /*visibility: hidden;*/
+    display: none;
+    width: 2000%;
+    border: 2px solid blue;
+    background-color: white;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
