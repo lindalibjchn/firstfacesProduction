@@ -282,7 +282,24 @@ function makeCorrectSentence() {
 
         if ( correction === "x" || correction === "[delete]" ) {
 
-            newCorrection = "x";
+            if ( wrongSection[ 0 ]  === " " && wrongSection[ wrongSection.length - 1 ] === " " ) {
+
+                console.log('both');
+                newCorrection = " ";
+
+            } else if ( wrongSection[ 0 ] === " " || wrongSection[ wrongSection.length - 1 ] === " " ) {
+
+                console.log('left or right');
+                newCorrection = "";
+
+            } else {
+
+                console.log('nowt');
+                newCorrection = correction;
+
+                newCorrection = "deleteASpace";
+
+            }
 
         // if error is a space then need to add spaces around it
         } else if ( wrongSection === " " ) {
@@ -341,59 +358,21 @@ function makeCorrectSentence() {
 
             if ( i === 0 ) {
 
-                console.log( 'i===0' );
-                if ( cleanedCorrection === "x" ) {
-
-                    console.log( 'cleanedCorrection====x' );
-                    if ( wrongIndexes[ i ][ 0 ] === 0 ) {
-
-                        correctSent += cleanedCorrection;
-
-                    } else {
-
-                        correctSection = wrongSent.substring( 0, wrongIndexes[ i ][ 0 ] );
-                        console.log( 'correctSection:', correctSection );
-                       
-                        if ( correctSection[ correctSection.length - 1 ] === " " ) {
-
-                            correctSent = correctSection.substring( 0, correctSection.length - 1 );
-                            console.log( 'with trailing whitespace' );
-
-                        } else {
-
-                            correctSent += correctSection;
-                            console.log( 'without trailing whitespace' );
-                    
-                        }
-
-                    }
-
-                } else {
-
-                    correctSection = wrongSent.substring( 0, wrongIndexes[ i ][ 0 ] )
-                    console.log( 'correctSection:', correctSection );
-                    correctSent += correctSection + cleanedCorrection;
-                    console.log( 'correctSent:', correctSent );
-               
-                }
+                correctSection = wrongSent.substring( 0, wrongIndexes[ i ][ 0 ] )
 
             } else {
 
                 correctSection = wrongSent.substring( wrongIndexes[ i - 1 ][ 1 ], wrongIndexes[ i ][ 0 ] )
 
-                if ( cleanedCorrection === "x" ) {
+            }
 
-                    if ( correctSection[ correctSection.len - 1 ] === " " ) {
+            if ( cleanedCorrection !== "deleteASpace" ) {
 
-                        correctSent += correctSection.substring( 0, correctSection.length - 1 );
+                correctSent += correctSection + cleanedCorrection;
 
-                    }
-                    
-                } else {
+            } else {
 
-                    correctSent += correctSection + cleanedCorrection;
-
-                }
+                correctSent += correctSection.substring( 0, correctSection.length - 1 )
 
             }
 
