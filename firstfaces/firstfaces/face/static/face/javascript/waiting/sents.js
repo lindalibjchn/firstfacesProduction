@@ -253,13 +253,13 @@ function appendRecordings( sentData, n ) {
     for ( var a in sentData.audio_files ) {
 
         // if no audio file
-        if ( sentData.audio_files[ a ][ 1 ] !== "" && sentData.audio_files[ a ][ 1 ] !== null ) {
+        if ( sentData.audio_files[ a ][ 1 ][ 0 ] !== "" && sentData.audio_files[ a ][ 1 ][ 0 ] !== null ) {
 
             let singleRecordingBox = document.createElement( "div" );
 
             let text = document.createElement( "div" );
             text.className = "speech-to-text";
-            text.innerHTML = sentData.audio_files[a][1]; 
+            text.innerHTML = sentData.audio_files[a][1][0]; 
             singleRecordingBox.appendChild( text );
 
             let a_btn = document.createElement("button");
