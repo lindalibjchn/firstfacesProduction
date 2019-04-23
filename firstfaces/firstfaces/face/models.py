@@ -57,7 +57,6 @@ class Sentence(models.Model):
     nodAmount = models.DecimalField(max_digits=2, decimal_places=1, default=0.0)
     surprise = models.DecimalField(max_digits=2, decimal_places=1, default=0.0)
     indexes = models.CharField(max_length=50, null=True, blank=True)
-    indexes_timestamp = models.DateTimeField(null=True, blank=True)
     correction = models.CharField(max_length=300, blank=True)
     correction_timestamp = models.DateTimeField(null=True, blank=True)
     #this was for checking if correction has come in previous version. could be removed if not needed later
@@ -104,7 +103,6 @@ class PermSentence(models.Model):
     nodAmount = models.DecimalField(max_digits=2, decimal_places=1, default=0.0)
     surprise = models.DecimalField(max_digits=2, decimal_places=1, default=0.0)
     indexes = models.CharField(max_length=50, null=True, blank=True)
-    indexes_timestamp = models.DateTimeField(null=True, blank=True)
     correction = models.CharField(max_length=300, blank=True)
     correction_timestamp = models.DateTimeField(null=True, blank=True)
     #this was for checking if correction has come in previous version. could be removed if not needed later

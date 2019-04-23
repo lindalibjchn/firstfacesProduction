@@ -997,6 +997,7 @@ def store_prompt(request):
     print('wrongIndexes:', wrongIndexes)
     sent = Sentence.objects.get(pk=sent_id)
     sent.prompt = prompt
+    sent.prompt_timestamp = time_now
     sent.indexes = wrongIndexes
 
     # code.interact(local=locals());
