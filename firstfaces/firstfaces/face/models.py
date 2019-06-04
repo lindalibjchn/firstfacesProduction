@@ -126,29 +126,25 @@ class PermSentence(models.Model):
 # may need multiple audio files per sentence as student attempts and re-attempts
 class AudioFile(models.Model):
     sentence = models.ForeignKey(Sentence, on_delete=models.CASCADE)
-    transcription0 = models.CharField(max_length=300, blank=True, null=True)
-    transcription1 = models.CharField(max_length=300, blank=True, null=True)
-    transcription2 = models.CharField(max_length=300, blank=True, null=True)
+    transcriptions = models.CharField(max_length=5000, blank=True, null=True)
     interference = models.NullBooleanField(null=True)
     clicks = models.CharField(max_length=2000, default='[]')
     audio = models.FileField(upload_to="")
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return  str(self.transcription0)
+        return  str(json.loads(self.transcription)[0])
 
 class PermAudioFile(models.Model):
     sentence = models.ForeignKey(PermSentence, on_delete=models.CASCADE)
-    transcription0 = models.CharField(max_length=300, blank=True, null=True)
-    transcription1 = models.CharField(max_length=300, blank=True, null=True)
-    transcription2 = models.CharField(max_length=300, blank=True, null=True)
+    transcriptions = models.CharField(max_length=5000, blank=True, null=True)
     clicks = models.CharField(max_length=2000, default='[]')
     interference = models.NullBooleanField(null=True)
     audio = models.FileField(upload_to="")
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return  str(self.transcription0)
+        return  str(json.loads(self.transcription)[0])
 
 class Test(models.Model):
     learner = models.ForeignKey(User, on_delete=models.CASCADE)

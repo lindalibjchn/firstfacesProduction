@@ -12,8 +12,7 @@ from .models import Session, Sentence, AudioFile, Profile, NewsArticle, PostTalk
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 import code
-import speech_recognition as sr
-import soundfile as sf
+#import soundfile as sf
 import os
 import time
 from operator import itemgetter
@@ -580,11 +579,9 @@ def store_blob(request):
     blob_no_text = json.loads(request.POST['blob_no_text'])
     interference = json.loads(request.POST['interference'])
     sess = Session.objects.get( pk=request.POST['sessionID'] )
-    text_from_speech0 = request.POST['transcript0']
-    text_from_speech1 = request.POST['transcript1']
-    text_from_speech2 = request.POST['transcript2']
-
-    print('text_from_speech2:', text_from_speech2)
+    # text_from_speech0 = request.POST['transcript0']
+    # text_from_speech1 = request.POST['transcript1']
+    # text_from_speech2 = request.POST['transcript2']
 
     #check if this recording is a retry
     #get prev sents for this user in this session
@@ -601,22 +598,27 @@ def store_blob(request):
         s.save()
 
 
-    filename = str(sess.id) + "_" + str(s.id) + "_" + timezone.now().strftime( '%H-%M-%S' ) + ".wav"
+    filename = str(sess.id) + "_" + str(s.id) + "_" + timezone.now().strftime( '%H-%M-%S' ) + ".webm" 
     blob.name = filename
 
     #and then link the recording
     a = AudioFile(
             sentence=s, 
             audio=blob, 
-            transcription0=text_from_speech0,
-            transcription1=text_from_speech1,
-            transcription2=text_from_speech2,
             interference=interference,
             )
     a.save()
 
+    # need to save the file before can acces url to use ffmpeg (in utils.py)
+    transcription_dict = json.dumps(get_speech_recognition(filename))
+
+    #and then once have the transcriptions, save them
+    a.transcription = transcription_dict
+    a.save()
+
     response_data = {
 
+        'transcription_dict': transcription_dict,
         'sent_id': s.id,
 
     }

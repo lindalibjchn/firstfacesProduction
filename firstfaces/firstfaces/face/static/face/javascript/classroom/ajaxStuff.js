@@ -79,9 +79,9 @@ function sendBlobToServer( blob_to_send ) {
     fd.append('data', blob_to_send);
     fd.append('sessionID', classVariableDict.session_id);
     fd.append('interference', synthesisObject.interference);
-    fd.append('transcript0', synthesisObject.transcript0);
-    fd.append('transcript1', synthesisObject.transcript1);
-    fd.append('transcript2', synthesisObject.transcript2);
+    //fd.append('transcript0', synthesisObject.transcript0);
+    //fd.append('transcript1', synthesisObject.transcript1);
+    //fd.append('transcript2', synthesisObject.transcript2);
     fd.append('blob_no_text', classVariableDict.blob_no_text);
     fd.append('blob_no_text_sent_id', classVariableDict.blob_no_text_sent_id);
 
@@ -374,7 +374,7 @@ function checkForPromptNIndexes( sentId ) {
 
 function sendTranscriptViewToAjax( choice ) {
 
-    console.log('choice:', choice);
+    //console.log('choice:', choice);
     $.ajax({
         url: "/add_transcription_choice_view",
         type: "GET",
@@ -384,7 +384,7 @@ function sendTranscriptViewToAjax( choice ) {
         },
         success: function(json) {
             
-            console.log('added transcription choice view');
+           // console.log('added transcription choice view');
 
         },
         error: function() {

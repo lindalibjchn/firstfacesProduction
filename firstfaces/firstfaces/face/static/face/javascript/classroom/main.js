@@ -12,14 +12,14 @@ $(window).on( 'load', function() {
 
 });
 
-function resetTranscripts() {
+//function resetTranscripts() {
 
-    synthesisObject.recordedSectionCount = 0;
-    synthesisObject.transcript0 = "";
-    synthesisObject.transcript1 = "";
-    synthesisObject.transcript2 = "";
+    //synthesisObject.recordedSectionCount = 0;
+    //synthesisObject.transcript0 = "";
+    //synthesisObject.transcript1 = "";
+    //synthesisObject.transcript2 = "";
 
-}
+//}
 
 var recognition// put here so can call in clipping occurs
 var recorder15sTimeout;
@@ -30,7 +30,7 @@ var stop;
 var aud;
 function readyBtns() {
  
-    resetTranscripts();
+    //resetTranscripts();
 
     $('#tryAgainBtn').on( 'click', tryAgain );
     $('#whatsWrongBtn').on( 'click', whatsWrong );
@@ -85,19 +85,19 @@ function readyBtns() {
     });
 
     // check that the browser has speech recognition
-    try {
+    //try {
 
-        var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-        recognition = new SpeechRecognition();
-        recognition.maxAlternatives = 3;
-        recognition.continuous = true;
-        recognition.lang = 'en';
+        //var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        //recognition = new SpeechRecognition();
+        //recognition.maxAlternatives = 3;
+        //recognition.continuous = true;
+        //recognition.lang = 'en';
 
-    } catch(e) {
+    //} catch(e) {
 
-        console.error(e);
+        //console.error(e);
 
-    }
+    //}
 
     record = document.getElementById( 'recordVoiceBtn' );
     stop = document.getElementById( 'stopRecordVoiceBtn' );
@@ -170,9 +170,9 @@ function readyBtns() {
 
                 function onRecord() {
 
-                    resetTranscripts();
+                    //resetTranscripts();
 
-                    recognition.start();
+                    //recognition.start();
                     console.log('Voice recognition activated. Try speaking into the microphone.');
                     mediaRecorder.start();
 
@@ -186,7 +186,7 @@ function readyBtns() {
 
                     // will check that the user has clicked the stop button by timing them and using this boolean
                     classVariableDict.recording = true;
-                    recorder15sTimeout = setTimeout( checkIfClickedStop, 20000 );
+                    recorder15sTimeout = setTimeout( checkIfClickedStop, 15000 );
 
                     // hide the microphone button
                     $(this).hide();
@@ -206,7 +206,7 @@ function readyBtns() {
 
                         onStopClick();
 
-                        alert('You have 20 seconds to say each sentence. If it is a very long sentence, try breaking it up into smaller sentences.')
+                        alert('You have 15 seconds to say each sentence. If it is a very long sentence, try breaking it up into smaller sentences.')
 
                     }
 
@@ -236,64 +236,65 @@ function readyBtns() {
             }
         );
             
-        recognition.onresult = function(event) {
+        //recognition.onresult = function(event) {
 
-            var orderedAlternatesList = createArrayOfAlternatives( event.results[ synthesisObject.recordedSectionCount ] );
+            //console.log('event:', event)
+            //var orderedAlternatesList = createArrayOfAlternatives( event.results[ synthesisObject.recordedSectionCount ] );
 
-            if ( orderedAlternatesList.length > 1 ) {
+            //if ( orderedAlternatesList.length > 1 ) {
 
-                if ( orderedAlternatesList.length === 2 ) {
+                //if ( orderedAlternatesList.length === 2 ) {
 
-                    synthesisObject.transcript0 += orderedAlternatesList[ 0 ].transcript;
-                    synthesisObject.transcript1 += orderedAlternatesList[ 1 ].transcript;
-                    synthesisObject.transcript2 += orderedAlternatesList[ 1 ].transcript;
+                    //synthesisObject.transcript0 += orderedAlternatesList[ 0 ].transcript;
+                    //synthesisObject.transcript1 += orderedAlternatesList[ 1 ].transcript;
+                    //synthesisObject.transcript2 += orderedAlternatesList[ 1 ].transcript;
             
-                } else if ( orderedAlternatesList.length === 3 ) {
+                //} else if ( orderedAlternatesList.length === 3 ) {
 
-                    synthesisObject.transcript0 += orderedAlternatesList[ 0 ].transcript;
-                    synthesisObject.transcript1 += orderedAlternatesList[ 1 ].transcript;
-                    synthesisObject.transcript2 += orderedAlternatesList[ 2 ].transcript;
+                    //synthesisObject.transcript0 += orderedAlternatesList[ 0 ].transcript;
+                    //synthesisObject.transcript1 += orderedAlternatesList[ 1 ].transcript;
+                    //synthesisObject.transcript2 += orderedAlternatesList[ 2 ].transcript;
             
-                }
+                //}
 
-            } else {
+            //} else {
 
-                synthesisObject.transcript0 += orderedAlternatesList[ 0 ].transcript;
-                synthesisObject.transcript1 += orderedAlternatesList[ 0 ].transcript;
-                synthesisObject.transcript2 += orderedAlternatesList[ 0 ].transcript;
+                //synthesisObject.transcript0 += orderedAlternatesList[ 0 ].transcript;
+                //synthesisObject.transcript1 += orderedAlternatesList[ 0 ].transcript;
+                //synthesisObject.transcript2 += orderedAlternatesList[ 0 ].transcript;
         
-            }
+            //}
 
-            console.log( 'transcript0:', synthesisObject.transcript0 );
-            synthesisObject.recordedSectionCount += 1;
+            //console.log( 'transcript0:', synthesisObject.transcript0 );
+            //synthesisObject.recordedSectionCount += 1;
 
-        }
+        //}
 
-        recognition.onend = function( event ) {
+        //recognition.onend = function( event ) {
 
-            let listOfAlternatives = confirmAlternatives();
-            synthesisObject.alternatives = listOfAlternatives.length;
-            fillTranscriptsAndConfidences( listOfAlternatives );
+            //let listOfAlternatives = confirmAlternatives();
+            //synthesisObject.alternatives = listOfAlternatives.length;
+            //fillTranscriptsAndConfidences( listOfAlternatives );
 
-        }
+        //}
 
-        function confirmAlternatives() {
+        //function confirmAlternatives() {
 
-            if ( synthesisObject.transcript1 === synthesisObject.transcript0 ) {
+            //if ( synthesisObject.transcript1 === synthesisObject.transcript0 ) {
     
-                return [ synthesisObject.transcript0 ];
+                //return [ synthesisObject.transcript0 ];
 
-            } else if ( synthesisObject.transcript2 !== synthesisObject.transcript1 ) {
+            //} else if ( synthesisObject.transcript2 !== synthesisObject.transcript1 ) {
 
-                return [ synthesisObject.transcript0,  synthesisObject.transcript1, synthesisObject.transcript2 ];
+                //return [ synthesisObject.transcript0,  synthesisObject.transcript1, synthesisObject.transcript2 ];
 
-            } else {
+            //} else {
 
-                return [ synthesisObject.transcript0, synthesisObject.transcript1 ];
+                //return [ synthesisObject.transcript0, synthesisObject.transcript1 ];
 
-            }
+            //}
 
-        }
+        //}
 
     } else {
 
@@ -317,11 +318,11 @@ function onStopClick() {
 
     $('#stopRecordVoiceBtn').hide();
 
-    setTimeout( function() { 
+    //setTimeout( function() { 
         
-        recognition.stop();
+        //recognition.stop();
 
-    }, 500 );
+    //}, 500 );
 
 }
 
@@ -331,7 +332,7 @@ function onMediaRecorderStop() {
     hideVolumeBar();
 
     //$('#talkBtn').prop( "disabled", true )
-    classVariableDict.blob = new Blob(chunks, { type : 'audio/ogg; codecs: opus' });
+    classVariableDict.blob = new Blob(chunks, { type : 'audio/webm; codecs: opus' });
 
     // create audiourl for easy replay
     var audioURL = window.URL.createObjectURL(classVariableDict.blob);
@@ -341,11 +342,11 @@ function onMediaRecorderStop() {
     chunks = [];
 
     // send blob to server to be stored, but wait a bit to make sure it has come through
-    setTimeout( function() {
+    //setTimeout( function() {
         
-        sendBlobToServer( classVariableDict.blob );
+    sendBlobToServer( classVariableDict.blob );
 
-    }, 1000);
+    //}, 1000);
 
 }
 
