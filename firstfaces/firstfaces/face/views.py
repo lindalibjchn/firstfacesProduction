@@ -6,6 +6,7 @@ from .forms import UserForm, SignUpForm, SignUpUserForm
 from django.contrib.auth.password_validation import validate_password
 from django.http import JsonResponse
 from .utils import *
+from .speech_to_text_utils import *
 from django.utils import timezone
 import json
 from .models import Session, Sentence, AudioFile, Profile, NewsArticle, PostTalkTimings, Test
@@ -610,15 +611,20 @@ def store_blob(request):
     a.save()
 
     # need to save the file before can acces url to use ffmpeg (in utils.py)
-    transcription_dict = json.dumps(get_speech_recognition(filename))
+    transcription_list = get_speech_recognition(filename)
+    print('transcription_list:', transcription_list)
+
+    transcription_aligned_list = get_alignments(transcription_list)
+
+    print('transcription_aligned_list:', transcription_aligned_list)
 
     #and then once have the transcriptions, save them
-    a.transcription = transcription_dict
+    a.transcription = transcription_aligned_list
     a.save()
 
     response_data = {
 
-        'transcription_dict': transcription_dict,
+        'transcription_aligned_list': transcription_aligned_list,
         'sent_id': s.id,
 
     }

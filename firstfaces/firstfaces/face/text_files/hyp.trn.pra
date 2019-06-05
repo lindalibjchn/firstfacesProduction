@@ -1,0 +1,17 @@
+
+
+		DUMP OF SYSTEM ALIGNMENT STRUCTURE
+
+System name:   /home/john/johnsHDD/PhD/2018_autumn/firstfacesProduction/firstfaces/firstfaces/face/text_files/hyp.trn
+
+Speakers: 
+    0:  aaa
+
+Speaker sentences   0:  aaa   #utts: 1
+id: (aaa_001)
+Scores: (#C #S #D #I) 0 1 2 0
+REF:  THREE TO SIX 
+HYP:  ***** ** 326 
+Eval: D     D  S   
+
+
