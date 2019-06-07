@@ -170,28 +170,22 @@ button:active {
 #textInputContainer {
 
     position: absolute;
-    width: 50%;
-    height: 32%;
-    /*border: 3px solid green;*/
-    bottom: 0;
-    /*laptop is not perfectly in the middle*/
-    left: -150;
-    right: 0;
-    margin: auto;
-    /*for development of volume bar*/
-    display: none;
-    /*border: 3px red solid;*/
+    width: 100%;
+    height: 25%;
+    background-color: black;
+    opacity: 0.7;
+    bottom: 12%;
+    border: 2px solid red;
+    /*display: none;*/
 
 }
 
 #textInputBox {
 
-    position: relative;
-    width: 90%;
-    height: 80%;
-    right: 0;
-    top: 0;
-    border: none;
+    height: 100%;
+    /*position: relative;*/
+    padding: 1%;
+    border: 2px solid white;
 
 }
 
@@ -202,12 +196,34 @@ button:active {
     background: rgba( 0, 0, 0, 0 );
     color: #33ff00;
     font-family: Courier;
-    font-size: 1.6vw;
     outline-style: none;
     box-shadow: none;
     border: none;
     resize: none;
 
+}
+
+@media screen and (min-width: 701px) {
+  #textInput {
+    font-size: 1.5em;
+    line-height: 1.5em;
+  }
+  .speaking-words-inside {
+      font-size: 1.3em;
+      line-height: 1.3em;
+  }
+}
+
+/* If the screen size is 600px wide or less, set the font-size of <div> to 30px */
+@media screen and (max-width: 700px) {
+  #textInput {
+    font-size: 1em;
+    line-height: 1.2em;
+  }
+  .speaking-words-inside {
+      font-size: 0.9em;
+      line-height: 1.2em;
+  }
 }
 
 #textInput:focus {
@@ -361,17 +377,6 @@ button:active {
 
 }
 
-#controllerContainer {
-
-    background: rgba( 0, 0, 0, 0.3 );
-    height: 100%;
-    width: 20%;
-    right: 0;
-    position: fixed;
-    display: none;
-
-}
-
 #prevSentsContainer {
 
     position: absolute;
@@ -476,41 +481,44 @@ button:active {
 
 #inputButtonsContainer {
 
-    position: absolute;
+    position: fixed;
     width: 100%;
-    height: 40%;
-    right: 0;
+    height: 12%;
     bottom: 0;
-    background-color: rgba( 256, 256, 256, 0.8 );
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    background-color: grey;
+    /*display: flex;*/
+    /*align-items: center;*/
+    /*justify-content: center;*/
 
 }
 
 #recordBtnsContainer {
 
-    height: 93%;
+    height: 100%;
+    width: 100%;
 
 }
 
 #recordAndStopBtnsContainer {
 
-    height: 33%;
+    height: 100%;
+    /*display: flex;*/
+    /*align-items: center;*/
 }
 
 #recordAndStopBtns {
 
     height: 100%;
+    width: 100%;
     display: flex;
     align-items: center;
-    justify-content: center;
+    /*justify-content: center;*/
 
 }
 
 #listenAndSynthBtnsContainer {
 
-    height: 33%;
+    height: 100%;
 
 }
 
@@ -533,7 +541,7 @@ button:active {
 
 #talkBtnContainer {
 
-    height: 33%
+    height: 100%
 
 }
 
@@ -572,8 +580,8 @@ button:active {
     left: 0;
     ridht: 0;
     margin: auto;
-    height: 75px;
-    width: 75px;
+    height: 60px;
+    width: 60px;
 
 }
 
@@ -663,66 +671,64 @@ button:active {
 
 #speechBubbleCont {
 
-    position: absolute;
-    width: 60%;
-    height: 50%;
-    right: 47%;
-    top: 10%;
-    opacity: 0.4;
-    display: none;
-
-}
-
-.speech-bubbles {
-
-    position: absolute;
+    position: fixed;
     width: 100%;
-    height: 100%;
-    display: none;
-    right: 0;
+    height: 19%;
+    bottom: 37%;
+    background-color: white;
+    opacity: 0.8;
+    /*display: none;*/
 
 }
 
-#speechBubbleTia {
+/*.speech-bubbles {*/
 
-    top: 35%;
+    /*position: absolute;*/
+    /*width: 100%;*/
+    /*height: 100%;*/
+    /*[>display: none;<]*/
+    /*right: 0;*/
 
-}
+/*}*/
+
+/*#speechBubbleTia {*/
+
+    /*top: 35%;*/
+
+/*}*/
 
 .speaking-words {
 
-    position: absolute;
-    display: none;
+    /*display: none;*/
     /*background-color: red;*/
-    height: 75%;
-    width: 45%;
-    left: 29%;
-    font-size: 1.6vw;
+    /*padding: 2%;*/
+    height: 100%;
+    /*border: 3px solid green;*/
+    padding: 0.45em;
 
 }
 
 .speaking-words-inside {
 
-    display: none;
-    position: absolute;
-    width: 100%;
+    /*display: none;*/
+    /*position: absolute;*/
     height: 100%;
 
 }
 
 #speakingWordsLaptop {
 
-    display: none;
-    top: 12%;
+    /*display: none;*/
+    /*top: 12%;*/
 
 }
 
-#speakingWordsTia {
+/*#speakingWordsTia {*/
 
-    display: none;
-    top: 47%;
+    /*display: none;*/
+    /*top: 47%;*/
 
-}
+/*}*/
 
 .thinkingOfSpeaking {
 

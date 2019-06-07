@@ -406,7 +406,7 @@ function init() {
 
     //// CAMERA CONTROLS \\\\
 
-    controls = new THREE.OrbitControls( camera, renderer.domElement );
+    //controls = new THREE.OrbitControls( camera, renderer.domElement );
 
 
     //// LIGHTS \\\\

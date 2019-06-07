@@ -34,27 +34,6 @@
 
 </div>
 
-<div id="speechBubbleCont">
-
-    <img class="speech-bubbles" id="speechBubbleTia" src="{% static 'face/images/speechBubbleUp.png' %}">
-    <img class="speech-bubbles" id="speechBubbleLaptop" src="{% static 'face/images/speechBubbleDown.png' %}">
-
-    <div id="speakingWordsTia" class="speaking-words">
-    
-       <div class="speaking-words-inside"></div>
-       <div class="thinkingOfSpeaking"><span>. </span><span>. </span><span>. </span></div>
-    
-    </div>
-
-    <div id="speakingWordsLaptop" class="speaking-words">
-    
-       <div class="speaking-words-inside"></div>
-       <div class="thinkingOfSpeaking"><span>. </span><span>. </span><span>. </span></div> 
-    
-    </div>
-
-</div>
-
 <!--will fill this tutorial button with confirmations from tutorial.js-->
 <div class="init-questions-container" id="tutorialBtnSingleCont">
 
@@ -223,149 +202,159 @@
 
 </div>
 
-<div id="textInputContainer">
+<div id="speechBubbleCont" class="w3-row">
 
-    <div class="w3-row sent-scores-row" id="altCont">
+    <!--<img class="speech-bubbles" id="speechBubbleTia" src="{% static 'face/images/speechBubbleUp.png' %}">-->
+    <!--<img class="speech-bubbles" id="speechBubbleLaptop" src="{% static 'face/images/speechBubbleDown.png' %}">-->
 
-        <div id="alt00" class="w3-col w3-third sent-scores">
-        
-            <div class="alt-no">1</div>
+    <!--<div id="speakingWordsTia" class="speaking-words">-->
+    
+       <!--<div class="speaking-words-inside"></div>-->
+       <!--<div class="thinkingOfSpeaking"><span>. </span><span>. </span><span>. </span></div>-->
+    
+    <!--</div>-->
 
-        </div>
-
-        <div id="alt01" class="w3-col w3-third sent-scores">
-        
-            <div class="alt-no">2</div>
-        
-        </div>
-        
-        <div id="alt02" class="w3-col w3-third sent-scores">
-        
-            <div class="alt-no">3</div>
-
-        </div>
-
+    <div class="w3-col l2 w3-hide-medium w3-hide-small">&nbsp</div>
+    <div id="speakingWordsLaptop" class="speaking-words w3-col l8 m12 s12">
+    
+       <div class="speaking-words-inside">Strong winds prevented the contest from hitting the heights anticipated, but there were plenty of majestic moments to please the Philippe-Chatrier crowd.
+       
+       The Spaniard broke the Swiss icon six times, crucially in the third and ninth games of the second set, en route to doubling his advantage.
+       
+       He then broke twice more in the third set as he completed his masterclass.
+       
+       </div>
+       <div class="thinkingOfSpeaking"><span>. </span><span>. </span><span>. </span></div> 
+    
     </div>
+    <div class="w3-col l2 w3-hide-medium w3-hide-small">&nbsp</div>
 
-    <div id="textInputBox">
+</div>
+
+
+<div id="textInputContainer" class="w3-row">
+
+
+    <div class="w3-col l2 w3-hide-medium w3-hide-small">&nbsp</div>
+    <div class="w3-col l8 m12 s12" id="textInputBox" >
 
         <textarea id="textInput" maxlength="259"></textarea>
 
     </div>
+    <div class="w3-col l2 w3-hide-medium w3-hide-small">&nbsp</div>
     
-    <div id="meterCont">
-                        
-        <i class="fa fa-microphone inputfa fa-lg" id="volumeMic"></i>
-    
-        <canvas id="meter" width="250" height="25"></canvas>
+    <!--<div id="playRobot">-->
 
-    </div>
+        <!--<img id="robot" src="{% static 'face/images/robot_speech.svg' %}">-->
 
-    <div id="playRobot">
-
-        <img id="robot" src="{% static 'face/images/robot_speech.svg' %}">
-
-    </div>
+    <!--</div>-->
 
 </div>
 
 
 <!-- right hand side controls for student to respond and see their own sentences -->
 
-<div id="controllerContainer" class="w3-container">
+<!--<div id="prevSentsContainer">-->
 
-    <div id="prevSentsContainer">
+    <!--<div id="prevSents">-->
 
-        <div id="prevSents">
+    <!--</div>-->
 
-        </div>
+<!--</div>-->
 
-    </div>
+<div id="inputButtonsContainer">
 
-    <div id="inputButtonsContainer">
+    <div id="recordBtnsContainer" class="w3-row">
 
-        <div id="recordBtnsContainer">
+        <div class="w3-col l3 w3-hide-medium w3-hide-small">&nbsp</div>
+        <div class="w3-col l2 m4 s4" id="listenAndSynthBtnsContainer">
+             
+            <div id="listenAndSynthBtns">
 
-            <div class="w3-container" id="recordAndStopBtnsContainer">
+                <button class="w3-btn w3-circle w3-xxxlarge w3-indigo input-btn-large record-btn play-btn" id="listenVoiceBtn">
+                
+                    <img id="human" src="{% static 'face/images/human_speech.svg' %}">
 
-                <div id="recordAndStopBtns">
-
-                    <button class="w3-btn w3-circle w3-xxxlarge w3-blue input-btn-large record-btn w3-padding-small" id="recordVoiceBtn">
-                     
-                        <i class="fa fa-microphone inputfa"></i>
-
-                    </button>
-
-                    <button class="w3-btn w3-circle w3-xxxlarge w3-red input-btn-large record-btn w3-padding-small" id="stopRecordVoiceBtn">
-                     
-                        <i class="fa fa-stop inputfa"></i>
-
-                    </button>
-
-                </div>
+                </button>
 
             </div>
 
-            <div class="w3-container" id="listenAndSynthBtnsContainer">
+            <div id="meterCont">
+                                
+                <i class="fa fa-microphone inputfa fa-lg" id="volumeMic"></i>
+            
+                <canvas id="meter" width="250" height="25"></canvas>
+
+            </div>
+
+        </div>
+
+        <div class="w3-col l2 m4 s4" id="recordAndStopBtnsContainer">
+
+            <div id="recordAndStopBtns">
+
+                <button class="w3-btn w3-circle w3-blue input-btn record-btn w3-padding-small" id="recordVoiceBtn">
                  
-                <div id="listenAndSynthBtns">
+                    <i class="fa fa-microphone inputfa"></i>
 
-                    <button class="w3-btn w3-circle w3-xxxlarge w3-indigo input-btn-large record-btn play-btn" id="listenVoiceBtn">
-                    
-                        <img id="human" src="{% static 'face/images/human_speech.svg' %}">
+                </button>
 
-                    </button>
+                <button class="w3-btn w3-circle w3-red input-btn record-btn w3-padding-small" id="stopRecordVoiceBtn">
+                 
+                    <i class="fa fa-stop inputfa"></i>
 
-                </div>
-
-            </div>
-
-            <div class="w3-container" id="talkBtnContainer">
-
-                <div id="talkBtnCont">
-
-                    <button class="w3-btn w3-circle w3-xxxlarge w3-green input-btn-large input-fa record-btn w3-padding-large play-btn" id="talkBtn">
-                        
-                        <i class="fa fa-play" id="yellowPlay"></i>
-                    
-                    </button>
-
-                </div>
+                </button>
 
             </div>
 
         </div>
 
-        <div class="w3-container" id="optionBtns">
+        <div class="w3-col l2 m4 s4" id="talkBtnContainer">
 
-            <div class="w3-row option-row">
+            <div id="talkBtnCont">
 
-                <button class="w3-btn w3-blue option-btn" id="tryAgainBtn">try again</button>
-
-            </div>
-
-            <div class="w3-row option-row">
-
-                <button class="w3-btn w3-indigo option-btn" id="whatsWrongBtn">what's wrong</button>
-                <button class="w3-btn w3-indigo option-btn" id="showCorrectionBtn">showCorrection</button>
+                <button class="w3-btn w3-circle w3-green input-btn input-fa record-btn w3-padding-large play-btn" id="talkBtn">
+                    
+                    <i class="fa fa-play" id="yellowPlay"></i>
+                
+                </button>
 
             </div>
 
-            <div class="w3-row option-row">
+        </div>
 
-                <button class="w3-btn w3-green option-btn" id="nextSentenceBtn">next sentence</button>
+        <div class="w3-col l3 w3-hide-medium w3-hide-small">&nbsp</div>
 
-            </div>
+    </div>
+
+    <div class="w3-container" id="optionBtns">
+
+        <div class="w3-row option-row">
+
+            <button class="w3-btn w3-blue option-btn" id="tryAgainBtn">try again</button>
+
+        </div>
+
+        <div class="w3-row option-row">
+
+            <button class="w3-btn w3-indigo option-btn" id="whatsWrongBtn">what's wrong</button>
+            <button class="w3-btn w3-indigo option-btn" id="showCorrectionBtn">showCorrection</button>
+
+        </div>
+
+        <div class="w3-row option-row">
+
+            <button class="w3-btn w3-green option-btn" id="nextSentenceBtn">next sentence</button>
 
         </div>
 
     </div>
-                            
-    <audio id="soundClip"></audio>
-    <audio id="synthClip"></audio>
-    <audio id="micInterferenceClip"></audio>
 
 </div>
+
+<audio id="soundClip"></audio>
+<audio id="synthClip"></audio>
+<audio id="micInterferenceClip"></audio>
 
 <!-- three.js script -->
 <script src="{% static 'three.min.js' %}"></script>
