@@ -87,8 +87,9 @@ function init() {
 
         doorLBone = mBuilding.skeleton.bones[0];
         doorRBone = mBuilding.skeleton.bones[1];
-
-        loader.load( trees, addTrees );
+        
+        addSign();
+        //loader.load( trees, addTrees );
 
     };
 
@@ -173,7 +174,7 @@ function init() {
         scene.add( mBuilding );
      
         $("#loadingIcon").hide();
-        $("#foreground").fadeOut( 1500, function(){initCameraMove( 'inside', '6' )} );
+        $("#foreground").fadeOut( 1500, function(){initCameraMove( 'inside', '0' )} );
 
         animate()
 
@@ -201,6 +202,6 @@ function animate () {
     requestAnimationFrame( animate );
     
     renderer.render(scene, camera);
-
+    
 };
 

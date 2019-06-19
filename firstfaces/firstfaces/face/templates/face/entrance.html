@@ -3,6 +3,8 @@
 
 {% block content %}
 
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <link rel="stylesheet" type="text/css" href="{% static 'face/css/utils.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'face/css/entrance.css' %}" />
 
@@ -26,9 +28,14 @@
 
         <div id="infoSentenceContainer" class="w3-center">
 
-            <div id="moreInfoSentence">
+            <div class="w3-row" id="moreInfoSentence">
 
-                <span id="text1">Your spoken English. </span><span id="text2">Native speaker judgement. </span><span id="text3">Emotional Response.</span>
+                <span class="w3-col w3-third info-cols" id="text1">Your spoken English. 
+                </span>
+                <span class="w3-col w3-third info-cols" id="text2">Native speaker judgement. 
+                </span>
+                <span class="w3-col w3-third info-cols" id="text3">Emotional Response.
+                </span>
 
             </div>
 
@@ -110,7 +117,7 @@
             
     <div class="w3-card-4">
         
-        <div class="w3-container w3-white">
+        <div class="w3-container w3-white" >
 
         <form method="POST" id="loginForm">
             {% csrf_token %}
@@ -210,17 +217,107 @@
         <div id="consent" class="sign-up-pages">
 
             <h2 class="w3-text-indigo w3-center">Consent</h2>
+            
 
-            <label><input type="checkbox" name="consent" class="consentChecks">&nbsp I am over 18 years old&nbsp <!-- 我已滿18歲 --></p></label>
-            <label><input type="checkbox" name="consent" class="consentChecks">&nbsp I understand that I will talk or type English sentences when using ERLE&nbsp <!-- 我知道在使用ERLE時我會說或輸入英文句子 --></p></label>
-            <label><input type="checkbox" name="consent" class="consentChecks">&nbsp I understand that I will receive feedback in the form of facial expressions of an avatar&nbsp <!-- 我知道我將以頭像的面部表情形式收到反饋 --></p></label>
-            <label><input type="checkbox" name="consent" class="consentChecks">&nbsp I understand that all data I submit is anonymous&nbsp <!-- 我知道我提交的所有數據都是匿名的 --></p></label>
-            <label><input type="checkbox" name="consent" class="consentChecks">&nbsp I understand that all data I submit will be securely stored and archived&nbsp <!-- 我了解我提交的所有數據都將被安全存儲和存檔 --></p></label>
-            <label><input type="checkbox" name="consent" class="consentChecks">&nbsp I consent to the recordings I submit being used to train pronunciation models&nbsp <!-- 我同意我提交的錄音用於訓練發音模型 --></p></label>
-            <label><input type="checkbox" name="consent" class="consentChecks">&nbsp I consent to the sentences I submit being used to train language models&nbsp <!-- 我同意我提交的句子被用來訓練語言模型 --></p></label>
-            <label><input type="checkbox" name="consent" class="consentChecks">&nbsp I understand that I can request the deletion of my data at any time&nbsp <!-- 我知道我可以隨時要求刪除我的數據 --></p></label>
-            <label><input type="checkbox" name="consent" class="consentChecks">&nbsp I understand that I can stop participating in this research project at any time&nbsp <!-- 我知道我可以隨時停止參與這個研究項目 --></p></label>
-            <label><input type="checkbox" name="consent" class="consentChecks">&nbsp I consent to taking part in this research&nbsp <!-- 我同意參加這項研究 --></p></label>
+            <label class="switch">
+            <input type="checkbox" name="consent" class="consentChecks">
+            <span class="slider round" > </span>
+            </label>
+            
+             <div style="margin-left: 40px">&nbsp I am over 18 years old&nbsp <!-- 我已滿18歲 --></p>
+             </div>
+        
+
+
+            <label class="switch">
+            <input type="checkbox" name="consent" class="consentChecks">
+            <span class="slider round" > </span>
+            </label>
+
+            <div style="margin-left: 40px">&nbsp I understand that I will talk or type English sentences when using ERLE&nbsp <!-- 我知道在使用ERLE時我會說或輸入英文句子 --></p>
+            </div>
+
+
+
+            <label class="switch">
+            <input type="checkbox" name="consent" class="consentChecks">
+            <span class="slider round" > </span>
+            </label>
+
+            <div style="margin-left: 40px">&nbsp I understand that I will receive feedback in the form of facial expressions of an avatar&nbsp <!-- 我知道我將以頭像的面部表情形式收到反饋 --></p>
+            </div>
+                
+            
+            <label class="switch">
+            <input type="checkbox" name="consent" class="consentChecks">
+            <span class="slider round" > </span>
+            </label>
+
+            <div style="margin-left: 40px">&nbsp I understand that all data I submit is anonymous&nbsp <!-- 我知道我提交的所有數據都是匿名的 --></p>
+            </div>
+
+
+            <label class="switch">
+            <input type="checkbox" name="consent" class="consentChecks">
+            <span class="slider round" > </span>
+            </label>
+
+            <div style="margin-left: 40px">&nbsp I understand that all data I submit will be securely stored and archived&nbsp <!-- 我了解我提交的所有數據都將被安全存儲和存檔 --></p>
+            </div>
+
+
+            <label class="switch">
+            <input type="checkbox" name="consent" class="consentChecks">
+            <span class="slider round" > </span>
+            </label>
+
+            <div style="margin-left: 40px">&nbsp I consent to the recordings I submit being used to train pronunciation models&nbsp <!-- 我同意我提交的錄音用於訓練發音模型 --></p>
+            </div>
+
+
+
+            <label class="switch">
+            <input type="checkbox" name="consent" class="consentChecks">>
+            <span class="slider round" > </span>
+            </label>
+
+            <div style="margin-left: 40px">&nbsp I consent to the sentences I submit being used to train language models&nbsp <!-- 我同意我提交的句子被用來訓練語言模型 --></p>
+            </div>
+
+
+
+            <label class="switch">
+            <input type="checkbox" name="consent" class="consentChecks">
+            <span class="slider round" > </span>
+            </label>
+
+            <div style="margin-left: 40px">&nbsp I understand that I can request the deletion of my data at any time&nbsp <!-- 我知道我可以隨時要求刪除我的數據 --></p>
+            </div>
+
+
+
+            <label class="switch">
+            <input type="checkbox" name="consent" class="consentChecks">
+            <span class="slider round" > </span>
+            </label>
+
+            <div style="margin-left: 40px">&nbsp I understand that I can stop participating in this research project at any time&nbsp <!-- 我知道我可以隨時停止參與這個研究項目 --></p>
+            </div>
+
+
+
+            <label class="switch">
+            <input type="checkbox" name="consent" class="consentChecks">
+            <span class="slider round" > </span>
+            </label>
+
+            <div style="margin-left: 40px">&nbsp I consent to taking part in this research&nbsp <!-- 我同意參加這項研究 --></p>
+            </div>
+
+
+
+
+
             <div class="w3-center w3-container">
                 <button id="consentBtn" class="w3-button w3-padding-large w3-large w3-blue w3-hover-indigo w3-ripple" style="margin: 20px;">next</button>
             </div>
