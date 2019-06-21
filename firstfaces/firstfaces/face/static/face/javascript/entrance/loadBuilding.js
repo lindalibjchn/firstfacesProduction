@@ -45,7 +45,7 @@ function init() {
     // CAMERA \\
 
     camera = new THREE.PerspectiveCamera( 55, WIDTH / HEIGHT, 0.1, 1000 );
-    camera.position.set( -100, pathPosY, pathPosZ );
+    camera.position.set( 0, pathPosY, pathPosZ );
     camera.rotation.x = pathRotX;
     //camera.up = new THREE.Vector3( 0, 1, 0 );
     //camera.lookAt( new THREE.Vector3( 0, cameraObject.lookAtY, 0 ) );
