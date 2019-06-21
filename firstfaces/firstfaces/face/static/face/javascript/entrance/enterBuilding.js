@@ -70,7 +70,7 @@ function moveCamera( main ) {
 
         if ( cameraObject.currentState === "door" ) {
 
-            $("#see-through-background").fadeIn( 0, showInfoBoxes );
+            //$("#see-through-background").fadeIn( 0, showInfoBoxes );
 
         } else if ( cameraObject.currentState === "inside" ) {
 
@@ -87,20 +87,20 @@ function moveCamera( main ) {
         let ids = [ "#text1", "#text2", "#text3" ]
 
         let idCount = 0
-        setTimeout(function(){showInfoBox( ids[ idCount ] )}, 0);
+        setTimeout(function(){showInfoBox( ids[ idCount ] )}, 500);
 
         function showInfoBox( id ) {
 
-            $( id ).css('visibility', 'visible').hide().fadeIn( 0 );
+            $( id ).css('visibility', 'visible').hide().fadeIn( 500 );
 
             if ( idCount < ids.length ) {
 
                 idCount += 1;
-                setTimeout( function() {showInfoBox( ids[ idCount ] )}, 0 );
+                setTimeout( function() {showInfoBox( ids[ idCount ] )}, 2000 );
 
             } else {
 
-                $(".info-card").fadeIn( 0 );
+                $(".info-card").fadeIn( 1500 );
 
             }
 
@@ -135,13 +135,48 @@ function moveDoors( main ) {
 
 function enterSchool() {
 
-   $("#see-through-background").fadeOut( 1500 );
+   //$("#see-through-background").fadeOut( 1500 );
    
-   initCameraMove( "inside", '4' );
-   initDoorsOpen( '4' );
+   //initCameraMove( "inside", '4' );
+   //initDoorsOpen( '4' );
 
+   window.location.href = "/waiting";   
+   
 }
 
+
+
+
+//Function showinfoboxes
+
+
+function showInfoBoxes() {
+
+    console.log('showing info boxes');
+
+    let ids = [ "#text1", "#text2", "#text3" ]
+
+    let idCount = 0
+    setTimeout(function(){showInfoBox( ids[ idCount ] )}, 500);
+
+    function showInfoBox( id ) {
+
+        $( id ).css('visibility', 'visible').hide().fadeIn( 500 );
+
+        if ( idCount < ids.length ) {
+
+            idCount += 1;
+            setTimeout( function() {showInfoBox( ids[ idCount ] )}, 2000 );
+
+        } else {
+
+            $(".info-card").fadeIn( 1500 );
+
+        }
+
+    }
+
+}
 
 
 

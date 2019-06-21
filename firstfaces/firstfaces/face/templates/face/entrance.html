@@ -9,7 +9,7 @@
 <link rel="stylesheet" type="text/css" href="{% static 'face/css/entrance.css' %}" />
 
 <!-- black screen which disappears after loading -->
-<div id="foreground" style="opacity: 1">
+<!--<div id="foreground" style="opacity: 1">
 
     <div id="loadingIcon">
 
@@ -17,8 +17,30 @@
 
     </div>
 
-</div>
+</div>-->
 
+
+
+
+<!--<div class="background"></div>-->
+
+<!--<img src="/static/face/images/background.png" width="100%" height="100%">-->
+
+
+<!--<img srcset="/static/face/images/background_small_320.png 320w,
+             /static/face/images/background_small_480.png 480w,
+             /static/face/images/background_full.png 800w"
+     sizes="(max-width: 320px) 280px,
+            (max-width: 480px) 440px,
+            800px"
+     src="background_full.png" width="100%" height="100%">-->
+
+
+<picture>
+  <source media="(max-width: 799px)" srcset="/static/face/images/background_small_480.png">
+  <source media="(min-width: 800px)" srcset="/static/face/images/background_full.png">
+  <img src="/static/face/images/background_full.png" width="100%" height="100%">
+</picture>
 
 <!-- info -->
 
@@ -43,7 +65,7 @@
 
         <div class="w3-row" id="row01">
 
-            <div class="w3-col w3-third info-cols">
+           <div class="w3-col w3-third info-cols">
 
                 <div class="info-card" id="moreInfoCard01">
 
@@ -169,7 +191,7 @@
                 <!--<p class="information-sheet-p">如果您決定參加，您將能夠在每堂課中使用頭像練習英語30分鐘。你可以加入課程12週。您可以選擇輸入或說出輸入句子。您將收到母語為英語的人的反饋。該反饋將顯示在化身的面部表情中。如果您犯了錯誤，您將能夠看到錯誤的位置以及更正的內容。</p>-->
                 <p class="information-sheet-pb"> How will the data be used? </p>
                 <!--<p class="information-sheet-pb"> 該數據將如何被使用？ </p>-->
-                <p class="information-sheet-p"> The sentences you type and speak will be used to understand how you change your language pronunciation and production after receiving feedback. The recordings from the sentences you speak will be saved and used to train a pronunciation model. </p>
+                <p class="information-sheet-p"> The sentences you type and speak will be used to understand how you change your language pronunciation and production after receiving feedback. The recordings from the sentences you speak will be saved and used to train a pronunciation model . </p>
                 <!--<p class="information-sheet-p">您輸入和說出的句子將用於了解您在收到反饋後如何更改語言發音和製作。您所說句子的錄音將被保存並用於訓練發音模型。 </p>-->
                 <p class="information-sheet-pb"> How will you protect my privacy? </p>
                 <!--<p class="information-sheet-pb"> 您將如何保護我的隱私？ </p>-->
@@ -274,8 +296,6 @@
             <div style="margin-left: 40px">&nbsp I consent to the recordings I submit being used to train pronunciation models&nbsp <!-- 我同意我提交的錄音用於訓練發音模型 --></p>
             </div>
 
-
-
             <label class="switch">
             <input type="checkbox" name="consent" class="consentChecks">>
             <span class="slider round" > </span>
@@ -283,8 +303,6 @@
 
             <div style="margin-left: 40px">&nbsp I consent to the sentences I submit being used to train language models&nbsp <!-- 我同意我提交的句子被用來訓練語言模型 --></p>
             </div>
-
-
 
             <label class="switch">
             <input type="checkbox" name="consent" class="consentChecks">
@@ -294,8 +312,6 @@
             <div style="margin-left: 40px">&nbsp I understand that I can request the deletion of my data at any time&nbsp <!-- 我知道我可以隨時要求刪除我的數據 --></p>
             </div>
 
-
-
             <label class="switch">
             <input type="checkbox" name="consent" class="consentChecks">
             <span class="slider round" > </span>
@@ -304,8 +320,6 @@
             <div style="margin-left: 40px">&nbsp I understand that I can stop participating in this research project at any time&nbsp <!-- 我知道我可以隨時停止參與這個研究項目 --></p>
             </div>
 
-
-
             <label class="switch">
             <input type="checkbox" name="consent" class="consentChecks">
             <span class="slider round" > </span>
@@ -313,10 +327,6 @@
 
             <div style="margin-left: 40px">&nbsp I consent to taking part in this research&nbsp <!-- 我同意參加這項研究 --></p>
             </div>
-
-
-
-
 
             <div class="w3-center w3-container">
                 <button id="consentBtn" class="w3-button w3-padding-large w3-large w3-blue w3-hover-indigo w3-ripple" style="margin: 20px;">next</button>
@@ -392,11 +402,11 @@
 </div>
 
 <!-- variables for blender objects from JSON -->
-<script>
+<!--<script>
     var building = "{% static 'face/JSON/outsideUCDBuilding.json' %}";
     var trees = "{% static 'face/JSON/outsideUCDTrees.json' %}";
     var ground = "{% static 'face/JSON/outsideUCDGround.json' %}";
-</script>
+</script>-->
 
 <!-- fonts -->
 <script>var board_font = "{% static 'face/fonts/roboto_condensed_regular.json' %}"</script>

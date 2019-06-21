@@ -8,7 +8,7 @@ $(window).on( 'load', function() {
     }
 
     // begins the loading of objects
-    init();
+    //init();
     
     if ( !!window.chrome ) {
         
@@ -78,6 +78,15 @@ $(window).on( 'load', function() {
    
 });
 
+
+// Loading the video links as soon as the main window is loaded
+// The container is activated with a fade in
+// The function is in enterBuilding.js
+$("#see-through-background").fadeIn( 1500, showInfoBoxes );
+
+
+
+
 function showLogInDropdown() {
 
     let x = document.getElementById( "signInCont" );
@@ -110,6 +119,7 @@ function logIn() {
                 
                 $("#signInCont").removeClass( "w3-show" );
                 enterSchool();
+
 
             } else {
 

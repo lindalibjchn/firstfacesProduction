@@ -8,7 +8,6 @@ var mainCount = 0;
 
 function init() {
 
-    
     // MESH VARIABLES \\
     
     //var mBuilding;
@@ -16,7 +15,6 @@ function init() {
     // SCENE \\
     
     scene = new THREE.Scene();
-    
     
     // WINDOW \\
 
@@ -47,7 +45,7 @@ function init() {
     // CAMERA \\
 
     camera = new THREE.PerspectiveCamera( 55, WIDTH / HEIGHT, 0.1, 1000 );
-    camera.position.set( 0, pathPosY, pathPosZ );
+    camera.position.set( -100, pathPosY, pathPosZ );
     camera.rotation.x = pathRotX;
     //camera.up = new THREE.Vector3( 0, 1, 0 );
     //camera.lookAt( new THREE.Vector3( 0, cameraObject.lookAtY, 0 ) );
@@ -73,8 +71,8 @@ function init() {
     // LOAD OBJECTS \\
 
     var loader = new THREE.JSONLoader();
-    loader.load( building, addBuilding );
-
+    //loader.load( building, addBuilding );
+    
 
     var mBuilding;
 
@@ -89,7 +87,7 @@ function init() {
         doorRBone = mBuilding.skeleton.bones[1];
         
         addSign();
-        //loader.load( trees, addTrees );
+        loader.load( trees, addTrees );
 
     };
 
@@ -113,6 +111,7 @@ function init() {
         addSign();
 
     };
+
 
     function addSign() {
        
@@ -169,6 +168,7 @@ function init() {
 
     }
 
+
     function addToScene( ) {
 
         scene.add( mBuilding );
@@ -196,12 +196,12 @@ function animate () {
     
     }
     
-
+    console.log(animate);
     mainCount += 1;
     
     requestAnimationFrame( animate );
     
     renderer.render(scene, camera);
-    
+  
 };
 

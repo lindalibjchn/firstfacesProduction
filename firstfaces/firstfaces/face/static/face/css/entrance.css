@@ -335,3 +335,24 @@ input:checked + .slider:before {
     display: inline-block;
     line-height:10px;
 }
+
+
+
+
+/*Background image CSS file*/
+
+.background {
+  /* The image used */
+  background-image: url("/static/face/images/background.png");
+
+  /* Full height */
+
+  height: 100%;
+  width: auto;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  
+}
