@@ -1,22 +1,26 @@
 
 $(window).on( 'load', function() {
 
-    if ( !!window.chrome !== true ) {
+    /*if ( !!window.chrome !== true ) {
 
         alert( "Erle currently works on Google Chrome only. You will not be able to sign up or log in on this browser. Apologies for the inconvenience.");
 
-    }
+    }*/
 
     // begins the loading of objects
     //init();
     
-    if ( !!window.chrome ) {
+    /*if ( !!window.chrome ) {
         
         // login dropdown
         $("#logInDropdown").on( "click", showLogInDropdown )
         $("#signUpBtn").on( "click", showSignUpForm )
     
-    }
+    }*/
+
+
+    $("#logInDropdown").on( "click", showLogInDropdown )
+    $("#signUpBtn").on( "click", showSignUpForm )
 
     // log in
     $( "#loginForm" ).on( "submit", function( event ) {
