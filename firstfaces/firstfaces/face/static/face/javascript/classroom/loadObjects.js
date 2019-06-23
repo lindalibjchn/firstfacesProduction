@@ -32,8 +32,7 @@ function enterOrReEnter() {
 
         talkObject.learning = true;
         //initCameraMove('laptop', 0.1);
-        initInputReady('');
-
+        initInputReady('Boris Johnson has refused to answer questions on reports of a row between him and his partner in which police were called. Speaking at a Tory Party hustings in Birmingham, Mr Johnson said "people did not want to hear" about the reported row between him') 
     };
 
     //if first enter then run entrance animation else sitting at chair
