@@ -23,6 +23,7 @@ function init() {
     let WIDTH = window.innerWidth;
     let HEIGHT = window.innerHeight;
 
+
     window.addEventListener('resize', function() {
         
         WIDTH = window.innerWidth;
@@ -33,6 +34,7 @@ function init() {
 
     });
 
+
     // RENDERER \\
 
     renderer = new THREE.WebGLRenderer();
@@ -42,12 +44,12 @@ function init() {
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     document.body.appendChild( renderer.domElement );
 
-    renderer.domElement.addEventListener("click", onClick, false)
-    renderer.domElement.addEventListener("mousemove", onMouseMove, false)
+    //renderer.domElement.addEventListener("click", onClick, false)
+    //renderer.domElement.addEventListener("mousemove", onMouseMove, false)
 
     // CAMERA \\
 
-    camera = new THREE.PerspectiveCamera( 60, WIDTH / HEIGHT, 0.1, 1000 );
+    camera = new THREE.PerspectiveCamera( 70, WIDTH / HEIGHT, 0.1, 1000 );
     camera.position.set( enterPosX, enterPosY, enterPosZ);
     camera.rotation.set( enterRotX, enterRotY, enterRotZ);
     //camera.position.set( deskPosX, deskPosY, deskPosZ);
@@ -79,7 +81,6 @@ function init() {
     var hemiLight = new THREE.HemisphereLight( 0xf9f8ed, 0xf9f8ed, 1);
     scene.add( hemiLight );
 
-
     // LOAD OBJECTS \\
 
     var loader = new THREE.JSONLoader();
@@ -95,25 +96,33 @@ function init() {
         //loader.load( sentencesBook, addSentencesBook );
 
     //};
+    
     function addWaitingRoom( geom, mat ) {
 
         //door
-        mat[6].skinning = true;
-        mat[6].morphtargets = true;
+        //mat[6].skinning = true;
+        //mat[6].morphtargets = true;
+
         // notice
-        mat[5].skinning = true;
-        mat[4].morphtargets = true;
-        // handle
+        //mat[5].skinning = true;
+        //mat[4].morphtargets = true;
+
+        //handle
         mat[7].skinning = true;
         mat[7].morphtargets = true;
+
         
         mWaitingRoom = new THREE.SkinnedMesh( geom, mat );
 
         doorBone = mWaitingRoom.skeleton.bones[0];
 
-        loader.load( sentencesBook, addSentencesBook );
+        //loader.load( sentencesBook, addSentencesBook );
+        loader.load( doorSign, addDoorSign );
+        //loader.load( schedule, addSchedule );
 
     };
+
+
 
     function addSentencesBook( geom, mat ) {
 
@@ -142,6 +151,8 @@ function init() {
 
     };
 
+
+
     function addTestsBook( geom, mat ) {
 
         var mTestsBook = new THREE.Mesh( geom, mat );
@@ -162,15 +173,48 @@ function init() {
 
         mWaitingRoom.add( mTestsBook );
         geom.center();
-
+        
+        //loader.load( doorSign, addDoorSign );
         loader.load( schedule, addSchedule );
 
     };
 
+
+
+
+
+    function addDoorSign( geom, mat ) {
+        
+        
+
+        var mDoorSign = new THREE.Mesh( geom, mat );
+        mDoorSign.name = "doorSign";
+        mDoorSign.position.set( doorSignPosX, doorSignPosY, doorSignPosZ );
+
+        clickableObjects.doorSign = mDoorSign;
+
+        doorBone.add( clickableObjects.doorSign );
+ 
+        geom.center();
+        
+
+        loader.load( schedule, addSchedule );
+        addDoorWriting();
+
+
+    };
+
+
+
     function addSchedule( geom, mat ) {
+        
+        console.log("Add schedule JSON");
+        console.log(geom);
+        console.log(mat);
 
         mSchedule = new THREE.Mesh( geom, mat );
         mSchedule.name = "schedule";
+        mSchedule.position.set( 2.0, -0.9, 0.02 );
 
         let timeBlockGeom = new THREE.PlaneGeometry( scheduleObject.lenX, scheduleObject.lenY );
         let timeBlockMat = new THREE.MeshBasicMaterial( { color: 0xffc4c4, transparent: true, opacity: 0.5 } );
@@ -184,29 +228,17 @@ function init() {
         scheduleObject.timeNowLine = new THREE.Mesh(timeNowGeom, timeNowMat);
 
         putTimetableUp();
+        
+        //mWaitingRoom.add( mSchedule );
 
-        mWaitingRoom.add( mSchedule );
+        doorBone.add(mSchedule);
         mSchedule.add( scheduleObject.timeBlock );
         
-        loader.load( doorSign, addDoorSign );
-
-    };
-
-    function addDoorSign( geom, mat ) {
-
-        var mDoorSign = new THREE.Mesh( geom, mat );
-        mDoorSign.name = "doorSign";
-        mDoorSign.position.set( doorSignPosX, doorSignPosY, doorSignPosZ );
-
-        clickableObjects.doorSign = mDoorSign;
-
-        doorBone.add( clickableObjects.doorSign );
-        
         geom.center();
-        
-        addDoorWriting();
 
     };
+
+
 
     function addDoorWriting() {
 
@@ -245,7 +277,8 @@ function init() {
 
                 signText = "Class Full";
 
-            } else {
+            } 
+            else {
 
                 signText = scheduleDict.upcomingClass;
 
@@ -314,9 +347,10 @@ function init() {
 
         });
         
-        loader.load( laptop, addLaptop );
-
+        //loader.load( laptop, addLaptop );
+        addToScene(); 
     };
+
 
     function addLaptop( geom, mat ) {
 
@@ -332,7 +366,7 @@ function init() {
         clickableObjects.laptop.facePos = { x: -0.4, y: 3.25, z: 4.3 };
         clickableObjects.laptop.faceRot = { x: 0.02, y: 0.85, z: 0.10};
 
-
+        
         geom.center();
 
         mLaptop.position.set( clickableObjects.laptop.deskPos.x, clickableObjects.laptop.deskPos.y, clickableObjects.laptop.deskPos.z );
@@ -368,13 +402,15 @@ function animate () {
     
     }
     
+
+
     if ( doorObject.bool ) {
 
         moveDoor( mainCount );
     
     }
     
-    if ( clickableObjects.laptop.bool ) {
+    /*if ( clickableObjects.laptop.bool ) {
 
         moveBook( mainCount, clickableObjects.laptop );
     
@@ -412,8 +448,9 @@ function animate () {
 
         }
 
-    }
+    }*/
     
+
     mainCount += 1;
     
     requestAnimationFrame( animate );

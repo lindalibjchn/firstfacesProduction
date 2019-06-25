@@ -1,4 +1,3 @@
-
 $(window).on( 'load', function() {
 
     // begins the loading of objects
@@ -8,15 +7,15 @@ $(window).on( 'load', function() {
     getSessionsIdList();
     
     // insert chart for last 3 months first (pos 0 in list"
-    if ( sessionsDict.IDList.length !== 0 ) {
-
+    if ( sessionsDict.IDList.length !== 0 ) 
+    {
         insertChart( 0 );
-    
-    } else {
+    }
 
+    else 
+    {
         $('#chartRow').html('<h5>Sentences will appear after your first class</h5>');
         $('#testChartCont').html('<h5>Tests will appear after your first class</h5>');
-
     }
 
     // this is for developing the sentences book
@@ -29,6 +28,22 @@ $(window).on( 'load', function() {
     $('#whatIsScoresBtn').hover( showScoresExpl, hideScoresExpl );
 
     $('#tutorialBtn').on( 'click', function(){doDoor(true)} );
+    
+    //$('#scoresBtn').on( 'click', );
+    
+    $("#testsBtn").on( "click", showTestsBook );
+    $("#sentencesBtn").on( "click", showSentencesBook );
+    $("#scheduleBtn").on( "click", showSchedule );
+    
+    
+    /*function showScore() {
+        $('#testsBook').hide();
+        $('#testsBook').fadeIn( 1000 ); 
+        if ( sessionsDict.IDList.length === 0 ) {
+            $('#testBtnCont').hide();
+        }
+    }*/
+
 
     setupScrollBtns();
 
@@ -38,12 +53,18 @@ $(window).on( 'load', function() {
 
     }
 
+
+
+
     $('#startTestBtn').on( 'click', startTest );
 
     // while developing
     // startTest();
 
 });
+
+
+
 
 function setupScrollBtns() {
 
@@ -58,6 +79,9 @@ function setupScrollBtns() {
 
     });
 
+
+
+
     $('#rightScroll').on( 'click', function(){
         
         if ( sentencesMonthIndex > 0 ) {
@@ -69,6 +93,8 @@ function setupScrollBtns() {
 
     });
 
+
+
     $('#leftTestScroll').on( 'click', function(){
         
         if ( testEarliestThreeMonths === false ) {
@@ -79,6 +105,7 @@ function setupScrollBtns() {
         }
 
     });
+
 
     $('#rightTestScroll').on( 'click', function(){
         
@@ -92,6 +119,7 @@ function setupScrollBtns() {
     });
 
 }
+
 
 function onMouseMove(event) {
     
@@ -159,7 +187,7 @@ function onMouseMove(event) {
             if ( clickableObjects.underMouse !== true ) {
 
                 clickableObjects.underMouse = true;
-
+            
             }
 
         }
@@ -182,8 +210,9 @@ function onMouseMove(event) {
 
 }
 
+
 function onClick(event) {
-    
+
     let x = (event.clientX / window.innerWidth) * 2 - 1;
     let y = -(event.clientY / window.innerHeight) * 2 + 1;
     let dir = new THREE.Vector3(x, y, -1)
@@ -238,8 +267,8 @@ function onClick(event) {
             //clickableObjects.intersectedObj.material[0].emissive = { r: 0, g: 0, b: 0 };
             clickableObjects.intersectedObj.scale.set( 1, 1, 1 );
 
-            renderer.domElement.removeEventListener( "click", onClick );
-            renderer.domElement.removeEventListener( "mousemove", onMouseMove );
+            //renderer.domElement.removeEventListener( "click", onClick );
+            //renderer.domElement.removeEventListener( "mousemove", onMouseMove );
 
             if ( clickedName === "doorSign" ) {
              
@@ -253,7 +282,9 @@ function onClick(event) {
                 
                 }
 
-            } else {
+            }
+             
+            else {
 
                 initBookMove( clickedName, "face", '1.5' );
 
@@ -265,18 +296,25 @@ function onClick(event) {
 
 }
 
+
+
 function bookBackToDesk() {
 
-    $("#bookContentBackground").fadeOut( 1000, initBookBack );
-    function initBookBack() {
+    //$("#bookContentBackground").fadeOut( 1000, initBookBack );
+    $("#bookContentBackground").fadeOut( 1000);
+    //clickableObjects.clickedBook = "";
+    /*function initBookBack() {
 
         initBookMove( clickableObjects.clickedBook, "desk", "2" )
 
         clickableObjects.clickedBook = "";
 
-    };
+    };*/
 
 }
+
+
+
 
 function doDoor( enterTutorial ) {
 
@@ -316,6 +354,9 @@ function doDoor( enterTutorial ) {
 
 }
 
+
+
+
 function getRecording() {
 
     let audio_url = this.id
@@ -326,6 +367,8 @@ function getRecording() {
     aud.play();
 
 }
+
+
 
 function getSynth() {
 

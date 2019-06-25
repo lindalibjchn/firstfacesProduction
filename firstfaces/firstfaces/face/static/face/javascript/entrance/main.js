@@ -107,6 +107,8 @@ function showLogInDropdown() {
 
 }
 
+
+
 function logIn() {
     
     $("#misMatch").hide();
@@ -139,6 +141,9 @@ function logIn() {
     });
 }
 
+
+
+
 function registerProfile() {
 
     console.log('in register');
@@ -161,6 +166,8 @@ function registerProfile() {
     });
 
 }
+
+
 
 function signUpUser() {
 
@@ -206,12 +213,17 @@ function signUpUser() {
     });
 }
 
+
+
 function showSignUpForm() {
 
     console.log('in showSignUpForm');
     $('#signUpBackground').fadeIn( 500 );
 
 }
+
+
+
 
 function removeSignUp() {
 

@@ -209,6 +209,7 @@ function insertTestChart( period ) {
             }]
         },
 
+
         // Configuration options go here
         options: {
             legend: {

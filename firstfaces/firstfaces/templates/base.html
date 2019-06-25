@@ -70,6 +70,13 @@
 
                         <a href="https://www.youtube.com/watch?v=xYNMh4sZu6k" target="_blank" class="w3-bar-item w3-button w3-hover-blue w3-ripple">instructions</a>
 
+                        <a class="w3-bar-item w3-button w3-hover-blue w3-ripple" id="scheduleBtn">schedule</a>
+                        
+                        <a class="w3-bar-item w3-button w3-hover-blue w3-ripple" id="testsBtn">tests</a>
+
+                        <a class="w3-bar-item w3-button w3-hover-blue w3-ripple" id="sentencesBtn">sentences</a>
+             
+
                         {% if class %}
                         
                             <a href="#" id="finishClassBtn" class="w3-bar-item w3-button w3-hover-blue w3-ripple">finish class</a>
@@ -82,9 +89,11 @@
                         
                         {% endif %}
 
+
                     {% else %}
 
-                        <button class="w3-bar-item w3-button w3-hover-blue w3-ripple" id="signUpBtn">Sign Up</button>
+                        <button class="w3-bar-item w3-button w3-hover-blue w3-ripple" id="signUpBtn">Sign Up
+                        </button>
                         <button class="w3-bar-item w3-button w3-hover-blue w3-ripple" id="logInDropdown">Log In</button>
 
                     {% endif %}
@@ -92,10 +101,10 @@
                 </div>
 
             </div>
-
+            
             {% block content %}
             {% endblock %}
-        
+            
         </body>
 
 </html>

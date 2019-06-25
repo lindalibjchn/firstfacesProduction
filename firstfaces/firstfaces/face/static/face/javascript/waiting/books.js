@@ -15,8 +15,19 @@ function getSessionsIdList() {
 
 }
 
-function showTestsBook() {
 
+function hideBooks() {
+    $('#testsBook').hide(); 
+    $('#sentencesBook').hide(); 
+}
+
+
+
+//Called to show the tests
+function showTestsBook() {
+    
+    hideBooks();
+    $("#bookContentBackground").fadeIn( 1000 );
     $('#testsBook').fadeIn( 1000 ); 
 
     if ( sessionsDict.IDList.length === 0 ) {
@@ -27,8 +38,12 @@ function showTestsBook() {
 
 };
 
+
+
 function showSentencesBook() {
     
+    hideBooks();
+    $("#bookContentBackground").fadeIn( 1000 );
     $('#sentencesBook').fadeIn( 1000 ); 
 
     if ( sessionsDict.IDList.length !== 0 ) {
@@ -38,12 +53,33 @@ function showSentencesBook() {
     }
 
 };
-        
+
+
+
+//Called to show the schedule
+function showSchedule() {
+    
+    hideBooks();
+    $("#bookContentBackground").fadeIn( 1000 );
+    $('#schedule').fadeIn( 1000 ); 
+
+    /*if ( sessionsDict.IDList.length === 0 ) {
+
+        $('#testBtnCont').hide();
+
+    }*/
+
+};
+
+
+ 
 function showNewsBook() {
     
     $('#newsBook').fadeIn( 1000 ); 
 
 };
+
+
 
 function showSession( sessID ) {
 

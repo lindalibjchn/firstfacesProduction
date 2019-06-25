@@ -12,11 +12,11 @@ function initCameraMove( to, secs ) {
             cameraObject[ 'startCount' ] = mainCount;
             cameraObject[ 'bool' ] = true;
 
-            cameraObject[ 'movementX' ] = enterPosX - deskPosX;
-            cameraObject[ 'movementY' ] = enterPosY - deskPosY;
-            cameraObject[ 'movementZ' ] = enterPosZ - deskPosZ;
-
-            cameraObject[ 'rotationY' ] = enterRotY - deskRotY;
+            cameraObject[ 'movementX' ] = 8; //enterPosX - deskPosX; //
+            cameraObject[ 'movementY' ] = 1; //enterPosY - deskPosY; // 
+            cameraObject[ 'movementZ' ] = -5; //enterPosZ - deskPosZ; //
+            
+            cameraObject[ 'rotationY' ] = 1; //enterRotY - deskRotY; //
                 
             cameraObject.currentState = "desk";
 
@@ -62,19 +62,22 @@ function initBookMove( book, to, secs ) {
         showTestsBook();
         clickableObjects.clickedBook = "tests";
 
-    } else if ( book === "sentences" ) {
+    } 
+    else if ( book === "sentences" ) {
 
         bookObj = clickableObjects.sentences;
         showSentencesBook();
         clickableObjects.clickedBook = "sentences";
 
-    } else if ( book === "laptop" ) {
+    } 
+    else if ( book === "laptop" ) {
 
         bookObj = clickableObjects.laptop;
         showNewsBook();
         clickableObjects.clickedBook = "laptop";
 
     }
+
 
     let from = bookObj.currentState;
 
@@ -218,7 +221,6 @@ function moveDoor( main ) {
 }
 
 ///////// enter the classroom
-
 //function enterClass() {
 
    //$("#see-through-background").fadeOut( 1500 );
@@ -228,13 +230,19 @@ function moveDoor( main ) {
 
 //}
 
+
+
 function putTimetableUp() {
 
-
     scheduleObject.timeBlock.position.set( scheduleObject.position.x, scheduleObject.position.y, scheduleObject.position.z );
+    
+    console.log("schedule time table data");
+    //console.log(scheduleDict);
 
     // add green blocks to schedule on wall
     for ( var key in scheduleDict ) {
+
+        console.log(scheduleDict[ key ]);
 
         if ( scheduleDict.hasOwnProperty( key ) ) {
 

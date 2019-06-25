@@ -32,6 +32,7 @@
     min-width: 700px;
     min-height: 500px;
     display: none;
+
     
 }
 
@@ -46,7 +47,7 @@
     top: 0;
     bottom: 0;
     margin: auto;
-
+    
 }
 
 #bookContentPageInner {
@@ -62,6 +63,46 @@
     bottom: 0;
     margin: auto;
     overflow-y: hidden;
+
+}
+
+
+
+#signUpBackground {
+
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background: rgba( 0, 0, 0, 0.7);
+    display: none;
+
+}
+
+
+.sign-up-info-background {
+    overflow: auto;
+    position: fixed;
+    height: 90%;
+    width: 100%;
+    left: 0;
+    right: 0;
+    top: 7%;
+    bottom: 0;
+    margin: auto;
+    background: white;
+    min-height: 200px;
+}
+
+.sign-up-pages {
+
+    position: center;
+    height: 95%;
+    width: 95%;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
 
 }
 
