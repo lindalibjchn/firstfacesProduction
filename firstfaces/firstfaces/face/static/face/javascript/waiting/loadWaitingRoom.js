@@ -17,7 +17,6 @@ function init() {
     
     scene = new THREE.Scene();
     
-    
     // WINDOW \\
 
     let WIDTH = window.innerWidth;
@@ -82,7 +81,6 @@ function init() {
     scene.add( hemiLight );
 
     // LOAD OBJECTS \\
-
     var loader = new THREE.JSONLoader();
     loader.load( waitingRoom, addWaitingRoom );
 
@@ -184,8 +182,6 @@ function init() {
 
 
     function addDoorSign( geom, mat ) {
-        
-        
 
         var mDoorSign = new THREE.Mesh( geom, mat );
         mDoorSign.name = "doorSign";
@@ -401,8 +397,6 @@ function animate () {
         moveCamera( mainCount );
     
     }
-    
-
 
     if ( doorObject.bool ) {
 

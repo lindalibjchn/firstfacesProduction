@@ -39,6 +39,7 @@ def out_or_in(request):
 
         return redirect('entrance')
 
+
 def entrance(request):
 
     if request.user.is_authenticated:
@@ -55,6 +56,8 @@ def entrance(request):
     }
 
     return render(request, 'face/entrance.html', context)
+
+
 
 def my_login(request):
 
@@ -77,6 +80,7 @@ def my_login(request):
         }
 
     return JsonResponse(response_data)    
+
 
 def sign_up(request):
 
@@ -144,6 +148,10 @@ group_leader_dict = {
     "john": "all",
 
 }
+
+
+
+
 def group_data(request):
     groups_sessions = {}
     try:
@@ -184,6 +192,7 @@ def waiting(request):
     try:    
         group_leader_dict[ request.user.username ]
         return redirect('group_data')
+    
     
     except:
     
@@ -495,7 +504,8 @@ def my_login(request):
             'loggedIn': False,
         }
 
-    return JsonResponse(response_data)    
+    return JsonResponse(response_data)
+
 
 def store_sound_mic(request):
 
@@ -520,7 +530,9 @@ def store_sound_mic(request):
 
     }
 
-    return JsonResponse(response_data)    
+    return JsonResponse(response_data)
+
+
 def store_tutorial_end(request):
 
     session_id = request.POST['sessionID']
@@ -623,6 +635,7 @@ def store_blob(request):
 
     return JsonResponse(response_data)    
 
+
 def tts(request):
 
     text = request.GET['sentence']
@@ -690,6 +703,7 @@ def tts(request):
 
     return JsonResponse(response_data)    
 
+
 def store_sent(request):
 
     time_now = timezone.now();
@@ -747,6 +761,9 @@ def store_sent(request):
     return JsonResponse(response_data)    
 
 from django.utils.dateparse import parse_datetime
+
+
+
 def timings(request):
 
     # code.interact(local=locals());

@@ -1,6 +1,6 @@
-const enterPosX = 4.0;
-const enterPosY = 4.4;
-const enterPosZ = 2.0;
+const enterPosX = 2.0;
+const enterPosY = 3.4;
+const enterPosZ = 1.0;
 
 const enterRotX = 0;
 const enterRotY = 1.0;
@@ -52,6 +52,7 @@ var doorObject = {
     sin: []
 }
 
+
 var doorBone;
 
 var clickableObjects = {
@@ -68,13 +69,13 @@ var scheduleObject = {
     timeBlock: {},
     lenX: 2.64,
     lenY: 1.60,
-    position: { x: 0.2, y: -0.1, z: 0.1 },
+    position: { x: 0.15, y: -0.12, z: 0.1 },
     topLeftPos: { x: -1.04, y: 0.73, z: 0 },
     blinkingBlock: {},
     blinkingBlockMat: new THREE.MeshBasicMaterial( { color: 0x53ef59 /*, transparent: true, opacity: 0.5 */} ),
     availableNow: false,
-    blinkOn: true 
-        
+    blinkOn: true
+    
 }
 
 

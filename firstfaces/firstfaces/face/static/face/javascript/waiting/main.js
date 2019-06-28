@@ -12,6 +12,7 @@ $(window).on( 'load', function() {
         insertChart( 0 );
     }
 
+
     else 
     {
         $('#chartRow').html('<h5>Sentences will appear after your first class</h5>');
@@ -52,9 +53,6 @@ $(window).on( 'load', function() {
         insertTestChart(0);
 
     }
-
-
-
 
     $('#startTestBtn').on( 'click', startTest );
 
@@ -345,11 +343,10 @@ function doDoor( enterTutorial ) {
             },
         });
 
-    } else {
-
+    } 
+    else {
         initDoorOpen('3');
         initCameraMove('class', '3');
-
     }
 
 }
@@ -441,6 +438,8 @@ function showScoresExpl() {
     console.log('show scores');
 
 }
+
+
 
 function hideScoresExpl() {
 

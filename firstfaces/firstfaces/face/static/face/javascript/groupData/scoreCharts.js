@@ -82,6 +82,8 @@ function insertChart() {
 
     }
 
+
+
     function getScores() {
 
         scores = [];
@@ -94,8 +96,9 @@ function insertChart() {
 
         return scores;
 
-
     }
+
+
 
     // see https://stackoverflow.com/questions/43323152/change-point-color-on-click-using-chartjs for why need a list of colors just to change one when clicked
     function getBackgroundColors() {

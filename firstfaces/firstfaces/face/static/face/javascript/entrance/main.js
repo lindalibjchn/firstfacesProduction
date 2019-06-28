@@ -1,4 +1,3 @@
-
 $(window).on( 'load', function() {
 
     /*if ( !!window.chrome !== true ) {

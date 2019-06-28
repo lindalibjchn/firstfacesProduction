@@ -103,18 +103,19 @@
 }
 
 
-@media screen and (min-width: 400px) and (max-width: 800px){
-  
+@media screen and (min-width: 400px) and (max-width: 600px){
+
   .info-card {
 
     width: 60%;
-    height: 50%;
+    height: 100%;
     display: none;
     margin-top: 20px;
     margin-bottom: 20px;
 }
 
 }
+
  
 .card-content {
 
@@ -136,22 +137,18 @@
 }
 
 
-
 @media screen and (min-width: 100px) {
   .card-content {
     font-size: 20px;
   }
 }
 
+
 @media screen and (min-width: 100px) {
   .card-titles {
     font-size: 20px;
   }
 }
-
-
-
-
 
 
 
@@ -179,8 +176,8 @@
 
     color: yellow !important;
     background-color: white;
-    height: 200px;
-    overflow: scroll;
+    height: 100%;
+    /*overflow: scroll;*/
     /*display: none;*/
 }
 
@@ -232,7 +229,7 @@
 .sign-up-info-background {
     overflow: auto;
     position: fixed;
-    height: 90%;
+    height: 93%;
     width: 100%;
     left: 0;
     right: 0;
@@ -334,7 +331,6 @@
   height: 0;
   max-width:100%;
 }
-
 
 .slider {
   position: absolute;
