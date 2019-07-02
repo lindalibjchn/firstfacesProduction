@@ -93,54 +93,6 @@
 
 </div>
 
-<div class="init-questions-container" id="emotionQuestionsContainer" class="w3-container">
-
-    <div class="w3-row">
-
-        <div class="w3-third">
-
-            <button class="w3-btn w3-light-green init-emot" id="happy">happy</button>
-
-        </div>
-
-        <div class="w3-third">
-
-            <button class="w3-btn w3-light-blue init-emot" id="surprised">surprised</button>
-
-        </div>
-
-        <div class="w3-third">
-
-            <button class="w3-btn w3-green init-emot" id="excited">excited</button>
-
-        </div>
-
-    </div>
-
-    <div class="w3-row">
-
-        <div class="w3-third">
-
-            <button class="w3-btn w3-blue init-emot" id="sad">sad</button>
-
-        </div>
-
-        <div class="w3-third">
-
-            <button class="w3-btn w3-red init-emot" id="angry">angry</button>
-
-        </div>
-
-        <div class="w3-third">
-
-            <button class="w3-btn w3-orange init-emot" id="annoyed">annoyed</button>
-
-        </div>
-
-    </div>
-
-</div>
-
 <div class="w3-container init-questions-container" id="continueNewChoices">
 
     <div class="w3-row topic-row">
@@ -157,52 +109,13 @@
 
 </div>
 
-<div class="w3-container init-questions-container" id="topicChoices">
-
-    <div class="w3-row topic-row">
-
-        <!--this will be filled in with js depending on student's choice-->
-        <button class="w3-btn w3-green choice-btn" id="myEmotion"></button>
-
-    </div>
-
-    <div class="w3-row topic-row">
-
-        <button class="w3-btn w3-blue choice-btn" id="myChoice">Choose my own topic</button>
-
-    </div>
-
-    {% if article %}
-
-    <div class="w3-row topic-row">
-
-        <button class="w3-btn w3-red choice-btn" id="todaysNewsArticle">Today's news article</button>
-
-    </div>
-
-    {% endif %}
-
-</div>
-
-<div class="w3-container init-questions-container" id="chooseTopicTextContainer">
-
-    <div class="w3-container">
-
-        <p id="topicExample">e.g. friends, travelling, family relations... </p>
-
-    </div>
-
-    <div class="w3-container">
-
-        <input class="w3-input" type="text" id="topicChoiceInput">
-
-    </div>
-
-    <button class="w3-button w3-green w3-large" id="submitOwnTopicBtn">submit</button>
-
-</div>
-
 <div id="speechBubbleCont" class="w3-row">
+
+    <div class="triangle-cont">
+    
+        <div class="triangle-bottomleft" id="nodTriangle"></div>
+
+    </div>
 
     <!--<img class="speech-bubbles" id="speechBubbleTia" src="{% static 'face/images/speechBubbleUp.png' %}">-->
     <!--<img class="speech-bubbles" id="speechBubbleLaptop" src="{% static 'face/images/speechBubbleDown.png' %}">-->
@@ -234,7 +147,6 @@
 
 <div id="textInputContainer" class="w3-row">
 
-
     <div class="w3-col l2 w3-hide-medium w3-hide-small">&nbsp</div>
     <div class="w3-col l8 m12 s12" id="textInputBox" >
 
@@ -264,12 +176,116 @@
 
 <div id="inputButtonsContainer">
 
+    <!--init questions buttons-->
+    <div class="w3-row" id="emotionQuestionsContainer">
+
+        <div class="w3-col l3 w3-hide-medium w3-hide-small">&nbsp</div>
+        <div class="w3-col l2 m4 s4">
+
+            <div class="input-btns">
+            
+                <button class="w3-btn w3-red init-emot" id="sad">sad</button>
+
+            </div>
+
+        </div>
+
+        <div class="w3-col l2 m4 s4">
+
+            <div class="input-btns">
+            
+                <button class="w3-btn w3-orange init-emot" id="ok">ok</button>
+
+            </div>
+
+        </div>
+
+        <div class="w3-col l2 m4 s4">
+
+            <div class="input-btns">
+            
+                <button class="w3-btn w3-green init-emot" id="happy">happy</button>
+
+            </div>
+
+        </div>
+
+        <div class="w3-col l3 w3-hide-medium w3-hide-small">&nbsp</div>
+
+    </div>
+
+    <!--topic choices-->
+    <div class="w3-row" id="topicChoices">
+
+        <div class="w3-col l3 w3-hide-medium w3-hide-small">&nbsp</div>
+
+        <div class="w3-col l2 m4 s4">
+
+            {% if article %}
+
+            <div class="input-btns">
+
+                <button class="w3-btn w3-red choice-btn" id="todaysNewsArticle">today's topic</button>
+
+            </div>
+
+            {% else %}
+
+            <div>&nbsp</div>
+
+            {% endif %}
+
+        </div>
+
+        <div class="w3-col l2 m4 s4">
+
+            <div class="input-btns">
+
+                <button class="w3-btn w3-blue choice-btn" id="myChoice">my choice</button>
+
+            </div>
+
+        </div>
+
+        <div class="w3-col l2 m4 s4">
+
+            <div class="input-btns">
+                <!--this will be filled in with js depending on student's choice-->
+                <button class="w3-btn w3-green choice-btn" id="myEmotion">my feeling</button>
+
+            </div>
+
+        </div>
+
+        <div class="w3-col l3 w3-hide-medium w3-hide-small">&nbsp</div>
+
+    </div>
+
+
+    <div class="w3-row" id="submitTopicBtnContainer">
+
+        <div class="w3-col l3 w3-hide-medium w3-hide-small">&nbsp</div>
+        <div class="w3-col l2 m4 s4">&nbsp</div>
+        <div class="w3-col l2 m4 s4">
+
+            <div class="input-btns">
+
+                <button class="w3-btn w3-green" id="submitOwnTopicBtn">submit</button>
+        
+            </div>
+
+        </div>
+        <div class="w3-col l2 m4 s4">&nbsp</div>
+        <div class="w3-col l3 w3-hide-medium w3-hide-small">&nbsp</div>
+
+    </div>
+
     <div id="recordBtnsContainer" class="w3-row">
 
         <div class="w3-col l3 w3-hide-medium w3-hide-small">&nbsp</div>
         <div class="w3-col l2 m4 s4" id="listenAndSynthBtnsContainer">
              
-            <div id="listenAndSynthBtns">
+            <div id="listenAndSynthBtns" class="input-btns">
 
                 <button class="w3-btn w3-circle w3-xxxlarge w3-indigo input-btn-large record-btn play-btn" id="listenVoiceBtn">
                 
@@ -279,7 +295,7 @@
 
             </div>
 
-            <div id="meterCont">
+            <div id="meterCont" class="input-btns">
                                 
                 <i class="fa fa-microphone inputfa fa-lg" id="volumeMic"></i>
             
@@ -291,7 +307,7 @@
 
         <div class="w3-col l2 m4 s4" id="recordAndStopBtnsContainer">
 
-            <div id="recordAndStopBtns">
+            <div id="recordAndStopBtns" class="input-btns">
 
                 <button class="w3-btn w3-circle w3-blue input-btn record-btn w3-padding-small" id="recordVoiceBtn">
                  
@@ -311,7 +327,7 @@
 
         <div class="w3-col l2 m4 s4" id="talkBtnContainer">
 
-            <div id="talkBtnCont">
+            <div id="talkBtnCont" class="input-btns">
 
                 <button class="w3-btn w3-circle w3-green input-btn input-fa record-btn w3-padding-large play-btn" id="talkBtn">
                     
@@ -327,28 +343,31 @@
 
     </div>
 
-    <div class="w3-container" id="optionBtns">
+    <div class="w3-row" id="optionBtns">
 
-        <div class="w3-row option-row">
+        <div class="w3-col l3 w3-hide-medium w3-hide-small">&nbsp</div>
+        <div class="w3-col l2 m4 s4 option-row" class="input-btns">
 
             <button class="w3-btn w3-blue option-btn" id="tryAgainBtn">try again</button>
 
         </div>
 
-        <div class="w3-row option-row">
+        <div class="w3-col l2 m4 s4 option-row" class="input-btns">
 
             <button class="w3-btn w3-indigo option-btn" id="whatsWrongBtn">what's wrong</button>
             <button class="w3-btn w3-indigo option-btn" id="showCorrectionBtn">showCorrection</button>
 
         </div>
 
-        <div class="w3-row option-row">
+        <div class="w3-col l2 m4 s4 option-row" class="input-btns">
 
             <button class="w3-btn w3-green option-btn" id="nextSentenceBtn">next sentence</button>
 
         </div>
+        <div class="w3-col l3 w3-hide-medium w3-hide-small">&nbsp</div>
 
     </div>
+
 
 </div>
 

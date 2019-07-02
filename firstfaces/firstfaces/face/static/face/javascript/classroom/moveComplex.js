@@ -610,7 +610,7 @@ function tapKeyFull() {
             
                 } else {
 
-                    calculateAlternatives();
+                    //calculateAlternatives();
                     //show play buttons below
                     if ( classVariableDict.tutorial === false ) {
 
@@ -632,35 +632,35 @@ function tapKeyFull() {
 
 }
 
-function calculateAlternatives() {
+//function calculateAlternatives() {
 
-    $('#textInput').val( synthesisObject.transcript0 );
-    //$('.sent-scores').css( 'border', 'none' );
-    //$('#alt00').css( 'border', '3px solid yellow' );
+    //$('#textInput').val( synthesisObject.transcript0 );
+    ////$('.sent-scores').css( 'border', 'none' );
+    ////$('#alt00').css( 'border', '3px solid yellow' );
     
-    synthesisObject.transcriptCur = '0';
+    //synthesisObject.transcriptCur = '0';
 
-    if ( synthesisObject.alternatives === 1 ) {
+    //if ( synthesisObject.alternatives === 1 ) {
 
-        $('#alt01').hide();
-        $('#alt02').hide();
+        //$('#alt01').hide();
+        //$('#alt02').hide();
 
-    } else if ( synthesisObject.alternatives === 2 ) {
+    //} else if ( synthesisObject.alternatives === 2 ) {
     
-        $('#alt01').show();
-        $('#alt02').hide();
+        //$('#alt01').show();
+        //$('#alt02').hide();
 
-    } else if ( synthesisObject.alternatives === 3 ) {
+    //} else if ( synthesisObject.alternatives === 3 ) {
     
-        $('#alt01').show();
-        $('#alt02').show();
+        //$('#alt01').show();
+        //$('#alt02').show();
 
-    }
+    //}
 
-    showTextStuff();
-    $('#textInput').focus();
+    //showTextStuff();
+    //$('#textInput').focus();
 
-}
+//}
 
 /////////// LISTEN TO SPEECH SYNTHESIS
 

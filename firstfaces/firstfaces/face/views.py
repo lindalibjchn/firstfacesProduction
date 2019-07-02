@@ -611,20 +611,20 @@ def store_blob(request):
     a.save()
 
     # need to save the file before can acces url to use ffmpeg (in utils.py)
-    transcription_list = get_speech_recognition(filename)
-    print('transcription_list:', transcription_list)
+    alternatives = get_speech_recognition(filename)
+    # print('transcription_list:', transcription_list)
 
-    transcription_aligned_list = get_alignments(transcription_list)
-
-    print('transcription_aligned_list:', transcription_aligned_list)
+    ## commented out as daniel will be doing his own thing here so wont need alignments
+    # transcription_aligned_list = get_alignments(transcription_list)
+    # print('transcription_aligned_list:', transcription_aligned_list)
 
     #and then once have the transcriptions, save them
-    a.transcription = transcription_aligned_list
+    a.alternatives = alternatives
     a.save()
 
     response_data = {
 
-        'transcription_aligned_list': transcription_aligned_list,
+        'alternatives': alternatives,
         'sent_id': s.id,
 
     }

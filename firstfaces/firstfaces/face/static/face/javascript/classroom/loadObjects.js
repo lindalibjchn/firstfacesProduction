@@ -17,8 +17,9 @@ function enterOrReEnter() {
 
         initMainEnter();
 
-        camera.position.set( CAMERA_ENTER_POS.x, CAMERA_ENTER_POS.y, CAMERA_ENTER_POS.z  );
-        camera.rotation.set( CAMERA_ENTER_ROT.x, CAMERA_ENTER_ROT.y, CAMERA_ENTER_ROT.z,);
+        camera.position.set( CAMERA_SIT_POS.x, CAMERA_SIT_POS.y, CAMERA_SIT_POS.z  );
+        camera.rotation.set( CAMERA_SIT_TO_LAPTOP_ROT.x, CAMERA_SIT_TO_LAPTOP_ROT.y, CAMERA_SIT_TO_LAPTOP_ROT.z,);
+        //movementController( movements.blank, 0.1, 0.1 );
         movementController( movements.laptop, 0.1, 0.1 );
 
     }
@@ -91,7 +92,7 @@ function renderScene() {
 
     renderer = new THREE.WebGLRenderer();
     renderer.setSize( WIDTH, HEIGHT );
-    renderer.setClearColor(0x7ec0ee, 0.5);
+    renderer.setClearColor(0x00ffff, 0.5);
     document.body.appendChild( renderer.domElement );
 
 }
@@ -421,7 +422,8 @@ function init() {
     
     //// LOAD JSON OBJECTS \\\\
     
-    loader.load( classroom, addClassroom );
+    //remove classroom for mobile redesign
+    //loader.load( classroom, addClassroom );
     addTia(); // contains all the loaders for head, body etc.
     loadAllTextElements(); // loads all text and backgrounds for text
 

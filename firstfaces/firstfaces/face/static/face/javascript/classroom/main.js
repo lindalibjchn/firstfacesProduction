@@ -21,7 +21,7 @@ $(window).on( 'load', function() {
 
 //}
 
-var recognition// put here so can call in clipping occurs
+//var recognition// put here so can call in clipping occurs
 var recorder15sTimeout;
 var mediaRecorder;
 var chunks;
@@ -37,7 +37,7 @@ function readyBtns() {
     $('#showCorrectionBtn').on( 'click', showCorrection );
     $('#nextSentenceBtn').on( 'click', nextSentence );
     $('#talkBtn').on( 'click', sendSentToServer );
-    $('.sent-scores').on( 'click', viewAlternateTranscription );
+    //$('.sent-scores').on( 'click', viewAlternateTranscription );
     $('#playRobot').on( 'click', prepareSynthPlay );
 
     $('#finishClassBtn').on( 'click', function() {
@@ -181,7 +181,7 @@ function readyBtns() {
                     volumeObject.bool = true;// detect volume and be ready to show volume bar
                     synthesisObject.interference = false; // start with no interference which can change if clipping occurs
         
-                    hideTextStuff();
+                    //hideTextStuff();
                     showVolumeBar();
 
                     // will check that the user has clicked the stop button by timing them and using this boolean
@@ -664,55 +664,55 @@ function hideVolumeBar() {
 
 }
 
-function showTextStuff() {
+//function showTextStuff() {
 
-    $('#altCont').css('visibility', 'visible'); 
+    //$('#altCont').css('visibility', 'visible'); 
     
-    if ( classVariableDict.tutorial === false ) {
+    //if ( classVariableDict.tutorial === false ) {
 
-        $('#playRobot').show(); 
+        //$('#playRobot').show(); 
     
-    }
+    //}
 
-    $('#textInputBox').css('border', '3px solid #33ff00');
+    //$('#textInputBox').css('border', '3px solid #33ff00');
 
-}
+//}
 
-function hideTextStuff() {
+//function hideTextStuff() {
 
-    $('#altCont').css('visibility', 'hidden'); 
-    $('#textInput').val(''); 
-    $('#playRobot').hide(); 
-    $('#textInputBox').css('border', 'none');
+    //$('#altCont').css('visibility', 'hidden'); 
+    //$('#textInput').val(''); 
+    //$('#playRobot').hide(); 
+    //$('#textInputBox').css('border', 'none');
 
-}
+//}
 
-function resetAllTabs() {
+//function resetAllTabs() {
 
-    $('.sent-scores' ).css( 'background-color', '#1b8900' )
-    $('.sent-scores' ).mouseover( function() { $('.sent-scores').css('cursor', 'pointer')});
-    //also reset tab colours so that the 1st one is bright
-    $('#alt00' ).css( 'background-color', '#33ff00' )
-    $('#alt00' ).mouseover( function() { $('#alt00').css('cursor', 'default')})
+    //$('.sent-scores' ).css( 'background-color', '#1b8900' )
+    //$('.sent-scores' ).mouseover( function() { $('.sent-scores').css('cursor', 'pointer')});
+    ////also reset tab colours so that the 1st one is bright
+    //$('#alt00' ).css( 'background-color', '#33ff00' )
+    //$('#alt00' ).mouseover( function() { $('#alt00').css('cursor', 'default')})
 
-}
+//}
 
-function viewAlternateTranscription() {
+//function viewAlternateTranscription() {
 
-    let id = this.id[4]//gets the number (0-2)
-    synthesisObject.transcriptCur = id;
-    $('#textInput').val( synthesisObject['transcript' + id ] )
-    //$('.sent-scores' ).css( 'border', 'none' )
-    //make all backgrounds of the tabs dark green
-    $('.sent-scores' ).css( 'background-color', '#1b8900' )
-    $('.sent-scores' ).mouseover( function() { $('.sent-scores').css('cursor', 'pointer')});
-    //then highlight the one clicked
-    $('#alt0' + id ).css( 'background-color', '#33ff00' )
-    $('#alt0' + id ).mouseover( function() { $('#alt0' + id).css('cursor', 'default')})
-    sendTranscriptViewToAjax( synthesisObject.transcriptCur );
-    $('#textInput').focus();
+    //let id = this.id[4]//gets the number (0-2)
+    //synthesisObject.transcriptCur = id;
+    //$('#textInput').val( synthesisObject['transcript' + id ] )
+    ////$('.sent-scores' ).css( 'border', 'none' )
+    ////make all backgrounds of the tabs dark green
+    //$('.sent-scores' ).css( 'background-color', '#1b8900' )
+    //$('.sent-scores' ).mouseover( function() { $('.sent-scores').css('cursor', 'pointer')});
+    ////then highlight the one clicked
+    //$('#alt0' + id ).css( 'background-color', '#33ff00' )
+    //$('#alt0' + id ).mouseover( function() { $('#alt0' + id).css('cursor', 'default')})
+    //sendTranscriptViewToAjax( synthesisObject.transcriptCur );
+    //$('#textInput').focus();
 
-}
+//}
 
 //function checkIfSentIsQuestion( s ) {
 

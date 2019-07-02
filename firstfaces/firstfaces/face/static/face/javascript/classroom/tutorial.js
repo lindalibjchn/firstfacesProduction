@@ -3,6 +3,7 @@ function tiaSpeak( tiaSays, needSendTTS=true, callback ) {
 
     // display text
     speechBubbleObject.sentence = tiaSays;
+    $('#speechBubbleCont').fadeIn( tiaTimings.speechBubbleFadeOutDuration );
     $('.speaking-words').hide();
     $('.speaking-words-inside').show();
     $('.speaking-words-inside').text( speechBubbleObject.sentence );
@@ -15,17 +16,17 @@ function tiaSpeak( tiaSays, needSendTTS=true, callback ) {
 
     }
 
-    if ( cameraObject.currentState === "laptop" ) {
+    //if ( cameraObject.currentState === "laptop" ) {
 
-        displaySpeechBubble( "low", tiaTimings.speechBubbleFadeInDuration, 0.9 );
-        $('#speakingWordsLaptop').fadeIn( tiaTimings.speechBubbleFadeInDuration );
+        //displaySpeechBubble( "low", tiaTimings.speechBubbleFadeInDuration, 0.9 );
+        //$('#speakingWordsLaptop').fadeIn( tiaTimings.speechBubbleFadeInDuration );
 
-    } else {
+    //} else {
 
-        displaySpeechBubble( "high", tiaTimings.speechBubbleFadeInDuration, 0.9 );
-        $('#speakingWordsTia').fadeIn( tiaTimings.speechBubbleFadeInDuration );
+        //displaySpeechBubble( "high", tiaTimings.speechBubbleFadeInDuration, 0.9 );
+    $('#speakingWordsLaptop').fadeIn( tiaTimings.speechBubbleFadeInDuration );
 
-    }
+    //}
 
     setTimeout( function() {
 

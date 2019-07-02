@@ -341,23 +341,23 @@ function removeCorrection() {
 
 //// SPEECH BUBBLE STUFF
 
-function displaySpeechBubble( highLow, dur, op ) {
+//function displaySpeechBubble( highLow, dur, op ) {
     
-    $('#speechBubbleCont').fadeTo( dur, op );
+    //$('#speechBubbleCont').fadeTo( dur, op );
 
-    if ( highLow === "high" ) {
+    //if ( highLow === "high" ) {
 
-        $('#speechBubbleTia').show();
-        $('#speakingWordsTia').show();
+        //$('#speechBubbleTia').show();
+        //$('#speakingWordsTia').show();
         
-    } else if ( highLow === "low" ) {
+    //} else if ( highLow === "low" ) {
 
-        $('#speechBubbleLaptop').show();
-        $('#speakingWordsLaptop').show();
+        //$('#speechBubbleLaptop').show();
+        //$('#speakingWordsLaptop').show();
         
-    }
+    //}
 
-}
+//}
 
 
 //// REMOVALS
@@ -368,7 +368,7 @@ function removeSpeechBubble( dur ) {
 
     setTimeout( function() {
 
-        $('.speech-bubbles').hide();
+        //$('.speech-bubbles').hide();
         $('.speaking-words-inside').text('');
         $('.speaking-words-inside').hide();
     

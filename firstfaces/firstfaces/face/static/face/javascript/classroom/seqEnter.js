@@ -8,29 +8,29 @@ function initMainEnter() {
 
 function mainEnter() {
 
-    if ( mainCount === 90 ) {
+    //if ( mainCount === 90 ) {
         
-        initEnterCameraMove( 'desk', '5' )
+        //initEnterCameraMove( 'desk', '5' )
  
-    } else if ( mainCount === 280 ) {
+    if ( mainCount === 50 ) {
 
-        movementController( movements.standingStudent, 0.5, 1.25 );
+        movementController( movements.blank, 0.5, 1.75 );
 
-    } else if ( mainCount === 380 ) {
+    } else if ( mainCount === 180 ) {
 
         let calculatedExpressions = createSingleExpression( expressionsRel.happy, 0.75 );
         calculatedExpression = getAbsoluteCoordsOfExpressionTo( calculatedExpressions[0] );
         calculatedTalkExpression = getAbsoluteCoordsOfExpressionTo( calculatedExpressions[1] );
         expressionController( calculatedExpression, tiaTimings.changeExpression );
 
-    } else if ( mainCount === 430 ) {
+    //} else if ( mainCount === 430 ) {
 
-        movementController( movements.lookChair, '0.5', '1');
-        initArmIndicate('left', 1, 'low', '1');
+        //movementController( movements.lookChair, '0.5', '1');
+        //initArmIndicate('left', 1, 'low', '1');
 
-    } else if ( mainCount === 510 ) {
+    //} else if ( mainCount === 180 ) {
 
-        initMovement( movements.standingStudent, '0.5', '1');
+        //initMovement( movements.standingStudent, '0.5', '1');
 
         let studentName = classVariableDict.username;
         
@@ -66,7 +66,7 @@ function mainEnter() {
 
         }
         
-        initArmIndicate('left', 0, 'low', '1');
+        //initArmIndicate('left', 0, 'low', '1');
         //in entrance so need to not return to laptop after talking when not learning
         talkObject.learning = false;
 
@@ -77,16 +77,16 @@ function mainEnter() {
         speechBubbleObject.sentence = greeting;
         sendTTS( greeting, true, "talk" );
 
-    } else if ( mainCount === 590 ) {
+    //} else if ( mainCount === 590 ) {
 
-        initEnterCameraMove('chair', '3');
-        movementController( movements.blank, '3', '3');
+        //initEnterCameraMove('chair', '3');
+        //movementController( movements.blank, '3', '3');
 
-    }  else if ( mainCount === 730 ) {
+    }  else if ( mainCount === 280 ) {
 
         expressionController( calculatedTalkExpression, '1', false );
 
-    } else if ( mainCount === 800 ) {
+    } else if ( mainCount === 350 ) {
 
         tiaSpeak( synthesisObject.text, needSendTTS=false, speakOpening );
         classVariableDict.promptSpeaking = true;
@@ -109,72 +109,72 @@ function speakOpening() {
 
 }
 
-function initEnterCameraMove( to, secs ) {
+//function initEnterCameraMove( to, secs ) {
 
-    let from = enterCameraObject.currentState;
+    //let from = enterCameraObject.currentState;
 
-    if ( from !== to ) {
+    //if ( from !== to ) {
 
-            assignSinArrayForSpeed( secs, enterCameraObject, sineArrays );
+            //assignSinArrayForSpeed( secs, enterCameraObject, sineArrays );
 
-            enterCameraObject[ 'startCount' ] = mainCount;
-            enterCameraObject[ 'bool' ] = true;
+            //enterCameraObject[ 'startCount' ] = mainCount;
+            //enterCameraObject[ 'bool' ] = true;
 
-        if ( from === "door" ) {
+        //if ( from === "door" ) {
 
-            enterCameraObject[ 'movementX' ] = CAMERA_DESK_POS.x - CAMERA_ENTER_POS.x;
-            enterCameraObject[ 'movementY' ] = CAMERA_DESK_POS.y - CAMERA_ENTER_POS.y;
-            enterCameraObject[ 'movementZ' ] = CAMERA_DESK_POS.z - CAMERA_ENTER_POS.z;
+            //enterCameraObject[ 'movementX' ] = CAMERA_DESK_POS.x - CAMERA_ENTER_POS.x;
+            //enterCameraObject[ 'movementY' ] = CAMERA_DESK_POS.y - CAMERA_ENTER_POS.y;
+            //enterCameraObject[ 'movementZ' ] = CAMERA_DESK_POS.z - CAMERA_ENTER_POS.z;
 
-            enterCameraObject[ 'rotationX' ] = CAMERA_DESK_ROT.x - CAMERA_ENTER_ROT.x;
-            enterCameraObject[ 'rotationY' ] = CAMERA_DESK_ROT.y - CAMERA_ENTER_ROT.y;
+            //enterCameraObject[ 'rotationX' ] = CAMERA_DESK_ROT.x - CAMERA_ENTER_ROT.x;
+            //enterCameraObject[ 'rotationY' ] = CAMERA_DESK_ROT.y - CAMERA_ENTER_ROT.y;
                 
-            enterCameraObject.currentState = "desk";
+            //enterCameraObject.currentState = "desk";
 
-        } else if ( from === "desk" ) {
+        //} else if ( from === "desk" ) {
 
-            enterCameraObject[ 'movementX' ] = CAMERA_SIT_POS.x - CAMERA_DESK_POS.x;
-            enterCameraObject[ 'movementY' ] = CAMERA_SIT_POS.y - CAMERA_DESK_POS.y;
-            enterCameraObject[ 'movementZ' ] = CAMERA_SIT_POS.z - CAMERA_DESK_POS.z;
+            //enterCameraObject[ 'movementX' ] = CAMERA_SIT_POS.x - CAMERA_DESK_POS.x;
+            //enterCameraObject[ 'movementY' ] = CAMERA_SIT_POS.y - CAMERA_DESK_POS.y;
+            //enterCameraObject[ 'movementZ' ] = CAMERA_SIT_POS.z - CAMERA_DESK_POS.z;
 
-            enterCameraObject[ 'rotationX' ] = CAMERA_SIT_TO_TIA_ROT.x - CAMERA_DESK_ROT.x;
-            enterCameraObject[ 'rotationY' ] = CAMERA_SIT_TO_TIA_ROT.y - CAMERA_DESK_ROT.y;
+            //enterCameraObject[ 'rotationX' ] = CAMERA_SIT_TO_TIA_ROT.x - CAMERA_DESK_ROT.x;
+            //enterCameraObject[ 'rotationY' ] = CAMERA_SIT_TO_TIA_ROT.y - CAMERA_DESK_ROT.y;
                 
-            enterCameraObject.currentState = "chair";
+            //enterCameraObject.currentState = "chair";
 
-        }
+        //}
 
-    } else {
+    //} else {
 
-        console.log( "same place" );
+        //console.log( "same place" );
 
-    }
+    //}
 
-}    
+//}    
 
-function enterCameraMove( main ) {
+//function enterCameraMove( main ) {
 
-    let main_start = main - enterCameraObject.startCount;
+    //let main_start = main - enterCameraObject.startCount;
 
-    let sinArray = enterCameraObject.sin;
+    //let sinArray = enterCameraObject.sin;
 
-    let sinAmount = sinArray[ main_start ]
+    //let sinAmount = sinArray[ main_start ]
     
-    if ( main_start < enterCameraObject.sinLength ) {
+    //if ( main_start < enterCameraObject.sinLength ) {
 
-        camera.position.x += sinAmount * enterCameraObject.movementX;
-        camera.position.y += sinAmount * enterCameraObject.movementY;
-        camera.position.z += sinAmount * enterCameraObject.movementZ;
-        camera.rotation.x += sinAmount * enterCameraObject.rotationX;
-        camera.rotation.y += sinAmount * enterCameraObject.rotationY;
+        //camera.position.x += sinAmount * enterCameraObject.movementX;
+        //camera.position.y += sinAmount * enterCameraObject.movementY;
+        //camera.position.z += sinAmount * enterCameraObject.movementZ;
+        //camera.rotation.x += sinAmount * enterCameraObject.rotationX;
+        //camera.rotation.y += sinAmount * enterCameraObject.rotationY;
 
-    } else {
+    //} else {
 
-        enterCameraObject[ 'bool' ] = false;
+        //enterCameraObject[ 'bool' ] = false;
 
-    }
+    //}
 
-}
+//}
 
 function showInitEmotionQuestions() {
 
@@ -226,7 +226,7 @@ function goToAskTopic( emotion ) {
         calculatedTalkExpression = getAbsoluteCoordsOfExpressionTo( calculatedExpressions[1] );
         expressionController( calculatedExpression, tiaTimings.changeExpression );
     
-        synthesisObject.pitch = -3;
+        synthesisObject.pitch = -2;
         synthesisObject.speaking_rate = 0.8;
 
         if ( classVariableDict['prev_topic'] !== null && classVariableDict.first_full_class !== true ) {
@@ -269,7 +269,7 @@ function storeEmotion() {
         success: function(json) {
 
             //add emotion to first topic button
-            document.getElementById("myEmotion").innerHTML = "Why I feel " + emotion;
+            //document.getElementById("myEmotion").innerHTML = "Why I'm " + emotion;
 
             $('.init-emot').unbind();
             $('#emotionQuestionsContainer').fadeOut( 500 );
@@ -328,7 +328,7 @@ function showContinueOrNew() {
     $('#newBtn').on( 'click', function() { 
     
         $('#continueNewChoices').fadeOut( tiaTimings.speechBubbleFadeOutDuration );
-        setTimeout( showTopicChoices, tiaTimings.speechBubbleFadeInDuration * 2 );
+        setTimeout( speakTopicChoices, tiaTimings.speechBubbleFadeInDuration * 2 );
 
     } );
 
@@ -339,7 +339,7 @@ function showContinueOrNew() {
 function showTopicChoices() {
 
     // allow topics to be clickable and follow logic depending on their needs
-    $('#myChoice').on( 'click', showChoiceTextInput );
+    $('#myChoice').on( 'click', showPreChoiceTextInput );
     $('#myEmotion').on( 'click', function() { storeTopic( 'emotion' ) } );
     $('#todaysNewsArticle').on( 'click', askIfReadNews );
 
@@ -347,30 +347,54 @@ function showTopicChoices() {
 
 }
 
-function showChoiceTextInput() {
+function showPreChoiceTextInput() {
+
+    removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
+    speechBubbleObject.sentence = "Please type your topic below";
+    synthesisObject.text = speechBubbleObject.sentence
 
     $('#topicChoices').fadeOut( tiaTimings.speechBubbleFadeOutDuration );
 
-    setTimeout( function(){ 
-        
-        $('#chooseTopicTextContainer').fadeIn( tiaTimings.speechBubbleFadeInDuration );
-        $('#topicChoiceInput').focus();
+    setTimeout( function() {tiaSpeak( speechBubbleObject.sentence, needSendTTS=true, showChoiceTextInput)}, 1500);
 
-        $('#submitOwnTopicBtn').on( 'click', getOwnTopicFromTextbox );
+}
+
+function showChoiceTextInput() {
+
+    $('#textInput').fadeIn( tiaTimings.speechBubbleFadeInDuration );
+    $('#textInput').focus();
+
+    $('#submitTopicBtnContainer').fadeIn( tiaTimings.speechBubbleFadeInDuration );
+    $('#submitOwnTopicBtn').on( 'click', getOwnTopicFromTextbox );
     
-    }, 2000 );
-
 }
 
 function getOwnTopicFromTextbox() {
 
     removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
-
-    let ownTopic = document.getElementById( "topicChoiceInput" ).value
+    let ownTopic = document.getElementById( "textInput" ).value
     
-    $('#chooseTopicTextContainer').fadeOut( tiaTimings.speechBubbleFadeOutDuration );
+    $('#textInput').fadeOut( tiaTimings.speechBubbleFadeOutDuration );
+    $('#submitTopicBtnContainer').fadeOut( tiaTimings.speechBubbleFadeOutDuration )
 
-    setTimeout( function() { storeTopic( ownTopic ) }, 1000 );
+    if ( ownTopic === '' ) {
+
+        dealWithEmptyTopic()
+
+    } else {
+
+        setTimeout( function() { storeTopic( ownTopic ) }, 1000 );
+
+    }
+
+}
+
+function dealWithEmptyTopic() {
+
+    speechBubbleObject.sentence = "You must type a topic in the box below";
+    synthesisObject.text = speechBubbleObject.sentence
+
+    setTimeout( function() {tiaSpeak( speechBubbleObject.sentence, needSendTTS=true, showChoiceTextInput)}, 1500);
 
 }
 
@@ -426,21 +450,17 @@ function storeTopic( topicChoice ) {
         success: function(json) {
 
             $('#topicChoices').fadeOut( 500 );
+            removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
 
-            setTimeout( function(){ 
-                
-                removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
-                initNod( 0.4, '0.5' )
-                
-                let startTalkSent = " Ok, please begin when you are ready.";
-                speechBubbleObject.sentence = startTalkSent;
-                synthesisObject.text = speechBubbleObject.sentence
-                sendTTS( startTalkSent, true, "talk" );
-
-                setTimeout( beginTalking, 4000 );
+            //initNod( 0.4, '0.5' )
             
-            }, 1000 );
+            let startTalkSent = " Ok, please begin when you are ready.";
+            speechBubbleObject.sentence = startTalkSent;
+            synthesisObject.text = speechBubbleObject.sentence
+            sendTTS( startTalkSent, true, "talk" );
 
+            setTimeout( beginTalking, 1000 );
+            
         },
         error: function() {
             alert("unsuccessful POST to store_topic");
@@ -451,7 +471,7 @@ function storeTopic( topicChoice ) {
 
 function beginTalking() {
 
-    initArmIndicate('right', 1.2, 'low', '0.75');
+    initArmIndicate('right', 1.2, 'low', 0.75);
     
     tiaSpeak( speechBubbleObject.sentence, needSendTTS=false, finalSpeak );
 
@@ -459,24 +479,14 @@ function beginTalking() {
 
 function finalSpeak() {
 
-    initArmIndicate('right', 0, 'low', '0.75');
     removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
 
     setTimeout( function() {
 
-        initCameraMove( 'laptop', tiaTimings.cameraMoveUpDuration );      
-        setTimeout( function() {
-            
-            initInputReady('');
-        
-            setTimeout( function() {
-                
-                expressionController( expressionObject.abs.neutral, 0.75 );
-                talkObject.learning = true;
-
-            }, 3500);
-
-        }, 2500);
+        expressionController( expressionObject.abs.neutral, 0.75 );
+        talkObject.learning = true;
+        initArmIndicate('right', 0, 'low', 0.75);
+        setTimeout(initInputReady, 1000)
 
     }, tiaTimings.speechBubbleFadeOutDuration );
 

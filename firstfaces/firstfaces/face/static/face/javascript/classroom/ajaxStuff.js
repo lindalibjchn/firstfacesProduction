@@ -79,9 +79,6 @@ function sendBlobToServer( blob_to_send ) {
     fd.append('data', blob_to_send);
     fd.append('sessionID', classVariableDict.session_id);
     fd.append('interference', synthesisObject.interference);
-    //fd.append('transcript0', synthesisObject.transcript0);
-    //fd.append('transcript1', synthesisObject.transcript1);
-    //fd.append('transcript2', synthesisObject.transcript2);
     fd.append('blob_no_text', classVariableDict.blob_no_text);
     fd.append('blob_no_text_sent_id', classVariableDict.blob_no_text_sent_id);
 
@@ -97,6 +94,7 @@ function sendBlobToServer( blob_to_send ) {
             classVariableDict.blob_no_text = true;
             classVariableDict.blob_no_text_sent_id = json.sent_id;
             console.log('got response from sending blob to server');
+            classVariableDict.alternatives = json.alternatives
 
             // if first interference, then want the flinch not to be interfered with by the return motions
             if ( classVariableDict.interference_count === 1 && synthesisObject.interference ) {

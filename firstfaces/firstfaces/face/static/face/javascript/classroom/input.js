@@ -1,10 +1,10 @@
-function initInputReady( boxVal ) {
+function initInputReady() {
 
-    $('#textInputContainer').show();
-    hideTextStuff();
+    //$('#textInputContainer').show();
+    //hideTextStuff();
     hideVolumeBar();
-    $('#textInput').val( boxVal );
-    $('#textInput').focus();
+    //$('#textInput').val( boxVal );
+    //$('#textInput').focus();
     $('#recordBtnsContainer').show();
 
     if ( classVariableDict.tutorial === false ) {
@@ -13,22 +13,23 @@ function initInputReady( boxVal ) {
     
     }
 
-    $('#controllerContainer').fadeIn( 1000 );
+    //$('#controllerContainer').fadeIn( 1000 );
 
     //playback buttons disabled until recording done
-    $('.play-btn').prop( "disabled", true);
-    $('#talkBtn').prop( "disabled", true);
+    $('#recordBtnsContainer').fadeIn(1000)
+    $('.play-btn').prop( "disabled", true).hide();
+    $('#talkBtn').prop( "disabled", true).hide();
 
-    if ( classVariableDict.tutorial === false ) {
+    //if ( classVariableDict.tutorial === false ) {
 
-        $('#textInput').bind('input propertychange', function() {
+        //$('#textInput').bind('input propertychange', function() {
 
-            $('#playRobot').show();
-            $('#talkBtn').prop( "disabled", false );
+            //$('#playRobot').show();
+            //$('#talkBtn').prop( "disabled", false );
 
-        });
+        //});
 
-    }
+    //}
 
 }
 
