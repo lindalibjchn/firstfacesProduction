@@ -1,11 +1,11 @@
 function initInputReady() {
 
-    //$('#textInputContainer').show();
+    $('#textInputContainer').show();
     //hideTextStuff();
-    hideVolumeBar();
+    //hideVolumeBar();
     //$('#textInput').val( boxVal );
-    //$('#textInput').focus();
-    $('#recordBtnsContainer').show();
+    $('#textInput').focus();
+    //$('#recordBtnsContainer').show();
 
     if ( classVariableDict.tutorial === false ) {
 
@@ -18,7 +18,9 @@ function initInputReady() {
     //playback buttons disabled until recording done
     $('#recordBtnsContainer').fadeIn(1000)
     $('.play-btn').prop( "disabled", true).hide();
-    $('#talkBtn').prop( "disabled", true).hide();
+
+    //  for development
+    $('#talkBtn').prop( "disabled", false).show();
 
     //if ( classVariableDict.tutorial === false ) {
 
@@ -96,22 +98,14 @@ function talkToTia() {
 
 
     // fadeOut all prev sentences - this is to stop learners reading prev sents while should be looking at tia
-    $('#prevSents').fadeTo( 500, 0.1 );
-    $('#textInputContainer').hide();
+    //$('#prevSents').fadeTo( 500, 0.1 );
+    //$('#textInputContainer').hide();
     $('.record-btn').prop("disabled", true);
     $('#recordBtnsContainer').fadeOut( 500 );
     
     setTimeout( function(){
         
-        initCameraMove('tia', tiaTimings.cameraMoveUpDuration);
-    
-        setTimeout( function() {
-            
-            //whenAllMovFinished( tiaLeanToListen )
-            tiaLeanToListen();
-                
-        }, tiaTimings.cameraMoveUpDuration * 700 );//2/3 of camera move up duration
-
+        tiaLeanToListen();
     
     }, tiaTimings.delayAfterClickPlayUntilCameraMovesUp );
     

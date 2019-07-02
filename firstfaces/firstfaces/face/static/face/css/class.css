@@ -1,4 +1,4 @@
-    button {
+button {
 
     outline: none;
 
@@ -155,15 +155,39 @@ button:active {
 
 }
 
+#laptopContainer {
+
+    position: absolute;
+    width: 100%;
+    height: 35%;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+#laptop {
+
+    width: 91%;
+    height: 100%;
+    background-color: #191919;
+    bottom: 0;
+    border-top: 8px solid #393939;
+    border-right: 3px solid #595959;
+    border-left: 2px solid #191919;
+
+}
+
 #textInputContainer {
 
     position: absolute;
     width: 100%;
-    height: 40%;
-    background-color: #090909;
-    bottom: 0;
-    /*border: 2px solid red;*/
-    /*display: none;*/
+    height: 38%;
+    background-color: #a9a9a9;
+    opacity: 0.9;
+    bottom: 12%;
+    display: none;
 
 }
 
@@ -187,7 +211,7 @@ button:active {
     box-shadow: none;
     border: none;
     resize: none;
-    display: none;
+    /*display: none;*/
 
 }
 
@@ -222,109 +246,109 @@ button:active {
 
 }
 
-#playRobot {
+/*#playRobot {*/
 
-    height: 65px;
-    width: 65px;
-    background-color: #1b8900;
-    position: absolute;
-    right: 0.5%;
-    bottom: 10%;
-
-}
-
-#playRobot:hover {
-
-    background-color: #33ff00;
-    cursor: pointer;
-
-}
-
-#robot {
-
-    position: relative;
-    height: 110%;
-    left: -2px;
-    bottom: 5px;
-
-}
-
-#altCont {
-
-    position: relative;
-    height: 10%;
-    width: 90%;
-    /*left: 0;*/
-    /*top: 0;*/
-    /*display: none;*/
-    /*border: 2px solid blue;*/
-
-}
-
-.sent-scores-row {
-
-    /*width: 100%;*/
-    /*height: 100%;*/
-    /*position: relative;*/
-
-}
-
-.sent-scores {
-
-    /*width: 45px;*/
-    height: 100%;
-    font-size: 1.7vw;
-    font-weight: bold;
-    text-align: center;
-    background-color: #33ff00;
+    /*height: 65px;*/
+    /*width: 65px;*/
+    /*background-color: #1b8900;*/
     /*position: absolute;*/
-    /*left: 0;*/
-    /*top: 0;*/
-    /*bottom: 0;*/
-    /*margin: auto;*/
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /*color: white;*/
+    /*right: 0.5%;*/
+    /*bottom: 10%;*/
 
-}
+/*}*/
 
-.sent-scores:hover {
+/*#playRobot:hover {*/
 
-    cursor: pointer;
-    background-color: #33ff00 !important;
-    /*color: black !important;*/
+    /*background-color: #33ff00;*/
+    /*cursor: pointer;*/
 
-}
+/*}*/
 
-#alt00 {
+/*#robot {*/
 
-    background-color: #33ff00;
-    cursor: default;
-    border-right: 1px solid black;
+    /*position: relative;*/
+    /*height: 110%;*/
+    /*left: -2px;*/
+    /*bottom: 5px;*/
 
-}
+/*}*/
 
-#alt00:hover {
+/*#altCont {*/
 
-    background-color: #33ff00; !important
+    /*position: relative;*/
+    /*height: 10%;*/
+    /*width: 90%;*/
+    /*[>left: 0;<]*/
+    /*[>top: 0;<]*/
+    /*[>display: none;<]*/
+    /*[>border: 2px solid blue;<]*/
 
-}
+/*}*/
 
-#alt01 {
+/*.sent-scores-row {*/
 
-    background-color: #1b8900;
-    border-left: 1px solid black;
-    border-right: 1px solid black;
+    /*[>width: 100%;<]*/
+    /*[>height: 100%;<]*/
+    /*[>position: relative;<]*/
 
-}
+/*}*/
 
-#alt02 {
+/*.sent-scores {*/
 
-    background-color: #1b8900;
-    border-left: 1px solid black;
+    /*[>width: 45px;<]*/
+    /*height: 100%;*/
+    /*font-size: 1.7vw;*/
+    /*font-weight: bold;*/
+    /*text-align: center;*/
+    /*background-color: #33ff00;*/
+    /*[>position: absolute;<]*/
+    /*[>left: 0;<]*/
+    /*[>top: 0;<]*/
+    /*[>bottom: 0;<]*/
+    /*[>margin: auto;<]*/
+    /*display: flex;*/
+    /*justify-content: center;*/
+    /*align-items: center;*/
+    /*[>color: white;<]*/
 
-}
+/*}*/
+
+/*.sent-scores:hover {*/
+
+    /*cursor: pointer;*/
+    /*background-color: #33ff00 !important;*/
+    /*[>color: black !important;<]*/
+
+/*}*/
+
+/*#alt00 {*/
+
+    /*background-color: #33ff00;*/
+    /*cursor: default;*/
+    /*border-right: 1px solid black;*/
+
+/*}*/
+
+/*#alt00:hover {*/
+
+    /*background-color: #33ff00; !important*/
+
+/*}*/
+
+/*#alt01 {*/
+
+    /*background-color: #1b8900;*/
+    /*border-left: 1px solid black;*/
+    /*border-right: 1px solid black;*/
+
+/*}*/
+
+/*#alt02 {*/
+
+    /*background-color: #1b8900;*/
+    /*border-left: 1px solid black;*/
+
+/*}*/
 
 #meterCont {
 

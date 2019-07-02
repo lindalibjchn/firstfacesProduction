@@ -139,6 +139,9 @@
 
 </div>
 
+<div id="laptopContainer">
+    <div id="laptop"></div>
+</div>
 
 <div id="textInputContainer" class="w3-row">
 
@@ -156,6 +159,19 @@
 
     <!--</div>-->
 
+</div>
+
+<div id="correctionContainer" class="w3-row">
+
+    <div class="w3-col l2 w3-hide-medium w3-hide-small">&nbsp</div>
+    <div class="w3-col l8 m12 s12" id="submittedNCorrectedSentence">
+    
+        <div class="submitted-corrected-sentences" id="submitted-sentence"></div>
+        <div class="submitted-corrected-sentences" id="corrected-sentence"></div>
+    
+    </div>
+    <div class="w3-col l2 w3-hide-medium w3-hide-small">&nbsp</div>
+    
 </div>
 
 
@@ -395,7 +411,7 @@
 <script>var classroom = "{% static 'face/JSON/classroom.json' %}"</script>
 <script>var speechBubble = "{% static 'face/JSON/speechBubble.json' %}"</script>
 <script>var speechBubble2 = "{% static 'face/JSON/speechBubble2.json' %}"</script>
-<script>var classVariableDict = {{ class_variable_dict|safe }}</script>;
+<script>var classVariableDict = {{ class_variable_dict|safe }}</script>
 
 <!-- fonts -->
 <script>var board_font = "{% static 'face/fonts/monaco_regular.json' %}"</script>
