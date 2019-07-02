@@ -1,4 +1,4 @@
-button {
+    button {
 
     outline: none;
 
@@ -328,22 +328,23 @@ button:active {
 
 #meterCont {
 
-    height: 80%;
-    width: 10%;
+    height: 7px;
+    width: 100%;
     /*display: none;*/
     /*border: 3px solid white;*/
     position: absolute;
-    right: 0;
-    top: 10%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    /*right: 0;*/
+    /*top: 10%;*/
+    bottom: 0;
+    /*display: flex;*/
+    /*justify-content: center;*/
+    /*align-items: center;*/
 
 }
 
 #volumeMic {
 
-    position: absolute;
+    /*position: absolute;*/
     /*padding: 5px;*/
     /*left: -10px;*/
     bottom: 0;
@@ -354,10 +355,10 @@ button:active {
 
 #meter {
 
-    border: 2px solid #33ff00;
-    height: 85%;
-    width: 30%;
-    position: absolute;
+    /*border: 2px solid #33ff00;*/
+    height: 100%;
+    width: 100%;
+    /*position: absolute;*/
     /*left: 0;*/
     /*right: 0;*/
     /*margin: auto;*/

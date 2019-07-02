@@ -277,6 +277,14 @@
 
     <div id="recordBtnsContainer" class="w3-row">
 
+        <div id="meterCont" class="input-btns">
+                            
+            <!--<i class="fa fa-microphone inputfa fa-lg" id="volumeMic"></i>-->
+        
+            <canvas id="meter" width="100%" height="100%"></canvas>
+
+        </div>
+
         <div class="w3-col l3 w3-hide-medium w3-hide-small">&nbsp</div>
         <div class="w3-col l2 m4 s4" id="listenAndSynthBtnsContainer">
              
@@ -287,14 +295,6 @@
                     <img id="human" src="{% static 'face/images/human_speech.svg' %}">
 
                 </button>
-
-            </div>
-
-            <div id="meterCont" class="input-btns">
-                                
-                <i class="fa fa-microphone inputfa fa-lg" id="volumeMic"></i>
-            
-                <canvas id="meter" width="250" height="25"></canvas>
 
             </div>
 

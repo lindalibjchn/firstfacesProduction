@@ -481,8 +481,8 @@ function clipLongTranscripts( t ) {
 var audioContext = null;
 var meter = null;
 var canvasContext = null;
-var WIDTH_VOL=250;
-var HEIGHT_VOL=25;
+var WIDTH_VOL=200;
+var HEIGHT_VOL=100;
 var rafID = null;
 var micIntAud = document.getElementById('micInterferenceClip')
 var micIntAudSources = ["http://127.0.0.1:8000/media/00micInterference04.mp3","http://127.0.0.1:8000/media/00micInterference01.mp3","http://127.0.0.1:8000/media/00micInterference02.mp3","http://127.0.0.1:8000/media/00micInterference03.mp3"];
@@ -500,16 +500,16 @@ function drawLoop() {
         // check if we're currently clipping
         if (meter.checkClipping()) {
 
-            canvasContext.fillRect(0, 0, WIDTH_VOL, 100);
+            canvasContext.fillRect(0, 0, 100, HEIGHT_VOL);
             canvasContext.fillStyle = "red";
-            $('#meter').css('border', '3px solid red')
+            //$('#meter').css('border', '3px solid red')
             $('#volumeMic').css('color', 'red')
             
         } else {
             canvasContext.fillStyle = "#33ff00";
             // draw a bar based on the current volume
-            canvasContext.fillRect(0, 0, WIDTH_VOL, meter.volume*HEIGHT_VOL);
-            $('#meter').css('border', '2px solid #33ff00')
+            canvasContext.fillRect(0, 0, meter.volume*WIDTH_VOL, HEIGHT_VOL);
+            //$('#meter').css('border', '2px solid #33ff00')
             $('#volumeMic').css('color', '#33ff00')
 
         }
