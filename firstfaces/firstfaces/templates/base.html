@@ -6,7 +6,7 @@
 
             <style>
 
-            body { margin: 0; }
+            body { margin: 0 }
         	canvas { width: 100%; height: 100% }
 
             </style>
@@ -40,57 +40,62 @@
 
             
             <!-- navbar -->
-            <div class="w3-bar w3-blue w3-xlarge" style="position: fixed; z-index: 100;">
+                
+            {% if class %}
 
-                {% if waiting %}
+                <!--<div style="float: left">-->
 
-                    <div style="float: left">
+                    <!--[><div class="w3-bar-item" id="timeLeft"></div><]-->
 
-                        <div class="w3-bar-item" id="timeInIre">Time in Ireland: {{ timeNow }}</div>
+                <!--</div>-->
 
-                    </div>
+            {% else %}
 
-                {% elif class %}
+                <div class="w3-bar w3-blue w3-xlarge" style="position: fixed; z-index: 100;">
 
-                    <div style="float: left">
+                    {% if waiting %}
 
-                        <!--<div class="w3-bar-item" id="timeLeft"></div>-->
+                        <div style="float: left">
 
-                    </div>
+                            <div class="w3-bar-item" id="timeInIre">Time in Ireland: {{ timeNow }}</div>
 
-                {% endif %}
-
-                <div style="float: right">
-
-                    {% if request.user.is_authenticated %}
-
-                        <!--<p class="w3-bar-item">{{ request.user.username }}</p>-->
-                        <a href="#" class="w3-bar-item w3-button w3-hover-blue w3-ripple">{{ request.user.username }}</a>
-
-                        <!--<a href="https://www.youtube.com/watch?v=xYNMh4sZu6k" target="_blank" class="w3-bar-item w3-button w3-hover-blue w3-ripple">instructions</a>-->
-
-                        {% if class %}
-                        
-                            <a href="#" id="finishClassBtn" class="w3-bar-item w3-button w3-hover-blue w3-ripple">finish</a>
-
-                        {% else %}
-
-                            <a class="w3-bar-item w3-button w3-hover-blue w3-ripple" id="tutorialBtn">tutorial</a>
-
-                            <a href="{% url 'logout' %}" class="w3-bar-item w3-button w3-hover-blue w3-ripple">logout</a>
-                        
-                        {% endif %}
-
-                    {% else %}
-
-                        <button class="w3-bar-item w3-button w3-hover-blue w3-ripple" id="signUpBtn">Sign Up</button>
-                        <button class="w3-bar-item w3-button w3-hover-blue w3-ripple" id="logInDropdown">Log In</button>
+                        </div>
 
                     {% endif %}
 
+                    <div style="float: right">
+
+                        {% if request.user.is_authenticated %}
+
+                            <!--<p class="w3-bar-item">{{ request.user.username }}</p>-->
+                            <a href="#" class="w3-bar-item w3-button w3-hover-blue w3-ripple">{{ request.user.username }}</a>
+
+                            <!--<a href="https://www.youtube.com/watch?v=xYNMh4sZu6k" target="_blank" class="w3-bar-item w3-button w3-hover-blue w3-ripple">instructions</a>-->
+
+                            {% if class %}
+                            
+                                <a href="#" id="finishClassBtn" class="w3-bar-item w3-button w3-hover-blue w3-ripple">finish</a>
+
+                            {% else %}
+
+                                <a class="w3-bar-item w3-button w3-hover-blue w3-ripple" id="tutorialBtn">tutorial</a>
+
+                                <a href="{% url 'logout' %}" class="w3-bar-item w3-button w3-hover-blue w3-ripple">logout</a>
+                            
+                            {% endif %}
+
+                        {% else %}
+
+                            <button class="w3-bar-item w3-button w3-hover-blue w3-ripple" id="signUpBtn">Sign Up</button>
+                            <button class="w3-bar-item w3-button w3-hover-blue w3-ripple" id="logInDropdown">Log In</button>
+
+                        {% endif %}
+
+                    </div>
+
                 </div>
 
-            </div>
+            {% endif %}
 
             {% block content %}
             {% endblock %}

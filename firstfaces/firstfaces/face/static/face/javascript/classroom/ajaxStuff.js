@@ -162,8 +162,9 @@ function sendSentToServer() {
     classVariableDict.blobs = 0;
 
     let sent = $('#textInput').val();
+    //let sent = "Yesterday I go to school";
 
-    if ( sent.length >= 260 ) {
+    if ( sent.length >= 252 ) {
 
         alert( 'This sentence is too long. Please simplify and try again.')
 
