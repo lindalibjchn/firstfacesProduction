@@ -4,9 +4,11 @@ function initInputReady() {
     //hideTextStuff();
     //hideVolumeBar();
     //$('#textInput').val( boxVal );
-    $('#textInput').focus();
+    //$('#textInput').focus();
     //$('#recordBtnsContainer').show();
-
+    
+    // removes speech bubble after user has a few second to read it
+    removeSpeechBubble( tiaTimings.changeExpression * 2000 );                   
     if ( classVariableDict.tutorial === false ) {
 
         $('.record-btn').prop( "disabled", false );
@@ -21,6 +23,9 @@ function initInputReady() {
 
     //  for development
     $('#talkBtn').prop( "disabled", false).show();
+    //showOptionBtns();
+    //$('#whatsWrongBtn').hide()
+    //$('#showCorrectionBtn').css('display', 'flex')
 
     //if ( classVariableDict.tutorial === false ) {
 

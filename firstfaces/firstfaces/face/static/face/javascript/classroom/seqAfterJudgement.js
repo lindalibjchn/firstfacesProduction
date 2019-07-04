@@ -50,6 +50,7 @@ function runAfterJudgement() {
 
     } else if ( classVariableDict.last_sent.judgement === "I" ) {
 
+        console.log('in judgement === I');
         movementController( movements.confused, tiaTimings.movementToConfused / 2, tiaTimings.movementToConfused );
 
         addToPrevSents(classVariableDict.last_sent);
@@ -177,7 +178,7 @@ function prePrepareForPromptSpeech() {
     setTimeout( function() {
 
         setTimeout( checkIfPromptReturned, tiaTimings.toTalkExpressionDuration * 1000 );
-        displaySpeechBubble( "high", tiaTimings.toTalkExpressionDuration * 1000, 0.5 )
+        //displaySpeechBubble( "high", tiaTimings.toTalkExpressionDuration * 1000, 0.5 )
     
     }, tiaTimings.toTalkExpressionDuration * 1000 );
 
@@ -262,7 +263,6 @@ function returnToLaptop( sent ) {
 
     if ( classVariableDict.tiaLookingAtStudent ) {
 
-        removeSpeechBubble( tiaTimings.changeExpression * 2000 );                   
         expressionController( expressionObject.abs.neutral, tiaTimings.changeExpression * 6 );
 
         setTimeout( function() {
@@ -345,10 +345,11 @@ function showOptionBtns() {
 
     recTimes.showOptionBtns = Date.now() / 1000;
     $('.option-btn').prop( "disabled", false);
+    //console.log('in showOptionBtns');
 
     // incase not reset from previous time
     $('#showCorrectionBtn').hide();
-    $('#whatsWrongBtn').show();
+    $('#whatsWrongBtnBtn').css('display', 'flex')
     $('#tryAgainBtn').show();
     $('#nextSentenceBtn').show();
 
@@ -444,7 +445,9 @@ function showCorrection() {
     });
     setTimeout( function() {
         
-        initArmIndicate('right', 1, 'high', '0.75');
+        //initArmIndicate('right', 1, 'high', '0.75');
+        classVariableDict.tapKeyForCorrection = true;
+        tapKeyFull();
     
         setTimeout( function() {
         
@@ -522,7 +525,10 @@ function waitForWrongSlices() {
                 classVariableDict.last_sent.correction = json.correction;
                 correctionObject.corrections = json.correction
                 
-                turnToBoardToShowErrors();
+                // no longer turning to board in mobile so comment out
+                // turnToBoardToShowErrors();
+                // tap key instead
+                tapKeyToShowErrors();
 
             } else {
 
@@ -536,6 +542,13 @@ function waitForWrongSlices() {
         },
         
     });
+
+}
+
+function tapKeyToShowErrors() {
+
+    classVariableDict.tapKeyForErrors = true;
+    tapKeyFull();
 
 }
 
