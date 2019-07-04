@@ -237,7 +237,8 @@ def fill_sessions_dict():
         
         if s.tutorial == False:
 
-            if s.start_time > timezone.now() - datetime.timedelta(hours=1):
+            # 1000 hours is for development
+            if s.start_time > timezone.now() - datetime.timedelta(hours=1000):
             
                 sessions[ 'numberOf' ] += 1
                 sessions[s.pk] = {}

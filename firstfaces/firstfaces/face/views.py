@@ -945,8 +945,10 @@ def wait_for_correction(request):
 
 def teacherMeeting(request):
 
-    sessions = fill_sessions_dict();
+    sessions = fill_sessions_dict()
     
+    print('sessions:', sessions)
+
     context = {
 
         "sessions": json.dumps(sessions),

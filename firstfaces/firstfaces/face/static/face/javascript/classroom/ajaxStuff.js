@@ -161,10 +161,11 @@ function sendSentToServer() {
     // reset the number of recordings for the sentence to 0.
     classVariableDict.blobs = 0;
 
-    let sent = $('#textInput').val();
-    //let sent = "Yesterday I go to school";
+    // all below for developing
+    //let sent = $('#textInput').val();
+    let sent = "40 year ago the Khmer Rouge were toppled from power in Cambodia"
 
-    if ( sent.length >= 252 ) {
+    if ( sent.length >= 200 ) {
 
         alert( 'This sentence is too long. Please simplify and try again.')
 

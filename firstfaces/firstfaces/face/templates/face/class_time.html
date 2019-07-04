@@ -17,18 +17,22 @@
 
 </div>
 
-<!--thought bubbles-->
-<div id="thoughtBubbleCont">
+<div id="thoughtBubbleContCont">
 
-    <img class="thought-bubbles" id="thoughtBubble03" src="{% static 'face/images/wide-thought-bubble-03.png' %}">
-    <img class="thought-bubbles" id="thoughtBubble02" src="{% static 'face/images/wide-thought-bubble-02.png' %}">
-    <img class="thought-bubbles" id="thoughtBubble01" src="{% static 'face/images/wide-thought-bubble-01.png' %}">
-    <img class="thought-bubbles" id="thoughtBubble00" src="{% static 'face/images/wide-thought-bubble-00.png' %}">
+    <!--thought bubbles-->
+    <div id="thoughtBubbleCont">
 
-    <div id="thinkingLoading">
+        <img class="thought-bubbles" id="thoughtBubble03" src="{% static 'face/images/wide-thought-bubble-03.png' %}">
+        <img class="thought-bubbles" id="thoughtBubble02" src="{% static 'face/images/wide-thought-bubble-02.png' %}">
+        <img class="thought-bubbles" id="thoughtBubble01" src="{% static 'face/images/wide-thought-bubble-01.png' %}">
+        <img class="thought-bubbles" id="thoughtBubble00" src="{% static 'face/images/wide-thought-bubble-00.png' %}">
 
-        <div id="thinkingWords"></div>
-        <div id="thinkingWords1"></div>
+        <div id="thinkingLoading">
+
+            <div id="thinkingWords" class="thinking-words"></div>
+            <div id="thinkingWords1" class="thinking-words"></div>
+
+        </div>
 
     </div>
 
@@ -130,7 +134,7 @@
     <div class="w3-col l2 w3-hide-medium w3-hide-small">&nbsp</div>
     <div id="speakingWordsLaptop" class="speaking-words w3-col l8 m12 s12">
     
-       <div class="speaking-words-inside">Strong winds prevented the contest from hitting the heights anticipated, but there were plenty of majestic moments to please the Philippe-Chatrier crowd. The Spaniard broke the Swiss icon six times, crucially in the third and ninth games of the second set, en route to doubling his advantage again an 
+       <div class="speaking-words-inside">Strong winds prevented the contest from hitting the heights anticipated, but there were plenty of majestic moments to please the Philippe-Chatrier crowd. The Spaniard broke the Swiss icon six times, crucially in the third and ninth games of the second set, en route to 
        </div>
        <div class="thinkingOfSpeaking"><span>. </span><span>. </span><span>. </span></div> 
     
@@ -146,11 +150,32 @@
 <div id="textInputContainer" class="w3-row">
 
     <div class="w3-col l2 w3-hide-medium w3-hide-small">&nbsp</div>
-    <div class="w3-col l8 m12 s12" id="textInputBox" >
+    <div id="textInputBoxContCont">
 
-        <textarea id="textInput" maxlength="256"></textarea>
+        <div id="textInputBoxCont">
+
+            <div class="w3-col l8 m12 s12" id="textInputBox">
+
+                <textarea id="textInput" maxlength="34"></textarea>
+
+            </div>
+
+        </div>
 
     </div>
+
+    <!--J for corrections after student has submitted sentence-->
+    <div class="w3-col l8 m12 s12" id="submittedNCorrectedSentenceContiCont">
+    
+        <div id="submittedNCorrectedSentenceCont">
+
+            <div class="submitted-corrected-sentences" id="submittedSentence"></div>
+            <div class="submitted-corrected-sentences" id="correctedSentence"></div>
+    
+        </div>
+
+    </div>
+    
     <div class="w3-col l2 w3-hide-medium w3-hide-small">&nbsp</div>
     
     <!--<div id="playRobot">-->
@@ -159,19 +184,6 @@
 
     <!--</div>-->
 
-</div>
-
-<div id="correctionContainer" class="w3-row">
-
-    <div class="w3-col l2 w3-hide-medium w3-hide-small">&nbsp</div>
-    <div class="w3-col l8 m12 s12" id="submittedNCorrectedSentence">
-    
-        <div class="submitted-corrected-sentences" id="submitted-sentence"></div>
-        <div class="submitted-corrected-sentences" id="corrected-sentence"></div>
-    
-    </div>
-    <div class="w3-col l2 w3-hide-medium w3-hide-small">&nbsp</div>
-    
 </div>
 
 

@@ -1,6 +1,6 @@
 function initInputReady() {
 
-    $('#textInputContainer').show();
+    //$('#textInputContainer').show();
     //hideTextStuff();
     //hideVolumeBar();
     //$('#textInput').val( boxVal );
@@ -79,7 +79,9 @@ function delayForListening( text ) {
 function talkToTia() {
 
     // check that final text box has been changed or not from recording
-    synthesisObject.finalTextInBox = $('#textInput').val();
+    // for development
+    //synthesisObject.finalTextInBox = $('#textInput').val();
+    synthesisObject.finalTextInBox = "40 year ago the Khmer Rouge were toppled from power in Cambodia";
 
     //no change from audio
     if ( synthesisObject.finalTextInBox === synthesisObject[ 'transcript' + synthesisObject.transcriptCur ] ) {

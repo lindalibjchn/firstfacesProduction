@@ -425,7 +425,7 @@ function init() {
     //remove classroom for mobile redesign
     //loader.load( classroom, addClassroom );
     addTia(); // contains all the loaders for head, body etc.
-    loadAllTextElements(); // loads all text and backgrounds for text
+    //loadAllTextElements(); // loads all text and backgrounds for text
 
 
 
