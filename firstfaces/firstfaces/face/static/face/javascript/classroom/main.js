@@ -101,9 +101,13 @@ function readyBtns() {
 
     record = document.getElementById( 'recordVoiceBtn' );
     stop = document.getElementById( 'stopRecordVoiceBtn' );
-    aud = document.getElementById('soundClip')
+    aud = document.getElementById('soundClip');
 
-    $('#listenVoiceBtn').on( 'click', function() {
+    recordModal = document.getElementById('reRecordBtn');
+    stopModal = document.getElementById('stopRecordBtn');
+    
+            
+$('#listenVoiceBtn').on( 'click', function() {
 
         aud.play();
         sendListenVoice();
@@ -190,6 +194,10 @@ function readyBtns() {
 
                     // hide the microphone button
                     $(this).hide();
+		            if(classVariableDict.stage2){
+				        $('#stopRecordBtn').show();
+				        $('#reRecordBtn').prop("disabled",true);
+		            }
                     $('#stopRecordVoiceBtn').show();
                     $('.play-btn').prop( "disabled", true);
                     $('#talkBtn').prop( "disabled", true);
@@ -197,7 +205,8 @@ function readyBtns() {
                 }
 
                 stop.onclick = onStopClick;
-    
+		        stopModal.onclick = onStopClick;    			
+
                 // this function checks that the user clicked stop after speaking one sentence. If not, it automatically finishes.
                 function checkIfClickedStop() {
 
@@ -214,6 +223,7 @@ function readyBtns() {
 
 
                 record.onclick = onRecord;
+		        recordModal.onclick = onRecord;		
 
                 chunks = [];
 
@@ -316,6 +326,7 @@ function onStopClick() {
 
     classVariableDict.recording = false;
 
+    $('#stopRecordBtn').hide();
     $('#stopRecordVoiceBtn').hide();
 
     //setTimeout( function() { 
@@ -343,9 +354,12 @@ function onMediaRecorderStop() {
 
     // send blob to server to be stored, but wait a bit to make sure it has come through
     //setTimeout( function() {
-        
-    sendBlobToServer( classVariableDict.blob );
-
+   if(!classVariableDict.stage2){
+    	sendBlobToServer( classVariableDict.blob );
+	}
+	else{
+	    sendErrorBlobToServer( classVariableDict.blob );
+	}
     //}, 1000);
 
 }

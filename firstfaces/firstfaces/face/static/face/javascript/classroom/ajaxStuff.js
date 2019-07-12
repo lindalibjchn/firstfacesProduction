@@ -82,7 +82,7 @@ function sendBlobToServer( blob_to_send ) {
     fd.append('blob_no_text', classVariableDict.blob_no_text);
     fd.append('blob_no_text_sent_id', classVariableDict.blob_no_text_sent_id);
 
-
+    alert("hereh");
     $.ajax({
         url: "/store_blob",
         type: "POST",

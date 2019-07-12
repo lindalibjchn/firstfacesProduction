@@ -42,4 +42,5 @@ urlpatterns = [
     path('entrance', views.entrance, name='entrance'),
     path('login', views.my_login, name='login'),
     path('logout', LogoutView.as_view(next_page=reverse_lazy('entrance')), name='logout'),
+    path('store_error_blob', views.store_error_blob,name='store_error_blob'),
 ]

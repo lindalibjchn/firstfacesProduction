@@ -135,6 +135,21 @@ class AudioFile(models.Model):
     # def __str__(self):
         # return  str(json.loads(self.transcriptions))
 
+class AudioErrors(models.Model):
+    audio = models.ForeignKey(AudioFile, on_delete=models.CASCADE)
+    start_index = models.SmallIntegerField()
+    end_index = models.SmallIntegerField()
+    intention = models.CharField(max_length=500, null=True)
+    typed = models.NullBooleanField(null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+class AudioErrorAttempt(models.Model):
+    error = models.ForeignKey(AudioFile, on_delete=models.CASCADE)
+    audio = models.FileField(upload_to="")
+    created_at = models.DateTimeField(auto_now_add=True)
+    transcript = models.CharField(max_length=500, blank=True, null=True)
+    correct = models.NullBooleanField(null=True)
+
 class PermAudioFile(models.Model):
     sentence = models.ForeignKey(PermSentence, on_delete=models.CASCADE)
     alternatives = models.CharField(max_length=5000, blank=True, null=True)

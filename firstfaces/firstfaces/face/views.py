@@ -571,6 +571,25 @@ def store_topic(request):
 
     return JsonResponse(response_data)    
 
+def store_error_blob(request):
+
+    blob = request.FILES['data'] 
+    #`Wsent_id = int(request.POST['blob_no_text_sent_id']) 
+    errors = request.POST['error_list']
+    print(errors,"\n\n")
+    sess = Session.objects.get( pk=request.POST['sessionID'] )
+    s = Sentence(learner=request.user, session=sess)
+    
+
+    
+
+    response_data = {
+
+    }
+
+    return JsonResponse(response_data) 
+
+
 def store_blob(request):
 
     blob = request.FILES['data']
@@ -683,8 +702,6 @@ def tts(request):
         synthURL = 'media/synths/session' + session_id + '_' + str(int(time.mktime((timezone.now()).timetuple()))) + '.wav'
         with open( os.path.join(settings.BASE_DIR, synthURL ), 'wb') as out:
             out.write(response.audio_content)
-    
-    # if problem at Google's server end
     except:
         synthURL = 'fault'
 
@@ -1242,6 +1259,10 @@ def add_listen_synth_data(request):
         s = Sentence(learner=request.user, session=sess)
         s.save()
         a = AudioFile(sentence=s)
+        clicks_already = []
+
+    #don't store it if too long
+    if len(a.clicks) < 1700:
         clicks_already = []
 
     #don't store it if too long

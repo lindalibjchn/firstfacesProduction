@@ -613,11 +613,50 @@ function tapKeyFull() {
                     //calculateAlternatives();
                     //show play buttons below
                     if ( classVariableDict.tutorial === false ) {
+                        if (($(".selectable-word").length > 0)||($(".selected-word").length >0)){
+                            //reset text
+                            $('#tia-speech-box').text("Is this what you meant to say?");
+                            //hide backward and forward buttons
+                            $('#backErrorSelection').hide();
+                            $('#forwardErrorSelection').hide();
+                        }
+                        if(($(".uncorrected-error").length > 0)|| ($(".corrected-error").length > 0) ){
+                            //reset speech
+                            $("#tia-speech-box").text("Is this what you meant to say?");
+                            //hide buttons
+                            $("#submitCorrectedErrors").hide();
+                            $("#backCorrection").hide();
+                        }
+                        
+                        if ( $('#upperSentenceHolder').children().length > 0 ) {
+                           $('#upperSentenceHolder').empty();
+                           $('#lowerSentenceHolder').empty();
+                        }
+                       
+                        
 
+                        //reset what tia is saying and add back in the two buttons
                         $('.play-btn').prop( "disabled", false);
                         $('#talkBtn').prop( "disabled", false);
                         $('#recordVoiceBtn').show();
+                        
+                        //Daniel
+                        //Adding correct and incorrect transcript buttons
+                        $('#listenAndSynthBtns').hide();
+                        $('#incorrectTranscriptBtn').show();
+                       
 
+                        $('#talkBtn').hide();
+                        $('#correctTranscript').show();
+                        //Adding speech bubble for tia 
+
+                        //Displaying hypothesised transcript
+                        $('#textInputContainer').show();
+                        $('#sentenceShowHolder').show();
+                        $('#speechBubbleCont').show();
+                          
+                        populateDivs();
+                         
                     }
 
                     initMove( armTapObject, [[0,0,0],[0,0,0]], 0.8 )
@@ -630,6 +669,20 @@ function tapKeyFull() {
 
         setTimeout( checkIfArmDone, 550 );
 
+}
+
+//fucntion to populate the output box with transcript
+function populateDivs() {
+    var words = classVariableDict.alternatives[0].transcript.split(" ");
+    words.forEach(addWord);
+}
+function addWord(word,count) {
+   var idx = "'upper_"+count+"'";
+   $('#upperSentenceHolder').append("<span id="+idx+"' class='normal-word' >"+word+"</span>");
+   $('#upperSentenceHolder').append(" "); 
+   idx = "'lower_"+count+"'";
+   $('#lowerSentenceHolder').append("<span id="+idx+"' class='hidden-word' >"+word+"</span>");
+   $('#lowerSentenceHolder').append(" ");
 }
 
 //function calculateAlternatives() {

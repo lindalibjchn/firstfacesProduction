@@ -1,6 +1,6 @@
 function initInputReady() {
-
-    $('#textInputContainer').show();
+    classVariableDict.stage2 = false;
+    //$('#textInputContainer').show();
     //hideTextStuff();
     //hideVolumeBar();
     //$('#textInput').val( boxVal );
@@ -18,13 +18,24 @@ function initInputReady() {
     //playback buttons disabled until recording done
     $('#recordBtnsContainer').fadeIn(1000)
     $('.play-btn').prop( "disabled", true).hide();
+    //Hide the display divs
+    $('#sentenceShowHolder').hide();
+    //hide correctTranscript
+    $('#correctTranscript').hide();
+    //hide back button
+    $('#backErrorSelection').hide();
+    // hide forward button
+    $('#forwardErrorSelection').hide();
+    
+    $('#backCorrection').hide();
+    $('#submitCorrectedErrors').hide();
 
     //  for development
     $('#talkBtn').prop( "disabled", false).show();
 
     //if ( classVariableDict.tutorial === false ) {
 
-        //$('#textInput').bind('input propertychange', function() {
+     //$('#textInput').bind('input propertychange', function() {
 
             //$('#playRobot').show();
             //$('#talkBtn').prop( "disabled", false );
