@@ -657,6 +657,31 @@ function tapKeyFull() {
                           
                         populateDivs();
                          
+
+                        // this tap for when the sentence is wrong
+                        if ( classVariableDict.tapKeyForErrors ) {
+                        
+                            classVariableDict.tapKeyForErrors = false;
+
+                            //need to change whats wrong btn to show correction btn in showOptionbtns, so just do it below before they fade in :-P
+                            showOptionBtns();
+                            $('#whatsWrongBtn').hide()
+                            $('#showCorrectionBtn').css('display', 'flex')
+                            movementController( movements.blank, '0.5', '1.5' );
+
+                        } else if ( classVariableDict.tapKeyForCorrection ) {
+
+                            $('#nextSentenceBtn').css('display', 'flex');
+
+                        // this one is for after listening to the learners speech
+                        } else {
+
+                            $('.play-btn').prop( "disabled", false);
+                            $('#talkBtn').prop( "disabled", false);
+                            $('#recordVoiceBtn').show();
+
+                        }
+
                     }
 
                     initMove( armTapObject, [[0,0,0],[0,0,0]], 0.8 )

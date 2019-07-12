@@ -1,12 +1,15 @@
 function initInputReady() {
     classVariableDict.stage2 = false;
+
     //$('#textInputContainer').show();
     //hideTextStuff();
     //hideVolumeBar();
     //$('#textInput').val( boxVal );
-    $('#textInput').focus();
+    //$('#textInput').focus();
     //$('#recordBtnsContainer').show();
-
+    
+    // removes speech bubble after user has a few second to read it
+    removeSpeechBubble( tiaTimings.changeExpression * 2000 );                   
     if ( classVariableDict.tutorial === false ) {
 
         $('.record-btn').prop( "disabled", false );
@@ -32,6 +35,9 @@ function initInputReady() {
 
     //  for development
     $('#talkBtn').prop( "disabled", false).show();
+    //showOptionBtns();
+    //$('#whatsWrongBtn').hide()
+    //$('#showCorrectionBtn').css('display', 'flex')
 
     //if ( classVariableDict.tutorial === false ) {
 
@@ -90,7 +96,9 @@ function delayForListening( text ) {
 function talkToTia() {
 
     // check that final text box has been changed or not from recording
-    synthesisObject.finalTextInBox = $('#textInput').val();
+    // for development
+    //synthesisObject.finalTextInBox = $('#textInput').val();
+    synthesisObject.finalTextInBox = "40 year ago the Khmer Rouge were toppled from power in Cambodia";
 
     //no change from audio
     if ( synthesisObject.finalTextInBox === synthesisObject[ 'transcript' + synthesisObject.transcriptCur ] ) {

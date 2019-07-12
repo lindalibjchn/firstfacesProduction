@@ -719,25 +719,26 @@ def store_sent(request):
 
     time_now = timezone.now();
 
-    def buffer_text( raw ) :
+    # don't need with new data storage in list
+    # def buffer_text( raw ) :
 
-        #add a space at beginning and period at end if needed.
+        # #add a space at beginning and period at end if needed.
         
-        stripped = raw.strip()
+        # stripped = raw.strip()
         
-        # buffered left
-        buff = " " + stripped
+        # # buffered left
+        # buff = " " + stripped
 
-        # buffered right
-        if buff[-1] not in ['.', '?', '!']:
-            buff += "."
+        # # buffered right
+        # if buff[-1] not in ['.', '?', '!']:
+            # buff += "."
         
-        # remove multiple spaces
-        buff = re.sub(' +', ' ', buff)
+        # # remove multiple spaces
+        # buff = re.sub(' +', ' ', buff)
 
-        return buff
+        # return buff
 
-    sentence_text = buffer_text(request.POST['sent'])
+    sentence_text = request.POST['sent']
 
     # q = json.loads(request.POST['isItQ'])
     #code.interact(local=locals());
@@ -796,7 +797,7 @@ def check_judgement(request):
     count = 0;
     while True:
 
-        print('in check judgement while loop')
+        # print('in check judgement while loop')
         time.sleep(1)
         count += 1
 
@@ -962,8 +963,10 @@ def wait_for_correction(request):
 
 def teacherMeeting(request):
 
-    sessions = fill_sessions_dict();
+    sessions = fill_sessions_dict()
     
+    print('sessions:', sessions)
+
     context = {
 
         "sessions": json.dumps(sessions),

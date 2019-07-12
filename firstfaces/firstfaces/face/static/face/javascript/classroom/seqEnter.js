@@ -14,9 +14,9 @@ function mainEnter() {
  
     if ( mainCount === 50 ) {
 
-        movementController( movements.blank, 0.5, 1.75 );
+        movementController( movements.blank, 0.5, 1 );
 
-    } else if ( mainCount === 180 ) {
+    } else if ( mainCount === 130 ) {
 
         let calculatedExpressions = createSingleExpression( expressionsRel.happy, 0.75 );
         calculatedExpression = getAbsoluteCoordsOfExpressionTo( calculatedExpressions[0] );
@@ -82,11 +82,11 @@ function mainEnter() {
         //initEnterCameraMove('chair', '3');
         //movementController( movements.blank, '3', '3');
 
-    }  else if ( mainCount === 280 ) {
+    }  else if ( mainCount === 210 ) {
 
         expressionController( calculatedTalkExpression, '1', false );
 
-    } else if ( mainCount === 350 ) {
+    } else if ( mainCount === 280 ) {
 
         tiaSpeak( synthesisObject.text, needSendTTS=false, speakOpening );
         classVariableDict.promptSpeaking = true;
@@ -361,7 +361,8 @@ function showPreChoiceTextInput() {
 
 function showChoiceTextInput() {
 
-    $('#textInput').fadeIn( tiaTimings.speechBubbleFadeInDuration );
+    $('#textInputBoxContCont').show();
+    $('#textInputContainer').fadeIn( tiaTimings.speechBubbleFadeInDuration );
     $('#textInput').focus();
 
     $('#submitTopicBtnContainer').fadeIn( tiaTimings.speechBubbleFadeInDuration );
@@ -374,7 +375,9 @@ function getOwnTopicFromTextbox() {
     removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
     let ownTopic = document.getElementById( "textInput" ).value
     
-    $('#textInput').fadeOut( tiaTimings.speechBubbleFadeOutDuration );
+    $('#textInputContainer').fadeOut( tiaTimings.speechBubbleFadeOutDuration );
+    $('#textInput').value = '';
+    $('#textInputBoxContCont').fadeOut( tiaTimings.speechBubbleFadeOutDuration );
     $('#submitTopicBtnContainer').fadeOut( tiaTimings.speechBubbleFadeOutDuration )
 
     if ( ownTopic === '' ) {

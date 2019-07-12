@@ -304,11 +304,10 @@ function sendErrorBlobToServer( new_blob ){
     let fd = new FormData();
     fd.append('data',new_blob);
     fd.append('sessionID',classVariableDict.sessionID);
-    fd.append('',synthesisObject.interference);
     fd.append('blob_no_text',classVariableDict.blob_no_txt);
     fd.append('blob_no_text_sent_id',classVariableDict.blob_no_text_sent_id);
     fd.append('error_list',classVariableDict.errors);
-
+    fd.append('start_idx',classVariableDict.startIDX);
 
     $.ajax({
         url: "/store_error_blob",

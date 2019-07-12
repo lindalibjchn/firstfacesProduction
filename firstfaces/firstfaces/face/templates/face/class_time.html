@@ -17,18 +17,22 @@
 
 </div>
 
-<!--thought bubbles-->
-<div id="thoughtBubbleCont">
+<div id="thoughtBubbleContCont">
 
-    <img class="thought-bubbles" id="thoughtBubble03" src="{% static 'face/images/wide-thought-bubble-03.png' %}">
-    <img class="thought-bubbles" id="thoughtBubble02" src="{% static 'face/images/wide-thought-bubble-02.png' %}">
-    <img class="thought-bubbles" id="thoughtBubble01" src="{% static 'face/images/wide-thought-bubble-01.png' %}">
-    <img class="thought-bubbles" id="thoughtBubble00" src="{% static 'face/images/wide-thought-bubble-00.png' %}">
+    <!--thought bubbles-->
+    <div id="thoughtBubbleCont">
 
-    <div id="thinkingLoading">
+        <img class="thought-bubbles" id="thoughtBubble03" src="{% static 'face/images/wide-thought-bubble-03.png' %}">
+        <img class="thought-bubbles" id="thoughtBubble02" src="{% static 'face/images/wide-thought-bubble-02.png' %}">
+        <img class="thought-bubbles" id="thoughtBubble01" src="{% static 'face/images/wide-thought-bubble-01.png' %}">
+        <img class="thought-bubbles" id="thoughtBubble00" src="{% static 'face/images/wide-thought-bubble-00.png' %}">
 
-        <div id="thinkingWords"></div>
-        <div id="thinkingWords1"></div>
+        <div id="thinkingLoading">
+
+            <div id="thinkingWords" class="thinking-words"></div>
+            <div id="thinkingWords1" class="thinking-words"></div>
+
+        </div>
 
     </div>
 
@@ -228,6 +232,7 @@
 <div id="textInputContainer" class="w3-row">
 
     <div class="w3-col l2 w3-hide-medium w3-hide-small">&nbsp</div>
+
     
     <div class="w3-col l8 m12 s12" id="sentenceShowHolder">
         <div id="sentenceHolderParent"> 
@@ -242,10 +247,32 @@
 
 
     <div class="w3-col l8 m12 s12" id="textInputBox" >
+    <div id="textInputBoxContCont">
 
-        <textarea id="textInput" maxlength="256"></textarea>
+        <div id="textInputBoxCont">
+
+            <div class="w3-col l8 m12 s12" id="textInputBox">
+
+                <textarea id="textInput" maxlength="34"></textarea>
+
+            </div>
+
+        </div>
 
     </div>
+
+    <!--J for corrections after student has submitted sentence-->
+    <div class="w3-col l8 m12 s12" id="submittedNCorrectedSentenceContiCont">
+    
+        <div id="submittedNCorrectedSentenceCont">
+
+            <div class="submitted-corrected-sentences" id="submittedSentence"></div>
+            <div class="submitted-corrected-sentences" id="correctedSentence"></div>
+    
+        </div>
+
+    </div>
+    
     <div class="w3-col l2 w3-hide-medium w3-hide-small">&nbsp</div>
     
     <!--<div id="playRobot">-->
@@ -256,29 +283,16 @@
 
 </div>
 
-<div id="correctionContainer" class="w3-row">
-
-    <div class="w3-col l2 w3-hide-medium w3-hide-small">&nbsp</div>
-    <div class="w3-col l8 m12 s12" id="submittedNCorrectedSentence">
-    
-        <div class="submitted-corrected-sentences" id="submitted-sentence"></div>
-        <div class="submitted-corrected-sentences" id="corrected-sentence"></div>
-    
-    </div>
-    <div class="w3-col l2 w3-hide-medium w3-hide-small">&nbsp</div>
-    
-</div>
-
 
 <!-- right hand side controls for student to respond and see their own sentences -->
 
-<!--<div id="prevSentsContainer">-->
+<div id="prevSentsContainer">
 
-    <!--<div id="prevSents">-->
+    <div id="prevSents">
 
-    <!--</div>-->
+    </div>
 
-<!--</div>-->
+</div>
 
 <div id="inputButtonsContainer">
 
@@ -400,7 +414,8 @@
         <div class="w3-col l2 m4 s4" id="listenAndSynthBtnsContainer">
              
             <div id="listenAndSynthBtns" class="input-btns">
-                <button class="w3-btn w3-circle w3-xxxlarge w3-indigo input-btn-large record-btn play-btn" id="listenVoiceBtn">
+
+                <button class="w3-btn w3-circle w3-indigo input-btn-large record-btn play-btn" id="listenVoiceBtn">
                 
                     <img id="human" src="{% static 'face/images/human_speech.svg' %}">
 
@@ -429,13 +444,13 @@
 
             <div id="recordAndStopBtns" class="input-btns">
 
-                <button class="w3-btn w3-circle w3-blue input-btn record-btn w3-padding-small" id="recordVoiceBtn">
+                <button class="w3-btn w3-circle w3-blue input-btn record-btn w3-padding-medium" id="recordVoiceBtn">
                  
                     <i class="fa fa-microphone inputfa"></i>
 
                 </button>
 
-                <button class="w3-btn w3-circle w3-red input-btn record-btn w3-padding-small" id="stopRecordVoiceBtn">
+                <button class="w3-btn w3-circle w3-red input-btn record-btn w3-padding-medium" id="stopRecordVoiceBtn">
                  
                     <i class="fa fa-stop inputfa"></i>
 
@@ -449,7 +464,7 @@
 
             <div id="talkBtnCont" class="input-btns">
 
-                <button class="w3-btn w3-circle w3-green input-btn input-fa record-btn w3-padding-large play-btn" id="talkBtn">
+                <button class="w3-btn w3-circle w3-green input-btn input-fa record-btn w3-padding-medium play-btn" id="talkBtn">
                     
                     <i class="fa fa-play" id="yellowPlay"></i>
                
@@ -487,7 +502,7 @@
         <div class="w3-col l2 m4 s4 option-row" class="input-btns">
 
             <button class="w3-btn w3-indigo option-btn" id="whatsWrongBtn">what's wrong</button>
-            <button class="w3-btn w3-indigo option-btn" id="showCorrectionBtn">showCorrection</button>
+            <button class="w3-btn w3-indigo option-btn" id="showCorrectionBtn">show correction</button>
 
         </div>
 

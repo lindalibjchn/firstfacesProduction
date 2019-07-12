@@ -85,7 +85,7 @@ const CAMERA_DESK_ROT = { x: -0.15, y: -0.2, z: 0 }
 
 const CAMERA_SIT_POS = { x: 0, y: -2, z: 39 };
 
-const CAMERA_SIT_TO_LAPTOP_ROT = { x: -0.275, y: 0, z: 0 };
+const CAMERA_SIT_TO_LAPTOP_ROT = { x: -0.29, y: 0, z: 0 };
 const CAMERA_SIT_TO_TIA_ROT = { x: 0, y: 0, z: 0 };
 const CAMERA_SIT_TO_BOARD_ROT = { x: 0.1, y: 0.6, z: 0 };
 
@@ -239,7 +239,7 @@ var movements = {
                 'shoulder': [[0, 0, 0], [0, 0, 0]],
             },
             'AU2b': {
-                'upperArm': [[0, 0.15, 0], [-0.2, -0.05, 0.2]],
+                'upperArm': [[0, 0.15, 0], [0.2, -0.15, 0.0]],
                 'hand': [[0, 0, 0], [0, 0, 0]],
                 'lowerArm': [[0, 0, 0], [0, 0, 0]],
             },

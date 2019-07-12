@@ -237,7 +237,8 @@ def fill_sessions_dict():
         
         if s.tutorial == False:
 
-            if s.start_time > timezone.now() - datetime.timedelta(hours=1):
+            # 1000 hours is for development
+            if s.start_time > timezone.now() - datetime.timedelta(hours=1000):
             
                 sessions[ 'numberOf' ] += 1
                 sessions[s.pk] = {}
@@ -282,7 +283,7 @@ def fill_sessions_dict():
                     sent_meta = {
                         "sess_id": s.pk,
                         "sent_id": sent.id, 
-                        "sentence": sent.sentence,
+                        "sentence": json.loads(sent.sentence),
                         "sentence_timestamp": sent_time,
                         "judgement": sent.judgement,
                         "judgement_timestamp": judge_time,

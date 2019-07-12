@@ -159,7 +159,7 @@ button:active {
 
     position: absolute;
     width: 100%;
-    height: 35%;
+    height: 38%;
     bottom: 0;
     display: flex;
     align-items: center;
@@ -169,7 +169,7 @@ button:active {
 
 #laptop {
 
-    width: 91%;
+    width: 95%;
     height: 100%;
     background-color: #191919;
     bottom: 0;
@@ -183,10 +183,12 @@ button:active {
 
     position: absolute;
     width: 100%;
-    height: 38%;
-    background-color: #a9a9a9;
+    height: 42%;
+    /*J deleted so we can have different colours for what we are doing inside*/
+    /*background-color: #a9a9a9;*/
+    /*border: 2px solid red;*/
     opacity: 0.9;
-    bottom: 12%;
+    bottom: 8%;
     display: none;
 
 }
@@ -288,13 +290,33 @@ button:active {
 #overlayRightBtn{
     height:100%
 } 
+#textInputBoxContCont {
+
+    width: 100%;
+    height: 15%;
+    position: absolute; 
+    bottom: 0;
+    display: none;
+
+}
+
+#textInputBoxCont {
+
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
 
 #textInputBox {
     display:none;
     height: 100%;
-    /*position: relative;*/
+    width: 89%;
+    position: relative; 
     padding: 1%;
-    /*border: 2px solid white;*/
+    background-color: black;
 
 }
 
@@ -337,6 +359,10 @@ button:active {
       font-size: 1.3em;
       line-height: 1.3em;
   }
+    .submitted-corrected-sentences {
+        font-size: 1.5em;
+        line-height: 2.5em;
+    }
 }
 
 /* If the screen size is 600px wide or less, set the font-size of <div> to 30px */
@@ -353,6 +379,11 @@ button:active {
       font-size: 0.9em;
       line-height: 1.2em;
   }
+    
+    .submitted-corrected-sentences {
+        font-size: 1em;
+        line-height: 2.6em;
+    }
 }
 
 #textInput:focus {
@@ -501,6 +532,50 @@ button:active {
 /*correct-error-lower{}*/
 
 
+#submittedNCorrectedSentenceContCont {
+
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    /*bottom: 4%;*/
+    /*border: 2px dashed blue;*/
+    display: none;
+
+}
+
+#submittedNCorrectedSentenceCont {
+
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: white;
+
+}
+
+.submitted-corrected-sentences {
+
+    width: 100%;
+    height: 100%;
+    bottom: 4%;
+    font-family: Courier;
+    padding: 0.3em;
+
+}
+
+#submittedSentence {
+
+    position: absolute;
+    /*border: 2px solid red;*/
+
+}
+
+#correctedSentence {
+
+    padding-top: 1.2em;
+    position: absolute;
+    /*border: 2px solid green;*/
+
+}
 
 /*#playRobot {*/
 
@@ -651,7 +726,7 @@ button:active {
     position: absolute;
     width: 100%;
     height: 56.5%;
-    right: 0;
+    right: 100%;
     top: 30px;
     background-color: rgba( 0, 0, 0, 0.3 );
 
@@ -752,7 +827,7 @@ button:active {
 
     position: fixed;
     width: 100%;
-    height: 12%;
+    height: 8%;
     bottom: 0;
     background-color: white;
     /*display: none;*/
@@ -822,11 +897,18 @@ button:active {
 
 #talkBtn {
 
-    /*position: absolute;*/
+    position: relative;
     /*width: 80%;*/
     /*font-size: 1.6vw !important;*/
     /*font-weight: bold;*/
     color: yellow !important;
+
+}
+
+#yellowPlay {
+
+    position: relative;
+    left: 12%;
 
 }
 
@@ -844,12 +926,10 @@ button:active {
 }
 
     .record-btn {
-
-        left: 0;
-        right: 0;
-        margin: auto;
-        height: 60px;
-        width: 60px;
+    /*left:0;*/
+    /*margin: auto;*/
+    /*height: 60px;*/
+    /*width: 60px;*/
 
     }
 
@@ -882,14 +962,22 @@ button:active {
 
 }
 
+#thoughtBubbleContCont {
+
+    position: absolute;
+    width: 100%;
+    height: 20%;
+    top: 10%;
+    opacity: 0.8;
+
+}
+
 #thoughtBubbleCont {
 
     position: absolute;
-    width: 30%;
-    height: 30%;
-    right: 55%;
-    top: 10%;
-    opacity: 0.7;
+    width: 35%;
+    height: 100%;
+    right: 65%;
 
 }
 
@@ -906,7 +994,7 @@ button:active {
 
     display: none;
     font-family: Georgia;
-    font-size: 2.0em;
+    font-size: 1.2em;
     font-style: italic;
     text-align: center;
     height: 100%;
@@ -920,28 +1008,15 @@ button:active {
     /*border: 3px solid red;*/
 }
 
-#thinkingWords {
+.thinking-words {
 
     z-index: 130;
     /*display: none;*/
     position: absolute;
     height: 20%;
     width: 80%;
-    left: 12%;
-    bottom: 45%;
-    /*border: 2px dashed blue;*/
-
-}
-
-#thinkingWords1 {
-
-    z-index: 130;
-    /*display: none;*/
-    position: absolute;
-    height: 20%;
-    width: 80%;
-    left: 12%;
-    bottom: 45%;
+    left: 10%;
+    bottom: 38%;
     /*border: 2px dashed blue;*/
 
 }
@@ -950,7 +1025,7 @@ button:active {
 
     position: fixed;
     width: 100%;
-    height: 10%;
+    height: 14%;
     bottom: 50%;
     background-color: white;
     opacity: 0.8;
@@ -974,11 +1049,10 @@ button:active {
 	position: absolute;
     width: 0;
 	height: 0;
-    top: -15px;
-    border-left: 15px solid transparent;
-    border-right: 15px solid transparent;
-    border-bottom: 15px solid white;
-
+    top: -10px;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid white;
 
 }
 
@@ -1122,7 +1196,7 @@ button:active {
 /* SUCCESSFULLY CENTERED DIVS HORIZONTALLY ADN VERTICALLY */
 .option-row {
 
-    height: 33%;
+    height: 100%;
     position: relative;
     display: flex;
     align-items: center;
@@ -1132,10 +1206,13 @@ button:active {
 
 .option-btn {
 
-    height: 40%;
-    width: 65%;
-    font-size: 1.2vw;
-    font-weight: bold;
+    /*height: 40%;*/
+    width: 90%;
+    /*font-size: 1.2vw;*/
+    /*font-weight: bold;*/
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
 }
 
