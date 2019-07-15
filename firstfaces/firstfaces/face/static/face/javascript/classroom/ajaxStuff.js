@@ -163,7 +163,7 @@ function sendSentToServer() {
 
     // all below for developing
     //let sent = $('#textInput').val();
-    let sent = "40 year ago the Khmer Rouge were toppled from power in Cambodia"
+    let sent = [' ', '40', ' ', 'year', ' ', 'ago', ' ', 'the', ' ', 'Khmer', ' ', 'Rouge', ' ', 'were', ' ', 'toppled', ' ', 'from', ' ', 'power', ' ', 'in', ' ', 'Cambodia', ' ']
 
     if ( sent.length >= 200 ) {
 
@@ -199,7 +199,7 @@ function sendSentToServer() {
                 url: "/store_sent",
                 type: "POST",
                 data: { 
-                    'sent': sent,
+                    'sent': JSON.stringify(sent),
                     //'isItQ': isItQ,
                     'blob_no_text': classVariableDict.blob_no_text,
                     'blob_no_text_sent_id': classVariableDict.blob_no_text_sent_id,
@@ -261,7 +261,7 @@ function checkJudgement( sentId ) {
 
                 }
                 
-                console.log('sentMeta:', json.sent_meta);
+                //console.log('sentMeta:', json.sent_meta);
                 JudgementReceived( json.sent_meta )
             
             } else {
