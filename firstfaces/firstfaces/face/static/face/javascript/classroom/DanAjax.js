@@ -67,9 +67,7 @@ $('#forwardErrorSelection').click(function(){
     $('#backErrorSelection').hide();
     $('#forwardErrorSelection').hide();
 
-    classVariableDict.errors = [];
-    
-    
+    classVariableDict.errors = {};
  
 
     //cahneg tias textbox
@@ -175,7 +173,7 @@ function selectErrWord(idx){
 
 
 var currentId;
-$('#submitOverlay').click(function(){
+function doneError(){
     var cor = $('#overlayTextBox').text().trim();
     var err = $('#overlayErrorText').text().trim();
 
@@ -225,7 +223,7 @@ $('#submitOverlay').click(function(){
         $("#submitCorrectedErrors").show();
     }
 
-});
+}
 
 
 $('#submitCorrectedErrors').click(function(){
@@ -261,17 +259,23 @@ $('#backCorrection').click(function(){
 $('#closeOverlayArea').click(function(){
    $('#correctionOverlay').hide();
    $('#overlayTextBox').empty();
-   $('#overlayTextBox').append('<span id="typeHereOverlay">Type Here!</span>');       
+   //$('#overlayTextBox').append('<span id="typeHereOverlay">Type Here!</span>');       
    $('#tia-speech-box').text("Select an error to correct!"); 
     classVariableDict.stage2 = false;
 });
 
 $('#keyboardOverlay').click(function(){
     $('#centeredError').hide();
+    $('#submitOverlay').hide();
     $('#overlayErrorBox').show();
     $('#overlayTextBox').show();
     $('#keyboardOverlay').hide();
-    $('#backOverlay').show();
+    //clear text area
+    $("#overlayTextBox").empty();
+    $("#overlayTextBox").attr("contenteditable","true")
+    //make text area editable
+    $("#submitOverlay").off("click"); 
+    $("#submitOverlay").click(submitKeyboard);
 });
 
 $('#backOverlay').click(function(){
@@ -288,12 +292,16 @@ $('#backOverlay').click(function(){
 function openOverlay(){
     $('#correctionOverlay').show();
     $('#centeredError').show();
+    $('#centeredErrorHolder').show();
+    $('#centeredErrorText').show();
     $('#closeOverlay').hide();    
     $('#submitOverlay').hide();
     $('#overlayErrorBox').hide();  
     $('#overlayTextBox').hide();
     $('#backOverlay').hide();
     $('#stopRecordBtn').hide();
+    $("#keyboardOverlay").show();
+    $("#reRecordBtn").show();
     //Says that modal is openl
     classVariableDict.stage2 = true;
 }
@@ -303,11 +311,12 @@ function openOverlay(){
 function sendErrorBlobToServer( new_blob ){
     let fd = new FormData();
     fd.append('data',new_blob);
-    fd.append('sessionID',classVariableDict.sessionID);
+    fd.append('sessionID',classVariableDict.session_id);
     fd.append('blob_no_text',classVariableDict.blob_no_txt);
     fd.append('blob_no_text_sent_id',classVariableDict.blob_no_text_sent_id);
-    fd.append('error_list',classVariableDict.errors);
+    fd.append('error_list',JSON.stringify(classVariableDict.errors));
     fd.append('start_idx',classVariableDict.startIDX);
+    fd.append('audio_id',classVariableDict.currentAudID);
 
     $.ajax({
         url: "/store_error_blob",
@@ -315,8 +324,94 @@ function sendErrorBlobToServer( new_blob ){
         data: fd,
         processData: false,
         contentType: false,
+        success: function(json){
+            //add index an foregin key to the errors
+            classVariableDict.errors[json['error_start']] = json['error_pk'];
+            //display transcript
+            $("#centeredErrorHolder").hide();
+            $("#overlayErrorBox").show();
+            $("#overlayTextBox").show();
+            $("#overlayTextBox").empty();
+            $('#overlayTextBox').text(json['error_trans']);
+            //show mic
+            $("#reRecordBtn").show();
+            $("#reRecordBtn").prop( "disabled", false );
+            $("#keyboardOverlay").show();
+            $("#submitOverlay").show();
+            $("#submitOverlay").off("click");
+            $("#submitOverlay").click(submitRecording);
+            //make textbox not editable
+            $("#overlayTextBox").attr("contenteditable","false");
+            //save last transcription into class
+            classVariableDict.lastAttemptID = json['attempt_pk'];
+        },
+        error: function() {
+            console.log("that's wrong");
+        },
+    });
+}
+
+
+
+//Keyboard and record have different submit funtionalities
+
+//Keyboard sumbit
+function submitKeyboard(){
+    var trans = $('#overlayTextBox').text().trim();
+    var err_trans = $('#overlayErrorText').text().trim();
+   
+    let fd = new FormData();
+    fd.append("attempt_pk",classVariableDict.lastAttemptID);
+    fd.append("trans",trans);
+    fd.append("etrans",err_trans);
+    fd.append('error_list',JSON.stringify(classVariableDict.errors));                        
+    fd.append('start_idx',classVariableDict.startIDX);                                       
+    fd.append('audio_id',classVariableDict.currentAudID);
+    
+    fd.append('gender', classVariableDict.gender);
+    fd.append('pitch', synthesisObject.pitch);
+    fd.append('speaking_rate', synthesisObject.speaking_rate);
+    fd.append('sessionID',classVariableDict.session_id);
+    var val = 0;
+    var i;
+    for(i=0;i<parseInt(classVariableDict.startIDX);i++){
+        val = val +  $('#upper_'+i).text().split(" ").length;
+    }
+    fd.append("first_word_id",val);
+    $.ajax({
+        url: "/error_typing_used",
+        type: "POST",
+        data: fd,
+        processData: false,
+        contentType: false,
         success: function(){
-            alert("Success")
+            alert("Success");
+        },
+        error: function() {
+            console.log("that's wrong"); 
+        },
+    });
+}
+
+
+// Recording Submit
+function submitRecording(){
+
+    var trans = $('#overlayTextBox').text().trim();
+    let fd = new FormData();
+    fd.append("attempt_pk",classVariableDict.lastAttemptID);
+    fd.append("error_pk",classVariableDict.errors[classVariableDict.startIDX]);
+    fd.append("trans",trans);
+
+    $.ajax({
+        url: "/error_recording_used",
+        type: "POST",
+        data: fd,
+        processData: false,
+        contentType: false,
+        success: function(json){
+            doneError();
+            //add returned audio url to audio tag
         },
         error: function() {
             console.log("that's wrong");

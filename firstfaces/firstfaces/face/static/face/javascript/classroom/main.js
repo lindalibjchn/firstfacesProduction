@@ -195,6 +195,7 @@ $('#listenVoiceBtn').on( 'click', function() {
                     // hide the microphone button
                     $(this).hide();
 		            if(classVariableDict.stage2){
+                        $('#submitOverlay').hide();
 				        $('#stopRecordBtn').show();
 				        $('#reRecordBtn').prop("disabled",true);
 		            }

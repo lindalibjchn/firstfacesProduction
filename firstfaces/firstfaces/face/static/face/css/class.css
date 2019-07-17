@@ -189,7 +189,7 @@ button:active {
     /*border: 2px solid red;*/
     opacity: 0.9;
     bottom: 8%;
-    display: none;
+    /*display: none;*/
 
 }
 #correctionOverlay {
