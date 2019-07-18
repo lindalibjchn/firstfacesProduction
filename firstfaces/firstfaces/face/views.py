@@ -9,7 +9,7 @@ from .utils import *
 from .speech_to_text_utils import *
 from django.utils import timezone
 import json
-from .models import Session, Sentence, AudioFile, Profile, NewsArticle, PostTalkTimings, Test
+from .models import Session, Sentence, AudioFile, Profile, NewsArticle, PostTalkTimings, Test,AudioErrors,AudioErrorAttempt
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 import code
@@ -23,11 +23,15 @@ from google.cloud import texttospeech
 import math
 from django.core.mail import send_mail
 import re
+import ast
+from .praat_utils import *
+
 
 logger = logging.getLogger(__name__)
 # os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/johnsHDD/PhD_backup/erle-3666ad7eec71.json"
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/johnsHDD/PhD/2018_autumn/erle-3666ad7eec71.json"
+#os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/johnsHDD/PhD/2018_autumn/erle-3666ad7eec71.json"
 # os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/firstfaces/erle-3666ad7eec71.json"
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/user1/Downloads/erle-3666ad7eec71.json"
 
 def out_or_in(request):
 
@@ -587,21 +591,142 @@ def store_error_blob(request):
 
     # code.interact(local=locals());
     blob = request.FILES['data'] 
+    startID = request.POST['start_idx']
     #`Wsent_id = int(request.POST['blob_no_text_sent_id']) 
-    errors = request.POST['error_list']
-    print(errors,"\n\n")
+    errors = json.loads(request.POST['error_list'])
+    if startID in errors.keys():
+        primaryKey = errors[startID]
+        af = AudioErrors.objects.get(pk=primaryKey)
+    else:
+        temp = AudioFile.objects.get(pk=request.POST['audio_id'])
+        af = AudioErrors(audio=temp, start_index=startID)
+        af.save()
     sess = Session.objects.get( pk=request.POST['sessionID'] )
     s = Sentence(learner=request.user, session=sess)
+    # Create new AudioErrorAttempt
+    filename ="error_"+str(sess.id) + "_" + str(s.id)+ "_" + timezone.now().strftime( '%H-%M-%S' )+ ".webm"
+    blob.name = filename
     
-
-    
-
+    aea = AudioErrorAttempt(
+            error = af,
+            audio = blob,
+            correct=False,
+            )
+    aea.save()
+    trans = get_speech_recognition(filename)[0]["transcript"]
+    aea.transcript = trans
+    aea.save()
     response_data = {
-
+            'error_trans':trans,
+            'attempt_pk':aea.id,
+            'error_pk':af.id,
+            'error_start':startID,
     }
 
     return JsonResponse(response_data) 
 
+def error_recording_used(request):
+    att = request.POST['attempt_pk']
+    err = request.POST['error_pk']
+    trans = request.POST['trans']
+
+    ae = AudioErrors.objects.get(pk=err)
+    aea = AudioErrorAttempt.objects.get(pk=att)
+    ae.typed = False
+    ae.intention = trans
+    ae.save()
+    
+    aea.correct = True
+    aea.save()
+
+    response_data = { 
+
+    }
+    return JsonResponse(response_data)
+
+def error_typing_used(request):
+    startID = request.POST['start_idx']
+    errors = json.loads(request.POST['error_list'])
+    af = AudioFile.objects.get(pk=request.POST['audio_id'])
+    #If no Audio error exists create it
+    if startID in errors.keys():
+        #AE exists
+        primaryKey = errors[startID]
+        ae = AudioErrors.objects.get(pk=primaryKey)
+    else:
+        #AE does not exist
+        ae = AudioErrors(audio=af, start_index=startID)
+
+    filename = af.audio.name
+    trans = ast.literal_eval(af.alternatives)[0]["transcript"]
+    print("\t-Alligning") 
+    ## generate file for forced allignment
+    f = open(get_text_path(),"w+")
+    for word in trans.split():
+        f.write(word.lower()+"\n")
+    f.close()
+    #convert audio to wav
+    audioPath = convert_audio(filename)
+    textPath = get_text_path()
+    extra_str = '"task_language=eng|os_task_file_format=json|is_text_type=plain"'
+    outPath = get_out_path()
+    aeneasPath = get_aeneas_path()
+    cwd = os.getcwd()
+    
+    #Run forced alligner
+    os.chdir(aeneasPath)
+    os.system('python3 -m aeneas.tools.execute_task '+audioPath+" "+textPath+" "+extra_str+" "+outPath+" >/dev/null 2>&1")
+    os.chdir(cwd)
+    print("\t- Cutting audio")
+    #Get audio
+    ERR_trans = request.POST['etrans']
+    idx = int(request.POST['first_word_id'])
+    
+    endid = idx + (len(ERR_trans.strip().split(" "))-1) 
+    
+
+    ts = get_timestamps(idx,endid)
+    fn = request.POST['sessionID']+"_error.wav"
+    play_errored_text(audioPath,ts,fn)
+    print("\t-getting correct")
+    #Synth Audio
+    gender = request.POST['gender']
+    if gender == 'F':
+        speaking_voice = 'en-GB-Wavenet-A'
+    elif gender == 'M':
+        speaking_voice = 'en-GB-Wavenet-B'
+    else:
+        speaking_voice = 'en-GB-Wavenet-A'
+    print("\t\t-Stage 1")
+    pitch_designated = float(request.POST['pitch'])
+    speaking_rate_designated = float(request.POST['speaking_rate'])      
+
+    client = texttospeech.TextToSpeechClient()
+    input_text = texttospeech.types.SynthesisInput(text=request.POST['trans'])
+    voice = texttospeech.types.VoiceSelectionParams(language_code='en-GB',name=speaking_voice)
+    audio_config = texttospeech.types.AudioConfig(audio_encoding=texttospeech.enums.AudioEncoding.MP3,pitch = pitch_designated,speaking_rate = speaking_rate_designated)
+    try:
+        print("\t\t-1")
+        print("\t\t-",input_text)
+        print("\t\t-",voice)
+        print("\t\t-",audio_config)
+        response = client.synthesize_speech(input_text, voice, audio_config)
+        print("\t\t-2")
+        synthURL = 'media/synths/session' + session_id + '_' + str(int(time.mktime((timezone.now()).timetuple()))) + '.wav'
+        print("\t\t-3")
+        with open( os.path.join(settings.BASE_DIR, synthURL ), 'wb') as out:
+            out.write(response.audio_content)
+    except:  
+        synthURL = 'fault'
+    print("\t\t-Stage 4")
+
+    ae.typed= True
+    ae.intention = request.POST['trans'];
+    ae.save();
+    response_data = {
+
+    }
+    return JsonResponse(response_data)
 
 def store_blob(request):
 
@@ -641,7 +766,6 @@ def store_blob(request):
             interference=interference,
             )
     a.save()
-
     # need to save the file before can acces url to use ffmpeg (in utils.py)
     alternatives = get_speech_recognition(filename)
     # print('transcription_list:', transcription_list)
@@ -658,7 +782,7 @@ def store_blob(request):
 
         'alternatives': alternatives,
         'sent_id': s.id,
-
+        'audio_pk':a.id,
     }
 
     return JsonResponse(response_data)    
@@ -727,7 +851,7 @@ def tts(request):
 
     }
 
-    return JsonResponse(response_data)    
+    return JsonResponse(response_data) 
 
 def store_sent(request):
 

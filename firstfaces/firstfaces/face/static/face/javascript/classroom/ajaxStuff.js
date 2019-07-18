@@ -82,7 +82,7 @@ function sendBlobToServer( blob_to_send ) {
     fd.append('blob_no_text', classVariableDict.blob_no_text);
     fd.append('blob_no_text_sent_id', classVariableDict.blob_no_text_sent_id);
 
-    alert("hereh");
+    
     $.ajax({
         url: "/store_blob",
         type: "POST",
@@ -94,7 +94,8 @@ function sendBlobToServer( blob_to_send ) {
             classVariableDict.blob_no_text = true;
             classVariableDict.blob_no_text_sent_id = json.sent_id;
             console.log('got response from sending blob to server');
-            classVariableDict.alternatives = json.alternatives
+            classVariableDict.alternatives = json.alternatives;
+            classVariableDict.currentAudID = json.audio_pk;
 
             // if first interference, then want the flinch not to be interfered with by the return motions
             if ( classVariableDict.interference_count === 1 && synthesisObject.interference ) {

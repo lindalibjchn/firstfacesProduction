@@ -25,7 +25,12 @@ def get_speech_recognition( aud_file ):
     # }
     
     # only return the list of alternatives
-    return recog_output['alternative'] 
+
+    try: 
+        output = recog_output['alternative'];
+    except:
+        output = {0: {'transcript': "", 'confidence':1}};
+    return output
 
 
 ## commented below out as Daniel will be using his own code for this part

@@ -138,13 +138,12 @@ class AudioFile(models.Model):
 class AudioErrors(models.Model):
     audio = models.ForeignKey(AudioFile, on_delete=models.CASCADE)
     start_index = models.SmallIntegerField()
-    end_index = models.SmallIntegerField()
     intention = models.CharField(max_length=500, null=True)
     typed = models.NullBooleanField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
 class AudioErrorAttempt(models.Model):
-    error = models.ForeignKey(AudioFile, on_delete=models.CASCADE)
+    error = models.ForeignKey(AudioErrors, on_delete=models.CASCADE)
     audio = models.FileField(upload_to="")
     created_at = models.DateTimeField(auto_now_add=True)
     transcript = models.CharField(max_length=500, blank=True, null=True)
