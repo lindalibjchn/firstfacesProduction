@@ -34,7 +34,7 @@ class Available(models.Model):
 class Sentence(models.Model):
     learner = models.ForeignKey(User, on_delete=models.CASCADE)
     session = models.ForeignKey(Session, on_delete=models.CASCADE)
-    sentence = models.CharField(max_length=300, blank=True, null=True)
+    sentence = models.CharField(max_length=300, default="[]")
     sentence_timestamp = models.DateTimeField(null=True, blank=True)
     question = models.BooleanField(default=False)
 
@@ -80,7 +80,7 @@ class Sentence(models.Model):
 class PermSentence(models.Model):
     learner = models.ForeignKey(User, on_delete=models.CASCADE)
     session = models.ForeignKey(Session, on_delete=models.CASCADE)
-    sentence = models.CharField(max_length=300, blank=True, null=True)
+    sentence = models.CharField(max_length=300, default="[]")
     sentence_timestamp = models.DateTimeField(null=True, blank=True)
     question = models.BooleanField(default=False)
 

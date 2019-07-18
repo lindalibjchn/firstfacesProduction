@@ -29,9 +29,9 @@ from .praat_utils import *
 
 logger = logging.getLogger(__name__)
 # os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/johnsHDD/PhD_backup/erle-3666ad7eec71.json"
-#os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/johnsHDD/PhD/2018_autumn/erle-3666ad7eec71.json"
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/johnsHDD/PhD/2018_autumn/erle-3666ad7eec71.json"
 # os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/firstfaces/erle-3666ad7eec71.json"
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/user1/Downloads/erle-3666ad7eec71.json"
+# os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/user1/Downloads/erle-3666ad7eec71.json"
 
 def out_or_in(request):
 
@@ -369,7 +369,7 @@ def class_time(request, session_id):
 
                             sentences[i] = {
                                 'sent_id': s.id,
-                                'sentence': json.loads(s.sentence),# sentence is a list but stored as a string
+                                'sentence': json.loads(s.sentence),
                                 'judgement': s.judgement,
                                 'emotion': s.emotion,
                                 'nod': s.nod,
@@ -648,6 +648,7 @@ def error_typing_used(request):
     startID = request.POST['start_idx']
     errors = json.loads(request.POST['error_list'])
     af = AudioFile.objects.get(pk=request.POST['audio_id'])
+    session_id = request.POST['sessionID']
     #If no Audio error exists create it
     if startID in errors.keys():
         #AE exists
@@ -682,6 +683,8 @@ def error_typing_used(request):
     ERR_trans = request.POST['etrans']
     idx = int(request.POST['first_word_id'])
     
+    print('\n\n' + str(idx) + '\n\n')
+
     endid = idx + (len(ERR_trans.strip().split(" "))-1) 
     
 
@@ -712,17 +715,18 @@ def error_typing_used(request):
         print("\t\t-",audio_config)
         response = client.synthesize_speech(input_text, voice, audio_config)
         print("\t\t-2")
-        synthURL = 'media/synths/session' + session_id + '_' + str(int(time.mktime((timezone.now()).timetuple()))) + '.wav'
-        print("\t\t-3")
-        with open( os.path.join(settings.BASE_DIR, synthURL ), 'wb') as out:
+        synthURL1 = 'media/synths/session' + session_id + '_'+ 'error' + '.wav'
+        print("\t\t" + synthURL1)
+        with open( os.path.join(settings.BASE_DIR, synthURL1 ), 'wb') as out:
             out.write(response.audio_content)
+        print("\t\t-4")
     except:  
-        synthURL = 'fault'
+        synthURL1 = 'fault'
     print("\t\t-Stage 4")
 
     ae.typed= True
-    ae.intention = request.POST['trans'];
-    ae.save();
+    ae.intention = request.POST['trans']
+    ae.save()
     response_data = {
 
     }
