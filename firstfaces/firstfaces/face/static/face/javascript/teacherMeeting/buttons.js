@@ -100,7 +100,6 @@ function sendJudgementToServer( e ) {
                 updateWrongSentences();
                 loadNextSentenceNeedingJudgement();
                 $('.judgement-btns').prop('disabled', false);
-                console.log('s.judgement inside:', s.judgement);
 
                 if ( sentForCorrection === undefined ) { 
                 

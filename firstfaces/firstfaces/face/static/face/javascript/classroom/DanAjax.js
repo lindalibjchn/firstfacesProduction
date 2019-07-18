@@ -303,7 +303,7 @@ function openOverlay(){
 function sendErrorBlobToServer( new_blob ){
     let fd = new FormData();
     fd.append('data',new_blob);
-    fd.append('sessionID',classVariableDict.sessionID);
+    fd.append('sessionID',classVariableDict.session_id);
     fd.append('blob_no_text',classVariableDict.blob_no_txt);
     fd.append('blob_no_text_sent_id',classVariableDict.blob_no_text_sent_id);
     fd.append('error_list',classVariableDict.errors);

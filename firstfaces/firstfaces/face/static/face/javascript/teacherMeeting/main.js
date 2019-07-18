@@ -15,6 +15,7 @@ $(window).on( 'load', function() {
     $( function() {
 
         $("#wrongSentForCorrectionNow").selectable();
+        $("#sentenceForJudgement").selectable();
 
     } )
 
@@ -630,15 +631,45 @@ function resetStatesOnScreen() {
 
 function putNextSentenceNeedingJudgementUpForViewing() {
 
-    $('#sentenceForJudgement').val( '' );
+    //$('#sentenceForJudgement').val( '' );
     
     if (sentencesNeedJudgement.length > 0 ) {
 
         // get next sentence needing judgement
         let sentNeedingJudgement = sentencesNeedJudgement[ 0 ].sentence;
 
-        // put it in the 
-        $('#sentenceForJudgement').html( sentNeedingJudgement.join("") );
+        let lenOfSentArray = sentNeedingJudgement.length;
+        for ( let wordInd = 0; wordInd < lenOfSentArray; wordInd++ ) {
+            
+            if ( sentNeedingJudgement[ wordInd ] === " " ) {
+
+                $('#sentenceForJudgement').append(
+
+                    "<div class='ui-widget-content individual-words' id='indWord_" + wordInd.toString() + "'>&nbsp</div>"
+                    
+                )
+
+            } else {
+                
+                $('#sentenceForJudgement').append(
+
+                    "<div class='ui-widget-content individual-words' id='indWord_" + wordInd.toString() + "'>" + sentNeedingJudgement[ wordInd ] +
+
+                "</div>"
+
+                )
+
+            }
+
+        }
+
+    //if (sentencesNeedJudgement.length > 0 ) {
+
+        //// get next sentence needing judgement
+        //let sentNeedingJudgement = sentencesNeedJudgement[ 0 ].sentence;
+
+        //// put it in the 
+        //$('#sentenceForJudgement').html( sentNeedingJudgement.join("") );
 
     }
 
@@ -657,23 +688,68 @@ function loadNextSentenceNeedingJudgement() {
 
 var appendWrongSection = function() {
     
-    var index1 = window.getSelection()['anchorOffset']
-    var index2 = window.getSelection()['focusOffset']
+    //var index1 = window.getSelection()['anchorOffset']
+    //var index2 = window.getSelection()['focusOffset']
 
-    if ( index1 > index2 ) {
-        var temp = index1;
-        index1 = index2;
-        index2 = temp;
-    } 
+    //if ( index1 > index2 ) {
+        //var temp = index1;
+        //index1 = index2;
+        //index2 = temp;
+    //} 
     
-    wrongIndexes.push( [index1,index2] );
+    //wrongIndexes.push( [index1,index2] );
 
-    let sent = sentencesNeedJudgement[ 0 ].sentence;
-    let wrongText = sent.slice( index1, index2 );
+    let sentNeedJudg = sentencesNeedJudgement[ 0 ].sentence;
+    //let wrongText = sent.slice( index1, index2 );
 
-    let displayedWrongText = replaceSpacesWithUnderscores( wrongText );
+    //let displayedWrongText = replaceSpacesWithUnderscores( wrongText );
     
-    $('#selectedSections').append( '<div class="selectedSection">' + displayedWrongText + '</div>' );
+    //$('#selectedSections').append( '<div class="selectedSection">' + displayedWrongText + '</div>' );
+
+
+    let idArray = []
+    $('#sentenceForJudgement > .ui-selected').each( function() {
+        idArray.push(parseInt(this.id.substring(8)));
+    })
+    wrongIndexes.push( idArray );
+
+    let sent = ''
+    let sent_ = ''
+    idArray.forEach( function(i) {
+
+        let token = sentNeedJudg[ i ];
+        
+        if ( token === ' ' ) {
+
+            sent_ += '_';
+            sent += token;
+
+        } else {
+
+            sent += token;
+            sent_ += token;
+
+        }
+
+    });
+
+    $('#selectedSections').append( '<div class="selectedSection">' + sent_ + '</div>' );
+    $('#sentenceForJudgement > .ui-selected').css('background-color', 'grey');
+
+    //curWrongText = $( '#wrongText' ).val()
+    //console.log( 'curWrongText:', curWrongText );
+    
+    $( '#promptText' ).focus()
+
+    //if ( curWrongText === '' ) {
+
+    $( '#promptText' ).val( sent );
+
+    //} else {
+
+        //$( '#wrongText' ).val( curWrongText + '\n' + sent );
+
+    //}
 
 } 
 
@@ -702,34 +778,72 @@ var appendCorrectionSection = function() {
 
     //get indexes of wrong words
     let idArray = []
-    $('.ui-selected').each( function() {
+    $('#wrongSentForCorrectionNow > .ui-selected').each( function() {
         idArray.push(parseInt(this.id.substring(11)));
     })
-    console.log( 'idArray:', idArray );
+    correctionIndexes.push( idArray );
 
-} 
+    let sent = ''
+    let sent_ = ''
+    idArray.forEach( function(i) {
 
-function replaceSpacesWithUnderscores( s ) {
+        let token = sentForCorrection.sentence[ i ];
+        
+        if ( token === ' ' ) {
 
-    var newString = ""
-
-    for ( var l in s ) {
-
-        if ( s[ l ] === " " ) {
-
-            newString += "_"
+            sent_ += '_';
+            sent += token;
 
         } else {
 
-            newString += s[ l ]
+            sent += token;
+            sent_ += token;
 
         }
 
+    });
+
+    $('#wrongSelections').append( '<div class="selectedSection">' + sent_ + '</div>' );
+    $('#wrongSentForCorrectionNow > .ui-selected').css('background-color', 'grey');
+
+    curWrongText = $( '#wrongText' ).val()
+    console.log( 'curWrongText:', curWrongText );
+    
+    $( '#wrongText' ).focus()
+
+    if ( curWrongText === '' ) {
+
+        $( '#wrongText' ).val( sent );
+
+    } else {
+
+        $( '#wrongText' ).val( curWrongText + '\n' + sent );
+
     }
 
-    return newString;
+} 
 
-}
+//function replaceSpacesWithUnderscores( s ) {
+
+    //var newString = ""
+
+    //for ( var l in s ) {
+
+        //if ( s[ l ] === " " ) {
+
+            //newString += "_"
+
+        //} else {
+
+            //newString += s[ l ]
+
+        //}
+
+    //}
+
+    //return newString;
+
+//}
 
 function checkForChange() {
 

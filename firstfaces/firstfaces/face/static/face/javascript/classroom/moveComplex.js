@@ -613,73 +613,74 @@ function tapKeyFull() {
                     //calculateAlternatives();
                     //show play buttons below
                     if ( classVariableDict.tutorial === false ) {
-                        if (($(".selectable-word").length > 0)||($(".selected-word").length >0)){
-                            //reset text
-                            $('#tia-speech-box').text("Is this what you meant to say?");
-                            //hide backward and forward buttons
-                            $('#backErrorSelection').hide();
-                            $('#forwardErrorSelection').hide();
-                        }
-                        if(($(".uncorrected-error").length > 0)|| ($(".corrected-error").length > 0) ){
-                            //reset speech
-                            $("#tia-speech-box").text("Is this what you meant to say?");
-                            //hide buttons
-                            $("#submitCorrectedErrors").hide();
-                            $("#backCorrection").hide();
-                        }
-                        
-                        if ( $('#upperSentenceHolder').children().length > 0 ) {
-                           $('#upperSentenceHolder').empty();
-                           $('#lowerSentenceHolder').empty();
-                        }
-                       
-                        
 
-                        //reset what tia is saying and add back in the two buttons
-                        $('.play-btn').prop( "disabled", false);
-                        $('#talkBtn').prop( "disabled", false);
-                        $('#recordVoiceBtn').show();
-                        
-                        //Daniel
-                        //Adding correct and incorrect transcript buttons
-                        $('#listenAndSynthBtns').hide();
-                        $('#incorrectTranscriptBtn').show();
-                       
-
-                        $('#talkBtn').hide();
-                        $('#correctTranscript').show();
-                        //Adding speech bubble for tia 
-
-                        //Displaying hypothesised transcript
-                        $('#textInputContainer').show();
-                        $('#sentenceShowHolder').show();
-                        $('#speechBubbleCont').show();
-                          
-                        populateDivs();
-                         
-
-                        // this tap for when the sentence is wrong
+                        // show john's error box
                         if ( classVariableDict.tapKeyForErrors ) {
-                        
+
+                            
                             classVariableDict.tapKeyForErrors = false;
 
-                            //need to change whats wrong btn to show correction btn in showOptionbtns, so just do it below before they fade in :-P
-                            showOptionBtns();
-                            $('#whatsWrongBtn').hide()
-                            $('#showCorrectionBtn').css('display', 'flex')
                             movementController( movements.blank, '0.5', '1.5' );
+                            // display errors
+                            showWrongSentence();
 
                         } else if ( classVariableDict.tapKeyForCorrection ) {
 
+                            classVariableDict.tapKeyForCorrection = false;
                             $('#nextSentenceBtn').css('display', 'flex');
+                            showCorrectionUnderWrongSent();
 
-                        // this one is for after listening to the learners speech
+                        // this one is for after listening to the learners speech - Daniel's stuff
                         } else {
 
                             $('.play-btn').prop( "disabled", false);
                             $('#talkBtn').prop( "disabled", false);
                             $('#recordVoiceBtn').show();
 
+                            if (($(".selectable-word").length > 0)||($(".selected-word").length >0)){
+                                //reset text
+                                $('#tia-speech-box').text("Is this what you meant to say?");
+                                //hide backward and forward buttons
+                                $('#backErrorSelection').hide();
+                                $('#forwardErrorSelection').hide();
+                            }
+                            if(($(".uncorrected-error").length > 0)|| ($(".corrected-error").length > 0) ){
+                                //reset speech
+                                $("#tia-speech-box").text("Is this what you meant to say?");
+                                //hide buttons
+                                $("#submitCorrectedErrors").hide();
+                                $("#backCorrection").hide();
+                            }
+                            
+                            if ( $('#upperSentenceHolder').children().length > 0 ) {
+                               $('#upperSentenceHolder').empty();
+                               $('#lowerSentenceHolder').empty();
+                            }
+                           
+                            
+
+                            //reset what tia is saying and add back in the two buttons
+                            $('.play-btn').prop( "disabled", false);
+                            $('#talkBtn').prop( "disabled", false);
+                            $('#recordVoiceBtn').show();
+                            
+                            //Daniel
+                            //Adding correct and incorrect transcript buttons
+                            $('#listenAndSynthBtns').hide();
+                            $('#incorrectTranscriptBtn').show();
+                           
+
+                            $('#talkBtn').hide();
+                            $('#correctTranscript').show();
+                            //Adding speech bubble for tia 
+
+                            //Displaying hypothesised transcript
+                            $('#textInputContainer').show();
+                            $('#sentenceShowHolder').show();
+                            $('#speechBubbleCont').show();
+                              
+                            populateDivs();
+                    
                         }
 
                     }

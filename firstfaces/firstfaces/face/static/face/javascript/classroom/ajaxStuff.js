@@ -283,6 +283,8 @@ function checkJudgement( sentId ) {
 classVariableDict.promptNINdexesCount = 0;
 function checkForPromptNIndexes( sentId ) {
 
+    console.log('in checkForPromptNIndexes');
+    
     $.ajax({
         url: "/check_prompt_indexes",
         type: "GET",
@@ -296,6 +298,7 @@ function checkForPromptNIndexes( sentId ) {
                 if ( classVariableDict.promptNIndexesReceived === false ) {
 
                     console.log('got prompt n indexes');
+                    console.log('indexes:', json.sent_meta.indexes);
                     classVariableDict.promptNINdexesCount = 0;
                     promptNIndexesReceived( json.sent_meta )
 

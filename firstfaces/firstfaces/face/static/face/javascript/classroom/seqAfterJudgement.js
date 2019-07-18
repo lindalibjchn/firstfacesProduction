@@ -395,6 +395,7 @@ function whatsWrong() {
 
     recTimes.clickOptionBtn = Date.now() / 1000;
     let sentId = classVariableDict.last_sent.sent_id
+
     $.ajax({
         url: "/store_whats_wrong",
         type: "GET",
@@ -451,7 +452,7 @@ function showCorrection() {
     
         setTimeout( function() {
         
-            displayCorrection();
+            //showWrongSentence();
 
             setTimeout( function() {
 
@@ -507,8 +508,6 @@ function nextSentence() {
 var reading = false;
 function waitForWrongSlices() {
 
-    console.log('in waitForWrongSlices');
-
     let sentId = classVariableDict.last_sent.sent_id
 
     $.ajax({
@@ -519,11 +518,9 @@ function waitForWrongSlices() {
 
             if ( json.indexes !== null ) {
 
-                classVariableDict.last_sent.indexes = json.indexes;
-                sentenceObject.wrongIndexes = JSON.parse( json.indexes );
+                classVariableDict.last_sent.indexes = JSON.parse( json.indexes );
 
-                classVariableDict.last_sent.correction = json.correction;
-                correctionObject.corrections = json.correction
+                classVariableDict.last_sent.correction = JSON.parse( json.correction );
                 
                 // no longer turning to board in mobile so comment out
                 // turnToBoardToShowErrors();
@@ -552,56 +549,239 @@ function tapKeyToShowErrors() {
 
 }
 
-function turnToBoardToShowErrors() {
+function showWrongSentence() {
 
-    recTimes.turnToBoardToShowErrors = Date.now() / 1000;
-    movementController( movements.board, tiaTimings.turnToBoard / 2, tiaTimings.turnToBoard );
 
-    let newInd = Object.keys(classVariableDict.sentences).length - 1;
-    parseText( sentenceObject, true, 0x2d2d2d );
-    addCloneLettersToTextBackground( sentenceObject, lineY );
-    scene.add( sentenceObject.background );
+    $('#submittedNCorrectedSentenceContCont').show()
 
-    setTimeout( function() {
+    for ( w=0; w < classVariableDict.last_sent.sentence.length; w++ ) {
 
-        initCameraMove('board', tiaTimings.cameraTurnToBoard);
+        if ( classVariableDict.last_sent.sentence[ w ] === ' ' ) {
 
-        setTimeout( function() {
 
-            initArmIndicate('right', 1, 'high', tiaTimings.armIndicate);
+            $('#submittedSentence').append(
 
-            expressionController( expressionObject.abs.neutral, tiaTimings.changeExpression * 2000 );
-            
-            setTimeout( function() {
+                "<div class='wrong-words wrong-words-spaces' id='wrongWord_" + w.toString() + "'>" + "*</div>"
 
-                highlightWrong(); 
+            );
 
-                setTimeout( function() {
+        
+        } else {
 
-                    initArmIndicate('right', 0, 'high', tiaTimings.armIndicate * 2);
+            $('#submittedSentence').append(
 
-                    setTimeout( function() {
+                "<div class='wrong-words wrong-words-words' id='wrongWord_" + w.toString() + "'>" + classVariableDict.last_sent.sentence[ w ] + "</div>"
 
-                        // show buttons again
-                        $('#whatsWrongBtn').hide();
-                        $('#showCorrectionBtn').show();
-                        $('.option-btn').prop( "disabled", false );
-                        $('#optionBtns').fadeIn( 500 )
+            );
 
-                    }, tiaTimings.armIndicate * 1000 );
+        }
 
-                }, tiaTimings.armIndicate * 1000 );
+    };
 
-            }, tiaTimings.armIndicate * 1000 );
+    setTimeout( highlightWrong, 2000 );
+        
+}
 
-        }, tiaTimings.cameraTurnToBoard * 1000 );
 
-    }, tiaTimings.turnToBoard * 500 )
+function showErrorBtns() {
+
+    recTimes.showErrors = Date.now() / 1000;
+    
+    // show buttons again
+    showOptionBtns();
+    $('#whatsWrongBtn').hide();
+    $('#showCorrectionBtn').css('display', 'flex')
+    $('.option-btn').prop( "disabled", false );
+    $('#optionBtns').fadeIn( 500 );
 
 }
 
 
+function highlightWrong() {
 
+    classVariableDict.last_sent.indexes.forEach( function(ind) {
+
+        // for spaces
+        if ( ind.length === 1 && ind === " " ) {
+
+            $('#wrongWord_' + ind[0].toString()).css( {
+                'color': 'red' ,
+                'font-weight': 'bold'
+            });
+
+        } else {
+
+            ind.forEach( function(i) {
+
+                $('#wrongWord_' + i.toString()).css( {
+                    //'color': 'red',
+                    'background-image': 'linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0), red, rgba(0,0,0,0), rgba(0,0,0,0))',
+                });
+
+            } );
+
+        }
+
+    } );
+
+    showErrorBtns();
+
+}
+
+function showCorrectionUnderWrongSent() {
+
+    $( '#correctedSentence' ).fadeIn()
+
+    //get correct parts
+    let correctParts = [];
+    let startSlice = 0
+    for ( i=0; i<classVariableDict.last_sent.indexes.length + 1; i++ ) {
+
+        if ( i < classVariableDict.last_sent.indexes.length ) {
+
+            slice = classVariableDict.last_sent.sentence.slice( startSlice, classVariableDict.last_sent.indexes[ i ][ 0 ])
+            correctParts.push( slice )
+
+            startSlice = classVariableDict.last_sent.indexes[ i ][ classVariableDict.last_sent.indexes[ i ].length - 1] + 1
+
+        } else {
+
+            slice = classVariableDict.last_sent.sentence.slice( startSlice )
+            correctParts.push( slice )
+
+        }
+
+    }
+
+    //put together with wrong parts
+
+    correct = true;
+    count = 0;
+    for ( j=0; j<(classVariableDict.last_sent.indexes.length + 1) * 2; j++ ) {
+
+        if ( correct ) {
+
+            correctParts[ count ].forEach( function( p ) {
+
+                if ( p  === ' ' ) {
+
+                    $('#correctedSentence').append(
+
+                        "<div class='correct-words correct-parts correct-words-spaces'>*</div>"
+
+                    );
+
+                } else {
+
+                    $('#correctedSentence').append(
+
+                        "<div class='correct-words correct-parts correct-words-words'>" + p + "</div>"
+
+                    );
+
+                };
+
+            } )
+
+            correct = false;
+
+        } else {
+
+            classVariableDict.last_sent.correction[ count ].forEach( function( q ) {
+
+                if ( q  === ' ' ) {
+
+                    $('#correctedSentence').append(
+
+                        "<div class='correct-words wrong-parts wrong-parts-spaces'>*</div>"
+
+                    );
+
+                } else {
+
+                    $('#correctedSentence').append(
+
+                        "<div class='correct-words wrong-parts wrong-parts-words'>" + q + "</div>"
+
+                    );
+
+                };
+
+            } );
+
+            correct = true;
+            count += 1;
+
+        }
+
+    }
+
+};
+
+function subCorrections() {
+
+    classVariableDict.last_sent.indexes.forEach( function ( ind, c ) {
+
+        // get length of original and correction
+        let lenOriginal = 0;
+        let lenCorrection = classVariableDict.last_sent.correction[ c ].length;
+
+        ind.forEach( function( i ) {
+
+            //$('#correctionWord_' + i.toString() ).addClass( "correction-word" );
+
+            lenOriginal += classVariableDict.last_sent.sentence[ i ].length
+
+        } );
+
+        var diff;
+        var finalInd;
+        if ( lenCorrection > lenOriginal ) {
+
+            diff = lenCorrection - lenOriginal;
+         
+            //add spaces to space after final word
+            finalInd = classVariableDict.last_sent.indexes[ c ][ classVariableDict.last_sent.indexes[ c ].length - 1 ] 
+
+            if ( classVariableDict.last_sent.sentence[ finalInd ] === ' ' ) {
+        
+                $('#wrongWord_' + toString( finalInd ) ).append('*'.repeat( diff ))
+
+            } else {
+
+                $('#wrongWord_' + toString( finalInd + 1 ) ).append('*'.repeat( diff ))
+
+            }
+
+        //} else if ( lenOriginal > lenCorrection ) {
+
+            //diff = lenOriginal - lenCorrection;
+         
+            ////add spaces to space after final word
+            //finalInd = classVariableDict.last_sent.indexes[ c ][ classVariableDict.last_sent.indexes[ c ].length - 1 ] 
+
+            //if ( classVariableDict.last_sent.sentence[ finalInd ] === ' ' ) {
+        
+                //$('#wrongWord_' + toString( finalInd ) ).append('*'.repeat( diff ))
+
+            //} else {
+
+                //$('#wrongWord_' + toString( finalInd + 1 ) ).append('*'.repeat( diff ))
+
+            //}
+
+        
+
+        }
+
+        console.log( 'lenOriginal:', lenOriginal );
+        console.log( 'lenCorrection:', lenCorrection );
+        console.log( 'diff:', diff );
+        console.log( 'finalInd:', finalInd );
+
+    } );
+
+}
 
 
 

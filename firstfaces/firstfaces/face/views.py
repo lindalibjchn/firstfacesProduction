@@ -351,17 +351,29 @@ def class_time(request, session_id):
                                 if a.interference:
                                     interference_count += 1;
 
+                            # stop error on json.loads when indexes are none
+                            print(type(s.correction))
+                            if s.indexes != None:
+                                indexes = json.loads(s.indexes)
+                            else:
+                                indexes = None
+
+                            if s.correction != '':
+                                correction = json.loads(s.correction)
+                            else:
+                                correction = None
+
                             sentences[i] = {
                                 'sent_id': s.id,
-                                'sentence': s.sentence,
+                                'sentence': json.loads(s.sentence),# sentence is a list but stored as a string
                                 'judgement': s.judgement,
                                 'emotion': s.emotion,
                                 'nod': s.nod,
                                 'nodSpeed': float_nodSpeed,
                                 'nodAmount': float_nodAmount,
                                 'surprise': float_surprise,
-                                'indexes': s.indexes,
-                                'correction': s.correction,
+                                'indexes': indexes,
+                                'correction': correction,
                                 'prompt': s.prompt,
                                 'show_correction': s.show_correction,
                             }
@@ -573,6 +585,7 @@ def store_topic(request):
 
 def store_error_blob(request):
 
+    # code.interact(local=locals());
     blob = request.FILES['data'] 
     #`Wsent_id = int(request.POST['blob_no_text_sent_id']) 
     errors = request.POST['error_list']
@@ -699,7 +712,8 @@ def tts(request):
     try:
         response = client.synthesize_speech(input_text, voice, audio_config)
 
-        synthURL = 'media/synths/session' + session_id + '_' + str(int(time.mktime((timezone.now()).timetuple()))) + '.wav'
+        # don't need to keep all synths for class. Remember to delete this when session ends.
+        synthURL = 'media/synths/session' + session_id # + '_' + str(int(time.mktime((timezone.now()).timetuple()))) + '.wav'
         with open( os.path.join(settings.BASE_DIR, synthURL ), 'wb') as out:
             out.write(response.audio_content)
     except:
@@ -950,7 +964,6 @@ def wait_for_correction(request):
 
             # break
 
-    sent_new.correction = sent_new.correction.split(" # ")
     sent_new.indexes = sent_new.indexes
     response_data = {
 
@@ -1056,7 +1069,18 @@ def store_correction(request):
     sent = Sentence.objects.get(pk=sent_id)
     sent.indexes = sent_meta['indexes']
     corrections_list = sent_meta['correction'].split('\n')
-    sent.correction = ' # '.join( corrections_list )
+    new_corrections_list = []
+    for cor in corrections_list:
+        list_without_spaces = cor.split()
+        list_with_spaces = [list_without_spaces[0]]
+        for i in range(1, len(list_without_spaces)):
+            list_with_spaces.append(' ')
+            list_with_spaces.append(list_without_spaces[i])
+        new_corrections_list.append(list_with_spaces)
+
+    print('new_corrections_list:', new_corrections_list)
+
+    sent.correction = json.dumps( new_corrections_list )
     sent.correction_timestamp = time_now
     sent.save()
 

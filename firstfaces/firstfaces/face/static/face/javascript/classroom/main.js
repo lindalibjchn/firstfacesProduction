@@ -752,9 +752,12 @@ function JudgementReceived( sentMeta ) {
     let newInd = Object.keys(classVariableDict.sentences).length;
     sentMeta.emotion = JSON.parse(sentMeta.emotion);
     classVariableDict.sentences[ newInd ] = sentMeta;
+    classVariableDict.sentences[ newInd ].sentence = JSON.parse( sentMeta.sentence );
+    classVariableDict.sentences[ newInd ].indexes = JSON.parse( sentMeta.indexes );
     classVariableDict.id_of_last_sent = newInd;
     classVariableDict.last_sent = sentMeta;
-    sentenceObject.sentence = sentMeta.sentence;
+    classVariableDict.last_sent.sentence = sentMeta.sentence;
+    classVariableDict.last_sent.indexes = JSON.parse( sentMeta.indexes );
 
     // keeps state of sentence
     classVariableDict.blob_no_text = false;

@@ -189,7 +189,7 @@ button:active {
     /*border: 2px solid red;*/
     opacity: 0.9;
     bottom: 8%;
-    display: none;
+    /*display: none;*/
 
 }
 #correctionOverlay {
@@ -538,7 +538,7 @@ button:active {
     height: 100%;
     width: 100%;
     /*bottom: 4%;*/
-    /*border: 2px dashed blue;*/
+    border: 2px dashed blue;
     display: none;
 
 }
@@ -571,9 +571,55 @@ button:active {
 
 #correctedSentence {
 
-    padding-top: 1.2em;
+    padding-top: 1.5em;
     position: absolute;
     /*border: 2px solid green;*/
+
+}
+
+.wrong-words {
+
+    display: inline-block;
+
+}
+
+.correct-words {
+
+    display: inline-block;
+    color: rgba(0,0,0,1);
+
+}
+
+.correction-word {
+
+    color: green;
+
+}
+
+/*put 'a's in place of spaces on Daniel's advice, n then make them disappear. Thi swill help with alignment later*/
+.wrong-words-spaces {
+
+    color: rgba(0, 0, 0, 0);
+
+}
+
+.correct-words-spaces {
+
+    color: rgba(0, 0, 0, 0);
+
+}
+
+.wrong-parts {
+
+    color: white;
+    background-image: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0), green, green, rgba(0,0,0,0), rgba(0,0,0,0));
+    font-weight: bold;
+
+}
+
+.wrong-parts-spaces {
+
+    color: rgba(0,0,0,0)
 
 }
 
@@ -1238,4 +1284,5 @@ button:active {
     width: 80%;
     height: 50px;
 }
+
 

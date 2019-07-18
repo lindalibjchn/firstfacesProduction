@@ -102,7 +102,7 @@ function createExchange( sM ) {
 
     if ( sM.sentence[ 0 ] == " " ) {
 
-        sentenceBox.innerHTML =  "&nbsp" + sM.sentence.substring( 1 );
+        sentenceBox.innerHTML =  "&nbsp" + sM.sentence;
 
     } else {
 
@@ -128,7 +128,7 @@ function makeHighlightedSent( sentenceMeta ) {
 
     if ( sentenceMeta.indexes !== null) {
 
-        let indexes = JSON.parse( sentenceMeta.indexes );
+        let indexes = sentenceMeta.indexes;
 
         // if there is more than one wrong bit I need this to find point of last index to begin next interation from
         let lastInd = 0
@@ -178,7 +178,7 @@ function makeHighlightedSent( sentenceMeta ) {
 
     if ( sentWithColor[ 0 ] == " " ) {
 
-        return "&nbsp" + sentWithColor.substring(1);
+        return "&nbsp" + sentWithColor;
 
     } else {
 
