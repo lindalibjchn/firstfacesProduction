@@ -1,5 +1,3 @@
-import matplotlib
-matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from scipy import signal
 from scipy.io import wavfile
@@ -11,6 +9,7 @@ import json
 from pydub.playback import play
 from pydub import AudioSegment
 from gtts import gTTS
+import ast
 
 def get_praat_path():
     return os.path.join(settings.BASE_DIR, 'media',"images")+"/"
@@ -74,8 +73,12 @@ def get_aeneas_path():
     return path+"/"
 
 def load_json():
-    with open(get_out_path()) as file:
-        data = json.load(file)
+    f = open(get_out_path(),"r")
+    out = ""
+    for line in f:
+        out+=line.strip()+" "
+    f.close()
+    data = ast.literal_eval(out)
     return data
 
 def get_timestamps(startIDX,endIDX):
