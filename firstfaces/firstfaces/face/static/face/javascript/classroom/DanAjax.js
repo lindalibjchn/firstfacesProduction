@@ -17,7 +17,7 @@ $('#incorrectTranscriptBtn').click(function(){
     //
 
     //change text in box
-    $('#tia-speech-box').text("Select the incorrect words");
+    //$('#tia-speech-box').text("Select the incorrect words");
 
     //add onclick function to btns
     $('#backErrorSelection').show();
@@ -71,7 +71,7 @@ $('#forwardErrorSelection').click(function(){
  
 
     //cahneg tias textbox
-    $('#tia-speech-box').text("Select an error to correct it");
+    //$('#tia-speech-box').text("Select an error to correct it");
     $('#backCorrection').show();
 });
 
@@ -108,7 +108,7 @@ function correctError(idx){
     $('#overlayErrorText').text(errText);
     $('#centeredErrorText').text(errText);
     //Have Tia change speech box
-    $('#tia-speech-box').text("Please enter what this is meant to be");
+    //$('#tia-speech-box').text("Please enter what this is meant to be");
 };
 
 $('#closeOverlay').click(function(){
@@ -116,7 +116,7 @@ $('#closeOverlay').click(function(){
     $('#overlayTextBox').empty();
     $('#overlayTextBox').append('<span id="typeHereOverlay">Type Here!</span>');
 
-    $('#tia-speech-box').text("Select an error to correct it");
+    //$('#tia-speech-box').text("Select an error to correct it");
 
 });
 
@@ -131,7 +131,7 @@ $('#backErrorSelection').click(function(){
     $('.selected-word').removeClass("selected-word");
 
     //reset text
-    $('#tia-speech-box').text("Is this what you meant to say?"); 
+    //$('#tia-speech-box').text("Is this what you meant to say?"); 
 
     //reset buttons
     $('#correctTranscript').show();
@@ -216,7 +216,7 @@ function doneError(){
     $('#overlayTextBox').empty();
     $('#overlayTextBox').append('<span id="typeHereOverlay">Type Here!</span>');
     
-    $('#tia-speech-box').text("Select an error to correct!");
+    //$('#tia-speech-box').text("Select an error to correct!");
 
     //Check if all errors are corrected
     if($('.uncorrected-error').length == 0){
@@ -246,7 +246,7 @@ $('#backCorrection').click(function(){
         $(idx).attr("onclick","selectErrWord(this.id)") 
     }
     // reset tia speech
-    $('#tia-speech-box').text("Select the incorrect words");
+    //$('#tia-speech-box').text("Select the incorrect words");
     // reset buttons
     $('#submitCorrectedErrors').hide();
     $('#backCorrection').hide();
@@ -260,7 +260,7 @@ $('#closeOverlayArea').click(function(){
    $('#correctionOverlay').hide();
    $('#overlayTextBox').empty();
    //$('#overlayTextBox').append('<span id="typeHereOverlay">Type Here!</span>');       
-   $('#tia-speech-box').text("Select an error to correct!"); 
+   //$('#tia-speech-box').text("Select an error to correct!"); 
    classVariableDict.stage2 = false;
    classVariableDict.stage3 = false;
 });
@@ -289,7 +289,10 @@ $('#backOverlay').click(function(){
     $('#submitOverlay').hide();
     classVariableDict.stage3 = false;
     classVariableDict.stage2 = true;
-    //Make Ajax call 
+    classVariableDict.specClicks = [];
+    //Make Ajax call
+    //send AE id set intention back to null and set typed to false
+    fd = new FormData();
 });
 
 function openOverlay(){
@@ -310,7 +313,39 @@ function openOverlay(){
     classVariableDict.stage2 = true;
 }
 
+function sendAttemptBlob( new_blob ){
+    let fd = new FormData();
+    fd.append('data',new_blob);
+    fd.append('error_pk',classVariableDict.errors[classVariableDict.startIDX]);
+    fd.append('sessionID',classVariableDict.session_id);
+    fd.append('audio_id',classVariableDict.currentAudID);
+    fd.append('correctio_id', classVariableDict.correctionAttemptID);
+    fd.append('clicks', classVariableDict.clicks);
+    fd.append('blob_no_text_sent_id',classVariableDict.blob_no_text_sent_id);
 
+    $.ajax({                                                                                 
+        url: "/store_attempt_blob",                                           
+        type: "POST",                                                                        
+        data: fd,                                                                            
+        processData: false,                                                                  
+        contentType: false,
+        success: function(json){
+           $('#reRecordBtn').show();
+           $("#reRecordBtn").prop( "disabled", false );
+           document.getElementById("hypImg").src = "http://127.0.0.1:8000/"+json.image_url;
+           $("#hyp_text").text(json.trans);
+           document.getElementById('hypAudio').src = "http://127.0.0.1:8000/"+json.audio_url;
+            
+           if(json.correct){
+                alert("right");
+           }
+           
+        },                                                                                   
+        error: function() {                                                                  
+            console.log("that's wrong");                                                     
+        },                                                                                   
+   });
+}
 
 function sendErrorBlobToServer( new_blob ){
     let fd = new FormData();
@@ -331,6 +366,7 @@ function sendErrorBlobToServer( new_blob ){
         success: function(json){
             //add index an foregin key to the errors
             classVariableDict.errors[json['error_start']] = json['error_pk'];
+            alert(classVariableDict.errors);
             //display transcript
             $("#centeredErrorHolder").hide();
             $("#overlayErrorBox").show();
@@ -361,7 +397,7 @@ function sendErrorBlobToServer( new_blob ){
 
 $('#ref_btn').click(function(){
     //Store click
-    classVariableDict.specClicks.push({"synth":Date.now() / 1000});
+    classVariableDict.specClicks.push(JSON.stringify({"synth":Date.now() / 1000}));
 
    document.getElementById("refAudio").play();
 });
@@ -369,7 +405,7 @@ $('#ref_btn').click(function(){
 $('#hyp_btn').click(function(){
 
     //store click
-    classVariableDict.specClicks.push({"user":Date.now() / 1000});
+    classVariableDict.specClicks.push(JSON.stringify({"user":Date.now() / 1000}));
 
     document.getElementById("hypAudio").play();
 });
@@ -431,12 +467,15 @@ function submitKeyboard(){
             $("#submitOverlay").hide();
             $("#reRecordBtn").css("background-color","blue");
             
-            $("backOverlay").show();
+            $("#backOverlay").show();
         
             classVariableDict.specClicks = [];
             classVariableDict.stage3 = true;
             classVariableDict.stage2 = false;
             classVariableDict.correctionAttemptID = json.aeca_id;
+
+            //add error id to errors
+            classVariableDict.errors[classVariableDict.startIDX] = json.ae_id;
         },
         error: function() {
             console.log("that's wrong"); 

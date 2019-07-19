@@ -638,14 +638,14 @@ function tapKeyFull() {
 
                             if (($(".selectable-word").length > 0)||($(".selected-word").length >0)){
                                 //reset text
-                                $('#tia-speech-box').text("Is this what you meant to say?");
+                                //$('#tia-speech-box').text("Is this what you meant to say?");
                                 //hide backward and forward buttons
                                 $('#backErrorSelection').hide();
                                 $('#forwardErrorSelection').hide();
                             }
                             if(($(".uncorrected-error").length > 0)|| ($(".corrected-error").length > 0) ){
                                 //reset speech
-                                $("#tia-speech-box").text("Is this what you meant to say?");
+                                //$("#tia-speech-box").text("Is this what you meant to say?");
                                 //hide buttons
                                 $("#submitCorrectedErrors").hide();
                                 $("#backCorrection").hide();
@@ -666,8 +666,7 @@ function tapKeyFull() {
                             //Daniel
                             //Adding correct and incorrect transcript buttons
                             $('#listenAndSynthBtns').hide();
-                            $('#incorrectTranscriptBtn').show();
-                           
+                            $('#incorrectTranscriptBtn').show(); 
 
                             $('#talkBtn').hide();
                             $('#correctTranscript').show();
@@ -676,7 +675,7 @@ function tapKeyFull() {
                             //Displaying hypothesised transcript
                             $('#textInputContainer').show();
                             $('#sentenceShowHolder').show();
-                            $('#speechBubbleCont').show();
+                            //$('#speechBubbleCont').show();
                               
                             populateDivs();
                     

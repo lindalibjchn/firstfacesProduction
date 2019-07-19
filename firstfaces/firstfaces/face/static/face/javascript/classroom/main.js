@@ -194,9 +194,10 @@ $('#listenVoiceBtn').on( 'click', function() {
 
                     // hide the microphone button
                     $(this).hide();
-		            if(classVariableDict.stage2){
+		            if(classVariableDict.stage2 || classVariableDict.stage3){
                         $('#submitOverlay').hide();
 				        $('#stopRecordBtn').show();
+                  
 				        $('#reRecordBtn').prop("disabled",true);
 		            }
                     $('#stopRecordVoiceBtn').show();
@@ -355,11 +356,16 @@ function onMediaRecorderStop() {
 
     // send blob to server to be stored, but wait a bit to make sure it has come through
     //setTimeout( function() {
-   if(!classVariableDict.stage2){
+   if(!classVariableDict.stage2 && !classVariableDict.stage3){
     	sendBlobToServer( classVariableDict.blob );
 	}
 	else{
-	    sendErrorBlobToServer( classVariableDict.blob );
+        if(classVariableDict.stage2){
+	        sendErrorBlobToServer( classVariableDict.blob );
+        }
+        else{
+            sendAttemptBlob( classVariableDict.blob );
+        }
 	}
     //}, 1000);
 

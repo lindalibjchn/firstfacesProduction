@@ -31,6 +31,10 @@ def get_praat_image(wav_path,code):
         ax.specgram(temp,Fs=samplingFrequency,cmap='OrRd')
     elif code ==1: # Ref
         ax.specgram(temp,Fs=samplingFrequency,cmap='YlGn')
+    elif code == 2: #correct att
+        ax.specgram(temp,Fs=samplingFrequency,cmap='YlGn')
+    elif code == 3: #incorrect att
+        ax.specgram(temp,Fs=samplingFrequency,cmap='OrRd')
     else:
         return 1
     ax.axis('off')
@@ -40,7 +44,8 @@ def get_praat_image(wav_path,code):
         plt.savefig(get_praat_path()+"hyp.png", transparent = True, bbox_inches = 'tight', pad_inches = 0)
     elif code == 1:
         plt.savefig(get_praat_path()+"ref.png", transparent = True, bbox_inches = 'tight', pad_inches = 0)
-
+    else:
+        plt.savefig(get_praat_path()+"att.png", transparent = True, bbox_inches = 'tight',pad_inches = 0)
 
 def convert_audio(filename):
     #input_aud_loc = os.path.join(settings.BASE_DIR, 'media', filename)

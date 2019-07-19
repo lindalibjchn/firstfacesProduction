@@ -44,5 +44,6 @@ urlpatterns = [
     path('logout', LogoutView.as_view(next_page=reverse_lazy('entrance')), name='logout'),
     path('store_error_blob', views.store_error_blob,name='store_error_blob'),
     path('error_recording_used', views.error_recording_used, name="error_recording_used"),
-    path('error_typing_used', views.error_typing_used, name="error_typing_used"),    
+    path('error_typing_used', views.error_typing_used, name="error_typing_used"),
+    path('store_attempt_blob', views.store_attempt_blob, name="store_attempt_blob"),
     ]

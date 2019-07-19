@@ -749,6 +749,53 @@ def error_typing_used(request):
             "hyp_length":hypLen,
             "ref_length":refLen,
             "aeca_id":aeca.id,
+            "ae_id":ae.id,
+    }
+    return JsonResponse(response_data)
+
+def store_attempt_blob(request):
+    blob = request.FILES['data']
+    sess = Session.objects.get( pk=request.POST['sessionID'] )
+    ae_pk = request.POST['error_pk']
+    ae = AudioErrors.objects.get( pk=ae_pk )
+
+    blob_no_text_sent_id = int(request.POST['blob_no_text_sent_id'])
+    s = Sentence.objects.get( pk=blob_no_text_sent_id )
+
+    aeca = AudioErrorCorrectionAttempt.objects.get(pk = request.POST['correctio_id'])
+    filename = str(sess.id) + "_attempt_" + str(s.id) + "_" + timezone.now().strftime( '%H-%M-%S' ) +".webm"
+    blob.name = filename 
+    aeca.audio = blob;
+    try:
+        clicks = ast.literal_eval(request.POST['clicks'])
+    except:
+        clicks = []
+    aeca.clicks = clicks
+    aeca.save();
+    
+    trans = get_speech_recognition(filename)[0]["transcript"]
+    aeca.transcript = trans
+    aeca.save()
+    
+    correct = False
+    if ae.intention == trans:
+        correct = True
+    print("\n\n",trans,"\n",correct,"\n\n")
+    audio_url = "media/wav/"+filename[:-4]+'wav'
+
+    code = 3
+    if correct:
+        code = 2
+    
+    get_praat_image(settings.BASE_DIR+"/"+audio_url,code)
+    pic_url = "media/images/att.png"
+
+
+    response_data = {
+        "correct":correct,
+        "audio_url":audio_url,
+        "image_url":pic_url,
+        "trans":trans,
     }
     return JsonResponse(response_data)
 
