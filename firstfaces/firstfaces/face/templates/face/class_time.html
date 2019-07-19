@@ -179,6 +179,31 @@
                 <span id="centeredErrorText">Error</span>  
             </div>
         </div>
+
+        <div id="praatCont">
+            <div id="praatContHolder">
+                <div id ="btnCont">   
+                    <center>
+                    <div id="ref_btn" class="img_btn">
+                        <img src="" class="spec_img" id="refImg">
+                        <div class="text_layer" id="ref_text_layer" onclick="">
+                            <span id="ref_text">TEST</span>
+                        </div>
+                        <div class="invisible_layer" id="ref_invisible"></div>
+                    </div>
+                    <div id="hyp_btn" class="img_btn">
+                        <center><img src="" class="spec_img" id="hypImg"></center>
+                        <div class = "text_layer" id="hyp_text_layer" onclick="">
+                            <span id="hyp_text"> TEST</span>    
+                        </div>
+                        <div class="invisible_layer" id="hyp_invisible"></div>
+                    </div>
+                    </center>
+                </div>
+            </div>        
+        </div>
+
+
         <div id="overlayErrorBox">
             <span id="overlayErrorText">Error</span>
         </div>
@@ -524,6 +549,10 @@
 <audio id="soundClip"></audio>
 <audio id="synthClip"></audio>
 <audio id="micInterferenceClip"></audio>
+
+<audio id="refAudio"></audio>
+<audio id="hypAudio"></audio>
+
 
 <!-- three.js script -->
 <script src="{% static 'three.min.js' %}"></script>

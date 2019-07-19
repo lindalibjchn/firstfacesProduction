@@ -223,6 +223,100 @@ button:active {
     align-items: center;
     justify-content:center;
 }
+#praatCont{
+    height:76%;
+    width:100%;
+    position: absolute;
+    top:0;
+    background-color:#f0f0f0;
+
+}
+
+.img_btn{
+    width:95%;
+    border-radius:7px;
+    min-width:96%;
+    padding-top:2.5%;
+    padding-bottom:1%;
+    padding-right:2.5%;
+}
+
+#ref_btn{
+    background-color:green;
+    width:95%;
+    position:relative;
+}
+.text_layer{
+    height:100%;
+    width:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background-color:transparent;
+    z-index:2;
+    position:absolute;
+    top:0;
+    right:0;
+}
+#ref_text{
+    z-index:3;
+    color:white;
+    font-size:24px;
+    font-family: monospace;
+}
+#hyp_text{
+    z-index:3;
+    color:white;
+    font-size:24px;
+    font-family:monospace;
+}
+#ref_invisible{
+    background-color:green;
+}
+#hyp_invisible{
+    background-color:red;
+}
+
+.invisible_layer{
+    height:100%;
+    width:100%;
+    position:absolute;
+    top:0;
+    right:0;
+    opacity:0.3;
+    z-index:1;
+    border-radius:7px;
+}
+
+
+#hyp_btn{
+    background-color:red;
+    position:relative;
+}
+
+
+
+#ref_btn{
+    margin-bottom:50px;
+}
+
+.spec_img{
+    width:97.5%;
+    height:auto;
+    max-width:97.5%;
+    max-height:100%;
+    min-width:95%;
+}
+
+
+#praatContHolder{
+    height:100%;
+    width:100%;
+    display: flex;
+    align-items:center;
+    justify-content:center;
+}
+
 #centeredErrorText{
     font-size:2em;
     font-family:monospace;

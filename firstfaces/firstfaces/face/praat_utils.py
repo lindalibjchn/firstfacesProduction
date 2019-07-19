@@ -10,6 +10,13 @@ from pydub.playback import play
 from pydub import AudioSegment
 from gtts import gTTS
 
+def get_praat_path():
+    return os.path.join(settings.BASE_DIR, 'media',"images")+"/"
+
+def get_rel_praat_paths():
+    base = "media/images/"
+    return base+"ref.png", base+"hyp.png"
+
 def get_praat_image(wav_path,code):
     samplingFrequency, signalData = wavfile.read(wav_path)
     temp = []
@@ -30,9 +37,9 @@ def get_praat_image(wav_path,code):
     plt.subplots_adjust(left=0, bottom=0, right=1, top=1, wspace=0, hspace=0)
     fig.tight_layout()
     if code == 0:
-        plt.savefig("../Scripts/templates/hyp.png", transparent = True, bbox_inches = 'tight', pad_inches = 0)
+        plt.savefig(get_praat_path()+"hyp.png", transparent = True, bbox_inches = 'tight', pad_inches = 0)
     elif code == 1:
-        plt.savefig("../Scripts/templates/ref.png", transparent = True, bbox_inches = 'tight', pad_inches = 0)
+        plt.savefig(get_praat_path()+"ref.png", transparent = True, bbox_inches = 'tight', pad_inches = 0)
 
 
 def convert_audio(filename):
@@ -43,6 +50,9 @@ def convert_audio(filename):
 
 def get_error_audio_path(filename):
     return os.path.join(settings.BASE_DIR, 'media', 'wav', filename)
+
+def ref_path(fn):
+    return "media/wav/"+fn
 
 def  get_text_path():
     path = os.path.join(settings.BASE_DIR, 'face', 'text_files','allign.txt')
@@ -74,7 +84,7 @@ def play_errored_text(wav_path,timestamp,filename):
     newAudio = newAudio[t1:t2]
     path = get_error_audio_path(filename)
     newAudio.export(path, format="wav")
-    return
+    return path
     
 
 def play_audio(wav_path):
@@ -83,5 +93,19 @@ def play_audio(wav_path):
 
 
 def get_synth_path(filename):
-	 return os.path.join(settings.BASE_DIR, 'media', 'synths', filename)
+    return os.path.join(settings.BASE_DIR, 'media', 'synths', filename)
 
+def get_hyp_audio_path(fn):
+    return "media/synths/"+fn[:-3]+'wav'
+
+def generate_synth_audio(text,filename):
+    tts = gTTS(text=text, lang='en')
+    tts.save(get_synth_path(filename[:-4]+'.mp3'))
+    output_aud_loc = os.path.join(settings.BASE_DIR, 'media', 'synths', filename[:-3] + 'wav')
+    ffmpeg.input(get_synth_path(filename[:-4]+".mp3")).output(output_aud_loc).run()
+    return output_aud_loc
+
+
+def get_audio_length(wav_path):
+    samplingFrequency, signalData = wavfile.read(wav_path)
+    return len(signalData)/samplingFrequency

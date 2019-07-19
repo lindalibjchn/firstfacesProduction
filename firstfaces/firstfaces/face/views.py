@@ -9,7 +9,7 @@ from .utils import *
 from .speech_to_text_utils import *
 from django.utils import timezone
 import json
-from .models import Session, Sentence, AudioFile, Profile, NewsArticle, PostTalkTimings, Test,AudioErrors,AudioErrorAttempt
+from .models import Session, Sentence, AudioFile, Profile, NewsArticle, PostTalkTimings, Test,AudioErrors,AudioErrorAttempt, AudioErrorCorrectionAttempt
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 import code
@@ -660,7 +660,6 @@ def error_typing_used(request):
 
     filename = af.audio.name
     trans = ast.literal_eval(af.alternatives)[0]["transcript"]
-    print("\t-Alligning") 
     ## generate file for forced allignment
     f = open(get_text_path(),"w+")
     for word in trans.split():
@@ -678,20 +677,17 @@ def error_typing_used(request):
     os.chdir(aeneasPath)
     os.system('python3 -m aeneas.tools.execute_task '+audioPath+" "+textPath+" "+extra_str+" "+outPath+" >/dev/null 2>&1")
     os.chdir(cwd)
-    print("\t- Cutting audio")
     #Get audio
     ERR_trans = request.POST['etrans']
     idx = int(request.POST['first_word_id'])
     
-    print('\n\n' + str(idx) + '\n\n')
 
     endid = idx + (len(ERR_trans.strip().split(" "))-1) 
     
 
     ts = get_timestamps(idx,endid)
-    fn = request.POST['sessionID']+"_error.wav"
-    play_errored_text(audioPath,ts,fn)
-    print("\t-getting correct")
+    fn = request.POST['sessionID']+"_"+timezone.now().strftime( '%H-%M-%S' )+"_error.wav"
+    errorPath = play_errored_text(audioPath,ts,fn)
     #Synth Audio
     gender = request.POST['gender']
     if gender == 'F':
@@ -700,35 +696,59 @@ def error_typing_used(request):
         speaking_voice = 'en-GB-Wavenet-B'
     else:
         speaking_voice = 'en-GB-Wavenet-A'
-    print("\t\t-Stage 1")
     pitch_designated = float(request.POST['pitch'])
     speaking_rate_designated = float(request.POST['speaking_rate'])      
 
-    client = texttospeech.TextToSpeechClient()
-    input_text = texttospeech.types.SynthesisInput(text=request.POST['trans'])
-    voice = texttospeech.types.VoiceSelectionParams(language_code='en-GB',name=speaking_voice)
-    audio_config = texttospeech.types.AudioConfig(audio_encoding=texttospeech.enums.AudioEncoding.MP3,pitch = pitch_designated,speaking_rate = speaking_rate_designated)
-    try:
-        print("\t\t-1")
-        print("\t\t-",input_text)
-        print("\t\t-",voice)
-        print("\t\t-",audio_config)
-        response = client.synthesize_speech(input_text, voice, audio_config)
-        print("\t\t-2")
-        synthURL1 = 'media/synths/session' + session_id + '_'+ 'error' + '.wav'
-        print("\t\t" + synthURL1)
-        with open( os.path.join(settings.BASE_DIR, synthURL1 ), 'wb') as out:
-            out.write(response.audio_content)
-        print("\t\t-4")
-    except:  
-        synthURL1 = 'fault'
-    print("\t\t-Stage 4")
+    #client = texttospeech.TextToSpeechClient()
+    #input_text = texttospeech.types.SynthesisInput(text=request.POST['trans'])
+    #voice = texttospeech.types.VoiceSelectionParams(language_code='en-GB',name=speaking_voice)
+    #audio_config = texttospeech.types.AudioConfig(audio_encoding=texttospeech.enums.AudioEncoding.MP3,pitch = pitch_designated,speaking_rate = speaking_rate_designated)
+    #try:
+     #   print("\t\t-1")
+      #  print("\t\t-",input_text)
+       # print("\t\t-",voice)
+        #print("\t\t-",audio_config)
+   #     response = client.synthesize_speech(input_text, voice, audio_config)
+   #     print("\t\t-2")
+   #     synthURL1 = 'media/synths/session' + session_id + '_'+ 'error' + '.wav'
+   #     print("\t\t" + synthURL1)
+   #     with open( os.path.join(settings.BASE_DIR, synthURL1 ), 'wb') as out:
+    #        out.write(response.audio_content)
+    #    print("\t\t-4")
+   # except:  
+    #    synthURL1 = 'fault'
+   # print("\t\t-Stage 4")
+    
+    #Above code works but for development is not being utilised
 
+    synthFN = generate_synth_audio(request.POST['trans'],fn)
+
+    get_praat_image(synthFN,1)
+    get_praat_image(errorPath,0) 
+    refLen = get_audio_length(synthFN)
+    hypLen = get_audio_length(errorPath)
+
+    ref_image, hyp_image = get_rel_praat_paths()
+    #Error in naming convention
+    hyp_audio = ref_path(fn) 
+    ref_audio = get_hyp_audio_path(fn)
+    
+    #create empty Audio Error Correction Attempt
     ae.typed= True
     ae.intention = request.POST['trans']
     ae.save()
-    response_data = {
 
+    aeca = AudioErrorCorrectionAttempt(error=ae)
+    aeca.save();
+
+    response_data = {
+            "ref_audio_url":ref_audio,
+            "ref_image_url":ref_image,
+            "hyp_audio_url":hyp_audio,
+            "hyp_image_url":hyp_image,
+            "hyp_length":hypLen,
+            "ref_length":refLen,
+            "aeca_id":aeca.id,
     }
     return JsonResponse(response_data)
 

@@ -261,7 +261,8 @@ $('#closeOverlayArea').click(function(){
    $('#overlayTextBox').empty();
    //$('#overlayTextBox').append('<span id="typeHereOverlay">Type Here!</span>');       
    $('#tia-speech-box').text("Select an error to correct!"); 
-    classVariableDict.stage2 = false;
+   classVariableDict.stage2 = false;
+   classVariableDict.stage3 = false;
 });
 
 $('#keyboardOverlay').click(function(){
@@ -282,14 +283,17 @@ $('#backOverlay').click(function(){
     $('#centeredError').show();
     $('#overlayErrorBox').hide();
     $('#overlayTextBox').empty();
-    $('#overlayTextBox').append('<span id="typeHereOverlay">Type Here!</span>');
     $('#overlayTextBox').hide();
     $('#keyboardOverlay').show();
     $('#backOverlay').hide();
     $('#submitOverlay').hide();
+    classVariableDict.stage3 = false;
+    classVariableDict.stage2 = true;
+    //Make Ajax call 
 });
 
 function openOverlay(){
+    $('#praatCont').hide();
     $('#correctionOverlay').show();
     $('#centeredError').show();
     $('#centeredErrorHolder').show();
@@ -355,6 +359,22 @@ function sendErrorBlobToServer( new_blob ){
 
 //Keyboard and record have different submit funtionalities
 
+$('#ref_btn').click(function(){
+    //Store click
+    classVariableDict.specClicks.push({"synth":Date.now() / 1000});
+
+   document.getElementById("refAudio").play();
+});
+
+$('#hyp_btn').click(function(){
+
+    //store click
+    classVariableDict.specClicks.push({"user":Date.now() / 1000});
+
+    document.getElementById("hypAudio").play();
+});
+
+
 //Keyboard sumbit
 function submitKeyboard(){
     var trans = $('#overlayTextBox').text().trim();
@@ -384,8 +404,39 @@ function submitKeyboard(){
         data: fd,
         processData: false,
         contentType: false,
-        success: function(){
-            alert("Success");
+        success: function(json){
+            var refAudioURL = "http://127.0.0.1:8000/" + json.ref_audio_url;
+            var refAudio = document.getElementById("refAudio");
+            refAudio.src = refAudioURL;
+            //refAudio.play();
+
+            var hyp_audio_url = "http://127.0.0.1:8000/" + json.hyp_audio_url;
+            var hypAudio = document.getElementById("hypAudio");
+            hypAudio.src = hyp_audio_url;
+            
+            var ref_image_url ="http://127.0.0.1:8000/"+json.ref_image_url; 
+            var refImage = document.getElementById("refImg");
+            refImg.src = ref_image_url;
+
+            var hyp_image_url = "http://127.0.0.1:8000/" + json.hyp_image_url;
+            var hypImage = document.getElementById("hypImg");
+            hypImg.src = hyp_image_url;
+            
+            $("#hyp_text").text(err_trans);
+            $("#ref_text").text(trans);
+
+            $("#overlayErrorBox").hide();                                                    
+            $("#overlayTextBox").hide();
+            $("#praatCont").show();
+            $("#submitOverlay").hide();
+            $("#reRecordBtn").css("background-color","blue");
+            
+            $("backOverlay").show();
+        
+            classVariableDict.specClicks = [];
+            classVariableDict.stage3 = true;
+            classVariableDict.stage2 = false;
+            classVariableDict.correctionAttemptID = json.aeca_id;
         },
         error: function() {
             console.log("that's wrong"); 

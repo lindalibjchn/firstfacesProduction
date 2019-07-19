@@ -149,6 +149,13 @@ class AudioErrorAttempt(models.Model):
     transcript = models.CharField(max_length=500, blank=True, null=True)
     correct = models.NullBooleanField(null=True)
 
+class AudioErrorCorrectionAttempt(models.Model):
+    error = models.ForeignKey(AudioErrors, on_delete=models.CASCADE)
+    audio = models.FileField(upload_to="")
+    transcript = models.CharField(max_length=500, blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    clicks = models.CharField(max_length=5000, blank=True, null=True)
+
 class PermAudioFile(models.Model):
     sentence = models.ForeignKey(PermSentence, on_delete=models.CASCADE)
     alternatives = models.CharField(max_length=5000, blank=True, null=True)
