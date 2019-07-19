@@ -700,29 +700,33 @@ def error_typing_used(request):
     pitch_designated = float(request.POST['pitch'])
     speaking_rate_designated = float(request.POST['speaking_rate'])      
 
-    #client = texttospeech.TextToSpeechClient()
-    #input_text = texttospeech.types.SynthesisInput(text=request.POST['trans'])
-    #voice = texttospeech.types.VoiceSelectionParams(language_code='en-GB',name=speaking_voice)
-    #audio_config = texttospeech.types.AudioConfig(audio_encoding=texttospeech.enums.AudioEncoding.MP3,pitch = pitch_designated,speaking_rate = speaking_rate_designated)
-    #try:
-     #   print("\t\t-1")
-      #  print("\t\t-",input_text)
-       # print("\t\t-",voice)
-        #print("\t\t-",audio_config)
-   #     response = client.synthesize_speech(input_text, voice, audio_config)
-   #     print("\t\t-2")
-   #     synthURL1 = 'media/synths/session' + session_id + '_'+ 'error' + '.wav'
-   #     print("\t\t" + synthURL1)
-   #     with open( os.path.join(settings.BASE_DIR, synthURL1 ), 'wb') as out:
-    #        out.write(response.audio_content)
-    #    print("\t\t-4")
-   # except:  
-    #    synthURL1 = 'fault'
-   # print("\t\t-Stage 4")
+    client = texttospeech.TextToSpeechClient()
+    input_text = texttospeech.types.SynthesisInput(text=request.POST['trans'])
+    voice = texttospeech.types.VoiceSelectionParams(language_code='en-GB',name=speaking_voice)
+    audio_config = texttospeech.types.AudioConfig(audio_encoding=texttospeech.enums.AudioEncoding.LINEAR16,pitch = pitch_designated,speaking_rate = speaking_rate_designated)
+    try:
+        print("\t\t-1")
+        print("\t\t-",input_text)
+        print("\t\t-",voice)
+        print("\t\t-",audio_config)
+        response = client.synthesize_speech(input_text, voice, audio_config)
+        print("\t\t-2")
+        synthURL1 = 'media/synths/session' + session_id + '_'+ 'error' + timezone.now().strftime('%H-%M-%S') + '.mp3'
+        print("\t\t" + synthURL1)
+        with open( os.path.join(settings.BASE_DIR, synthURL1 ), 'wb') as out:
+            out.write(response.audio_content)
+        print("\t\t-4")
+
+        synthURL1 = convert_mp3_to_wav(synthURL1)
+
+    except:  
+        synthURL1 = 'fault'
+    print("\t\t-Stage 4")
     
     #Above code works but for development is not being utilised
 
-    synthFN = generate_synth_audio(request.POST['trans'],fn)
+    synthFN = settings.BASE_DIR + '/' + synthURL1
+    # synthFN = generate_synth_audio(request.POST['trans'],fn)
 
     get_praat_image(synthFN,1)
     get_praat_image(errorPath,0) 
@@ -743,7 +747,7 @@ def error_typing_used(request):
     aeca.save();
 
     response_data = {
-            "ref_audio_url":ref_audio,
+            "ref_audio_url":synthURL1,
             "ref_image_url":ref_image,
             "hyp_audio_url":hyp_audio,
             "hyp_image_url":hyp_image,
@@ -782,7 +786,7 @@ def store_attempt_blob(request):
     if ae.intention == trans:
         correct = True
     print("\n\n",trans,"\n",correct,"\n\n")
-    audio_url = "media/wav/"+filename[:-4]+'wav'
+    audio_url = "media/wav/"+filename[:-4]+"wav"
 
     code = 3
     if correct:

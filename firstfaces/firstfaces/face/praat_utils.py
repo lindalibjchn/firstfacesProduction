@@ -19,6 +19,7 @@ def get_rel_praat_paths():
     return base+"ref.png", base+"hyp.png"
 
 def get_praat_image(wav_path,code):
+    print('wav path:', wav_path)
     samplingFrequency, signalData = wavfile.read(wav_path)
     temp = []
     for i in range(len(signalData)):
@@ -73,12 +74,11 @@ def get_aeneas_path():
     return path+"/"
 
 def load_json():
-    f = open(get_out_path(),"r")
-    out = ""
-    for line in f:
-        out+=line.strip()+" "
-    f.close()
-    data = ast.literal_eval(out)
+    f = open( get_out_path(), 'r')
+    out_str = ''
+    for i in f:
+        out_str += i + " "
+    data = ast.literal_eval( out_str )
     return data
 
 def get_timestamps(startIDX,endIDX):
