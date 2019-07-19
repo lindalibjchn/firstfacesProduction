@@ -611,8 +611,8 @@ button:active {
 
 .wrong-parts {
 
-    color: white;
-    background-image: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0), green, green, rgba(0,0,0,0), rgba(0,0,0,0));
+    color: rgba(0,0,0,0);
+    /*background-image: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0), green, green, rgba(0,0,0,0), rgba(0,0,0,0));*/
     font-weight: bold;
 
 }
@@ -620,6 +620,12 @@ button:active {
 .wrong-parts-spaces {
 
     color: rgba(0,0,0,0)
+
+}
+
+.correct-parts {
+
+    color: rgba(0,0,0,0);
 
 }
 

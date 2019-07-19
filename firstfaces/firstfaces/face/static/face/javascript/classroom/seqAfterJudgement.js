@@ -578,7 +578,7 @@ function showWrongSentence() {
 
     };
 
-    setTimeout( highlightWrong, 2000 );
+    highlightWrong();
         
 }
 
@@ -599,28 +599,67 @@ function showErrorBtns() {
 
 function highlightWrong() {
 
-    classVariableDict.last_sent.indexes.forEach( function(ind) {
+    classVariableDict.last_sent.indexes.forEach( function(ind, i) {
 
-        // for spaces
-        if ( ind.length === 1 && ind === " " ) {
+        setTimeout( function() {
 
-            $('#wrongWord_' + ind[0].toString()).css( {
-                'color': 'red' ,
-                'font-weight': 'bold'
-            });
+            // for spaces
+            if ( ind.length === 1 && classVariableDict.last_sent.sentence[ ind ] === " " ) {
 
-        } else {
-
-            ind.forEach( function(i) {
-
-                $('#wrongWord_' + i.toString()).css( {
-                    //'color': 'red',
-                    'background-image': 'linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0), red, rgba(0,0,0,0), rgba(0,0,0,0))',
+                $('#wrongWord_' + ind[0].toString()).css( {
+                    //'color': 'red' ,
+                    //'font-weight': 'bold'
+                    'background-image': 'linear-gradient(rgba(0,0,0,0), red, rgba(0,0,0,0))',
                 });
+                setTimeout( function() { 
+                    $('#wrongWord_' + ind[0].toString()).css( {
+                        'background-image': 'linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0), red, rgba(0,0,0,0), rgba(0,0,0,0))',
+                    });
+                }, 1500);
 
-            } );
+            } else {
 
-        }
+                ind.forEach( function(i) {
+
+                    $('#wrongWord__' + i.toString()).css( {
+                            'background-image': 'linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0), red, red, rgba(0,0,0,0), rgba(0,0,0,0))',
+                            'color': 'white',
+                    });
+
+
+                    if ( classVariableDict.last_sent.sentence[ i ] === " " ) {
+                    
+                        $('#wrongWord_' + i.toString()).css( {
+                            'color': 'rgba(0,0,0,0)',
+                            'background-image': 'linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0), red, red, rgba(0,0,0,0), rgba(0,0,0,0))',
+                        });
+                        setTimeout( function() { 
+                            $('#wrongWord_' + i.toString()).css( {
+                                'background-image': 'none',
+                            });
+                        }, 1500);
+
+                    } else {
+                        
+                        $('#wrongWord_' + i.toString()).css( {
+                            'background-image': 'linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0), red, red, rgba(0,0,0,0), rgba(0,0,0,0))',
+                            'color': 'white',
+                            'font-weight': 'bold',
+                        });
+                        setTimeout( function() { 
+                            $('#wrongWord_' + i.toString()).css( {
+                                'color': 'red',
+                                'background-image': 'none',
+                            });
+                        }, 1500);
+
+                    }
+
+                } );
+
+            }
+
+        }, i * 2000 );
 
     } );
 
@@ -634,9 +673,11 @@ function showCorrectionUnderWrongSent() {
 
     //get correct parts
     let correctParts = [];
-    let startSlice = 0
-    for ( i=0; i<classVariableDict.last_sent.indexes.length + 1; i++ ) {
+    let lenCorrectParts = [];
+    let startSlice = 0;
+    for (let i=0; i<classVariableDict.last_sent.indexes.length + 1; i++ ) {
 
+        var slice;
         if ( i < classVariableDict.last_sent.indexes.length ) {
 
             slice = classVariableDict.last_sent.sentence.slice( startSlice, classVariableDict.last_sent.indexes[ i ][ 0 ])
@@ -651,13 +692,62 @@ function showCorrectionUnderWrongSent() {
 
         }
 
+        let lenSlice = 0;
+        slice.forEach( function( w ) {
+
+            lenSlice += w.length;
+
+        } );
+        lenCorrectParts.push( lenSlice );
+
     }
 
-    //put together with wrong parts
+    console.log( 'correctParts:', correctParts );
+    console.log( 'lenCorrectParts:', lenCorrectParts );
+
+    let wrongParts = [];
+    let lenWrongParts = [];
+    classVariableDict.last_sent.indexes.forEach( function(ind) {
+
+        lenWrongPart = 0;
+        wrongPart = []
+        ind.forEach( function( wo ) {
+
+            wrongPart.push( classVariableDict.last_sent.sentence[ wo ] );
+            lenWrongPart += classVariableDict.last_sent.sentence[ wo ].length;
+
+        } );
+
+        wrongParts.push( wrongPart );
+        lenWrongParts.push( lenWrongPart );
+
+    } );
+
+    console.log('wrongParts:', wrongParts);
+    console.log('lenWrongParts:', lenWrongParts);
+
+    let corrections = classVariableDict.last_sent.correction
+    let lenCorrections = [];
+    corrections.forEach( function( wp ) {
+
+        let lenCorrection = 0
+        wp.forEach( function( wpp ) {
+
+            lenCorrection += wpp.length;
+
+        } );
+
+        lenCorrections.push( lenCorrection );
+
+    } );
+
+    console.log( 'corrections:', corrections );
+    console.log( 'lenCorrections:', lenCorrections );
+
 
     correct = true;
     count = 0;
-    for ( j=0; j<(classVariableDict.last_sent.indexes.length + 1) * 2; j++ ) {
+    for ( j=0; j<classVariableDict.last_sent.indexes.length * 2; j++ ) {
 
         if ( correct ) {
 
@@ -693,7 +783,7 @@ function showCorrectionUnderWrongSent() {
 
                     $('#correctedSentence').append(
 
-                        "<div class='correct-words wrong-parts wrong-parts-spaces'>*</div>"
+                        "<div class='correct-words wrong-parts wrong-parts-spaces correct_words_" + count.toString() + "'>*</div>"
 
                     );
 
@@ -701,7 +791,7 @@ function showCorrectionUnderWrongSent() {
 
                     $('#correctedSentence').append(
 
-                        "<div class='correct-words wrong-parts wrong-parts-words'>" + q + "</div>"
+                        "<div class='correct-words wrong-parts wrong-parts-words correct_words_" + count.toString() + "'>" + q + "</div>"
 
                     );
 
@@ -709,82 +799,94 @@ function showCorrectionUnderWrongSent() {
 
             } );
 
+            let lenWrong = lenWrongParts[ count ];
+            let lenCorrection = lenCorrections[ count ];
+            let lenNextCorrect = lenCorrectParts[ count + 1 ];
+
+            let needsAdded = lenWrong - lenCorrection;
+            console.log('needsAdded:', needsAdded);
+            let nextCorrectStarString = correctParts[ count + 1  ];
+            if ( needsAdded > 0 ) {
+
+                for (let i = wrongParts[ count ].length - 1; i>=0; i--) {
+                    
+                    let lenWord = wrongParts[ count ][ i ].length;
+
+                    if ( lenWord > needsAdded ) {
+
+                        nextCorrectStarString.unshift( '*'.repeat( needsAdded ));
+                        break;
+
+                    } else {
+
+                        nextCorrectStarString.unshift( '*'.repeat( lenWord ));
+                        needsAdded -= lenWord; 
+
+                    }
+
+                }
+
+            } else if ( needsAdded < 0 ) {
+
+                let noIters = correctParts[ count + 1 ].length - 1;
+                for (let i=0; i<noIters; i++) {
+
+                    console.log('needsAddedupdate:', needsAdded);
+                    console.log('correctParts:', correctParts[ count + 1 ]);
+                    console.log('correctWord:', correctParts[ count + 1 ][ 0 ]);
+                    let lenWord = correctParts[ count + 1 ][ 0 ].length;
+                    console.log('lenCorrectWord:', lenWord);
+
+                    if ( lenWord > Math.abs(needsAdded) ) {
+
+                        nextCorrectStarString.shift();
+                        nextCorrectStarString.unshift( '*'.repeat( lenWord - Math.abs(needsAdded) ));
+                        break;
+
+                    } else {
+
+                        nextCorrectStarString.shift();
+                        needsAdded += lenWord; 
+
+                    }
+
+                }
+
+            }
+
+            console.log( 'nextCorrectStarString:', nextCorrectStarString );
+
             correct = true;
             count += 1;
+
+
 
         }
 
     }
+    
+    for (let i=0; i<classVariableDict.last_sent.indexes.length; i++ ) {
+
+        setTimeout( function() {
+
+            $('.correct_words_' + i.toString()).css({
+
+                'color': 'white',
+                'background-image': 'linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0), green, green, rgba(0,0,0,0), rgba(0,0,0,0))',
+
+            });
+            setTimeout( function() {
+
+                $('.correct_words_' + i.toString()).css({
+                    'color': 'green',
+                    'background-image': 'none',
+                });
+
+            }, 1500 )
+
+        }, i*2000 );
+
+    }
 
 };
-
-function subCorrections() {
-
-    classVariableDict.last_sent.indexes.forEach( function ( ind, c ) {
-
-        // get length of original and correction
-        let lenOriginal = 0;
-        let lenCorrection = classVariableDict.last_sent.correction[ c ].length;
-
-        ind.forEach( function( i ) {
-
-            //$('#correctionWord_' + i.toString() ).addClass( "correction-word" );
-
-            lenOriginal += classVariableDict.last_sent.sentence[ i ].length
-
-        } );
-
-        var diff;
-        var finalInd;
-        if ( lenCorrection > lenOriginal ) {
-
-            diff = lenCorrection - lenOriginal;
-         
-            //add spaces to space after final word
-            finalInd = classVariableDict.last_sent.indexes[ c ][ classVariableDict.last_sent.indexes[ c ].length - 1 ] 
-
-            if ( classVariableDict.last_sent.sentence[ finalInd ] === ' ' ) {
-        
-                $('#wrongWord_' + toString( finalInd ) ).append('*'.repeat( diff ))
-
-            } else {
-
-                $('#wrongWord_' + toString( finalInd + 1 ) ).append('*'.repeat( diff ))
-
-            }
-
-        //} else if ( lenOriginal > lenCorrection ) {
-
-            //diff = lenOriginal - lenCorrection;
-         
-            ////add spaces to space after final word
-            //finalInd = classVariableDict.last_sent.indexes[ c ][ classVariableDict.last_sent.indexes[ c ].length - 1 ] 
-
-            //if ( classVariableDict.last_sent.sentence[ finalInd ] === ' ' ) {
-        
-                //$('#wrongWord_' + toString( finalInd ) ).append('*'.repeat( diff ))
-
-            //} else {
-
-                //$('#wrongWord_' + toString( finalInd + 1 ) ).append('*'.repeat( diff ))
-
-            //}
-
-        
-
-        }
-
-        console.log( 'lenOriginal:', lenOriginal );
-        console.log( 'lenCorrection:', lenCorrection );
-        console.log( 'diff:', diff );
-        console.log( 'finalInd:', finalInd );
-
-    } );
-
-}
-
-
-
-
-
 
