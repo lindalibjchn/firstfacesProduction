@@ -675,7 +675,9 @@ def error_typing_used(request):
     
     #Run forced alligner
     command = 'python3 -m aeneas.tools.execute_task '+audioPath+" "+textPath+" "+extra_str+" "+outPath+" >/dev/null 2>&1"
-    subprocess.Popen(command,cwd=get_aeneas_path(),shell=True)
+    sub_proc = subprocess.Popen(command,cwd=get_aeneas_path(),shell=True,stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    sub_proc.wait()
+    
     #Get audio
     ERR_trans = request.POST['etrans']
     idx = int(request.POST['first_word_id'])
