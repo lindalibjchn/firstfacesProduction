@@ -23,13 +23,13 @@ function runAfterJudgement() {
         if ( classVariableDict.last_sent.nod !== null ) {
                 
             nodOrShakeHead()
-            setTimeout( function(){returnToLaptop('')}, nodShakeDur + 500 );//0.5s overlap for end of nod n talking
+            setTimeout( function(){returnToLaptop()}, nodShakeDur + 500 );//0.5s overlap for end of nod n talking
 
         } else {
 
             setTimeout( function() {
 
-                returnToLaptop( '' )
+                returnToLaptop()
 
             }, tiaTimings.delayBeforeReturnToLaptop );
 
@@ -243,7 +243,7 @@ function displaySpeechBubblePrompt() {
          
             setTimeout( function() {
                 
-                returnToLaptop( ' ' );
+                returnToLaptop();
 
             }, tiaTimings.delayBeforeReturnToLaptop );
 
@@ -255,76 +255,29 @@ function displaySpeechBubblePrompt() {
 
 }
     
-function returnToLaptop( sent ) {
+function returnToLaptop() {
 
     recTimes.returnToLaptop = Date.now() / 1000;
     console.log( 'in return to laptop');
     addToPrevSents();
 
-    if ( classVariableDict.tiaLookingAtStudent ) {
+    expressionController( expressionObject.abs.neutral, tiaTimings.changeExpression * 6 );
 
-        expressionController( expressionObject.abs.neutral, tiaTimings.changeExpression * 6 );
+    if ( classVariableDict.classOver && classVariableDict.endClassSequenceStarted !== true ) {
 
-        setTimeout( function() {
-
-            initCameraMove('laptop', tiaTimings.cameraMoveUpDuration );
-
-            setTimeout( function () {
-
-                if ( classVariableDict.classOver && classVariableDict.endClassSequenceStarted !== true ) {
-
-                    console.log('\n\n\nend class return to laptop tia looking at student\n\n\n');
-                    endClass();
-                    classVariableDict.endClassSequenceStarted = true;
-
-                } else {
-
-                    initInputReady( sent )
-                    //showQuestionStreak();
-                    recTimes.initInputReady = Date.now() / 1000;
-                    sendTimesToServer();
-
-                }
-        
-            }, tiaTimings.cameraMoveUpDuration * 1000 )
-
-        }, tiaTimings.changeExpression * 2000 );
+        console.log('\n\n\nend class return to laptop tia looking at student\n\n\n');
+        endClass();
+        classVariableDict.endClassSequenceStarted = true;
 
     } else {
 
-        initCameraMove('laptop', tiaTimings.cameraMoveUpDuration );
-
-        setTimeout( function() { 
-            
-            movementController( movements.blank, tiaTimings.movementToConfused / 2, tiaTimings.movementToConfused );
-            
-            setTimeout( function() {
-
-                expressionController( expressionObject.abs.neutral, tiaTimings.changeExpression * 2 );
-                
-                setTimeout( function() {
-
-                    if ( classVariableDict.classOver && classVariableDict.endClassSequenceStarted !== true ) {
-
-                        console.log('\n\n\nend class tia not looking at student\n\n\n');
-                        endClass();
-                        classVariableDict.endClassSequenceStarted = true;
-
-                    } else {
-
-                        initInputReady( sent )
-                        //showQuestionStreak();
-
-                    }
-       
-                }, tiaTimings.changeExpression * 1500 )
-
-            }, tiaTimings.movementToConfused * 500 );
-
-        }, tiaTimings.cameraMoveUpDuration * 500 );
+        initInputReady()
+        //showQuestionStreak();
+        recTimes.initInputReady = Date.now() / 1000;
+        sendTimesToServer();
 
     }
-
+    
 }
 
 // show in prevSent
@@ -363,7 +316,7 @@ function tryAgain() {
     let sent = classVariableDict.sentences[ classVariableDict.id_of_last_sent ].sentence;
 
     classVariableDict.tiaLookingAtStudent = false;
-    returnToLaptop( sent );
+    returnToLaptop();
 
     $('#prevSents').fadeTo( 500, 1 );
     $('#optionBtns').fadeOut( 500 )
@@ -430,6 +383,7 @@ function showCorrection() {
     recTimes.clickShowCorrectionBtn = Date.now() / 1000;
     $('#showCorrectionBtn').prop( "disabled", true).fadeOut( 500 );
     $('#tryAgainBtn').prop( "disabled", true).fadeOut( 500 );
+    $('#nextSentenceBtn').prop( "disabled", true).fadeOut( 500 );
 
     let sentId = classVariableDict.last_sent.sent_id
     $.ajax({
@@ -479,7 +433,7 @@ function nextSentence() {
     }
 
     classVariableDict.tiaLookingAtStudent = false;
-    returnToLaptop( '' );
+    returnToLaptop();
 
     let sentId = classVariableDict.last_sent.sent_id
     $.ajax({
@@ -494,14 +448,7 @@ function nextSentence() {
         
     });
 
-    setTimeout( function() {
-
-        removeCorrection();
-        removeSentence();
-
-        $('#prevSents').fadeTo( 500, 1 );
-        
-    }, 1000 )
+    $('#submittedNCorrectedSentenceContCont').fadeOut( 500 )
 
 }
 
@@ -578,7 +525,8 @@ function showWrongSentence() {
 
     };
 
-    setTimeout( highlightWrong, 2000 );
+
+    setTimeout(highlightWrong, 1500);
         
 }
 
@@ -599,32 +547,84 @@ function showErrorBtns() {
 
 function highlightWrong() {
 
-    classVariableDict.last_sent.indexes.forEach( function(ind) {
+    classVariableDict.last_sent.indexes.forEach( function(ind, i) {
 
-        // for spaces
-        if ( ind.length === 1 && ind === " " ) {
+        setTimeout( function() {
 
-            $('#wrongWord_' + ind[0].toString()).css( {
-                'color': 'red' ,
-                'font-weight': 'bold'
-            });
+            // for spaces
+            if ( ind.length === 1 && classVariableDict.last_sent.sentence[ ind ] === " " ) {
 
-        } else {
-
-            ind.forEach( function(i) {
-
-                $('#wrongWord_' + i.toString()).css( {
-                    //'color': 'red',
-                    'background-image': 'linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0), red, rgba(0,0,0,0), rgba(0,0,0,0))',
+                $('#wrongWord_' + ind[0].toString()).css( {
+                    //'color': 'red' ,
+                    //'font-weight': 'bold'
+                    'background-image': 'linear-gradient(rgba(0,0,0,0), red, rgba(0,0,0,0))',
                 });
+                setTimeout( function() { 
+                    $('#wrongWord_' + ind[0].toString()).css( {
+                        'background-image': 'linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0), red, rgba(0,0,0,0), rgba(0,0,0,0))',
+                    });
+                }, 1500);
 
-            } );
+            } else {
 
-        }
+                ind.forEach( function(i, ind) {
+
+                    $('#wrongWord__' + i.toString()).css( {
+                            'background-image': 'linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0), red, red, rgba(0,0,0,0), rgba(0,0,0,0))',
+                            'color': 'white',
+                    });
+
+
+                    if ( classVariableDict.last_sent.sentence[ i ] === " " ) {
+                    
+                        $('#wrongWord_' + i.toString()).css( {
+                            'color': 'rgba(0,0,0,0)',
+                            'background-image': 'linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0), red, red, rgba(0,0,0,0), rgba(0,0,0,0))',
+                        });
+                        setTimeout( function() { 
+                            $('#wrongWord_' + i.toString()).css( {
+                                'background-image': 'none',
+                           
+                            });
+
+                            if ( ind === classVariableDict.last_sent.indexes.length - 1 ) {
+
+                                showErrorBtns();
+
+                            }
+
+                        }, 1500);
+
+                    } else {
+                        
+                        $('#wrongWord_' + i.toString()).css( {
+                            'background-image': 'linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0), red, red, rgba(0,0,0,0), rgba(0,0,0,0))',
+                            'color': 'white',
+                            'font-weight': 'bold',
+                        });
+                        setTimeout( function() { 
+                            $('#wrongWord_' + i.toString()).css( {
+                                'color': 'red',
+                                'background-image': 'none',
+                            });
+
+                            if ( ind === classVariableDict.last_sent.indexes.length - 1 ) {
+
+                                showErrorBtns();
+
+                            }
+
+                        }, 1500);
+
+                    }
+
+                } );
+
+            }
+
+        }, i * 2250 );
 
     } );
-
-    showErrorBtns();
 
 }
 
@@ -634,9 +634,11 @@ function showCorrectionUnderWrongSent() {
 
     //get correct parts
     let correctParts = [];
-    let startSlice = 0
-    for ( i=0; i<classVariableDict.last_sent.indexes.length + 1; i++ ) {
+    let lenCorrectParts = [];
+    let startSlice = 0;
+    for (let i=0; i<classVariableDict.last_sent.indexes.length + 1; i++ ) {
 
+        var slice;
         if ( i < classVariableDict.last_sent.indexes.length ) {
 
             slice = classVariableDict.last_sent.sentence.slice( startSlice, classVariableDict.last_sent.indexes[ i ][ 0 ])
@@ -651,13 +653,52 @@ function showCorrectionUnderWrongSent() {
 
         }
 
+        let lenSlice = 0;
+        slice.forEach( function( w ) {
+
+            lenSlice += w.length;
+
+        } );
+        lenCorrectParts.push( lenSlice );
+
     }
 
-    //put together with wrong parts
+    let wrongParts = [];
+    let lenWrongParts = [];
+    classVariableDict.last_sent.indexes.forEach( function(ind) {
+
+        lenWrongPart = 0;
+        wrongPart = []
+        ind.forEach( function( wo ) {
+
+            wrongPart.push( classVariableDict.last_sent.sentence[ wo ] );
+            lenWrongPart += classVariableDict.last_sent.sentence[ wo ].length;
+
+        } );
+
+        wrongParts.push( wrongPart );
+        lenWrongParts.push( lenWrongPart );
+
+    } );
+
+    let corrections = classVariableDict.last_sent.correction
+    let lenCorrections = [];
+    corrections.forEach( function( wp ) {
+
+        let lenCorrection = 0
+        wp.forEach( function( wpp ) {
+
+            lenCorrection += wpp.length;
+
+        } );
+
+        lenCorrections.push( lenCorrection );
+
+    } );
 
     correct = true;
     count = 0;
-    for ( j=0; j<(classVariableDict.last_sent.indexes.length + 1) * 2; j++ ) {
+    for ( j=0; j<classVariableDict.last_sent.indexes.length * 2; j++ ) {
 
         if ( correct ) {
 
@@ -693,7 +734,7 @@ function showCorrectionUnderWrongSent() {
 
                     $('#correctedSentence').append(
 
-                        "<div class='correct-words wrong-parts wrong-parts-spaces'>*</div>"
+                        "<div class='correct-words wrong-parts wrong-parts-spaces correct_words_" + count.toString() + "'>*</div>"
 
                     );
 
@@ -701,7 +742,7 @@ function showCorrectionUnderWrongSent() {
 
                     $('#correctedSentence').append(
 
-                        "<div class='correct-words wrong-parts wrong-parts-words'>" + q + "</div>"
+                        "<div class='correct-words wrong-parts wrong-parts-words correct_words_" + count.toString() + "'>" + q + "</div>"
 
                     );
 
@@ -709,82 +750,114 @@ function showCorrectionUnderWrongSent() {
 
             } );
 
+            let lenWrong = lenWrongParts[ count ];
+            let lenCorrection = lenCorrections[ count ];
+            let lenNextCorrect = lenCorrectParts[ count + 1 ];
+
+            let needsAdded = lenWrong - lenCorrection;
+            let nextCorrectStarString = correctParts[ count + 1  ];
+            if ( needsAdded > 0 ) {
+
+                for (let i = wrongParts[ count ].length - 1; i>=0; i--) {
+                    
+                    let lenWord = wrongParts[ count ][ i ].length;
+
+                    if ( lenWord > needsAdded ) {
+
+                        nextCorrectStarString.unshift( '*'.repeat( needsAdded ));
+                        break;
+
+                    } else {
+
+                        nextCorrectStarString.unshift( '*'.repeat( lenWord ));
+                        needsAdded -= lenWord; 
+
+                    }
+
+                }
+
+            } else if ( needsAdded < 0 ) {
+
+                let noIters = correctParts[ count + 1 ].length - 1;
+                for (let i=0; i<noIters; i++) {
+
+                    let lenWord = correctParts[ count + 1 ][ 0 ].length;
+                    if ( lenWord > Math.abs(needsAdded) ) {
+
+                        nextCorrectStarString.shift();
+                        nextCorrectStarString.unshift( '*'.repeat( lenWord - Math.abs(needsAdded) ));
+                        break;
+
+                    } else {
+
+                        nextCorrectStarString.shift();
+                        needsAdded += lenWord; 
+
+                    }
+
+                }
+
+            }
+
             correct = true;
             count += 1;
+
+
 
         }
 
     }
+    setTimeout( function() {
 
-};
+        for (let i=0; i<classVariableDict.last_sent.indexes.length; i++ ) {
 
-function subCorrections() {
+            setTimeout( function() {
 
-    classVariableDict.last_sent.indexes.forEach( function ( ind, c ) {
+                $('.correct_words_' + i.toString()).css({
 
-        // get length of original and correction
-        let lenOriginal = 0;
-        let lenCorrection = classVariableDict.last_sent.correction[ c ].length;
+                    'color': 'white',
+                    'background-image': 'linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0), green, green, rgba(0,0,0,0), rgba(0,0,0,0))',
 
-        ind.forEach( function( i ) {
+                });
+                $('.correct_words_' + i.toString()).each( function() {
+                    if ( $(this).text() === '*' ) {
+                        $(this).css({
+                            'color': 'green',
+                        })
 
-            //$('#correctionWord_' + i.toString() ).addClass( "correction-word" );
+                    }
+                });
 
-            lenOriginal += classVariableDict.last_sent.sentence[ i ].length
+                setTimeout( function() {
 
-        } );
+                    $('.correct_words_' + i.toString()).css({
+                        'color': 'green',
+                        'background-image': 'none',
+                    });
 
-        var diff;
-        var finalInd;
-        if ( lenCorrection > lenOriginal ) {
+                    $('.correct_words_' + i.toString()).each( function() {
+                        if ( $(this).text() === '*' ) {
+                            $(this).css({
+                                'color': 'rgba(0,0,0,0)',
+                            })
 
-            diff = lenCorrection - lenOriginal;
-         
-            //add spaces to space after final word
-            finalInd = classVariableDict.last_sent.indexes[ c ][ classVariableDict.last_sent.indexes[ c ].length - 1 ] 
+                        }
+                    });
 
-            if ( classVariableDict.last_sent.sentence[ finalInd ] === ' ' ) {
-        
-                $('#wrongWord_' + toString( finalInd ) ).append('*'.repeat( diff ))
+                    if ( i === classVariableDict.last_sent.indexes.length - 1 ) {
 
-            } else {
+                        $('#nextSentenceBtn').css('display', 'flex');
+                        $('#nextSentenceBtn').prop( "disabled", false ).fadeIn( 500 );
 
-                $('#wrongWord_' + toString( finalInd + 1 ) ).append('*'.repeat( diff ))
+                    }
 
-            }
+                }, 1500 )
 
-        //} else if ( lenOriginal > lenCorrection ) {
-
-            //diff = lenOriginal - lenCorrection;
-         
-            ////add spaces to space after final word
-            //finalInd = classVariableDict.last_sent.indexes[ c ][ classVariableDict.last_sent.indexes[ c ].length - 1 ] 
-
-            //if ( classVariableDict.last_sent.sentence[ finalInd ] === ' ' ) {
-        
-                //$('#wrongWord_' + toString( finalInd ) ).append('*'.repeat( diff ))
-
-            //} else {
-
-                //$('#wrongWord_' + toString( finalInd + 1 ) ).append('*'.repeat( diff ))
-
-            //}
-
-        
+            }, i*2250 );
 
         }
 
-        console.log( 'lenOriginal:', lenOriginal );
-        console.log( 'lenCorrection:', lenCorrection );
-        console.log( 'diff:', diff );
-        console.log( 'finalInd:', finalInd );
+    }, 1000 );
 
-    } );
-
-}
-
-
-
-
-
+};
 

@@ -705,8 +705,8 @@ button:active {
 
 .wrong-parts {
 
-    color: white;
-    background-image: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0), green, green, rgba(0,0,0,0), rgba(0,0,0,0));
+    color: rgba(0,0,0,0);
+    /*background-image: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0), green, green, rgba(0,0,0,0), rgba(0,0,0,0));*/
     font-weight: bold;
 
 }
@@ -714,6 +714,12 @@ button:active {
 .wrong-parts-spaces {
 
     color: rgba(0,0,0,0)
+
+}
+
+.correct-parts {
+
+    color: rgba(0,0,0,0);
 
 }
 
@@ -858,6 +864,46 @@ button:active {
     /*right: 0;*/
     /*margin: auto;*/
     top: 0;
+
+}
+
+#finishClassIconCont {
+
+    position: absolute;
+    height: 50px;
+    width: 50px;
+    top: 0;
+    right: 0;
+    margin: 10px;
+
+}
+
+#finishClassIcon {
+
+    position: absolute;
+    height: 50px;
+    width: 50px;
+
+}
+
+#prevSentsIconCont {
+
+    position: absolute;
+    margin: 10px;
+
+}
+
+.prev-sents-icons {
+
+    position: absolute;
+    height: 60px;
+    width: 40px;
+
+}
+
+#iconDark {
+
+    display: none;
 
 }
 

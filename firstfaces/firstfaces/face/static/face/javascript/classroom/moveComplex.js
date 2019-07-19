@@ -627,7 +627,6 @@ function tapKeyFull() {
                         } else if ( classVariableDict.tapKeyForCorrection ) {
 
                             classVariableDict.tapKeyForCorrection = false;
-                            $('#nextSentenceBtn').css('display', 'flex');
                             showCorrectionUnderWrongSent();
 
                         // this one is for after listening to the learners speech - Daniel's stuff

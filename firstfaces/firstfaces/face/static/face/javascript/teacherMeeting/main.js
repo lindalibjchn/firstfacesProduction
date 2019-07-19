@@ -45,11 +45,19 @@ $(window).on( 'load', function() {
         if(e.keyCode == 65 && e.ctrlKey) {
             console.log('Ctrl-A pressed');
             e.preventDefault();
-            appendWrongSection();
+            appendCorrectionSection(true);
         } else if (e.keyCode == 83 && e.ctrlKey) {
             console.log('Ctrl-S pressed');
             e.preventDefault();
-            appendCorrectionSection();
+            appendCorrectionSection(false);
+        } else if(e.keyCode == 90 && e.ctrlKey) {
+            console.log('Ctrl-Z pressed');
+            e.preventDefault();
+            appendWrongSection(true);
+        } else if (e.keyCode == 88 && e.ctrlKey) {
+            console.log('Ctrl-X pressed');
+            e.preventDefault();
+            appendWrongSection(false);
         }
     });
 
@@ -686,7 +694,7 @@ function loadNextSentenceNeedingJudgement() {
 
 }
 
-var appendWrongSection = function() {
+var appendWrongSection = function( copy ) {
     
     //var index1 = window.getSelection()['anchorOffset']
     //var index2 = window.getSelection()['focusOffset']
@@ -711,23 +719,63 @@ var appendWrongSection = function() {
     $('#sentenceForJudgement > .ui-selected').each( function() {
         idArray.push(parseInt(this.id.substring(8)));
     })
+
+    if ( idArray.length > 1 ) {
+
+        if ( sentNeedJudg[ idArray[ 0 ] ] === " " ) {
+
+            idArray.shift();
+
+        }
+
+        if ( sentNeedJudg[ idArray[ idArray.length - 1 ] ] === " " ) {
+
+            idArray.pop();
+
+        }
+
+    }
+
     wrongIndexes.push( idArray );
 
     let sent = ''
     let sent_ = ''
+
     idArray.forEach( function(i) {
 
         let token = sentNeedJudg[ i ];
         
-        if ( token === ' ' ) {
+        if ( idArray.length === 1 && token === ' ' ) {
 
-            sent_ += '_';
-            sent += token;
+            if ( token === ' ' ) {
+
+                sent_ += '_';
+
+            }
 
         } else {
 
-            sent += token;
-            sent_ += token;
+            if ( token === ' ' ) {
+
+                sent_ += '_';
+
+                if ( copy ) {
+                
+                    sent += token;
+
+                }
+
+            } else {
+
+                if ( copy ) {
+                
+                    sent += token;
+
+                }
+
+                sent_ += token;
+
+            }
 
         }
 
@@ -755,7 +803,7 @@ var appendWrongSection = function() {
 
 // this is for the wrong sentences on the right needing correction
 var sentNeedingCorrectionID;
-var appendCorrectionSection = function() {
+var appendCorrectionSection = function( copy ) {
     
     //var index1 = window.getSelection()['anchorOffset']
     //var index2 = window.getSelection()['focusOffset']
@@ -781,6 +829,23 @@ var appendCorrectionSection = function() {
     $('#wrongSentForCorrectionNow > .ui-selected').each( function() {
         idArray.push(parseInt(this.id.substring(11)));
     })
+
+    if ( idArray.length > 1 ) {
+
+        if ( sentForCorrection.sentence[ idArray[ 0 ] ] === " " ) {
+
+            idArray.shift();
+
+        }
+
+        if ( sentForCorrection.sentence[ idArray[ idArray.length - 1 ] ] === " " ) {
+
+            idArray.pop();
+
+        }
+
+    }
+
     correctionIndexes.push( idArray );
 
     let sent = ''
@@ -789,18 +854,39 @@ var appendCorrectionSection = function() {
 
         let token = sentForCorrection.sentence[ i ];
         
-        if ( token === ' ' ) {
+        if ( idArray.length === 1 && token === ' ' ) {
 
-            sent_ += '_';
-            sent += token;
+            if ( token === ' ' ) {
+
+                sent_ += '_';
+
+            }
 
         } else {
 
-            sent += token;
-            sent_ += token;
+            if ( token === ' ' ) {
+
+                sent_ += '_';
+
+                if ( copy ) {
+
+                    sent += token;
+
+                }
+
+            } else {
+
+                if ( copy ) {
+
+                    sent += token;
+
+                }
+
+                sent_ += token;
+
+            }
 
         }
-
     });
 
     $('#wrongSelections').append( '<div class="selectedSection">' + sent_ + '</div>' );
