@@ -773,6 +773,46 @@ button:active {
 
 }
 
+#finishClassIconCont {
+
+    position: absolute;
+    height: 50px;
+    width: 50px;
+    top: 0;
+    right: 0;
+    margin: 10px;
+
+}
+
+#finishClassIcon {
+
+    position: absolute;
+    height: 50px;
+    width: 50px;
+
+}
+
+#prevSentsIconCont {
+
+    position: absolute;
+    margin: 10px;
+
+}
+
+.prev-sents-icons {
+
+    position: absolute;
+    height: 60px;
+    width: 40px;
+
+}
+
+#iconDark {
+
+    display: none;
+
+}
+
 #prevSentsContainer {
 
     position: absolute;

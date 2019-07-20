@@ -23,13 +23,13 @@ function runAfterJudgement() {
         if ( classVariableDict.last_sent.nod !== null ) {
                 
             nodOrShakeHead()
-            setTimeout( function(){returnToLaptop('')}, nodShakeDur + 500 );//0.5s overlap for end of nod n talking
+            setTimeout( function(){returnToLaptop()}, nodShakeDur + 500 );//0.5s overlap for end of nod n talking
 
         } else {
 
             setTimeout( function() {
 
-                returnToLaptop( '' )
+                returnToLaptop()
 
             }, tiaTimings.delayBeforeReturnToLaptop );
 
@@ -243,7 +243,7 @@ function displaySpeechBubblePrompt() {
          
             setTimeout( function() {
                 
-                returnToLaptop( ' ' );
+                returnToLaptop();
 
             }, tiaTimings.delayBeforeReturnToLaptop );
 
@@ -255,76 +255,29 @@ function displaySpeechBubblePrompt() {
 
 }
     
-function returnToLaptop( sent ) {
+function returnToLaptop() {
 
     recTimes.returnToLaptop = Date.now() / 1000;
     console.log( 'in return to laptop');
     addToPrevSents();
 
-    if ( classVariableDict.tiaLookingAtStudent ) {
+    expressionController( expressionObject.abs.neutral, tiaTimings.changeExpression * 6 );
 
-        expressionController( expressionObject.abs.neutral, tiaTimings.changeExpression * 6 );
+    if ( classVariableDict.classOver && classVariableDict.endClassSequenceStarted !== true ) {
 
-        setTimeout( function() {
-
-            initCameraMove('laptop', tiaTimings.cameraMoveUpDuration );
-
-            setTimeout( function () {
-
-                if ( classVariableDict.classOver && classVariableDict.endClassSequenceStarted !== true ) {
-
-                    console.log('\n\n\nend class return to laptop tia looking at student\n\n\n');
-                    endClass();
-                    classVariableDict.endClassSequenceStarted = true;
-
-                } else {
-
-                    initInputReady( sent )
-                    //showQuestionStreak();
-                    recTimes.initInputReady = Date.now() / 1000;
-                    sendTimesToServer();
-
-                }
-        
-            }, tiaTimings.cameraMoveUpDuration * 1000 )
-
-        }, tiaTimings.changeExpression * 2000 );
+        console.log('\n\n\nend class return to laptop tia looking at student\n\n\n');
+        endClass();
+        classVariableDict.endClassSequenceStarted = true;
 
     } else {
 
-        initCameraMove('laptop', tiaTimings.cameraMoveUpDuration );
-
-        setTimeout( function() { 
-            
-            movementController( movements.blank, tiaTimings.movementToConfused / 2, tiaTimings.movementToConfused );
-            
-            setTimeout( function() {
-
-                expressionController( expressionObject.abs.neutral, tiaTimings.changeExpression * 2 );
-                
-                setTimeout( function() {
-
-                    if ( classVariableDict.classOver && classVariableDict.endClassSequenceStarted !== true ) {
-
-                        console.log('\n\n\nend class tia not looking at student\n\n\n');
-                        endClass();
-                        classVariableDict.endClassSequenceStarted = true;
-
-                    } else {
-
-                        initInputReady( sent )
-                        //showQuestionStreak();
-
-                    }
-       
-                }, tiaTimings.changeExpression * 1500 )
-
-            }, tiaTimings.movementToConfused * 500 );
-
-        }, tiaTimings.cameraMoveUpDuration * 500 );
+        initInputReady()
+        //showQuestionStreak();
+        recTimes.initInputReady = Date.now() / 1000;
+        sendTimesToServer();
 
     }
-
+    
 }
 
 // show in prevSent
@@ -363,7 +316,7 @@ function tryAgain() {
     let sent = classVariableDict.sentences[ classVariableDict.id_of_last_sent ].sentence;
 
     classVariableDict.tiaLookingAtStudent = false;
-    returnToLaptop( sent );
+    returnToLaptop();
 
     $('#prevSents').fadeTo( 500, 1 );
     $('#optionBtns').fadeOut( 500 )
@@ -430,6 +383,7 @@ function showCorrection() {
     recTimes.clickShowCorrectionBtn = Date.now() / 1000;
     $('#showCorrectionBtn').prop( "disabled", true).fadeOut( 500 );
     $('#tryAgainBtn').prop( "disabled", true).fadeOut( 500 );
+    $('#nextSentenceBtn').prop( "disabled", true).fadeOut( 500 );
 
     let sentId = classVariableDict.last_sent.sent_id
     $.ajax({
@@ -479,7 +433,7 @@ function nextSentence() {
     }
 
     classVariableDict.tiaLookingAtStudent = false;
-    returnToLaptop( '' );
+    returnToLaptop();
 
     let sentId = classVariableDict.last_sent.sent_id
     $.ajax({
@@ -494,14 +448,7 @@ function nextSentence() {
         
     });
 
-    setTimeout( function() {
-
-        removeCorrection();
-        removeSentence();
-
-        $('#prevSents').fadeTo( 500, 1 );
-        
-    }, 1000 )
+    $('#submittedNCorrectedSentenceContCont').fadeOut( 500 )
 
 }
 
@@ -578,7 +525,8 @@ function showWrongSentence() {
 
     };
 
-    highlightWrong();
+
+    setTimeout(highlightWrong, 1500);
         
 }
 
@@ -619,7 +567,7 @@ function highlightWrong() {
 
             } else {
 
-                ind.forEach( function(i) {
+                ind.forEach( function(i, ind) {
 
                     $('#wrongWord__' + i.toString()).css( {
                             'background-image': 'linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0), red, red, rgba(0,0,0,0), rgba(0,0,0,0))',
@@ -636,7 +584,15 @@ function highlightWrong() {
                         setTimeout( function() { 
                             $('#wrongWord_' + i.toString()).css( {
                                 'background-image': 'none',
+                           
                             });
+
+                            if ( ind === classVariableDict.last_sent.indexes.length - 1 ) {
+
+                                showErrorBtns();
+
+                            }
+
                         }, 1500);
 
                     } else {
@@ -651,6 +607,13 @@ function highlightWrong() {
                                 'color': 'red',
                                 'background-image': 'none',
                             });
+
+                            if ( ind === classVariableDict.last_sent.indexes.length - 1 ) {
+
+                                showErrorBtns();
+
+                            }
+
                         }, 1500);
 
                     }
@@ -659,11 +622,9 @@ function highlightWrong() {
 
             }
 
-        }, i * 2000 );
+        }, i * 2250 );
 
     } );
-
-    showErrorBtns();
 
 }
 
@@ -702,9 +663,6 @@ function showCorrectionUnderWrongSent() {
 
     }
 
-    console.log( 'correctParts:', correctParts );
-    console.log( 'lenCorrectParts:', lenCorrectParts );
-
     let wrongParts = [];
     let lenWrongParts = [];
     classVariableDict.last_sent.indexes.forEach( function(ind) {
@@ -723,9 +681,6 @@ function showCorrectionUnderWrongSent() {
 
     } );
 
-    console.log('wrongParts:', wrongParts);
-    console.log('lenWrongParts:', lenWrongParts);
-
     let corrections = classVariableDict.last_sent.correction
     let lenCorrections = [];
     corrections.forEach( function( wp ) {
@@ -740,10 +695,6 @@ function showCorrectionUnderWrongSent() {
         lenCorrections.push( lenCorrection );
 
     } );
-
-    console.log( 'corrections:', corrections );
-    console.log( 'lenCorrections:', lenCorrections );
-
 
     correct = true;
     count = 0;
@@ -804,7 +755,6 @@ function showCorrectionUnderWrongSent() {
             let lenNextCorrect = lenCorrectParts[ count + 1 ];
 
             let needsAdded = lenWrong - lenCorrection;
-            console.log('needsAdded:', needsAdded);
             let nextCorrectStarString = correctParts[ count + 1  ];
             if ( needsAdded > 0 ) {
 
@@ -831,12 +781,7 @@ function showCorrectionUnderWrongSent() {
                 let noIters = correctParts[ count + 1 ].length - 1;
                 for (let i=0; i<noIters; i++) {
 
-                    console.log('needsAddedupdate:', needsAdded);
-                    console.log('correctParts:', correctParts[ count + 1 ]);
-                    console.log('correctWord:', correctParts[ count + 1 ][ 0 ]);
                     let lenWord = correctParts[ count + 1 ][ 0 ].length;
-                    console.log('lenCorrectWord:', lenWord);
-
                     if ( lenWord > Math.abs(needsAdded) ) {
 
                         nextCorrectStarString.shift();
@@ -854,8 +799,6 @@ function showCorrectionUnderWrongSent() {
 
             }
 
-            console.log( 'nextCorrectStarString:', nextCorrectStarString );
-
             correct = true;
             count += 1;
 
@@ -864,29 +807,57 @@ function showCorrectionUnderWrongSent() {
         }
 
     }
-    
-    for (let i=0; i<classVariableDict.last_sent.indexes.length; i++ ) {
+    setTimeout( function() {
 
-        setTimeout( function() {
+        for (let i=0; i<classVariableDict.last_sent.indexes.length; i++ ) {
 
-            $('.correct_words_' + i.toString()).css({
-
-                'color': 'white',
-                'background-image': 'linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0), green, green, rgba(0,0,0,0), rgba(0,0,0,0))',
-
-            });
             setTimeout( function() {
 
                 $('.correct_words_' + i.toString()).css({
-                    'color': 'green',
-                    'background-image': 'none',
+
+                    'color': 'white',
+                    'background-image': 'linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0), green, green, rgba(0,0,0,0), rgba(0,0,0,0))',
+
+                });
+                $('.correct_words_' + i.toString()).each( function() {
+                    if ( $(this).text() === '*' ) {
+                        $(this).css({
+                            'color': 'green',
+                        })
+
+                    }
                 });
 
-            }, 1500 )
+                setTimeout( function() {
 
-        }, i*2000 );
+                    $('.correct_words_' + i.toString()).css({
+                        'color': 'green',
+                        'background-image': 'none',
+                    });
 
-    }
+                    $('.correct_words_' + i.toString()).each( function() {
+                        if ( $(this).text() === '*' ) {
+                            $(this).css({
+                                'color': 'rgba(0,0,0,0)',
+                            })
+
+                        }
+                    });
+
+                    if ( i === classVariableDict.last_sent.indexes.length - 1 ) {
+
+                        $('#nextSentenceBtn').css('display', 'flex');
+                        $('#nextSentenceBtn').prop( "disabled", false ).fadeIn( 500 );
+
+                    }
+
+                }, 1500 )
+
+            }, i*2250 );
+
+        }
+
+    }, 1000 );
 
 };
 
