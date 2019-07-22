@@ -889,6 +889,8 @@ button:active {
 #prevSentsIconCont {
 
     position: absolute;
+    height: 50px;
+    width: 50px;
     margin: 10px;
 
 }

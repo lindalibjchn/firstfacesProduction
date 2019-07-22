@@ -1,3 +1,5 @@
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from scipy import signal
 from scipy.io import wavfile
@@ -73,6 +75,7 @@ def get_aeneas_path():
 
 def load_json():
     with open(get_out_path()) as file:
+        print('\n\nmap.json', file.readlines(), '\n\n')
         data = json.load(file)
     return data
 
