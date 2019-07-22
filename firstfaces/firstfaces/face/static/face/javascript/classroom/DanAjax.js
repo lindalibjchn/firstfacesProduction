@@ -263,6 +263,11 @@ $('#closeOverlayArea').click(function(){
    //$('#tia-speech-box').text("Select an error to correct!"); 
    classVariableDict.stage2 = false;
    classVariableDict.stage3 = false;
+
+   // also close prevSentsContainer - J
+   $('#prevSentsContainer').fadeOut();
+   $('#prevSentsIconCont').fadeIn();
+
 });
 
 $('#keyboardOverlay').click(function(){

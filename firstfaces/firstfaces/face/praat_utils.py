@@ -11,6 +11,7 @@ import json
 from pydub.playback import play
 from pydub import AudioSegment
 from gtts import gTTS
+import ast
 
 def get_praat_path():
     return os.path.join(settings.BASE_DIR, 'media',"images")+"/"
@@ -20,6 +21,7 @@ def get_rel_praat_paths():
     return base+"ref.png", base+"hyp.png"
 
 def get_praat_image(wav_path,code):
+    print('wav path:', wav_path)
     samplingFrequency, signalData = wavfile.read(wav_path)
     temp = []
     for i in range(len(signalData)):
@@ -74,9 +76,11 @@ def get_aeneas_path():
     return path+"/"
 
 def load_json():
-    with open(get_out_path()) as file:
-        print('\n\nmap.json', file.readlines(), '\n\n')
-        data = json.load(file)
+    f = open( get_out_path(), 'r')
+    out_str = ''
+    for i in f:
+        out_str += i + " "
+    data = ast.literal_eval( out_str )
     return data
 
 def get_timestamps(startIDX,endIDX):

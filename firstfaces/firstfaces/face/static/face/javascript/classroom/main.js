@@ -32,6 +32,13 @@ function readyBtns() {
  
     //resetTranscripts();
 
+    $('#prevSentsIconCont').on( 'click', function() {
+
+        $('#prevSentsContainer').fadeIn();
+        $('#prevSentsIconCont').hide();
+
+    });
+
     $('#tryAgainBtn').on( 'click', tryAgain );
     $('#whatsWrongBtn').on( 'click', whatsWrong );
     $('#showCorrectionBtn').on( 'click', showCorrection );

@@ -883,6 +883,7 @@ button:active {
     position: absolute;
     height: 50px;
     width: 50px;
+    z-index: 112;
 
 }
 
@@ -892,6 +893,7 @@ button:active {
     height: 50px;
     width: 50px;
     margin: 10px;
+    z-index: 112;
 
 }
 
@@ -911,12 +913,14 @@ button:active {
 
 #prevSentsContainer {
 
+    display: none;
     position: absolute;
     width: 100%;
-    height: 56.5%;
-    right: 100%;
-    top: 30px;
-    background-color: rgba( 0, 0, 0, 0.3 );
+    height: 50%;
+    left: 0;
+    bottom: 0;
+    background-color: rgba( 0, 0, 0, 1 );
+    z-index: 110;
 
 }
 
@@ -939,7 +943,7 @@ button:active {
     margin: 4px;
     padding: 3%;
     float: right;
-    font-size: 1.1vw;
+    font-size: 1.1em;
     
 }
 
