@@ -12,6 +12,13 @@ var noSessions;
 
 $(window).on( 'load', function() {
 
+    $( function() {
+
+        $("#wrongSentForCorrectionNow").selectable();
+        $("#sentenceForJudgement").selectable();
+
+    } )
+
     noSessions = Object.keys( sessions ).length;
 
     aud = document.getElementById('bells')
@@ -38,11 +45,19 @@ $(window).on( 'load', function() {
         if(e.keyCode == 65 && e.ctrlKey) {
             console.log('Ctrl-A pressed');
             e.preventDefault();
-            appendWrongSection();
+            appendCorrectionSection(true);
         } else if (e.keyCode == 83 && e.ctrlKey) {
             console.log('Ctrl-S pressed');
             e.preventDefault();
-            appendCorrectionSection();
+            appendCorrectionSection(false);
+        } else if(e.keyCode == 90 && e.ctrlKey) {
+            console.log('Ctrl-Z pressed');
+            e.preventDefault();
+            appendWrongSection(true);
+        } else if (e.keyCode == 88 && e.ctrlKey) {
+            console.log('Ctrl-X pressed');
+            e.preventDefault();
+            appendWrongSection(false);
         }
     });
 
@@ -311,7 +326,8 @@ function updatePrevSentences() {
                                 
                                 "<div class='prev-sents'>" +
                                     
-                                    sessions[ key ].sentences[ sent ].sentence +
+                                    // sent is in array for so join with empty sting to display properly
+                                    sessions[ key ].sentences[ sent ].sentence.join("") +
                                 
                                 "</div>" +
 
@@ -410,31 +426,47 @@ function loadNextSentenceNeedingCorrection() {
 
     if ( sentForCorrection !== undefined ) {
 
-        if ( sentForCorrection.sentence[ 0 ] == " " ) {
-            
-            $('#wrongSentForCorrectionNow').append(
+        //if ( sentForCorrection.sentence[ 0 ] == " " ) {
 
-                "<div class='wrong-sents-individual-sent' id='wrongSentNOW'>" +
+        // need to create a button for each word with index
+        let lenOfErrorArray = sentForCorrection.sentence.length;
+        for ( let wordInd = 0; wordInd < lenOfErrorArray; wordInd++ ) {
+            
+            if ( sentForCorrection.sentence[ wordInd ] === " " ) {
+
+                $('#wrongSentForCorrectionNow').append(
+
+                    "<div class='ui-widget-content individual-words' id='indErrWord_" + wordInd.toString() + "'>&nbsp</div>"
+                    
+                )
+
+            } else {
                 
-                    "&nbsp" +  sentForCorrection.sentence.substring( 1 ) + 
-        
+                $('#wrongSentForCorrectionNow').append(
+
+                    "<div class='ui-widget-content individual-words' id='indErrWord_" + wordInd.toString() + "'>" + sentForCorrection.sentence[ wordInd ] +
+
                 "</div>"
 
-            )
-            
-        } else {
+                )
 
-            $('#wrongSentForCorrectionNow').append(
+            }
 
-                "<div class='wrong-sents-individual-sent' id='wrongSentNOW'>" +
-                
-                    "&nbsp" +  sentForCorrection.sentence + 
-        
-                "</div>"
-
-            )
-           
         }
+            
+        //} else {
+
+            //$('#wrongSentForCorrectionNow').append(
+
+                //"<div class='wrong-sents-individual-sent' id='wrongSentNOW'>" +
+                
+                    //sentForCorrection.sentence("") + 
+        
+                //"</div>"
+
+            //)
+           
+        //}
 
     }
 
@@ -454,7 +486,7 @@ function updateWrongSentences() {
             
                 "<div class='wrong-sents-individual-sent'>" +
                     
-                    "&nbsp" + sentencesNeedUrgentCorrection[ urgentS ].sentence.substring( 1 ) + 
+                    sentencesNeedUrgentCorrection[ urgentS ].sentence.join("") + 
             
                 "</div>" +
 
@@ -472,7 +504,7 @@ function updateWrongSentences() {
 
                 "<div class='wrong-sents-individual'>" + 
             
-                    "&nbsp" + sentencesMaybeNeedUrgentCorrection[ maybeUrgentS ].sentence.substring( 1 ) + 
+                    sentencesMaybeNeedUrgentCorrection[ maybeUrgentS ].sentence.join("") + 
                 
                 "</div>" +
 
@@ -607,15 +639,45 @@ function resetStatesOnScreen() {
 
 function putNextSentenceNeedingJudgementUpForViewing() {
 
-    $('#sentenceForJudgement').val( '' );
+    //$('#sentenceForJudgement').val( '' );
     
     if (sentencesNeedJudgement.length > 0 ) {
 
         // get next sentence needing judgement
         let sentNeedingJudgement = sentencesNeedJudgement[ 0 ].sentence;
 
-        // put it in the 
-        $('#sentenceForJudgement').html( "&nbsp" + sentNeedingJudgement.substring( 1 ) );
+        let lenOfSentArray = sentNeedingJudgement.length;
+        for ( let wordInd = 0; wordInd < lenOfSentArray; wordInd++ ) {
+            
+            if ( sentNeedingJudgement[ wordInd ] === " " ) {
+
+                $('#sentenceForJudgement').append(
+
+                    "<div class='ui-widget-content individual-words' id='indWord_" + wordInd.toString() + "'>&nbsp</div>"
+                    
+                )
+
+            } else {
+                
+                $('#sentenceForJudgement').append(
+
+                    "<div class='ui-widget-content individual-words' id='indWord_" + wordInd.toString() + "'>" + sentNeedingJudgement[ wordInd ] +
+
+                "</div>"
+
+                )
+
+            }
+
+        }
+
+    //if (sentencesNeedJudgement.length > 0 ) {
+
+        //// get next sentence needing judgement
+        //let sentNeedingJudgement = sentencesNeedJudgement[ 0 ].sentence;
+
+        //// put it in the 
+        //$('#sentenceForJudgement').html( sentNeedingJudgement.join("") );
 
     }
 
@@ -632,74 +694,242 @@ function loadNextSentenceNeedingJudgement() {
 
 }
 
-var appendWrongSection = function() {
+var appendWrongSection = function( copy ) {
     
-    var index1 = window.getSelection()['anchorOffset']
-    var index2 = window.getSelection()['focusOffset']
+    //var index1 = window.getSelection()['anchorOffset']
+    //var index2 = window.getSelection()['focusOffset']
 
-    if ( index1 > index2 ) {
-        var temp = index1;
-        index1 = index2;
-        index2 = temp;
-    } 
+    //if ( index1 > index2 ) {
+        //var temp = index1;
+        //index1 = index2;
+        //index2 = temp;
+    //} 
     
-    wrongIndexes.push( [index1,index2] );
+    //wrongIndexes.push( [index1,index2] );
 
-    let sent = sentencesNeedJudgement[ 0 ].sentence;
-    let wrongText = sent.slice( index1, index2 );
+    let sentNeedJudg = sentencesNeedJudgement[ 0 ].sentence;
+    //let wrongText = sent.slice( index1, index2 );
 
-    let displayedWrongText = replaceSpacesWithUnderscores( wrongText );
+    //let displayedWrongText = replaceSpacesWithUnderscores( wrongText );
     
-    $('#selectedSections').append( '<div class="selectedSection">' + displayedWrongText + '</div>' );
+    //$('#selectedSections').append( '<div class="selectedSection">' + displayedWrongText + '</div>' );
 
-} 
 
-// this is for the wrong sentences on the right needing correction
-var sentNeedingCorrectionID;
-var appendCorrectionSection = function() {
-    
-    var index1 = window.getSelection()['anchorOffset']
-    var index2 = window.getSelection()['focusOffset']
+    let idArray = []
+    $('#sentenceForJudgement > .ui-selected').each( function() {
+        idArray.push(parseInt(this.id.substring(8)));
+    })
 
-    if ( index1 > index2 ) {
-        var temp = index1;
-        index1 = index2;
-        index2 = temp;
-    } 
-    
-    correctionIndexes.push( [index1,index2] );
+    if ( idArray.length > 1 ) {
 
-    var sent = sentForCorrection.sentence;
+        if ( sentNeedJudg[ idArray[ 0 ] ] === " " ) {
 
-    let incorrectText = sent.slice( index1, index2 );
+            idArray.shift();
 
-    let displayedIncorrectText = replaceSpacesWithUnderscores( incorrectText );
+        }
 
-    $('#wrongSelections').append( '<div class="selectedSection">' + displayedIncorrectText + '</div>' );
+        if ( sentNeedJudg[ idArray[ idArray.length - 1 ] ] === " " ) {
 
-} 
-
-function replaceSpacesWithUnderscores( s ) {
-
-    var newString = ""
-
-    for ( var l in s ) {
-
-        if ( s[ l ] === " " ) {
-
-            newString += "_"
-
-        } else {
-
-            newString += s[ l ]
+            idArray.pop();
 
         }
 
     }
 
-    return newString;
+    wrongIndexes.push( idArray );
 
-}
+    let sent = ''
+    let sent_ = ''
+
+    idArray.forEach( function(i) {
+
+        let token = sentNeedJudg[ i ];
+        
+        if ( idArray.length === 1 && token === ' ' ) {
+
+            if ( token === ' ' ) {
+
+                sent_ += '_';
+
+            }
+
+        } else {
+
+            if ( token === ' ' ) {
+
+                sent_ += '_';
+
+                if ( copy ) {
+                
+                    sent += token;
+
+                }
+
+            } else {
+
+                if ( copy ) {
+                
+                    sent += token;
+
+                }
+
+                sent_ += token;
+
+            }
+
+        }
+
+    });
+
+    $('#selectedSections').append( '<div class="selectedSection">' + sent_ + '</div>' );
+    $('#sentenceForJudgement > .ui-selected').css('background-color', 'grey');
+
+    //curWrongText = $( '#wrongText' ).val()
+    //console.log( 'curWrongText:', curWrongText );
+    
+    $( '#promptText' ).focus()
+
+    //if ( curWrongText === '' ) {
+
+    $( '#promptText' ).val( sent );
+
+    //} else {
+
+        //$( '#wrongText' ).val( curWrongText + '\n' + sent );
+
+    //}
+
+} 
+
+// this is for the wrong sentences on the right needing correction
+var sentNeedingCorrectionID;
+var appendCorrectionSection = function( copy ) {
+    
+    //var index1 = window.getSelection()['anchorOffset']
+    //var index2 = window.getSelection()['focusOffset']
+
+    //if ( index1 > index2 ) {
+        //var temp = index1;
+        //index1 = index2;
+        //index2 = temp;
+    //} 
+    
+    //correctionIndexes.push( [index1,index2] );
+
+    //var sent = sentForCorrection.sentence;
+
+    //let incorrectText = sent.slice( index1, index2 );
+
+    //let displayedIncorrectText = replaceSpacesWithUnderscores( incorrectText );
+
+    //$('#wrongSelections').append( '<div class="selectedSection">' + displayedIncorrectText + '</div>' );
+
+    //get indexes of wrong words
+    let idArray = []
+    $('#wrongSentForCorrectionNow > .ui-selected').each( function() {
+        idArray.push(parseInt(this.id.substring(11)));
+    })
+
+    if ( idArray.length > 1 ) {
+
+        if ( sentForCorrection.sentence[ idArray[ 0 ] ] === " " ) {
+
+            idArray.shift();
+
+        }
+
+        if ( sentForCorrection.sentence[ idArray[ idArray.length - 1 ] ] === " " ) {
+
+            idArray.pop();
+
+        }
+
+    }
+
+    correctionIndexes.push( idArray );
+
+    let sent = ''
+    let sent_ = ''
+    idArray.forEach( function(i) {
+
+        let token = sentForCorrection.sentence[ i ];
+        
+        if ( idArray.length === 1 && token === ' ' ) {
+
+            if ( token === ' ' ) {
+
+                sent_ += '_';
+
+            }
+
+        } else {
+
+            if ( token === ' ' ) {
+
+                sent_ += '_';
+
+                if ( copy ) {
+
+                    sent += token;
+
+                }
+
+            } else {
+
+                if ( copy ) {
+
+                    sent += token;
+
+                }
+
+                sent_ += token;
+
+            }
+
+        }
+    });
+
+    $('#wrongSelections').append( '<div class="selectedSection">' + sent_ + '</div>' );
+    $('#wrongSentForCorrectionNow > .ui-selected').css('background-color', 'grey');
+
+    curWrongText = $( '#wrongText' ).val()
+    console.log( 'curWrongText:', curWrongText );
+    
+    $( '#wrongText' ).focus()
+
+    if ( curWrongText === '' ) {
+
+        $( '#wrongText' ).val( sent );
+
+    } else {
+
+        $( '#wrongText' ).val( curWrongText + '\n' + sent );
+
+    }
+
+} 
+
+//function replaceSpacesWithUnderscores( s ) {
+
+    //var newString = ""
+
+    //for ( var l in s ) {
+
+        //if ( s[ l ] === " " ) {
+
+            //newString += "_"
+
+        //} else {
+
+            //newString += s[ l ]
+
+        //}
+
+    //}
+
+    //return newString;
+
+//}
 
 function checkForChange() {
 

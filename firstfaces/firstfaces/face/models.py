@@ -34,7 +34,7 @@ class Available(models.Model):
 class Sentence(models.Model):
     learner = models.ForeignKey(User, on_delete=models.CASCADE)
     session = models.ForeignKey(Session, on_delete=models.CASCADE)
-    sentence = models.CharField(max_length=300, blank=True, null=True)
+    sentence = models.CharField(max_length=300, default="[]")
     sentence_timestamp = models.DateTimeField(null=True, blank=True)
     question = models.BooleanField(default=False)
 
@@ -80,7 +80,7 @@ class Sentence(models.Model):
 class PermSentence(models.Model):
     learner = models.ForeignKey(User, on_delete=models.CASCADE)
     session = models.ForeignKey(Session, on_delete=models.CASCADE)
-    sentence = models.CharField(max_length=300, blank=True, null=True)
+    sentence = models.CharField(max_length=300, default="[]")
     sentence_timestamp = models.DateTimeField(null=True, blank=True)
     question = models.BooleanField(default=False)
 
@@ -134,6 +134,20 @@ class AudioFile(models.Model):
 
     # def __str__(self):
         # return  str(json.loads(self.transcriptions))
+
+class AudioErrors(models.Model):
+    audio = models.ForeignKey(AudioFile, on_delete=models.CASCADE)
+    start_index = models.SmallIntegerField()
+    intention = models.CharField(max_length=500, null=True)
+    typed = models.NullBooleanField(null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+class AudioErrorAttempt(models.Model):
+    error = models.ForeignKey(AudioErrors, on_delete=models.CASCADE)
+    audio = models.FileField(upload_to="")
+    created_at = models.DateTimeField(auto_now_add=True)
+    transcript = models.CharField(max_length=500, blank=True, null=True)
+    correct = models.NullBooleanField(null=True)
 
 class PermAudioFile(models.Model):
     sentence = models.ForeignKey(PermSentence, on_delete=models.CASCADE)

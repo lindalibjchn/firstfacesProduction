@@ -134,7 +134,10 @@
     <div class="w3-col l2 w3-hide-medium w3-hide-small">&nbsp</div>
     <div id="speakingWordsLaptop" class="speaking-words w3-col l8 m12 s12">
     
-       <div class="speaking-words-inside">Strong winds prevented the contest from hitting the heights anticipated, but there were plenty of majestic moments to please the Philippe-Chatrier crowd. The Spaniard broke the Swiss icon six times, crucially in the third and ninth games of the second set, en route to 
+       <div class="speaking-words-inside">
+           <span id="tia-speech-box">
+               Is this what you meant to say? 
+           </span>
        </div>
        <div class="thinkingOfSpeaking"><span>. </span><span>. </span><span>. </span></div> 
     
@@ -147,16 +150,113 @@
     <div id="laptop"></div>
 </div>
 
+<div id="modalOverlay" class="w3-row" style="display:none;">
+    <div class="w3-col l8 m12 s12" id="modalHolder"> 
+    
+        <div id="upperModal">
+            <div class="sound-btn">
+                Test Button
+            </div>
+        </div>
+        <div id="lowerModal">
+            <div class="sound-btn">
+                Test Button
+            </div>
+        </div>
+        <div id="buttonModal">
+        </div>
+    
+    </div>
+</div>
+
+
+<div id="closeOverlayArea"></div>
+
+<div id="correctionOverlay" class="w3-row">
+     <div class="w3-col l8 m12 s12" id="overlayHolder"> 
+        <div id="centeredError">
+            <div id="centeredErrorHolder">
+                <span id="centeredErrorText">Error</span>  
+            </div>
+        </div>
+        <div id="overlayErrorBox">
+            <span id="overlayErrorText">Error</span>
+        </div>
+        <div contentEditable="true" id="overlayTextBox">
+            <span id="typeHereOverlay">Type Here!</span>
+        </div>
+        <div id="overlayBtnBox"> 
+            <div class="w3-col l2 m4 s4" id="overlayLeftBtn">
+                <div class="input-btns">
+                    <button class="w3-btn w3-circle w3-red record-btn w3-padding-small play-btn input-btn" id="closeOverlay">                                                           
+                        <center> <i class="fa fa-angle-double-left inputfa"></i></center> 
+                    </button>
+                    <button class="w3-btn w3-circle w3-red record-btn w3-padding-small play-b
+                                variablesAndConstants.j|tn input-btn" id="backOverlay">                                                             
+                        <center> <i class="fa fa-angle-double-left inputfa"></i></center>
+                    </button>
+                    <button class="w3-btn w3-circle w3-red record-btn w3-padding-small plasy input-btn" id="keyboardOverlay">
+                        <i class="fa fa-keyboard-o inputfa"></i>
+                    </button> 
+                </div>  
+            </div>
+            
+            <div class="w3-col l2 m4 s4" id="overlayCentreBtn">
+                <div class="input-btns">
+                    <button class="w3-btn w3-circle w3-pink  record-btn w3-padding-small plasy input-btn" id="reRecordBtn">
+                        <i class="fa fa-microphone inputfa"></i>
+                    </button>
+
+                    <button class="w3-btn w3-circle w3-yellow record-btn w3-padding-small plasy input-btn" id="stopRecordBtn">                                                               
+                        <i class="fa fa-stop inputfa"></i>
+                    </button>  
+
+                </div>
+            </div>
+            
+            <div class="w3-col l2 m4 s4" id="overlayRightBtn">
+                <div class="input-btns">
+                   <button class="w3-btn w3-circle w3-green record-btn w3-padding-small plasy input-btn" id="submitOverlay">                                                                 
+                        <center> <i class="fa fa-angle-double-right inputfa"></i></center>     
+                   </button>
+
+                </div>
+            </div>
+            
+                
+        </div>
+    </div>
+</div>
+
+
 <div id="textInputContainer" class="w3-row">
 
     <div class="w3-col l2 w3-hide-medium w3-hide-small">&nbsp</div>
-    <div id="textInputBoxContCont">
 
-        <div id="textInputBoxCont">
+    
+    <div class="w3-col l8 m12 s12" id="sentenceShowHolder">
+        <div id="sentenceHolderParent"> 
+            <div id="upperSentenceHolder" class="monospace-sent-font">
+               
+            </div>
+            <div id="lowerSentenceHolder" class="monospace-sent-font" >
+                    
+            </div>
+        </div>
+    </div>
 
-            <div class="w3-col l8 m12 s12" id="textInputBox">
 
-                <textarea id="textInput" maxlength="34"></textarea>
+    <div class="w3-col l8 m12 s12" id="textInputBoxContContCont" >
+
+        <div id="textInputBoxContCont">
+
+            <div id="textInputBoxCont">
+
+                <div class="w3-col l8 m12 s12" id="textInputBox">
+
+                    <textarea id="textInput" maxlength="34"></textarea>
+
+                </div>
 
             </div>
 
@@ -165,7 +265,7 @@
     </div>
 
     <!--J for corrections after student has submitted sentence-->
-    <div class="w3-col l8 m12 s12" id="submittedNCorrectedSentenceContiCont">
+    <div class="w3-col l8 m12 s12" id="submittedNCorrectedSentenceContCont">
     
         <div id="submittedNCorrectedSentenceCont">
 
@@ -189,6 +289,13 @@
 
 <!-- right hand side controls for student to respond and see their own sentences -->
 
+<div id="prevSentsIconCont">
+
+     <img class="prev-sents-icons" id="iconWhite" src="{% static 'face/images/prevSentsIcon.png' %}">
+     <img class="prev-sents-icons" id="iconDark" src="{% static 'face/images/prevSentsIconDark.png' %}">
+
+</div>        
+        
 <div id="prevSentsContainer">
 
     <div id="prevSents">
@@ -197,6 +304,12 @@
 
 </div>
 
+<div id="finishClassIconCont">
+
+     <img id="finishClassIcon" src="{% static 'face/images/finishClock.png' %}">
+
+</div>        
+        
 <div id="inputButtonsContainer">
 
     <!--init questions buttons-->
@@ -323,7 +436,22 @@
                     <img id="human" src="{% static 'face/images/human_speech.svg' %}">
 
                 </button>
+            </div>
+            
+            <!-- Adds button needed for  no-->
+            <div id="incorrectTranscriptBtns" class="input-btns">
+                <button class="w3-btn w3-circle w3-red record-btn w3-padding-small play-btn input-btn" id="incorrectTranscriptBtn">
+                    <center> <i class="fa fa-times inputfa "></i></center>
+                </button>    
+                
+                <button class="w3-btn w3-circle w3-red record-btn w3-padding-small play-btn input-btn" id="backErrorSelection">
+                    <i class="fa fa-angle-double-left inputfa"></i>
+                </button>
 
+                <button class="w3-btn w3-circle w3-red record-btn w3-padding-small play-btn input-btn" id="backCorrection">
+                    <i class="fa fa-angle-double-left inputfa"></i>
+                </button>   
+            
             </div>
 
         </div>
@@ -355,11 +483,23 @@
                 <button class="w3-btn w3-circle w3-green input-btn input-fa record-btn w3-padding-medium play-btn" id="talkBtn">
                     
                     <i class="fa fa-play" id="yellowPlay"></i>
-                
+               
                 </button>
 
-            </div>
+                <button class="w3-btn w3-circle w3-green input-btn input-fa record-btn w3-padding-small play-btn" id="correctTranscript">
+                    <i class="fa fa-check inputfa" id="whiteTick"></i>
+                </button>
+                
+                <button class="w3-btn w3-circle w3-green input-btn input-fa record-btn w3-padding-small play-btn" id="forwardErrorSelection">
+                    <i class="fa fa-angle-double-right inputfa"></i>                 
+                </button>
+                
+                <button class="w3-btn w3-circle w3-green input-btn input-fa record-btn w3-padding-small play-btn" id="submitCorrectedErrors">                                             
+                    <i class="fa fa-angle-double-right inputfa"></i>
+                </button>  
 
+            </div>
+     
         </div>
 
         <div class="w3-col l3 w3-hide-medium w3-hide-small">&nbsp</div>
@@ -449,6 +589,9 @@
 <script src="{% static 'face/javascript/classroom/volume-meter.js' %}"></script>
 <script src="{% static 'face/javascript/classroom/main.js' %}"></script>
 <script src="{% static 'face/javascript/classroom/animate.js' %}"></script>
+
+<!-- Daniel's Scripts -->
+<script src="{% static 'face/javascript/classroom/DanAjax.js' %}"></script>
 
 
 {% endblock %}

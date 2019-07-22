@@ -336,8 +336,8 @@
 
     position: absolute;
     margin: 0px 10px;
-    letter-spacing: 0.4vw;
-    font-size: 1vw;
+    letter-spacing: 0.1em;
+    font-size: 1em;
     font-weight: bold;
     bottom: 0;
     height: 95%;
@@ -401,18 +401,31 @@
 
 #sentForCorrectionNow {
 
+    /*display: flex;*/
+    /*flex-direction: column;*/
+    width: 100%;
     margin-top: 50px;
     height: 30%; 
     padding: 2%;
-    overflow-y: scroll;
+
+}
+
+.individual-words {
+
+    display: inline-block;
+    height: 20%;
 
 }
 
 #wrongSentForCorrectionNow {
 
+    /*display: flex;*/
+    /*flex-direction: column;*/
+    width: 100%;
+    height: 100%;
     font-size: 18px;
     font-weight: bold;
-    color: white;
+    color: black;
     letter-spacing: 0.4vw;
 
 }
@@ -567,7 +580,17 @@
 
 }
 
+#feedback { font-size: 1.4em; }
+#wrongSentForCorrectionNow .ui-selecting { background: #FECA40; }
+#wrongSentForCorrectionNow .ui-selected { background: #000000; color: white; }
+/*#wrongSentForCorrectionNow { list-style-type: none; margin: 0; padding: 0; width: 60%; }*/
+/*#wrongSentForCorrectionNow div { margin: 3px; padding: 0.4em; font-size: 1.4em; height: 18px; }*/
+#sentenceForJudgement .ui-selecting { background: #FECA40; }
+#sentenceForJudgement .ui-selected { background: #000000; color: white; }
 
+.individual-words: hover {
 
+    cursor: pointer;
 
+}
 

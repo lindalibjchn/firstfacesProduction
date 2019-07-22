@@ -189,10 +189,107 @@ button:active {
     /*border: 2px solid red;*/
     opacity: 0.9;
     bottom: 8%;
-    display: none;
+    /*display: none;*/
 
 }
+#correctionOverlay {
+    position:absolute;
+    width:100%;
+    height:50%;
+    bottom:0;
+    z-index:2;
+    display:none;
+}
 
+#closeOverlayArea{
+    height:50%;
+    width:100%;
+    position:absolute;
+    top:0;
+    opacity:0;
+    z-index:3;
+}
+#centeredError{
+    height:76%;
+    width:100%;
+    position:absolute;
+    top:0;
+    background-color:#f0f0f0;
+}
+#centeredErrorHolder{
+    height:100%;
+    width:100%;
+    display: flex;
+    align-items: center;
+    justify-content:center;
+}
+#centeredErrorText{
+    font-size:2em;
+    font-family:monospace;
+    color:red;
+}
+
+
+#modalOverlay {
+    position:absolute;
+    width:100%;
+    height:50%;
+    bottom:0;
+    z-index:2;
+    background-color:red;
+}
+
+#overlayTextBox {
+    height:61%;
+    position:absolute;
+    top:15%;
+    width:100%;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    /*margin-top:4em;*/
+    background-color:#f0f0f0;
+    opacity:i;
+    color:green;
+    z-index:3;
+    overflow:hidden;
+    font-size:2em;
+}
+#overlayErrorBox{
+    height:15%;
+    position:absolute;
+    top:0;
+    background-color:white;
+    width:100%;
+    font-family:monospace;
+    color:red;
+    padding-top:0.5em;
+    opacity: 1;
+    border-bottom: 1px solid #575757;
+    z-index:4;
+}
+#overlayErrorText{
+    font-size:2em;
+    padding-left:0.5em;
+}
+#overlayBtnBox {
+    position:absolute;
+    bottom:0;
+    height:24%;
+    width:100%;
+    z-index:5;
+    border-top:1px solid #575757;
+    background-color:#f0f0f0;
+}
+#overlayLeftBtn{
+    height: 100%;
+}
+
+#overlayCentreBtn{
+    height:100%;
+}
+#overlayRightBtn{
+    height:100%
+} 
 #textInputBoxContCont {
 
     width: 100%;
@@ -212,14 +309,30 @@ button:active {
     justify-content: center;
 
 }
-#textInputBox {
 
+#textInputBox {
+    display:none;
     height: 100%;
     width: 89%;
     position: relative; 
     padding: 1%;
     background-color: black;
 
+}
+
+.corrected-error{
+    background-color:green;
+    opacity:1;
+    padding:0.1em;
+    border:1px solid white;;
+    color:white;
+}
+.lower-error{
+    background-color:red;
+    opacity:1;
+    padding:0.1em;
+    border:1px solid white;
+    color:white;
 }
 
 #textInput {
@@ -238,14 +351,14 @@ button:active {
 }
 
 @media screen and (min-width: 701px) {
-    #textInput {
-        font-size: 1.5em;
-        line-height: 1.5em;
-    }
-    .speaking-words-inside {
-        font-size: 1.3em;
-        line-height: 1.3em;
-    }
+  #textInput {
+    font-size 1.5em;
+    line-height: 1.5em;
+  }
+  .speaking-words-inside {
+      font-size: 1.3em;
+      line-height: 1.3em;
+  }
     .submitted-corrected-sentences {
         font-size: 1.5em;
         line-height: 2.5em;
@@ -254,14 +367,19 @@ button:active {
 
 /* If the screen size is 600px wide or less, set the font-size of <div> to 30px */
 @media screen and (max-width: 700px) {
-    #textInput {
-        font-size: 1em;
-        line-height: 1.2em;
-    }
-    .speaking-words-inside {
-        font-size: 0.9em;
-        line-height: 1.2em;
-    }
+  #textInput {
+    font-size: 1em;
+    line-height: 1.2em;
+  }
+  #sentenceShowHolder{
+    font-size: 1em;
+    line-height: 1.2em;
+  }
+  .speaking-words-inside {
+      font-size: 0.9em;
+      line-height: 1.2em;
+  }
+    
     .submitted-corrected-sentences {
         font-size: 1em;
         line-height: 2.6em;
@@ -276,13 +394,151 @@ button:active {
 
 }
 
+#overlayHolder{
+    height:100%;
+    width:100%;
+    position:absolute;
+    top:0;
+} 
+#modalHolder{
+    height:100%;
+    width:100%;
+    position:absolute;
+    top:0;
+}
+#upperModal{
+    height:38%;
+    width:100%;
+    position:absolute;
+    top:0;
+    background-color:green;
+    display: flex;                                                                           
+    align-items: center;                                                                     
+    justify-content: center;                                                                 
+}
+#lowerModal{
+    height:38%;
+    width:100%;
+    position:absolute;
+    top:38%;
+    background-color:yellow;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+#buttonModal{
+    height:24%;
+    width:100%;
+    position:absolute;
+    bottom:0;
+    background-color:white;
+}
+.sound-btn{
+    width:80%;
+    height:50%;
+    background-color:blue;
+    border-radius:20px;
+    display:flex;
+   
+}
+
+#sentenceShowHolder{
+    height:100%;
+    width:100%;
+    position:absolute;
+    top:0;
+    background-color:white;
+}
+#sentenceHolderParent{
+    height:100%;
+    width:100%;
+    position:absolute;
+    background-color:transparent;
+}
+#lowerSentenceHolder{
+    padding-left:2%;
+    padding-right:2%;
+    height:100%;
+    width:100%;
+    z-index:1;
+    background-color:transparent;
+    padding-top:1.4em; 
+    word-wrap:break-word;
+}
+#upperSentenceHolder{
+    padding-right:2%;
+    padding-left:2%;
+    height:100%;
+    background-color:transparent;
+    width:100%;
+    float:top;
+    position:absolute;
+    top:0;
+    z-index:0;
+    word-wrap:break-word;
+}
+.monospace-sent-font{
+    font-family:monospace;
+    color:green;
+    line-height:2.9;
+}
+
+.selectable-word{
+    opacity:0.9;
+    border:1px solid green;
+    border-radius:0.5em;
+    padding:0.1em;
+    cursor:pointer;
+}
+.normal-word{
+    opacity:1;
+    padding:0.1em;
+    border:1px solid transparent;
+}
+
+.uncorrected-error{
+    opacity:1;
+    padding:0.1em;
+    border:1px solid black;
+    background-color:yellow;
+    color:black;
+}
+
+.hidden-word{
+    opacity:0;
+    padding:0.1em;
+    border:1px solid transparent;
+}
+.hidden-span{
+    opacity:0;
+}
+
+.selected-word{
+    opacity:1;
+    border:1px solid white;
+    background-color:green;
+    color:white;
+    border-radius:0.5em;
+    padding:0.1em;
+    cursor:pointer;
+}
+.selected-word:hover{
+    cursor:pointer;
+}
+
+/*error-word-unselected{}*/
+/*error-word-selected{}*/
+/*correct-error-upper{} */
+/*correct-error-lower{}*/
+
+
 #submittedNCorrectedSentenceContCont {
 
     position: absolute;
     height: 100%;
     width: 100%;
     /*bottom: 4%;*/
-    /*border: 2px dashed blue;*/
+    border: 2px dashed blue;
     display: none;
 
 }
@@ -315,9 +571,61 @@ button:active {
 
 #correctedSentence {
 
-    padding-top: 1.2em;
+    padding-top: 1.5em;
     position: absolute;
     /*border: 2px solid green;*/
+
+}
+
+.wrong-words {
+
+    display: inline-block;
+
+}
+
+.correct-words {
+
+    display: inline-block;
+    color: rgba(0,0,0,1);
+
+}
+
+.correction-word {
+
+    color: green;
+
+}
+
+/*put 'a's in place of spaces on Daniel's advice, n then make them disappear. Thi swill help with alignment later*/
+.wrong-words-spaces {
+
+    color: rgba(0, 0, 0, 0);
+
+}
+
+.correct-words-spaces {
+
+    color: rgba(0, 0, 0, 0);
+
+}
+
+.wrong-parts {
+
+    color: rgba(0,0,0,0);
+    /*background-image: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0), green, green, rgba(0,0,0,0), rgba(0,0,0,0));*/
+    font-weight: bold;
+
+}
+
+.wrong-parts-spaces {
+
+    color: rgba(0,0,0,0)
+
+}
+
+.correct-parts {
+
+    color: rgba(0,0,0,0);
 
 }
 
@@ -465,6 +773,46 @@ button:active {
 
 }
 
+#finishClassIconCont {
+
+    position: absolute;
+    height: 50px;
+    width: 50px;
+    top: 0;
+    right: 0;
+    margin: 10px;
+
+}
+
+#finishClassIcon {
+
+    position: absolute;
+    height: 50px;
+    width: 50px;
+
+}
+
+#prevSentsIconCont {
+
+    position: absolute;
+    margin: 10px;
+
+}
+
+.prev-sents-icons {
+
+    position: absolute;
+    height: 60px;
+    width: 40px;
+
+}
+
+#iconDark {
+
+    display: none;
+
+}
+
 #prevSentsContainer {
 
     position: absolute;
@@ -607,17 +955,13 @@ button:active {
 }
 
 #listenAndSynthBtnsContainer {
-
+    /*position:relative;*/
     height: 100%;
 
 }
 
-#listenAndSynthBtns {
-
+#incorrectTranscriptBtns{
     height: 100%;
-    display: flex;
-    align-items: center;
-
 }
 
 #human {
@@ -673,26 +1017,25 @@ button:active {
 
 }
 
-.record-btn {
-
-    /*left: 0;*/
-    /*ridht: 0;*/
+    .record-btn {
+    /*left:0;*/
     /*margin: auto;*/
     /*height: 60px;*/
     /*width: 60px;*/
 
-}
+    }
 
-#stopRecordVoiceBtn {
+    #stopRecordVoiceBtn {
 
-    display: none;
+        display: none;
 
-}
+    }
 
-.inputfa {
-
-    color: white;
-
+    .inputfa {
+        color: white;
+    }
+    .redfa{
+        color: red;
 }
 
 #optionBtns {
@@ -755,7 +1098,6 @@ button:active {
     align-items: center;
     justify-content: center;
     /*border: 3px solid red;*/
-
 }
 
 .thinking-words {
@@ -838,7 +1180,7 @@ button:active {
     /*display: none;*/
     /*position: absolute;*/
     height: 100%;
-
+    font-size:1.2em;
 }
 
 #speakingWordsLaptop {
@@ -987,8 +1329,6 @@ button:active {
 
     width: 80%;
     height: 50px;
-
 }
-
 
 

@@ -283,7 +283,7 @@ def fill_sessions_dict():
                     sent_meta = {
                         "sess_id": s.pk,
                         "sent_id": sent.id, 
-                        "sentence": sent.sentence,
+                        "sentence": json.loads(sent.sentence),
                         "sentence_timestamp": sent_time,
                         "judgement": sent.judgement,
                         "judgement_timestamp": judge_time,

@@ -82,7 +82,7 @@ function sendBlobToServer( blob_to_send ) {
     fd.append('blob_no_text', classVariableDict.blob_no_text);
     fd.append('blob_no_text_sent_id', classVariableDict.blob_no_text_sent_id);
 
-
+    
     $.ajax({
         url: "/store_blob",
         type: "POST",
@@ -94,7 +94,8 @@ function sendBlobToServer( blob_to_send ) {
             classVariableDict.blob_no_text = true;
             classVariableDict.blob_no_text_sent_id = json.sent_id;
             console.log('got response from sending blob to server');
-            classVariableDict.alternatives = json.alternatives
+            classVariableDict.alternatives = json.alternatives;
+            classVariableDict.currentAudID = json.audio_pk;
 
             // if first interference, then want the flinch not to be interfered with by the return motions
             if ( classVariableDict.interference_count === 1 && synthesisObject.interference ) {
@@ -163,7 +164,7 @@ function sendSentToServer() {
 
     // all below for developing
     //let sent = $('#textInput').val();
-    let sent = "40 year ago the Khmer Rouge were toppled from power in Cambodia"
+    let sent = [' ', '40', ' ', 'year', ' ', 'ago', ' ', 'the', ' ', 'Khmer', ' ', 'Rouge', ' ', 'were', ' ', 'toppled', ' ', 'from', ' ', 'power', ' ', 'in', ' ', 'Cambodia', ' ']
 
     if ( sent.length >= 200 ) {
 
@@ -199,7 +200,7 @@ function sendSentToServer() {
                 url: "/store_sent",
                 type: "POST",
                 data: { 
-                    'sent': sent,
+                    'sent': JSON.stringify(sent),
                     //'isItQ': isItQ,
                     'blob_no_text': classVariableDict.blob_no_text,
                     'blob_no_text_sent_id': classVariableDict.blob_no_text_sent_id,
@@ -261,7 +262,7 @@ function checkJudgement( sentId ) {
 
                 }
                 
-                console.log('sentMeta:', json.sent_meta);
+                //console.log('sentMeta:', json.sent_meta);
                 JudgementReceived( json.sent_meta )
             
             } else {
@@ -283,6 +284,8 @@ function checkJudgement( sentId ) {
 classVariableDict.promptNINdexesCount = 0;
 function checkForPromptNIndexes( sentId ) {
 
+    console.log('in checkForPromptNIndexes');
+    
     $.ajax({
         url: "/check_prompt_indexes",
         type: "GET",
@@ -296,6 +299,7 @@ function checkForPromptNIndexes( sentId ) {
                 if ( classVariableDict.promptNIndexesReceived === false ) {
 
                     console.log('got prompt n indexes');
+                    console.log('indexes:', json.sent_meta.indexes);
                     classVariableDict.promptNINdexesCount = 0;
                     promptNIndexesReceived( json.sent_meta )
 
