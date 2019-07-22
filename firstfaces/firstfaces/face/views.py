@@ -675,7 +675,7 @@ def error_typing_used(request):
     
     #Run forced alligner
     os.chdir(aeneasPath)
-    os.system('python3 -m aeneas.tools.execute_task '+audioPath+" "+textPath+" "+extra_str+" "+outPath+" >/dev/null 2>&1")
+    os.system('python -m aeneas.tools.execute_task '+audioPath+" "+textPath+" "+extra_str+" "+outPath+" >/dev/null 2>&1")
     os.chdir(cwd)
     #Get audio
     ERR_trans = request.POST['etrans']
