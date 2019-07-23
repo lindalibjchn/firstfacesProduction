@@ -46,4 +46,5 @@ urlpatterns = [
     path('error_recording_used', views.error_recording_used, name="error_recording_used"),
     path('error_typing_used', views.error_typing_used, name="error_typing_used"),
     path('store_attempt_blob', views.store_attempt_blob, name="store_attempt_blob"),
+    path('close_attempt', views.close_attempt, name="close_attempt"),
     ]

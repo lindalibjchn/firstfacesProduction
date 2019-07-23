@@ -3,59 +3,11 @@
   {
    "begin": "0.000",
    "children": [],
-<<<<<<< HEAD
-   "end": "4.360",
+   "end": "2.080",
    "id": "f000001",
    "language": "eng",
    "lines": [
-    "en23"
-=======
-   "end": "0.560",
-   "id": "f000001",
-   "language": "eng",
-   "lines": [
-    "this"
-   ]
-  },
-  {
-   "begin": "0.560",
-   "children": [],
-   "end": "1.720",
-   "id": "f000002",
-   "language": "eng",
-   "lines": [
-    "time"
-   ]
-  },
-  {
-   "begin": "1.720",
-   "children": [],
-   "end": "1.800",
-   "id": "f000003",
-   "language": "eng",
-   "lines": [
-    "it"
-   ]
-  },
-  {
-   "begin": "1.800",
-   "children": [],
-   "end": "2.000",
-   "id": "f000004",
-   "language": "eng",
-   "lines": [
-    "will"
-   ]
-  },
-  {
-   "begin": "2.000",
-   "children": [],
-   "end": "2.760",
-   "id": "f000005",
-   "language": "eng",
-   "lines": [
-    "pass"
->>>>>>> f8b98899f4d800416f93b5182c1d7cdf0d64afaf
+    "until"
    ]
   }
  ]

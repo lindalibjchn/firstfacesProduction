@@ -625,6 +625,24 @@ def store_error_blob(request):
 
     return JsonResponse(response_data) 
 
+def close_attempt(request):
+    att = request.POST['correctio_id']
+    err = request.POST['error_pk']
+    aeca = AudioErrorCorrectionAttempt.objects.get(pk=att)
+    ae = AudioErrors.objects.get(pk=err)
+    ae.typed = False
+    ae.intention = ""
+    ae.save();
+    aeca = AudioErrorCorrectionAttempt.objects.get(pk = request.POST['correctio_id'])
+    clicks = request.POST['clicks']
+    aeca.clicks = clicks
+    aeca.save()
+    response_data = {
+
+    }
+    return JsonResponse(response_data) 
+
+
 def error_recording_used(request):
     att = request.POST['attempt_pk']
     err = request.POST['error_pk']
@@ -700,39 +718,39 @@ def error_typing_used(request):
     pitch_designated = float(request.POST['pitch'])
     speaking_rate_designated = float(request.POST['speaking_rate'])      
 
-    client = texttospeech.TextToSpeechClient()
-    input_text = texttospeech.types.SynthesisInput(text=request.POST['trans'])
-    voice = texttospeech.types.VoiceSelectionParams(language_code='en-GB',name=speaking_voice)
-    audio_config = texttospeech.types.AudioConfig(audio_encoding=texttospeech.enums.AudioEncoding.LINEAR16,pitch = pitch_designated,speaking_rate = speaking_rate_designated)
-    try:
-        print("\t\t-1")
-        print("\t\t-",input_text)
-        print("\t\t-",voice)
-        print("\t\t-",audio_config)
-        response = client.synthesize_speech(input_text, voice, audio_config)
-        print("\t\t-2")
-        synthURL1 = 'media/synths/session' + session_id + '_'+ 'error' + timezone.now().strftime('%H-%M-%S') + '.mp3'
-        print("\t\t" + synthURL1)
-        with open( os.path.join(settings.BASE_DIR, synthURL1 ), 'wb') as out:
-            out.write(response.audio_content)
-        print("\t\t-4")
+    #client = texttospeech.TextToSpeechClient()
+    #input_text = texttospeech.types.SynthesisInput(text=request.POST['trans'])
+    #voice = texttospeech.types.VoiceSelectionParams(language_code='en-GB',name=speaking_voice)
+    #audio_config = texttospeech.types.AudioConfig(audio_encoding=texttospeech.enums.AudioEncoding.LINEAR16,pitch = pitch_designated,speaking_rate = speaking_rate_designated)
+    #try:
+     #   print("\t\t-1")
+      #  print("\t\t-",input_text)
+       # print("\t\t-",voice)
+        #print("\t\t-",audio_config)
+        #response = client.synthesize_speech(input_text, voice, audio_config)
+        #print("\t\t-2")
+        #synthURL1 = 'media/synths/session' + session_id + '_'+ 'error' + timezone.now().strftime('%H-%M-%S') + '.mp3'
+        #print("\t\t" + synthURL1)
+        #with open( os.path.join(settings.BASE_DIR, synthURL1 ), 'wb') as out:
+            #out.write(response.audio_content)
+        #print("\t\t-4")
 
-        synthURL1 = convert_mp3_to_wav(synthURL1)
+        #synthURL1 = convert_mp3_to_wav(synthURL1)
 
-    except:  
-        synthURL1 = 'fault'
-    print("\t\t-Stage 4")
+    #except:  
+        #synthURL1 = 'fault'
+    #print("\t\t-Stage 4")
     
     #Above code works but for development is not being utilised
 
-    synthFN = settings.BASE_DIR + '/' + synthURL1
-    # synthFN = generate_synth_audio(request.POST['trans'],fn)
+    #synthFN = settings.BASE_DIR + '/' + synthURL1
+    synthFN = generate_synth_audio(request.POST['trans'],fn)
 
-    get_praat_image(synthFN,1)
-    get_praat_image(errorPath,0) 
+    get_praat_image(synthFN,1,0)
+    get_praat_image(errorPath,0,0) 
     refLen = get_audio_length(synthFN)
     hypLen = get_audio_length(errorPath)
-
+    print("\n\n",refLen,"\n\n")
     ref_image, hyp_image = get_rel_praat_paths()
     #Error in naming convention
     hyp_audio = ref_path(fn) 
@@ -747,7 +765,7 @@ def error_typing_used(request):
     aeca.save();
 
     response_data = {
-            "ref_audio_url":synthURL1,
+            "ref_audio_url":ref_audio, #synthURL1,
             "ref_image_url":ref_image,
             "hyp_audio_url":hyp_audio,
             "hyp_image_url":hyp_image,
@@ -771,10 +789,7 @@ def store_attempt_blob(request):
     filename = str(sess.id) + "_attempt_" + str(s.id) + "_" + timezone.now().strftime( '%H-%M-%S' ) +".webm"
     blob.name = filename 
     aeca.audio = blob;
-    try:
-        clicks = ast.literal_eval(request.POST['clicks'])
-    except:
-        clicks = []
+    clicks = request.POST['clicks']
     aeca.clicks = clicks
     aeca.save();
     
@@ -792,15 +807,18 @@ def store_attempt_blob(request):
     if correct:
         code = 2
     
-    get_praat_image(settings.BASE_DIR+"/"+audio_url,code)
-    pic_url = "media/images/att.png"
-
-
+    get_praat_image(settings.BASE_DIR+"/"+audio_url,code,aeca.id)
+    pic_url = "media/images/att_"+str(aeca.id)+".png"
+    lenAudio = get_audio_length(settings.BASE_DIR+"/"+audio_url)
+    aeca = AudioErrorCorrectionAttempt(error=ae)
+    aeca.save()        
     response_data = {
         "correct":correct,
         "audio_url":audio_url,
         "image_url":pic_url,
         "trans":trans,
+        "att_id":aeca.id,
+        "hypLen":lenAudio,
     }
     return JsonResponse(response_data)
 
