@@ -257,6 +257,8 @@ $('#backCorrection').click(function(){
     $('#backCorrection').hide();
     $('#backErrorSelection').show();
     selected = [];
+    $('#forwardErrorSelection').prop("disabled",false);
+    $('#backErrorSelection').prop("disabled",false);
 });
 
 
@@ -456,6 +458,7 @@ function sendErrorBlobToServer( new_blob ){
 //Keyboard and record have different submit funtionalities
 
 $('#ref_btn').click(function(){
+    disableBtns();
     //Store click
     classVariableDict.specClicks.push(JSON.stringify({"synth":Date.now() / 1000}));
     //disable other buttons during playing
@@ -470,11 +473,12 @@ $('#ref_btn').click(function(){
         $("#ref_invisible").css("border-left","none");
         $('#ref_text').fadeIn(800);
         $('#ref_invisible').css("width","100%");
+        enableBtns();
    },(classVariableDict.refLen+100));
 });
 
 $('#hyp_btn').click(function(){
-
+    disableBtns();
     //store click
     classVariableDict.specClicks.push(JSON.stringify({"user":Date.now() / 1000}));
     //hide text
@@ -486,7 +490,8 @@ $('#hyp_btn').click(function(){
     setTimeout(function(){   
         $("#hyp_invisible").css("border-left","none");                                       
         $('#hyp_text').fadeIn(800);                                                     
-        $('#hyp_invisible').css({"width":"100%"});                                           
+        $('#hyp_invisible').css({"width":"100%"});
+        enableBtns();
    },(classVariableDict.hypLen+100));  
 });
 
@@ -611,7 +616,7 @@ function correct_attempt(){
     }, 1000);
 
     setTimeout(function(){
-       $('#ref_btn').hide();
+       $('#ref_btn').css('visibility', 'hidden');
        $('#hyp_text_layer').fadeIn(800);
     },2500);
     classVariableDict.correctionDone = true;
@@ -628,6 +633,9 @@ function correct_attempt(){
 
 function submitCorrect(){
     doneError();
+
+    $('#backCorrection').prop("disabled",false);
+    $('#submitCorrectedErrors').prop("disabled",false); 
     undoCorrect();
 }
 
@@ -641,5 +649,24 @@ function undoCorrect(){
     $("#hyp_btn").css("background-color","red");          
     $("#hyp_invisible").css("background-color","red");
     $('#submitOverlay').hide();
+    $('#ref_btn').css('visibility', 'visible');
     $('#reRecordBtn').prop( "disabled", false);
+}
+
+
+function disableBtns(){
+    $('#submitOverlay').prop( "disabled", true);
+    $('#reRecordBtn').prop( "disabled", true);
+    $('#backOverlay').prop( "disabled", true);
+    $('#ref_btn').prop( "disabled", true);
+    $('#hyp_btn').prop( "disabled", true);
+    $('#closeOverlayArea').prop( "disabled", true);    
+}
+function enableBtns(){
+    $('#submitOverlay').prop( "disabled", false);                       
+    $('#reRecordBtn').prop( "disabled", false);                                             
+    $('#backOverlay').prop( "disabled", false);                                            
+    $('#ref_btn').prop( "disabled", false);   
+    $('#hyp_btn').prop( "disabled", false);                      
+    $('#closeOverlayArea').prop( "disabled", false);
 }
