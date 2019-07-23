@@ -1,3 +1,5 @@
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from scipy import signal
 from scipy.io import wavfile
@@ -112,7 +114,6 @@ def generate_synth_audio(text,filename):
     output_aud_loc = os.path.join(settings.BASE_DIR, 'media', 'synths', filename[:-3] + 'wav')
     ffmpeg.input(get_synth_path(filename[:-4]+".mp3")).output(output_aud_loc).run()
     return output_aud_loc
-
 
 def get_audio_length(wav_path):
     samplingFrequency, signalData = wavfile.read(wav_path)
