@@ -411,90 +411,90 @@ function prepareSynthPlay() {
 
 }
 
-// for sorting
-function compare(a,b) {
-  if (a.confidence > b.confidence)
-    return -1;
-  if (a.confidence < b.confidence)
-    return 1;
-  return 0;
-}
+//// for sorting
+//function compare(a,b) {
+  //if (a.confidence > b.confidence)
+    //return -1;
+  //if (a.confidence < b.confidence)
+    //return 1;
+  //return 0;
+//}
 
 // put all transcriptions into an array
-function createArrayOfAlternatives( unorderedDict ) {
+//function createArrayOfAlternatives( unorderedDict ) {
 
-    let sentencesList = [];
+    //let sentencesList = [];
     
-    //store leading confidence and remove lower one if more than 20 points below
-    var topConf;
+    ////store leading confidence and remove lower one if more than 20 points below
+    //var topConf;
 
-    // get list of scores
-    for (let i=0; i<unorderedDict.length; i++) {
+    //// get list of scores
+    //for (let i=0; i<unorderedDict.length; i++) {
 
-        if ( i === 0 ) {
+        //if ( i === 0 ) {
 
-            topConf = unorderedDict[i].confidence;
+            //topConf = unorderedDict[i].confidence;
         
-            sentencesList.push( unorderedDict[i] )
+            //sentencesList.push( unorderedDict[i] )
 
-        } else {
+        //} else {
 
-            if ( unorderedDict[ i ].confidence > topConf - 0.20 ) {
+            //if ( unorderedDict[ i ].confidence > topConf - 0.20 ) {
             
-                sentencesList.push( unorderedDict[i] )
+                //sentencesList.push( unorderedDict[i] )
 
-            }
+            //}
 
-        }
+        //}
 
-    }
+    //}
 
-    sentencesList.sort(compare)
+    //sentencesList.sort(compare)
 
-    return sentencesList
+    //return sentencesList
 
-}
+//}
 
-function fillTranscriptsAndConfidences( alternatives ) {
+//function fillTranscriptsAndConfidences( alternatives ) {
 
-    if ( alternatives.length === 0 ) {
+    //if ( alternatives.length === 0 ) {
 
-        console.log('no transcripts');
+        //console.log('no transcripts');
 
-    }
+    //}
 
-    for ( let i=0; i<alternatives.length; i++ ) {
+    //for ( let i=0; i<alternatives.length; i++ ) {
 
-        synthesisObject[ 'transcript' + i.toString() ] = clipLongTranscripts( alternatives[i] );
+        //synthesisObject[ 'transcript' + i.toString() ] = clipLongTranscripts( alternatives[i] );
 
-    }
+    //}
 
-    resetAllTabs();
+    //resetAllTabs();
 
-}
+//}
 
-function clipLongTranscripts( t ) {
+//function clipLongTranscripts( t ) {
 
-    console.log('t', t);
-    // avoid sending sentence which is too long to server
-    if ( t.length >= 300 ) {
+    //console.log('t', t);
+    //// avoid sending sentence which is too long to server
+    //if ( t.length >= 300 ) {
 
-        alert('Your sentence was too long and will be shortened. Please check it before sending.')
+        //alert('Your sentence was too long and will be shortened. Please check it before sending.')
 
-        newT = t.slice(0, 299);
+        //newT = t.slice(0, 299);
 
-    } else {
+    //} else {
 
-        newT = t.slice(0,t.length);
+        //newT = t.slice(0,t.length);
 
-    }
+    //}
 
-    // lowercase all but first letter
-    //titled = makeTitle( newT )
+    //// lowercase all but first letter
+    ////titled = makeTitle( newT )
     
-    return newT
+    //return newT
 
-}
+//}
 
 //function makeTitle( s ) {
 

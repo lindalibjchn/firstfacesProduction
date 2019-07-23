@@ -34,7 +34,7 @@ function initInputReady() {
     $('#submitCorrectedErrors').hide();
 
     //  for development
-    $('#talkBtn').prop( "disabled", false).show();
+    //$('#talkBtn').prop( "disabled", false).show();
     //showOptionBtns();
     //$('#whatsWrongBtn').hide()
     //$('#showCorrectionBtn').css('display', 'flex')
@@ -122,7 +122,7 @@ function talkToTia() {
     $('.record-btn').prop("disabled", true);
     $('#recordBtnsContainer').fadeOut( 500 );
     
-    tiaLeanToListen();
+    setTimeout( tiaLeanToListen, 500 );
     
 }
 
@@ -132,7 +132,7 @@ function tiaLeanToListen() {
     expressionController( expressionObject.abs.listening, 0.3) 
     
     synthesisObject.waitingForSynthCount = 0;
-    speakWords();
+    setTimeout( speakWords, tiaTimings.tiaLeanDuration * 2 );
 
 }
 
@@ -211,7 +211,7 @@ function tiaThinkAboutSentence() {
             //} else {
 
                 //goToThinkingPos();
-    setTimeout( addThoughtBubbles, tiaTimings.thoughtBubbleAddDelay );
+    setTimeout( addThoughtBubbles, tiaTimings.delayToAddThoughtBubbles );
 
             //}
 

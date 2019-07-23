@@ -166,7 +166,7 @@ function sendSentToServer() {
     //let sent = $('#textInput').val();
     let sent = [' ', '40', ' ', 'year', ' ', 'ago', ' ', 'the', ' ', 'Khmer', ' ', 'Rouge', ' ', 'were', ' ', 'toppled', ' ', 'from', ' ', 'power', ' ', 'in', ' ', 'Cambodia', ' ']
 
-    if ( sent.length >= 200 ) {
+    if ( sent.length >= 30 ) {
 
         alert( 'This sentence is too long. Please simplify and try again.')
 
@@ -192,6 +192,9 @@ function sendSentToServer() {
 
         if ( sent.length > 2 ) {
             
+            // fade out text box
+            $('#textInputContainer').fadeOut( 500 );
+
             talkToTia(); 
             recTimes = {};
             recTimes.clickTalkBtn = Date.now() / 1000;

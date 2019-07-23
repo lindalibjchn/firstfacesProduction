@@ -10,7 +10,7 @@ $('#incorrectTranscriptBtn').click(function(){
         $(idx).attr("onclick","selectErrWord(this.id)")
     }
     //hide incorrect and other btns
-    $('#correctTranscript').hide();
+    $('#talkBtn').hide();
     $('#incorrectTranscriptBtn').hide();
     
     //show button on overlay
@@ -23,10 +23,6 @@ $('#incorrectTranscriptBtn').click(function(){
     $('#backErrorSelection').show();
     //$('#forwardErrorSelection').show();
     //add new btns (back and done)?
-});
-
-$('#correctTranscript').click(function(){
-    alert("Transcript is right");
 });
 
 $('#forwardErrorSelection').click(function(){
@@ -134,7 +130,7 @@ $('#backErrorSelection').click(function(){
     //$('#tia-speech-box').text("Is this what you meant to say?"); 
 
     //reset buttons
-    $('#correctTranscript').show();
+    $('#talkBtn').show();
     $('#incorrectTranscriptBtn').show();
     $('#backErrorSelection').hide();
     $('#forwardErrorSelection').hide();
