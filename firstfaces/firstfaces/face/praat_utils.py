@@ -1,5 +1,3 @@
-import matplotlib
-matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from scipy import signal
 from scipy.io import wavfile
@@ -20,7 +18,7 @@ def get_rel_praat_paths():
     base = "media/images/"
     return base+"ref.png", base+"hyp.png"
 
-def get_praat_image(wav_path,code):
+def get_praat_image(wav_path,code,att):
     print('wav path:', wav_path)
     samplingFrequency, signalData = wavfile.read(wav_path)
     temp = []
@@ -39,8 +37,6 @@ def get_praat_image(wav_path,code):
         ax.specgram(temp,Fs=samplingFrequency,cmap='YlGn')
     elif code == 3: #incorrect att
         ax.specgram(temp,Fs=samplingFrequency,cmap='OrRd')
-    else:
-        return 1
     ax.axis('off')
     plt.subplots_adjust(left=0, bottom=0, right=1, top=1, wspace=0, hspace=0)
     fig.tight_layout()
@@ -49,7 +45,7 @@ def get_praat_image(wav_path,code):
     elif code == 1:
         plt.savefig(get_praat_path()+"ref.png", transparent = True, bbox_inches = 'tight', pad_inches = 0)
     else:
-        plt.savefig(get_praat_path()+"att.png", transparent = True, bbox_inches = 'tight',pad_inches = 0)
+        plt.savefig(get_praat_path()+"att_"+str(att)+".png", transparent = True, bbox_inches = 'tight',pad_inches = 0)
 
 def convert_audio(filename):
     #input_aud_loc = os.path.join(settings.BASE_DIR, 'media', filename)
@@ -120,4 +116,4 @@ def generate_synth_audio(text,filename):
 
 def get_audio_length(wav_path):
     samplingFrequency, signalData = wavfile.read(wav_path)
-    return len(signalData)/samplingFrequency
+    return int((len(signalData)/samplingFrequency)*1000)
