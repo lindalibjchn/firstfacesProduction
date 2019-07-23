@@ -668,8 +668,9 @@ function tapKeyFull() {
                             $('#listenAndSynthBtns').hide();
                             $('#incorrectTranscriptBtn').show(); 
 
-                            $('#talkBtn').hide();
-                            $('#correctTranscript').show();
+                            $('#talkBtn').show();
+                            //change correct transcipt to #talkBtn
+                            //$('#correctTranscript').show();
                             //Adding speech bubble for tia 
 
                             //Displaying hypothesised transcript

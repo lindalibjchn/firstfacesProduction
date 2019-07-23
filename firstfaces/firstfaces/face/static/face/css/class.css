@@ -854,6 +854,12 @@ button:active {
 
 }
 
+#meterCont {
+
+    z-index: 120;
+
+}
+
 #meter {
 
     /*border: 2px solid #33ff00;*/

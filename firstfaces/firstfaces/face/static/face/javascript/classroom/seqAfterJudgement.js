@@ -498,6 +498,7 @@ function tapKeyToShowErrors() {
 
 function showWrongSentence() {
 
+    $('#textInputContainer').fadeIn();
 
     $('#submittedNCorrectedSentenceContCont').show()
 

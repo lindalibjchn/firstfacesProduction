@@ -45,19 +45,19 @@ function setTimings() {
 
         tiaTimings.delayAfterClickPlayUntilCameraMovesUp = 0;
         tiaTimings.cameraMoveUpDuration = 2.0;
-        tiaTimings.tiaLeanDuration = 0.85;
+        tiaTimings.tiaLeanDuration = 1;
         tiaTimings.delayUntilSpeakWords = 500;
         tiaTimings.delayAfterStudentSpeech = 1000;
         tiaTimings.delayBeforeGoingToThinkingPos = 1000;
-        tiaTimings.toThinkDuration = 1.5;
+        tiaTimings.toThinkDuration = 1.25;
         tiaTimings.delayToAddThoughtBubbles = 1500;
         tiaTimings.thoughtBubbleAddDelay = 500;
         tiaTimings.wordFade = 250;
         tiaTimings.returnFromThinking = 1.5;
         tiaTimings.removeThoughtBubble = 1000;
         tiaTimings.changeExpression = 0.75;
-        tiaTimings.changeExpressionConfused = 1.0;
-        tiaTimings.movementToConfused = 1.5;
+        tiaTimings.changeExpressionConfused = 0.75;
+        tiaTimings.movementToConfused = 1.25;
         tiaTimings.delayBeforeReturnToLaptop = 3000;
         tiaTimings.speechBubbleFadeInDuration = 500;
         tiaTimings.speechBubbleFadeOutDuration = 1000;
@@ -312,7 +312,7 @@ var movements = {
             },
             'AU2b': {
                 'hand': [[0, 0, 0], [0, 0, 0]],
-                'upperArm': [[0, 0, 0], [0, 0, 0]],
+                'upperArm': [[0, 0, 0], [0, -0.15, 0]],
                 'lowerArm': [[0, 0, 0], [0, 0, 0]],
             },
         },
