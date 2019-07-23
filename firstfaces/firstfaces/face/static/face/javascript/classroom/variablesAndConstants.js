@@ -45,7 +45,7 @@ function setTimings() {
 
         tiaTimings.delayAfterClickPlayUntilCameraMovesUp = 0;
         tiaTimings.cameraMoveUpDuration = 2.0;
-        tiaTimings.tiaLeanDuration = 1.0;
+        tiaTimings.tiaLeanDuration = 0.85;
         tiaTimings.delayUntilSpeakWords = 500;
         tiaTimings.delayAfterStudentSpeech = 1000;
         tiaTimings.delayBeforeGoingToThinkingPos = 1000;
@@ -251,7 +251,7 @@ var movements = {
         'name': 'think',
         'AUs': {
             'AU1': {
-                'head': [[0, 0, 0], [-0.05, 0.125, 0]],
+                'head': [[0, 0, 0], [-0.05, 0.15, 0]],
                 'neck': [[0, 0, 0], [0, 0, 0]],
             },
             'AU1b': {
@@ -264,7 +264,7 @@ var movements = {
             },
             'AU2b': {
                 'hand': [[0, 0, 0], [0, 0, 0]],
-                'upperArm': [[0, 0, 0], [0, 0, 0]],
+                'upperArm': [[0, 0, 0], [0, -0.1, 0]],
                 'lowerArm': [[0, 0, 0], [0, 0, 0]],
             },
         },

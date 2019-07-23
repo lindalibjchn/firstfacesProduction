@@ -7,21 +7,21 @@ function loadPrevSents( callback ) {
 
         for ( var i in classVariableDict.sentences ) {
 
-            appendExchange( classVariableDict.sentences[ i ], node );
+            appendExchange( classVariableDict.sentences[ i ], node, i );
 
         }
-
-        // have to delay so page loads to get scroll height in the callback function
-        setTimeout(callback, 2000);
 
     }
 
 }
 
-function appendExchange( sentenceMeta, node ) {
+function appendExchange( sentenceMeta, node, sentIndex ) {
 
     // this creates the boxes and sets the sentence variable
-    createExchange( sentenceMeta );
+    createExchangeOutput = createExchange( sentenceMeta, sentIndex );
+    newExchange = createExchangeOutput[ 0 ]
+    sentenceBox = createExchangeOutput[ 1 ];
+    node.appendChild( newExchange );
 
     // change background colour iand other stuf if correct/wrongetc.
     if ( sentenceMeta.judgement === "C" || sentenceMeta.judgement === "P" ) {
@@ -31,33 +31,33 @@ function appendExchange( sentenceMeta, node ) {
     } else if ( sentenceMeta.judgement === "I" ) {
 
         sentenceBox.className += " incorrectSent";
-        sentenceBox.innerHTML = makeHighlightedSent( sentenceMeta );
+        makeHighlightedSent( sentenceMeta, sentIndex );
         
     } else if ( sentenceMeta.judgement === "M" ) {
 
         sentenceBox.className += " meanBySent";
-        sentenceBox.innerHTML = makeHighlightedSent( sentenceMeta );
+        makeHighlightedSent( sentenceMeta, sentIndex );
 
         let meanByText = createMeanByTextForPromptBox( sentenceMeta ); 
-        exchange.appendChild( createPromptBox( meanByText ) );
+        newExchange.appendChild( createPromptBox( meanByText ) );
 
     } else if ( sentenceMeta.judgement === "B" ) {
 
         sentenceBox.className += " correctSent";
-        sentenceBox.innerHTML = makeHighlightedSent( sentenceMeta );
+        makeHighlightedSent( sentenceMeta, sentIndex );
     
         let betterText = createBetterTextForPromptBox( sentenceMeta ); 
-        exchange.appendChild( createPromptBox( betterText ) );
+        newExchange.appendChild( createPromptBox( betterText ) );
 
     } else if ( sentenceMeta.judgement === "D" ) {
 
         sentenceBox.className += " meanBySent";
-        exchange.appendChild( createPromptBox( "I'm sorry but I don't understand what you said." ) );
+        newExchange.appendChild( createPromptBox( "I'm sorry but I don't understand what you said." ) );
 
     } else if ( sentenceMeta.judgement === "3" ) {
 
         sentenceBox.className += " meanBySent";
-        exchange.appendChild( createPromptBox( "There are more than 3 mistakes in your sentence. Could you simplify and try again?" ) );
+        newExchange.appendChild( createPromptBox( "There are more than 3 mistakes in your sentence. Could you simplify and try again?" ) );
 
     } else if ( sentenceMeta.judgement === null ) {
 
@@ -69,7 +69,7 @@ function appendExchange( sentenceMeta, node ) {
 
         if ( sentenceMeta.judgement !== "B" && sentenceMeta.judgement !== "M" ) {
 
-            exchange.appendChild( createPromptBox( sentenceMeta.prompt ) );
+            newExchange.appendChild( createPromptBox( sentenceMeta.prompt ) );
 
         }
 
@@ -81,7 +81,7 @@ function appendExchange( sentenceMeta, node ) {
 
             if ( sentenceMeta.show_correction ) {
 
-                exchange.appendChild( createCorrectionsBox( sentenceMeta.correction ) );
+                newExchange.appendChild( createCorrectionsBox( sentenceMeta.correction ) );
             
             }
 
@@ -89,29 +89,36 @@ function appendExchange( sentenceMeta, node ) {
 
     }
 
-    node.appendChild( exchange );
-
 }
 
-function createExchange( sM ) {
+function createExchange( sM, sentI ) {
 
-    exchange = document.createElement("div");
+    let exchange = document.createElement("div");
+    exchange.className = "exchangeCont"
 
-    sentenceBox = document.createElement("div");
+    let sentenceBox = document.createElement("div");
     sentenceBox.className = "sentenceBox";
 
-    if ( sM.sentence[ 0 ] == " " ) {
+    let newInnerHTML = "";
+    sM.sentence.forEach( function(w, i) {
 
-        sentenceBox.innerHTML =  "&nbsp" + sM.sentence;
+        if ( w === " " ) {
 
-    } else {
+            newInnerHTML += "<div class='prev-sents-words' id='word_" + sentI.toString() + "_" + i.toString() + "'>" + "&nbsp</div>"
 
-        sentenceBox.innerHTML =  "&nbsp" + sM.sentence;
+        } else {
 
-    }
+            newInnerHTML += "<div class='prev-sents-words' id='word_" + sentI.toString() + "_" + i.toString() + "'>" + w + "</div>"
+
+        }
+
+    });
+
+    sentenceBox.innerHTML = newInnerHTML;
 
     exchange.appendChild( sentenceBox );
 
+    return [exchange, sentenceBox]
 }
 
 function scrollBottom() {
@@ -121,71 +128,38 @@ function scrollBottom() {
 
 }
 
-function makeHighlightedSent( sentenceMeta ) {
+function makeHighlightedSent( sentenceMeta, sI ) {
 
-    let sentWithColor = ''
-    // if not indexes for incorrect sentence, then just return sentence
-
+    console.log('in makeHighlightedSent');
     if ( sentenceMeta.indexes !== null) {
 
-        let indexes = sentenceMeta.indexes;
+        let spanClass;
+        // just one now, but can add other types of highlights later if needed
+        if ( sentenceMeta.judgement === "I" ) {
 
-        // if there is more than one wrong bit I need this to find point of last index to begin next interation from
-        let lastInd = 0
-        for ( var ind in indexes ) {
+            spanClass = "correctedSection";
 
-            let ind_0 = indexes[ ind ][ 0 ];
-            let ind_1 = indexes[ ind ][ 1 ];
+        } else if ( sentenceMeta.judgement === "B" ) {
 
-            //cut string between these points
+            spanClass = "betterSection";
 
-            let cut_0 = sentenceMeta.sentence.slice( lastInd, ind_0 );
-            let cut_1 = sentenceMeta.sentence.slice( ind_0, ind_1 );
-            let cut_2 = sentenceMeta.sentence.slice( ind_1 );
+        } else if ( sentenceMeta.judgement === "M" ) {
 
-            let spanClass;
-            // just one now, but can add other types of highlights later if needed
-            if ( sentenceMeta.judgement === "I" ) {
-
-                spanClass = "correctedSection";
-
-            } else if ( sentenceMeta.judgement === "B" ) {
-
-                spanClass = "betterSection";
-
-            } else if ( sentenceMeta.judgement === "M" ) {
-
-                spanClass = "meanBySection";
-
-            }
-
-            sentWithColor += cut_0 + "<span class='" + spanClass + "'>" + cut_1 + "</span>"
-            
-            // add last bit at end. Only double equals as w_1 is a string
-            if ( ind == indexes.length - 1 ) {
-
-                sentWithColor += cut_2;
-
-            }
+            spanClass = "meanBySection";
 
         }
- 
-    } else {
 
-        sentWithColor = sentenceMeta.sentence;
+        sentenceMeta.indexes.forEach( function( i ) {
 
-    }
+            i.forEach( function( j ) {
+            
+                $('#word_' + sI.toString() + "_"  + j.toString()).addClass( spanClass );
 
-    if ( sentWithColor[ 0 ] == " " ) {
+            } );
 
-        return "&nbsp" + sentWithColor;
-
-    } else {
-
-        return "&nbsp" + sentWithColor;
+        } );
 
     }
-
 
 }
 
@@ -215,17 +189,22 @@ function createCorrectionsBox( correctionsText ) {
 
 function createMeanByTextForPromptBox( sentenceMetaData ) {
 
-    let confusingIndexes = JSON.parse( sentenceMetaData.indexes );
+    let confusingIndexes = sentenceMetaData.indexes;
     let confusingSlices = []
     
     // may be more than one confusing bit
-    for (var i in confusingIndexes ) {
+    confusingIndexes.forEach( function( cI ) {
 	
-        let confusingSlice = sentenceMetaData.sentence.slice( confusingIndexes[ i ][ 0 ], confusingIndexes[ i ][ 1 ] ).trim();
+        confusingSlice = ''
+        cI.forEach( function( i ) {
 
-	confusingSlices.push( confusingSlice );
+            confusingSlice += sentenceMetaData.sentence[ i ];
 
-    }
+        } );
+
+	    confusingSlices.push( confusingSlice );
+
+    } );
 
     let meanByText = "I'm not sure what you mean by, "
     
@@ -250,8 +229,16 @@ function createMeanByTextForPromptBox( sentenceMetaData ) {
 function createBetterTextForPromptBox( sentenceMetaData ) {
 
     // only one section for better
-    let betterIndexes = JSON.parse( sentenceMetaData.indexes )[ 0 ];
-    let betterSlice = sentenceMetaData.sentence.slice( betterIndexes[ 0 ], betterIndexes[ 1 ] ).trim();
+    console.log( 'sentenceMetaData:', sentenceMetaData );
+    let betterIndexes = sentenceMetaData.indexes[ 0 ];
+    let betterSlice = ''
+        
+    console.log( 'betterIndexes:', betterIndexes );
+    betterIndexes.forEach( function( i ) {
+
+        betterSlice += sentenceMetaData.sentence[ i ];
+
+    } );
     
     let text = "It would be better to say, '" + sentenceMetaData.prompt + "', instead of, '" + betterSlice + "'."
     

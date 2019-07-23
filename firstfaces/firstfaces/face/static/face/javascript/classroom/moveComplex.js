@@ -761,27 +761,16 @@ function listenToSpeechSynthesis( intensity ) {
 
 }
 
-function noAltsAskAboutMic() {
+function dealWithBlankTranscription() {
 
+    $('#recordBtnsContainer').hide();
 
-    tiaSpeak( "I didn't hear anything. Could you try again?", needSendTTS=true, showBtnThatCanHear );
-    $('#textInput').val( '' );
-    hideTextStuff();
+    tiaSpeak( "I didn't hear anything. Could you try again?", needSendTTS=true, function() {
+     
+    $('#recordBtnsContainer').fadeIn();
+    removeSpeechBubble();
 
-    function showBtnThatCanHear() {
-
-        showSingleBtn( "Ok", function() {
-
-            removeSingleBtn();
-            //$('#textInputContainer').show();
-            $('#recordVoiceBtn').show();
-            $('.listenAndSynthBtns').prop('disabled', 'false');
-            $('#textInputContainer').show();
-            $('#textInput').focus();
-
-        });
-
-    }
+    } );
 
 }
 
@@ -798,7 +787,7 @@ function returnFromListenToSpeechSynthesis() {
                 setTimeout( function() {
 
                     initShake(0.2, 0.5)
-                    setTimeout( noAltsAskAboutMic, 500 );
+                    setTimeout( dealWithBlankTranscription, 500 );
 
                 }, 1000);
         
