@@ -926,10 +926,9 @@ button:active {
 
 #prevSents {
 
-    bottom: 2%;
     position: absolute;
     width: 100%;
-    max-height: 92%;
+    height: 100%;
     overflow-y: auto;
 
 }
@@ -970,7 +969,7 @@ button:active {
 
     background-color: red;
     color: white;
-    border-radius: 5px;
+    /*border-radius: 5px;*/
 
 }
 
@@ -978,7 +977,7 @@ button:active {
 
     background-color: orange;
     color: white;
-    border-radius: 5px;
+    /*border-radius: 5px;*/
 
 }
 
@@ -986,7 +985,6 @@ button:active {
 
     background-color: green;
     color: white;
-    border-radius: 5px;
 
 }
 
@@ -1012,6 +1010,14 @@ button:active {
     float: left;
     /*to give edge on other side*/
     border-radius: 0px 7px 7px 7px;
+
+}
+
+/*new stuff after changing sentence from string to list*/
+.prev-sents-words {
+
+    display: inline-block;
+    
 
 }
 
@@ -1167,9 +1173,9 @@ button:active {
 #thoughtBubbleCont {
 
     position: absolute;
-    width: 35%;
+    width: 40%;
     height: 100%;
-    right: 65%;
+    right: 60%;
 
 }
 
