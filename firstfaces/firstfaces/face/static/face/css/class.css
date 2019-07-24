@@ -1024,6 +1024,25 @@ button:active {
 
     display: inline-block;
     
+}
+
+
+#listenVoiceBtn {
+
+    position: absolute;
+    left: 80%;
+    display: none;
+    height: 35px;
+    width: 35px;
+
+}
+
+#human {
+
+    position: relative;
+    height: 110%;
+    left: -10px;
+    bottom: 2px;
 
 }
 
@@ -1056,6 +1075,10 @@ button:active {
     /*align-items: center;*/
 }
 
+#recordAndStopBtns {
+    position: relative;
+}
+
 .input-btns {
 
     height: 100%;
@@ -1074,15 +1097,6 @@ button:active {
 
 #incorrectTranscriptBtns{
     height: 100%;
-}
-
-#human {
-
-    position: relative;
-    height: 110%;
-    left: -10px;
-    bottom: 2px;
-
 }
 
 #talkBtnContainer {

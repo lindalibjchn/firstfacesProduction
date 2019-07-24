@@ -952,26 +952,13 @@ def store_sent(request):
 
     time_now = timezone.now();
 
-    # don't need with new data storage in list
-    # def buffer_text( raw ) :
-
-        # #add a space at beginning and period at end if needed.
-        
-        # stripped = raw.strip()
-        
-        # # buffered left
-        # buff = " " + stripped
-
-        # # buffered right
-        # if buff[-1] not in ['.', '?', '!']:
-            # buff += "."
-        
-        # # remove multiple spaces
-        # buff = re.sub(' +', ' ', buff)
-
-        # return buff
-
     sentence_text = request.POST['sent']
+
+    # change string to padded list
+    sentence_list = sentence_text.split()
+    sentence_list.append(' ')
+    sentence_list.insert(0, ' ')
+    sentence_list = json.dumps(sentence_list)
 
     # q = json.loads(request.POST['isItQ'])
     #code.interact(local=locals());
@@ -986,13 +973,13 @@ def store_sent(request):
     if blob_no_text:
 
         s = Sentence.objects.get( pk=blob_no_text_sent_id )
-        s.sentence = sentence_text
+        s.sentence = sentence_list
         s.sentence_timestamp = time_now
         s.save()
 
     else:
     
-        s = Sentence(learner=request.user, session=sess, sentence=sentence_text, sentence_timestamp=timezone.now())
+        s = Sentence(learner=request.user, session=sess, sentence=sentence_list, sentence_timestamp=timezone.now())
         s.sentence_timestamp = time_now
         s.save()
 

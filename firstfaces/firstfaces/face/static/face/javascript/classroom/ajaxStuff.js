@@ -96,6 +96,7 @@ function sendBlobToServer( blob_to_send ) {
             console.log('got response from sending blob to server');
             classVariableDict.alternatives = json.alternatives;
             classVariableDict.currentAudID = json.audio_pk;
+            classVariableDict.preSent = classVariableDict.alternatives[ 0 ][ 'transcript' ]
 
             // if first interference, then want the flinch not to be interfered with by the return motions
             if ( classVariableDict.interference_count === 1 && synthesisObject.interference ) {
@@ -163,10 +164,9 @@ function sendSentToServer() {
     classVariableDict.blobs = 0;
 
     // all below for developing
-    //let sent = $('#textInput').val();
-    let sent = [' ', '40', ' ', 'year', ' ', 'ago', ' ', 'the', ' ', 'Khmer', ' ', 'Rouge', ' ', 'were', ' ', 'toppled', ' ', 'from', ' ', 'power', ' ', 'in', ' ', 'Cambodia', ' ']
+    let sent = classVariableDict.preSent;
 
-    if ( sent.length >= 30 ) {
+    if ( sent.length >= 300 ) {
 
         alert( 'This sentence is too long. Please simplify and try again.')
 

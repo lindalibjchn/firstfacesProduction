@@ -98,7 +98,7 @@ function talkToTia() {
     // check that final text box has been changed or not from recording
     // for development
     //synthesisObject.finalTextInBox = $('#textInput').val();
-    synthesisObject.finalTextInBox = "40 year ago the Khmer Rouge were toppled from power in Cambodia";
+    synthesisObject.finalTextInBox = classVariableDict.preSent;
 
     //no change from audio
     if ( synthesisObject.finalTextInBox === synthesisObject[ 'transcript' + synthesisObject.transcriptCur ] ) {

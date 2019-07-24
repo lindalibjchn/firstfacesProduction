@@ -257,7 +257,6 @@
 <div id="textInputContainer" class="w3-row">
 
     <div class="w3-col l2 w3-hide-medium w3-hide-small">&nbsp</div>
-
     
     <div class="w3-col l8 m12 s12" id="sentenceShowHolder">
         <div id="sentenceHolderParent"> 
@@ -454,26 +453,17 @@
         <div class="w3-col l3 w3-hide-medium w3-hide-small">&nbsp</div>
         <div class="w3-col l2 m4 s4" id="listenAndSynthBtnsContainer">
              
-            <!--<div id="listenAndSynthBtns" class="input-btns">-->
-
-                <!--<button class="w3-btn w3-circle w3-indigo input-btn-large record-btn play-btn" id="listenVoiceBtn">-->
-                
-                    <!--<img id="human" src="{% static 'face/images/human_speech.svg' %}">-->
-
-                <!--</button>-->
-            <!--</div>-->
-            
             <!-- Adds button needed for  no-->
             <div id="incorrectTranscriptBtns" class="input-btns">
-                <button class="w3-btn w3-circle w3-red record-btn w3-padding-small play-btn input-btn" id="incorrectTranscriptBtn">
+                <button class="w3-btn w3-circle w3-red record-btn w3-padding-medium play-btn input-btn" id="incorrectTranscriptBtn">
                     <center> <i class="fa fa-times inputfa "></i></center>
                 </button>    
                 
-                <button class="w3-btn w3-circle w3-red record-btn w3-padding-small play-btn input-btn" id="backErrorSelection">
+                <button class="w3-btn w3-circle w3-red record-btn w3-padding-medium play-btn input-btn" id="backErrorSelection">
                     <i class="fa fa-angle-double-left inputfa"></i>
                 </button>
 
-                <button class="w3-btn w3-circle w3-red record-btn w3-padding-small play-btn input-btn" id="backCorrection">
+                <button class="w3-btn w3-circle w3-red record-btn w3-padding-medium play-btn input-btn" id="backCorrection">
                     <i class="fa fa-angle-double-left inputfa"></i>
                 </button>   
             
@@ -497,6 +487,10 @@
 
                 </button>
 
+                <button class="w3-btn w3-circle w3-indigo" id="listenVoiceBtn">
+                    <img id="human" src="{% static 'face/images/human_speech.svg' %}">
+                </button>
+
             </div>
 
         </div>
@@ -505,7 +499,7 @@
 
             <div id="talkBtnCont" class="input-btns">
 
-                <button class="w3-btn w3-circle w3-green input-btn input-fa record-btn w3-padding-small play-btn" id="talkBtn">
+                <button class="w3-btn w3-circle w3-green input-btn input-fa record-btn w3-padding-medium play-btn" id="talkBtn">
                     
                     <i class="fa fa-play inputfa" id="yellowPlay"></i>
                

@@ -665,7 +665,7 @@ function tapKeyFull() {
                             
                             //Daniel
                             //Adding correct and incorrect transcript buttons
-                            $('#listenAndSynthBtns').hide();
+                            //$('#listenAndSynthBtns').hide();
                             $('#incorrectTranscriptBtn').show(); 
 
                             $('#talkBtn').show();
@@ -700,6 +700,7 @@ function tapKeyFull() {
 function populateDivs() {
     var words = classVariableDict.alternatives[0].transcript.split(" ");
     words.forEach(addWord);
+    $('#listenVoiceBtn').show();
 }
 function addWord(word,count) {
    var idx = "'upper_"+count+"'";
