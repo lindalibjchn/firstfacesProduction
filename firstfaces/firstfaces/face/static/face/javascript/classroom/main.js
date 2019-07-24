@@ -39,6 +39,12 @@ function readyBtns() {
 
     });
 
+    $('.input-btn').on( 'click', function() {
+
+        $( '#listenVoiceBtn' ).hide();
+
+    } );
+
     $('#tryAgainBtn').on( 'click', tryAgain );
     $('#whatsWrongBtn').on( 'click', whatsWrong );
     $('#showCorrectionBtn').on( 'click', showCorrection );
@@ -117,7 +123,7 @@ function readyBtns() {
 $('#listenVoiceBtn').on( 'click', function() {
 
         aud.play();
-        sendListenVoice();
+        //sendListenVoice();
 
         // for tutorial
         if ( classVariableDict.tutorialStep === 6 ) {
@@ -187,7 +193,7 @@ $('#listenVoiceBtn').on( 'click', function() {
                     console.log('Voice recognition activated. Try speaking into the microphone.');
                     mediaRecorder.start();
 
-                    listenToSpeechSynthesis( classVariableDict.blobs );// tia leans to listen
+                    listenToSpeechSynthesis( 0 );// tia leans a bit to listen
                     classVariableDict.blobs += 1;
                     volumeObject.bool = true;// detect volume and be ready to show volume bar
                     synthesisObject.interference = false; // start with no interference which can change if clipping occurs
@@ -593,22 +599,29 @@ function drawLoop() {
 
                         setTimeout( function() {
 
-                            tiaSpeak( "That was very loud. Be careful with the microphone volume. If the volume bar turns red, it means the sound is too loud.", needSendTTS=true, showButtonToConfirm );
+                            tiaSpeak( "That was very loud. Please be careful with the microphone volume.", needSendTTS=true, removeTooLoudWarning );
 
-                            function showButtonToConfirm() {
-
-                                $('#textInputContainer').hide();
-
-                                showSingleBtn( "I will check the volume bar", function() {
-
-                                    removeSingleBtn();
-                                    //$('#textInputContainer').show();
-                                    $('#recordVoiceBtn').show();
-                                    $('.listenAndSynthBtns').prop('disabled', 'false');
-                                    $('#textInputContainer').show();
-                                });
+                            function removeTooLoudWarning() {
+                                
+                                $('#recordVoiceBtn').show();
+                                removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
 
                             }
+
+                            //function showButtonToConfirm() {
+
+                                //$('#textInputContainer').hide();
+
+                                //showSingleBtn( "I will check the volume bar", function() {
+
+                                    //removeSingleBtn();
+                                    ////$('#textInputContainer').show();
+                                    //$('#recordVoiceBtn').show();
+                                    ////$('.listenAndSynthBtns').prop('disabled', 'false');
+                                    //$('#textInputContainer').show();
+                                //});
+
+                            //}
 
                         }, 1500 )
 

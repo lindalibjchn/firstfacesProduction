@@ -778,11 +778,11 @@ function dealWithBlankTranscription() {
 
 function returnFromListenToSpeechSynthesis() {
 
-    movementController( movements.blank, 1.5, 1.5 );
+    movementController( movements.blank, 1, 1 );
     setTimeout( function() {
         
         // if no sound comes through, don't tap or show empty transcripts
-        if ( synthesisObject.transcript0 === "" ) {
+        if ( synthesisObject.alternatives[ 0 ].transcript === "" ) {
         
             if ( classVariableDict.tutorial === false ) {
 

@@ -1030,19 +1030,22 @@ button:active {
 #listenVoiceBtn {
 
     position: absolute;
-    left: 80%;
+    left: 90%;
+    /*bottom: 100%;*/
     display: none;
     height: 35px;
     width: 35px;
+    /*border-radius: 10px 10px 0px 0px;*/
+    /*z-index: 9;*/
 
 }
 
 #human {
 
     position: relative;
-    height: 110%;
+    height: 120%;
     left: -10px;
-    bottom: 2px;
+    bottom: 5px;
 
 }
 
@@ -1073,6 +1076,7 @@ button:active {
     height: 100%;
     /*display: flex;*/
     /*align-items: center;*/
+    z-index: 10;
 }
 
 #recordAndStopBtns {

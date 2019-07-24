@@ -718,25 +718,25 @@ def error_typing_used(request):
     pitch_designated = float(request.POST['pitch'])
     speaking_rate_designated = float(request.POST['speaking_rate'])      
 
-    #client = texttospeech.TextToSpeechClient()
-    #input_text = texttospeech.types.SynthesisInput(text=request.POST['trans'])
-    #voice = texttospeech.types.VoiceSelectionParams(language_code='en-GB',name=speaking_voice)
-    #audio_config = texttospeech.types.AudioConfig(audio_encoding=texttospeech.enums.AudioEncoding.LINEAR16,pitch = pitch_designated,speaking_rate = speaking_rate_designated)
-    #try:
-        #response = client.synthesize_speech(input_text, voice, audio_config)
-        #synthURL1 = 'media/synths/session' + session_id + '_'+ 'error' + timezone.now().strftime('%H-%M-%S') + '.mp3'
-        #with open( os.path.join(settings.BASE_DIR, synthURL1 ), 'wb') as out:
-            #out.write(response.audio_content)
+    client = texttospeech.TextToSpeechClient()
+    input_text = texttospeech.types.SynthesisInput(text=request.POST['trans'])
+    voice = texttospeech.types.VoiceSelectionParams(language_code='en-GB',name=speaking_voice)
+    audio_config = texttospeech.types.AudioConfig(audio_encoding=texttospeech.enums.AudioEncoding.LINEAR16,pitch = pitch_designated,speaking_rate = speaking_rate_designated)
+    try:
+        response = client.synthesize_speech(input_text, voice, audio_config)
+        synthURL1 = 'media/synths/session' + session_id + '_'+ 'error' + timezone.now().strftime('%H-%M-%S') + '.mp3'
+        with open( os.path.join(settings.BASE_DIR, synthURL1 ), 'wb') as out:
+            out.write(response.audio_content)
 
-        #synthURL1 = convert_mp3_to_wav(synthURL1)
+        synthURL1 = convert_mp3_to_wav(synthURL1)
 
-    #except:  
-        #synthURL1 = 'fault'
+    except:  
+        synthURL1 = 'fault'
     
     # Above code works but for development is not being utilised
 
-    #synthFN = settings.BASE_DIR + '/' + synthURL1
-    synthFN = generate_synth_audio(request.POST['trans'],fn)
+    synthFN = settings.BASE_DIR + '/' + synthURL1
+    # synthFN = generate_synth_audio(request.POST['trans'],fn)
 
     get_praat_image(synthFN,1,0)
     get_praat_image(errorPath,0,0) 
@@ -757,8 +757,8 @@ def error_typing_used(request):
     aeca.save();
 
     response_data = {
-            "ref_audio_url":ref_audio,
-            #"ref_audio_url":synthURL1,
+            # "ref_audio_url":ref_audio,
+            "ref_audio_url":synthURL1,
             "ref_image_url":ref_image,
             "hyp_audio_url":hyp_audio,
             "hyp_image_url":hyp_image,
@@ -947,9 +947,10 @@ def store_sent(request):
     sentence_text = request.POST['sent']
 
     # change string to padded list
-    sentence_list = sentence_text.split()
-    sentence_list.append(' ')
-    sentence_list.insert(0, ' ')
+    sentence_list = [' ']
+    for w in sentence_text.split():
+        sentence_list.append(w)
+        sentence_list.append(' ')
     sentence_list = json.dumps(sentence_list)
 
     # q = json.loads(request.POST['isItQ'])
@@ -1439,116 +1440,116 @@ def update_session_object(request):
 
     return JsonResponse(response_data)    
 
-def add_transcription_choice_view(request):
+# def add_transcription_choice_view(request):
 
-    # code.interact(local=locals());
-    blob_no_text_sent_id = request.GET['blob_no_text_sent_id']
-    choice = request.GET['choice']
+    # # code.interact(local=locals());
+    # blob_no_text_sent_id = request.GET['blob_no_text_sent_id']
+    # choice = request.GET['choice']
 
-    s = Sentence.objects.get(pk=int(blob_no_text_sent_id))
-    a = AudioFile.objects.filter(sentence=s).latest('pk')
+    # s = Sentence.objects.get(pk=int(blob_no_text_sent_id))
+    # a = AudioFile.objects.filter(sentence=s).latest('pk')
     
-    time_now = int(time.mktime((timezone.now()).timetuple()))
+    # time_now = int(time.mktime((timezone.now()).timetuple()))
 
-    if len(a.clicks) < 1700:
+    # if len(a.clicks) < 1700:
 
-        clicks_already = json.loads(a.clicks)
-        clicks_already.append( [choice, time_now] )
+        # clicks_already = json.loads(a.clicks)
+        # clicks_already.append( [choice, time_now] )
 
-        a.clicks = json.dumps(clicks_already)
-        a.save();
+        # a.clicks = json.dumps(clicks_already)
+        # a.save();
     
-    response_data = {
+    # response_data = {
 
-    }
+    # }
 
-    return JsonResponse(response_data)    
+    # return JsonResponse(response_data)    
 
-def add_listen_synth_data(request):
+# def add_listen_synth_data(request):
 
-    # code.interact(local=locals());
-    blob_no_text = json.loads(request.GET['blob_no_text'])
-    blob_no_text_sent_id = request.GET['blob_no_text_sent_id']
-    session_id = int(request.GET['sessId'])
-    diffSent = request.GET['diffSent']
-    transcriptCur = request.GET['transcriptCur']
-    listenTranscript = json.loads(request.GET['listenTranscript'])
-    repeat = json.loads(request.GET['repeat'])
+    # # code.interact(local=locals());
+    # blob_no_text = json.loads(request.GET['blob_no_text'])
+    # blob_no_text_sent_id = request.GET['blob_no_text_sent_id']
+    # session_id = int(request.GET['sessId'])
+    # diffSent = request.GET['diffSent']
+    # transcriptCur = request.GET['transcriptCur']
+    # listenTranscript = json.loads(request.GET['listenTranscript'])
+    # repeat = json.loads(request.GET['repeat'])
 
-    if blob_no_text:
-        s = Sentence.objects.get(pk=int(blob_no_text_sent_id))
-        a = AudioFile.objects.filter(sentence=s).latest('pk')
-        clicks_already = json.loads( a.clicks )
-    else:
-        sess = Session.objects.get(pk=int(session_id))
-        s = Sentence(learner=request.user, session=sess)
-        s.save()
-        a = AudioFile(sentence=s)
-        clicks_already = []
+    # if blob_no_text:
+        # s = Sentence.objects.get(pk=int(blob_no_text_sent_id))
+        # a = AudioFile.objects.filter(sentence=s).latest('pk')
+        # clicks_already = json.loads( a.clicks )
+    # else:
+        # sess = Session.objects.get(pk=int(session_id))
+        # s = Sentence(learner=request.user, session=sess)
+        # s.save()
+        # a = AudioFile(sentence=s)
+        # clicks_already = []
 
-    #don't store it if too long
-    if len(a.clicks) < 1700:
-        clicks_already = []
+    # #don't store it if too long
+    # if len(a.clicks) < 1700:
+        # clicks_already = []
 
-    #don't store it if too long
-    if len(a.clicks) < 1700:
+    # #don't store it if too long
+    # if len(a.clicks) < 1700:
 
-        time_now = int(time.mktime((timezone.now()).timetuple()))
+        # time_now = int(time.mktime((timezone.now()).timetuple()))
 
-        #if it's a repeat
-        if json.loads( request.GET['repeat'] ):
+        # #if it's a repeat
+        # if json.loads( request.GET['repeat'] ):
 
-            clicks_already.append( ['r', time_now] )
+            # clicks_already.append( ['r', time_now] )
 
-        else:
+        # else:
 
-            if listenTranscript:
+            # if listenTranscript:
 
-                clicks_already.append( [transcriptCur + 's', time_now] )
+                # clicks_already.append( [transcriptCur + 's', time_now] )
 
-            else:
+            # else:
 
-                clicks_already.append( [diffSent, time_now] )
+                # clicks_already.append( [diffSent, time_now] )
 
-        a.clicks = json.dumps(clicks_already)
-        a.save();
+        # a.clicks = json.dumps(clicks_already)
+        # a.save();
 
-    response_data = {
+    # response_data = {
 
-        'sent_id': s.id,
+        # 'sent_id': s.id,
 
-    }
+    # }
 
-    return JsonResponse(response_data)    
+    # return JsonResponse(response_data)    
 
-def add_voice_data(request):
+# def add_voice_data(request):
 
-    # code.interact(local=locals());
-    blob_no_text_sent_id = request.GET['blob_no_text_sent_id']
-    transcriptCur = request.GET['transcriptCur']
+    # # code.interact(local=locals());
+    # blob_no_text_sent_id = request.GET['blob_no_text_sent_id']
+    # transcript = request.GET['transcript']
 
-    s = Sentence.objects.get(pk=int(blob_no_text_sent_id))
-    a = AudioFile.objects.filter(sentence=s).latest('pk')
+    # s = Sentence.objects.get(pk=int(blob_no_text_sent_id))
+    # a = AudioFile.objects.filter(sentence=s).latest('pk')
 
-    #don't store it if too long
-    if len(a.clicks) < 1700:
+    # #don't store it if too long
+    # if len(a.clicks) < 1700:
 
-        clicks_already = json.loads( a.clicks )
+        # clicks_already = json.loads( a.clicks )
 
-        time_now = int(time.mktime((timezone.now()).timetuple()))
+        # time_now = int(time.mktime((timezone.now()).timetuple()))
 
-        clicks_already.append( [transcriptCur + 'v', time_now] )
+        # clicks_already.append( [transcript + 'v', time_now] )
 
-        a.clicks = json.dumps(clicks_already)
-        a.save();
+        # a.clicks = json.dumps(clicks_already)
+        # a.save();
 
-    response_data = {
+    # response_data = {
 
-        'sent_id': s.id,
+        # 'sent_id': s.id,
 
-    }
+    # }
 
-    return JsonResponse(response_data)    
+    # return JsonResponse(response_data)    
 
 def store_test_begin(request):
 
