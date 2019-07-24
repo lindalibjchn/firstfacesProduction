@@ -133,10 +133,12 @@ $('#backErrorSelection').click(function(){
 
     //reset text
     //$('#tia-speech-box').text("Is this what you meant to say?"); 
-
+    
     //reset buttons
     $('#talkBtn').show();
+    $('#talkBtn').prop( "disabled", false);
     $('#incorrectTranscriptBtn').show();
+    $('#incorrectTranscriptBtn').prop( "disabled", false);
     $('#backErrorSelection').hide();
     $('#forwardErrorSelection').hide();
 });
@@ -195,11 +197,11 @@ function doneError(){
     }
 
     var idx = parseInt(currentId.split('_')[1]);
-    $("#upper_"+idx).text(cor);
-    $("#upper_"+idx).attr("class","corrected-error");
+    $("#upper_"+idx).text(err);
+    $("#upper_"+idx).attr("class","lower-error");
     $("#upper_"+idx).attr("onclick","");
-    $("#lower_"+idx).text(err);
-    $("#lower_"+idx).attr("class","lower-error");
+    $("#lower_"+idx).text(cor);
+    $("#lower_"+idx).attr("class","corrected-error");
     if(err.length < cor.length){
         //add new span at start
         var next = idx+1;
@@ -223,7 +225,7 @@ function doneError(){
     if($('.uncorrected-error').length == 0){
         $("#submitCorrectedErrors").show();
     }
-
+    classVariableDict.preSentence = getSentence();
 }
 
 
@@ -253,6 +255,9 @@ $('#backCorrection').click(function(){
     $('#backCorrection').hide();
     $('#backErrorSelection').show();
     selected = [];
+    $('#forwardErrorSelection').prop("disabled",false);
+    $('#backErrorSelection').prop("disabled",false);
+   
 });
 
 
@@ -356,6 +361,7 @@ function openOverlay(){
         success: function(json){
            $('#reRecordBtn').show();
            $("#reRecordBtn").prop( "disabled", false );
+           if(json.trans.trim() != ""){
            document.getElementById("hypImg").src = "http://127.0.0.1:8000/"+json.image_url;
            $("#hyp_text").text(json.trans);
            document.getElementById('hypAudio').src = "http://127.0.0.1:8000/"+json.audio_url;
@@ -368,10 +374,14 @@ function openOverlay(){
            else{
                 $("#hyp_btn").css("background-color","red");
                 $("#hyp_invisible").css("background-color","red");
+                incorrect_attempt();
            }
-           classVariableDict.correctionAttemptID = json.att_id;
            classVariableDict.hypLen = json.hypLen;
-           
+          }
+          else{
+            dealWithBlankTranscription();      
+          }
+          classVariableDict.correctionAttemptID = json.att_id; 
         },                                                                                   
         error: function() {                                                                  
             console.log("that's wrong");                                                     
@@ -422,24 +432,28 @@ function sendErrorBlobToServer( new_blob ){
         success: function(json){
             //add index an foregin key to the errors
             classVariableDict.errors[json['error_start']] = json['error_pk'];
-            alert(classVariableDict.errors);
             //display transcript
+            if(json['error_trans'].trim() != ""){
             $("#centeredErrorHolder").hide();
             $("#overlayErrorBox").show();
             $("#overlayTextBox").show();
             $("#overlayTextBox").empty();
             $('#overlayTextBox').text(json['error_trans']);
             //show mic
-            $("#reRecordBtn").show();
-            $("#reRecordBtn").prop( "disabled", false );
-            $("#keyboardOverlay").show();
             $("#submitOverlay").show();
             $("#submitOverlay").off("click");
             $("#submitOverlay").click(submitRecording);
             //make textbox not editable
             $("#overlayTextBox").attr("contenteditable","false");
             //save last transcription into class
-            classVariableDict.lastAttemptID = json['attempt_pk'];
+           }
+           else{
+            dealWithBlankTranscription();
+           }
+           classVariableDict.lastAttemptID = json['attempt_pk'];  
+           $("#reRecordBtn").show();                                                        
+           $("#reRecordBtn").prop( "disabled", false );                                     
+           $("#keyboardOverlay").show();
         },
         error: function() {
             console.log("that's wrong");
@@ -452,6 +466,7 @@ function sendErrorBlobToServer( new_blob ){
 //Keyboard and record have different submit funtionalities
 
 $('#ref_btn').click(function(){
+    disableBtns();
     //Store click
     classVariableDict.specClicks.push(JSON.stringify({"synth":Date.now() / 1000}));
     //disable other buttons during playing
@@ -466,11 +481,12 @@ $('#ref_btn').click(function(){
         $("#ref_invisible").css("border-left","none");
         $('#ref_text').fadeIn(800);
         $('#ref_invisible').css("width","100%");
+        enableBtns();
    },(classVariableDict.refLen+100));
 });
 
 $('#hyp_btn').click(function(){
-
+    disableBtns();
     //store click
     classVariableDict.specClicks.push(JSON.stringify({"user":Date.now() / 1000}));
     //hide text
@@ -482,7 +498,8 @@ $('#hyp_btn').click(function(){
     setTimeout(function(){   
         $("#hyp_invisible").css("border-left","none");                                       
         $('#hyp_text').fadeIn(800);                                                     
-        $('#hyp_invisible').css({"width":"100%"});                                           
+        $('#hyp_invisible').css({"width":"100%"});
+        enableBtns();
    },(classVariableDict.hypLen+100));  
 });
 
@@ -564,7 +581,6 @@ function submitKeyboard(){
     });
 }
 
-
 // Recording Submit
 function submitRecording(){
 
@@ -607,7 +623,7 @@ function correct_attempt(){
     }, 1000);
 
     setTimeout(function(){
-       $('#ref_btn').hide();
+       $('#ref_btn').css('visibility', 'hidden');
        $('#hyp_text_layer').fadeIn(800);
     },2500);
     classVariableDict.correctionDone = true;
@@ -622,8 +638,38 @@ function correct_attempt(){
     },3500);
 }
 
+function incorrect_attempt(){
+    var middle = $('#ref_btn').offset().top;                                                 
+    var bottom = $('#hyp_btn').offset().top;                                                 
+    var diff = (bottom-middle)/2;
+    disableBtns();
+    $('#ref_text_layer').hide();
+    $('#hyp_text_layer').hide();
+
+    $('#ref_btn').animate({top:'+='+diff+"px"});
+    $('#hyp_btn').animate({top:'-='+diff+"px"});
+    setTimeout(function(){
+        $('#ref_btn').effect("shake",{direction:"ip",times: 4, distance: 2}, 500);
+        $('#hyp_btn').effect("shake",{direction:"ip",times: 4, distance: 2}, 500);
+    },500);
+    setTimeout(function(){
+        $('#ref_btn').animate({top:'-='+diff+"px"});
+        $('#hyp_btn').animate({top:'+='+diff+"px"}); 
+    },1700);
+    setTimeout(function(){
+        $("#ref_text_layer").fadeIn(800);
+        $("#hyp_text_layer").fadeIn(800);
+        enableBtns();
+    },2000)
+}
+
+
+
 function submitCorrect(){
     doneError();
+
+    $('#backCorrection').prop("disabled",false);
+    $('#submitCorrectedErrors').prop("disabled",false); 
     undoCorrect();
 }
 
@@ -637,5 +683,43 @@ function undoCorrect(){
     $("#hyp_btn").css("background-color","red");          
     $("#hyp_invisible").css("background-color","red");
     $('#submitOverlay').hide();
+    $('#ref_btn').css('visibility', 'visible');
     $('#reRecordBtn').prop( "disabled", false);
+}
+
+
+function disableBtns(){
+    $('#submitOverlay').prop( "disabled", true);
+    $('#reRecordBtn').prop( "disabled", true);
+    $('#backOverlay').prop( "disabled", true);
+    $('#ref_btn').prop( "disabled", true);
+    $('#hyp_btn').prop( "disabled", true);
+    $('#closeOverlayArea').prop( "disabled", true);    
+}
+function enableBtns(){
+    $('#submitOverlay').prop( "disabled", false);                       
+    $('#reRecordBtn').prop( "disabled", false);                                             
+    $('#backOverlay').prop( "disabled", false);                                            
+    $('#ref_btn').prop( "disabled", false);   
+    $('#hyp_btn').prop( "disabled", false);                      
+    $('#closeOverlayArea').prop( "disabled", false);
+}
+
+function getSentence(){
+    var words = classVariableDict.alternatives[0].transcript.split(" ");
+    var curr = 0;
+    var i = 0;
+    var out= "";
+    while(i<words.length){
+        if($('#upper_'+curr).attr("class") == 'lower-error'){
+             i += $('#upper_'+curr).text().split(" ").length;
+             out += $('#lower_'+curr).text()+" "; 
+        }
+        else{
+            i+=1;
+            out += $('#upper_'+curr).text()+" ";
+        }
+        curr++;
+    }
+    return out;
 }
