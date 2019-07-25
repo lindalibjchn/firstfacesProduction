@@ -225,7 +225,7 @@ function doneError(){
     if($('.uncorrected-error').length == 0){
         $("#submitCorrectedErrors").show();
     }
-    classVariableDict.preSentence = getSentence();
+    classVariableDict.preSent = getSentence().trim();
 }
 
 
@@ -433,7 +433,7 @@ function sendErrorBlobToServer( new_blob ){
             //add index an foregin key to the errors
             classVariableDict.errors[json['error_start']] = json['error_pk'];
             //display transcript
-            if(json['error_trans'].trim() != ""){
+           
             $("#centeredErrorHolder").hide();
             $("#overlayErrorBox").show();
             $("#overlayTextBox").show();
