@@ -266,3 +266,47 @@ def replace_phonetically_same_words(t1,t2):
             out += t2[curr]+" "
             curr+=1
     return out.strip()
+
+
+def get_cmap(threshold):
+    if threshold == 0:
+        return "Greens"
+    elif threshold <= 0.15:
+        return "YlOrBr"
+    else:
+        return "Reds"
+
+def get_spectogram(wav_path,sim,filename):
+    samplingFrequency, signalData = wavfile.read(wav_path)
+    temp = []                                             
+    for i in range(len(signalData)):                      
+        if signalData[i] == 0:                            
+            continue                                      
+        else:                                             
+            temp.append(signalData[i])
+    fig = plt.figure(num=None, figsize=(18,3), dpi=80, facecolor='w', edgecolor='k')
+    ax = plt.subplot(111)  
+    ax.specgram(temp,Fs=samplingFrequency,cmap=get_cmap(sim))
+    ax.axis('off')                          
+    plt.subplots_adjust(left=0, bottom=0, right=1, top=1, wspace=0, hspace=0)    
+    fig.tight_layout()
+    out = "media/images/"+filename
+    plt.savefig(settings.BASE_DIR+'/'+out, transparent= True, bbox_inches = 'tight', pad_inches = 0)            
+    return out
+
+
+# t1, correct
+# t2, not
+def is_phonetically_same(t1,t2):
+    t1 = t1.split()
+    t2 = t2.split()
+    if len(t1) != len(t2):
+        return False
+
+    for i in range(len(t1)):
+        if t1[i].lower() != t2[i].lower():
+            if get_phonemes_num(t1[i].lower()) != get_phonemes_num(t1[i].lower()):
+                return False
+    return True
+
+

@@ -737,13 +737,17 @@ def error_typing_used(request):
 
     synthFN = settings.BASE_DIR + '/' + synthURL1
     # synthFN = generate_synth_audio(request.POST['trans'],fn)
-
-    get_praat_image(synthFN,1,0)
-    get_praat_image(errorPath,0,0) 
+    ref_image = get_spectogram(synthFN,0,"ref_"+session_id+"_"+timezone.now().strftime('%H-%M-%S')+".png")
+    
+    sim = get_sim(ERR_trans,request.POST['trans'])
+    hin = "hyp_"+session_id+"_"+timezone.now().strftime('%H-%M-%S')+".png"
+    print("\n\n",hin,"\n\n")
+    
+    
+    hyp_image = get_spectogram(errorPath,sim,hin) 
     refLen = get_audio_length(synthFN)
     hypLen = get_audio_length(errorPath)
-    print("\n\n",refLen,"\n\n")
-    ref_image, hyp_image = get_rel_praat_paths()
+    #ref_image, hyp_image = get_rel_praat_paths()
     #Error in naming convention
     hyp_audio = ref_path(fn) 
     ref_audio = get_hyp_audio_path(fn)
@@ -766,6 +770,7 @@ def error_typing_used(request):
             "ref_length":refLen,
             "aeca_id":aeca.id,
             "ae_id":ae.id,
+            "sim":sim,
     }
     return JsonResponse(response_data)
 
@@ -793,15 +798,18 @@ def store_attempt_blob(request):
     correct = False
     if ae.intention == trans:
         correct = True
+    elif is_phonetically_same(ae.intention,trans):
+        trans = ae.intention
+        correct = True
     print("\n\n",trans,"\n",correct,"\n\n")
     audio_url = "media/wav/"+filename[:-4]+"wav"
 
     code = 3
     if correct:
         code = 2
-    
-    get_praat_image(settings.BASE_DIR+"/"+audio_url,code,aeca.id)
-    pic_url = "media/images/att_"+str(aeca.id)+".png"
+    pic_name = "att_"+str(aeca.id)+".png"
+    sim = get_sim(ae.intention,trans)
+    pic_url = get_spectogram(settings.BASE_DIR+"/"+audio_url,sim,pic_name)
     lenAudio = get_audio_length(settings.BASE_DIR+"/"+audio_url)
     aeca = AudioErrorCorrectionAttempt(error=ae)
     aeca.save()        
@@ -812,6 +820,7 @@ def store_attempt_blob(request):
         "trans":trans,
         "att_id":aeca.id,
         "hypLen":lenAudio,
+        "sim":sim,
     }
     return JsonResponse(response_data)
 

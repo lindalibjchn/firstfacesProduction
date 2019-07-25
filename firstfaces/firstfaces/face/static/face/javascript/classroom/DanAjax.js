@@ -299,7 +299,7 @@ $('#keyboardOverlay').click(function(){
     //make text area editable
     $("#submitOverlay").off("click"); 
     $("#submitOverlay").click(submitKeyboard);
-    $("#overlayTextBox").focus();;
+    $("#overlayTextBox").focus();
 });
 
 $('#backOverlay').click(function(){
@@ -372,11 +372,20 @@ function openOverlay(){
                 correct_attempt();
            }
            else{
-                $("#hyp_btn").css("background-color","red");
-                $("#hyp_invisible").css("background-color","red");
+                var sim = parseFloat(json.sim);                
+                if(sim <= 0.15){               
+                    $('#hyp_btn').css("background-color","#ffaa00");                                            
+                                                                               $('#hyp_invisible').css("background-color","#ffaa00");                                                
+                }else{
+                    $("#hyp_btn").css("background-color","red");
+                    $("#hyp_invisible").css("background-color","red");
+                }
                 incorrect_attempt();
            }
-           classVariableDict.hypLen = json.hypLen;
+           classVariableDict.hypLenOriginal = json.hypLen;
+           classVariableDict.hypLen = json.hypLen/classVariableDict.playspeed;
+           //change speed of play
+           document.getElementById('hypAudio').playbackRate = classVariableDict.playspeed;
           }
           else{
             dealWithBlankTranscription();      
@@ -560,7 +569,13 @@ function submitKeyboard(){
             $("#praatCont").show();
             $("#submitOverlay").hide();
             $("#reRecordBtn").css("background-color","blue");
-            
+           
+            var sim = parseFloat(json.sim);
+            if(sim <= 0.15){
+                $('#hyp_btn').css("background-color","#ffaa00");
+                $('#hyp_invisible').css("background-color","#ffaa00");
+            }
+
             $("#backOverlay").show();
         
             classVariableDict.specClicks = [];
@@ -572,8 +587,14 @@ function submitKeyboard(){
             classVariableDict.errors[classVariableDict.startIDX] = json.ae_id;
 
             //save lenghts of both audio files
-            classVariableDict.refLen = json.ref_length;
-            classVariableDict.hypLen = json.hyp_length;
+            classVariableDict.refLen = json.ref_length/classVariableDict.playspeed;
+            classVariableDict.hypLen = json.hyp_length/classVariableDict.playspeed;
+            //change speed of play
+            document.getElementById('hypAudio').playbackRate = classVariableDict.playspeed;
+            document.getElementById('refAudio').playbackRate = classVariableDict.playspeed;
+
+            classVariableDict.hypLenOriginal = json.hyp_length;
+            classVariableDict.refLenOriginal = json.ref_length;
         },
         error: function() {
             console.log("that's wrong"); 
@@ -690,6 +711,7 @@ function undoCorrect(){
 
 function disableBtns(){
     $('#submitOverlay').prop( "disabled", true);
+    $('#myRange').prop( "disabled", true);
     $('#reRecordBtn').prop( "disabled", true);
     $('#backOverlay').prop( "disabled", true);
     $('#ref_btn').prop( "disabled", true);
@@ -699,7 +721,8 @@ function disableBtns(){
 function enableBtns(){
     $('#submitOverlay').prop( "disabled", false);                       
     $('#reRecordBtn').prop( "disabled", false);                                             
-    $('#backOverlay').prop( "disabled", false);                                            
+    $('#backOverlay').prop( "disabled", false);
+    $('#myRange').prop("disabled",false);
     $('#ref_btn').prop( "disabled", false);   
     $('#hyp_btn').prop( "disabled", false);                      
     $('#closeOverlayArea').prop( "disabled", false);
@@ -723,3 +746,18 @@ function getSentence(){
     }
     return out;
 }
+
+var slider = document.getElementById("myRange");
+slider.oninput = function() { 
+    var val = (20 + parseInt(this.value));
+    $('#sliderVal').text(val+"%");
+    val = val / 100;
+    classVariableDict.playspeed = val;
+    //change animation amoutns
+    classVariableDict.hypLen = classVariableDict.hypLenOriginal/val;
+    classVariableDict.refLen = classVariableDict.refLenOriginal/val;
+
+    document.getElementById('refAudio').playbackRate = val;
+    document.getElementById('hypAudio').playbackRate = val;
+}
+

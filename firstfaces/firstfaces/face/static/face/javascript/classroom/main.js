@@ -9,7 +9,7 @@ $(window).on( 'load', function() {
 
     //fill prevSents
     loadPrevSents( scrollBottom );   
-
+    classVariableDict.playspeed=1.0;
 });
 
 //function resetTranscripts() {
