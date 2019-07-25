@@ -433,22 +433,22 @@ function sendErrorBlobToServer( new_blob ){
             //add index an foregin key to the errors
             classVariableDict.errors[json['error_start']] = json['error_pk'];
             //display transcript
-           
-            $("#centeredErrorHolder").hide();
-            $("#overlayErrorBox").show();
-            $("#overlayTextBox").show();
-            $("#overlayTextBox").empty();
-            $('#overlayTextBox').text(json['error_trans']);
-            //show mic
-            $("#submitOverlay").show();
-            $("#submitOverlay").off("click");
-            $("#submitOverlay").click(submitRecording);
-            //make textbox not editable
-            $("#overlayTextBox").attr("contenteditable","false");
-            //save last transcription into class
-           }
-           else{
-            dealWithBlankTranscription();
+            if(json['error_trans'] != ""){
+                $("#centeredErrorHolder").hide();
+                $("#overlayErrorBox").show();
+                $("#overlayTextBox").show();
+                $("#overlayTextBox").empty();
+                $('#overlayTextBox').text(json['error_trans']);
+                //show mic
+                $("#submitOverlay").show();
+                $("#submitOverlay").off("click");
+                $("#submitOverlay").click(submitRecording);
+                //make textbox not editable
+                $("#overlayTextBox").attr("contenteditable","false");
+                //save last transcription into class
+           }else {
+               alert(json['error_trans']);
+               dealWithBlankTranscription();
            }
            classVariableDict.lastAttemptID = json['attempt_pk'];  
            $("#reRecordBtn").show();                                                        

@@ -782,7 +782,7 @@ function returnFromListenToSpeechSynthesis() {
     setTimeout( function() {
         
         // if no sound comes through, don't tap or show empty transcripts
-        if ( synthesisObject.alternatives[ 0 ].transcript === "" ) {
+        if ( classVariableDict.alternatives[ 0 ].transcript === "" ) {
         
             if ( classVariableDict.tutorial === false ) {
 

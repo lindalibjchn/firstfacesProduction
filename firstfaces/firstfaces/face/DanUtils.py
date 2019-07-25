@@ -1,23 +1,23 @@
 import numpy as np
+import matplotlib
+matplotlib.use('Agg')
 import pandas as pd
 import tabulate as tb
 import os
 import itertools
 import collections
-import seaborn as sns
 import matplotlib.pyplot as plt
 from matplotlib.pyplot import figure
 import ast
 import math
-import pocketsphinx
 from g2p_en import G2p
 import wave
 import contextlib
 from scipy.io import wavfile
+from django.conf import settings 
 
-
-sim_path = "../../Data/Prounciation_Dicts/normalised_phone_diffs_john.csv"
-dict_path = "../../Data/Prounciation_Dicts/cmu.dict1.txt"
+sim_path = settings.BASE_DIR+"/face/text_files/pho_diffs.csv"
+dict_path = settings.BASE_DIR+"/face/text_files/cmudict.txt"
 
 
 similarities = pd.read_csv(sim_path, index_col=0)
