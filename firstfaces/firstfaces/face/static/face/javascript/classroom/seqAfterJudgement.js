@@ -166,6 +166,8 @@ function prePrepareForPromptSpeech() {
             
             if ( speechBubbleObject.dotsAppear === false ) {
 
+                $('#speechBubbleCont').fadeIn();
+
                 $('.thinkingOfSpeaking').fadeIn( 2000 );
                 speechBubbleObject.dotsAppear = true;
 

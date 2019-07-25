@@ -665,7 +665,7 @@ function tapKeyFull() {
                             
                             //Daniel
                             //Adding correct and incorrect transcript buttons
-                            $('#listenAndSynthBtns').hide();
+                            //$('#listenAndSynthBtns').hide();
                             $('#incorrectTranscriptBtn').show(); 
 
                             $('#talkBtn').show();
@@ -700,6 +700,7 @@ function tapKeyFull() {
 function populateDivs() {
     var words = classVariableDict.alternatives[0].transcript.split(" ");
     words.forEach(addWord);
+    $('#listenVoiceBtn').show();
 }
 function addWord(word,count) {
    var idx = "'upper_"+count+"'";
@@ -777,11 +778,11 @@ function dealWithBlankTranscription() {
 
 function returnFromListenToSpeechSynthesis() {
 
-    movementController( movements.blank, 1.5, 1.5 );
+    movementController( movements.blank, 1, 1 );
     setTimeout( function() {
         
         // if no sound comes through, don't tap or show empty transcripts
-        if ( synthesisObject.transcript0 === "" ) {
+        if ( synthesisObject.alternatives[ 0 ].transcript === "" ) {
         
             if ( classVariableDict.tutorial === false ) {
 

@@ -98,22 +98,22 @@ function talkToTia() {
     // check that final text box has been changed or not from recording
     // for development
     //synthesisObject.finalTextInBox = $('#textInput').val();
-    synthesisObject.finalTextInBox = "40 year ago the Khmer Rouge were toppled from power in Cambodia";
+    synthesisObject.finalTextInBox = classVariableDict.preSent;
 
-    //no change from audio
-    if ( synthesisObject.finalTextInBox === synthesisObject[ 'transcript' + synthesisObject.transcriptCur ] ) {
+    ////no change from audio
+    //if ( synthesisObject.finalTextInBox === synthesisObject[ 'transcript' + synthesisObject.transcriptCur ] ) {
 
         synthesisObject.originalVoice = true;
 
-    } else {
+    //} else {
 
-        synthesisObject.originalVoice = false;
-        synthesisObject.pitch = 0;
-        synthesisObject.speaking_rate = 0.85;
-        synthesisObject.text = synthesisObject.finalTextInBox;
-        sendTTS( synthesisObject.finalTextInBox, false, "talk" ); 
+        //synthesisObject.originalVoice = false;
+        //synthesisObject.pitch = 0;
+        //synthesisObject.speaking_rate = 0.85;
+        //synthesisObject.text = synthesisObject.finalTextInBox;
+        //sendTTS( synthesisObject.finalTextInBox, false, "talk" ); 
 
-    }
+    //}
 
 
     // fadeOut all prev sentences - this is to stop learners reading prev sents while should be looking at tia
@@ -236,8 +236,6 @@ function goToThinkingPos() {
 var wordThinkingCount = 0;
 function showTiaThinkingOverWords() {
 
-    tiaTimings.wordFade = 200;
-
     if ( wordThinkingCount % 2 === 0 ) {
 
         if (wordThinkingCount === 0 ) {
@@ -274,7 +272,7 @@ function showTiaThinkingOverWords() {
     }
 
     let wordLength = synthesisObject.wordList[ wordThinkingCount ].length
-    let wordDelay = tiaTimings.wordFade + wordLength * tiaTimings.wordFade / 3;
+    let wordDelay = tiaTimings.wordFade + wordLength * tiaTimings.wordFade / 2;
     wordThinkingCount += 1;
 
     if ( wordThinkingCount < synthesisObject.wordList.length ) {
@@ -303,7 +301,7 @@ function showTiaThinkingOverWords() {
 
                     }
 
-                }, 1000 );
+                }, 1500 );
 
             } else {
 

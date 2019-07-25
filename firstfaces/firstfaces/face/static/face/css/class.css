@@ -1024,6 +1024,28 @@ button:active {
 
     display: inline-block;
     
+}
+
+
+#listenVoiceBtn {
+
+    position: absolute;
+    left: 90%;
+    /*bottom: 100%;*/
+    display: none;
+    height: 35px;
+    width: 35px;
+    /*border-radius: 10px 10px 0px 0px;*/
+    /*z-index: 9;*/
+
+}
+
+#human {
+
+    position: relative;
+    height: 120%;
+    left: -10px;
+    bottom: 5px;
 
 }
 
@@ -1054,6 +1076,11 @@ button:active {
     height: 100%;
     /*display: flex;*/
     /*align-items: center;*/
+    z-index: 10;
+}
+
+#recordAndStopBtns {
+    position: relative;
 }
 
 .input-btns {
@@ -1074,15 +1101,6 @@ button:active {
 
 #incorrectTranscriptBtns{
     height: 100%;
-}
-
-#human {
-
-    position: relative;
-    height: 110%;
-    left: -10px;
-    bottom: 2px;
-
 }
 
 #talkBtnContainer {

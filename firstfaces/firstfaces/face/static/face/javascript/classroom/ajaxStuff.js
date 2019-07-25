@@ -96,6 +96,7 @@ function sendBlobToServer( blob_to_send ) {
             console.log('got response from sending blob to server');
             classVariableDict.alternatives = json.alternatives;
             classVariableDict.currentAudID = json.audio_pk;
+            classVariableDict.preSent = classVariableDict.alternatives[ 0 ][ 'transcript' ]
 
             // if first interference, then want the flinch not to be interfered with by the return motions
             if ( classVariableDict.interference_count === 1 && synthesisObject.interference ) {
@@ -163,10 +164,9 @@ function sendSentToServer() {
     classVariableDict.blobs = 0;
 
     // all below for developing
-    //let sent = $('#textInput').val();
-    let sent = [' ', '40', ' ', 'year', ' ', 'ago', ' ', 'the', ' ', 'Khmer', ' ', 'Rouge', ' ', 'were', ' ', 'toppled', ' ', 'from', ' ', 'power', ' ', 'in', ' ', 'Cambodia', ' ']
+    let sent = classVariableDict.preSent;
 
-    if ( sent.length >= 30 ) {
+    if ( sent.length >= 300 ) {
 
         alert( 'This sentence is too long. Please simplify and try again.')
 
@@ -203,7 +203,7 @@ function sendSentToServer() {
                 url: "/store_sent",
                 type: "POST",
                 data: { 
-                    'sent': JSON.stringify(sent),
+                    'sent': sent,
                     //'isItQ': isItQ,
                     'blob_no_text': classVariableDict.blob_no_text,
                     'blob_no_text_sent_id': classVariableDict.blob_no_text_sent_id,
@@ -379,100 +379,100 @@ function checkForPromptNIndexes( sentId ) {
 
 }
 
-function sendTranscriptViewToAjax( choice ) {
+//function sendTranscriptViewToAjax( choice ) {
 
-    //console.log('choice:', choice);
-    $.ajax({
-        url: "/add_transcription_choice_view",
-        type: "GET",
-        data: { 
-            'choice': choice,
-            'blob_no_text_sent_id': classVariableDict.blob_no_text_sent_id,
-        },
-        success: function(json) {
+    ////console.log('choice:', choice);
+    //$.ajax({
+        //url: "/add_transcription_choice_view",
+        //type: "GET",
+        //data: { 
+            //'choice': choice,
+            //'blob_no_text_sent_id': classVariableDict.blob_no_text_sent_id,
+        //},
+        //success: function(json) {
             
-           // console.log('added transcription choice view');
+           //// console.log('added transcription choice view');
 
-        },
-        error: function() {
-            alert("error adding transcription choice view");
-        },
+        //},
+        //error: function() {
+            //alert("error adding transcription choice view");
+        //},
 
-    });
+    //});
 
-}
+//}
 
-function sendListenSynth( repeat ) {
+//function sendListenSynth( repeat ) {
 
-    listenTranscript = false;
-    diffSent = "";
-    transcriptCur = "3";
-    // if not a repeat then something different - is it one of the transcripts?
-    if ( repeat === false ) {
+    //listenTranscript = false;
+    //diffSent = "";
+    //transcriptCur = "3";
+    //// if not a repeat then something different - is it one of the transcripts?
+    //if ( repeat === false ) {
 
-        if ( synthesisObject['transcript' + synthesisObject.transcriptCur ] === $('#textInput').val() ) {
+        //if ( synthesisObject['transcript' + synthesisObject.transcriptCur ] === $('#textInput').val() ) {
         
-            listenTranscript = true;
-            transcriptCur = synthesisObject.transcriptCur;
+            //listenTranscript = true;
+            //transcriptCur = synthesisObject.transcriptCur;
 
-        } else {
+        //} else {
 
-            // something typed by the learner
-            diffSent = $('#textInput').val();
+            //// something typed by the learner
+            //diffSent = $('#textInput').val();
 
-        }
+        //}
 
-    }
+    //}
 
-    $.ajax({
-        url: "/add_listen_synth_data",
-        type: "GET",
-        data: { 
-            'sessId': classVariableDict.session_id,
-            'diffSent': diffSent,
-            'transcriptCur': transcriptCur,
-            'listenTranscript': listenTranscript,
-            'repeat': repeat,
-            'blob_no_text': classVariableDict.blob_no_text,
-            'blob_no_text_sent_id': classVariableDict.blob_no_text_sent_id,
-        },
-        success: function(json) {
+    //$.ajax({
+        //url: "/add_listen_synth_data",
+        //type: "GET",
+        //data: { 
+            //'sessId': classVariableDict.session_id,
+            //'diffSent': diffSent,
+            //'transcriptCur': transcriptCur,
+            //'listenTranscript': listenTranscript,
+            //'repeat': repeat,
+            //'blob_no_text': classVariableDict.blob_no_text,
+            //'blob_no_text_sent_id': classVariableDict.blob_no_text_sent_id,
+        //},
+        //success: function(json) {
             
-            classVariableDict.blob_no_text = true;
-            classVariableDict.blob_no_text_sent_id = json.sent_id;
+            //classVariableDict.blob_no_text = true;
+            //classVariableDict.blob_no_text_sent_id = json.sent_id;
 
-            console.log('added pronunciation data');
+            //console.log('added pronunciation data');
 
-        },
-        error: function() {
-            alert("error adding pronunciation data");
-        },
+        //},
+        //error: function() {
+            //alert("error adding pronunciation data");
+        //},
 
-    });
+    //});
 
-}
+//}
 
-function sendListenVoice() {
+//function sendListenVoice() {
 
-    $.ajax({
-        url: "/add_voice_data",
-        type: "GET",
-        data: { 
-            'blob_no_text_sent_id': classVariableDict.blob_no_text_sent_id,
-            'transcriptCur': synthesisObject.transcriptCur,
-        },
-        success: function(json) {
+    //$.ajax({
+        //url: "/add_voice_data",
+        //type: "GET",
+        //data: { 
+            //'blob_no_text_sent_id': classVariableDict.blob_no_text_sent_id,
+            //'transcript': classVariableDict.preSent,
+        //},
+        //success: function(json) {
             
-            console.log('added voice data');
+            //console.log('added voice data');
 
-        },
-        error: function() {
-            alert("error adding pronunciation data");
-        },
+        //},
+        //error: function() {
+            //alert("error adding pronunciation data");
+        //},
 
-    });
+    //});
 
-}
+//}
 
 function sendSoundMicToServer( device, TF ) {
 
