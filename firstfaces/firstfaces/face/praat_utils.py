@@ -83,6 +83,7 @@ def load_json():
 
 def get_timestamps(startIDX,endIDX):
     data = load_json()
+    print("\n\n",startIDX," ",endIDX,"\n\n\n")
     start = float(data['fragments'][startIDX]['begin'])
     end = float(data['fragments'][endIDX]['end'])
     return start*1000,end*1000

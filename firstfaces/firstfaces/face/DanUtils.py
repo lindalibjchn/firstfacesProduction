@@ -15,6 +15,7 @@ import wave
 import contextlib
 from scipy.io import wavfile
 from django.conf import settings 
+from PIL import Image
 
 sim_path = settings.BASE_DIR+"/face/text_files/pho_diffs.csv"
 dict_path = settings.BASE_DIR+"/face/text_files/cmudict.txt"
@@ -276,7 +277,7 @@ def get_cmap(threshold):
     else:
         return "Reds"
 
-def get_spectogram(wav_path,sim,filename):
+def get_spectogram(wav_path,sim,filename,code):
     samplingFrequency, signalData = wavfile.read(wav_path)
     temp = []                                             
     for i in range(len(signalData)):                      
@@ -284,16 +285,29 @@ def get_spectogram(wav_path,sim,filename):
             continue                                      
         else:                                             
             temp.append(signalData[i])
-    fig = plt.figure(num=None, figsize=(18,3), dpi=80, facecolor='w', edgecolor='k')
+    if code == 0:
+        height = 3
+    else:
+        height = 3.5
+    fig = plt.figure(num=None, figsize=(18,height), dpi=80, facecolor='w', edgecolor='k')
     ax = plt.subplot(111)  
     ax.specgram(temp,Fs=samplingFrequency,cmap=get_cmap(sim))
     ax.axis('off')                          
     plt.subplots_adjust(left=0, bottom=0, right=1, top=1, wspace=0, hspace=0)    
     fig.tight_layout()
     out = "media/images/"+filename
-    plt.savefig(settings.BASE_DIR+'/'+out, transparent= True, bbox_inches = 'tight', pad_inches = 0)            
+    plt.savefig(settings.BASE_DIR+'/'+out, transparent= True, bbox_inches = 'tight', pad_inches = 0)
+    if code !=0:
+        new_out = "media/images/"+filename[:-4]+"_crop.png"
+        crop_spectogram(settings.BASE_DIR+'/'+out,(0,38,1416,256), settings.BASE_DIR+'/'+new_out)
+        return new_out
     return out
 
+def crop_spectogram(inpath,coords,outpath):
+    image = Image.open(inpath)
+    crop_im = image.crop(coords)
+    crop_im.save(outpath)
+    return
 
 # t1, correct
 # t2, not
@@ -305,7 +319,7 @@ def is_phonetically_same(t1,t2):
 
     for i in range(len(t1)):
         if t1[i].lower() != t2[i].lower():
-            if get_phonemes_num(t1[i].lower()) != get_phonemes_num(t1[i].lower()):
+            if get_phonemes_num(t1[i].lower()) != get_phonemes_num(t2[i].lower()):
                 return False
     return True
 

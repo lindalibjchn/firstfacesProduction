@@ -236,9 +236,9 @@ button:active {
     width:95%;
     border-radius:7px;
     min-width:96%;
-    padding-top:2.5%;
+    padding-top:1%;
     padding-bottom:1%;
-    padding-right:2.5%;
+    padding-right:0.5%;
 }
 
 #ref_btn{
@@ -427,7 +427,9 @@ button:active {
 #overlayLeftBtn{
     height: 100%;
 }
-
+#moveText{
+    position:relative;
+}
 #overlayCentreBtn{
     height:100%;
 }

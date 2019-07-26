@@ -737,14 +737,14 @@ def error_typing_used(request):
 
     synthFN = settings.BASE_DIR + '/' + synthURL1
     # synthFN = generate_synth_audio(request.POST['trans'],fn)
-    ref_image = get_spectogram(synthFN,0,"ref_"+session_id+"_"+timezone.now().strftime('%H-%M-%S')+".png")
+    ref_image = get_spectogram(synthFN,0,"ref_"+session_id+"_"+timezone.now().strftime('%H-%M-%S')+".png",0)
     
     sim = get_sim(ERR_trans,request.POST['trans'])
     hin = "hyp_"+session_id+"_"+timezone.now().strftime('%H-%M-%S')+".png"
     print("\n\n",hin,"\n\n")
     
     
-    hyp_image = get_spectogram(errorPath,sim,hin) 
+    hyp_image = get_spectogram(errorPath,sim,hin,1) 
     refLen = get_audio_length(synthFN)
     hypLen = get_audio_length(errorPath)
     #ref_image, hyp_image = get_rel_praat_paths()
@@ -809,7 +809,7 @@ def store_attempt_blob(request):
         code = 2
     pic_name = "att_"+str(aeca.id)+".png"
     sim = get_sim(ae.intention,trans)
-    pic_url = get_spectogram(settings.BASE_DIR+"/"+audio_url,sim,pic_name)
+    pic_url = get_spectogram(settings.BASE_DIR+"/"+audio_url,sim,pic_name,1)
     lenAudio = get_audio_length(settings.BASE_DIR+"/"+audio_url)
     aeca = AudioErrorCorrectionAttempt(error=ae)
     aeca.save()        
