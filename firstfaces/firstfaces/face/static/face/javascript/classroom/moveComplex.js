@@ -769,8 +769,11 @@ function dealWithBlankTranscription() {
 
     tiaSpeak( "I didn't hear anything. Could you try again?", needSendTTS=true, function() {
      
-    $('#recordBtnsContainer').fadeIn();
-    removeSpeechBubble();
+        $('#recordVoiceBtn').show();
+        classVariableDict.mainRecord = false;
+
+        $('#recordBtnsContainer').fadeIn();
+        removeSpeechBubble();
 
     } );
 
@@ -796,6 +799,8 @@ function returnFromListenToSpeechSynthesis() {
             }
 
         } else {
+           // reset this as main recording is complete with a transcription
+           classVariableDict.mainRecord = false;
             
             tapKeyFull();
     

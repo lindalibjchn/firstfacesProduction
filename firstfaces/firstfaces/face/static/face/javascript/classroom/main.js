@@ -187,8 +187,8 @@ $('#listenVoiceBtn').on( 'click', function() {
 
                 function onRecord() {
 
-                    //resetTranscripts();
-
+                    // this is to identify main recording and allow return of mic button if user says nothing
+                    classVariableDict.mainRecord = true;
                     //recognition.start();
                     console.log('Voice recognition activated. Try speaking into the microphone.');
                     mediaRecorder.start();
