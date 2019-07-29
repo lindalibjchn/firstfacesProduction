@@ -60,6 +60,46 @@ function readyBtns() {
 
         $('#confirmFinish').hide();
 
+        if ( classVariableDict.tutorial === false ) {
+
+            //if ( classVariableDict.awaitingJudgement ) {
+            
+            //} else {
+
+            if ( classVariableDict.id_of_last_sent === null ) {
+            
+                endClassNoSentences()
+
+            } else {
+
+                if ( classVariableDict.endClassSequenceStarted !== true ) {
+
+                    console.log('\n\n\nend class finish button\n\n\n');
+                    endClass();
+                    classVariableDict.endClassSequenceStarted = true;
+
+                }
+
+            }
+                
+            //}
+
+        } else {
+
+            if ( classVariableDict.tutorialStep === 99 ) {
+
+                endTutorial();
+
+            } else {
+    
+                //window.location.href = "https://erle.ucd.ie/waiting"
+                window.location.href = "http://127.0.0.1:8000/waiting"
+
+            }
+
+
+        }
+
     } );
 
     $('#cancelFinishClassBtn').on( 'click', function() {
@@ -87,45 +127,6 @@ function readyBtns() {
 
     $('#finishClassBtn').on( 'click', function() {
         
-        if ( classVariableDict.tutorial === false ) {
-
-            if ( classVariableDict.awaitingJudgement ) {
-            
-            } else {
-
-                if ( classVariableDict.id_of_last_sent === null ) {
-                
-                    endClassNoSentences()
-
-                } else {
-
-                    if ( classVariableDict.endClassSequenceStarted !== true ) {
-
-                        console.log('\n\n\nend class finish button\n\n\n');
-                        endClass();
-                        classVariableDict.endClassSequenceStarted = true;
-
-                    }
-
-                }
-                
-            }
-
-        } else {
-
-            if ( classVariableDict.tutorialStep === 99 ) {
-
-                endTutorial();
-
-            } else {
-    
-                //window.location.href = "https://erle.ucd.ie/waiting"
-                window.location.href = "http://127.0.0.1:8000/waiting"
-
-            }
-
-
-        }
 
     });
 

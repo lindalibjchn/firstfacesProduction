@@ -3,79 +3,31 @@
   {
    "begin": "0.000",
    "children": [],
-<<<<<<< HEAD
-   "end": "1.240",
+   "end": "3.160",
    "id": "f000001",
    "language": "eng",
    "lines": [
-    "there's"
+    "there"
    ]
   },
   {
-   "begin": "1.240",
+   "begin": "3.160",
    "children": [],
-   "end": "2.000",
+   "end": "3.920",
    "id": "f000002",
    "language": "eng",
    "lines": [
-    "a"
+    "it"
    ]
   },
   {
-   "begin": "2.000",
+   "begin": "3.920",
    "children": [],
-   "end": "2.600",
+   "end": "9.000",
    "id": "f000003",
    "language": "eng",
    "lines": [
-    "snake"
-   ]
-  },
-  {
-   "begin": "2.600",
-   "children": [],
-   "end": "2.720",
-   "id": "f000004",
-   "language": "eng",
-   "lines": [
-    "in"
-   ]
-  },
-  {
-   "begin": "2.720",
-   "children": [],
-   "end": "3.000",
-   "id": "f000005",
-   "language": "eng",
-   "lines": [
-    "my"
-   ]
-  },
-  {
-   "begin": "3.000",
-   "children": [],
-   "end": "3.720",
-   "id": "f000006",
-   "language": "eng",
-   "lines": [
-    "boot"
-=======
-   "end": "5.080",
-   "id": "f000001",
-   "language": "eng",
-   "lines": [
-    "on"
-   ]
-  },
-  {
-   "begin": "5.080",
-   "children": [],
-   "end": "6.720",
-   "id": "f000002",
-   "language": "eng",
-   "lines": [
-    "to"
->>>>>>> d8922052648b387651bb838f6155399f65be00d9
+    "is"
    ]
   }
  ]

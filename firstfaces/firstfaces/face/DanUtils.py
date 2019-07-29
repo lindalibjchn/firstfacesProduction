@@ -343,23 +343,26 @@ def is_phonetically_same(t1,t2):
     return True
 
 def cut_wav(wav_path):
+    print('\n\nin cut_wav\n\n')
     start_pad = 0
     end_pad = 0
 
     samplingFrequency, signalData = wavfile.read(wav_path)
     window = int((samplingFrequency/1000)*10)
 
-    start = 0
-    end = int(window)
+    start = int((samplingFrequency/1000)*10)
+    end = int(window) + start
     prev_variability = 0
     for i in range(int(window),len(signalData),int(window/2)):
         data = signalData[start:end]
+        # print('start:', start)
+        # print('end:', end)
         curr_variabilty = data.mean()
         diff = curr_variabilty-prev_variability
         start += int(window/2)
         end += int(window/2)
         prev_variability = curr_variabilty
-        if abs(diff) > 50:
+        if abs(diff) > 120:
             break
     begining = (i/samplingFrequency)*1000
     start = len(signalData)-window
@@ -372,7 +375,7 @@ def cut_wav(wav_path):
         start -= int(window/2)
         end -= int(window/2)
         prev_variability = curr_variabilty
-        if abs(diff) > 50:
+        if abs(diff) > 120:
             break
     finish = (i/samplingFrequency)*1000
     newA = AudioSegment.from_wav(wav_path)

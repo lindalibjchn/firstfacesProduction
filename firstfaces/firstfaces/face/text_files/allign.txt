@@ -1,11 +1,3 @@
-<<<<<<< HEAD
-there's
-a
-snake
-in
-my
-boot
-=======
-on
-to
->>>>>>> d8922052648b387651bb838f6155399f65be00d9
+there
+it
+is

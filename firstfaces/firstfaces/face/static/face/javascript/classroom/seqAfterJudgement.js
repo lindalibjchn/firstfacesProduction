@@ -265,20 +265,20 @@ function returnToLaptop() {
 
     expressionController( expressionObject.abs.neutral, tiaTimings.changeExpression * 6 );
 
-    if ( classVariableDict.classOver && classVariableDict.endClassSequenceStarted !== true ) {
+    //if ( classVariableDict.classOver && classVariableDict.endClassSequenceStarted !== true ) {
 
-        console.log('\n\n\nend class return to laptop tia looking at student\n\n\n');
-        endClass();
-        classVariableDict.endClassSequenceStarted = true;
+        //console.log('\n\n\nend class return to laptop tia looking at student\n\n\n');
+        //endClass();
+        //classVariableDict.endClassSequenceStarted = true;
 
-    } else {
+    //} else {
 
-        initInputReady()
-        //showQuestionStreak();
-        recTimes.initInputReady = Date.now() / 1000;
-        sendTimesToServer();
+        //initInputReady()
+        ////showQuestionStreak();
+        //recTimes.initInputReady = Date.now() / 1000;
+        //sendTimesToServer();
 
-    }
+    //}
     
 }
 
