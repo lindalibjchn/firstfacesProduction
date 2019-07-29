@@ -375,7 +375,7 @@ function sendAttemptBlob( new_blob ){
                     $('#hyp_invisible').css("background-color","#ffaa00");                                                
                 }else{
                     $("#hyp_btn").css("background-color","red");
-                    $("#hyp_invisible").css("background-color","red");
+                    $("#hyp_invisible").css("background-color","#ffcccb");
                 }
                 incorrect_attempt();
            }
@@ -575,7 +575,7 @@ function submitKeyboard(){
             }
             else{
                 $('#hyp_btn').css("background-color","red");                 
-                $('#hyp_invisible').css("background-color","red");           
+                $('#hyp_invisible').css("background-color","#ffcccb");           
             }
 
             $("#backOverlay").show();
@@ -704,7 +704,7 @@ function undoCorrect(){
     $('#hyp_text_layer').show();
     classVariableDict.correctionDone = false;
     $("#hyp_btn").css("background-color","red");          
-    $("#hyp_invisible").css("background-color","red");
+    $("#hyp_invisible").css("background-color","#ffcccb");
     $('#submitOverlay').hide();
     $('#ref_btn').css('visibility', 'visible');
     $('#reRecordBtn').prop( "disabled", false);

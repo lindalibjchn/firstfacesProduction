@@ -18,7 +18,8 @@ from scipy.io import wavfile
 from django.conf import settings 
 from PIL import Image
 import cv2
-
+from pydub import AudioSegment
+from pydub.playback import play
 
 sim_path = settings.BASE_DIR+"/face/text_files/pho_diffs.csv"
 dict_path = settings.BASE_DIR+"/face/text_files/cmudict.txt"
@@ -88,7 +89,7 @@ def compare(string1, string2):
 def score(l1, l2):
 
     sim_score = similarities[str(l1)][str(l2)]
-    
+     
     if sim_score == 0:
         
         print('sim_score = 0')
@@ -227,14 +228,20 @@ def get_phonemes_num(word):
 
 #t1 = correct
 #t2 = incorrect
+
+def remove_spaces__list(l):
+    l = [x.strip(' ') for x in l]
+    return list(filter(bool,l))
+
+
 def get_sim(t1,t2):
     p1 = []
     p2 = []
     g2p = G2p()
     for word in t1.split():
-        p1 += remove_numbers_vowel_phonemes(g2p(word))
+        p1 += remove_numbers_vowel_phonemes(remove_spaces__list(g2p(word)))
     for word in t2.split():
-        p2 += remove_numbers_vowel_phonemes(g2p(word))
+        p2 += remove_numbers_vowel_phonemes(remove_spaces__list(g2p(word)))
     return compareDem(p1,p2)
 
 def replace_phonetically_same_words(t1,t2):
@@ -291,7 +298,7 @@ def get_spectogram(wav_path,sim,filename,code):
     if code == 0:
         height = 3
     else:
-        height = 3.5
+        height = 5
     fig = plt.figure(num=None, figsize=(18,height), dpi=80, facecolor='w', edgecolor='k')
     ax = plt.subplot(111)  
     ax.specgram(temp,Fs=samplingFrequency,cmap=get_cmap(sim))
@@ -303,7 +310,7 @@ def get_spectogram(wav_path,sim,filename,code):
     if code !=0:
         start = time.time()
         new_out = "media/images/"+filename[:-4]+"_crop.png"
-        crop_spectogram(settings.BASE_DIR+'/'+out,(0,38,1416,256), settings.BASE_DIR+'/'+new_out)
+        crop_spectogram(settings.BASE_DIR+'/'+out,(0,162,1416,376), settings.BASE_DIR+'/'+new_out)
         end = time.time()
         print("\n\nCut - ",end-start,"\n\n")
     
@@ -335,4 +342,40 @@ def is_phonetically_same(t1,t2):
                 return False
     return True
 
+def cut_wav(wav_path):
+    start_pad = 0
+    end_pad = 0
 
+    samplingFrequency, signalData = wavfile.read(wav_path)
+    window = int((samplingFrequency/1000)*10)
+
+    start = 0
+    end = int(window)
+    prev_variability = 0
+    for i in range(int(window),len(signalData),int(window/2)):
+        data = signalData[start:end]
+        curr_variabilty = data.mean()
+        diff = curr_variabilty-prev_variability
+        start += int(window/2)
+        end += int(window/2)
+        prev_variability = curr_variabilty
+        if abs(diff) > 50:
+            break
+    begining = (i/samplingFrequency)*1000
+    start = len(signalData)-window
+    end = len(signalData)   
+    prev_variability = 0
+    for i in range(len(signalData),0,-int(window/2)):
+        data = signalData[start:end]
+        curr_variabilty = data.mean()
+        diff = curr_variabilty-prev_variability
+        start -= int(window/2)
+        end -= int(window/2)
+        prev_variability = curr_variabilty
+        if abs(diff) > 50:
+            break
+    finish = (i/samplingFrequency)*1000
+    newA = AudioSegment.from_wav(wav_path)
+    newA = newA[begining:finish]
+    newA.export(wav_path,format='wav')
+    return

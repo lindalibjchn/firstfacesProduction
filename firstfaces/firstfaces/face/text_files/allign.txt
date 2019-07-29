@@ -1,7 +1,2 @@
-there
-is
-a
-cat
 on
-the
-table
+to

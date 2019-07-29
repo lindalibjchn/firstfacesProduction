@@ -714,6 +714,10 @@ def error_typing_used(request):
     ts = get_timestamps(idx,endid)
     fn = request.POST['sessionID']+"_"+timezone.now().strftime( '%H-%M-%S' )+"_error.wav"
     errorPath = play_errored_text(audioPath,ts,fn)
+    #cut audio
+    print(errorPath)
+    cut_wav(errorPath)
+
     end = time.time()
     print("\n\nGetting Audio - ",(end-start))
     #Synth Audio
@@ -817,6 +821,7 @@ def store_attempt_blob(request):
         trans = ae.intention
         correct = True
     audio_url = "media/wav/"+filename[:-4]+"wav"
+    cut_wav(settings.BASE_DIR+"/"+audio_url)
     pic_name = "att_"+str(aeca.id)+".png" 
     pic_url = get_spectogram(settings.BASE_DIR+"/"+audio_url,sim,pic_name,1)
     lenAudio = get_audio_length(settings.BASE_DIR+"/"+audio_url)
