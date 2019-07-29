@@ -274,7 +274,8 @@ button:active {
     background-color:green;
 }
 #hyp_invisible{
-    background-color:red;
+    background-color:#ffcccb;
+    opacity:0.2;
 }
 
 .invisible_layer{
