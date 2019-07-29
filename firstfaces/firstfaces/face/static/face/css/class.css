@@ -969,6 +969,19 @@ button:active {
 
 }
 
+#timeOverlayCont {
+
+    display: none;
+    position: absolute;
+    width: 100%;
+    height: 50%;
+    left: 0;
+    bottom: 0;
+    background-color: rgba( 256, 256, 256, 1 );
+    z-index: 111;
+
+}
+
 #prevSentsContainer {
 
     display: none;
@@ -1512,5 +1525,13 @@ button:active {
     width: 80%;
     height: 50px;
 }
+
+
+
+
+
+
+
+
 
 

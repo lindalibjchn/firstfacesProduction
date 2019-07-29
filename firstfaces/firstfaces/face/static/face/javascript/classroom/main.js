@@ -39,6 +39,13 @@ function readyBtns() {
 
     });
 
+    $('#finishClassIcon').on( 'click', function() {
+
+        $('#prevSentsIconCont').hide();
+        $('#timeOverlayCont').fadeIn()
+
+    });
+
     $('.input-btn').on( 'click', function() {
 
         $( '#listenVoiceBtn' ).hide();

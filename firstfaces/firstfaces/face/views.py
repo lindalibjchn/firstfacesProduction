@@ -27,6 +27,9 @@ import ast
 from .praat_utils import *
 from .DanUtils import *
 
+
+
+
 logger = logging.getLogger(__name__)
 # os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/johnsHDD/PhD_backup/erle-3666ad7eec71.json"
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/johnsHDD/PhD/2018_autumn/erle-3666ad7eec71.json"
@@ -668,6 +671,7 @@ def error_typing_used(request):
     af = AudioFile.objects.get(pk=request.POST['audio_id'])
     session_id = request.POST['sessionID']
     #If no Audio error exists create it
+
     if startID in errors.keys():
         #AE exists
         primaryKey = errors[startID]
@@ -679,6 +683,7 @@ def error_typing_used(request):
     filename = af.audio.name
     trans = ast.literal_eval(af.alternatives)[0]["transcript"]
     ## generate file for forced allignment
+    start = time.time()
     f = open(get_text_path(),"w+")
     for word in trans.split():
         f.write(word.lower()+"\n")
@@ -695,8 +700,10 @@ def error_typing_used(request):
     command = 'python3 -m aeneas.tools.execute_task '+audioPath+" "+textPath+" "+extra_str+" "+outPath+" >/dev/null 2>&1"
     sub_proc = subprocess.Popen(command,cwd=get_aeneas_path(),shell=True,stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     sub_proc.wait()
-    
+    end = time.time()
+    print("\n\nFA - ",(end-start))
     #Get audio
+    start = time.time()
     ERR_trans = request.POST['etrans']
     idx = int(request.POST['first_word_id'])
     
@@ -707,6 +714,8 @@ def error_typing_used(request):
     ts = get_timestamps(idx,endid)
     fn = request.POST['sessionID']+"_"+timezone.now().strftime( '%H-%M-%S' )+"_error.wav"
     errorPath = play_errored_text(audioPath,ts,fn)
+    end = time.time()
+    print("\n\nGetting Audio - ",(end-start))
     #Synth Audio
     gender = request.POST['gender']
     if gender == 'F':
@@ -737,16 +746,21 @@ def error_typing_used(request):
 
     synthFN = settings.BASE_DIR + '/' + synthURL1
     # synthFN = generate_synth_audio(request.POST['trans'],fn)
+    start = time.time()
     ref_image = get_spectogram(synthFN,0,"ref_"+session_id+"_"+timezone.now().strftime('%H-%M-%S')+".png",0)
     
     sim = get_sim(ERR_trans,request.POST['trans'])
     hin = "hyp_"+session_id+"_"+timezone.now().strftime('%H-%M-%S')+".png"
-    print("\n\n",hin,"\n\n")
     
     
     hyp_image = get_spectogram(errorPath,sim,hin,1) 
+    end = time.time()
+    print("\n\nGet images - ",(end-start))
+    start = time.time()
     refLen = get_audio_length(synthFN)
     hypLen = get_audio_length(errorPath)
+    end = time.time()
+    print("\n\nTime  -",(end-start))
     #ref_image, hyp_image = get_rel_praat_paths()
     #Error in naming convention
     hyp_audio = ref_path(fn) 

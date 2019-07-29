@@ -1,7 +1,6 @@
-there
-is
-a
+the
 cat
+is
 on
 the
-table
+mat
