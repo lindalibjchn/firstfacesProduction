@@ -808,7 +808,10 @@ def store_attempt_blob(request):
     trans = get_speech_recognition(filename)[0]["transcript"]
     aeca.transcript = trans
     aeca.save()
+    start = time.time()
     sim = get_sim(ae.intention,trans)
+    end = time.time()
+    print("\n\nSim = ",end-start,"\n")
     correct = False
     if ae.intention == trans or sim == 0:
         trans = ae.intention
