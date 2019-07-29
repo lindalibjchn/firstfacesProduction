@@ -1,7 +1,8 @@
 import numpy as np
 import matplotlib
-matplotlib.use('Agg')
+#matplotlib.use('Agg')
 import pandas as pd
+import time
 import tabulate as tb
 import os
 import itertools
@@ -16,6 +17,8 @@ import contextlib
 from scipy.io import wavfile
 from django.conf import settings 
 from PIL import Image
+import cv2
+
 
 sim_path = settings.BASE_DIR+"/face/text_files/pho_diffs.csv"
 dict_path = settings.BASE_DIR+"/face/text_files/cmudict.txt"
@@ -298,15 +301,24 @@ def get_spectogram(wav_path,sim,filename,code):
     out = "media/images/"+filename
     plt.savefig(settings.BASE_DIR+'/'+out, transparent= True, bbox_inches = 'tight', pad_inches = 0)
     if code !=0:
+        start = time.time()
         new_out = "media/images/"+filename[:-4]+"_crop.png"
         crop_spectogram(settings.BASE_DIR+'/'+out,(0,38,1416,256), settings.BASE_DIR+'/'+new_out)
+        end = time.time()
+        print("\n\nCut - ",end-start,"\n\n")
+    
         return new_out
     return out
 
+
+
 def crop_spectogram(inpath,coords,outpath):
-    image = Image.open(inpath)
-    crop_im = image.crop(coords)
-    crop_im.save(outpath)
+    #image = Image.open(inpath)
+    #crop_im = image.crop(coords)
+    #crop_im.save(outpath)
+    img = cv2.imread(inpath)
+    crop_img = img[coords[1]:coords[3], coords[0]:coords[2]]
+    cv2.imwrite(outpath,crop_img)
     return
 
 # t1, correct
