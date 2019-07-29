@@ -39,12 +39,37 @@ function readyBtns() {
 
     });
 
-    $('#finishClassIcon').on( 'click', function() {
+    $('#finishClassIconCont').on( 'click', function() {
 
+        showTime();
         $('#prevSentsIconCont').hide();
-        $('#timeOverlayCont').fadeIn()
+        $('#finishClassIconCont').hide();
+        $('#dataNFinish').show();
+        $('#timeOverlayCont').fadeIn();
 
     });
+
+    $('#finishClassBtnPre').on( 'click', function() {
+
+        $('#dataNFinish').hide();
+        $('#confirmFinish').fadeIn();
+
+    } );
+
+    $('#finishClassBtn').on( 'click', function() {
+
+        $('#confirmFinish').hide();
+
+    } );
+
+    $('#cancelFinishClassBtn').on( 'click', function() {
+
+        $('#confirmFinish').hide();
+        $('#dataNFinish').show();
+        $('#finishClassBtnPre').show();
+    
+    } );
+
 
     $('.input-btn').on( 'click', function() {
 

@@ -58,12 +58,12 @@ function engineRunning() {
     blinkControllerObject.bool = true;
     expressionController( expressionObject.abs.neutral, 0.1 );
     enterOrReEnter();
-    if ( classVariableDict.tutorial === false ) {
+    //if ( classVariableDict.tutorial === false ) {
 
-        showTimeRemaining();
-        //showQuestionStreak();
+        //showTimeRemaining();
+        ////showQuestionStreak();
 
-    }
+    //}
 
 
     setTimeout( function() {

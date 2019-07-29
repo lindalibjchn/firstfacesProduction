@@ -808,21 +808,16 @@ def store_attempt_blob(request):
     trans = get_speech_recognition(filename)[0]["transcript"]
     aeca.transcript = trans
     aeca.save()
-    
+    start = time.time()
+    sim = get_sim(ae.intention,trans)
+    end = time.time()
+    print("\n\nSim = ",end-start,"\n")
     correct = False
-    if ae.intention == trans:
-        correct = True
-    elif is_phonetically_same(ae.intention,trans):
+    if ae.intention == trans or sim == 0:
         trans = ae.intention
         correct = True
-    print("\n\n",trans,"\n",correct,"\n\n")
     audio_url = "media/wav/"+filename[:-4]+"wav"
-
-    code = 3
-    if correct:
-        code = 2
-    pic_name = "att_"+str(aeca.id)+".png"
-    sim = get_sim(ae.intention,trans)
+    pic_name = "att_"+str(aeca.id)+".png" 
     pic_url = get_spectogram(settings.BASE_DIR+"/"+audio_url,sim,pic_name,1)
     lenAudio = get_audio_length(settings.BASE_DIR+"/"+audio_url)
     aeca = AudioErrorCorrectionAttempt(error=ae)
@@ -1153,20 +1148,20 @@ def store_class_over(request):
 
     session_id = int(request.GET['sessId'])
 
-    print('in store_class_over')
+    # print('in store_class_over')
 
-    scores = get_scores( session_id )
-    score = math.floor(min(100, sum(scores)))
+    # scores = get_scores( session_id )
+    # score = math.floor(min(100, sum(scores)))
 
     time_now = timezone.now();
     sess = Session.objects.get(pk=session_id)
     sess.end_time = time_now
-    sess.score = score
+    # sess.score = score
     sess.save()
 
     response_data = {
 
-        'score': score,
+        # 'score': score,
 
     }
 

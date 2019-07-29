@@ -281,6 +281,10 @@ $('#closeOverlayArea').click(function(){
    // also close prevSentsContainer - J
    $('#prevSentsContainer').fadeOut();
    $('#prevSentsIconCont').fadeIn();
+   $('#confirmFinish').hide();
+   $('#dataNFinish').show();
+   $('#timeOverlayCont').fadeOut();
+   $('#finishClassIconCont').fadeIn();
    $('#backCorrection').prop( "disabled", false );
    
 
