@@ -666,7 +666,8 @@ function tapKeyFull() {
                             //Daniel
                             //Adding correct and incorrect transcript buttons
                             //$('#listenAndSynthBtns').hide();
-                            $('#incorrectTranscriptBtn').show(); 
+                            //$('#incorrectTranscriptBtn').show(); 
+                            //set_selectable();
 
                             $('#talkBtn').show();
                             //change correct transcipt to #talkBtn
@@ -679,7 +680,8 @@ function tapKeyFull() {
                             //$('#speechBubbleCont').show();
                               
                             populateDivs();
-                    
+                            setTimeout( set_selectable() , 1200);
+
                         }
 
                     }

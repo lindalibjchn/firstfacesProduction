@@ -25,6 +25,23 @@ $('#incorrectTranscriptBtn').click(function(){
     //add new btns (back and done)?
 });
 
+
+function set_selectable(){
+    selected = [];
+    var words = classVariableDict.alternatives[0].transcript.split(" ");
+    var i;
+    //Make words selectable 
+    for(i=0;i<words.length;i++){
+        var idx = "#upper_"+i;
+        $(idx).attr("class","selectable-word");
+    }
+    causeFlash();
+    var duration = words.length * 125;
+    setTimeout(function(){
+        $('.selectable-word').attr("onclick","selectErrWord(this.id)");
+    },duration);
+}
+
 $('#forwardErrorSelection').click(function(){
     //loop through selected words, amalgamate sewuential errors into one
     var words = classVariableDict.alternatives[0].transcript.split(" ");
@@ -154,6 +171,7 @@ function selectErrWord(idx){
         selected.push(num);
         selected.sort();
         if(selected.length == 1){
+            $('#talkBtn').hide();
             $('#forwardErrorSelection').show();
         }
     }
@@ -168,6 +186,7 @@ function selectErrWord(idx){
         });
         selected = temp;
         if(selected.length == 0){
+            $('#talkBtn').show();
             $('#forwardErrorSelection').hide();
         }
         selected.sort();
@@ -246,19 +265,26 @@ $('#backCorrection').click(function(){
     var j = 0;
     for(j=0;j<words.length;j++){
         addWord(words[j],j,'selectable-word');
-        var idx = "#upper_"+j;                                                               
-        $(idx).attr("onclick","selectErrWord(this.id)") 
+        var idx = "#upper_"+j;                                               
     }
+
+     causeFlash();                                                      
+     var duration = words.length * 125;                                 
+     setTimeout(function(){                                             
+        $('.selectable-word').attr("onclick","selectErrWord(this.id)");
+     },duration);                                                       
+
+
     // reset tia speech
     //$('#tia-speech-box').text("Select the incorrect words");
     // reset buttons
-    $('#talkBtn').hide();
+    $('#talkBtn').show();
     $('#backCorrection').hide();
-    $('#backErrorSelection').show();
+    $('#listenVoiceBtn').css('display','block');
     selected = [];
     $('#forwardErrorSelection').prop("disabled",false);
     $('#backErrorSelection').prop("disabled",false);
-   
+    $('#listenVoiceBtn').show();
 });
 
 
@@ -830,13 +856,13 @@ function flash(i,max) {
         var idx = "#upper_"+i;
         flashBorder(idx);
         flash(++i,max);
-    }, 50);
+    }, 60);
 }
 
 function flashBorder(id){
     $(id).css('border-color','#eeee90');
     setTimeout(function(){
         $(id).css('border-color','green'); 
-    },100);
+    },125);
 }
 
