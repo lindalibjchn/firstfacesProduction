@@ -849,6 +849,8 @@ slider.oninput = function() {
 
     document.getElementById('refAudio').playbackRate = val;
     document.getElementById('hypAudio').playbackRate = val;
+    classVariableDict.specClicks.push(JSON.stringify({"speed":Date.now() / 1000,"val":val}));
+
 }
 
  
