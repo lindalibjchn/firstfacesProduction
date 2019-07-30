@@ -585,114 +585,114 @@ function initSacc( coords, secs ) {
 
 function tapKeyFull() {
 
-        let state = 0;
-        initMove( armTapObject, [[0,0,0],[0,0.2,-0.2]], 0.5 );
+    let state = 0;
+    initMove( armTapObject, [[0,0,0],[0,0.2,-0.2]], 0.5 );
 
-        function checkIfArmDone() {
+    function checkIfArmDone() {
 
-            if ( armTapObject.bool ) {
+        if ( armTapObject.bool ) {
 
-                setTimeout( checkIfArmDone, 100 );
+            setTimeout( checkIfArmDone, 100 );
 
+        } else {
+
+            if ( state === 0 ) {
+                
+                initMove( armTapObject, [[0,0,0],[0,0.2,-0.15]], 0.1 )
+                state = 1;   
+                setTimeout( checkIfArmDone, 150 );
+
+            } else if ( state === 1 ) {
+
+                initMove( armTapObject, [[0,0,0],[0,0.2,-0.2]], 0.1 )
+                state = 2;
+                setTimeout( checkIfArmDone, 150 );
+        
             } else {
 
-                if ( state === 0 ) {
-                    
-                    initMove( armTapObject, [[0,0,0],[0,0.2,-0.15]], 0.1 )
-                    state = 1;   
-                    setTimeout( checkIfArmDone, 150 );
+                //calculateAlternatives();
+                //show play buttons below
+                if ( classVariableDict.tutorial === false ) {
 
-                } else if ( state === 1 ) {
+                    // show john's error box
+                    if ( classVariableDict.tapKeyForErrors ) {
 
-                    initMove( armTapObject, [[0,0,0],[0,0.2,-0.2]], 0.1 )
-                    state = 2;
-                    setTimeout( checkIfArmDone, 150 );
-            
-                } else {
+                        
+                        classVariableDict.tapKeyForErrors = false;
 
-                    //calculateAlternatives();
-                    //show play buttons below
-                    if ( classVariableDict.tutorial === false ) {
+                        movementController( movements.blank, '0.5', '1.5' );
+                        // display errors
+                        showWrongSentence();
 
-                        // show john's error box
-                        if ( classVariableDict.tapKeyForErrors ) {
+                    } else if ( classVariableDict.tapKeyForCorrection ) {
 
-                            
-                            classVariableDict.tapKeyForErrors = false;
+                        classVariableDict.tapKeyForCorrection = false;
+                        showCorrectionUnderWrongSent();
 
-                            movementController( movements.blank, '0.5', '1.5' );
-                            // display errors
-                            showWrongSentence();
+                    // this one is for after listening to the learners speech - Daniel's stuff
+                    } else {
 
-                        } else if ( classVariableDict.tapKeyForCorrection ) {
+                        $('.play-btn').prop( "disabled", false);
+                        $('#talkBtn').prop( "disabled", false);
+                        $('#recordVoiceBtn').show();
 
-                            classVariableDict.tapKeyForCorrection = false;
-                            showCorrectionUnderWrongSent();
-
-                        // this one is for after listening to the learners speech - Daniel's stuff
-                        } else {
-
-                            $('.play-btn').prop( "disabled", false);
-                            $('#talkBtn').prop( "disabled", false);
-                            $('#recordVoiceBtn').show();
-
-                            if (($(".selectable-word").length > 0)||($(".selected-word").length >0)){
-                                //reset text
-                                //$('#tia-speech-box').text("Is this what you meant to say?");
-                                //hide backward and forward buttons
-                                $('#backErrorSelection').hide();
-                                $('#forwardErrorSelection').hide();
-                            }
-                            if(($(".uncorrected-error").length > 0)|| ($(".corrected-error").length > 0) ){
-                                //reset speech
-                                //$("#tia-speech-box").text("Is this what you meant to say?");
-                                //hide buttons
-                                $("#submitCorrectedErrors").hide();
-                                $("#backCorrection").hide();
-                            }
-                            
-                            if ( $('#upperSentenceHolder').children().length > 0 ) {
-                               $('#upperSentenceHolder').empty();
-                               $('#lowerSentenceHolder').empty();
-                            }
-                           
-                            
-
-                            //reset what tia is saying and add back in the two buttons
-                            $('.play-btn').prop( "disabled", false);
-                            $('#talkBtn').prop( "disabled", false);
-                            $('#recordVoiceBtn').show();
-                            
-                            //Daniel
-                            //Adding correct and incorrect transcript buttons
-                            //$('#listenAndSynthBtns').hide();
-                            $('#incorrectTranscriptBtn').show(); 
-
-                            $('#talkBtn').show();
-                            //change correct transcipt to #talkBtn
-                            //$('#correctTranscript').show();
-                            //Adding speech bubble for tia 
-
-                            //Displaying hypothesised transcript
-                            $('#textInputContainer').show();
-                            $('#sentenceShowHolder').show();
-                            //$('#speechBubbleCont').show();
-                              
-                            populateDivs();
-                    
+                        if (($(".selectable-word").length > 0)||($(".selected-word").length >0)){
+                            //reset text
+                            //$('#tia-speech-box').text("Is this what you meant to say?");
+                            //hide backward and forward buttons
+                            $('#backErrorSelection').hide();
+                            $('#forwardErrorSelection').hide();
                         }
+                        if(($(".uncorrected-error").length > 0)|| ($(".corrected-error").length > 0) ){
+                            //reset speech
+                            //$("#tia-speech-box").text("Is this what you meant to say?");
+                            //hide buttons
+                            $("#submitCorrectedErrors").hide();
+                            $("#backCorrection").hide();
+                        }
+                        
+                        if ( $('#upperSentenceHolder').children().length > 0 ) {
+                           $('#upperSentenceHolder').empty();
+                           $('#lowerSentenceHolder').empty();
+                        }
+                       
+                        
 
+                        //reset what tia is saying and add back in the two buttons
+                        $('.play-btn').prop( "disabled", false);
+                        $('#talkBtn').prop( "disabled", false);
+                        $('#recordVoiceBtn').show();
+                        
+                        //Daniel
+                        //Adding correct and incorrect transcript buttons
+                        //$('#listenAndSynthBtns').hide();
+                        $('#incorrectTranscriptBtn').show(); 
+
+                        $('#talkBtn').show();
+                        //change correct transcipt to #talkBtn
+                        //$('#correctTranscript').show();
+                        //Adding speech bubble for tia 
+
+                        //Displaying hypothesised transcript
+                        $('#textInputContainer').show();
+                        $('#sentenceShowHolder').show();
+                        //$('#speechBubbleCont').show();
+                          
+                        populateDivs();
+                
                     }
 
-                    initMove( armTapObject, [[0,0,0],[0,0,0]], 0.8 )
-
                 }
+
+                initMove( armTapObject, [[0,0,0],[0,0,0]], 0.8 )
 
             }
 
         }
 
-        setTimeout( checkIfArmDone, 550 );
+    }
+
+    setTimeout( checkIfArmDone, 550 );
 
 }
 

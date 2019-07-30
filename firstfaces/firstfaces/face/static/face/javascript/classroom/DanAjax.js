@@ -366,6 +366,7 @@ function sendAttemptBlob( new_blob ){
         processData: false,                                                                  
         contentType: false,
         success: function(json){
+           //returnFromListenToSpeechSynthesis();
            $('#reRecordBtn').show();
            $("#reRecordBtn").prop( "disabled", false );
            if(json.trans.trim() != ""){
@@ -431,6 +432,7 @@ function closeStage3(){
 }
 
 function sendErrorBlobToServer( new_blob ){
+
     let fd = new FormData();
     fd.append('data',new_blob);
     fd.append('sessionID',classVariableDict.session_id);
@@ -447,6 +449,7 @@ function sendErrorBlobToServer( new_blob ){
         processData: false,
         contentType: false,
         success: function(json){
+            returnFromListenToSpeechSynthesis();
             //add index an foregin key to the errors
             classVariableDict.errors[json['error_start']] = json['error_pk'];
             //display transcript
@@ -460,12 +463,15 @@ function sendErrorBlobToServer( new_blob ){
                     $('#bottomCent').text(json['error_trans']);
                     $("#bottomCent").attr("contenteditable","false");
 
+                    $("#submitOverlay").show();
+                    $("#reRecordBtn").show();                                                        
+                    $("#reRecordBtn").prop( "disabled", false );                                     
+                    $("#keyboardOverlay").show();
                 
                 
                 },900);
                 $('#overlayTextBox').text(json['error_trans']);
                 //show mic
-                $("#submitOverlay").show();
                 $("#submitOverlay").off("click");
                 $("#submitOverlay").click(submitRecording);
                 //make textbox not editable
@@ -476,9 +482,6 @@ function sendErrorBlobToServer( new_blob ){
                dealWithBlankTranscription();
            }
            classVariableDict.lastAttemptID = json['attempt_pk'];  
-           $("#reRecordBtn").show();                                                        
-           $("#reRecordBtn").prop( "disabled", false );                                     
-           $("#keyboardOverlay").show();
         },
         error: function() {
             console.log("that's wrong");
@@ -532,8 +535,8 @@ $('#hyp_btn').click(function(){
 
 //Keyboard sumbit
 function submitKeyboard(){
-    var trans = $('#overlayTextBox').text().trim();
-    var err_trans = $('#overlayErrorText').text().trim();
+    var trans = $('#centeredErrorText').text().trim();
+    var err_trans = $('#bottomCent').text().trim();
     classVariableDict.attemptCount = 0; 
     let fd = new FormData();
     fd.append("attempt_pk",classVariableDict.lastAttemptID);

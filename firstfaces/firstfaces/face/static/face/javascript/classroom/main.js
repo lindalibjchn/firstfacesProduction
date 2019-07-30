@@ -226,7 +226,21 @@ $('#listenVoiceBtn').on( 'click', function() {
                     console.log('Voice recognition activated. Try speaking into the microphone.');
                     mediaRecorder.start();
 
-                    listenToSpeechSynthesis( 0 );// tia leans a bit to listen
+                    // tia leans to listen, more so at later stages
+                    if ( classVariableDict.stage2 ) {
+
+                        listenToSpeechSynthesis( 1 );
+
+                    } else if ( classVariableDict.stage3 ) {
+                    
+                        listenToSpeechSynthesis( 2 );
+
+                    } else {
+
+                        listenToSpeechSynthesis( 0 );
+
+                    }
+
                     classVariableDict.blobs += 1;
                     volumeObject.bool = true;// detect volume and be ready to show volume bar
                     synthesisObject.interference = false; // start with no interference which can change if clipping occurs
@@ -241,10 +255,18 @@ $('#listenVoiceBtn').on( 'click', function() {
                     // hide the microphone button
                     $(this).hide();
 		            if(classVariableDict.stage2 || classVariableDict.stage3){
+                        
                         $('#submitOverlay').hide();
-				        $('#stopRecordBtn').show();
-                  
-				        $('#reRecordBtn').prop("disabled",true);
+                        $('#stopRecordBtn').show();
+                        $('#reRecordBtn').prop("disabled",true);
+                    
+                        if (classVariableDict.stage2 ) {
+
+                            $('#keyboardOverlay').hide();
+                            $('#spectrogramBtn').hide();
+
+                        }
+
 		            }
                     $('#stopRecordVoiceBtn').show();
                     $('.play-btn').prop( "disabled", true);

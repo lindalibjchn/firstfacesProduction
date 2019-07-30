@@ -864,7 +864,7 @@ def store_blob(request):
 
         ps = PermSentence(learner=request.user, session=sess)
         ps.save()
-        s = TempSentence(p_sentence=ps, learner=request.user, session=sess)
+        s = TempSentence(pk=ps.pk, p_sentence=ps, learner=request.user, session=sess)
         s.save()
 
 
@@ -1006,7 +1006,7 @@ def store_sent(request):
         ps.sentence_timestamp = time_now
         ps.save()
 
-        s = TempSentence(p_sentence=ps, learner=request.user, session=sess, sentence=sentence_list, sentence_timestamp=timezone.now())
+        s = TempSentence(pk=ps.pk, p_sentence=ps, learner=request.user, session=sess, sentence=sentence_list, sentence_timestamp=timezone.now())
         s.sentence_timestamp = time_now
         s.save()
 
