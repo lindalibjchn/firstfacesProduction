@@ -593,8 +593,8 @@ $('#hyp_btn').click(function(){
 
 //Keyboard sumbit
 function submitKeyboard(){
-    var trans = $('#centeredErrorText').text().trim();
-    var err_trans = $('#bottomCent').text().trim();
+    var trans = $('#bottomCent').text().trim();
+    var err_trans = $('#centeredErrorText').text().trim();
     classVariableDict.attemptCount = 0; 
     let fd = new FormData();
     fd.append("attempt_pk",classVariableDict.lastAttemptID);
@@ -767,6 +767,8 @@ function incorrect_attempt(){
         $('#ref_btn').animate({top:'-='+diff+"px"});
         $('#hyp_btn').animate({top:'+='+diff+"px"}); 
     },1700);
+    setTimeout
+
     setTimeout(function(){
         $("#ref_text_layer").fadeIn(800);
         $("#hyp_text_layer").fadeIn(800);
