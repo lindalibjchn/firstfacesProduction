@@ -32,13 +32,13 @@ $(window).on( 'load', function() {
 
     setupScrollBtns();
 
-    if ( prevTestScores.length !== 0 ) {
+    //if ( prevTestScores.length !== 0 ) {
 
-        insertTestChart(0);
+        //insertTestChart(0);
 
-    }
+    //}
 
-    $('#startTestBtn').on( 'click', startTest );
+    //$('#startTestBtn').on( 'click', startTest );
 
     // while developing
     // startTest();
