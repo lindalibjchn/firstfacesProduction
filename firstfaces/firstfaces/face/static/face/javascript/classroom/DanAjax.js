@@ -1,31 +1,4 @@
 
-$('#incorrectTranscriptBtn').click(function(){
-    selected = [];
-    var words = classVariableDict.alternatives[0].transcript.split(" ");
-    var i;
-    //Make words selectable 
-    for(i=0;i<words.length;i++){
-        var idx = "#upper_"+i;
-        $(idx).attr("class","selectable-word");
-        $(idx).attr("onclick","selectErrWord(this.id)")
-    }
-    //hide incorrect and other btns
-    $('#talkBtn').hide();
-    $('#incorrectTranscriptBtn').hide();
-    
-    //show button on overlay
-    //
-
-    //change text in box
-    //$('#tia-speech-box').text("Select the incorrect words");
-
-    //add onclick function to btns
-    $('#backErrorSelection').show();
-    //$('#forwardErrorSelection').show();
-    //add new btns (back and done)?
-});
-
-
 function set_selectable(){
     selected = [];
     var words = classVariableDict.alternatives[0].transcript.split(" ");
@@ -101,8 +74,8 @@ $('#overlayTextBox').click(function(){
     $('#typeHereOverlay').empty(); 
 });
 
-$('#bottomCent').keyup(function(event){
-    if($('#bottomCent').text().trim().length != ""){
+$('#overlayTextBox').keypress(function(event){
+    if($('#overlayTextBox').text().trim().length > 0){
         $('#submitOverlay').show(); 
     }
     else{
@@ -125,7 +98,6 @@ function correctError(idx){
 
     $('#overlayErrorText').text(errText);
     $('#centeredErrorText').text(errText);
-    $('#topCentText').text(errText);
     //Have Tia change speech box
     //$('#tia-speech-box').text("Please enter what this is meant to be");
 };
@@ -134,7 +106,7 @@ $('#closeOverlay').click(function(){
     $('#correctionOverlay').hide();
     $('#overlayTextBox').empty();
     $('#overlayTextBox').append('<span id="typeHereOverlay">Type Here!</span>');
-    
+
     //$('#tia-speech-box').text("Select an error to correct it");
 
 });
@@ -155,8 +127,6 @@ $('#backErrorSelection').click(function(){
     //reset buttons
     $('#talkBtn').show();
     $('#talkBtn').prop( "disabled", false);
-    $('#incorrectTranscriptBtn').show();
-    $('#incorrectTranscriptBtn').prop( "disabled", false);
     $('#backErrorSelection').hide();
     $('#forwardErrorSelection').hide();
 });
@@ -197,8 +167,8 @@ function selectErrWord(idx){
 
 var currentId;
 function doneError(){
-    var cor = $('#bottomCent').text().trim();
-    var err = $('#centeredErrorText').text().trim();
+    var cor = $('#overlayTextBox').text().trim();
+    var err = $('#overlayErrorText').text().trim();
 
     var dif;
     var i;
@@ -236,10 +206,9 @@ function doneError(){
     classVariableDict.stage2 = false;
     //close overlay
     $('#correctionOverlay').hide();
-    $('#bottomCent').empty();
-    unmoveText();
-    //$('#overlayTextBox').append('<span id="typeHereOverlay">Type Here!</span>');
-     
+    $('#overlayTextBox').empty();
+    $('#overlayTextBox').append('<span id="typeHereOverlay">Type Here!</span>');
+    
     //$('#tia-speech-box').text("Select an error to correct!");
     //closeStage3();
     //Check if all errors are corrected
@@ -295,8 +264,7 @@ $('#closeOverlayArea').click(function(){
    }  
     
    $('#correctionOverlay').hide();
-   $('#bottomCent').empty();
-   $('#bottomCent').hide();
+   $('#overlayTextBox').empty();
    //$('#overlayTextBox').append('<span id="typeHereOverlay">Type Here!</span>');       
    //$('#tia-speech-box').text("Select an error to correct!"); 
    
@@ -315,14 +283,14 @@ $('#closeOverlayArea').click(function(){
    $('#timeOverlayCont').fadeOut();
    $('#finishClassIconCont').fadeIn();
    $('#backCorrection').prop( "disabled", false );
-   unmoveText(); 
+   
 
 });
 
 $('#keyboardOverlay').click(function(){
     moveText();
     //$('#centeredError').hide();
-    //$('#ubmitOverlay').hide();
+    //$('#submitOverlay').hide();
     //$('#overlayErrorBox').show();
     //$('#overlayTextBox').show();
     $('#keyboardOverlay').hide();
@@ -332,9 +300,7 @@ $('#keyboardOverlay').click(function(){
     //make text area editable
     $("#submitOverlay").off("click"); 
     $("#submitOverlay").click(submitKeyboard);
-    setTimeout(function(){
-        $('#bottomCent').focus();
-    },900);
+    $("#bottomCent").focus();
 });
 
 $('#backOverlay').click(function(){
@@ -374,11 +340,9 @@ function openOverlay(){
     //Says that modal is openl
     classVariableDict.stage2 = true;
 
+
     $('#topCent').css('visibility', 'hidden');
     $('#bottomCent').hide();
-
-
-    $('#spectrogramBtn').hide();
 
 }
 
@@ -399,6 +363,7 @@ function sendAttemptBlob( new_blob ){
         processData: false,                                                                  
         contentType: false,
         success: function(json){
+           //returnFromListenToSpeechSynthesis();
            $('#reRecordBtn').show();
            $("#reRecordBtn").prop( "disabled", false );
            if(json.trans.trim() != ""){
@@ -464,6 +429,7 @@ function closeStage3(){
 }
 
 function sendErrorBlobToServer( new_blob ){
+
     let fd = new FormData();
     fd.append('data',new_blob);
     fd.append('sessionID',classVariableDict.session_id);
@@ -480,6 +446,7 @@ function sendErrorBlobToServer( new_blob ){
         processData: false,
         contentType: false,
         success: function(json){
+            returnFromListenToSpeechSynthesis();
             //add index an foregin key to the errors
             classVariableDict.errors[json['error_start']] = json['error_pk'];
             //display transcript
@@ -493,12 +460,15 @@ function sendErrorBlobToServer( new_blob ){
                     $('#bottomCent').text(json['error_trans']);
                     $("#bottomCent").attr("contenteditable","false");
 
+                    $("#submitOverlay").show();
+                    $("#reRecordBtn").show();                                                        
+                    $("#reRecordBtn").prop( "disabled", false );                                     
+                    $("#keyboardOverlay").show();
                 
                 
                 },900);
                 $('#overlayTextBox').text(json['error_trans']);
                 //show mic
-                $("#submitOverlay").show();
                 $("#submitOverlay").off("click");
                 $("#submitOverlay").click(submitRecording);
                 //make textbox not editable
@@ -509,9 +479,6 @@ function sendErrorBlobToServer( new_blob ){
                dealWithBlankTranscription();
            }
            classVariableDict.lastAttemptID = json['attempt_pk'];  
-           $("#reRecordBtn").show();                                                        
-           $("#reRecordBtn").prop( "disabled", false );                                     
-           $("#keyboardOverlay").show();
         },
         error: function() {
             console.log("that's wrong");
@@ -565,8 +532,8 @@ $('#hyp_btn').click(function(){
 
 //Keyboard sumbit
 function submitKeyboard(){
-    var trans = $('#bottomCent').text().trim();
-    var err_trans = $('#centeredErrorText').text().trim();
+    var trans = $('#centeredErrorText').text().trim();
+    var err_trans = $('#bottomCent').text().trim();
     classVariableDict.attemptCount = 0; 
     let fd = new FormData();
     fd.append("attempt_pk",classVariableDict.lastAttemptID);
@@ -819,10 +786,7 @@ function moveText(){
     
     var to = $('#topCentText').offset().top;
     var from  = $('#moveText').offset().top;
-    
-
     var dif_v = from - to; 
-    classVariableDict.textDiff = dif_v;
     $('#moveText').animate({top:'-='+dif_v+"px"},800);
     setTimeout(function(){
         $('#bottomCent').show(); 

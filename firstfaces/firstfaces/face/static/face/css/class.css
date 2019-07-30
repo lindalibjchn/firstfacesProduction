@@ -1207,8 +1207,8 @@ button:active {
 
 #listenVoiceBtn {
 
-    position: absolute;
-    left: 90%;
+    /*position: absolute;*/
+    /*left: 90%;*/
     /*bottom: 100%;*/
     display: none;
     height: 35px;
@@ -1221,8 +1221,8 @@ button:active {
 #human {
 
     position: relative;
-    height: 120%;
-    left: -10px;
+    height: 130%;
+    /*left: -10px;*/
     bottom: 5px;
 
 }
