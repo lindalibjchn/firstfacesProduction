@@ -668,7 +668,7 @@ button:active {
 
 .selectable-word{
     opacity:0.9;
-    border:1px solid green;
+    border:1px solid white;
     border-radius:0.5em;
     padding:0.1em;
     cursor:pointer;

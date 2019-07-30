@@ -84,8 +84,8 @@ $('#overlayTextBox').click(function(){
     $('#typeHereOverlay').empty(); 
 });
 
-$('#overlayTextBox').keypress(function(event){
-    if($('#overlayTextBox').text().trim().length > 0){
+$('#bottomCent').keyup(function(event){
+    if($('#bottomCent').text().trim().length != ""){
         $('#submitOverlay').show(); 
     }
     else{
@@ -108,6 +108,7 @@ function correctError(idx){
 
     $('#overlayErrorText').text(errText);
     $('#centeredErrorText').text(errText);
+    $('#topCentText').text(errText);
     //Have Tia change speech box
     //$('#tia-speech-box').text("Please enter what this is meant to be");
 };
@@ -116,7 +117,7 @@ $('#closeOverlay').click(function(){
     $('#correctionOverlay').hide();
     $('#overlayTextBox').empty();
     $('#overlayTextBox').append('<span id="typeHereOverlay">Type Here!</span>');
-
+    
     //$('#tia-speech-box').text("Select an error to correct it");
 
 });
@@ -177,8 +178,8 @@ function selectErrWord(idx){
 
 var currentId;
 function doneError(){
-    var cor = $('#overlayTextBox').text().trim();
-    var err = $('#overlayErrorText').text().trim();
+    var cor = $('#bottomCent').text().trim();
+    var err = $('#centeredErrorText').text().trim();
 
     var dif;
     var i;
@@ -216,9 +217,10 @@ function doneError(){
     classVariableDict.stage2 = false;
     //close overlay
     $('#correctionOverlay').hide();
-    $('#overlayTextBox').empty();
-    $('#overlayTextBox').append('<span id="typeHereOverlay">Type Here!</span>');
-    
+    $('#bottomCent').empty();
+    unmoveText();
+    //$('#overlayTextBox').append('<span id="typeHereOverlay">Type Here!</span>');
+     
     //$('#tia-speech-box').text("Select an error to correct!");
     //closeStage3();
     //Check if all errors are corrected
@@ -267,7 +269,8 @@ $('#closeOverlayArea').click(function(){
    }  
     
    $('#correctionOverlay').hide();
-   $('#overlayTextBox').empty();
+   $('#bottomCent').empty();
+   $('#bottomCent').hide();
    //$('#overlayTextBox').append('<span id="typeHereOverlay">Type Here!</span>');       
    //$('#tia-speech-box').text("Select an error to correct!"); 
    
@@ -286,7 +289,7 @@ $('#closeOverlayArea').click(function(){
    $('#timeOverlayCont').fadeOut();
    $('#finishClassIconCont').fadeIn();
    $('#backCorrection').prop( "disabled", false );
-   
+   unmoveText(); 
 
 });
 
@@ -303,7 +306,9 @@ $('#keyboardOverlay').click(function(){
     //make text area editable
     $("#submitOverlay").off("click"); 
     $("#submitOverlay").click(submitKeyboard);
-    $("#bottomCent").focus();
+    setTimeout(function(){
+        $('#bottomCent').focus();
+    },900);
 });
 
 $('#backOverlay').click(function(){
@@ -343,9 +348,11 @@ function openOverlay(){
     //Says that modal is openl
     classVariableDict.stage2 = true;
 
-
     $('#topCent').css('visibility', 'hidden');
     $('#bottomCent').hide();
+
+
+    $('#spectrogramBtn').hide();
 
 }
 
@@ -532,8 +539,8 @@ $('#hyp_btn').click(function(){
 
 //Keyboard sumbit
 function submitKeyboard(){
-    var trans = $('#overlayTextBox').text().trim();
-    var err_trans = $('#bottomCent').text().trim();
+    var trans = $('#bottomCent').text().trim();
+    var err_trans = $('#centeredErrorText').text().trim();
     classVariableDict.attemptCount = 0; 
     let fd = new FormData();
     fd.append("attempt_pk",classVariableDict.lastAttemptID);
@@ -786,10 +793,50 @@ function moveText(){
     
     var to = $('#topCentText').offset().top;
     var from  = $('#moveText').offset().top;
+    
+
     var dif_v = from - to; 
+    classVariableDict.textDiff = dif_v;
     $('#moveText').animate({top:'-='+dif_v+"px"},800);
     setTimeout(function(){
         $('#bottomCent').show(); 
         //$('#bottomCent').focus();
     },900);
 }
+
+function unmoveText(){
+     $('#moveText').animate({top:'+='+classVariableDict.textDiff+"px"},10);
+}
+
+
+function animate_transcripts(){
+    var words = classVariableDict.alternatives[0].transcript.split(" ");
+    var i;
+    //Make words selectable                                             
+    for(i=0;i<words.length;i++){
+        var idx = "#upper_"+i;      
+    }
+}
+
+
+function causeFlash(){
+    var words = classVariableDict.alternatives[0].transcript.split(" ").length;
+    flash(0,words);
+}
+
+function flash(i,max) {
+    if (i == max) return;
+    setTimeout(function () {
+        var idx = "#upper_"+i;
+        flashBorder(idx);
+        flash(++i,max);
+    }, 50);
+}
+
+function flashBorder(id){
+    $(id).css('border-color','#eeee90');
+    setTimeout(function(){
+        $(id).css('border-color','green'); 
+    },100);
+}
+
