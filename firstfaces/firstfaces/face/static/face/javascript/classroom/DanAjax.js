@@ -293,7 +293,7 @@ $('#closeOverlayArea').click(function(){
 $('#keyboardOverlay').click(function(){
     moveText();
     //$('#centeredError').hide();
-    //$('#submitOverlay').hide();
+    //$('#ubmitOverlay').hide();
     //$('#overlayErrorBox').show();
     //$('#overlayTextBox').show();
     $('#keyboardOverlay').hide();
@@ -533,7 +533,7 @@ $('#hyp_btn').click(function(){
 //Keyboard sumbit
 function submitKeyboard(){
     var trans = $('#overlayTextBox').text().trim();
-    var err_trans = $('#overlayErrorText').text().trim();
+    var err_trans = $('#bottomCent').text().trim();
     classVariableDict.attemptCount = 0; 
     let fd = new FormData();
     fd.append("attempt_pk",classVariableDict.lastAttemptID);
