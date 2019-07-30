@@ -40,6 +40,7 @@ function doAllignment(){
 
 $('#forwardErrorSelection').click(function(){
     doAllignment();
+    classVariableDict.usePlayAud = true;
     //loop through selected words, amalgamate sewuential errors into one
     classVariableDict.playStage2 = true;
     var words = classVariableDict.alternatives[0].transcript.split(" ");
@@ -896,6 +897,8 @@ function flashBorder(id){
 
 function animate_open_overlay(err_id){
     //have button flash
+    $('#backCorrection').hide();
+    $('#recordVoiceBtn').hide();
     classVariableDict.correcting = true;
     var original_color = 'yellow';
     var new_color = 'black';
@@ -908,6 +911,10 @@ function animate_open_overlay(err_id){
         correctError(err_id)
         
     },1100);
+    setTimeout(function(){
+        $('#backCorrection').show();
+        $('#recordVoiceBtn').show();
+    },2000);
 
 
 
