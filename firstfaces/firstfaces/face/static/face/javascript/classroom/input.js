@@ -1,6 +1,6 @@
 function initInputReady() {
     classVariableDict.stage2 = false;
-
+    classVariableDict.stage3 = false;
     //$('#textInputContainer').show();
     //hideTextStuff();
     //hideVolumeBar();
@@ -32,6 +32,8 @@ function initInputReady() {
     
     $('#backCorrection').hide();
     $('#submitCorrectedErrors').hide();
+    
+    //openOverlay();
 
     //  for development
     //$('#talkBtn').prop( "disabled", false).show();

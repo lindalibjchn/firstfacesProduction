@@ -220,10 +220,10 @@ function doneError(){
     $('#overlayTextBox').append('<span id="typeHereOverlay">Type Here!</span>');
     
     //$('#tia-speech-box').text("Select an error to correct!");
-    //closeStage3();
+    closeStage3();
     //Check if all errors are corrected
     if($('.uncorrected-error').length == 0){
-        $("#talkBtn").show();
+        $("#submitCorrectedErrors").show();
     }
     classVariableDict.preSent = getSentence().trim();
 }
@@ -250,7 +250,7 @@ $('#backCorrection').click(function(){
     // reset tia speech
     //$('#tia-speech-box').text("Select the incorrect words");
     // reset buttons
-    $('#talkBtn').hide();
+    $('#submitCorrectedErrors').hide();
     $('#backCorrection').hide();
     $('#backErrorSelection').show();
     selected = [];
@@ -295,11 +295,11 @@ $('#keyboardOverlay').click(function(){
     $('#keyboardOverlay').hide();
     //clear text area
     $("#bottomCent").empty();
-    $("#bottomCent").attr("contenteditable","true")
+    //$("#overlayTextBox").attr("contenteditable","true")
     //make text area editable
     $("#submitOverlay").off("click"); 
     $("#submitOverlay").click(submitKeyboard);
-    $("#bottomCent").focus();
+    //$("#overlayTextBox").focus();
 });
 
 $('#backOverlay').click(function(){
@@ -447,18 +447,10 @@ function sendErrorBlobToServer( new_blob ){
             classVariableDict.errors[json['error_start']] = json['error_pk'];
             //display transcript
             if(json['error_trans'] != ""){
-                //$("#centeredErrorHolder").hide();
-                //$("#overlayErrorBox").show();
-                //$("#overlayTextBox").show();
-                //$("#overlayTextBox").empty();
-                moveText();
-                setTimeout(function(){
-                    $('#bottomCent').text(json['error_trans']);
-                    $("#bottomCent").attr("contenteditable","false");
-
-                
-                
-                },900);
+                $("#centeredErrorHolder").hide();
+                $("#overlayErrorBox").show();
+                $("#overlayTextBox").show();
+                $("#overlayTextBox").empty();
                 $('#overlayTextBox').text(json['error_trans']);
                 //show mic
                 $("#submitOverlay").show();
@@ -706,7 +698,7 @@ function submitCorrect(){
     doneError();
 
     $('#backCorrection').prop("disabled",false);
-    $('#talkBtn').prop("disabled",false); 
+    $('#submitCorrectedErrors').prop("disabled",false); 
     undoCorrect();
 }
 

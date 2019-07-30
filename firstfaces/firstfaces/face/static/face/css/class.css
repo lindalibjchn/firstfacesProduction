@@ -373,7 +373,11 @@ button:active {
     font-family:monospace;
     color:red;
 }
-
+#topCentText{
+    font-size:2em;
+    font-family:monospace;
+    color:red;
+}
 
 #modalOverlay {
     position:absolute;
@@ -393,12 +397,44 @@ button:active {
     padding-right: 0.5em;
     /*margin-top:4em;*/
     background-color:#f0f0f0;
-    opacity:i;
     color:green;
     z-index:3;
     overflow:hidden;
     font-size:2em;
 }
+
+#bottomCent{
+    height:60%;
+    width:100%;
+    position:absolute;
+    bottom:0;
+    /**display: flex;         
+    align-items:center;    
+    justify-content:center;**/
+    text-align: center;
+    font-size:2em;        
+    font-family:monospace;
+    color:green;
+}
+[contenteditable]:focus {
+    outline: 0px solid transparent;
+}
+
+#topCent{
+    height:40%;
+    width:100%;
+    position:absolute;
+    top:0;
+}
+#topCentHolder{
+    height:100%;
+    width:100%; 
+    display: flex;         
+    align-items:center;    
+    justify-content:center;
+}
+
+
 #overlayErrorBox{
     height:15%;
     position:absolute;
