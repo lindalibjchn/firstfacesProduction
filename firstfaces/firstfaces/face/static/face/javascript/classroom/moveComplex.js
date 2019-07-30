@@ -664,9 +664,6 @@ function tapKeyFull() {
                         $('#recordVoiceBtn').show();
                         
                         //Daniel
-                        //Adding correct and incorrect transcript buttons
-                        //$('#listenAndSynthBtns').hide();
-                        $('#incorrectTranscriptBtn').show(); 
 
                         $('#talkBtn').show();
                         //change correct transcipt to #talkBtn

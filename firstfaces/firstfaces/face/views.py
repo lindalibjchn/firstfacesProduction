@@ -729,25 +729,25 @@ def error_typing_used(request):
     pitch_designated = float(request.POST['pitch'])
     speaking_rate_designated = float(request.POST['speaking_rate'])      
 
-    #client = texttospeech.TextToSpeechClient()
-    #input_text = texttospeech.types.SynthesisInput(text=request.POST['trans'])
-    #voice = texttospeech.types.VoiceSelectionParams(language_code='en-GB',name=speaking_voice)
-    #audio_config = texttospeech.types.AudioConfig(audio_encoding=texttospeech.enums.AudioEncoding.LINEAR16,pitch = pitch_designated,speaking_rate = speaking_rate_designated)
-    #try:
-        #response = client.synthesize_speech(input_text, voice, audio_config)
-        #synthURL1 = 'media/synths/session' + session_id + '_'+ 'error' + timezone.now().strftime('%H-%M-%S') + '.mp3'
-        #with open( os.path.join(settings.BASE_DIR, synthURL1 ), 'wb') as out:
-            #out.write(response.audio_content)
+    client = texttospeech.TextToSpeechClient()
+    input_text = texttospeech.types.SynthesisInput(text=request.POST['trans'])
+    voice = texttospeech.types.VoiceSelectionParams(language_code='en-GB',name=speaking_voice)
+    audio_config = texttospeech.types.AudioConfig(audio_encoding=texttospeech.enums.AudioEncoding.LINEAR16,pitch = pitch_designated,speaking_rate = speaking_rate_designated)
+    try:
+        response = client.synthesize_speech(input_text, voice, audio_config)
+        synthURL1 = 'media/synths/session' + session_id + '_'+ 'error' + timezone.now().strftime('%H-%M-%S') + '.mp3'
+        with open( os.path.join(settings.BASE_DIR, synthURL1 ), 'wb') as out:
+            out.write(response.audio_content)
 
-        #synthURL1 = convert_mp3_to_wav(synthURL1)
+        synthURL1 = convert_mp3_to_wav(synthURL1)
 
-    #except:  
-        #synthURL1 = 'fault'
+    except:  
+        synthURL1 = 'fault'
     
     # Above code works but for development is not being utilised
 
-    #synthFN = settings.BASE_DIR + '/' + synthURL1
-    synthFN = generate_synth_audio(request.POST['trans'],fn)
+    synthFN = settings.BASE_DIR + '/' + synthURL1
+    # synthFN = generate_synth_audio(request.POST['trans'],fn)
     start = time.time()
     ref_image = get_spectogram(synthFN,0,"ref_"+session_id+"_"+timezone.now().strftime('%H-%M-%S')+".png",0)
     
@@ -777,8 +777,8 @@ def error_typing_used(request):
     aeca.save();
 
     response_data = {
-            "ref_audio_url":ref_audio,
-            #"ref_audio_url":synthURL1,
+            # "ref_audio_url":ref_audio,
+            "ref_audio_url":synthURL1,
             "ref_image_url":ref_image,
             "hyp_audio_url":hyp_audio,
             "hyp_image_url":hyp_image,

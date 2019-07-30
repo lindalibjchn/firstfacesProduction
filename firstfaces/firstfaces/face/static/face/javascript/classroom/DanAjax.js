@@ -1,30 +1,4 @@
 
-$('#incorrectTranscriptBtn').click(function(){
-    selected = [];
-    var words = classVariableDict.alternatives[0].transcript.split(" ");
-    var i;
-    //Make words selectable 
-    for(i=0;i<words.length;i++){
-        var idx = "#upper_"+i;
-        $(idx).attr("class","selectable-word");
-        $(idx).attr("onclick","selectErrWord(this.id)")
-    }
-    //hide incorrect and other btns
-    $('#talkBtn').hide();
-    $('#incorrectTranscriptBtn').hide();
-    
-    //show button on overlay
-    //
-
-    //change text in box
-    //$('#tia-speech-box').text("Select the incorrect words");
-
-    //add onclick function to btns
-    $('#backErrorSelection').show();
-    //$('#forwardErrorSelection').show();
-    //add new btns (back and done)?
-});
-
 $('#forwardErrorSelection').click(function(){
     //loop through selected words, amalgamate sewuential errors into one
     var words = classVariableDict.alternatives[0].transcript.split(" ");
@@ -137,8 +111,6 @@ $('#backErrorSelection').click(function(){
     //reset buttons
     $('#talkBtn').show();
     $('#talkBtn').prop( "disabled", false);
-    $('#incorrectTranscriptBtn').show();
-    $('#incorrectTranscriptBtn').prop( "disabled", false);
     $('#backErrorSelection').hide();
     $('#forwardErrorSelection').hide();
 });
