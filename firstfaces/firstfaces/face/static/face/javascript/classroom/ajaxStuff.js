@@ -90,7 +90,7 @@ function sendBlobToServer( blob_to_send ) {
         processData: false,
         contentType: false,
         success: function(json) {
-
+            classVariableDict.Aud_Fname = json.audio_file;
             classVariableDict.blob_no_text = true;
             classVariableDict.blob_no_text_sent_id = json.sent_id;
             console.log('got response from sending blob to server');
@@ -156,8 +156,38 @@ function sendBlobToServer( blob_to_send ) {
 
 }
 
-function sendSentToServer() {
 
+function getRemainingAudio(){
+    let fd = new FormData();  
+    fd.append("ids",classVariableDict.correct_audio);
+    fd.append("fn", classVariableDict.Aud_Fname); 
+                                  
+     $.ajax({                     
+              url: "/get_remaining_audio", 
+              type: "POST",             
+              data: fd,
+              processData: false,
+              contentType: false,
+              success: function(json) {
+                var i;
+                var base = "http://127.0.0.1:8000/";
+                for(i=0;i<classVariableDict.correct_audio.length;i++){
+                    document.getElementById("audio_"+classVariableDict.correct_audio[i]).src = base+json['paths'][i];
+                }
+              },
+              error: function() {
+
+              },
+     } );
+
+}
+
+
+
+function sendSentToServer() {
+    if(classVariableDict.playStage2){
+        getRemainingAudio();
+    }
     // reset to false
     classVariableDict.promptNIndexesReceived = false;
     // reset the number of recordings for the sentence to 0.

@@ -1,8 +1,3 @@
 1
-<<<<<<< HEAD
-=======
 and
 2
-and
-3
->>>>>>> b4536eeab8e519d19bc5c83c313b6bbabde95fdb

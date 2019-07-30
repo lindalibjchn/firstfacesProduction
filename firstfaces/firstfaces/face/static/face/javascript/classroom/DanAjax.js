@@ -15,8 +15,33 @@ function set_selectable(trans){
    },duration);
 }
 
+function doAllignment(){
+    let fd = new FormData();                                                    
+    fd.append('trans',classVariableDict.alternatives[0].transcript);                 
+    fd.append('fn',classVariableDict.Aud_Fname);   
+                                                                                
+    $.ajax({                                                                    
+        url: "/do_allignment",                                             
+        type: "POST",                                                           
+        data: fd,                                                               
+        processData: false,                                                     
+        contentType: false,                                                     
+        success: function(json){  
+            console.log("Allignment Worked")
+        },
+        error: function() {             
+            console.log("that's wrong");
+        },
+    });    
+
+
+}
+
+
 $('#forwardErrorSelection').click(function(){
+    doAllignment();
     //loop through selected words, amalgamate sewuential errors into one
+    classVariableDict.playStage2 = true;
     var words = classVariableDict.alternatives[0].transcript.split(" ");
     var i = 0;
     classVariableDict.uncorrectedErrors = [];
@@ -38,19 +63,36 @@ $('#forwardErrorSelection').click(function(){
         }
         
     }
- 
+    
+    //add audio tags
+     
+        
+
     //empty upper and lower divs
     $('#upperSentenceHolder').empty(); 
     $('#lowerSentenceHolder').empty();
+    $('#audioclips').empty();
+    classVariableDict.correct_audio= [];
     //add spans and add onclick function to these
     var j = 0;
+    classVariableDict.tlen = newTran.length;
     for(j=0;j<newTran.length;j++){
         addWord(newTran[j],j,classes[j]);
         if(classes[j] == 'uncorrected-error'){
             classVariableDict.uncorrectedErrors.push("upper_"+j);
         }
+        else{
+            classVariableDict.correct_audio.push(j);
+        }
         $('#upperSentenceHolder').append("<span id='hidden_"+j+"' class='hidden-span'></span>");
+        if(j<(newTran.length-1)){
+            $('#audioclips').append("<audio id='audio_"+j+"' onended='play_nxt("+(j+1)+")'></audio>");
+        }
+        else{
+            $('#audioclips').append("<audio id='audio_"+j+"'></audio>");
+        }
     }
+
     $(".uncorrected-error").attr("onclick","correctError(this.id)");
     //add back button and submit button
     $('#backErrorSelection').hide();
@@ -237,7 +279,7 @@ function doneError(){
 
 
 $('#backCorrection').click(function(){
-    // get
+    classVariableDict.playStage2 = false;
     var words = classVariableDict.alternatives[0].transcript.split(" ");
     classVariableDict.uncorrectedErrors = []; 
     // reset divs
@@ -483,7 +525,8 @@ function sendErrorBlobToServer( new_blob ){
                     $("#reRecordBtn").prop( "disabled", false );                                     
                     $("#keyboardOverlay").show();
                 
-                
+                    document.getElementById('audio_'+json['error_start']).src = "http://127.0.0.1:8000/"+json.audio_url;
+
                 },900);
                 $('#overlayTextBox').text(json['error_trans']);
                 //show mic
@@ -632,6 +675,12 @@ function submitKeyboard(){
 
             classVariableDict.hypLenOriginal = json.hyp_length;
             classVariableDict.refLenOriginal = json.ref_length;
+
+            
+            var finAudio = document.getElementById("audio_"+classVariableDict.startIDX);             
+            finAudio.src = hypAudioURL;                                     
+
+
         },
         error: function() {
             console.log("that's wrong"); 
@@ -875,3 +924,14 @@ function reset_text(trans){
     $('#backCorrection').hide();
     setTimeout( set_selectable(trans) , 1200);
 }
+
+
+function play_audio(){
+    document.getElementById("audio_0").play();
+}
+function play_nxt(val){
+    document.getElementById("audio_"+val).play();
+}
+
+
+
