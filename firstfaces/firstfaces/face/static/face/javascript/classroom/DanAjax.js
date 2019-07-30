@@ -1,7 +1,7 @@
 
-function set_selectable(){
+function set_selectable(trans){
    selected = [];
-   var words = classVariableDict.alternatives[0].transcript.split(" ");
+   var words = trans.split(" ");
    var i;
    //Make words selectable 
    for(i=0;i<words.length;i++){
@@ -806,7 +806,8 @@ function moveText(){
     
     var to = $('#topCentText').offset().top;
     var from  = $('#moveText').offset().top;
-    var dif_v = from - to; 
+    var dif_v = from - to;
+    classVariableDict.textDiff = dif_v;
     $('#moveText').animate({top:'-='+dif_v+"px"},800);
     setTimeout(function(){
         $('#bottomCent').show(); 
@@ -870,5 +871,7 @@ function reset_text(trans){
     $('#upperSentenceHolder').empty();
     $('#lowerSentenceHolder').empty();
     populateDivsNewTrans(trans);
-    setTimeout( set_selectable() , 1200);
+    $('#listenVoiceBtn').hide();
+    $('#backCorrection').hide();
+    setTimeout( set_selectable(trans) , 1200);
 }

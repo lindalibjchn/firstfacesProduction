@@ -682,7 +682,7 @@ function tapKeyFull() {
                             
                               
                             
-                            setTimeout( set_selectable() , 1200);   
+                            setTimeout( set_selectable(classVariableDict.alternatives[0].transcript) , 1200);   
 
                         
                         }}
