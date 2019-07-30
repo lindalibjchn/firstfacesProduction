@@ -223,27 +223,21 @@ function doneError(){
         $("#talkBtn").show();
     }
     else{
-        alert("here")
-        //animate_open_overlay(classVariableDict.uncorrectedErrors[0])
+        animate_open_overlay(classVariableDict.uncorrectedErrors[0])
             
     }
     classVariableDict.preSent = getSentence().trim();
+    
+
     classVariableDict.correcting = false;
     
     
 }
 
 
-$('#submitCorrectedErrors').click(function(){
-    alert("This is where the next stage is");
-});
-
-
-
 
 $('#backCorrection').click(function(){
     // get
-    alert("Clicked");
     var words = classVariableDict.alternatives[0].transcript.split(" ");
     classVariableDict.uncorrectedErrors = []; 
     // reset divs
@@ -499,7 +493,6 @@ function sendErrorBlobToServer( new_blob ){
                 $("#overlayTextBox").attr("contenteditable","false");
                 //save last transcription into class
            }else {
-               alert(json['error_trans']);
                dealWithBlankTranscription();
            }
            classVariableDict.lastAttemptID = json['attempt_pk'];  
@@ -830,7 +823,6 @@ function unmoveText(){
 
 function causeFlash(){
     var words = classVariableDict.alternatives[0].transcript.split(" ").length;
-    alert('Flash');
     flash(0,words);
 }
 

@@ -1208,7 +1208,7 @@ button:active {
 
 #listenVoiceBtn {
 
-    /*position: absolute;*/
+    position: absolute;
     /*left: 90%;*/
     /*bottom: 100%;*/
     display: none;
@@ -1320,6 +1320,13 @@ button:active {
 }
 
 .input-btn {
+
+    font-size: 1.9em !important;
+    font-weight: bold !important
+
+}
+
+.back-btn-1 {
 
     font-size: 1.9em !important;
     font-weight: bold !important

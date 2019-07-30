@@ -483,7 +483,7 @@ function nod( main ) {
 
         nodObject.bool = false;
         
-        if ( nodObject.iter < 5 ) {
+        if ( nodObject.iter < 3 ) {
 
             nodObject.iter += 1;
             initNod( nodObject.depth, nodObject.secs );
@@ -544,7 +544,7 @@ function shake( main ) {
 
         shakeObject.bool = false;
         
-        if ( shakeObject.iter < 5 ) {
+        if ( shakeObject.iter < 3 ) {
 
             shakeObject.iter += 1;
             initShake( shakeObject.depth, shakeObject.secs );
@@ -610,6 +610,8 @@ function tapKeyFull() {
         
             } else {
 
+                $('#closeOverlayArea').prop( "disabled", false);
+                $('#submitOverlay').prop( "disabled", false);
                 //calculateAlternatives();
                 //show play buttons below
                 if ( classVariableDict.tutorial === false ) {
@@ -631,7 +633,7 @@ function tapKeyFull() {
                     // this one is for after listening to the learners speech - Daniel's stuff
                     } else {
                         
-                        if(!classVariableDict.correcting){
+                        if(!classVariableDict.stage2 && !classVariableDict.stage3){
 
                         $('.play-btn').prop( "disabled", false);
                         $('#talkBtn').prop( "disabled", false);
@@ -804,7 +806,9 @@ function returnFromListenToSpeechSynthesis() {
         } else {
            // reset this as main recording is complete with a transcription
            classVariableDict.mainRecord = false;
-            $("#closeOverlayArea").  
+            
+            $('#closeOverlayArea').prop( "disabled", true);
+            $('#submitOverlay').prop( "disabled", true);
             tapKeyFull();
     
             setTimeout( function() {

@@ -1,4 +1,4 @@
-function initInputReady() {
+function initInputReady( from ) {
     classVariableDict.stage2 = false;
     classVariableDict.stage3 = false;
     //$('#textInputContainer').show();
@@ -18,11 +18,21 @@ function initInputReady() {
 
     //$('#controllerContainer').fadeIn( 1000 );
 
+    if ( from === 'try again' ) {
+
+        $( '#textInputContainer' ).fadeIn();
+        $( '#sentenceShowHolder').fadeIn();
+        $('.play-btn').prop( "disabled", false).show();
+
+    } else {
+
+        $( '#sentenceShowHolder').hide();
+        $('.play-btn').prop( "disabled", true).hide();
+    
+    }
+
     //playback buttons disabled until recording done
     $('#recordBtnsContainer').fadeIn(1000)
-    $('.play-btn').prop( "disabled", true).hide();
-    //Hide the display divs
-    $('#sentenceShowHolder').hide();
     //hide correctTranscript
     $('#correctTranscript').hide();
     //hide back button
@@ -319,69 +329,69 @@ function showTiaThinkingOverWords() {
 
 function addThoughtBubble( no ) {
 
-    if ( classVariableDict.awaitingJudgement === false ) {
+    //if ( classVariableDict.awaitingJudgement === false ) {
     
-        removeThoughtBubbles();
-        judgementReceivedInThinkingPos();
+        //removeThoughtBubbles();
+        //judgementReceivedInThinkingPos();
 
-    } else {
+    //} else {
 
-        recTimes.thoughtBubblesAdded = Date.now() / 1000;
-        if ( no === 0 ) {
+    recTimes.thoughtBubblesAdded = Date.now() / 1000;
+    if ( no === 0 ) {
 
-            $('#thoughtBubble00').fadeIn( 250 );
+        $('#thoughtBubble00').fadeIn( 250 );
 
-        } else if ( no === 1 ) {
+    } else if ( no === 1 ) {
 
-            $('#thoughtBubble01').fadeIn( 250 );
-            $('#thoughtBubble00').fadeOut( 250 );
+        $('#thoughtBubble01').fadeIn( 250 );
+        $('#thoughtBubble00').fadeOut( 250 );
+        
+    } else if ( no === 2 ) {
+
+        $('#thoughtBubble01').fadeOut( 250 );
+        $('#thoughtBubble02').fadeIn( 250 );
+        
+    } else if ( no === 3 ) {
+
+        $('#thoughtBubble02').fadeOut( 1000 );
+        $('#thoughtBubble03').fadeIn( 1000 );
+        $('#thinkingWords').text( '' )
+        $('#thinkingWords1').text( '' )
+        $('#thinkingLoading').css('display', 'flex'); 
+        synthesisObject.wordList = synthesisObject.finalTextInBox.split(" ");
+        classVariableDict.showThoughtBubble = true;
+     
+        //if ( classVariableDict.awaitingJudgement ) {
+
+        setTimeout( function() {
             
-        } else if ( no === 2 ) {
+            showTiaThinkingOverWords();
 
-            $('#thoughtBubble01').fadeOut( 250 );
-            $('#thoughtBubble02').fadeIn( 250 );
-            
-        } else if ( no === 3 ) {
+        }, 1500 );
 
-            $('#thoughtBubble02').fadeOut( 1000 );
-            $('#thoughtBubble03').fadeIn( 1000 );
-            $('#thinkingWords').text( '' )
-            $('#thinkingWords1').text( '' )
-            $('#thinkingLoading').css('display', 'flex'); 
-            synthesisObject.wordList = synthesisObject.finalTextInBox.split(" ");
-            classVariableDict.showThoughtBubble = true;
-         
-            if ( classVariableDict.awaitingJudgement ) {
+        //} else {
 
-                setTimeout( function() {
-                    
-                    showTiaThinkingOverWords();
+            //judgementReceivedInThinkingPos();
 
-                }, 1500 );
+        //}
 
-            } else {
+    }
 
-                judgementReceivedInThinkingPos();
+    setTimeout( function() {
 
-            }
+        if ( no < 4 ) {
+
+            addThoughtBubble( no + 1 );
+
+        } else {
+
+            thinkingEyes();
 
         }
 
-        setTimeout( function() {
+    }, tiaTimings.thoughtBubbleAddDelay )
 
-            if ( no < 4 ) {
-
-                addThoughtBubble( no + 1 );
-
-            } else {
-
-                thinkingEyes();
-
-            }
-
-        }, tiaTimings.thoughtBubbleAddDelay )
-
-    }
+    //}
 
 }
 
