@@ -630,6 +630,8 @@ function tapKeyFull() {
 
                     // this one is for after listening to the learners speech - Daniel's stuff
                     } else {
+                        
+                        if(!classVariableDict.correcting){
 
                         $('.play-btn').prop( "disabled", false);
                         $('#talkBtn').prop( "disabled", false);
@@ -675,8 +677,13 @@ function tapKeyFull() {
                         //$('#speechBubbleCont').show();
                           
                         populateDivs();
-                        setTimeout( set_selectable() , 1200);   
-                    }
+                            
+                              
+                            
+                            setTimeout( set_selectable() , 1200);   
+
+                        
+                        }}
 
                 }
 
@@ -797,7 +804,7 @@ function returnFromListenToSpeechSynthesis() {
         } else {
            // reset this as main recording is complete with a transcription
            classVariableDict.mainRecord = false;
-            
+            $("#closeOverlayArea").  
             tapKeyFull();
     
             setTimeout( function() {

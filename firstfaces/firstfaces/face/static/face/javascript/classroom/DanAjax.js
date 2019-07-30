@@ -1,18 +1,18 @@
 
 function set_selectable(){
-    selected = [];
-    var words = classVariableDict.alternatives[0].transcript.split(" ");
-    var i;
-    //Make words selectable 
-    for(i=0;i<words.length;i++){
-        var idx = "#upper_"+i;
-        $(idx).attr("class","selectable-word");
-    }
-    causeFlash();
-    var duration = words.length * 125;
-    setTimeout(function(){
-        $('.selectable-word').attr("onclick","selectErrWord(this.id)");
-    },duration);
+   selected = [];
+   var words = classVariableDict.alternatives[0].transcript.split(" ");
+   var i;
+   //Make words selectable 
+   for(i=0;i<words.length;i++){
+   var idx = "#upper_"+i;
+   $(idx).attr("class","selectable-word");
+   }
+   causeFlash();
+   var duration = words.length * 125;
+   setTimeout(function(){
+    $('.selectable-word').attr("onclick","selectErrWord(this.id)");
+   },duration);
 }
 
 $('#forwardErrorSelection').click(function(){
@@ -172,8 +172,8 @@ function selectErrWord(idx){
 
 var currentId;
 function doneError(){
-    var cor = $('#overlayTextBox').text().trim();
-    var err = $('#overlayErrorText').text().trim();
+    var cor = $('#bottomCent').text().trim();
+    var err = $('#centeredErrorText').text().trim();
     
     var dif;
     var i;
@@ -211,8 +211,8 @@ function doneError(){
     classVariableDict.stage2 = false;
     //close overlay
     $('#correctionOverlay').hide();
-    $('#overlayTextBox').empty();
-    $('#overlayTextBox').append('<span id="typeHereOverlay">Type Here!</span>');
+    $('#bottomCent').empty();
+    //$('#overlayTextBox').append('<span id="typeHereOverlay">Type Here!</span>');
     
         classVariableDict.uncorrectedErrors = classVariableDict.uncorrectedErrors.filter(e => e !== "upper_"+idx);                                                                             
 
@@ -223,10 +223,12 @@ function doneError(){
         $("#talkBtn").show();
     }
     else{
-        animate_open_overlay(classVariableDict.uncorrectedErrors[0])        
+        alert("here")
+        //animate_open_overlay(classVariableDict.uncorrectedErrors[0])
+            
     }
     classVariableDict.preSent = getSentence().trim();
-
+    classVariableDict.correcting = false;
     
     
 }
@@ -240,7 +242,8 @@ $('#submitCorrectedErrors').click(function(){
 
 
 $('#backCorrection').click(function(){
-    // get 
+    // get
+    alert("Clicked");
     var words = classVariableDict.alternatives[0].transcript.split(" ");
     classVariableDict.uncorrectedErrors = []; 
     // reset divs
@@ -351,7 +354,7 @@ function openOverlay(){
     $('#stopRecordBtn').hide();
     $('#spectrogramBtn').hide();
     $('#correctionOverlay').fadeIn(700);
-    
+    $('backCorrection').prop( "disabled", true); 
     $('#centeredError').show();
     $('#centeredErrorHolder').show();
     $('#centeredErrorText').show();
@@ -659,8 +662,11 @@ function submitRecording(){
         processData: false,
         contentType: false,
         success: function(json){
-            doneError();
-            //add returned audio url to audio tag
+            doneError();                                  
+                                                          
+            $('#backCorrection').prop("disabled",false);  
+            $('#talkBtn').prop("disabled",false);         
+
         },
         error: function() {
             console.log("that's wrong");
@@ -824,6 +830,7 @@ function unmoveText(){
 
 function causeFlash(){
     var words = classVariableDict.alternatives[0].transcript.split(" ").length;
+    alert('Flash');
     flash(0,words);
 }
 
@@ -846,17 +853,21 @@ function flashBorder(id){
 
 
 function animate_open_overlay(err_id){
-    //have button flash 
+    //have button flash
+    classVariableDict.correcting = true;
     var original_color = 'yellow';
     var new_color = 'black';
     $('#'+err_id).css({"background-color":new_color,"color":original_color});
     setTimeout(function(){
-        $('#'+err_id).css({"background-color":original_color,"color":new_color});
+        $('#'+err_id).removeAttr( 'style' );
     },200);
     //open overlay
     setTimeout(function(){
         correctError(err_id)
+        
     },1100);
+
+
 
 }
 
