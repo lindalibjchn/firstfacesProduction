@@ -1,6 +1,4 @@
-cat
-is
-sitting
-on
-the
-mat
+test
+as
+a
+sentence

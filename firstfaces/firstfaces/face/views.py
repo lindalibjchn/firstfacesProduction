@@ -857,7 +857,8 @@ def store_blob(request):
     if blob_no_text:
         
         blob_no_text_sent_id = int(request.POST['blob_no_text_sent_id'])
-        s = PermSentence.objects.get( pk=blob_no_text_sent_id )
+        # s = PermSentence.objects.get( pk=blob_no_text_sent_id )
+        ps = PermSentence.objects.get( pk=blob_no_text_sent_id )
 
     else:
 
@@ -867,7 +868,7 @@ def store_blob(request):
         s.save()
 
 
-    filename = str(sess.id) + "_" + str(s.id) + "_" + timezone.now().strftime( '%H-%M-%S' ) + ".webm" 
+    filename = str(sess.id) + "_" + str(ps.id) + "_" + timezone.now().strftime( '%H-%M-%S' ) + ".webm" 
     blob.name = filename
 
     #and then link the recording
@@ -892,8 +893,8 @@ def store_blob(request):
     response_data = {
 
         'alternatives': alternatives,
-        'sent_id': s.id,
-        'audio_pk':a.id,
+        'sent_id': ps.id,
+        'audio_pk':ps.id,
     }
 
     return JsonResponse(response_data)    
