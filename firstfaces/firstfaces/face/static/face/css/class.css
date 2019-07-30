@@ -1006,6 +1006,95 @@ button:active {
 
 }
 
+#timeOverlayCont {
+
+    /*display: none;*/
+    position: absolute;
+    width: 100%;
+    height: 50%;
+    left: 0;
+    bottom: 0;
+    background-color: rgba( 256, 256, 256, 1 );
+    z-index: 111;
+
+}
+
+#timeElapsedCont {
+
+    width: 100%;
+    height: 15%;
+    /*border: 2px solid black;*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+#classDataCont {
+
+    width: 100%;
+    height: 65%;
+    /*border: 2px solid red;*/
+    /*display: flex;*/
+    /*justify-content: center;*/
+    /*align-items: center;*/
+
+}
+
+.class-data-row {
+
+    height: 50%;
+    /*border: 2px solid green;*/
+
+}
+
+.class-data-col {
+
+    height: 100%;
+    /*border: 2px dashed blue;*/
+
+}
+
+#finishClassCont {
+
+    width: 100%;
+    height: 20%;
+    /*border: 2px solid black;*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+#confirmFinish {
+
+    position: absolute;
+    /*border: 2px solid green;*/
+    display: none;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.end-btn-cont {
+
+    width: 100%;
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.finish-class-btns {
+
+    width: 10em;
+
+}
+
 #prevSentsContainer {
 
     display: none;
@@ -1549,5 +1638,13 @@ button:active {
     width: 80%;
     height: 50px;
 }
+
+
+
+
+
+
+
+
 
 

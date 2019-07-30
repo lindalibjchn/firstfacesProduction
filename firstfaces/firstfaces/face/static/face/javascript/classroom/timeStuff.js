@@ -1,62 +1,70 @@
-function calcTimeRemaining() {
+function calcTimePassed() {
 
     let timeNow = new Date();
     let timePassed = timeNow - classVariableDict.start_time;
     let timePassedMinutes = Math.ceil( -60 + timePassed / 60000  );	
     //console.log('time passed minutes:', timePassedMinutes);
 
-    // this classTimeMinutes is defined in variables
-    let timeRemainingMinutes = CLASS_TIME_MINUTES - timePassedMinutes;
+    //// this classTimeMinutes is defined in variables
+    //let timeRemainingMinutes = CLASS_TIME_MINUTES - timePassedMinutes;
 
-    return timeRemainingMinutes;
+    //return timeRemainingMinutes;
+    return timePassedMinutes;
+
+}
+
+function showTime() {
+
+    let minutesPassed = calcTimePassed();
+    $('#elapsedTimeSpan').text( minutesPassed.toString() );
 
 }
 
 // will call this with every blink, cuz nothing else goin on when blinking and relatively frequent :-)
-function showTimeRemaining() {
+//function showTimeRemaining() {
 
-    //console.log('in showTimeRemaining');
+    ////console.log('in showTimeRemaining');
 
-    let timeRemainingMinutes = calcTimeRemaining();
+    //let timeRemainingMinutes = calcTimeRemaining();
 
-    if ( timeRemainingMinutes > 0 ) {
+    //if ( timeRemainingMinutes > 0 ) {
 
-        $('#timeLeft').text( timeRemainingMinutes.toString() + " minutes left" );
+        //$('#timeLeft').text( timeRemainingMinutes.toString() + " minutes left" );
 
-    } else if ( timeRemainingMinutes > -5 ) {
+    //} else if ( timeRemainingMinutes > -5 ) {
 
-        $('#timeLeft').text( "last sentence" );
-        $('#timeLeft').css( "color", "red" );
-        classVariableDict.lastSentToBeSent = true;
+        //$('#timeLeft').text( "last sentence" );
+        //$('#timeLeft').css( "color", "red" );
+        //classVariableDict.lastSentToBeSent = true;
 
-    } else {
+    //} else {
 
-        classVariableDict.classOver = true;
-        $('#timeLeft').text( "class finished" );
+        //classVariableDict.classOver = true;
+        //$('#timeLeft').text( "class finished" );
 
-        // just delete class if no sentences when finished
-        if ( classVariableDict.id_of_last_sent === null ) {
+        //// just delete class if no sentences when finished
+        //if ( classVariableDict.id_of_last_sent === null ) {
 
-            endClassNoSentences()
+            //endClassNoSentences()
 
-        } else {
+        //} else {
 
-            if ( classVariableDict.endClassSequenceStarted !== true ) {
+            //if ( classVariableDict.endClassSequenceStarted !== true ) {
 
-                endClass();
-                classVariableDict.endClassSequenceStarted = true;
+                //endClass();
+                //classVariableDict.endClassSequenceStarted = true;
 
-            }
+            //}
 
-        }
+        //}
 
-    }
+    //}
 
-}
+//}
 
 function endClassNoSentences() {
 
-    $('#finishClassBtn').off('click');
+    //$('#finishClassBtn').off('click');
 
     let sessId = classVariableDict.session_id;
     $.ajax({
@@ -78,7 +86,7 @@ function endClassNoSentences() {
 
 function endClass() {
 
-    $('#finishClassBtn').off('click');
+    //$('#finishClassBtn').off('click');
 
     let sessId = classVariableDict.session_id;
     $.ajax({
@@ -87,36 +95,37 @@ function endClass() {
         data: {'sessId': sessId},
         success: function(json) {
 
-            classVariableDict.score = json.score
+            //classVariableDict.score = json.score
 
             if ( classVariableDict.first_ever_class ) {
 
-                synthesisObject.text = "Well done today! Your first ever score is " + ( classVariableDict.score ).toString() + ". I hope to see you again for a second class!";
+                synthesisObject.text = "It was nice to meet you! Come back again whenever you want to talk.";
 
             } else {
 
-                if ( classVariableDict.score > classVariableDict.prev_score ) {
+                //if ( classVariableDict.score > classVariableDict.prev_score ) {
                 
-                    let improvement = classVariableDict.score - classVariableDict.prev_score;
+                    //let improvement = classVariableDict.score - classVariableDict.prev_score;
                     
-                    let praise = "";
-                    if ( improvement >= 5 ) {
+                    //let praise = "";
+                    //if ( improvement >= 5 ) {
 
-                        praise = " You are improving a lot! ";
+                        //praise = " You are improving a lot! ";
 
-                    } else if ( improvement >= 10 ) {
+                    //} else if ( improvement >= 10 ) {
 
-                        praise = " You have improved so much! ";
+                        //praise = " You have improved so much! ";
                     
-                    }
+                    //}
 
-                    synthesisObject.text = "Well done today! your score is " + ( classVariableDict.score ).toString() + ". That is better than last time by " + improvement.toString() + " points." + praise + "I look forward to seeing you again soon!";
+                    //synthesisObject.text = "Well done today! your score is " + ( classVariableDict.score ).toString() + ". That is better than last time by " + improvement.toString() + " points." + praise + "I look forward to seeing you again soon!";
                     
-                } else {
+                //} else {
 
-                    synthesisObject.text = "Well done today! your score is " + ( classVariableDict.score ).toString() +  ". I look forward to seeing you again soon!";
+                let farewellGreetings = ["It was good to see you again", "I look forward to seeing you again soon", "Nice to talk to you again"];
+                synthesisObject.text = farewellGreetings[ Math.floor(Math.random(farewellGreetings.length -1 )) ];
                 
-                }
+                //}
 
             }
 
@@ -134,33 +143,21 @@ function endClass() {
     });
 
     // disable all buttons
-    $('.option-btn').prop( "disabled", true);
-    $('.input-btn').prop( "disabled", true);
-    $('.input-btn-large').prop( "disabled", true);
-    $('#textInput').hide();
+    //$('.option-btn').prop( "disabled", true);
+    //$('.input-btn').prop( "disabled", true);
+    //$('.input-btn-large').prop( "disabled", true);
+    //$('#textInput').hide();
 
-    // fadeOut controller container on the right
-    $('#controllerContainer').fadeOut( 500 );
+    //// fadeOut controller container on the right
+    //$('#controllerContainer').fadeOut( 500 );
 
 
     let singleCalculatedExpressions = createSingleExpression( expressionsRel.happy, 0.7 )
     calculatedExpression = getAbsoluteCoordsOfExpressionTo( singleCalculatedExpressions[ 0 ] )
     calculatedTalkExpression = getAbsoluteCoordsOfExpressionTo( singleCalculatedExpressions[ 1 ] )
 
-    setTimeout( function() {
-
-        initCameraMove( 'tia', '2' );
-
-        setTimeout( function() {
-
-            expressionController( calculatedExpression, '1', false );
-
-            setTimeout( goodbyeTalk, 1500 ); 
-
-        }, 1600 );
-
-    }, 600 );
-
+    expressionController( calculatedExpression, '1', false );
+    setTimeout( goodbyeTalk, 1500 ); 
 
 }
 
@@ -179,11 +176,11 @@ function goodbyeTalk() {
                 
                 location.reload( true );
                 
-            }, 7000 )
+            }, 4000 )
 
         });
         
-    }, 1500);
+    }, 1250);
 
 }
 

@@ -39,45 +39,50 @@ function readyBtns() {
 
     });
 
-    $('.input-btn').on( 'click', function() {
+    $('#finishClassIconCont').on( 'click', function() {
 
-        $( '#listenVoiceBtn' ).hide();
+        showTime();
+        $('#prevSentsIconCont').hide();
+        $('#finishClassIconCont').hide();
+        $('#dataNFinish').show();
+        $('#timeOverlayCont').fadeIn();
+
+    });
+
+    $('#finishClassBtnPre').on( 'click', function() {
+
+        $('#dataNFinish').hide();
+        $('#confirmFinish').fadeIn();
 
     } );
 
-    $('#tryAgainBtn').on( 'click', tryAgain );
-    $('#whatsWrongBtn').on( 'click', whatsWrong );
-    $('#showCorrectionBtn').on( 'click', showCorrection );
-    $('#nextSentenceBtn').on( 'click', nextSentence );
-    $('#talkBtn').on( 'click', sendSentToServer );
-    //$('.sent-scores').on( 'click', viewAlternateTranscription );
-    $('#playRobot').on( 'click', prepareSynthPlay );
-
     $('#finishClassBtn').on( 'click', function() {
-        
+
+        $('#confirmFinish').hide();
+
         if ( classVariableDict.tutorial === false ) {
 
-            if ( classVariableDict.awaitingJudgement ) {
+            //if ( classVariableDict.awaitingJudgement ) {
             
+            //} else {
+
+            if ( classVariableDict.id_of_last_sent === null ) {
+            
+                endClassNoSentences()
+
             } else {
 
-                if ( classVariableDict.id_of_last_sent === null ) {
-                
-                    endClassNoSentences()
+                if ( classVariableDict.endClassSequenceStarted !== true ) {
 
-                } else {
-
-                    if ( classVariableDict.endClassSequenceStarted !== true ) {
-
-                        console.log('\n\n\nend class finish button\n\n\n');
-                        endClass();
-                        classVariableDict.endClassSequenceStarted = true;
-
-                    }
+                    console.log('\n\n\nend class finish button\n\n\n');
+                    endClass();
+                    classVariableDict.endClassSequenceStarted = true;
 
                 }
-                
+
             }
+                
+            //}
 
         } else {
 
@@ -94,6 +99,34 @@ function readyBtns() {
 
 
         }
+
+    } );
+
+    $('#cancelFinishClassBtn').on( 'click', function() {
+
+        $('#confirmFinish').hide();
+        $('#dataNFinish').show();
+        $('#finishClassBtnPre').show();
+    
+    } );
+
+
+    $('.input-btn').on( 'click', function() {
+
+        $( '#listenVoiceBtn' ).hide();
+
+    } );
+
+    $('#tryAgainBtn').on( 'click', tryAgain );
+    $('#whatsWrongBtn').on( 'click', whatsWrong );
+    $('#showCorrectionBtn').on( 'click', showCorrection );
+    $('#nextSentenceBtn').on( 'click', nextSentence );
+    $('#talkBtn').on( 'click', sendSentToServer );
+    //$('.sent-scores').on( 'click', viewAlternateTranscription );
+    $('#playRobot').on( 'click', prepareSynthPlay );
+
+    $('#finishClassBtn').on( 'click', function() {
+        
 
     });
 
@@ -187,8 +220,8 @@ $('#listenVoiceBtn').on( 'click', function() {
 
                 function onRecord() {
 
-                    //resetTranscripts();
-
+                    // this is to identify main recording and allow return of mic button if user says nothing
+                    classVariableDict.mainRecord = true;
                     //recognition.start();
                     console.log('Voice recognition activated. Try speaking into the microphone.');
                     mediaRecorder.start();

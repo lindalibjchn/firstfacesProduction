@@ -349,10 +349,92 @@
 
 <div id="finishClassIconCont">
 
-     <img id="finishClassIcon" src="{% static 'face/images/finishClock.png' %}">
+    <img id="finishClassIcon" src="{% static 'face/images/finishClock.png' %}">
 
 </div>        
+
+<div id="timeOverlayCont">
+
+    <div id="dataNFinish">
+
+        <div id="timeElapsedCont">
         
+            <div id="elapsedTime"><span id="elapsedTimeSpan"></span> mins</div>
+        
+        </div>
+
+        <div id="classDataCont">
+        
+            <div class="w3-row class-data-row">
+
+                <div class="w3-col s6 class-data-col">
+
+                    <div>Pronunciation</div>
+                    
+                    <div>1st time</div>
+
+                </div>
+
+                <div class="w3-col s6 class-data-col">
+                    
+                    <div>Problematic Phonemes</div>
+
+                </div>
+
+            </div>
+        
+            <div class="w3-row class-data-row">
+
+                <div class="w3-col s6 class-data-col">
+
+                    <div>Grammar</div>
+
+                    <div>Sentences Correct</div>
+
+                </div>
+
+                <div class="w3-col s6 class-data-col">
+
+                    <div>Errors</div>
+
+                </div>
+
+            </div>
+        
+        </div>
+
+        <div id="finishClassCont">
+        
+            <button class="w3-button w3-large w3-blue" id="finishClassBtnPre">finish</button>
+
+        </div>
+
+    </div>
+
+    <div id="confirmFinish">
+
+        <div id="confirmFinishDisplay">
+
+            <div>Do you want to end this conversation?</div>
+
+            <div class="end-btn-cont">
+
+                <button class="w3-button finish-class-btns w3-large w3-green" id="finishClassBtn">yes</button>
+
+            </div>
+
+            <div class="end-btn-cont">
+
+                <button class="w3-button finish-class-btns w3-large w3-red" id="cancelFinishClassBtn">no</button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
 <div id="meterCont" class="input-btns">
                     
     <!--<i class="fa fa-microphone inputfa fa-lg" id="volumeMic"></i>-->
