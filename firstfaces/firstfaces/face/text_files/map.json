@@ -3,11 +3,39 @@
   {
    "begin": "0.000",
    "children": [],
+<<<<<<< HEAD
    "end": "2.200",
    "id": "f000001",
    "language": "eng",
    "lines": [
     "123"
+=======
+   "end": "1.600",
+   "id": "f000001",
+   "language": "eng",
+   "lines": [
+    "1"
+   ]
+  },
+  {
+   "begin": "1.600",
+   "children": [],
+   "end": "2.200",
+   "id": "f000002",
+   "language": "eng",
+   "lines": [
+    "and"
+   ]
+  },
+  {
+   "begin": "2.200",
+   "children": [],
+   "end": "2.280",
+   "id": "f000003",
+   "language": "eng",
+   "lines": [
+    "2"
+>>>>>>> ea23fe2941aacead5c5c809f7ef86426bc48248f
    ]
   }
  ]
