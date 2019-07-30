@@ -704,10 +704,16 @@ function tapKeyFull() {
 //fucntion to populate the output box with transcript
 function populateDivs() {
     var words = classVariableDict.alternatives[0].transcript.split(" ");
-    words.forEach(addWord);
+    words.forEach(addWords);
     $('#listenVoiceBtn').show();
 }
-function addWord(word,count) {
+function populateDivsNewTrans(trans){
+    var words = trans.split(" ");
+    words.forEach(addWords);                                            
+    $('#listenVoiceBtn').show();                                        
+}
+
+function addWords(word,count) {
    var idx = "'upper_"+count+"'";
    $('#upperSentenceHolder').append("<span id="+idx+"' class='normal-word' >"+word+"</span>");
    $('#upperSentenceHolder').append(" "); 

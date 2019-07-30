@@ -227,7 +227,7 @@ function doneError(){
             
     }
     classVariableDict.preSent = getSentence().trim();
-    
+    unmoveText(); 
 
     classVariableDict.correcting = false;
     
@@ -296,7 +296,7 @@ $('#closeOverlayArea').click(function(){
    $('#timeOverlayCont').fadeOut();
    $('#finishClassIconCont').fadeIn();
    $('#backCorrection').prop( "disabled", false );
-   
+   unmoveText();   
 
 });
 
@@ -863,3 +863,12 @@ function animate_open_overlay(err_id){
 
 }
 
+
+function reset_text(trans){
+    $('#textInputContainer').show();
+    $('#sentenceShowHolder').show();
+    $('#upperSentenceHolder').empty();
+    $('#lowerSentenceHolder').empty();
+    populateDivsNewTrans(trans);
+    setTimeout( set_selectable() , 1200);
+}
