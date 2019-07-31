@@ -846,19 +846,23 @@ function flashBorder(id){
 
 function animate_open_overlay(err_id){
     //have button flash
-    classVariableDict.correcting = true;
-    var original_color = 'yellow';
-    var new_color = 'black';
-    $('#'+err_id).css({"background-color":new_color,"color":original_color});
-    setTimeout(function(){
-        $('#'+err_id).removeAttr( 'style' );
-    },200);
-    //open overlay
-    setTimeout(function(){
-        correctError(err_id)
-        
-    },1100);
 
+    setTimeout( function() {
+
+        classVariableDict.correcting = true;
+        var original_color = 'yellow';
+        var new_color = 'black';
+        $('#'+err_id).css({"background-color":new_color,"color":original_color});
+        setTimeout(function(){
+            $('#'+err_id).removeAttr( 'style' );
+        },400);
+        //open overlay
+        setTimeout(function(){
+            correctError(err_id)
+            
+        },1000);
+
+    }, 750 );
 
 
 }

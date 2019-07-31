@@ -266,7 +266,7 @@ function checkJudgement( sentId ) {
                 }
                 
                 //console.log('sentMeta:', json.sent_meta);
-                JudgementReceived( json.sent_meta )
+                judgementReceived( json.sent_meta )
             
             } else {
 
@@ -284,100 +284,100 @@ function checkJudgement( sentId ) {
 
 }
 
-classVariableDict.promptNINdexesCount = 0;
-function checkForPromptNIndexes( sentId ) {
+//classVariableDict.promptNINdexesCount = 0;
+//function checkForPromptNIndexes( sentId ) {
 
-    console.log('in checkForPromptNIndexes');
+    //console.log('in checkForPromptNIndexes');
     
-    $.ajax({
-        url: "/check_prompt_indexes",
-        type: "GET",
-        data: { 
-            'sentId': sentId,
-        },
-        success: function(json) {
+    //$.ajax({
+        //url: "/check_prompt_indexes",
+        //type: "GET",
+        //data: { 
+            //'sentId': sentId,
+        //},
+        //success: function(json) {
             
-            if ( json.sent_meta.receivedPromptNIndexes ) {
+            //if ( json.sent_meta.receivedPromptNIndexes ) {
 
-                if ( classVariableDict.promptNIndexesReceived === false ) {
+                //if ( classVariableDict.promptNIndexesReceived === false ) {
 
-                    console.log('got prompt n indexes');
-                    console.log('indexes:', json.sent_meta.indexes);
-                    classVariableDict.promptNINdexesCount = 0;
-                    promptNIndexesReceived( json.sent_meta )
+                    //console.log('got prompt n indexes');
+                    //console.log('indexes:', json.sent_meta.indexes);
+                    //classVariableDict.promptNINdexesCount = 0;
+                    //promptNIndexesReceived( json.sent_meta )
 
-                    if ( classVariableDict.lastSentToBeSent ) {
+                    ////if ( classVariableDict.lastSentToBeSent ) {
 
-                        classVariableDict.classOver = true;
+                        ////classVariableDict.classOver = true;
 
-                    }
+                    ////}
 
-                }
+                //}
             
-            } else {
+            //} else {
 
-                console.log('checking for prompt n indexes again');
-                classVariableDict.promptNINdexesCount += 1;
+                //console.log('checking for prompt n indexes again');
+                //classVariableDict.promptNINdexesCount += 1;
 
-                if ( classVariableDict.promptNINdexesCount < 20 ) {
+                //if ( classVariableDict.promptNINdexesCount < 20 ) {
 
-                    setTimeout( function() {
+                    //setTimeout( function() {
 
-                        checkForPromptNIndexes( sentId );
+                        //checkForPromptNIndexes( sentId );
 
-                    }, 2000 );
+                    //}, 2000 );
 
-                } else {
+                //} else {
 
-                    classVariableDict.promptNINdexesCount = 0;
-                    setTimeout( function() {
+                    //classVariableDict.promptNINdexesCount = 0;
+                    //setTimeout( function() {
 
-                        synthesisObject.text = "Sorry, my message has take too long to come across the internet. Please continue."
+                        //synthesisObject.text = "Sorry, my message has take too long to come across the internet. Please continue."
 
-                        tiaSpeak( synthesisObject.text, needSendTTS=true, function() {
+                        //tiaSpeak( synthesisObject.text, needSendTTS=true, function() {
                          
-                            setTimeout( function() {
+                            //setTimeout( function() {
                                 
-                                returnToLaptop( ' ' );
+                                //returnToLaptop( ' ' );
 
-                            }, tiaTimings.delayBeforeReturnToLaptop );
+                            //}, tiaTimings.delayBeforeReturnToLaptop );
 
-                        })
+                        //})
 
 
-                    }, 2000 )
+                    //}, 2000 )
 
-                }
+                //}
 
-            }
+            //}
 
-        },
-        error: function() {
+        //},
+        //error: function() {
 
-            classVariableDict.promptNINdexesCount = 0;
-            setTimeout( function(){
+            //classVariableDict.promptNINdexesCount = 0;
+            //setTimeout( function(){
             
-                console.log("error awaiting prompt n indexes");
+                //console.log("error awaiting prompt n indexes");
         
-                synthesisObject.text = "Sorry, my message hasn't come across the internet quickly enough. Please continue."
+                //synthesisObject.text = "Sorry, my message hasn't come across the internet quickly enough. Please continue."
 
-                tiaSpeak( synthesisObject.text, needSendTTS=true, function() {
+                //tiaSpeak( synthesisObject.text, needSendTTS=true, function() {
                  
-                    setTimeout( function() {
+                    //setTimeout( function() {
                         
-                        returnToLaptop( ' ' );
+                        //returnToLaptop( ' ' );
 
-                    }, tiaTimings.delayBeforeReturnToLaptop );
+                    //}, tiaTimings.delayBeforeReturnToLaptop );
 
-                })
+                //})
 
-            }, 10000 )
+            //}, 10000 )
 
-        },
+        //},
 
-    });
+    //});
 
-}
+//}
 
 //function sendTranscriptViewToAjax( choice ) {
 

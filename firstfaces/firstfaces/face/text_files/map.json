@@ -3,14 +3,7 @@
   {
    "begin": "0.000",
    "children": [],
-<<<<<<< HEAD
-   "end": "1.960",
-   "id": "f000001",
-   "language": "eng",
-   "lines": [
-    "1"
-=======
-   "end": "1.160",
+   "end": "0.960",
    "id": "f000001",
    "language": "eng",
    "lines": [
@@ -18,9 +11,9 @@
    ]
   },
   {
-   "begin": "1.160",
+   "begin": "0.960",
    "children": [],
-   "end": "1.680",
+   "end": "1.360",
    "id": "f000002",
    "language": "eng",
    "lines": [
@@ -28,9 +21,9 @@
    ]
   },
   {
-   "begin": "1.680",
+   "begin": "1.360",
    "children": [],
-   "end": "2.200",
+   "end": "1.800",
    "id": "f000003",
    "language": "eng",
    "lines": [
@@ -38,9 +31,9 @@
    ]
   },
   {
-   "begin": "2.200",
+   "begin": "1.800",
    "children": [],
-   "end": "2.640",
+   "end": "2.200",
    "id": "f000004",
    "language": "eng",
    "lines": [
@@ -48,14 +41,13 @@
    ]
   },
   {
-   "begin": "2.640",
+   "begin": "2.200",
    "children": [],
-   "end": "3.480",
+   "end": "2.800",
    "id": "f000005",
    "language": "eng",
    "lines": [
     "3"
->>>>>>> b4536eeab8e519d19bc5c83c313b6bbabde95fdb
    ]
   }
  ]

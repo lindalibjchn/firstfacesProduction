@@ -826,7 +826,7 @@ function hideVolumeBar() {
 
 //}
 
-function JudgementReceived( sentMeta ) {
+function judgementReceived( sentMeta ) {
 
     console.log('sentMeta:', sentMeta);
 
@@ -848,11 +848,11 @@ function JudgementReceived( sentMeta ) {
     // do this here to change voices too
     if ( classVariableDict.last_sent.judgement === "B" || classVariableDict.last_sent.judgement === "C" || classVariableDict.last_sent.judgement === "P" || classVariableDict.last_sent.judgement === "M" ) {
 
-        if ( classVariableDict.last_sent.judgement !== "C" ) {
+        //if ( classVariableDict.last_sent.judgement !== "C" ) {
 
-            checkForPromptNIndexes( sentMeta.sent_id );
+            //checkForPromptNIndexes( sentMeta.sent_id );
 
-        }
+        //}
 
         // calculate changes in expression for these
         if ( classVariableDict.last_sent.judgement === "M" ) {

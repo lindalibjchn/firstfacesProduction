@@ -425,15 +425,15 @@ function judgementReceivedInThinkingPos() {
     
     setTimeout( function() {
 
-        if ( classVariableDict.last_sent.judgement === "I" ) {
+        //if ( classVariableDict.last_sent.judgement === "I" ) {
 
-            runAfterJudgement();
+        runAfterJudgement();
 
-        } else {
+        //} else {
 
-            returnFromThinking();
+            //returnFromThinking();
 
-        }
+        //}
 
     }, tiaTimings.removeThoughtBubble );
 
@@ -479,39 +479,39 @@ function thinkingEyes() {
 
 }
 
-function runAfterJudgementWithoutBeingAtTurnToThink() {
+//function runAfterJudgementWithoutBeingAtTurnToThink() {
 
-    if ( classVariableDict.last_sent.judgement === "I" ) {
+    //if ( classVariableDict.last_sent.judgement === "I" ) {
     
-        runAfterJudgement();
+        //runAfterJudgement();
 
-    } else {
+    //} else {
 
-        expressionController( calculatedExpression, tiaTimings.changeExpression );
+        //expressionController( calculatedExpression, tiaTimings.changeExpression );
     
-        setTimeout( function() {
+        //setTimeout( function() {
             
-            runAfterJudgement();
+            //runAfterJudgement();
 
-        }, tiaTimings.changeExpression * 750 ) // want nod/move to confused to happen before expression change ends
+        //}, tiaTimings.changeExpression * 750 ) // want nod/move to confused to happen before expression change ends
 
-    }
+    //}
 
-}
+//}
 
-function returnFromThinking() {
+//function returnFromThinking() {
 
-    expressionController( calculatedExpression, tiaTimings.changeExpression );
+    //expressionController( calculatedExpression, tiaTimings.changeExpression );
 
-    setTimeout( function() {
+    //setTimeout( function() {
 
-        movementController( movements.blank, tiaTimings.returnFromThinking / 2, tiaTimings.returnFromThinking );
+        //movementController( movements.blank, tiaTimings.returnFromThinking / 2, tiaTimings.returnFromThinking );
 
-        setTimeout( runAfterJudgement, tiaTimings.returnFromThinking * 750 ); // want nod to happen before movement back ends
+        //setTimeout( runAfterJudgement, tiaTimings.returnFromThinking * 750 ); // want nod to happen before movement back ends
     
-    }, tiaTimings.changeExpression * 250 );
+    //}, tiaTimings.changeExpression * 250 );
 
-} 
+//} 
 
 
 

@@ -1051,8 +1051,14 @@ def check_judgement(request):
         
         if s_new.judgement != None:
 
-            received_judgement = True
-            break
+            if s_new.judgement == "C":
+                received_judgement = True
+                break
+
+            elif s_new.judgement in ["M", "B", "P"]:
+                if s_new.indexes != None:
+                    received_judgement = True
+                    break
 
         elif count == 10:
 
@@ -1085,61 +1091,61 @@ def check_judgement(request):
 
     return JsonResponse(response_data)    
 
-def check_prompt_indexes(request):
+# def check_prompt_indexes(request):
 
-    sent_id = int(request.GET['sentId'])
+    # sent_id = int(request.GET['sentId'])
 
-    received_prompt_n_ind = False
+    # received_prompt_n_ind = False
 
-    # p_count = 0;
-    # while True:
+    # # p_count = 0;
+    # # while True:
 
-        # print('in while loop')
-        # time.sleep(1)
-        # p_count += 1
+        # # print('in while loop')
+        # # time.sleep(1)
+        # # p_count += 1
 
-    s_new = TempSentence.objects.get(pk=sent_id)
+    # s_new = TempSentence.objects.get(pk=sent_id)
     
-    if s_new.judgement == "B":
+    # if s_new.judgement == "B":
 
-        if s_new.indexes != None:
+        # if s_new.indexes != None:
 
-            received_prompt_n_ind = True
-            # break
+            # received_prompt_n_ind = True
+            # # break
 
-    elif s_new.judgement == "P":
+    # elif s_new.judgement == "P":
 
-        if s_new.prompt != None:
+        # if s_new.prompt != None:
 
-            received_prompt_n_ind = True
-            # break
+            # received_prompt_n_ind = True
+            # # break
 
-    elif s_new.judgement == "M":
+    # elif s_new.judgement == "M":
 
-        if s_new.indexes != None:
+        # if s_new.indexes != None:
 
-            received_prompt_n_ind = True
-            # break
+            # received_prompt_n_ind = True
+            # # break
 
-        # elif p_count == 10:
+        # # elif p_count == 10:
 
-            # received_prompt_n_ind = False
-            # break
+            # # received_prompt_n_ind = False
+            # # break
 
-    sent_meta = {
-        'sent_id': s_new.id,
-        'indexes': s_new.indexes,
-        'prompt': s_new.prompt,
-        'receivedPromptNIndexes': received_prompt_n_ind,
-    }
+    # sent_meta = {
+        # 'sent_id': s_new.id,
+        # 'indexes': s_new.indexes,
+        # 'prompt': s_new.prompt,
+        # 'receivedPromptNIndexes': received_prompt_n_ind,
+    # }
 
-    response_data = {
+    # response_data = {
 
-        'sent_meta': sent_meta,
+        # 'sent_meta': sent_meta,
 
-    }
+    # }
 
-    return JsonResponse(response_data)    
+    # return JsonResponse(response_data)    
 
 def delete_session(request):
 
