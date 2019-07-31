@@ -144,12 +144,14 @@ function nodOrShakeHead() {
 
 }
 
-//function prePrepareForPromptSpeech() {
+function prePrepareForPromptSpeech() {
 
-    //recTimes.prePrepareForPromptSpeech =  Date.now() / 1000;
-    //// return to talking pos
-    //expressionController( calculatedTalkExpression, tiaTimings.toTalkExpressionDuration );
+    recTimes.prePrepareForPromptSpeech =  Date.now() / 1000;
+    // return to talking pos
+    expressionController( calculatedTalkExpression, tiaTimings.toTalkExpressionDuration );
 
+    displaySpeechBubblePrompt();
+    
     ////display waiting bubble
     //speechBubbleObject.dotsAppear = false;
 
@@ -183,7 +185,7 @@ function nodOrShakeHead() {
     
     //}, tiaTimings.toTalkExpressionDuration * 1000 );
 
-//}
+}
 
 function displaySpeechBubblePrompt() {
 
@@ -191,13 +193,14 @@ function displaySpeechBubblePrompt() {
     // actually delay to return to laptop
     //synthesisObject.delayToReturnToLaptop = 3000 + synthesisObject.text.length * 60 * ( 1 / synthesisObject.speaking_rate );
 
-    $('.thinkingOfSpeaking').fadeOut( 500 );
-    speechBubbleObject.dotsAppear = false;
+    //$('.thinkingOfSpeaking').fadeOut( 500 );
+    //speechBubbleObject.dotsAppear = false;
 
     if ( classVariableDict.last_sent.judgement === "P" ) {
             
         synthesisObject.text = classVariableDict.last_sent.prompt;
-        sendTTS( synthesisObject.text, true, "talk" );
+        //sendTTS( synthesisObject.text, true, "talk" );
+
         speechBubbleObject.sentence = classVariableDict.last_sent.prompt;
 
     } else if ( classVariableDict.last_sent.judgement === "B" ) {

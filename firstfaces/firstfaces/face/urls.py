@@ -46,4 +46,6 @@ urlpatterns = [
     path('error_typing_used', views.error_typing_used, name="error_typing_used"),
     path('store_attempt_blob', views.store_attempt_blob, name="store_attempt_blob"),
     path('close_attempt', views.close_attempt, name="close_attempt"),
+    path('get_remaining_audio', views.get_remaining_audio, name="get_remaining_audio"),
+    path('do_allignment',views.do_allignment, name="do_allignment"),
     ]

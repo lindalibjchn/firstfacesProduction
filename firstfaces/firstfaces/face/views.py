@@ -617,6 +617,7 @@ def store_error_blob(request):
             )
     aea.save()
     trans = get_speech_recognition(filename)[0]["transcript"]
+    audio_url = "media/wav/"+filename[:-4]+"wav"
     aea.transcript = trans
     aea.save()
     response_data = {
@@ -624,6 +625,7 @@ def store_error_blob(request):
             'attempt_pk':aea.id,
             'error_pk':af.id,
             'error_start':startID,
+            'audio_url':audio_url,
     }
 
     return JsonResponse(response_data) 
@@ -665,6 +667,46 @@ def error_recording_used(request):
     }
     return JsonResponse(response_data)
 
+def do_allignment(request):
+    trans= request.POST['trans']
+    audioPath = request.POST['fn']
+    f = open(get_text_path(),"w+")                                               
+    for word in trans.split():                                                   
+        f.write(word.lower()+"\n")                                               
+    f.close()                                                         
+    textPath = get_text_path()                                                   
+    extra_str = '"task_language=eng|os_task_file_format=json|is_text_type=plain"'
+    outPath = get_out_path()                                                     
+    aeneasPath = get_aeneas_path()                                               
+    cwd = os.getcwd()                                                            
+    command = 'python3 -m aeneas.tools.execute_task '+settings.BASE_DIR+"/"+audioPath+" "+textPath+" "+extra_str+" "+outPath+" >/dev/null 2>&1"            
+    sub_proc = subprocess.Popen(command,cwd=get_aeneas_path(),shell=True,stdout=subprocess.PIPE, stderr=subprocess.PIPE)                                                                  
+    sub_proc.wait()                                                                          
+    response_data = {                  
+                                               
+            }                                  
+    return JsonResponse(response_data) 
+
+
+def get_remaining_audio(request):
+   
+    ids = ast.literal_eval("["+str(request.POST['ids'])+']')
+    paths = []
+    for i in ids:
+        idx = i
+        ts = get_timestamps(idx,idx)
+        audioPath = request.POST['fn'];
+        fn = "part_"+str(i)+"_"+timezone.now().strftime( '%H-%M-%S' )+"_aud.wav"
+        errorPath = play_errored_text(audioPath,ts,fn)
+        hyp_audio = ref_path(fn)   
+        paths.append(hyp_audio)
+    print("\n\n",paths)
+    response_data = {                  
+        "paths":paths,                                           
+    }                                  
+    return JsonResponse(response_data) 
+
+
 def error_typing_used(request):
     startID = request.POST['start_idx']
     errors = json.loads(request.POST['error_list'])
@@ -690,18 +732,6 @@ def error_typing_used(request):
     f.close()
     #convert audio to wav
     audioPath = convert_audio(filename)
-    textPath = get_text_path()
-    extra_str = '"task_language=eng|os_task_file_format=json|is_text_type=plain"'
-    outPath = get_out_path()
-    aeneasPath = get_aeneas_path()
-    cwd = os.getcwd()
-    
-    #Run forced alligner
-    command = 'python3 -m aeneas.tools.execute_task '+audioPath+" "+textPath+" "+extra_str+" "+outPath+" >/dev/null 2>&1"
-    sub_proc = subprocess.Popen(command,cwd=get_aeneas_path(),shell=True,stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    sub_proc.wait()
-    end = time.time()
-    print("\n\nFA - ",(end-start))
     #Get audio
     start = time.time()
     ERR_trans = request.POST['etrans']
@@ -879,6 +909,7 @@ def store_blob(request):
     a.save()
     # need to save the file before can acces url to use ffmpeg (in utils.py)
     alternatives = get_speech_recognition(filename)
+    audioFile = "media/wav/"+filename[:-4]+'wav' 
     # print('transcription_list:', transcription_list)
 
     ## commented out as daniel will be doing his own thing here so wont need alignments
@@ -894,6 +925,8 @@ def store_blob(request):
         'alternatives': alternatives,
         'sent_id': ps.id,
         'audio_pk':a.id,
+        'audio_file':audioFile,
+
     }
 
     return JsonResponse(response_data)    

@@ -255,25 +255,14 @@ function checkJudgement( sentId ) {
 
                 console.log('got judgement');
 
-                //if ( classVariableDict.lastSentToBeSent ) {
-
-                    //if ( classVariableDict.last_sent.judgement !== "I" ) {
-
-                        //classVariableDict.classOver = true;
-
-                    //}
-
-                //}
-                
                 if (json.sent_meta.synthURL !== 'fault' ) {
 
                     synthesisObject.synthAudio = document.getElementById( 'synthClip' );
-                    //var synthAudioURL = "https://erle.ucd.ie/" + json.sent_meta.synthURL;
-                    var synthAudioURL = "http://127.0.0.1:8000/" + json.sent_meta.synthURL;
+                    //synthesisObject.synthAudio.src = "https://erle.ucd.ie/" + json.sent_meta.synthURL;
+                    synthesisObject.synthAudio.src = "http://127.0.0.1:8000/" + json.sent_meta.synthURL;
 
                 }
 
-                //console.log('sentMeta:', json.sent_meta);
                 judgementReceived( json.sent_meta )
             
             } else {
