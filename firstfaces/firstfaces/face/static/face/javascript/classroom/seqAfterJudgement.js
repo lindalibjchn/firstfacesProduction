@@ -50,7 +50,6 @@ function runAfterJudgement() {
 
     } else if ( classVariableDict.last_sent.judgement === "I" ) {
 
-        console.log('in judgement === I');
         movementController( movements.confused, tiaTimings.movementToConfused / 2, tiaTimings.movementToConfused );
 
         addToPrevSents(classVariableDict.last_sent);
@@ -261,9 +260,11 @@ function returnToLaptop() {
 
     recTimes.returnToLaptop = Date.now() / 1000;
     console.log( 'in return to laptop');
+    movementController( movements.blank, 0.5, 1 );
     addToPrevSents();
+    initInputReady()
 
-    expressionController( expressionObject.abs.neutral, tiaTimings.changeExpression * 6 );
+    expressionController( expressionObject.abs.neutral, tiaTimings.changeExpression );
 
     //if ( classVariableDict.classOver && classVariableDict.endClassSequenceStarted !== true ) {
 
@@ -317,6 +318,7 @@ function tryAgain() {
     recTimes.clickOptionBtn = Date.now() / 1000;
     let sent = classVariableDict.sentences[ classVariableDict.id_of_last_sent ].sentence;
 
+    $('#sentenceShowHolder').show();
     classVariableDict.tiaLookingAtStudent = false;
     returnToLaptop();
 
@@ -336,13 +338,6 @@ function tryAgain() {
         },
         
     });
-
-    setTimeout( function() {
-
-        removeCorrection();
-        removeSentence();
-
-    }, 1000 )
 
 }
 
@@ -427,6 +422,7 @@ function nextSentence() {
     recTimes.clickNextSentenceBtn = Date.now() / 1000;
     $('#optionBtns').fadeOut( 500 );
     $('.option-btn').prop( "disabled", true);
+    $('#sentenceShowHolder').hide;
 
     if ( classVariableDict.lastSentToBeSent ) {
 

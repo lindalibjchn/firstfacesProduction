@@ -249,11 +249,13 @@ $('#backCorrection').click(function(){
     // reset buttons
     $('#talkBtn').show();
     $('#backCorrection').hide();
-    $('#listenVoiceBtn').css('display','block');
+    //$('#listenVoiceBtn').css('display','block');
     selected = [];
     $('#forwardErrorSelection').prop("disabled",false);
     $('#backErrorSelection').prop("disabled",false);
-    $('#listenVoiceBtn').show();
+    $('#incorrectTranscriptBtns').show();
+    console.log('displaying listenVoiceBtn');
+    $('#listenVoiceBtn').css('display', 'block');
 });
 
 

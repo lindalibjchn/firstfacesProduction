@@ -893,7 +893,7 @@ def store_blob(request):
 
         'alternatives': alternatives,
         'sent_id': ps.id,
-        'audio_pk':ps.id,
+        'audio_pk':a.id,
     }
 
     return JsonResponse(response_data)    
