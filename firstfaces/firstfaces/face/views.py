@@ -1073,7 +1073,7 @@ def timings(request):
 def check_judgement(request):
 
     sent_id = int(request.GET['sentId'])
-
+    synth_url = ""
     count = 0;
     while True:
 
