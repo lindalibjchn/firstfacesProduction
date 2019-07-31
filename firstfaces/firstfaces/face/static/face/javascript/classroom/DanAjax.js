@@ -19,7 +19,7 @@ $('#forwardErrorSelection').click(function(){
     //loop through selected words, amalgamate sewuential errors into one
     var words = classVariableDict.alternatives[0].transcript.split(" ");
     var i = 0;
-
+    classVariableDict.uncorrectedErrors = [];
     var classes = [];
     var newTran = []; 
     while(i < words.length){
@@ -46,6 +46,9 @@ $('#forwardErrorSelection').click(function(){
     var j = 0;
     for(j=0;j<newTran.length;j++){
         addWord(newTran[j],j,classes[j]);
+        if(classes[j] == 'uncorrected-error'){
+            classVariableDict.uncorrectedErrors.push("upper_"+j);
+        }
         $('#upperSentenceHolder').append("<span id='hidden_"+j+"' class='hidden-span'></span>");
     }
     $(".uncorrected-error").attr("onclick","correctError(this.id)");
@@ -59,6 +62,8 @@ $('#forwardErrorSelection').click(function(){
     //cahneg tias textbox
     //$('#tia-speech-box').text("Select an error to correct it");
     $('#backCorrection').show();
+
+    animate_open_overlay(classVariableDict.uncorrectedErrors[0]);
 });
 
 
@@ -74,8 +79,8 @@ $('#overlayTextBox').click(function(){
     $('#typeHereOverlay').empty(); 
 });
 
-$('#overlayTextBox').keypress(function(event){
-    if($('#overlayTextBox').text().trim().length > 0){
+$('#bottomCent').keyup(function(event){
+    if($('#bottomCent').text() != ""){
         $('#submitOverlay').show(); 
     }
     else{
@@ -169,7 +174,7 @@ var currentId;
 function doneError(){
     var cor = $('#overlayTextBox').text().trim();
     var err = $('#overlayErrorText').text().trim();
-
+    
     var dif;
     var i;
     var pad = "";
@@ -209,13 +214,21 @@ function doneError(){
     $('#overlayTextBox').empty();
     $('#overlayTextBox').append('<span id="typeHereOverlay">Type Here!</span>');
     
+        classVariableDict.uncorrectedErrors = classVariableDict.uncorrectedErrors.filter(e => e !== "upper_"+idx);                                                                             
+
     //$('#tia-speech-box').text("Select an error to correct!");
     //closeStage3();
     //Check if all errors are corrected
     if($('.uncorrected-error').length == 0){
         $("#talkBtn").show();
     }
+    else{
+        animate_open_overlay(classVariableDict.uncorrectedErrors[0])        
+    }
     classVariableDict.preSent = getSentence().trim();
+
+    
+    
 }
 
 
@@ -223,10 +236,13 @@ $('#submitCorrectedErrors').click(function(){
     alert("This is where the next stage is");
 });
 
+
+
+
 $('#backCorrection').click(function(){
     // get 
     var words = classVariableDict.alternatives[0].transcript.split(" ");
-     
+    classVariableDict.uncorrectedErrors = []; 
     // reset divs
     //empty upper and lower divs
     $('#upperSentenceHolder').empty(); 
@@ -254,10 +270,8 @@ $('#backCorrection').click(function(){
     $('#forwardErrorSelection').prop("disabled",false);
     $('#backErrorSelection').prop("disabled",false);
     $('#incorrectTranscriptBtns').show();
-    console.log('displaying listenVoiceBtn');
     $('#listenVoiceBtn').css('display', 'block');
 });
-
 
 
 $('#closeOverlayArea').click(function(){
@@ -302,7 +316,9 @@ $('#keyboardOverlay').click(function(){
     //make text area editable
     $("#submitOverlay").off("click"); 
     $("#submitOverlay").click(submitKeyboard);
-    $("#bottomCent").focus();
+    setTimeout(function(){
+        $("#bottomCent").focus();
+    },900);
 });
 
 $('#backOverlay').click(function(){
@@ -327,18 +343,21 @@ $('#backOverlay').click(function(){
 
 function openOverlay(){
     $('#praatCont').hide();
-    $('#correctionOverlay').show();
-    $('#centeredError').show();
-    $('#centeredErrorHolder').show();
-    $('#centeredErrorText').show();
-    $('#closeOverlay').hide();    
+    $('#closeOverlay').hide();
     $('#submitOverlay').hide();
-    $('#overlayErrorBox').hide();  
+    $('#overlayErrorBox').hide();
     $('#overlayTextBox').hide();
     $('#backOverlay').hide();
     $('#stopRecordBtn').hide();
+    $('#spectrogramBtn').hide();
+    $('#correctionOverlay').fadeIn(700);
+    
+    $('#centeredError').show();
+    $('#centeredErrorHolder').show();
+    $('#centeredErrorText').show();
     $("#keyboardOverlay").show();
     $("#reRecordBtn").show();
+    
     //Says that modal is openl
     classVariableDict.stage2 = true;
 
@@ -797,18 +816,10 @@ function moveText(){
 }
 
 function unmoveText(){
-     $('#moveText').animate({top:'+='+classVariableDict.textDiff+"px"},10);
+     $('#moveText').animate({top:'+='+classVariableDict.textDiff+"px"},1);
 }
 
 
-function animate_transcripts(){
-    var words = classVariableDict.alternatives[0].transcript.split(" ");
-    var i;
-    //Make words selectable                                             
-    for(i=0;i<words.length;i++){
-        var idx = "#upper_"+i;      
-    }
-}
 
 
 function causeFlash(){
@@ -830,5 +841,22 @@ function flashBorder(id){
     setTimeout(function(){
         $(id).css('border-color','green'); 
     },125);
+}
+
+
+
+function animate_open_overlay(err_id){
+    //have button flash 
+    var original_color = 'yellow';
+    var new_color = 'black';
+    $('#'+err_id).css({"background-color":new_color,"color":original_color});
+    setTimeout(function(){
+        $('#'+err_id).css({"background-color":original_color,"color":new_color});
+    },200);
+    //open overlay
+    setTimeout(function(){
+        correctError(err_id)
+    },1100);
+
 }
 
