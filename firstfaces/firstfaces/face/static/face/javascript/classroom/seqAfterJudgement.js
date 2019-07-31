@@ -144,46 +144,46 @@ function nodOrShakeHead() {
 
 }
 
-function prePrepareForPromptSpeech() {
+//function prePrepareForPromptSpeech() {
 
-    recTimes.prePrepareForPromptSpeech =  Date.now() / 1000;
-    // return to talking pos
-    expressionController( calculatedTalkExpression, tiaTimings.toTalkExpressionDuration );
+    //recTimes.prePrepareForPromptSpeech =  Date.now() / 1000;
+    //// return to talking pos
+    //expressionController( calculatedTalkExpression, tiaTimings.toTalkExpressionDuration );
 
-    //display waiting bubble
-    speechBubbleObject.dotsAppear = false;
+    ////display waiting bubble
+    //speechBubbleObject.dotsAppear = false;
 
-    function checkIfPromptReturned() {
+    //function checkIfPromptReturned() {
 
-        if ( classVariableDict.promptNIndexesReceived ) {
+        //if ( classVariableDict.promptNIndexesReceived ) {
 
-            displaySpeechBubblePrompt();
+            //displaySpeechBubblePrompt();
 
-        } else {
+        //} else {
 
-            setTimeout( checkIfPromptReturned, 2000 );
+            //setTimeout( checkIfPromptReturned, 2000 );
             
-            if ( speechBubbleObject.dotsAppear === false ) {
+            //if ( speechBubbleObject.dotsAppear === false ) {
 
-                $('#speechBubbleCont').fadeIn();
+                //$('#speechBubbleCont').fadeIn();
 
-                $('.thinkingOfSpeaking').fadeIn( 2000 );
-                speechBubbleObject.dotsAppear = true;
+                //$('.thinkingOfSpeaking').fadeIn( 2000 );
+                //speechBubbleObject.dotsAppear = true;
 
-            }
+            //}
 
-        }
+        //}
 
-    }
+    //}
 
-    setTimeout( function() {
+    //setTimeout( function() {
 
-        setTimeout( checkIfPromptReturned, tiaTimings.toTalkExpressionDuration * 1000 );
-        //displaySpeechBubble( "high", tiaTimings.toTalkExpressionDuration * 1000, 0.5 )
+        //setTimeout( checkIfPromptReturned, tiaTimings.toTalkExpressionDuration * 1000 );
+        ////displaySpeechBubble( "high", tiaTimings.toTalkExpressionDuration * 1000, 0.5 )
     
-    }, tiaTimings.toTalkExpressionDuration * 1000 );
+    //}, tiaTimings.toTalkExpressionDuration * 1000 );
 
-}
+//}
 
 function displaySpeechBubblePrompt() {
 

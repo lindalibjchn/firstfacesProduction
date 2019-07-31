@@ -54,7 +54,7 @@ function setTimings() {
         tiaTimings.thoughtBubbleAddDelay = 200;
         tiaTimings.wordFade = 250;
         tiaTimings.returnFromThinking = 1.5;
-        tiaTimings.removeThoughtBubble = 1000;
+        tiaTimings.removeThoughtBubble = 500;
         tiaTimings.changeExpression = 0.75;
         tiaTimings.changeExpressionConfused = 0.75;
         tiaTimings.movementToConfused = 1.25;

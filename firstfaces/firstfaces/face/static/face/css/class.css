@@ -210,7 +210,7 @@ button:active {
     z-index:3;
 }
 #centeredError{
-    height:76%;
+    height:84%;
     width:100%;
     position:absolute;
     top:0;
@@ -224,7 +224,7 @@ button:active {
     justify-content:center;
 }
 #praatCont{
-    height:76%;
+    height:84%;
     width:100%;
     position: absolute;
     top:0;
@@ -455,10 +455,10 @@ button:active {
 #overlayBtnBox {
     position:absolute;
     bottom:0;
-    height:24%;
+    height:16%;
     width:100%;
     z-index:5;
-    border-top:1px solid #575757;
+    /*border-top:1px solid #575757;*/
     background-color:#f0f0f0;
 }
 #overlayLeftBtn{
@@ -1333,25 +1333,25 @@ button:active {
 
 }
 
-    .record-btn {
-    /*left:0;*/
-    /*margin: auto;*/
-    /*height: 60px;*/
-    /*width: 60px;*/
+.record-btn {
+/*left:0;*/
+/*margin: auto;*/
+/*height: 60px;*/
+/*width: 60px;*/
 
-    }
+}
 
-    #stopRecordVoiceBtn {
+#stopRecordVoiceBtn {
 
-        display: none;
+    display: none;
 
-    }
+}
 
-    .inputfa {
-        color: white;
-    }
-    .redfa{
-        color: red;
+.inputfa {
+    color: white;
+}
+.redfa{
+    color: red;
 }
 
 #optionBtns {

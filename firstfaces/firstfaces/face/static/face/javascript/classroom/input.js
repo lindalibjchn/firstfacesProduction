@@ -480,25 +480,25 @@ function thinkingEyes() {
 
 }
 
-//function runAfterJudgementWithoutBeingAtTurnToThink() {
+function runAfterJudgementWithoutBeingAtTurnToThink() {
 
-    //if ( classVariableDict.last_sent.judgement === "I" ) {
+    if ( classVariableDict.last_sent.judgement === "I" ) {
     
-        //runAfterJudgement();
+        runAfterJudgement();
 
-    //} else {
+    } else {
 
-        //expressionController( calculatedExpression, tiaTimings.changeExpression );
+        expressionController( calculatedExpression, tiaTimings.changeExpression );
     
-        //setTimeout( function() {
+        setTimeout( function() {
             
-            //runAfterJudgement();
+            runAfterJudgement();
 
-        //}, tiaTimings.changeExpression * 750 ) // want nod/move to confused to happen before expression change ends
+        }, tiaTimings.changeExpression * 750 ) // want nod/move to confused to happen before expression change ends
 
-    //}
+    }
 
-//}
+}
 
 //function returnFromThinking() {
 

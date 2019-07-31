@@ -159,7 +159,7 @@ function sendBlobToServer( blob_to_send ) {
 function sendSentToServer() {
 
     // reset to false
-    classVariableDict.promptNIndexesReceived = false;
+    //classVariableDict.promptNIndexesReceived = false;
     // reset the number of recordings for the sentence to 0.
     classVariableDict.blobs = 0;
 
@@ -255,16 +255,24 @@ function checkJudgement( sentId ) {
 
                 console.log('got judgement');
 
-                if ( classVariableDict.lastSentToBeSent ) {
+                //if ( classVariableDict.lastSentToBeSent ) {
 
-                    if ( classVariableDict.last_sent.judgement !== "I" ) {
+                    //if ( classVariableDict.last_sent.judgement !== "I" ) {
 
-                        classVariableDict.classOver = true;
+                        //classVariableDict.classOver = true;
 
-                    }
+                    //}
+
+                //}
+                
+                if (json.sent_meta.synthURL !== 'fault' ) {
+
+                    synthesisObject.synthAudio = document.getElementById( 'synthClip' );
+                    //var synthAudioURL = "https://erle.ucd.ie/" + json.sent_meta.synthURL;
+                    var synthAudioURL = "http://127.0.0.1:8000/" + json.sent_meta.synthURL;
 
                 }
-                
+
                 //console.log('sentMeta:', json.sent_meta);
                 judgementReceived( json.sent_meta )
             

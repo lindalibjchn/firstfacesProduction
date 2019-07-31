@@ -1056,7 +1056,14 @@ def check_judgement(request):
                 break
 
             elif s_new.judgement in ["M", "B", "P"]:
-                if s_new.indexes != None:
+                
+                print('\nin M B P\n')
+                if s_new.indexes != None or s_new.prompt != None:
+
+                    print('\npasseed the indexes and prompts\n')
+                    synth_url = get_tia_tts_for_prompts_early(s_new.prompt, s_new.id)
+                    print('synth_url:', synth_url)
+
                     received_judgement = True
                     break
 
@@ -1081,6 +1088,7 @@ def check_judgement(request):
         'nodSpeed': float(s_new.nodSpeed),
         'show_correction': s_new.show_correction,
         'receivedJudgement': received_judgement,
+        'synthURL': synth_url,
     }
 
     response_data = {
