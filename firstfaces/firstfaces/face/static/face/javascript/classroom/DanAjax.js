@@ -679,7 +679,7 @@ function submitKeyboard(){
 
             
             var finAudio = document.getElementById("audio_"+classVariableDict.startIDX);             
-            finAudio.src = hypAudioURL;                                     
+            finAudio.src = hyp_audio_url;                                     
 
 
         },

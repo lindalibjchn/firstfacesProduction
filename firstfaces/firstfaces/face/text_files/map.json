@@ -1,0 +1,64 @@
+{
+ "fragments": [
+  {
+   "begin": "0.000",
+   "children": [],
+   "end": "0.960",
+   "id": "f000001",
+   "language": "eng",
+   "lines": [
+    "the"
+   ]
+  },
+  {
+   "begin": "0.960",
+   "children": [],
+   "end": "1.600",
+   "id": "f000002",
+   "language": "eng",
+   "lines": [
+    "dog"
+   ]
+  },
+  {
+   "begin": "1.600",
+   "children": [],
+   "end": "2.760",
+   "id": "f000003",
+   "language": "eng",
+   "lines": [
+    "jumped"
+   ]
+  },
+  {
+   "begin": "2.760",
+   "children": [],
+   "end": "3.560",
+   "id": "f000004",
+   "language": "eng",
+   "lines": [
+    "over"
+   ]
+  },
+  {
+   "begin": "3.560",
+   "children": [],
+   "end": "5.120",
+   "id": "f000005",
+   "language": "eng",
+   "lines": [
+    "the"
+   ]
+  },
+  {
+   "begin": "5.120",
+   "children": [],
+   "end": "6.360",
+   "id": "f000006",
+   "language": "eng",
+   "lines": [
+    "dog"
+   ]
+  }
+ ]
+}

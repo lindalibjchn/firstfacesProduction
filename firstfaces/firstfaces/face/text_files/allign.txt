@@ -1,5 +1,6 @@
 the
-fox
-ate
+dog
+jumped
+over
 the
-cat
+dog
