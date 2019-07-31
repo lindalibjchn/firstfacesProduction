@@ -1,4 +1,4 @@
-function initInputReady() {
+function initInputReady( from ) {
     classVariableDict.stage2 = false;
     classVariableDict.stage3 = false;
     //$('#textInputContainer').show();
@@ -18,11 +18,21 @@ function initInputReady() {
 
     //$('#controllerContainer').fadeIn( 1000 );
 
+    if ( from === 'try again' ) {
+
+        $( '#textInputContainer' ).fadeIn();
+        $( '#sentenceShowHolder').fadeIn();
+        $('.play-btn').prop( "disabled", false).show();
+
+    } else {
+
+        $( '#sentenceShowHolder').hide();
+        $('.play-btn').prop( "disabled", true).hide();
+    
+    }
+
     //playback buttons disabled until recording done
     $('#recordBtnsContainer').fadeIn(1000)
-    $('.play-btn').prop( "disabled", true).hide();
-    //Hide the display divs
-    $('#sentenceShowHolder').hide();
     //hide correctTranscript
     $('#correctTranscript').hide();
     //hide back button

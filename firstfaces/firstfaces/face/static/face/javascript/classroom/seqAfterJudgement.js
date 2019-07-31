@@ -256,13 +256,13 @@ function displaySpeechBubblePrompt() {
 
 }
     
-function returnToLaptop() {
+function returnToLaptop( from ) {
 
     recTimes.returnToLaptop = Date.now() / 1000;
     console.log( 'in return to laptop');
     movementController( movements.blank, 0.5, 1 );
     addToPrevSents();
-    initInputReady()
+    initInputReady( from )
 
     expressionController( expressionObject.abs.neutral, tiaTimings.changeExpression );
 
@@ -318,9 +318,8 @@ function tryAgain() {
     recTimes.clickOptionBtn = Date.now() / 1000;
     let sent = classVariableDict.sentences[ classVariableDict.id_of_last_sent ].sentence;
 
-    $('#sentenceShowHolder').show();
     classVariableDict.tiaLookingAtStudent = false;
-    returnToLaptop();
+    returnToLaptop('try again');
 
     $('#prevSents').fadeTo( 500, 1 );
     $('#optionBtns').fadeOut( 500 )
