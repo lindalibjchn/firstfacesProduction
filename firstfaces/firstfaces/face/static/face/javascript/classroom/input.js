@@ -150,7 +150,11 @@ function tiaLeanToListen() {
 }
 
 function speakWords() {
-
+    if(classVariableDict.usePlayAud){
+        play_audio()      
+        classVariableDict.usePlayAud = false;
+    }
+    else{
     if ( synthesisObject.originalVoice ) {
 
         recTimes.startSpeak = Date.now() / 1000;
@@ -186,7 +190,7 @@ function speakWords() {
 
         }
 
-    }
+    }}
 
 }
 

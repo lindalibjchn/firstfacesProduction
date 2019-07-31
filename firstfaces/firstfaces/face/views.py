@@ -670,6 +670,7 @@ def error_recording_used(request):
 def do_allignment(request):
     trans= request.POST['trans']
     audioPath = request.POST['fn']
+    print('\naudioPath:', audioPath)
     f = open(get_text_path(),"w+")                                               
     for word in trans.split():                                                   
         f.write(word.lower()+"\n")                                               
@@ -679,7 +680,7 @@ def do_allignment(request):
     outPath = get_out_path()                                                     
     aeneasPath = get_aeneas_path()                                               
     cwd = os.getcwd()                                                            
-    command = 'python3 -m aeneas.tools.execute_task '+settings.BASE_DIR+"/"+audioPath+" "+textPath+" "+extra_str+" "+outPath+" >/dev/null 2>&1"            
+    command = 'python3 -m aeneas.tools.execute_task '+audioPath+" "+textPath+" "+extra_str+" "+outPath+" >/dev/null 2>&1"            
     sub_proc = subprocess.Popen(command,cwd=get_aeneas_path(),shell=True,stdout=subprocess.PIPE, stderr=subprocess.PIPE)                                                                  
     sub_proc.wait()                                                                          
     response_data = {                  

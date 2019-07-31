@@ -40,6 +40,7 @@ function doAllignment(){
 
 $('#forwardErrorSelection').click(function(){
     doAllignment();
+    classVariableDict.usePlayAud = true;
     //loop through selected words, amalgamate sewuential errors into one
     classVariableDict.playStage2 = true;
     var words = classVariableDict.alternatives[0].transcript.split(" ");
@@ -592,8 +593,8 @@ $('#hyp_btn').click(function(){
 
 //Keyboard sumbit
 function submitKeyboard(){
-    var trans = $('#centeredErrorText').text().trim();
-    var err_trans = $('#bottomCent').text().trim();
+    var trans = $('#bottomCent').text().trim();
+    var err_trans = $('#centeredErrorText').text().trim();
     classVariableDict.attemptCount = 0; 
     let fd = new FormData();
     fd.append("attempt_pk",classVariableDict.lastAttemptID);
@@ -766,6 +767,8 @@ function incorrect_attempt(){
         $('#ref_btn').animate({top:'-='+diff+"px"});
         $('#hyp_btn').animate({top:'+='+diff+"px"}); 
     },1700);
+    setTimeout
+
     setTimeout(function(){
         $("#ref_text_layer").fadeIn(800);
         $("#hyp_text_layer").fadeIn(800);
@@ -848,6 +851,8 @@ slider.oninput = function() {
 
     document.getElementById('refAudio').playbackRate = val;
     document.getElementById('hypAudio').playbackRate = val;
+    classVariableDict.specClicks.push(JSON.stringify({"speed":Date.now() / 1000,"val":val}));
+
 }
 
  
@@ -899,6 +904,8 @@ function animate_open_overlay(err_id){
 
     setTimeout( function() {
 
+        $('#backCorrection').hide();
+        $('#recordVoiceBtn').hide();
         classVariableDict.correcting = true;
         var original_color = 'yellow';
         var new_color = 'black';
@@ -911,6 +918,11 @@ function animate_open_overlay(err_id){
             correctError(err_id)
             
         },1000);
+
+        setTimeout(function(){
+            $('#backCorrection').show();
+            $('#recordVoiceBtn').show();
+        },2000);
 
     }, 750 );
 
