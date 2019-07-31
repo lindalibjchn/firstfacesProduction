@@ -390,7 +390,13 @@ function onStopClick() {
 
     clearTimeout( recorder15sTimeout );
 
-    mediaRecorder.stop();
+    // little delay as some users click too soon
+    setTimeout( function() {
+
+        mediaRecorder.stop();
+    
+    }, 250 )
+
     console.log( mediaRecorder.state );
     console.log( "recorder stopped" );
 

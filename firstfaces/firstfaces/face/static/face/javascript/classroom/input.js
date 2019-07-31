@@ -23,6 +23,7 @@ function initInputReady( from ) {
         $( '#textInputContainer' ).fadeIn();
         $( '#sentenceShowHolder').fadeIn();
         $('.play-btn').prop( "disabled", false).show();
+        reset_text(classVariableDict.preSent)
 
     } else {
 
