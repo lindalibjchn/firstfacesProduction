@@ -679,7 +679,7 @@ function submitKeyboard(){
 
             
             var finAudio = document.getElementById("audio_"+classVariableDict.startIDX);             
-            finAudio.src = hypAudioURL;                                     
+            finAudio.src = hyp_audio_url;                                     
 
 
         },
@@ -901,25 +901,30 @@ function flashBorder(id){
 
 function animate_open_overlay(err_id){
     //have button flash
-    $('#backCorrection').hide();
-    $('#recordVoiceBtn').hide();
-    classVariableDict.correcting = true;
-    var original_color = 'yellow';
-    var new_color = 'black';
-    $('#'+err_id).css({"background-color":new_color,"color":original_color});
-    setTimeout(function(){
-        $('#'+err_id).removeAttr( 'style' );
-    },200);
-    //open overlay
-    setTimeout(function(){
-        correctError(err_id)
-        
-    },1100);
-    setTimeout(function(){
-        $('#backCorrection').show();
-        $('#recordVoiceBtn').show();
-    },2000);
 
+    setTimeout( function() {
+
+        $('#backCorrection').hide();
+        $('#recordVoiceBtn').hide();
+        classVariableDict.correcting = true;
+        var original_color = 'yellow';
+        var new_color = 'black';
+        $('#'+err_id).css({"background-color":new_color,"color":original_color});
+        setTimeout(function(){
+            $('#'+err_id).removeAttr( 'style' );
+        },400);
+        //open overlay
+        setTimeout(function(){
+            correctError(err_id)
+            
+        },1000);
+
+        setTimeout(function(){
+            $('#backCorrection').show();
+            $('#recordVoiceBtn').show();
+        },2000);
+
+    }, 750 );
 
 
 }

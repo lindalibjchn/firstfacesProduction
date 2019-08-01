@@ -670,6 +670,7 @@ def error_recording_used(request):
 def do_allignment(request):
     trans= request.POST['trans']
     audioPath = request.POST['fn']
+    print('\naudioPath:', audioPath)
     f = open(get_text_path(),"w+")                                               
     for word in trans.split():                                                   
         f.write(word.lower()+"\n")                                               
@@ -679,7 +680,7 @@ def do_allignment(request):
     outPath = get_out_path()                                                     
     aeneasPath = get_aeneas_path()                                               
     cwd = os.getcwd()                                                            
-    command = 'python3 -m aeneas.tools.execute_task '+settings.BASE_DIR+"/"+audioPath+" "+textPath+" "+extra_str+" "+outPath+" >/dev/null 2>&1"            
+    command = 'python3 -m aeneas.tools.execute_task '+ settings.BASE_DIR + '/' + audioPath+" "+textPath+" "+extra_str+" "+outPath+" >/dev/null 2>&1"            
     sub_proc = subprocess.Popen(command,cwd=get_aeneas_path(),shell=True,stdout=subprocess.PIPE, stderr=subprocess.PIPE)                                                                  
     sub_proc.wait()                                                                          
     response_data = {                  
@@ -1072,7 +1073,7 @@ def timings(request):
 def check_judgement(request):
 
     sent_id = int(request.GET['sentId'])
-
+    synth_url = ""
     count = 0;
     while True:
 
@@ -1084,8 +1085,21 @@ def check_judgement(request):
         
         if s_new.judgement != None:
 
-            received_judgement = True
-            break
+            if s_new.judgement == "C":
+                received_judgement = True
+                break
+
+            elif s_new.judgement in ["M", "B", "P"]:
+                
+                print('\nin M B P\n')
+                if s_new.indexes != None or s_new.prompt != None:
+
+                    print('\npasseed the indexes and prompts\n')
+                    synth_url = get_tia_tts_for_prompts_early(s_new.prompt, s_new.id)
+                    print('synth_url:', synth_url)
+
+                    received_judgement = True
+                    break
 
         elif count == 10:
 
@@ -1108,6 +1122,7 @@ def check_judgement(request):
         'nodSpeed': float(s_new.nodSpeed),
         'show_correction': s_new.show_correction,
         'receivedJudgement': received_judgement,
+        'synthURL': synth_url,
     }
 
     response_data = {
@@ -1118,61 +1133,61 @@ def check_judgement(request):
 
     return JsonResponse(response_data)    
 
-def check_prompt_indexes(request):
+# def check_prompt_indexes(request):
 
-    sent_id = int(request.GET['sentId'])
+    # sent_id = int(request.GET['sentId'])
 
-    received_prompt_n_ind = False
+    # received_prompt_n_ind = False
 
-    # p_count = 0;
-    # while True:
+    # # p_count = 0;
+    # # while True:
 
-        # print('in while loop')
-        # time.sleep(1)
-        # p_count += 1
+        # # print('in while loop')
+        # # time.sleep(1)
+        # # p_count += 1
 
-    s_new = TempSentence.objects.get(pk=sent_id)
+    # s_new = TempSentence.objects.get(pk=sent_id)
     
-    if s_new.judgement == "B":
+    # if s_new.judgement == "B":
 
-        if s_new.indexes != None:
+        # if s_new.indexes != None:
 
-            received_prompt_n_ind = True
-            # break
+            # received_prompt_n_ind = True
+            # # break
 
-    elif s_new.judgement == "P":
+    # elif s_new.judgement == "P":
 
-        if s_new.prompt != None:
+        # if s_new.prompt != None:
 
-            received_prompt_n_ind = True
-            # break
+            # received_prompt_n_ind = True
+            # # break
 
-    elif s_new.judgement == "M":
+    # elif s_new.judgement == "M":
 
-        if s_new.indexes != None:
+        # if s_new.indexes != None:
 
-            received_prompt_n_ind = True
-            # break
+            # received_prompt_n_ind = True
+            # # break
 
-        # elif p_count == 10:
+        # # elif p_count == 10:
 
-            # received_prompt_n_ind = False
-            # break
+            # # received_prompt_n_ind = False
+            # # break
 
-    sent_meta = {
-        'sent_id': s_new.id,
-        'indexes': s_new.indexes,
-        'prompt': s_new.prompt,
-        'receivedPromptNIndexes': received_prompt_n_ind,
-    }
+    # sent_meta = {
+        # 'sent_id': s_new.id,
+        # 'indexes': s_new.indexes,
+        # 'prompt': s_new.prompt,
+        # 'receivedPromptNIndexes': received_prompt_n_ind,
+    # }
 
-    response_data = {
+    # response_data = {
 
-        'sent_meta': sent_meta,
+        # 'sent_meta': sent_meta,
 
-    }
+    # }
 
-    return JsonResponse(response_data)    
+    # return JsonResponse(response_data)    
 
 def delete_session(request):
 

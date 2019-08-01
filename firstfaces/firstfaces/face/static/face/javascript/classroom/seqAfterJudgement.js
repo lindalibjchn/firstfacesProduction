@@ -10,11 +10,11 @@ function runAfterJudgement() {
     let nodShakeDur = 0;
     if ( classVariableDict.last_sent.nod !== null ) {
     
-        nodShakeDur = 5 * parseFloat( getNodSpeedInString() ) * 1000;
+        nodShakeDur = 3 * parseFloat( getNodSpeedInString() ) * 1000 + 500;
 
     } else if ( classVariableDict.last_sent.judgement === "D" ) {
 
-        nodShakeDur = 5 * 0.75 * 1000;
+        nodShakeDur = 3 * 0.75 * 1000 + 500;
 
     }
 
@@ -23,7 +23,7 @@ function runAfterJudgement() {
         if ( classVariableDict.last_sent.nod !== null ) {
                 
             nodOrShakeHead()
-            setTimeout( function(){returnToLaptop()}, nodShakeDur + 500 );//0.5s overlap for end of nod n talking
+            setTimeout( function(){returnToLaptop()}, nodShakeDur );
 
         } else {
 
@@ -40,11 +40,11 @@ function runAfterJudgement() {
         if ( classVariableDict.last_sent.nod !== null ) {
 
             nodOrShakeHead()
-            setTimeout( prePrepareForPromptSpeech, nodShakeDur + 500 );
+            setTimeout( prePrepareForPromptSpeech, nodShakeDur );
 
         } else {
 
-            setTimeout( prePrepareForPromptSpeech, tiaTimings.delyUntilToTalkPos );
+            setTimeout( prePrepareForPromptSpeech, tiaTimings.delayUntilToTalkPos );
 
         }
 
@@ -58,7 +58,7 @@ function runAfterJudgement() {
             
             expressionController( expressionObject.abs.confused, tiaTimings.changeExpressionConfused );
 
-            setTimeout( showOptionBtns, tiaTimings.changeExpressionConfused * 1500 );
+            setTimeout( showOptionBtns, tiaTimings.changeExpressionConfused * 1000 );
 
         }, tiaTimings.movementToConfused * 500 )
 
@@ -150,87 +150,94 @@ function prePrepareForPromptSpeech() {
     // return to talking pos
     expressionController( calculatedTalkExpression, tiaTimings.toTalkExpressionDuration );
 
-    //display waiting bubble
-    speechBubbleObject.dotsAppear = false;
-
-    function checkIfPromptReturned() {
-
-        if ( classVariableDict.promptNIndexesReceived ) {
-
-            displaySpeechBubblePrompt();
-
-        } else {
-
-            setTimeout( checkIfPromptReturned, 2000 );
-            
-            if ( speechBubbleObject.dotsAppear === false ) {
-
-                $('#speechBubbleCont').fadeIn();
-
-                $('.thinkingOfSpeaking').fadeIn( 2000 );
-                speechBubbleObject.dotsAppear = true;
-
-            }
-
-        }
-
-    }
-
-    setTimeout( function() {
-
-        setTimeout( checkIfPromptReturned, tiaTimings.toTalkExpressionDuration * 1000 );
-        //displaySpeechBubble( "high", tiaTimings.toTalkExpressionDuration * 1000, 0.5 )
+    displaySpeechBubblePrompt();
     
-    }, tiaTimings.toTalkExpressionDuration * 1000 );
+    ////display waiting bubble
+    //speechBubbleObject.dotsAppear = false;
+
+    //function checkIfPromptReturned() {
+
+        //if ( classVariableDict.promptNIndexesReceived ) {
+
+            //displaySpeechBubblePrompt();
+
+        //} else {
+
+            //setTimeout( checkIfPromptReturned, 2000 );
+            
+            //if ( speechBubbleObject.dotsAppear === false ) {
+
+                //$('#speechBubbleCont').fadeIn();
+
+                //$('.thinkingOfSpeaking').fadeIn( 2000 );
+                //speechBubbleObject.dotsAppear = true;
+
+            //}
+
+        //}
+
+    //}
+
+    //setTimeout( function() {
+
+        //setTimeout( checkIfPromptReturned, tiaTimings.toTalkExpressionDuration * 1000 );
+        ////displaySpeechBubble( "high", tiaTimings.toTalkExpressionDuration * 1000, 0.5 )
+    
+    //}, tiaTimings.toTalkExpressionDuration * 1000 );
 
 }
 
 function displaySpeechBubblePrompt() {
 
     recTimes.displaySpeechBubblePrompt = Date.now() / 1000;
+    $('#speechBubbleCont').fadeIn( tiaTimings.speechBubbleFadeOutDuration );
+    $('.speaking-words').hide();
+    $('.speaking-words-inside').show();
+    $('.speaking-words-inside').text( speechBubbleObject.sentence );
     // actually delay to return to laptop
     //synthesisObject.delayToReturnToLaptop = 3000 + synthesisObject.text.length * 60 * ( 1 / synthesisObject.speaking_rate );
 
-    $('.thinkingOfSpeaking').fadeOut( 500 );
-    speechBubbleObject.dotsAppear = false;
+    //$('.thinkingOfSpeaking').fadeOut( 500 );
+    //speechBubbleObject.dotsAppear = false;
 
     if ( classVariableDict.last_sent.judgement === "P" ) {
             
         synthesisObject.text = classVariableDict.last_sent.prompt;
-        sendTTS( synthesisObject.text, true, "talk" );
+        //sendTTS( synthesisObject.text, true, "talk" );
+
         speechBubbleObject.sentence = classVariableDict.last_sent.prompt;
 
     } else if ( classVariableDict.last_sent.judgement === "B" ) {
 
         let text = createBetterTextForPromptBox( classVariableDict.last_sent );
         synthesisObject.text = text;
-        sendTTS( synthesisObject.text, true, "talk" );
+        //sendTTS( synthesisObject.text, true, "talk" );
         speechBubbleObject.sentence = text;
     
     } else if ( classVariableDict.last_sent.judgement === "M" ) {
 
         let text = createMeanByTextForPromptBox( classVariableDict.last_sent );
-        synthesisObject.speaking_rate = 0.8;
-        synthesisObject.pitch = -2;
-        sendTTS( text, true, "talk");
+        //synthesisObject.speaking_rate = 0.8;
+        //synthesisObject.pitch = -2;
+        //sendTTS( text, true, "talk");
         synthesisObject.text = text;
         speechBubbleObject.sentence = text;
         
     } else if ( classVariableDict.last_sent.judgement === "3" ) {
 
         let text = "There are more than 3 mistakes in your sentence. Could you simplify and try again?";
-        synthesisObject.speaking_rate = 0.8;
-        synthesisObject.pitch = -2;
-        sendTTS( text, true, "talk");
+        //synthesisObject.speaking_rate = 0.8;
+        //synthesisObject.pitch = -2;
+        //sendTTS( text, true, "talk");
         synthesisObject.text = text;
         speechBubbleObject.sentence = text;
 
     } else if ( classVariableDict.last_sent.judgement === "D" ) {
 
         let text = "I'm sorry but I don't understand what you said.";
-        synthesisObject.speaking_rate = 0.8;
-        synthesisObject.pitch = -2;
-        sendTTS( text, true, "talk" );
+        //synthesisObject.speaking_rate = 0.8;
+        //synthesisObject.pitch = -2;
+        //sendTTS( text, true, "talk" );
         synthesisObject.text = text;
         speechBubbleObject.sentence = text;
     
@@ -240,15 +247,16 @@ function displaySpeechBubblePrompt() {
     setTimeout( function() {
 
         recTimes.tiaStartTalking = Date.now() / 1000;
-        tiaSpeak( synthesisObject.text, needSendTTS=false, function() {
+        synthesisObject.synthAudio.play();
+        //tiaSpeak( synthesisObject.text, needSendTTS=false, function() {
          
-            setTimeout( function() {
+            //setTimeout( function() {
                 
-                returnToLaptop();
+                //returnToLaptop();
 
-            }, tiaTimings.delayBeforeReturnToLaptop );
+            //}, tiaTimings.delayBeforeReturnToLaptop );
 
-        })
+        //})
 
         classVariableDict.promptSpeaking = true;
         
@@ -264,7 +272,7 @@ function returnToLaptop( from ) {
     addToPrevSents();
     initInputReady( from )
 
-    expressionController( expressionObject.abs.neutral, tiaTimings.changeExpression );
+    expressionController( expressionObject.abs.neutral, tiaTimings.changeExpression * 2 );
 
     //if ( classVariableDict.classOver && classVariableDict.endClassSequenceStarted !== true ) {
 

@@ -155,18 +155,18 @@ function readyBtns() {
             
 $('#listenVoiceBtn').on( 'click', function() {
 
-        aud.play();
-        //sendListenVoice();
+    aud.play();
+    //sendListenVoice();
 
-        // for tutorial
-        if ( classVariableDict.tutorialStep === 6 ) {
+    // for tutorial
+    if ( classVariableDict.tutorialStep === 6 ) {
 
-            $('#listenVoiceBtn').prop( 'disabled', true );
-            setTimeout( greeting07, 3000 );
+        $('#listenVoiceBtn').prop( 'disabled', true );
+        setTimeout( greeting07, 3000 );
 
-        }
+    }
 
-    });
+});
 
     //// THIS SECOND BIT SENDS THE AUDIO FILE TO THE SERVER
 
@@ -390,7 +390,13 @@ function onStopClick() {
 
     clearTimeout( recorder15sTimeout );
 
-    mediaRecorder.stop();
+    // little delay as some users click too soon
+    setTimeout( function() {
+
+        mediaRecorder.stop();
+    
+    }, 250 )
+
     console.log( mediaRecorder.state );
     console.log( "recorder stopped" );
 
@@ -826,7 +832,7 @@ function hideVolumeBar() {
 
 //}
 
-function JudgementReceived( sentMeta ) {
+function judgementReceived( sentMeta ) {
 
     console.log('sentMeta:', sentMeta);
 
@@ -836,10 +842,14 @@ function JudgementReceived( sentMeta ) {
     classVariableDict.sentences[ newInd ] = sentMeta;
     classVariableDict.sentences[ newInd ].sentence = JSON.parse( sentMeta.sentence );
     classVariableDict.sentences[ newInd ].indexes = JSON.parse( sentMeta.indexes );
+    classVariableDict.sentences[ newInd ].prompt = sentMeta.prompt;
+
     classVariableDict.id_of_last_sent = newInd;
+    
     classVariableDict.last_sent = sentMeta;
     classVariableDict.last_sent.sentence = sentMeta.sentence;
     classVariableDict.last_sent.indexes = JSON.parse( sentMeta.indexes );
+    classVariableDict.last_sent.prompt = sentMeta.prompt;
 
     // keeps state of sentence
     classVariableDict.blob_no_text = false;
@@ -848,11 +858,11 @@ function JudgementReceived( sentMeta ) {
     // do this here to change voices too
     if ( classVariableDict.last_sent.judgement === "B" || classVariableDict.last_sent.judgement === "C" || classVariableDict.last_sent.judgement === "P" || classVariableDict.last_sent.judgement === "M" ) {
 
-        if ( classVariableDict.last_sent.judgement !== "C" ) {
+        //if ( classVariableDict.last_sent.judgement !== "C" ) {
 
-            checkForPromptNIndexes( sentMeta.sent_id );
+            //checkForPromptNIndexes( sentMeta.sent_id );
 
-        }
+        //}
 
         // calculate changes in expression for these
         if ( classVariableDict.last_sent.judgement === "M" ) {
@@ -889,18 +899,18 @@ function JudgementReceived( sentMeta ) {
                 
 }
 
-function promptNIndexesReceived( sentMeta ) {
+//function promptNIndexesReceived( sentMeta ) {
 
-    console.log('new sent meta:', sentMeta);
+    //console.log('new sent meta:', sentMeta);
 
-    classVariableDict.promptNIndexesReceived = true;
+    //classVariableDict.promptNIndexesReceived = true;
 
-    classVariableDict.sentences[ classVariableDict.id_of_last_sent ].prompt = sentMeta.prompt;
-    classVariableDict.last_sent.prompt = sentMeta.prompt;
+    //classVariableDict.sentences[ classVariableDict.id_of_last_sent ].prompt = sentMeta.prompt;
+    //classVariableDict.last_sent.prompt = sentMeta.prompt;
 
-    classVariableDict.sentences[ classVariableDict.id_of_last_sent ].indexes = sentMeta.indexes;
-    classVariableDict.last_sent.indexes = sentMeta.indexes;
+    //classVariableDict.sentences[ classVariableDict.id_of_last_sent ].indexes = sentMeta.indexes;
+    //classVariableDict.last_sent.indexes = sentMeta.indexes;
 
-}
+//}
 
 

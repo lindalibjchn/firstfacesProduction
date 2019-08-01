@@ -1,6 +1,7 @@
 from .models import Available, TempSentence, Session, PermSentence, Profile, PostTalkTiming
 
 from django.contrib.auth.models import User
+from django.conf import settings
 import datetime
 import time
 from django.utils import timezone
@@ -8,6 +9,13 @@ from operator import itemgetter
 import math
 import json
 from django.forms.models import model_to_dict
+from google.cloud import texttospeech
+import os
+
+# os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/johnsHDD/PhD_backup/erle-3666ad7eec71.json"
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/johnsHDD/PhD/2018_autumn/erle-3666ad7eec71.json"
+# os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/firstfaces/erle-3666ad7eec71.json"
+# os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/user1/Downloads/erle-3666ad7eec71.json"
 
 def get_this_weeks_dates():
 
@@ -470,4 +478,48 @@ def check_if_username_is_unique( name ):
     # print('prev_test_scores:', prev_test_scores)
 
     # return prev_test_scores
+
+def get_tia_tts_for_prompts_early(text, sent_id):
+
+    print('\ntext:', text)
+    print('\nsent_id:', sent_id)
+    speaking_voice = 'en-GB-Wavenet-C'
+
+    client = texttospeech.TextToSpeechClient()
+    input_text = texttospeech.types.SynthesisInput(text=text)
+
+    # Note: the voice can also be specified by name.
+    # Names of voices can be retrieved with client.list_voices().
+    voice = texttospeech.types.VoiceSelectionParams(
+        language_code='en-GB',
+        name=speaking_voice
+        # ssml_gender=texttospeech.enums.SsmlVoiceGender.MALE
+        )
+
+    audio_config = texttospeech.types.AudioConfig(
+        audio_encoding=texttospeech.enums.AudioEncoding.MP3,
+        pitch = 0,
+        speaking_rate = 1,
+        )
+
+    try:
+        response = client.synthesize_speech(input_text, voice, audio_config)
+
+        print('response:', response)
+
+        # don't need to keep all synths for class. Remember to delete this when session ends.
+        synthURL = 'media/synths/sent_' + str(sent_id) + '.wav' # + '_' + str(int(time.mktime((timezone.now()).timetuple())))
+        print('rsynthURL:', synthURL)
+        with open( os.path.join(settings.BASE_DIR, synthURL ), 'wb') as out:
+            out.write(response.audio_content)
+    except:
+        synthURL = 'fault'
+
+    return synthURL
+
+
+
+
+
+
 

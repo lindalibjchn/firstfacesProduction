@@ -66,7 +66,9 @@ def  get_text_path():
     return path
 
 def get_out_path():
+    print('in get out path')
     path = os.path.join(settings.BASE_DIR, 'face', 'text_files','map.json')
+    print('path:', path)
     return path
 
 def get_aeneas_path():
