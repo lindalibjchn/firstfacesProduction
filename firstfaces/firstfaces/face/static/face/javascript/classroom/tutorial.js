@@ -2,11 +2,11 @@ var tiaSpeakCount = 0;
 function tiaSpeak( tiaSays, needSendTTS=true, callback ) {
 
     // display text
-    speechBubbleObject.sentence = tiaSays;
-    $('#speechBubbleCont').fadeIn( tiaTimings.speechBubbleFadeOutDuration );
-    $('.speaking-words').hide();
-    $('.speaking-words-inside').show();
-    $('.speaking-words-inside').text( speechBubbleObject.sentence );
+    //speechBubbleObject.sentence = tiaSays;
+    $('#speechBubbleCont').fadeIn( tiaTimings.speechBubbleFadeInDuration );
+    //$('.speaking-words').hide();
+    //$('.speaking-words-inside').show();
+    $('#speakingWordsInside').text( tiaSays );
     
     // only false if TTS can be sent in advance so no need to do it again
     if ( needSendTTS ) {

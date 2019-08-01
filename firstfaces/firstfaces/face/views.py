@@ -1073,6 +1073,7 @@ def timings(request):
 def check_judgement(request):
 
     sent_id = int(request.GET['sentId'])
+    sess_id = int(request.GET['sessId'])
     synth_url = ""
     count = 0;
     while True:
@@ -1085,21 +1086,20 @@ def check_judgement(request):
         
         if s_new.judgement != None:
 
-            if s_new.judgement == "C":
-                received_judgement = True
-                break
-
-            elif s_new.judgement in ["M", "B", "P"]:
+            if s_new.judgement in ["M", "B", "P"]:
                 
-                print('\nin M B P\n')
                 if s_new.indexes != None or s_new.prompt != None:
 
-                    print('\npasseed the indexes and prompts\n')
-                    synth_url = get_tia_tts_for_prompts_early(s_new.prompt, s_new.id)
-                    print('synth_url:', synth_url)
+                    text = get_text(s_new.sentence, s_new.judgement, s_new.prompt, s_new.indexes)
+                    synth_url = get_tia_tts_for_prompts_early(text, sess_id)
 
                     received_judgement = True
                     break
+
+            else:
+
+                received_judgement = True
+                break
 
         elif count == 10:
 

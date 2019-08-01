@@ -1487,7 +1487,7 @@ button:active {
     /*padding: 2%;*/
     height: 100%;
     /*border: 3px solid green;*/
-    padding: 0.45em;
+    padding: 0.25em;
 
 }
 
@@ -1496,74 +1496,55 @@ button:active {
     /*display: none;*/
     /*position: absolute;*/
     height: 100%;
-    font-size:1.2em;
+    width: 100%;
+    /*font-size: 0.8em;*/
+    /*border: 3px solid red;*/
 }
 
-/*#speakingWordsLaptop {*/
 
-    /*[>display: none;<]*/
-    /*[>top: 12%;<]*/
-
-/*}*/
-
-/*#speakingWordsTia {*/
-
-    /*display: none;*/
-    /*top: 47%;*/
-
-/*}*/
-
-.thinkingOfSpeaking {
-
-    font-size: 30px;
-    left: 10%;
-    display: none;
-
-}
-
-@keyframes blink {
+/*@keyframes blink {*/
     /**
      * At the start of the animation the dot
      * has an opacity of .2
      */
-    0% {
-      opacity: 0;
-    }
+    /*0% {*/
+      /*opacity: 0;*/
+    /*}*/
     /**
      * At 20% the dot is fully visible and
      * then fades out slowly
      */
-    20% {
-      opacity: 0;
-    }
-    35% {
-      opacity: 1;
-    }
+    /*20% {*/
+      /*opacity: 0;*/
+    /*}*/
+    /*35% {*/
+      /*opacity: 1;*/
+    /*}*/
     /**
      * Until it reaches an opacity of .2 and
      * the animation can start again
      */
-    70% {
-      opacity: 1;
-    }
-    100% {
-      opacity: 0;
-    }
-}
+    /*70% {*/
+      /*opacity: 1;*/
+    /*}*/
+    /*100% {*/
+      /*opacity: 0;*/
+    /*}*/
+/*}*/
 
-.thinkingOfSpeaking span {
+/*.thinkingOfSpeaking span {*/
     /**
      * Use the blink animation, which is defined above
      */
-    animation-name: blink;
+    /*animation-name: blink;*/
     /**
      * The animation should take 4 seconds
      */
-    animation-duration: 4s;
+    /*animation-duration: 4s;*/
     /**
      * It will repeat itself forever
      */
-    animation-iteration-count: infinite;
+    /*animation-iteration-count: infinite;*/
     /**
      * This makes sure that the starting style (opacity: .2)
      * of the animation is applied before the animation starts.
@@ -1571,35 +1552,35 @@ button:active {
      * to set the default styling of the dots to the same
      * as the animation. Same applies for the ending styles.
      */
-    animation-fill-mode: both;
-}
+    /*animation-fill-mode: both;*/
+/*}*/
 
-.thinkingOfSpeaking span:nth-child(2) {
+/*.thinkingOfSpeaking span:nth-child(2) {*/
     /**
      * Starts the animation of the third dot
      * with a delay of .2s, otherwise all dots
      * would animate at the same time
      */
-    animation-delay: 0.5s;
-}
-
-.thinkingOfSpeaking span:nth-child(3) {
-    /**
-     * Starts the animation of the third dot
-     * with a delay of .4s, otherwise all dots
-     * would animate at the same time
-     */
-    animation-delay: 1s;
-}
-
-/*.thinkingOfSpeaking span:nth-child(4) {*/
-    /**
-     * Starts the animation of the third dot
-     * with a delay of .4s, otherwise all dots
-     * would animate at the same time
-     */
-    /*animation-delay: 1.5s;*/
+    /*animation-delay: 0.5s;*/
 /*}*/
+
+/*.thinkingOfSpeaking span:nth-child(3) {*/
+    /**
+     * Starts the animation of the third dot
+     * with a delay of .4s, otherwise all dots
+     * would animate at the same time
+     */
+    /*animation-delay: 1s;*/
+/*}*/
+
+/*[>.thinkingOfSpeaking span:nth-child(4) {<]*/
+    /**
+     * Starts the animation of the third dot
+     * with a delay of .4s, otherwise all dots
+     * would animate at the same time
+     */
+    /*[>animation-delay: 1.5s;<]*/
+/*[>}<]*/
 
 /* SUCCESSFULLY CENTERED DIVS HORIZONTALLY ADN VERTICALLY */
 .option-row {

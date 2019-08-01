@@ -220,6 +220,9 @@ $('#listenVoiceBtn').on( 'click', function() {
 
                 function onRecord() {
 
+                    // remove speech buuble if it is up
+                    $('#speechBubbleCont').hide();
+
                     // this is to identify main recording and allow return of mic button if user says nothing
                     classVariableDict.mainRecord = true;
                     //recognition.start();

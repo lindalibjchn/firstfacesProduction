@@ -103,7 +103,7 @@ $('#forwardErrorSelection').click(function(){
  
 
     //cahneg tias textbox
-    //$('#tia-speech-box').text("Select an error to correct it");
+    //$('#speakingWordsInside').text("Select an error to correct it");
     $('#backCorrection').show();
 
     animate_open_overlay(classVariableDict.uncorrectedErrors[0]);
@@ -147,7 +147,7 @@ function correctError(idx){
     $('#overlayErrorText').text(errText);
     $('#centeredErrorText').text(errText);
     //Have Tia change speech box
-    //$('#tia-speech-box').text("Please enter what this is meant to be");
+    //$('#speakingWordsInside').text("Please enter what this is meant to be");
 };
 
 $('#closeOverlay').click(function(){
@@ -155,7 +155,7 @@ $('#closeOverlay').click(function(){
     $('#overlayTextBox').empty();
     $('#overlayTextBox').append('<span id="typeHereOverlay">Type Here!</span>');
 
-    //$('#tia-speech-box').text("Select an error to correct it");
+    //$('#speakingWordsInside').text("Select an error to correct it");
 
 });
 
@@ -170,7 +170,7 @@ $('#backErrorSelection').click(function(){
     $('.selected-word').removeClass("selected-word");
 
     //reset text
-    //$('#tia-speech-box').text("Is this what you meant to say?"); 
+    //$('#speakingWordsInside').text("Is this what you meant to say?"); 
     
     //reset buttons
     $('#talkBtn').show();
@@ -259,7 +259,7 @@ function doneError(){
     
         classVariableDict.uncorrectedErrors = classVariableDict.uncorrectedErrors.filter(e => e !== "upper_"+idx);                                                                             
 
-    //$('#tia-speech-box').text("Select an error to correct!");
+    //$('#speakingWordsInside').text("Select an error to correct!");
     //closeStage3();
     //Check if all errors are corrected
     if($('.uncorrected-error').length == 0){
@@ -301,7 +301,7 @@ $('#backCorrection').click(function(){
 
 
     // reset tia speech
-    //$('#tia-speech-box').text("Select the incorrect words");
+    //$('#speakingWordsInside').text("Select the incorrect words");
     // reset buttons
     $('#talkBtn').show();
     $('#backCorrection').hide();
@@ -322,7 +322,7 @@ $('#closeOverlayArea').click(function(){
    $('#correctionOverlay').hide();
    $('#overlayTextBox').empty();
    //$('#overlayTextBox').append('<span id="typeHereOverlay">Type Here!</span>');       
-   //$('#tia-speech-box').text("Select an error to correct!"); 
+   //$('#speakingWordsInside').text("Select an error to correct!"); 
    
    if(classVariableDict.stage3){
         closeStage3();
