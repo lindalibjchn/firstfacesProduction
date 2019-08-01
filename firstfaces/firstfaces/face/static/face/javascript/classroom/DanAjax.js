@@ -165,11 +165,20 @@ function correctError(idx){
     //Set necessary variables
     classVariableDict.startIDX = idx.split('_')[1]
     classVariableDict.endIDX = classVariableDict.startIDX 
-    
-    if(errText.trim().length > 21){
-        $('#centeredErrorText').removeClass('bigText').addClass('mediumText');
-        $('#topCentText').removeClass('bigText').addClass('mediumText');
-        $('#bottomCent').removeClass('bigText').addClass('mediumText');
+    if(errText.trim().length > 40){
+        $('#centeredErrorText').removeClass().addClass('smallText');
+        $('#topCentText').removeClass().addClass('smallText');  
+        $('#bottomCent').removeClass().addClass('smallText');   
+    }
+    else if(errText.trim().length > 21 ){
+        $('#centeredErrorText').removeClass().addClass('mediumText');
+        $('#topCentText').removeClass().addClass('mediumText');
+        $('#bottomCent').removeClass().addClass('mediumText');
+    }
+    else{
+        $('#centeredErrorText').removeClass().addClass('bigText');
+        $('#topCentText').removeClass().addClass('bigText');      
+        $('#bottomCent').removeClass().addClass('bigText');       
     }
 
     $('#overlayErrorText').text(errText);
@@ -734,7 +743,7 @@ function submitKeyboard(){
 
             $("#overlayErrorBox").hide();                                                    
             $("#overlayTextBox").hide();
-            $("#eraatCont").show();
+            $("#praatCont").show();
             $("#submitOverlay").hide();
             $("#reRecordBtn").css("background-color","blue");
            
@@ -811,7 +820,7 @@ function submitRecording(){
 function correct_attempt(){
     var middle = $('#ref_btn').offset().top;
     var bottom = $('#hyp_btn').offset().top;
-    $('#sliderHolder').fadeOut(150);
+    $('#sliderHolder').css('visibility','none');
     var diff = (bottom-middle)/2;
     classVariableDict.animationDistance = diff;
     $('#ref_text_layer').hide();
@@ -835,7 +844,7 @@ function correct_attempt(){
     $('#reRecordBtn').prop( "disabled", true );
     setTimeout(function(){
     //show submit
-    $('#sliderHolder').show();
+    $('#sliderHolder').css('visibility','visible');
     $('#submitOverlay').show();
     $("#submitOverlay").off("click");                                                
     $("#submitOverlay").click(submitCorrect);
@@ -845,7 +854,7 @@ function correct_attempt(){
 function incorrect_attempt(){
     var middle = $('#ref_btn').offset().top;                                                 
     var bottom = $('#hyp_btn').offset().top;
-    $('#sliderHolder').fadeOut(150);
+    $('#sliderHolder').css('visibility','none');
     var diff = (bottom-middle)/2;
     disableBtns();
     $('#ref_text_layer').hide();
@@ -867,7 +876,7 @@ function incorrect_attempt(){
         $("#ref_text_layer").fadeIn(800);
         $("#hyp_text_layer").fadeIn(800);
         enableBtns();
-        $('#sliderHolder').fadeIn(800);
+        $('#sliderHolder').css('visibility','visible');
     },2000)
 }
 
@@ -1048,6 +1057,8 @@ $('#exitOverlay').click(function(){
     document.getElementById('audio_'+classVariableDict.startIDX).src = document.getElementById('refAudio').src;
     document.getElementById('audio_'+classVariableDict.startIDX).volume = 0.7;
     doneError();
+    $('#backCorrection').prop('disabled',false);
+    $('#recordVoiceBtn').prop('disabled',false);
 });
 
 
