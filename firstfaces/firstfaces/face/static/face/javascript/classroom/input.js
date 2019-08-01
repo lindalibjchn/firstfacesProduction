@@ -9,7 +9,7 @@ function initInputReady( from ) {
     //$('#recordBtnsContainer').show();
     
     // removes speech bubble after user has a few second to read it
-    removeSpeechBubble( tiaTimings.changeExpression * 2000 );                   
+    //removeSpeechBubble( tiaTimings.changeExpression * 2000 );                   
     if ( classVariableDict.tutorial === false ) {
 
         $('.record-btn').prop( "disabled", false );

@@ -10,11 +10,11 @@ function runAfterJudgement() {
     let nodShakeDur = 0;
     if ( classVariableDict.last_sent.nod !== null ) {
     
-        nodShakeDur = 3 * parseFloat( getNodSpeedInString() ) * 1000 + 500;
+        nodShakeDur = 4 * parseFloat( getNodSpeedInString() ) * 1000 + 500;
 
     } else if ( classVariableDict.last_sent.judgement === "D" ) {
 
-        nodShakeDur = 3 * 0.75 * 1000 + 500;
+        nodShakeDur = 4 * 1000 + 500;
 
     }
 
@@ -207,45 +207,48 @@ function displaySpeechBubblePrompt() {
     $('#speakingWords').hide()
     $('#speechBubbleCont').fadeIn( tiaTimings.speechBubbleFadeInDuration );
 
-    if ( classVariableDict.last_sent.judgement === "P" ) {
+    $('#speakingWordsInside').text( classVariableDict.tiaToSay );
+    
+    //if ( classVariableDict.last_sent.judgement === "P" ) {
             
-        $('#speakingWordsInside').text( classVariableDict.last_sent.prompt );
+        //$('#speakingWordsInside').text( classVariableDict.last_sent.prompt );
 
-    } else if ( classVariableDict.last_sent.judgement === "B" ) {
+    //} else if ( classVariableDict.last_sent.judgement === "B" ) {
 
-        let text = createBetterTextForPromptBox( classVariableDict.last_sent );
-        $('#speakingWordsInside').text( text );
+        //let text = createBetterTextForPromptBox( classVariableDict.last_sent );
+        //$('#speakingWordsInside').text( text );
     
-    } else if ( classVariableDict.last_sent.judgement === "M" ) {
+    //} else if ( classVariableDict.last_sent.judgement === "M" ) {
 
-        let text = createMeanByTextForPromptBox( classVariableDict.last_sent );
-        $('#speakingWordsInside').text( text );
+        //let text = createMeanByTextForPromptBox( classVariableDict.last_sent );
+        //$('#speakingWordsInside').text( text );
         
-    } else if ( classVariableDict.last_sent.judgement === "3" ) {
+    //} else if ( classVariableDict.last_sent.judgement === "3" ) {
 
-        let text = "There are more than 3 mistakes in your sentence. Could you simplify and try again?";
-        $('#speakingWordsInside').text( text );
+        //let text = "There are more than 3 mistakes in your sentence. Could you simplify and try again?";
+        //$('#speakingWordsInside').text( text );
 
-    } else if ( classVariableDict.last_sent.judgement === "D" ) {
+    //} else if ( classVariableDict.last_sent.judgement === "D" ) {
 
-        let text = "I'm sorry but I don't understand what you said.";
-        $('#speakingWordsInside').text( text );
+        //let text = "I'm sorry but I don't understand what you said.";
+        //$('#speakingWordsInside').text( text );
     
-    }
+    //}
 
     setTimeout( function() {
 
         $('#speakingWords').fadeIn( tiaTimings.speechBubbleFadeInDuration );
 
-        setTimeout( function() {
+        recTimes.tiaStartTalking = Date.now() / 1000;
+        synthesisObject.endCount = synthesisObject.synthAudio.duration * 60* 0.75;
+        
+        tiaSpeakCount = 0;
+        initTalk();
 
-            recTimes.tiaStartTalking = Date.now() / 1000;
-            synthesisObject.synthAudio.play()
-            synthesisObject.synthAudio.onended = returnToLaptop;
-            classVariableDict.promptSpeaking = true;
+        synthesisObject.synthAudio.play()
+        synthesisObject.synthAudio.onended = returnToLaptop;
+        classVariableDict.promptSpeaking = true;
             
-        }, tiaTimings.delayAfterTextShowsToBeginSpeaking );
-
     }, tiaTimings.toTalkExpressionDuration * 1000 );
 
 }

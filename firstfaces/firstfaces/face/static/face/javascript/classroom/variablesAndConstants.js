@@ -59,12 +59,11 @@ function setTimings() {
         tiaTimings.changeExpressionConfused = 0.75;
         tiaTimings.movementToConfused = 1;
         tiaTimings.speechBubbleFadeInDuration = 500;
-        tiaTimings.speechBubbleFadeOutDuration = 1000;
+        tiaTimings.speechBubbleFadeOutDuration = 500;
         tiaTimings.toTalkExpressionDuration = 1;
         tiaTimings.delayUntilToTalkPos = 500;
         tiaTimings.delayBeforeReturnToLaptop = 1000;
         tiaTimings.delayAfterBubbleShowUntilSpeak = 1000;
-        tiaTimings.delayAfterTextShowsToBeginSpeaking = 750;
         tiaTimings.turnToBoard = 2;
         tiaTimings.cameraTurnToBoard = 2;
         tiaTimings.armIndicate = 1;

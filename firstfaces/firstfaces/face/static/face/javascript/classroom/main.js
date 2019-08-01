@@ -221,7 +221,7 @@ $('#listenVoiceBtn').on( 'click', function() {
                 function onRecord() {
 
                     // remove speech buuble if it is up
-                    $('#speechBubbleCont').hide();
+                    removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
 
                     // this is to identify main recording and allow return of mic button if user says nothing
                     classVariableDict.mainRecord = true;
@@ -848,10 +848,11 @@ function judgementReceived( sentMeta ) {
     classVariableDict.sentences[ newInd ].prompt = sentMeta.prompt;
 
     classVariableDict.id_of_last_sent = newInd;
+    classVariableDict.tiaToSay = sentMeta.tiaToSay;
     
     classVariableDict.last_sent = sentMeta;
     classVariableDict.last_sent.sentence = sentMeta.sentence;
-    classVariableDict.last_sent.indexes = JSON.parse( sentMeta.indexes );
+    classVariableDict.last_sent.indexes = sentMeta.indexes;
     classVariableDict.last_sent.prompt = sentMeta.prompt;
 
     // keeps state of sentence

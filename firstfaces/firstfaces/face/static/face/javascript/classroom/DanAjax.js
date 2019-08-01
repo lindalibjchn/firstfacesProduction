@@ -106,7 +106,6 @@ $('#forwardErrorSelection').click(function(){
 
     classVariableDict.errors = {};
  
-
     //cahneg tias textbox
     //$('#tia-speech-box').text("Select an error to correct it");
     //$('#backCorrection').show();

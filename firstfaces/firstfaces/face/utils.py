@@ -497,21 +497,23 @@ def get_text(sentence, judgement, prompt, indexes):
 
         unsure_strings = " "
 
-        inds = json.loads(indexes)
-        for i in range(len(inds)):
-            
+        for i in range(len(indexes)):
             if i != 0:
-
                 unsure_strings += " or "
+            unsure_word_list = []
+            for j in indexes[i]:
+                unsure_word_list.append(sentence[j])
+            unsure_strings += "'" + ''.join(unsure_word_list) + "'"
 
-            unsure_word_list = [sentence[j] for j in inds[i]]
-            print('unsure_word_list:', unsure_word_list)
-            unsure_strings += ''.join(unsure_word_list)
-            print('unsure_strings:', unsure_strings)
+        tia_to_say = "I'm not sure what you mean by" + unsure_strings + ". Could you rephrase that sentence?"
 
-        tia_to_say = "I'm not sure what you mean by '" + unsure_strings + "'. Could you rephrase that sentence?"
+    elif judgement == "B":
 
-    print('tia_to_say:', tia_to_say)
+        better_bit = "".join([sentence[k] for k in indexes[0]])
+
+        tia_to_say = "It would be more natural to say '" + prompt + "', instead of '" + better_bit + "'"
+
+    return tia_to_say
 
 
 def get_tia_tts_for_prompts_early(text, sess_id):
@@ -531,8 +533,8 @@ def get_tia_tts_for_prompts_early(text, sess_id):
 
     audio_config = texttospeech.types.AudioConfig(
         audio_encoding=texttospeech.enums.AudioEncoding.MP3,
-        pitch = 0,
-        speaking_rate = 1,
+        pitch = 1,
+        speaking_rate = 0.9,
         )
 
     try:
