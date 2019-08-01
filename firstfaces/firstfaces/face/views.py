@@ -669,14 +669,15 @@ def error_recording_used(request):
 def do_allignment(request):
     trans= request.POST['trans']
     audioPath = request.POST['fn']
+    sid = request.POST['sessionID']
     print('\naudioPath:', audioPath)
-    f = open(get_text_path(),"w+")                                               
+    f = open(get_text_path(sid),"w+")                                               
     for word in trans.split():                                                   
         f.write(word.lower()+"\n")                                               
     f.close()                                                         
-    textPath = get_text_path()                                                   
+    textPath = get_text_path(sid)                                                   
     extra_str = '"task_language=eng|os_task_file_format=json|is_text_type=plain"'
-    outPath = get_out_path()                                                     
+    outPath = get_out_path(sid)                                                     
     aeneasPath = get_aeneas_path()                                               
     cwd = os.getcwd()                                                            
     command = 'python3 -m aeneas.tools.execute_task '+ settings.BASE_DIR + '/' + audioPath+" "+textPath+" "+extra_str+" "+outPath+" >/dev/null 2>&1"            
@@ -738,8 +739,7 @@ def error_typing_used(request):
 
     endid = idx + (len(ERR_trans.strip().split(" "))-1) 
     
-
-    ts = get_timestamps(idx,endid)
+    ts = get_timestamps(idx,endid, sid)
     fn = request.POST['sessionID']+"_"+timezone.now().strftime( '%H-%M-%S' )+"_error.wav"
     errorPath = play_errored_text(audioPath,ts,fn)
     cut_wav(errorPath)

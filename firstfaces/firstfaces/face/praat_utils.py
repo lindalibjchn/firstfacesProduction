@@ -61,7 +61,7 @@ def get_error_audio_path(filename):
 def ref_path(fn):
     return "media/wav/"+fn
 
-def  get_text_path(sid):
+def get_text_path(sid):
     path = os.path.join(settings.BASE_DIR, 'face', 'text_files','allign_'+str(sid)+'.txt')
     return path
 
