@@ -755,7 +755,6 @@ function submitKeyboard(){
 
             $("#overlayErrorBox").hide();                                                    
             $("#overlayTextBox").hide();
-           
             $("#praatCont").fadeIn(800);
             $("#submitOverlay").hide();
             $("#reRecordBtn").css("background-color","blue");
@@ -1072,6 +1071,7 @@ $('#exitOverlay').click(function(){
     doneError();
     $('#backCorrection').prop('disabled',false);
     $('#recordVoiceBtn').prop('disabled',false);
+    $('#talkBtn').prop('disabled', false);
 });
 
 
