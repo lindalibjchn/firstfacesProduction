@@ -16,17 +16,7 @@ function tiaSpeak( tiaSays, needSendTTS=true, callback ) {
 
     }
 
-    //if ( cameraObject.currentState === "laptop" ) {
-
-        //displaySpeechBubble( "low", tiaTimings.speechBubbleFadeInDuration, 0.9 );
-        //$('#speakingWordsLaptop').fadeIn( tiaTimings.speechBubbleFadeInDuration );
-
-    //} else {
-
-        //displaySpeechBubble( "high", tiaTimings.speechBubbleFadeInDuration, 0.9 );
-    $('#speakingWordsLaptop').fadeIn( tiaTimings.speechBubbleFadeInDuration );
-
-    //}
+    $('#speakingWords').fadeIn( tiaTimings.speechBubbleFadeInDuration );
 
     setTimeout( function() {
 

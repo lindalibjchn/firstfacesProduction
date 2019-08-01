@@ -519,6 +519,20 @@ function returnFromThinking() {
 
 } 
 
+function removeSpeechBubble( dur ) {
+
+    $('#speechBubbleCont').fadeOut( dur );
+
+    setTimeout( function() {
+
+        //$('.speech-bubbles').hide();
+        $('.speaking-words-inside').text('');
+        $('.speaking-words-inside').hide();
+    
+    }, dur )
+
+}
+
 
 
 

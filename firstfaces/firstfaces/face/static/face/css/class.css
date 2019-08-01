@@ -1480,7 +1480,7 @@ button:active {
 
 /*}*/
 
-.speaking-words {
+#speakingWords {
 
     /*display: none;*/
     /*background-color: red;*/
@@ -1491,7 +1491,7 @@ button:active {
 
 }
 
-.speaking-words-inside {
+#speakingWordsInside {
 
     /*display: none;*/
     /*position: absolute;*/
@@ -1499,12 +1499,12 @@ button:active {
     font-size:1.2em;
 }
 
-#speakingWordsLaptop {
+/*#speakingWordsLaptop {*/
 
-    /*display: none;*/
-    /*top: 12%;*/
+    /*[>display: none;<]*/
+    /*[>top: 12%;<]*/
 
-}
+/*}*/
 
 /*#speakingWordsTia {*/
 
