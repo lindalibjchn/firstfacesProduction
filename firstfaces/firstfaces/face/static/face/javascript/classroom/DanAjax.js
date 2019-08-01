@@ -152,6 +152,19 @@ $('#bottomCent').keyup(function(event){
     else{
         $('#spectrogramBtn').hide(); 
     }
+
+    if($('#bottomCent').text().trim().length > 40 || $('#centeredErrorText').trim().length > 40 ){
+        $('#centeredErrorText').removeClass().addClass('smallText'); 
+        $('#topCentText').removeClass().addClass('smallText');       
+        $('#bottomCent').removeClass().addClass('smallText');        
+    }
+    else if($('#bottomCent').text().trim().length > 25 || $('centeredErrorText').trim().length > 25 ){      
+        $('#centeredErrorText').removeClass().addClass('mediumText');
+        $('#topCentText').removeClass().addClass('mediumText');      
+        $('#bottomCent').removeClass().addClass('mediumText');       
+
+    }
+
 });
 
 
@@ -743,7 +756,8 @@ function submitKeyboard(){
 
             $("#overlayErrorBox").hide();                                                    
             $("#overlayTextBox").hide();
-            $("#praatCont").show();
+           
+            $("#praatCont").fadeIn(800);
             $("#submitOverlay").hide();
             $("#reRecordBtn").css("background-color","blue");
            
