@@ -479,10 +479,45 @@ def check_if_username_is_unique( name ):
 
     # return prev_test_scores
 
-def get_tia_tts_for_prompts_early(text, sent_id):
+def get_text(sentence, judgement, prompt, indexes):
 
-    print('\ntext:', text)
-    print('\nsent_id:', sent_id)
+    if judgement == "P":
+
+        tia_to_say = prompt
+
+    elif judgement == "D":
+
+        tia_to_say = "I'm sorry but I don't understand what you mean"
+
+    elif judgement == "3":
+
+        tia_to_say = " There were more than 3 errors in your sentence. Please simplify and try again"
+
+    elif judgement == "M":
+
+        unsure_strings = " "
+
+        for i in range(len(indexes)):
+            if i != 0:
+                unsure_strings += " or "
+            unsure_word_list = []
+            for j in indexes[i]:
+                unsure_word_list.append(sentence[j])
+            unsure_strings += "'" + ''.join(unsure_word_list) + "'"
+
+        tia_to_say = "I'm not sure what you mean by" + unsure_strings + ". Could you rephrase that sentence?"
+
+    elif judgement == "B":
+
+        better_bit = "".join([sentence[k] for k in indexes[0]])
+
+        tia_to_say = "It would be more natural to say '" + prompt + "', instead of '" + better_bit + "'"
+
+    return tia_to_say
+
+
+def get_tia_tts_for_prompts_early(text, sess_id):
+
     speaking_voice = 'en-GB-Wavenet-C'
 
     client = texttospeech.TextToSpeechClient()
@@ -498,8 +533,8 @@ def get_tia_tts_for_prompts_early(text, sent_id):
 
     audio_config = texttospeech.types.AudioConfig(
         audio_encoding=texttospeech.enums.AudioEncoding.MP3,
-        pitch = 0,
-        speaking_rate = 1,
+        pitch = 1,
+        speaking_rate = 0.9,
         )
 
     try:
@@ -508,7 +543,7 @@ def get_tia_tts_for_prompts_early(text, sent_id):
         print('response:', response)
 
         # don't need to keep all synths for class. Remember to delete this when session ends.
-        synthURL = 'media/synths/sent_' + str(sent_id) + '.wav' # + '_' + str(int(time.mktime((timezone.now()).timetuple())))
+        synthURL = 'media/synths/sent_' + str(sess_id) + '.wav' # + '_' + str(int(time.mktime((timezone.now()).timetuple())))
         print('rsynthURL:', synthURL)
         with open( os.path.join(settings.BASE_DIR, synthURL ), 'wb') as out:
             out.write(response.audio_content)

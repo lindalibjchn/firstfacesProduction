@@ -297,6 +297,7 @@ function checkJudgement( sentId ) {
         url: "/check_judgement",
         type: "GET",
         data: { 
+            'sessId': classVariableDict.session_id,
             'sentId': sentId,
         },
         success: function(json) {

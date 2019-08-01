@@ -1,5 +1,14 @@
+<<<<<<< HEAD
+the
+cat
+sat
+on
+the
+mat
+=======
 1
 and
 2
 and
 3
+>>>>>>> 4f64b9dcd471a4445dad1485d281adec81a1cda2

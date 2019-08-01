@@ -9,7 +9,7 @@ function initInputReady( from ) {
     //$('#recordBtnsContainer').show();
     
     // removes speech bubble after user has a few second to read it
-    removeSpeechBubble( tiaTimings.changeExpression * 2000 );                   
+    //removeSpeechBubble( tiaTimings.changeExpression * 2000 );                   
     if ( classVariableDict.tutorial === false ) {
 
         $('.record-btn').prop( "disabled", false );
@@ -518,6 +518,20 @@ function returnFromThinking() {
     }, tiaTimings.changeExpression * 250 );
 
 } 
+
+function removeSpeechBubble( dur ) {
+
+    $('#speechBubbleCont').fadeOut( dur );
+
+    setTimeout( function() {
+
+        //$('.speech-bubbles').hide();
+        $('.SpeakingWordsInside').text('');
+        $('.SpeakingWordsInside').hide();
+    
+    }, dur )
+
+}
 
 
 

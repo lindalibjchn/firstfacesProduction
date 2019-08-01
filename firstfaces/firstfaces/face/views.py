@@ -669,15 +669,14 @@ def error_recording_used(request):
 def do_allignment(request):
     trans= request.POST['trans']
     audioPath = request.POST['fn']
-    sid = request.POST['sessionID']
     print('\naudioPath:', audioPath)
-    f = open(get_text_path(sid),"w+")                                               
+    f = open(get_text_path(),"w+")                                               
     for word in trans.split():                                                   
         f.write(word.lower()+"\n")                                               
     f.close()                                                         
-    textPath = get_text_path(sid)                                                   
+    textPath = get_text_path()                                                   
     extra_str = '"task_language=eng|os_task_file_format=json|is_text_type=plain"'
-    outPath = get_out_path(sid)                                                     
+    outPath = get_out_path()                                                     
     aeneasPath = get_aeneas_path()                                               
     cwd = os.getcwd()                                                            
     command = 'python3 -m aeneas.tools.execute_task '+ settings.BASE_DIR + '/' + audioPath+" "+textPath+" "+extra_str+" "+outPath+" >/dev/null 2>&1"            
@@ -690,7 +689,7 @@ def do_allignment(request):
 
 
 def get_remaining_audio(request):
-    sid = request.POST['sessionID'];
+   
     ids = ast.literal_eval("["+str(request.POST['ids'])+']')
     poss = ast.literal_eval("["+str(request.POST['poss'])+']')
     paths = []
@@ -730,6 +729,12 @@ def error_typing_used(request):
     filename = af.audio.name
     trans = ast.literal_eval(af.alternatives)[0]["transcript"]
     ## generate file for forced allignment
+    start = time.time()
+    f = open(get_text_path(),"w+")
+    for word in trans.split():
+        f.write(word.lower()+"\n")
+    f.close()
+    #convert audio to wav
     audioPath = convert_audio(filename)
     #Get audio
     start = time.time()
@@ -738,8 +743,9 @@ def error_typing_used(request):
     
 
     endid = idx + (len(ERR_trans.strip().split(" "))-1) 
+    
 
-    ts = get_timestamps(idx,endid,session_id)
+    ts = get_timestamps(idx,endid)
     fn = request.POST['sessionID']+"_"+timezone.now().strftime( '%H-%M-%S' )+"_error.wav"
     errorPath = play_errored_text(audioPath,ts,fn)
     cut_wav(errorPath)
@@ -1070,6 +1076,7 @@ def timings(request):
 def check_judgement(request):
 
     sent_id = int(request.GET['sentId'])
+    sess_id = int(request.GET['sessId'])
     synth_url = ""
     count = 0;
     while True:
@@ -1079,22 +1086,38 @@ def check_judgement(request):
         count += 1
 
         s_new = TempSentence.objects.get(pk=sent_id)
-        
+        tia_to_say = None
+
         if s_new.judgement != None:
 
-            if s_new.judgement == "C":
+            if s_new.judgement in ["C", "X"]:
+                
                 received_judgement = True
                 break
 
-            elif s_new.judgement in ["M", "B", "P"]:
+            elif s_new.judgement == "P":
+
+                if s_new.prompt != None:
+                    tia_to_say = s_new.prompt
+                    synth_url = get_tia_tts_for_prompts_early(tia_to_say, sess_id)
+                    received_judgement = True
+                    break
+
+            else:
+
+                if s_new.judgement in ["M", "B", "P"]:
                 
-                print('\nin M B P\n')
-                if s_new.indexes != None or s_new.prompt != None:
+                    if s_new.indexes != None or s_new.prompt != None:
 
-                    print('\npasseed the indexes and prompts\n')
-                    synth_url = get_tia_tts_for_prompts_early(s_new.prompt, s_new.id)
-                    print('synth_url:', synth_url)
+                        tia_to_say = get_text(json.loads(s_new.sentence), s_new.judgement, s_new.prompt, json.loads(s_new.indexes))
+                        synth_url = get_tia_tts_for_prompts_early(tia_to_say, sess_id)
+                        received_judgement = True
+                        break
 
+                else: # 'D' and '3'
+
+                    tia_to_say = get_text(json.loads(s_new.sentence), s_new.judgement, s_new.prompt, s_new.indexes)
+                    synth_url = get_tia_tts_for_prompts_early(tia_to_say, sess_id)
                     received_judgement = True
                     break
 
@@ -1120,6 +1143,7 @@ def check_judgement(request):
         'show_correction': s_new.show_correction,
         'receivedJudgement': received_judgement,
         'synthURL': synth_url,
+        'tiaToSay': tia_to_say,
     }
 
     response_data = {

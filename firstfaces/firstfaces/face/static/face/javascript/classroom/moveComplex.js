@@ -491,6 +491,7 @@ function nod( main ) {
         } else {
 
             nodObject.iter = 0;
+            movementController( movements.blank, nodObject.secs, nodObject.secs );
 
         }
 
@@ -552,6 +553,7 @@ function shake( main ) {
         } else {
 
             shakeObject.iter = 0;
+            movementController( movements.blank, shakeObject.secs, shakeObject.secs );
 
         }
 
@@ -784,7 +786,7 @@ function dealWithBlankTranscription() {
         classVariableDict.mainRecord = false;
 
         $('#recordBtnsContainer').fadeIn();
-        removeSpeechBubble();
+        //removeSpeechBubble();
 
     } );
 
