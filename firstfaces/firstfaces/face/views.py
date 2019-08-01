@@ -592,7 +592,6 @@ def store_topic(request):
     return JsonResponse(response_data)    
 
 def store_error_blob(request):
-
     # code.interact(local=locals());
     blob = request.FILES['data'] 
     startID = request.POST['start_idx']
@@ -693,10 +692,14 @@ def do_allignment(request):
 def get_remaining_audio(request):
     sid = request.POST['sessionID'];
     ids = ast.literal_eval("["+str(request.POST['ids'])+']')
+    poss = ast.literal_eval("["+str(request.POST['poss'])+']')
     paths = []
+    count=0
     for i in ids:
         idx = i
-        ts = get_timestamps(idx,idx,sid)
+        pos =  poss[count]
+        count+=1
+        ts = get_timestamps(pos,pos,sid)
         audioPath = request.POST['fn'];
         fn = "part_"+str(i)+"_"+timezone.now().strftime( '%H-%M-%S' )+"_aud.wav"
         errorPath = play_errored_text(audioPath,ts,fn)

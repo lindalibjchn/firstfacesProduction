@@ -234,6 +234,7 @@ $('#listenVoiceBtn').on( 'click', function() {
                     } else if ( classVariableDict.stage3 ) {
                     
                         listenToSpeechSynthesis( 2 );
+                        $('#backOverlay').hide();
 
                     } else {
 

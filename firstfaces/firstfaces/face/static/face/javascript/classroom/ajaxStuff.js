@@ -157,10 +157,29 @@ function sendBlobToServer( blob_to_send ) {
 
 }
 
+function correctids(ids){
+ var i;
+ var out =[];
+ for(i=0;i<ids.length;i++){
+    out.push(correctID(ids[i]));
+ }
+ return out
+}
+function correctID(id){
+    var count = 0;
+    var i;
+    for(i=0;i < id;i++){
+        count += $('#upper_'+i).text().trim().split(" ").length;
+    }
+    return count;
+}
+
+
 
 function getRemainingAudio(){
     let fd = new FormData();  
     fd.append("ids",classVariableDict.correct_audio);
+    fd.append("poss", correctids(classVariableDict.correct_audio));
     fd.append("fn", classVariableDict.Aud_Fname);
     fd.append('sessionID',classVariableDict.session_id);
     $.ajax({                     

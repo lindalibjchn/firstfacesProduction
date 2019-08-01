@@ -52,13 +52,18 @@ $('#forwardErrorSelection').click(function(){
     var i = 0;
     classVariableDict.uncorrectedErrors = [];
     var classes = [];
-    var newTran = []; 
+    var newTran = [];
+    var tooLong = false;
     while(i < words.length){
         if(selected.includes(i)){
             var curStr = '';
             while(selected.includes(i)){
                 curStr = curStr + words[i] + " ";
                 i = i+1;
+            }
+            if(curStr.trim().length > 60){
+                tooLong = true;
+                break;
             }
             newTran.push(curStr);
             classes.push("uncorrected-error");
@@ -69,7 +74,19 @@ $('#forwardErrorSelection').click(function(){
         }
         
     }
-    
+    if(tooLong){
+        $('#forwardErrorSelection').hide();
+        $('#upperSentenceHolder').empty();
+        $('#lowerSentenceHolder').empty();
+        
+        tiaSpeak("That is too many words, please choose again",true,function(){
+            reset_text(classVariableDict.alternatives['0'].transcript);
+            $('#talkBtn').show();
+            $('#recordVoiceBtn').show();
+            $('#listenVoiceBtn').show();
+        });
+    }
+    else{
     //add audio tags
      
         
@@ -111,7 +128,8 @@ $('#forwardErrorSelection').click(function(){
     //$('#tia-speech-box').text("Select an error to correct it");
     //$('#backCorrection').show();
 
-    animate_open_overlay(classVariableDict.uncorrectedErrors[0]);
+        animate_open_overlay(classVariableDict.uncorrectedErrors[0]);
+    }
 });
 
 
@@ -143,11 +161,16 @@ function correctError(idx){
     openOverlay();
    
      //Populate top of overaly with error text
-    var errText = $('#'+idx).text();
+    var errText = $('#'+idx).text().trim();
     //Set necessary variables
     classVariableDict.startIDX = idx.split('_')[1]
     classVariableDict.endIDX = classVariableDict.startIDX 
     
+    if(errText.trim().length > 21){
+        $('#centeredErrorText').removeClass('bigText').addClass('mediumText');
+        $('#topCentText').removeClass('bigText').addClass('mediumText');
+        $('#bottomCent').removeClass('bigText').addClass('mediumText');
+    }
 
     $('#overlayErrorText').text(errText);
     $('#centeredErrorText').text(errText);
@@ -436,10 +459,31 @@ function sendAttemptBlob( new_blob ){
         success: function(json){
            //returnFromListenToSpeechSynthesis();
            $('#reRecordBtn').show();
+           $('#backOverlay').show();
            $("#reRecordBtn").prop( "disabled", false );
            if(json.trans.trim() != ""){
            document.getElementById("hypImg").src = "http://127.0.0.1:8000/"+json.image_url;
            $("#hyp_text").text(json.trans);
+           
+           err_trans = $('#ref_text').text().trim();
+           trans = json.trans;
+           if(err_trans.trim().length <= 18 && trans.trim().length <= 18){ 
+                $("#hyp_text").removeClass().addClass('bigText');           
+                $("#ref_text").removeClass().addClass('bigText');           
+           }                                                               
+           else{                                                           
+                if(err_trans.trim().length > 25 || trans.lenght > 25){      
+                    $("#hyp_text").removeClass().addClass('smallText');     
+                    $("#ref_text").removeClass().addClass('smallText');     
+                }                                                           
+                else{                                                       
+                    $("#hyp_text").removeClass().addClass('mediumText');    
+                    $("#ref_text").removeClass().addClass('mediumText');    
+                }                                                           
+            }                                                               
+
+
+
            document.getElementById('hypAudio').src = "http://127.0.0.1:8000/"+json.audio_url;
             
            if(json.correct){
@@ -521,6 +565,7 @@ function sendErrorBlobToServer( new_blob ){
     fd.append('error_list',JSON.stringify(classVariableDict.errors));
     fd.append('start_idx',classVariableDict.startIDX);
     fd.append('audio_id',classVariableDict.currentAudID);
+    fd.append('trans', $('#centeredErrorText').text().trim());
 
     $.ajax({
         url: "/store_error_blob",
@@ -671,10 +716,25 @@ function submitKeyboard(){
             
             $("#hyp_text").text(err_trans);
             $("#ref_text").text(trans);
+            
+            if(err_trans.trim().length <= 18 && trans.trim().length <= 18){
+                $("#hyp_text").removeClass().addClass('bigText');
+                $("#ref_text").removeClass().addClass('bigText'); 
+            }
+            else{
+                if(err_trans.trim().length > 25 || trans.lenght > 25){
+                    $("#hyp_text").removeClass().addClass('smallText');
+                    $("#ref_text").removeClass().addClass('smallText');
+                }
+                else{
+                    $("#hyp_text").removeClass().addClass('mediumText');
+                    $("#ref_text").removeClass().addClass('mediumText');
+                }
+            }
 
             $("#overlayErrorBox").hide();                                                    
             $("#overlayTextBox").hide();
-            $("#praatCont").show();
+            $("#eraatCont").show();
             $("#submitOverlay").hide();
             $("#reRecordBtn").css("background-color","blue");
            
@@ -751,6 +811,7 @@ function submitRecording(){
 function correct_attempt(){
     var middle = $('#ref_btn').offset().top;
     var bottom = $('#hyp_btn').offset().top;
+    $('#sliderHolder').fadeOut(150);
     var diff = (bottom-middle)/2;
     classVariableDict.animationDistance = diff;
     $('#ref_text_layer').hide();
@@ -774,6 +835,7 @@ function correct_attempt(){
     $('#reRecordBtn').prop( "disabled", true );
     setTimeout(function(){
     //show submit
+    $('#sliderHolder').show();
     $('#submitOverlay').show();
     $("#submitOverlay").off("click");                                                
     $("#submitOverlay").click(submitCorrect);
@@ -782,7 +844,8 @@ function correct_attempt(){
 
 function incorrect_attempt(){
     var middle = $('#ref_btn').offset().top;                                                 
-    var bottom = $('#hyp_btn').offset().top;                                                 
+    var bottom = $('#hyp_btn').offset().top;
+    $('#sliderHolder').fadeOut(150);
     var diff = (bottom-middle)/2;
     disableBtns();
     $('#ref_text_layer').hide();
@@ -804,6 +867,7 @@ function incorrect_attempt(){
         $("#ref_text_layer").fadeIn(800);
         $("#hyp_text_layer").fadeIn(800);
         enableBtns();
+        $('#sliderHolder').fadeIn(800);
     },2000)
 }
 
@@ -981,8 +1045,8 @@ function play_nxt(val){
 }
  
 $('#exitOverlay').click(function(){
-    alert("You have quit...Coward...");
     document.getElementById('audio_'+classVariableDict.startIDX).src = document.getElementById('refAudio').src;
+    document.getElementById('audio_'+classVariableDict.startIDX).volume = 0.7;
     doneError();
 });
 
