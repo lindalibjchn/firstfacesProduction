@@ -19,7 +19,9 @@ function doAllignment(){
     let fd = new FormData();                                                    
     fd.append('trans',classVariableDict.alternatives[0].transcript);                 
     fd.append('fn',classVariableDict.Aud_Fname);   
-                                                                                
+    fd.append('sessionID',classVariableDict.session_id);
+
+
     $.ajax({                                                                    
         url: "/do_allignment",                                             
         type: "POST",                                                           
@@ -39,6 +41,9 @@ function doAllignment(){
 
 
 $('#forwardErrorSelection').click(function(){
+    $('#recordVoiceBtn').hide();
+    $('#backCorrection').hide();
+    
     doAllignment();
     classVariableDict.usePlayAud = true;
     //loop through selected words, amalgamate sewuential errors into one
@@ -103,8 +108,8 @@ $('#forwardErrorSelection').click(function(){
  
 
     //cahneg tias textbox
-    //$('#speakingWordsInside').text("Select an error to correct it");
-    $('#backCorrection').show();
+    //$('#tia-speech-box').text("Select an error to correct it");
+    //$('#backCorrection').show();
 
     animate_open_overlay(classVariableDict.uncorrectedErrors[0]);
 });
@@ -124,10 +129,10 @@ $('#overlayTextBox').click(function(){
 
 $('#bottomCent').keyup(function(event){
     if($('#bottomCent').text() != ""){
-        $('#submitOverlay').show(); 
+        $('#spectrogramBtn').show(); 
     }
     else{
-        $('#submitOverlay').hide(); 
+        $('#spectrogramBtn').hide(); 
     }
 });
 
@@ -217,7 +222,8 @@ var currentId;
 function doneError(){
     var cor = $('#bottomCent').text().trim();
     var err = $('#centeredErrorText').text().trim();
-    
+    $('#recordVoiceBtn').hide();
+    $('#backCorrection').hide();
     var dif;
     var i;
     var pad = "";
@@ -264,10 +270,11 @@ function doneError(){
     //Check if all errors are corrected
     if($('.uncorrected-error').length == 0){
         $("#talkBtn").show();
+        $('#recordVoiceBtn').show();
+        $('#backCorrection').show();
     }
     else{
-        animate_open_overlay(classVariableDict.uncorrectedErrors[0])
-            
+        animate_open_overlay(classVariableDict.uncorrectedErrors[0]);   
     }
     classVariableDict.preSent = getSentence().trim();
     unmoveText(); 
@@ -345,6 +352,7 @@ $('#closeOverlayArea').click(function(){
 
 $('#keyboardOverlay').click(function(){
     moveText();
+    $('#submitOverlay').hide();
     //$('#centeredError').hide();
     //$('#submitOverlay').hide();
     //$('#overlayErrorBox').show();
@@ -354,8 +362,9 @@ $('#keyboardOverlay').click(function(){
     $("#bottomCent").empty();
     $("#bottomCent").attr("contenteditable","true")
     //make text area editable
-    $("#submitOverlay").off("click"); 
-    $("#submitOverlay").click(submitKeyboard);
+    $('#spectrogramBtn').hide();
+    $("#spectrogramBtn").off("click"); 
+    $("#spectrogramBtn").click(submitKeyboard);
     setTimeout(function(){
         $("#bottomCent").focus();
     },900);
@@ -382,6 +391,7 @@ $('#backOverlay').click(function(){
 });
 
 function openOverlay(){
+    $('#exitOverlay').hide();
     $('#praatCont').hide();
     $('#closeOverlay').hide();
     $('#submitOverlay').hide();
@@ -433,26 +443,38 @@ function sendAttemptBlob( new_blob ){
            document.getElementById('hypAudio').src = "http://127.0.0.1:8000/"+json.audio_url;
             
            if(json.correct){
-                $("#hyp_btn").css("background-color","green");
-                $("#hyp_invisible").css("background-color","green");
+                $('exitOverlay').hide();
                 correct_attempt();
+                setTimeout(function(){
+                    $("#hyp_btn").css("background-color","green");      
+                    $("#hyp_invisible").css("background-color","green");
+                },500);
+                
            }
            else{
                 var sim = parseFloat(json.sim);                
-                if(sim <= 0.15){               
-                    $('#hyp_btn').css("background-color","#ffaa00");                                            
-                    $('#hyp_invisible').css("background-color","#ffaa00");                                                
-                }else{
-                    $("#hyp_btn").css("background-color","red");
-                    $("#hyp_invisible").css("background-color","#ffcccb");
-                }
                 incorrect_attempt();
+                setTimeout(function(){
+                    if(sim <= 0.15){                                          
+                        $('#hyp_btn').css("background-color","#ffaa00");      
+                        $('#hyp_invisible').css("background-color","#ffaa00");
+                    }else{                                                    
+                        $("#hyp_btn").css("background-color","red");          
+                        $("#hyp_invisible").css("background-color","#ffcccb");
+                    }                                                         
+                },750);
            }
            classVariableDict.hypLenOriginal = json.hypLen;
            classVariableDict.hypLen = json.hypLen/classVariableDict.playspeed;
            //change speed of play
            document.getElementById('hypAudio').playbackRate = classVariableDict.playspeed;
            classVariableDict.attemptCount +=1;
+           if(classVariableDict.attemptCount >= 3 && !json.correct){
+                //Tia says you can give up
+                disableBtns();
+               tiaSpeak("If you are struggling you can try again another time", needSendTTS=true,enableBtns);
+               $('#exitOverlay').show();
+           }
           }
           else{
             dealWithBlankTranscription();      
@@ -593,6 +615,13 @@ $('#hyp_btn').click(function(){
 
 //Keyboard sumbit
 function submitKeyboard(){
+    //hide other buttons
+    $('#reRecordBtn').hide();
+    $('#keyboardOverlay').hide();
+    $('#submitOverlay').hide();
+    $('#spectrogramBtn').hide();
+    $('#backOverlay').prop("disabled",false);
+
     var trans = $('#bottomCent').text().trim();
     var err_trans = $('#centeredErrorText').text().trim();
     classVariableDict.attemptCount = 0; 
@@ -621,6 +650,8 @@ function submitKeyboard(){
         processData: false,
         contentType: false,
         success: function(json){
+            $('#reRecordBtn').show();
+
             var refAudioURL = "http://127.0.0.1:8000/" + json.ref_audio_url;
             var refAudio = document.getElementById("refAudio");
             refAudio.src = refAudioURL;
@@ -948,6 +979,11 @@ function play_audio(){
 function play_nxt(val){
     document.getElementById("audio_"+val).play();
 }
-
+ 
+$('#exitOverlay').click(function(){
+    alert("You have quit...Coward...");
+    document.getElementById('audio_'+classVariableDict.startIDX).src = document.getElementById('refAudio').src;
+    doneError();
+});
 
 

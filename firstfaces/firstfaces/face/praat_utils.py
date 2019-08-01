@@ -61,13 +61,12 @@ def get_error_audio_path(filename):
 def ref_path(fn):
     return "media/wav/"+fn
 
-def  get_text_path():
-    path = os.path.join(settings.BASE_DIR, 'face', 'text_files','allign.txt')
+def  get_text_path(sid):
+    path = os.path.join(settings.BASE_DIR, 'face', 'text_files','allign_'+str(sid)+'.txt')
     return path
 
-def get_out_path():
-    print('in get out path')
-    path = os.path.join(settings.BASE_DIR, 'face', 'text_files','map.json')
+def get_out_path(sid):
+    path = os.path.join(settings.BASE_DIR, 'face', 'text_files','map_'+str(sid)+'.json')
     print('path:', path)
     return path
 
@@ -75,16 +74,16 @@ def get_aeneas_path():
     path = os.path.join(settings.BASE_DIR, 'face', 'aeneas')
     return path+"/"
 
-def load_json():
-    f = open( get_out_path(), 'r')
+def load_json(sid):
+    f = open( get_out_path(sid), 'r')
     out_str = ''
     for i in f:
         out_str += i + " "
     data = ast.literal_eval( out_str )
     return data
 
-def get_timestamps(startIDX,endIDX):
-    data = load_json()
+def get_timestamps(startIDX,endIDX,sid):
+    data = load_json(sid)
     print("\n\n",startIDX," ",endIDX,"\n\n\n")
     start = float(data['fragments'][startIDX]['begin'])
     end = float(data['fragments'][endIDX]['end'])
