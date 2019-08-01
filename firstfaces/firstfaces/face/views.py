@@ -728,12 +728,6 @@ def error_typing_used(request):
 
     filename = af.audio.name
     trans = ast.literal_eval(af.alternatives)[0]["transcript"]
-    ## generate file for forced allignment
-    start = time.time()
-    f = open(get_text_path(),"w+")
-    for word in trans.split():
-        f.write(word.lower()+"\n")
-    f.close()
     #convert audio to wav
     audioPath = convert_audio(filename)
     #Get audio
