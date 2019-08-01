@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 it
 was
 an
@@ -9,3 +10,28 @@ day
 in
 the
 park
+=======
+1
+and
+2
+and
+3
+and
+4
+and
+5
+and
+6
+and
+7
+and
+8
+and
+9
+and
+10
+and
+11
+and
+12
+>>>>>>> 519d6f7aa7e62f48192c00b04cdc2f64e4e491e8

@@ -388,12 +388,21 @@ button:active {
 }
 
 #centeredErrorText{
-    font-size:2em;
     font-family:monospace;
     color:red;
 }
-#topCentText{
+
+.bigText{
     font-size:2em;
+}
+.mediumText{
+    font-size:1.5em;
+}
+.smallText{
+    font-size:1.1em;
+}
+
+#topCentText{
     font-family:monospace;
     color:red;
 }
@@ -431,7 +440,7 @@ button:active {
     align-items:center;    
     justify-content:center;**/
     text-align: center;
-    font-size:2em;        
+   /** font-size:2em;**/        
     font-family:monospace;
     color:green;
 }
@@ -485,6 +494,7 @@ button:active {
 }
 #moveText{
     position:relative;
+    text-align:center;
 }
 #overlayCentreBtn{
     height:100%;
