@@ -289,6 +289,25 @@ button:active {
     border-radius:7px;
 }
 
+#textBtnCont{
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#spectrogramBtnImage{
+    width: 40.72;
+    height: 28;
+}
+#spectrogramBtn{
+    position:relative;
+}
+
 
 #hyp_btn{
     background-color:red;

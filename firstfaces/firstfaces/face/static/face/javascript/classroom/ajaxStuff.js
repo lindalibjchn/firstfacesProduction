@@ -161,7 +161,8 @@ function sendBlobToServer( blob_to_send ) {
 function getRemainingAudio(){
     let fd = new FormData();  
     fd.append("ids",classVariableDict.correct_audio);
-    fd.append("fn", classVariableDict.Aud_Fname); 
+    fd.append("fn", classVariableDict.Aud_Fname);
+    fd.append('sessionID',classVariableDict.session_id);
     $.ajax({                     
         url: "/get_remaining_audio", 
         type: "POST",             
