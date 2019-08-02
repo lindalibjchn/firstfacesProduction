@@ -117,7 +117,7 @@ function talkToTia() {
     ////no change from audio
     //if ( synthesisObject.finalTextInBox === synthesisObject[ 'transcript' + synthesisObject.transcriptCur ] ) {
 
-        synthesisObject.originalVoice = true;
+    synthesisObject.originalVoice = true;
 
     //} else {
 
@@ -151,47 +151,48 @@ function tiaLeanToListen() {
 }
 
 function speakWords() {
+    recTimes.startSpeak = Date.now() / 1000;
     if(classVariableDict.usePlayAud){
         play_audio()      
         classVariableDict.usePlayAud = false;
     }
     else{
-    if ( synthesisObject.originalVoice ) {
+        //if ( synthesisObject.originalVoice ) {
 
-        recTimes.startSpeak = Date.now() / 1000;
-        synthesisObject.speechDuration = delayForListening( synthesisObject.finalTextInBox );
+        //synthesisObject.speechDuration = delayForListening( synthesisObject.finalTextInBox );
         aud.play();
         //synthesisObject.gotNewSpeech = false;
-        synthesisObject.waitingForSynthCount = 0;
-        setTimeout( tiaThinkAboutSentence, synthesisObject.speechDuration );
-        
-    } else if ( synthesisObject.gotNewSpeech ) {
-
-        recTimes.startSpeak = Date.now() / 1000;
-        synthesisObject.speechDuration = delayForListening( synthesisObject.finalTextInBox );
-        synthesisObject.synthAudio.play();
-        synthesisObject.waitingForSynthCount = 0;
-        //synthesisObject.gotNewSpeech = false;
-        setTimeout( tiaThinkAboutSentence, synthesisObject.speechDuration );
-
-    } else {
-
-        console.log('waiting for speech synthesis to return audio: ' + synthesisObject.waitingForSynthCount.toString())
-        synthesisObject.waitingForSynthCount += 1;
-        
-        if ( synthesisObject.waitingForSynthCount > 6 ) {
-
-            synthesisObject.waitingForSynthCount = 0;
-            //synthesisObject.gotNewSpeech = false
-            tiaThinkAboutSentence();
-
-        } else {
-
-            setTimeout( speakWords, 1000 );
-
+        //synthesisObject.waitingForSynthCount = 0;
         }
+    setTimeout( tiaThinkAboutSentence, classVariableDict.totalAudioLength );
+        
+    //} else if ( synthesisObject.gotNewSpeech ) {
 
-    }}
+        //recTimes.startSpeak = Date.now() / 1000;
+        //synthesisObject.speechDuration = delayForListening( synthesisObject.finalTextInBox );
+        //synthesisObject.synthAudio.play();
+        //synthesisObject.waitingForSynthCount = 0;
+        ////synthesisObject.gotNewSpeech = false;
+        //setTimeout( tiaThinkAboutSentence, synthesisObject.speechDuration );
+
+    //} else {
+
+        //console.log('waiting for speech synthesis to return audio: ' + synthesisObject.waitingForSynthCount.toString())
+        //synthesisObject.waitingForSynthCount += 1;
+        
+        //if ( synthesisObject.waitingForSynthCount > 6 ) {
+
+            //synthesisObject.waitingForSynthCount = 0;
+            ////synthesisObject.gotNewSpeech = false
+            //tiaThinkAboutSentence();
+
+        //} else {
+
+            //setTimeout( speakWords, 1000 );
+
+        //}
+
+    //}}
 
 }
 

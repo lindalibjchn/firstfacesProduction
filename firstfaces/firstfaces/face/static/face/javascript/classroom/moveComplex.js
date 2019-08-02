@@ -634,6 +634,7 @@ function tapKeyFull() {
 
                     } else if ( classVariableDict.showingSpectrograms ) {
 
+                        classVariableDict.showingSpectrograms = false;
                         $("#praatCont").fadeIn(800);
 
                     // this one is for after listening to the learners speech - Daniel's stuff
