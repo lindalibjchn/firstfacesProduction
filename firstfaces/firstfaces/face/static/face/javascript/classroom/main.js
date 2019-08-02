@@ -1,6 +1,6 @@
 
 $(window).on( 'load', function() {
-
+   
     // begins the loading of objects
     init();
 

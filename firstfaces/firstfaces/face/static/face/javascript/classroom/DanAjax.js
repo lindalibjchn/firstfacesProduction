@@ -182,7 +182,7 @@ function correctError(idx){
     $('#backCorrection').hide(); 
     $('#recordVoiceBtn').hide();
     //hide text area
-    $("#textInputContainer").hide();
+    $("#sentenceHolderParent").hide();
     
     currentId = idx;
     //function will make overlay appear
@@ -328,7 +328,7 @@ function doneError(){
     classVariableDict.stage2 = false;
     //close overlay
     $('#correctionOverlay').hide();
-    $('#textInputContainer').show();
+    $('#sentenceHolderParent').show();
     $('#bottomCent').empty();
     //$('#overlayTextBox').append('<span id="typeHereOverlay">Type Here!</span>');
     
@@ -404,7 +404,7 @@ $('#closeOverlayArea').click(function(){
    $('#backCorrection').show();
    $('#recordVoiceBtn').show();
    $('#correctionOverlay').hide();
-   $('#textInputContainer').show();
+   $('#sentenceHolderParent').show();
    $('#overlayTextBox').empty();
    //$('#overlayTextBox').append('<span id="typeHereOverlay">Type Here!</span>');       
    //$('#speakingWordsInside').text("Select an error to correct!"); 
@@ -1142,8 +1142,7 @@ function animate_open_overlay(err_id){
 
 
 function reset_text(trans){
-    $('#textInputContainer').show();
-    $('#sentenceShowHolder').show();
+    $('#sentenceHolderParent').show();
     $('#upperSentenceHolder').empty();
     $('#lowerSentenceHolder').empty();
     populateDivsNewTrans(trans);
@@ -1183,11 +1182,10 @@ function getAudioLength(){
     var i;
     var count = 0;
     for(i=0;i<$('.temp1').length;i++){
-        alert("audio_"+i)
         count = count +  parseFloat($('#audio_'+i).attr('duration'));
     }
     classVariableDict.totalAudioLength = count;
-    classVariableDict.totalAudioLength += (100*$('.temp1').length);
+    //classVariableDict.totalAudioLength += (100*$('.temp1').length);
   
 
 }

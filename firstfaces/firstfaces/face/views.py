@@ -360,7 +360,7 @@ def class_time(request, session_id):
                                     interference_count += 1;
 
                             # stop error on json.loads when indexes are none
-                            print(type(s.correction))
+                            # print(type(s.correction))
                             if s.indexes != None:
                                 indexes = json.loads(s.indexes)
                             else:

@@ -1,14 +1,6 @@
-<<<<<<< HEAD
-the
-lazy
-brown
-fox
-jumped
-over
-the
-hedge
-=======
-1
+what
+auntie
 and
-2
->>>>>>> 3f92a1771b4107ef316ed75b15a60a0f4abeb916
+3
+and
+4

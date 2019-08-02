@@ -195,7 +195,8 @@ function getRemainingAudio(){
                 document.getElementById("audio_"+classVariableDict.correct_audio[i]).src = base+json['paths'][i];
                 $("#audio_"+classVariableDict.correct_audio[i]).attr('duration',json['lens'][i]);
             }
-       },
+            getAudioLength();
+        },
        error: function() {
        },
 
@@ -208,7 +209,8 @@ function getRemainingAudio(){
 function sendSentToServer() {
     if(classVariableDict.playStage2){
         getRemainingAudio();
-        getAudioLength();
+        
+       //i getAudioLength();
     }
     // reset to false
     //classVariableDict.promptNIndexesReceived = false;
