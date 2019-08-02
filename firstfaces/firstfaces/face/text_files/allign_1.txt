@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 the
 lazy
 brown
@@ -6,3 +7,8 @@ jumped
 over
 the
 hedge
+=======
+1
+and
+2
+>>>>>>> 3f92a1771b4107ef316ed75b15a60a0f4abeb916
