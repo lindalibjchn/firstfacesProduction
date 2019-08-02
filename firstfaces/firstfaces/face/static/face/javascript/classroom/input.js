@@ -67,6 +67,7 @@ function initInputReady( from ) {
 
 function delayForListening( text ) {
 
+    // gonna use dans actual length of audio for this
     var speechDuration;
     if ( synthesisObject.originalVoice ) {
 

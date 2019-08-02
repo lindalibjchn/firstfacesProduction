@@ -47,7 +47,7 @@ function setTimings() {
         tiaTimings.cameraMoveUpDuration = 2.0;
         tiaTimings.tiaLeanDuration = 1;
         tiaTimings.delayUntilSpeakWords = 500;
-        tiaTimings.delayAfterStudentSpeech = 1000;
+        tiaTimings.delayAfterStudentSpeech = 500;
         tiaTimings.delayBeforeGoingToThinkingPos = 1000;
         tiaTimings.toThinkDuration = 1.5;
         tiaTimings.delayToAddThoughtBubbles = 1500;

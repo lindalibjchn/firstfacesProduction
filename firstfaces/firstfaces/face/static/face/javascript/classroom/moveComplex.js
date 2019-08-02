@@ -632,6 +632,10 @@ function tapKeyFull() {
                         classVariableDict.tapKeyForCorrection = false;
                         showCorrectionUnderWrongSent();
 
+                    } else if ( classVariableDict.showingSpectrograms ) {
+
+                        $("#praatCont").fadeIn(800);
+
                     // this one is for after listening to the learners speech - Daniel's stuff
                     } else {
                         
@@ -834,6 +838,12 @@ function returnFromListenToSpeechSynthesis() {
         }
 
     }, 200 );
+
+}
+
+function returnFromListenToErrorAttemptWithSpectrograph() {
+
+    movementController( movements.laptop, 0.5, 1 );
 
 }
 

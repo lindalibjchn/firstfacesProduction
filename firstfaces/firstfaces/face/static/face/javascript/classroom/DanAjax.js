@@ -462,6 +462,7 @@ function openOverlay(){
 }
 
 function sendAttemptBlob( new_blob ){
+    returnFromListenToErrorAttemptWithSpectrograph();
     let fd = new FormData();
     fd.append('data',new_blob);
     fd.append('error_pk',classVariableDict.errors[classVariableDict.startIDX]);
@@ -478,74 +479,82 @@ function sendAttemptBlob( new_blob ){
         processData: false,                                                                  
         contentType: false,
         success: function(json){
-           //returnFromListenToSpeechSynthesis();
-           $('#reRecordBtn').show();
-           $('#backOverlay').show();
-           $("#reRecordBtn").prop( "disabled", false );
-           if(json.trans.trim() != ""){
-           document.getElementById("hypImg").src = "http://127.0.0.1:8000/"+json.image_url;
-           $("#hyp_text").text(json.trans);
-           
-           err_trans = $('#ref_text').text().trim();
-           trans = json.trans;
-           if(err_trans.trim().length <= 18 && trans.trim().length <= 18){ 
-                $("#hyp_text").removeClass().addClass('bigText');           
-                $("#ref_text").removeClass().addClass('bigText');           
-           }                                                               
-           else{                                                           
-                if(err_trans.trim().length > 25 || trans.lenght > 25){      
-                    $("#hyp_text").removeClass().addClass('smallText');     
-                    $("#ref_text").removeClass().addClass('smallText');     
-                }                                                           
-                else{                                                       
-                    $("#hyp_text").removeClass().addClass('mediumText');    
-                    $("#ref_text").removeClass().addClass('mediumText');    
-                }                                                           
-            }                                                               
+            //john
+            classVariableDict.showingSpectrograms = true;
+            tapKeyFull();
+            movementController( movements.blank, '0.5', '1' );
+          
+            setTimeout( function(){
+
+                $('#reRecordBtn').show();
+                $('#backOverlay').show();
+                $("#reRecordBtn").prop( "disabled", false );
+                if(json.trans.trim() != ""){
+                document.getElementById("hypImg").src = "http://127.0.0.1:8000/"+json.image_url;
+                $("#hyp_text").text(json.trans);
+               
+                err_trans = $('#ref_text').text().trim();
+                trans = json.trans;
+                if(err_trans.trim().length <= 18 && trans.trim().length <= 18){ 
+                    $("#hyp_text").removeClass().addClass('bigText');           
+                    $("#ref_text").removeClass().addClass('bigText');           
+                }                                                               
+                else{                                                           
+                    if(err_trans.trim().length > 25 || trans.lenght > 25){      
+                        $("#hyp_text").removeClass().addClass('smallText');     
+                        $("#ref_text").removeClass().addClass('smallText');     
+                    }                                                           
+                    else{                                                       
+                        $("#hyp_text").removeClass().addClass('mediumText');    
+                        $("#ref_text").removeClass().addClass('mediumText');    
+                    }                                                           
+                }                                                               
 
 
 
-           document.getElementById('hypAudio').src = "http://127.0.0.1:8000/"+json.audio_url;
-            
-           if(json.correct){
-                $('exitOverlay').hide();
-                correct_attempt();
-                setTimeout(function(){
-                    $("#hyp_btn").css("background-color","green");      
-                    $("#hyp_invisible").css("background-color","green");
-                },500);
+                document.getElementById('hypAudio').src = "http://127.0.0.1:8000/"+json.audio_url;
                 
-           }
-           else{
-                var sim = parseFloat(json.sim);                
-                incorrect_attempt();
-                setTimeout(function(){
-                    if(sim <= 0.15){                                          
-                        $('#hyp_btn').css("background-color","#ffaa00");      
-                        $('#hyp_invisible').css("background-color","#ffaa00");
-                    }else{                                                    
-                        $("#hyp_btn").css("background-color","red");          
-                        $("#hyp_invisible").css("background-color","#ffcccb");
-                    }                                                         
-                },750);
-           }
-           classVariableDict.hypLenOriginal = json.hypLen;
-           classVariableDict.hypLen = json.hypLen/classVariableDict.playspeed;
-           //change speed of play
-           document.getElementById('hypAudio').playbackRate = classVariableDict.playspeed;
-           classVariableDict.attemptCount +=1;
-           if(classVariableDict.attemptCount >= 3 && !json.correct){
-                //Tia says you can give up
-                disableBtns();
-               tiaSpeak("If you are struggling you can try again another time", needSendTTS=true,enableBtns);
-               $('#exitOverlay').show();
-           }
-          }
-          else{
-            dealWithBlankTranscription();      
-          }
-          classVariableDict.correctionAttemptID = json.att_id; 
-        },                                                                                   
+                if(json.correct){
+                    $('exitOverlay').hide();
+                    correct_attempt();
+                    setTimeout(function(){
+                        $("#hyp_btn").css("background-color","green");      
+                        $("#hyp_invisible").css("background-color","green");
+                    },500);
+                    
+                }
+                else{
+                    var sim = parseFloat(json.sim);                
+                    incorrect_attempt();
+                    setTimeout(function(){
+                        if(sim <= 0.15){                                          
+                            $('#hyp_btn').css("background-color","#ffaa00");      
+                            $('#hyp_invisible').css("background-color","#ffaa00");
+                        }else{                                                    
+                            $("#hyp_btn").css("background-color","red");          
+                            $("#hyp_invisible").css("background-color","#ffcccb");
+                        }                                                         
+                    },750);
+                }
+                classVariableDict.hypLenOriginal = json.hypLen;
+                classVariableDict.hypLen = json.hypLen/classVariableDict.playspeed;
+                //change speed of play
+                document.getElementById('hypAudio').playbackRate = classVariableDict.playspeed;
+                classVariableDict.attemptCount +=1;
+                if(classVariableDict.attemptCount >= 3 && !json.correct){
+                    //Tia says you can give up
+                    disableBtns();
+                    tiaSpeak("If you are struggling you can try again another time", needSendTTS=true,enableBtns);
+                    $('#exitOverlay').show();
+                }
+            }
+            else{
+                dealWithBlankTranscription();      
+            }
+            classVariableDict.correctionAttemptID = json.att_id; 
+            }, 1500);
+
+        },
         error: function() {                                                                  
             console.log("that's wrong");                                                     
         },                                                                                   
@@ -681,6 +690,12 @@ $('#hyp_btn').click(function(){
 
 //Keyboard sumbit
 function submitKeyboard(){
+
+    // john
+    // tia looks at laptop while waiting for images to return
+    movementController( movements.laptop, '0.5', '1' );
+
+
     //hide other buttons
     $('#reRecordBtn').hide();
     $('#keyboardOverlay').hide();
@@ -716,6 +731,13 @@ function submitKeyboard(){
         processData: false,
         contentType: false,
         success: function(json){
+
+            // john
+            //  tia taps and looks at student
+            classVariableDict.showingSpectrograms = true;
+            tapKeyFull();
+            movementController( movements.blank, '0.5', '1' );
+
             $('#reRecordBtn').show();
 
             var refAudioURL = "http://127.0.0.1:8000/" + json.ref_audio_url;
@@ -755,7 +777,8 @@ function submitKeyboard(){
 
             $("#overlayErrorBox").hide();                                                    
             $("#overlayTextBox").hide();
-            $("#praatCont").fadeIn(800);
+            // john - moving this to tapKeyFull()
+            //$("#praatCont").fadeIn(800);
             $("#submitOverlay").hide();
             $("#reRecordBtn").css("background-color","blue");
            
