@@ -858,7 +858,7 @@ function submitRecording(){
 function correct_attempt(){
     var middle = $('#ref_btn').offset().top;
     var bottom = $('#hyp_btn').offset().top;
-    $('#sliderHolder').css('visibility','none');
+    $('#sliderHolder').css('visibility','hidden');
     var diff = (bottom-middle)/2;
     classVariableDict.animationDistance = diff;
     $('#ref_text_layer').hide();
@@ -892,7 +892,7 @@ function correct_attempt(){
 function incorrect_attempt(){
     var middle = $('#ref_btn').offset().top;                                                 
     var bottom = $('#hyp_btn').offset().top;
-    $('#sliderHolder').css('visibility','none');
+    $('#sliderHolder').css('visibility','hidden');
     var diff = (bottom-middle)/2;
     disableBtns();
     $('#ref_text_layer').hide();
@@ -1109,5 +1109,10 @@ function getAudioLength(){
         count += parseInt($('#audio_'+i).attr('duration'));
     }
     classVariableDict.totalAudioLength = count;
+    classVariableDict.totalAudioLength += (100*$('.temp1').length);
 
 }
+
+
+fucntion
+
