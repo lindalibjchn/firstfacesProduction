@@ -603,7 +603,7 @@ function sendAttemptBlob( new_blob ){
                 $('#backOverlay').prop('disabled',"false");
             }
             classVariableDict.correctionAttemptID = json.att_id; 
-            }, 1500);
+            }, 1000);
 
         },
         error: function() {                                                                  
