@@ -43,7 +43,8 @@ function doAllignment(){
 $('#forwardErrorSelection').click(function(){
     $('#recordVoiceBtn').hide();
     $('#backCorrection').hide();
-    
+    classVariableDict.originalLength = classVariableDict.totalAudioLength;
+    classVariableDict.totalAudioLength = 0;
     doAllignment();
     classVariableDict.usePlayAud = true;
     //loop through selected words, amalgamate sewuential errors into one
@@ -109,10 +110,10 @@ $('#forwardErrorSelection').click(function(){
         }
         $('#upperSentenceHolder').append("<span id='hidden_"+j+"' class='hidden-span'></span>");
         if(j<(newTran.length-1)){
-            $('#audioclips').append("<audio id='audio_"+j+"' onended='play_nxt("+(j+1)+")'></audio>");
+            $('#audioclips').append("<audio id='audio_"+j+"' duration =0 onended='play_nxt("+(j+1)+")'></audio>");
         }
         else{
-            $('#audioclips').append("<audio id='audio_"+j+"'></audio>");
+            $('#audioclips').append("<audio id='audio_"+j+"' duration=0> </audio>");
         }
     }
 
@@ -332,6 +333,7 @@ function doneError(){
 
 $('#backCorrection').click(function(){
     classVariableDict.playStage2 = false;
+    classVariableDict.totalAudioLength = classVariableDict.originalLength;
     var words = classVariableDict.alternatives[0].transcript.split(" ");
     classVariableDict.uncorrectedErrors = []; 
     // reset divs
@@ -624,6 +626,7 @@ function sendErrorBlobToServer( new_blob ){
                     $("#keyboardOverlay").show();
                 
                     document.getElementById('audio_'+json['error_start']).src = "http://127.0.0.1:8000/"+json.audio_url;
+                    $('#audio_'+json['error_start']).attr('duration',json.audio_len);   
 
                 },900);
                 $('#overlayTextBox').text(json['error_trans']);
@@ -815,7 +818,7 @@ function submitKeyboard(){
             
             var finAudio = document.getElementById("audio_"+classVariableDict.startIDX);             
             finAudio.src = hyp_audio_url;                                     
-
+            $('#audio_'+classVariableDict.startIDX).attr('duration',json.hyp_length);
 
         },
         error: function() {
@@ -1091,6 +1094,7 @@ function play_nxt(val){
 $('#exitOverlay').click(function(){
     document.getElementById('audio_'+classVariableDict.startIDX).src = document.getElementById('refAudio').src;
     document.getElementById('audio_'+classVariableDict.startIDX).volume = 0.7;
+    $('#audio_'+classVariableDict.startIDX).attr('duration',classVariableDict.refLenOriginal);
     doneError();
     $('#backCorrection').prop('disabled',false);
     $('#recordVoiceBtn').prop('disabled',false);
@@ -1098,3 +1102,7 @@ $('#exitOverlay').click(function(){
 });
 
 
+function getAudioLength(){
+    
+
+}
