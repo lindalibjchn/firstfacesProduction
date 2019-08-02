@@ -3,71 +3,21 @@
   {
    "begin": "0.000",
    "children": [],
-   "end": "1.320",
+   "end": "4.280",
    "id": "f000001",
    "language": "eng",
    "lines": [
-    "1"
+    "play"
    ]
   },
   {
-   "begin": "1.320",
+   "begin": "4.280",
    "children": [],
-   "end": "1.720",
+   "end": "11.560",
    "id": "f000002",
    "language": "eng",
    "lines": [
-    "and"
-   ]
-  },
-  {
-   "begin": "1.720",
-   "children": [],
-   "end": "2.360",
-   "id": "f000003",
-   "language": "eng",
-   "lines": [
-    "2"
-   ]
-  },
-  {
-   "begin": "2.360",
-   "children": [],
-   "end": "2.800",
-   "id": "f000004",
-   "language": "eng",
-   "lines": [
-    "and"
-   ]
-  },
-  {
-   "begin": "2.800",
-   "children": [],
-   "end": "3.360",
-   "id": "f000005",
-   "language": "eng",
-   "lines": [
-    "3"
-   ]
-  },
-  {
-   "begin": "3.360",
-   "children": [],
-   "end": "3.720",
-   "id": "f000006",
-   "language": "eng",
-   "lines": [
-    "and"
-   ]
-  },
-  {
-   "begin": "3.720",
-   "children": [],
-   "end": "4.560",
-   "id": "f000007",
-   "language": "eng",
-   "lines": [
-    "4"
+    "1234"
    ]
   }
  ]
