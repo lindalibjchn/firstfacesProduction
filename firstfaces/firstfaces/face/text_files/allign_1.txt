@@ -1,11 +1,5 @@
+phone
+and
 2
-<<<<<<< HEAD
-ad
-=======
 and
 3
-and
-4
-and
-5
->>>>>>> e5ea0935a3f1a58cc12f1de404ad2368b2bf2e66
