@@ -791,7 +791,7 @@ function dealWithBlankTranscription() {
         classVariableDict.mainRecord = false;
 
         $('#recordBtnsContainer').fadeIn();
-        //removeSpeechBubble();
+        removeSpeechBubble();
 
     } );
 
