@@ -208,6 +208,7 @@ function getRemainingAudio(){
 function sendSentToServer() {
     if(classVariableDict.playStage2){
         getRemainingAudio();
+        getAudioLength();
     }
     // reset to false
     //classVariableDict.promptNIndexesReceived = false;

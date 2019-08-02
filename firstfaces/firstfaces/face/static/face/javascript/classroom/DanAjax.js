@@ -110,10 +110,10 @@ $('#forwardErrorSelection').click(function(){
         }
         $('#upperSentenceHolder').append("<span id='hidden_"+j+"' class='hidden-span'></span>");
         if(j<(newTran.length-1)){
-            $('#audioclips').append("<audio id='audio_"+j+"' duration =0 onended='play_nxt("+(j+1)+")'></audio>");
+            $('#audioclips').append("<audio id='audio_"+j+"' duration =0 class='temp1' onended='play_nxt("+(j+1)+")'></audio>");
         }
         else{
-            $('#audioclips').append("<audio id='audio_"+j+"' duration=0> </audio>");
+            $('#audioclips').append("<audio id='audio_"+j+"' class='temp1' duration=0> </audio>");
         }
     }
 
@@ -1103,6 +1103,11 @@ $('#exitOverlay').click(function(){
 
 
 function getAudioLength(){
-    
+    var i;
+    var count = 0;
+    for(i=0;i<$('.temp1').length;i++){
+        count += parseInt($('#audio_'+i).attr('duration'));
+    }
+    classVariableDict.totalAudioLength = count;
 
 }
