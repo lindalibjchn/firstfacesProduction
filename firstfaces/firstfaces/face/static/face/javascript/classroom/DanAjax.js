@@ -141,11 +141,21 @@ function addWord(word, count, cls) {
     $('#lowerSentenceHolder').append("<span id="+idx+" class='hidden-word' >"+word+"</span> ");
 }
 
-$('#overlayTextBox').click(function(){
-    $('#typeHereOverlay').empty(); 
+$('#bottomCent').click(function(){
+    if(classVariableDict.noTransError){                              
+        removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
+        classVariableDict.noTransError = false;                      
+    }                                                                
 });
 
 $('#bottomCent').keyup(function(event){
+
+    if(classVariableDict.noTransError){   
+        removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );            
+        classVariableDict.noTransError = false;                                  
+    }                                                                            
+
+
     if($('#bottomCent').text() != ""){
         $('#spectrogramBtn').show(); 
     }
@@ -169,7 +179,8 @@ $('#bottomCent').keyup(function(event){
 
 
 function correctError(idx){
-    
+    $('#backCorrection').hide(); 
+    $('#recordVoiceBtn').hide();
     //hide text area
     $("#textInputContainer").hide();
     
@@ -269,6 +280,14 @@ function selectErrWord(idx){
 
 var currentId;
 function doneError(){
+    
+    if(classVariableDict.thirdAttemptError || classVariableDict.noTransError){             
+        removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
+        classVariableDict.thirdAttemptError = false;
+        classVariableDict.noTransError = false;
+    }                                                                 
+
+
     var cor = $('#bottomCent').text().trim();
     var err = $('#centeredErrorText').text().trim();
     $('#recordVoiceBtn').hide();
@@ -375,8 +394,15 @@ $('#backCorrection').click(function(){
 $('#closeOverlayArea').click(function(){
    if(classVariableDict.correctionDone){
         undoCorrect();
+   }
+   if(classVariableDict.thirdAttemptError || classVariableDict.noTransError){               
+        removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
+        classVariableDict.thirdAttemptError = false;  
+        classVariableDict.noTransError = false;
    }  
-    
+
+   $('#backCorrection').show();
+   $('#recordVoiceBtn').show();
    $('#correctionOverlay').hide();
    $('#textInputContainer').show();
    $('#overlayTextBox').empty();
@@ -404,6 +430,13 @@ $('#closeOverlayArea').click(function(){
 
 $('#keyboardOverlay').click(function(){
     moveText();
+
+    if(classVariableDict.noTransError){   
+        removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );            
+        classVariableDict.noTransError = false;                                  
+    }                                                                            
+
+
     $('#submitOverlay').hide();
     //$('#centeredError').hide();
     //$('#submitOverlay').hide();
@@ -426,8 +459,14 @@ $('#backOverlay').click(function(){
     if(classVariableDict.correctionDone){
         undoCorrect();
     }
+    if(classVariableDict.thirdAttemptError || classVariableDict.noTransError){       
+        removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
+        classVariableDict.thirdAttemptError = false;  
+        classVariableDict.noTransError = false;
+    }                                                                 
+
     
-    $('#centeredErrorHolder').show();
+    $('#centeredError').show();
     $('#centeredError').show();
     $('#overlayErrorBox').hide();
     $('#overlayTextBox').empty();
@@ -550,15 +589,18 @@ function sendAttemptBlob( new_blob ){
                 //change speed of play
                 document.getElementById('hypAudio').playbackRate = classVariableDict.playspeed;
                 classVariableDict.attemptCount +=1;
-                if(classVariableDict.attemptCount >= 3 && !json.correct){
+                if(classVariableDict.attemptCount == 3 && !json.correct){
                     //Tia says you can give up
                     disableBtns();
+                    classVariableDict.thirdAttemptError = true;
                     tiaSpeak("If you are struggling you can try again another time", needSendTTS=true,enableBtns);
                     $('#exitOverlay').show();
                 }
             }
             else{
-                dealWithBlankTranscription();      
+                dealWithBlankTranscription();   
+                classVariableDict.noTransError = true;
+                $('#backOverlay').prop('disabled',"false");
             }
             classVariableDict.correctionAttemptID = json.att_id; 
             }, 1500);
@@ -645,6 +687,10 @@ function sendErrorBlobToServer( new_blob ){
                 //save last transcription into class
            }else {
                dealWithBlankTranscription();
+               classVariableDict.noTransError = true;
+               $('#backOverlay').prop('disabled',"false");
+               $("#reRecordBtn").show().prop( "disabled", false );
+               $("#keyboardOverlay").show();
            }
            classVariableDict.lastAttemptID = json['attempt_pk'];  
         },
@@ -660,6 +706,11 @@ function sendErrorBlobToServer( new_blob ){
 
 $('#ref_btn').click(function(){
     disableBtns();
+    if(classVariableDict.thirdAttemptError || classVariableDict.noTransError){
+        removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
+        classVariableDict.thirdAttemptError = false;
+        classVariableDict.noTransError = false;
+    }
     //Store click
     classVariableDict.specClicks.push(JSON.stringify({"synth":Date.now() / 1000}));
     //disable other buttons during playing
@@ -679,6 +730,12 @@ $('#ref_btn').click(function(){
 });
 
 $('#hyp_btn').click(function(){
+    if(classVariableDict.thirdAttemptError || classVariableDict.noTransError){
+        removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
+        classVariableDict.thirdAttemptError = false;
+        classVariableDict.noTransError = false;
+    }
+
     disableBtns();
     //store click
     classVariableDict.specClicks.push(JSON.stringify({"user":Date.now() / 1000}));
@@ -787,7 +844,7 @@ function submitKeyboard(){
 
             $("#overlayErrorBox").hide();                                                    
             $("#overlayTextBox").hide();
-            $('#centeredErrorHolder').hide();
+            $('#centeredError').hide();
             // john - moving this to tapKeyFull()
             //$("#praatCont").fadeIn(800);
             $("#submitOverlay").hide();
@@ -916,7 +973,6 @@ function incorrect_attempt(){
         $('#ref_btn').animate({top:'-='+diff+"px"});
         $('#hyp_btn').animate({top:'+='+diff+"px"}); 
     },1700);
-    setTimeout
 
     setTimeout(function(){
         $("#ref_text_layer").fadeIn(800);
@@ -953,21 +1009,23 @@ function undoCorrect(){
 
 function disableBtns(){
     $('#submitOverlay').prop( "disabled", true);
-    $('#myRange').prop( "disabled", true);
-    $('#reRecordBtn').prop( "disabled", true);
-    $('#backOverlay').prop( "disabled", true);
+    $('#sliderHolder').css('visibility','hidden');
+    $('#reRecordBtn').hide();
+    $('#backOverlay').hide();
     $('#ref_btn').prop( "disabled", true);
     $('#hyp_btn').prop( "disabled", true);
     $('#closeOverlayArea').prop( "disabled", true);    
 }
 function enableBtns(){
     $('#submitOverlay').prop( "disabled", false);                       
-    $('#reRecordBtn').prop( "disabled", false);                                             
-    $('#backOverlay').prop( "disabled", false);
-    $('#myRange').prop("disabled",false);
+    $('#reRecordBtn').show();                                             
+    $('#backOverlay').show();
+    $('#sliderHolder').css('visibility','visible');
     $('#ref_btn').prop( "disabled", false);   
     $('#hyp_btn').prop( "disabled", false);                      
     $('#closeOverlayArea').prop( "disabled", false);
+    $('#backOverlay').prop( "disabled", false);
+
 }
 
 function getSentence(){
@@ -1007,7 +1065,7 @@ slider.oninput = function() {
 
  
 function moveText(){
-    
+    classVariableDict.movedText = true;
     var to = $('#topCentText').offset().top;
     var from  = $('#moveText').offset().top;
     var dif_v = from - to;
@@ -1020,7 +1078,10 @@ function moveText(){
 }
 
 function unmoveText(){
-     $('#moveText').animate({top:'+='+classVariableDict.textDiff+"px"},1);
+    if(classVariableDict.movedText){
+        $('#moveText').animate({top:'+='+classVariableDict.textDiff+"px"},1);
+        classVariableDict.movedText = false;
+    }
 }
 
 
@@ -1107,6 +1168,14 @@ $('#exitOverlay').click(function(){
     $('#backCorrection').prop('disabled',false);
     $('#recordVoiceBtn').prop('disabled',false);
     $('#talkBtn').prop('disabled', false);
+
+    if(classVariableDict.thirdAttemptError || classVariableDict.noTransError){              
+        removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
+        classVariableDict.thirdAttemptError = false;                 
+        classVariableDict.noTransError = false;
+    }                                                                 
+
+
 });
 
 
