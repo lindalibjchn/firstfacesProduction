@@ -691,6 +691,7 @@ def do_allignment(request):
 
 def get_remaining_audio(request):
    
+    sid = request.POST['sessionID']
     ids = ast.literal_eval("["+str(request.POST['ids'])+']')
     poss = ast.literal_eval("["+str(request.POST['poss'])+']')
     paths = []
@@ -739,7 +740,7 @@ def error_typing_used(request):
 
     endid = idx + (len(ERR_trans.strip().split(" "))-1) 
     
-    ts = get_timestamps(idx,endid, sid)
+    ts = get_timestamps(idx,endid, session_id)
     fn = request.POST['sessionID']+"_"+timezone.now().strftime( '%H-%M-%S' )+"_error.wav"
     errorPath = play_errored_text(audioPath,ts,fn)
     cut_wav(errorPath)

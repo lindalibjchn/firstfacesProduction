@@ -152,12 +152,12 @@ $('#bottomCent').keyup(function(event){
         $('#spectrogramBtn').hide(); 
     }
 
-    if($('#bottomCent').text().trim().length > 40 || $('#centeredErrorText').trim().length > 40 ){
+    if($('#bottomCent').text().trim().length > 40 || $('#centeredErrorText').text().trim().length > 40 ){
         $('#centeredErrorText').removeClass().addClass('smallText'); 
         $('#topCentText').removeClass().addClass('smallText');       
         $('#bottomCent').removeClass().addClass('smallText');        
     }
-    else if($('#bottomCent').text().trim().length > 25 || $('centeredErrorText').trim().length > 25 ){      
+    else if($('#bottomCent').text().trim().length > 25 || $('centeredErrorText').text().trim().length > 25 ){      
         $('#centeredErrorText').removeClass().addClass('mediumText');
         $('#topCentText').removeClass().addClass('mediumText');      
         $('#bottomCent').removeClass().addClass('mediumText');       
