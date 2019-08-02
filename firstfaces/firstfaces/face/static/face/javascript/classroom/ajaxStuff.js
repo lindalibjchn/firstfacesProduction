@@ -90,7 +90,7 @@ function sendBlobToServer( blob_to_send ) {
         processData: false,
         contentType: false,
         success: function(json) {
-
+            classVariableDict.totalAudioLength = json.audio_length;
             classVariableDict.Aud_Fname = json.audio_file;
             classVariableDict.blob_no_text = true;
             classVariableDict.blob_no_text_sent_id = json.sent_id;
@@ -193,6 +193,7 @@ function getRemainingAudio(){
             var base = "http://127.0.0.1:8000/";
             for(i=0;i<classVariableDict.correct_audio.length;i++){
                 document.getElementById("audio_"+classVariableDict.correct_audio[i]).src = base+json['paths'][i];
+                $("#audio_"+classVariableDict.correct_audio[i]).attr('duration',json['lens'][i]);
             }
        },
        error: function() {

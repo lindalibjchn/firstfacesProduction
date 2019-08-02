@@ -617,6 +617,7 @@ def store_error_blob(request):
     aea.save()
     trans = get_speech_recognition(filename)[0]["transcript"]
     audio_url = "media/wav/"+filename[:-4]+"wav"
+    audio_len = get_audio_length(settings.BASE_DIR+"/"+audio_url);
     aea.transcript = trans
     aea.save()
     response_data = {
@@ -625,6 +626,7 @@ def store_error_blob(request):
             'error_pk':af.id,
             'error_start':startID,
             'audio_url':audio_url,
+            'audio_len':audio_len,
     }
 
     return JsonResponse(response_data) 
@@ -695,6 +697,7 @@ def get_remaining_audio(request):
     ids = ast.literal_eval("["+str(request.POST['ids'])+']')
     poss = ast.literal_eval("["+str(request.POST['poss'])+']')
     paths = []
+    lens = []
     count=0
     for i in ids:
         idx = i
@@ -704,11 +707,13 @@ def get_remaining_audio(request):
         audioPath = request.POST['fn'];
         fn = "part_"+str(i)+"_"+timezone.now().strftime( '%H-%M-%S' )+"_aud.wav"
         errorPath = play_errored_text(audioPath,ts,fn)
-        hyp_audio = ref_path(fn)   
+        hyp_audio = ref_path(fn)
+        lens.append(get_audio_length(settings.BASE_DIR+'/'+hyp_audio))
         paths.append(hyp_audio)
     print("\n\n",paths)
     response_data = {                  
-        "paths":paths,                                           
+        "paths":paths,
+        "lens":lens,
     }                                  
     return JsonResponse(response_data) 
 
@@ -743,7 +748,7 @@ def error_typing_used(request):
     ts = get_timestamps(idx,endid, session_id)
     fn = request.POST['sessionID']+"_"+timezone.now().strftime( '%H-%M-%S' )+"_error.wav"
     errorPath = play_errored_text(audioPath,ts,fn)
-    cut_wav(errorPath)
+    #cut_wav(errorPath)
     
     end = time.time()
     print("\n\nGetting Audio - ",(end-start))
@@ -848,7 +853,7 @@ def store_attempt_blob(request):
         trans = ae.intention
         correct = True
     audio_url = "media/wav/"+filename[:-4]+"wav"
-    cut_wav(settings.BASE_DIR + '/' + audio_url)
+    #cut_wav(settings.BASE_DIR + '/' + audio_url)
     pic_name = "att_"+str(aeca.id)+".png" 
     pic_url = get_spectogram(settings.BASE_DIR+"/"+audio_url,sim,pic_name,1)
     lenAudio = get_audio_length(settings.BASE_DIR+"/"+audio_url)
@@ -908,7 +913,9 @@ def store_blob(request):
     a.save()
     # need to save the file before can acces url to use ffmpeg (in utils.py)
     alternatives = get_speech_recognition(filename)
-    audioFile = "media/wav/"+filename[:-4]+'wav' 
+    audioFile = "media/wav/"+filename[:-4]+'wav'
+    audioLength = get_audio_length(settings.BASE_DIR+"/"+audioFile)
+    
     # print('transcription_list:', transcription_list)
 
     ## commented out as daniel will be doing his own thing here so wont need alignments
@@ -925,7 +932,7 @@ def store_blob(request):
         'sent_id': ps.id,
         'audio_pk':a.id,
         'audio_file':audioFile,
-
+        'audio_length':audioLength,
     }
 
     return JsonResponse(response_data)    
