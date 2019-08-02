@@ -169,6 +169,10 @@ $('#bottomCent').keyup(function(event){
 
 
 function correctError(idx){
+    
+    //hide text area
+    $("#textInputContainer").hide();
+    
     currentId = idx;
     //function will make overlay appear
     openOverlay();
@@ -305,6 +309,7 @@ function doneError(){
     classVariableDict.stage2 = false;
     //close overlay
     $('#correctionOverlay').hide();
+    $('#textInputContainer').show();
     $('#bottomCent').empty();
     //$('#overlayTextBox').append('<span id="typeHereOverlay">Type Here!</span>');
     
@@ -373,6 +378,7 @@ $('#closeOverlayArea').click(function(){
    }  
     
    $('#correctionOverlay').hide();
+   $('#textInputContainer').show();
    $('#overlayTextBox').empty();
    //$('#overlayTextBox').append('<span id="typeHereOverlay">Type Here!</span>');       
    //$('#speakingWordsInside').text("Select an error to correct!"); 
@@ -421,6 +427,7 @@ $('#backOverlay').click(function(){
         undoCorrect();
     }
     
+    $('#centeredErrorHolder').show();
     $('#centeredError').show();
     $('#overlayErrorBox').hide();
     $('#overlayTextBox').empty();
@@ -780,6 +787,7 @@ function submitKeyboard(){
 
             $("#overlayErrorBox").hide();                                                    
             $("#overlayTextBox").hide();
+            $('#centeredErrorHolder').hide();
             // john - moving this to tapKeyFull()
             //$("#praatCont").fadeIn(800);
             $("#submitOverlay").hide();
@@ -1106,13 +1114,14 @@ function getAudioLength(){
     var i;
     var count = 0;
     for(i=0;i<$('.temp1').length;i++){
-        count += parseInt($('#audio_'+i).attr('duration'));
+        alert("audio_"+i)
+        count = count +  parseFloat($('#audio_'+i).attr('duration'));
     }
     classVariableDict.totalAudioLength = count;
     classVariableDict.totalAudioLength += (100*$('.temp1').length);
+  
 
 }
 
 
-fucntion
 
