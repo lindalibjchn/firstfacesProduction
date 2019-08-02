@@ -3,17 +3,17 @@
   {
    "begin": "0.000",
    "children": [],
-   "end": "1.760",
+   "end": "1.320",
    "id": "f000001",
    "language": "eng",
    "lines": [
-    "phone"
+    "1"
    ]
   },
   {
-   "begin": "1.760",
+   "begin": "1.320",
    "children": [],
-   "end": "2.400",
+   "end": "1.720",
    "id": "f000002",
    "language": "eng",
    "lines": [
@@ -21,9 +21,9 @@
    ]
   },
   {
-   "begin": "2.400",
+   "begin": "1.720",
    "children": [],
-   "end": "3.360",
+   "end": "2.360",
    "id": "f000003",
    "language": "eng",
    "lines": [
@@ -31,9 +31,9 @@
    ]
   },
   {
-   "begin": "3.360",
+   "begin": "2.360",
    "children": [],
-   "end": "4.200",
+   "end": "2.800",
    "id": "f000004",
    "language": "eng",
    "lines": [
@@ -41,13 +41,33 @@
    ]
   },
   {
-   "begin": "4.200",
+   "begin": "2.800",
    "children": [],
-   "end": "4.240",
+   "end": "3.360",
    "id": "f000005",
    "language": "eng",
    "lines": [
     "3"
+   ]
+  },
+  {
+   "begin": "3.360",
+   "children": [],
+   "end": "3.720",
+   "id": "f000006",
+   "language": "eng",
+   "lines": [
+    "and"
+   ]
+  },
+  {
+   "begin": "3.720",
+   "children": [],
+   "end": "4.560",
+   "id": "f000007",
+   "language": "eng",
+   "lines": [
+    "4"
    ]
   }
  ]

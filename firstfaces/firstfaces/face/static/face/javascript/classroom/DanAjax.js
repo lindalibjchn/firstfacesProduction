@@ -554,7 +554,7 @@ function sendAttemptBlob( new_blob ){
                 dealWithBlankTranscription();      
             }
             classVariableDict.correctionAttemptID = json.att_id; 
-            }, 1500);
+            }, 1000);
 
         },
         error: function() {                                                                  
