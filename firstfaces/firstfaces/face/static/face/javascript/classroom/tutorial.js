@@ -1,21 +1,8 @@
-var tiaSpeakCount = 0;
-function tiaSpeak( tiaSays, needSendTTS=true, callback ) {
+function tiaSpeak( tiaSays, callback ) {
 
     // display text
-    //speechBubbleObject.sentence = tiaSays;
     $('#speechBubbleCont').fadeIn( tiaTimings.speechBubbleFadeInDuration );
-    //$('.speaking-words').hide();
-    //$('.speaking-words-inside').show();
-    $('#speakingWordsInside').text( tiaSays );
-    
-    // only false if TTS can be sent in advance so no need to do it again
-    if ( needSendTTS ) {
-
-        synthesisObject.text = tiaSays;
-        sendTTS( synthesisObject.text, true, "talk" );
-
-    }
-
+    $('#speakingWordsInside').text( tiaSays ); 
     $('#speakingWords').fadeIn( tiaTimings.speechBubbleFadeInDuration );
 
     setTimeout( function() {
@@ -26,57 +13,56 @@ function tiaSpeak( tiaSays, needSendTTS=true, callback ) {
 
     function speakSent( s ) {
 
-        if ( synthesisObject.gotNewSpeech ) {
+        //if ( synthesisObject.gotNewSpeech ) {Vdd
+          
+            //if ( synthesisObject.ttsServerFault === false ) {
+
+        synthesisObject.synthAudio.play();
+
+            //}
+
+        console.log('synthSudio.duration:', synthesisObject.synthAudio.duration)
+        synthesisObject.endCount =  Math.max( synthesisObject.synthAudio.duration * 60 - 60, 60 ); 
+        //synthesisObject.gotNewSpeech = false;
+        initTalk();
+        //tiaSpeakCount = 0;
+
+        setTimeout( function() {
             
-            if ( synthesisObject.ttsServerFault === false ) {
+            callback();
+            
+            setTimeout( resetTalk, 800 );
 
-                synthesisObject.synthAudio.play();
+        }, synthesisObject.synthAudio.duration * 1000 ); // add 250 to allow lips to return
 
-            }
+        //} else {
 
-            synthesisObject.delay = delayForListening( s )
-            synthesisObject.endCount =  ( synthesisObject.delay * 60 / 1000 ) * 0.75 //dunno why the delay needs to be curtailed, but has to be
-            synthesisObject.gotNewSpeech = false;
-            initTalk();
-            tiaSpeakCount = 0;
+            //if ( tiaSpeakCount < 4 ) {
 
-            let delayForCallback = Math.max( 1000, synthesisObject.delay - 500 );
-            setTimeout( function() {
-                
-                callback();
-                
-                setTimeout( resetTalk, 800 );
+                //console.log('waiting for speech synthesis to return audio')
+                //setTimeout( function() { speakSent( s ) }, 1000 );
+                //tiaSpeakCount += 1;
 
-            }, delayForCallback );
+            //} else {
 
-        } else {
+                //tiaSpeakCount = 0;
+                //synthesisObject.delay = delayForListening( s )
+                //synthesisObject.endCount =  ( synthesisObject.delay * 60 / 1000 ) * 0.75 //dunno why the delay needs to be curtailed, but has to be
+                //initTalk();
+                //let delayForCallback = Math.max( 1000, synthesisObject.delay - 500 );
 
-            if ( tiaSpeakCount < 4 ) {
-
-                console.log('waiting for speech synthesis to return audio')
-                setTimeout( function() { speakSent( s ) }, 1000 );
-                tiaSpeakCount += 1;
-
-            } else {
-
-                tiaSpeakCount = 0;
-                synthesisObject.delay = delayForListening( s )
-                synthesisObject.endCount =  ( synthesisObject.delay * 60 / 1000 ) * 0.75 //dunno why the delay needs to be curtailed, but has to be
-                initTalk();
-                let delayForCallback = Math.max( 1000, synthesisObject.delay - 500 );
-
-                setTimeout( function() {
+                //setTimeout( function() {
                     
-                    callback();
+                    //callback();
                     
-                    setTimeout( resetTalk, 800 );
+                    //setTimeout( resetTalk, 800 );
 
-                }, delayForCallback );
+                //}, delayForCallback );
 
 
-            }
+            //}
 
-        }
+        //}
 
     }
 

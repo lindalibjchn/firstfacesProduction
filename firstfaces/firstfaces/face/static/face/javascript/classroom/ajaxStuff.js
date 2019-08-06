@@ -1,9 +1,8 @@
-
 // text is string and tiaSpeaker is true if it is tia speaking, false if student
-function sendTTS( text, tiaSpeaker, caller ) {
+function sendTTS( text, tiaSpeaker ) {
 
     synthesisObject.ttsServerFault = false;
-    console.log('text:', text);
+    //console.log('text:', text);
 
     // checks if speech has arrived from server
     synthesisObject.gotNewSpeech = false;
@@ -20,7 +19,7 @@ function sendTTS( text, tiaSpeaker, caller ) {
             'pitch': synthesisObject.pitch,
             'speaking_rate': synthesisObject.speaking_rate,
             'sessionID': classVariableDict.session_id,
-            'caller': caller,
+            //'caller': caller,
             'blob_no_text': classVariableDict.blob_no_text,
             'blob_no_text_sent_id': classVariableDict.blob_no_text_sent_id,
         },
@@ -33,34 +32,33 @@ function sendTTS( text, tiaSpeaker, caller ) {
 
             } else {
 
-                //var synthAudioURL = "https://erle.ucd.ie/" + json.synthURL;
-                var synthAudioURL = "http://127.0.0.1:8000/" + json.synthURL;
+                var synthAudioURL = prefixURL + json.synthURL;
                 synthesisObject.synthAudio = document.getElementById( 'synthClip' );
                 synthesisObject.synthAudio.src = synthAudioURL;
 
                 // now this is true, other functions waiting on it can continue
                 synthesisObject.gotNewSpeech = true;
                 
-                if ( tiaSpeaker ) {
+                //if ( tiaSpeaker ) {
 
-                } else {
+                //} else {
 
-                    // listen is when the user click the listen button so want the audio to play asap
-                    if ( caller === "listen" ) {
+                    //// listen is when the user click the listen button so want the audio to play asap
+                    ////if ( caller === "listen" ) {
 
-                        setTimeout( function() {
+                        ////setTimeout( function() {
 
-                            synthesisObject.synthAudio.play();
+                            ////synthesisObject.synthAudio.play();
 
-                        }, 500 );
+                        ////}, 500 );
 
-                    } else {
+                    ////} else {
                     
-                        console.log('talk speech synth made');
+                        //console.log('talk speech synth made');
 
-                    }
+                    ////}
 
-                }
+                //}
 
             }
 
@@ -313,8 +311,7 @@ function checkJudgement( sentId ) {
                 if (json.sent_meta.synthURL !== 'fault' ) {
 
                     synthesisObject.synthAudio = document.getElementById( 'synthClip' );
-                    //synthesisObject.synthAudio.src = "https://erle.ucd.ie/" + json.sent_meta.synthURL;
-                    synthesisObject.synthAudio.src = "http://127.0.0.1:8000/" + json.sent_meta.synthURL;
+                    synthesisObject.synthAudio.src = prefixURL + json.sent_meta.synthURL;
 
                 }
 

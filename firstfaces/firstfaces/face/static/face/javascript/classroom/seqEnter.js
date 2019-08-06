@@ -8,15 +8,15 @@ function initMainEnter() {
 
 function mainEnter() {
 
-    //if ( mainCount === 90 ) {
+    if ( mainCount === 10 ) {
         
-        //initEnterCameraMove( 'desk', '5' )
+        movementController( movements.laptop, 0.1, 0.1 );
  
-    if ( mainCount === 50 ) {
+    } else if ( mainCount === 60 ) {
 
         movementController( movements.blank, 0.5, 1 );
 
-    } else if ( mainCount === 130 ) {
+    } else if ( mainCount === 110 ) {
 
         let calculatedExpressions = createSingleExpression( expressionsRel.happy, 0.75 );
         calculatedExpression = getAbsoluteCoordsOfExpressionTo( calculatedExpressions[0] );
@@ -34,63 +34,87 @@ function mainEnter() {
 
         let studentName = classVariableDict.username;
         
-        let greeting = ""
+        //let greeting = ""
+        greetingSrc0 = "greetings/" + studentName + ".wav";
+        greetingText0 = "Hello " + studentName;
             
         if ( classVariableDict.tutorial ) {
 
-            // if in tutorial, need this to be true so that responses from the recording and speech synthesis react in the correct way
-            classVariableDict.tutorialStep = 0;
+            //// if in tutorial, need this to be true so that responses from the recording and speech synthesis react in the correct way
+            //classVariableDict.tutorialStep = 0;
 
-            // if user has completed tutorial before, don't need to introduce name
-            if ( classVariableDict.tutorial_complete ) {
+            //// if user has completed tutorial before, don't need to introduce name
+            //if ( classVariableDict.tutorial_complete ) {
 
-                greeting = " Hello " + studentName + ". Welcome to the ERLE tutorial. It will take 5 to 10 minutes to complete. I will speak, and then buttons will appear for you to click.";
+                //greeting = " Hello " + studentName + ". Welcome to the ERLE tutorial. It will take 5 to 10 minutes to complete. I will speak, and then buttons will appear for you to click.";
         
-            } else {
+            //} else {
 
-                greeting = " Hello " + studentName + ", my name is Tia. Welcome to the ERLE tutorial. It will take 5 to 10 minutes to complete. I will speak, and then buttons will appear for you to click.";
+                //greeting = " Hello " + studentName + ", my name is Tia. Welcome to the ERLE tutorial. It will take 5 to 10 minutes to complete. I will speak, and then buttons will appear for you to click.";
         
-            }
+            //}
 
         } else if ( classVariableDict.first_full_class ) {
 
-            greeting = " Hello " + studentName + ", welcome to your first full class at ERLE! How are you feeling today?";
-        
-        } else if ( classVariableDict['prev_topic'] !== null ) {
+            //greeting = " Hello " + studentName + ", welcome to your first full class at ERLE! How are you feeling today?";
+            //console.log( 'prefixURL:', prefixURL )
 
-            greeting = " Hello " + studentName + ", nice to see you again! Last time we met you were feeling " + classVariableDict.prev_emotion + ". How are you feeling today?";
+            greetingSrc1 = "welcome_to_your_first_full_class_at_erle.wav";
+            greetingText1 = "Welcome to your first full class at ERLE";
+
+        //} else if ( classVariableDict['prev_topic'] !== null ) {
         
         } else {
-            
-            greeting = " Hello " + studentName + ", nice to see you again! It's been a while since we last met. How are you feeling today?";
 
-        }
+            //greeting = " Hello " + studentName + ", nice to see you again! Last time we met you were feeling " + classVariableDict.prev_emotion + ". How are you feeling today?";
+            greetingSrc1 = "its_great_to_see_you_again.wav"
+            greetingText1 = "It's great to see you again"
         
+        }
+            
+        greetingSrc2 = "how_are_you_feeling_today.wav";
+        greetingText2 = "How are you feeling today?";
+
         //initArmIndicate('left', 0, 'low', '1');
         //in entrance so need to not return to laptop after talking when not learning
         talkObject.learning = false;
 
-        synthesisObject.pitch = 0;
-        synthesisObject.speaking_rate = 0.85;
-        synthesisObject.text = greeting;
-        synthesisObject.speaker = "tia";
-        speechBubbleObject.sentence = greeting;
-        sendTTS( greeting, true, "talk" );
+        //synthesisObject.pitch = 0;
+        //synthesisObject.speaking_rate = 0.85;
+        //synthesisObject.text = greeting;
+        //synthesisObject.speaker = "tia";
+        //speechBubbleObject.sentence = greeting;
+        //sendTTS( greeting, true );
 
     //} else if ( mainCount === 590 ) {
 
         //initEnterCameraMove('chair', '3');
         //movementController( movements.blank, '3', '3');
 
-    }  else if ( mainCount === 210 ) {
+    } else if ( mainCount === 210 ) {
 
         expressionController( calculatedTalkExpression, '1', false );
 
     } else if ( mainCount === 280 ) {
 
-        tiaSpeak( synthesisObject.text, needSendTTS=false, speakOpening );
-        classVariableDict.promptSpeaking = true;
+        //tiaSpeak( synthesisObject.text, needSendTTS=false, speakOpening );
+        //classVariableDict.promptSpeaking = true;
+        synthesisObject.synthAudio.src = prefixURL + tiaMediaLoc + greetingSrc0;
         
+        tiaSpeak( greetingText0, function() {
+            
+            synthesisObject.synthAudio.src = prefixURL + tiaMediaLoc + greetingSrc1;
+            
+            tiaSpeak( greetingText1, function () {
+                   
+                synthesisObject.synthAudio.src = prefixURL + tiaMediaLoc + greetingSrc2;
+
+                tiaSpeak( greetingText2, speakOpening );
+
+            } );
+
+        } );
+
     }
 
 }
@@ -109,73 +133,6 @@ function speakOpening() {
 
 }
 
-//function initEnterCameraMove( to, secs ) {
-
-    //let from = enterCameraObject.currentState;
-
-    //if ( from !== to ) {
-
-            //assignSinArrayForSpeed( secs, enterCameraObject, sineArrays );
-
-            //enterCameraObject[ 'startCount' ] = mainCount;
-            //enterCameraObject[ 'bool' ] = true;
-
-        //if ( from === "door" ) {
-
-            //enterCameraObject[ 'movementX' ] = CAMERA_DESK_POS.x - CAMERA_ENTER_POS.x;
-            //enterCameraObject[ 'movementY' ] = CAMERA_DESK_POS.y - CAMERA_ENTER_POS.y;
-            //enterCameraObject[ 'movementZ' ] = CAMERA_DESK_POS.z - CAMERA_ENTER_POS.z;
-
-            //enterCameraObject[ 'rotationX' ] = CAMERA_DESK_ROT.x - CAMERA_ENTER_ROT.x;
-            //enterCameraObject[ 'rotationY' ] = CAMERA_DESK_ROT.y - CAMERA_ENTER_ROT.y;
-                
-            //enterCameraObject.currentState = "desk";
-
-        //} else if ( from === "desk" ) {
-
-            //enterCameraObject[ 'movementX' ] = CAMERA_SIT_POS.x - CAMERA_DESK_POS.x;
-            //enterCameraObject[ 'movementY' ] = CAMERA_SIT_POS.y - CAMERA_DESK_POS.y;
-            //enterCameraObject[ 'movementZ' ] = CAMERA_SIT_POS.z - CAMERA_DESK_POS.z;
-
-            //enterCameraObject[ 'rotationX' ] = CAMERA_SIT_TO_TIA_ROT.x - CAMERA_DESK_ROT.x;
-            //enterCameraObject[ 'rotationY' ] = CAMERA_SIT_TO_TIA_ROT.y - CAMERA_DESK_ROT.y;
-                
-            //enterCameraObject.currentState = "chair";
-
-        //}
-
-    //} else {
-
-        //console.log( "same place" );
-
-    //}
-
-//}    
-
-//function enterCameraMove( main ) {
-
-    //let main_start = main - enterCameraObject.startCount;
-
-    //let sinArray = enterCameraObject.sin;
-
-    //let sinAmount = sinArray[ main_start ]
-    
-    //if ( main_start < enterCameraObject.sinLength ) {
-
-        //camera.position.x += sinAmount * enterCameraObject.movementX;
-        //camera.position.y += sinAmount * enterCameraObject.movementY;
-        //camera.position.z += sinAmount * enterCameraObject.movementZ;
-        //camera.rotation.x += sinAmount * enterCameraObject.rotationX;
-        //camera.rotation.y += sinAmount * enterCameraObject.rotationY;
-
-    //} else {
-
-        //enterCameraObject[ 'bool' ] = false;
-
-    //}
-
-//}
-
 function showInitEmotionQuestions() {
 
     $('#emotionQuestionsContainer').fadeIn( tiaTimings.speechBubbleFadeInDuration );
@@ -189,69 +146,81 @@ function goToAskTopic( emotion ) {
 
     // remove speech bubble to ask which topic
     removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
+    var calculatedExpressions;
 
-    if ( emotion === "happy" || emotion === "surprised" || emotion === "excited" ) {
+    if ( emotion === "happy" ) {
 
-        let calculatedExpressions = createCalculatedExpression([expressionsRel.happy, expressionsRel.content], 0.95, 0.6, 0.2)
-        calculatedExpression = getAbsoluteCoordsOfExpressionTo( calculatedExpressions[ 0 ] );
-        calculatedTalkExpression = getAbsoluteCoordsOfExpressionTo( calculatedExpressions[ 1 ] );
+        calculatedExpressions = createCalculatedExpression([expressionsRel.happy, expressionsRel.content], 0.95, 0.6, 0.2)
+        //calculatedExpression = getAbsoluteCoordsOfExpressionTo( calculatedExpressions[ 0 ] );
+        //calculatedTalkExpression = getAbsoluteCoordsOfExpressionTo( calculatedExpressions[ 1 ] );
         
-        expressionController( calculatedExpression, tiaTimings.changeExpression );
+        //expressionController( calculatedExpression, tiaTimings.changeExpression );
 
-        synthesisObject.pitch = 1;
-        synthesisObject.speaking_rate = 0.95;
+        //synthesisObject.pitch = 1;
+        //synthesisObject.speaking_rate = 0.95;
 
-        if ( classVariableDict['prev_topic'] !== null && classVariableDict.first_full_class !== true ) {
+        //if ( classVariableDict['prev_topic'] !== null && classVariableDict.first_full_class !== true ) {
 
-            speechBubbleObject.sentence = " That's great! Last time you talked about '" + classVariableDict['prev_topic'] + "' and your score was " + classVariableDict.prev_score.toString() + ". Would you like to continue with the same topic, or choose something different?";
+            //speechBubbleObject.sentence = " That's great! Last time you talked about '" + classVariableDict['prev_topic'] + "' and your score was " + classVariableDict.prev_score.toString() + ". Would you like to continue with the same topic, or choose something different?";
 
-        } else {
+        //} else {
 
-            speechBubbleObject.sentence = " That's great! What would you like to talk about today?";
+            //speechBubbleObject.sentence = " That's great! What would you like to talk about today?";
     
-        }
+        //}
 
-        setTimeout( function() {
+       //setTimeout( function() {
 
-            initNod( 0.4, '0.5' )
+            //initNod( 0.4, '0.5' )
 
-            setTimeout( askTopic, 3500 );
+            //setTimeout( askTopic, 2500 );
 
-        }, 800)
+        //}, tiaTimings.changeExpression );
 
-    } else {
+    } else if ( emotion === "ok" ) {
+
+        calculatedExpressions = createCalculatedExpression([expressionsRel.content, expressionsRel.happy], 0.98, 0.5, 0);
+        //calculatedExpression = getAbsoluteCoordsOfExpressionTo( calculatedExpressions[0] );
+        //calculatedTalkExpression = getAbsoluteCoordsOfExpressionTo( calculatedExpressions[1] );
+        //expressionController( calculatedExpression, tiaTimings.changeExpression );
+    
+    } else if ( emotion === "sad" ) {
 
         calculatedExpressions = createCalculatedExpression([expressionsRel.sad, expressionsRel.fear], 0.98, 0.5, 0);
-        calculatedExpression = getAbsoluteCoordsOfExpressionTo( calculatedExpressions[0] );
-        calculatedTalkExpression = getAbsoluteCoordsOfExpressionTo( calculatedExpressions[1] );
-        expressionController( calculatedExpression, tiaTimings.changeExpression );
+        //calculatedExpression = getAbsoluteCoordsOfExpressionTo( calculatedExpressions[0] );
+        //calculatedTalkExpression = getAbsoluteCoordsOfExpressionTo( calculatedExpressions[1] );
+        //expressionController( calculatedExpression, tiaTimings.changeExpression );
     
-        synthesisObject.pitch = -2;
-        synthesisObject.speaking_rate = 0.8;
+        //synthesisObject.pitch = -2;
+        //synthesisObject.speaking_rate = 0.8;
 
-        if ( classVariableDict['prev_topic'] !== null && classVariableDict.first_full_class !== true ) {
+        //if ( classVariableDict['prev_topic'] !== null && classVariableDict.first_full_class !== true ) {
 
-            speechBubbleObject.sentence = " I'm sorry to hear that! Last time you talked about '" + classVariableDict['prev_topic'] + "' and your score was " + classVariableDict.prev_score.toString() + ". Would you like to continue with the same topic, or choose something different?";
+            //speechBubbleObject.sentence = " I'm sorry to hear that! Last time you talked about '" + classVariableDict['prev_topic'] + "' and your score was " + classVariableDict.prev_score.toString() + ". Would you like to continue with the same topic, or choose something different?";
 
-        } else {
+        //} else {
 
-            speechBubbleObject.sentence = " I'm sorry to hear that! What would you like to talk about today?";
+            //speechBubbleObject.sentence = " I'm sorry to hear that! What would you like to talk about today?";
     
-        }
-
-
-        setTimeout( function() {
-
-            initNod( 0.4, '0.5' )
-
-            setTimeout( askTopic, 3500 );
-
-        }, 1050)
-
+        //}
     }
+
+    calculatedExpression = getAbsoluteCoordsOfExpressionTo( calculatedExpressions[ 0 ] );
+    calculatedTalkExpression = getAbsoluteCoordsOfExpressionTo( calculatedExpressions[ 1 ] );
+    expressionController( calculatedExpression, tiaTimings.changeExpression );
+
+    setTimeout( function() {
+
+        initNod( 0.4, '0.5' )
+
+        setTimeout( askTopic, 2000 );
+
+    }, tiaTimings.changeExpression * 1000 );
+
+    //synthesisObject.text = speechBubbleObject.sentence
+    //sendTTS( synthesisObject.text, true );
+
     
-    synthesisObject.text = speechBubbleObject.sentence
-    sendTTS( synthesisObject.text, true, "talk" );
 
 }
 
@@ -274,11 +243,11 @@ function storeEmotion() {
             $('.init-emot').unbind();
             $('#emotionQuestionsContainer').fadeOut( 500 );
 
-            setTimeout( function() {
+            //setTimeout( function() {
                     
-                goToAskTopic( emotion )
+            goToAskTopic( emotion )
                     
-            }, 600 );
+            //}, 600 );
 
         },
         error: function() {
@@ -293,55 +262,63 @@ function askTopic() {
 
     // remove emotion questions container, making sure to unbind the click event to avoid multiple clicks
     expressionController( calculatedTalkExpression, '1');
+    //setTimeout( function() {
+
+        //tiaSpeak( speechBubbleObject.sentence, needSendTTS=false, speakTopic );
+        
+    //}, 1500 );
+
+    synthesisObject.synthAudio.src = prefixURL + tiaMediaLoc + "what_would_you_like_to_talk_about_today.wav";
+    
     setTimeout( function() {
 
-        tiaSpeak( speechBubbleObject.sentence, needSendTTS=false, speakTopic );
-        
-    }, 1500 );
+        tiaSpeak( "What would you like to talk about today?", speakTopic )
+
+    }, 1200 );
 
 }
 
 function speakTopic() {
 
-    if ( classVariableDict['prev_topic'] !== null && classVariableDict.first_full_class !== true ) {
+    //if ( classVariableDict['prev_topic'] !== null && classVariableDict.first_full_class !== true ) {
 
-        showContinueOrNew();
+        //showContinueOrNew();
 
-    } else {
+    //} else {
 
         showTopicChoices();
 
-    }
+    //}
 
 }
 
-function showContinueOrNew() {
+//function showContinueOrNew() {
 
-    // allow topics to be clickable and follow logic depending on their needs
-    $('#continueBtn').on( 'click', function() { 
+    //// allow topics to be clickable and follow logic depending on their needs
+    //$('#continueBtn').on( 'click', function() { 
         
-        $('#continueNewChoices').fadeOut( tiaTimings.speechBubbleFadeOutDuration );
-        storeTopic( 'same' ) 
+        //$('#continueNewChoices').fadeOut( tiaTimings.speechBubbleFadeOutDuration );
+        //storeTopic( 'same' ) 
     
-    } );
+    //} );
 
-    $('#newBtn').on( 'click', function() { 
+    //$('#newBtn').on( 'click', function() { 
     
-        $('#continueNewChoices').fadeOut( tiaTimings.speechBubbleFadeOutDuration );
-        setTimeout( speakTopicChoices, tiaTimings.speechBubbleFadeInDuration * 2 );
+        //$('#continueNewChoices').fadeOut( tiaTimings.speechBubbleFadeOutDuration );
+        //setTimeout( speakTopicChoices, tiaTimings.speechBubbleFadeInDuration * 2 );
 
-    } );
+    //} );
 
-    $('#continueNewChoices').fadeIn( tiaTimings.speechBubbleFadeInDuration );
+    //$('#continueNewChoices').fadeIn( tiaTimings.speechBubbleFadeInDuration );
 
-}
+//}
 
 function showTopicChoices() {
 
     // allow topics to be clickable and follow logic depending on their needs
     $('#myChoice').on( 'click', showPreChoiceTextInput );
     $('#myEmotion').on( 'click', function() { storeTopic( 'emotion' ) } );
-    $('#todaysNewsArticle').on( 'click', askIfReadNews );
+    //$('#todaysNewsArticle').on( 'click', askIfReadNews );
 
     $('#topicChoices').fadeIn( tiaTimings.speechBubbleFadeInDuration );
 
@@ -350,18 +327,24 @@ function showTopicChoices() {
 function showPreChoiceTextInput() {
 
     removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
-    speechBubbleObject.sentence = "Please type your topic below";
-    synthesisObject.text = speechBubbleObject.sentence
+    //speechBubbleObject.sentence = "Please type your topic below";
+    //synthesisObject.text = speechBubbleObject.sentence
 
     $('#topicChoices').fadeOut( tiaTimings.speechBubbleFadeOutDuration );
 
-    setTimeout( function() {tiaSpeak( speechBubbleObject.sentence, needSendTTS=true, showChoiceTextInput)}, 1500);
+    synthesisObject.synthAudio.src = prefixURL + tiaMediaLoc + "type_your_topic_in_the_box_below.wav";
+    setTimeout( function() {
+        
+        tiaSpeak( "Type your topic in the box below", showChoiceTextInput)
+    
+    }, 500);
 
 }
 
 function showChoiceTextInput() {
 
     $('#textInputBoxContCont').show();
+    $('#textInputBox').show();
     $('#textInputContainer').fadeIn( tiaTimings.speechBubbleFadeInDuration );
     $('#textInput').focus();
 
@@ -372,7 +355,7 @@ function showChoiceTextInput() {
 
 function getOwnTopicFromTextbox() {
 
-    removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
+    //removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
     let ownTopic = document.getElementById( "textInput" ).value
     
     $('#textInputContainer').fadeOut( tiaTimings.speechBubbleFadeOutDuration );
@@ -386,7 +369,7 @@ function getOwnTopicFromTextbox() {
 
     } else {
 
-        setTimeout( function() { storeTopic( ownTopic ) }, 1000 );
+        storeTopic( ownTopic );
 
     }
 
@@ -394,51 +377,56 @@ function getOwnTopicFromTextbox() {
 
 function dealWithEmptyTopic() {
 
-    speechBubbleObject.sentence = "You must type a topic in the box below";
-    synthesisObject.text = speechBubbleObject.sentence
+    //speechBubbleObject.sentence = "You must type a topic in the box below";
+    //synthesisObject.text = speechBubbleObject.sentence
 
-    setTimeout( function() {tiaSpeak( speechBubbleObject.sentence, needSendTTS=true, showChoiceTextInput)}, 1500);
-
-}
-
-function askIfReadNews() {
-    
-    removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
-    $('#topicChoices').fadeOut( tiaTimings.speechBubbleFadeInDuration );
-
-    setTimeout( function() {
-
-        tiaSpeak( "Did you read today's article? It's title is: '" + classVariableDict.headline + "'", needSendTTS=true, function() { 
-            
-            showDoubleBtn( "Yes, I read it", "no, I didn't read it", 
-                    
-                function(){ 
-                    
-                    removeDoubleBtn();
-                    storeTopic( 'news: ' + classVariableDict.headline ) 
-                
-                },
-
-                function(){ tellNewsTitle() } ) 
+    synthesisObject.synthAudio.src = prefixURL + tiaMediaLoc + "you_must_type_your_choice_of_topic_in_the_box_below.wav";
         
-        } );
+    tiaSpeak( "You must type your choice of topic in the box below", showChoiceTextInput)
+    
 
-    }, tiaTimings.speechBubbleFadeOutDuration * 2 );
+    //setTimeout( function() {tiaSpeak( speechBubbleObject.sentence, needSendTTS=true, showChoiceTextInput)}, 1500);
 
 }
 
-function tellNewsTitle() {
+//function askIfReadNews() {
+    
+    //removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
+    //$('#topicChoices').fadeOut( tiaTimings.speechBubbleFadeInDuration );
 
-    removeDoubleBtn();
-    removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
+    //setTimeout( function() {
 
-    setTimeout( function() {
-
-        tiaSpeak( "You need to read the article before coming to class. In the waiting area, if you click the laptop, you can see today's article. Click 'finish class' on the top right to go back to the waiting area. Read the article and then start the class again.", needSendTTS=true )
+        //tiaSpeak( "Did you read today's article? It's title is: '" + classVariableDict.headline + "'", needSendTTS=true, function() { 
             
-    }, tiaTimings.speechBubbleFadeOutDuration * 2 );
+            //showDoubleBtn( "Yes, I read it", "no, I didn't read it", 
+                    
+                //function(){ 
+                    
+                    //removeDoubleBtn();
+                    //storeTopic( 'news: ' + classVariableDict.headline ) 
+                
+                //},
 
-}
+                //function(){ tellNewsTitle() } ) 
+        
+        //} );
+
+    //}, tiaTimings.speechBubbleFadeOutDuration * 2 );
+
+//}
+
+//function tellNewsTitle() {
+
+    //removeDoubleBtn();
+    //removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
+
+    //setTimeout( function() {
+
+        //tiaSpeak( "You need to read the article before coming to class. In the waiting area, if you click the laptop, you can see today's article. Click 'finish class' on the top right to go back to the waiting area. Read the article and then start the class again.", needSendTTS=true )
+            
+    //}, tiaTimings.speechBubbleFadeOutDuration * 2 );
+
+//}
 
 
 function storeTopic( topicChoice ) {
@@ -460,7 +448,7 @@ function storeTopic( topicChoice ) {
             let startTalkSent = " Ok, please begin when you are ready.";
             speechBubbleObject.sentence = startTalkSent;
             synthesisObject.text = speechBubbleObject.sentence
-            sendTTS( startTalkSent, true, "talk" );
+            sendTTS( startTalkSent, true );
 
             setTimeout( beginTalking, 1000 );
             
@@ -474,9 +462,15 @@ function storeTopic( topicChoice ) {
 
 function beginTalking() {
 
-    initArmIndicate('right', 1.2, 'low', 0.75);
+    synthesisObject.synthAudio.src = prefixURL + tiaMediaLoc + "ok_please_begin_when_you_are_ready.wav";
+        
+    tiaSpeak( "Ok, please begin when you are ready", finalSpeak)
+
+    setTimeout( function() {
     
-    tiaSpeak( speechBubbleObject.sentence, needSendTTS=false, finalSpeak );
+        initArmIndicate('right', 1.2, 'low', 0.75);
+    
+    }, 1000 );
 
 }
 

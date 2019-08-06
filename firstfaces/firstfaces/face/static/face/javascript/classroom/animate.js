@@ -120,7 +120,7 @@ function animate () {
 
     }
 
-    if ( mainCount % 2 === 0 ) {
+    //if ( mainCount % 2 === 0 ) {
 
         if ( mouthOpenObject.bool ) {
 
@@ -128,7 +128,7 @@ function animate () {
 
         }
 
-    } else {
+    //} else {
 
         if ( purseLipsObject.bool ) {
 
@@ -136,7 +136,7 @@ function animate () {
 
         }
 
-    }
+    //}
 
     if ( nodObject.bool ) {
 

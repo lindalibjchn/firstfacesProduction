@@ -22,7 +22,7 @@ function initInputReady( from ) {
 
         $( '#textInputContainer' ).fadeIn();
         $( '#sentenceShowHolder').fadeIn();
-        $('.play-btn').prop( "disabled", false).show();
+        $('.play-btn').hide();
         reset_text(classVariableDict.preSent)
 
     } else {
@@ -65,44 +65,44 @@ function initInputReady( from ) {
 
 }
 
-function delayForListening( text ) {
+//function delayForListening( text ) {
 
-    // gonna use dans actual length of audio for this
-    var speechDuration;
-    if ( synthesisObject.originalVoice ) {
+    //// gonna use dans actual length of audio for this
+    //var speechDuration;
+    //if ( synthesisObject.originalVoice ) {
 
-        speechDuration = aud.duration;
+        //speechDuration = aud.duration;
     
-    } else {
+    //} else {
 
-        if ( synthesisObject.ttsServerFault ) {
+        //if ( synthesisObject.ttsServerFault ) {
          
-            speechDuration = Infinity;
+            //speechDuration = Infinity;
 
-        } else {
+        //} else {
 
-            speechDuration = synthesisObject.synthAudio.duration;
+            //speechDuration = synthesisObject.synthAudio.duration;
 
-        }
+        //}
 
-    }
+    //}
 
-    if ( speechDuration !== Infinity ) {
+    //if ( speechDuration !== Infinity ) {
 
-        delay = speechDuration * 1000 + tiaTimings.delayAfterStudentSpeech; // cause it's in seconds
-        console.log('real delay:', delay)
+        //delay = speechDuration * 1000 + tiaTimings.delayAfterStudentSpeech; // cause it's in seconds
+        //console.log('real delay:', delay)
 
-    } else {
+    //} else {
 
-        // if the above is infinity it means it hasn't read it and need to calc by length of characters
-        delay = text.length * 90 * ( 1 / synthesisObject.speaking_rate ) + tiaTimings.delayAfterStudentSpeech;
-        console.log('calc delay:', delay)
+        //// if the above is infinity it means it hasn't read it and need to calc by length of characters
+        //delay = text.length * 90 * ( 1 / synthesisObject.speaking_rate ) + tiaTimings.delayAfterStudentSpeech;
+        //console.log('calc delay:', delay)
 
-    }
+    //}
 
-    return delay;
+    //return delay;
 
-}
+//}
 
 
 // after press talk button this does the logic, deciding whether to use synthesized voice or not depending on changes to the textbox

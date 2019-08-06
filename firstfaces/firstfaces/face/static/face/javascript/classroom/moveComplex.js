@@ -785,13 +785,15 @@ function dealWithBlankTranscription() {
 
     $('#recordBtnsContainer').hide();
 
-    tiaSpeak( "I didn't hear anything. Could you try again?", needSendTTS=true, function() {
+
+    synthesisObject.synthAudio.src = prefixURL + tiaMediaLoc + "im_sorry_but_i_didnt_hear_anything.wav";
+    tiaSpeak( "I'm sorry, but I didn't hear anything. Could you try again?", function() {
      
         $('#recordVoiceBtn').show();
         classVariableDict.mainRecord = false;
 
         $('#recordBtnsContainer').fadeIn();
-        removeSpeechBubble();
+        //removeSpeechBubble();
 
     } );
 
@@ -810,7 +812,7 @@ function returnFromListenToSpeechSynthesis() {
                 setTimeout( function() {
 
                     initShake(0.2, 0.5)
-                    setTimeout( dealWithBlankTranscription, 500 );
+                    setTimeout( dealWithBlankTranscription, 1500 );
 
                 }, 1000);
         

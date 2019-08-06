@@ -92,8 +92,7 @@ function readyBtns() {
 
             } else {
     
-                //window.location.href = "https://erle.ucd.ie/waiting"
-                window.location.href = "http://127.0.0.1:8000/waiting"
+                window.location.href = prefixURL + "waiting"
 
             }
 
@@ -122,8 +121,6 @@ function readyBtns() {
     $('#showCorrectionBtn').on( 'click', showCorrection );
     $('#nextSentenceBtn').on( 'click', nextSentence );
     $('#talkBtn').on( 'click', sendSentToServer );
-    //$('.sent-scores').on( 'click', viewAlternateTranscription );
-    $('#playRobot').on( 'click', prepareSynthPlay );
 
     $('#finishClassBtn').on( 'click', function() {
         
@@ -433,8 +430,8 @@ function onMediaRecorderStop() {
     chunks = [];
 
     // send blob to server to be stored, but wait a bit to make sure it has come through
-    //setTimeout( function() {
-   if(!classVariableDict.stage2 && !classVariableDict.stage3){
+    // setTimeout( function() {
+    if(!classVariableDict.stage2 && !classVariableDict.stage3){
     	sendBlobToServer( classVariableDict.blob );
 	}
 	else{
@@ -449,133 +446,6 @@ function onMediaRecorderStop() {
 
 }
 
-function prepareSynthPlay() {
-
-    // checks if play is repeat - dont need to send to server again
-    let textInBox = $('#textInput').val();
-    if ( textInBox === synthesisObject.text ) {
-
-        synthesisObject.synthAudio.play();
-        console.log('repeating play');
-        sendListenSynth( true );
-
-    } else {
-
-        sendListenSynth( false );
-        sendTTS( textInBox, false, "listen" );
-
-    }
-
-    if ( classVariableDict.tutorial ) {
-
-        if ( classVariableDict.tutorialStep === 13 ) {
-
-            setTimeout( greeting14, 2000 );
-
-        } else if ( classVariableDict.tutorialStep === 513 ) {
-
-            setTimeout( greeting0514, 2000 );
-
-        }
-
-    }
-
-}
-
-//// for sorting
-//function compare(a,b) {
-  //if (a.confidence > b.confidence)
-    //return -1;
-  //if (a.confidence < b.confidence)
-    //return 1;
-  //return 0;
-//}
-
-// put all transcriptions into an array
-//function createArrayOfAlternatives( unorderedDict ) {
-
-    //let sentencesList = [];
-    
-    ////store leading confidence and remove lower one if more than 20 points below
-    //var topConf;
-
-    //// get list of scores
-    //for (let i=0; i<unorderedDict.length; i++) {
-
-        //if ( i === 0 ) {
-
-            //topConf = unorderedDict[i].confidence;
-        
-            //sentencesList.push( unorderedDict[i] )
-
-        //} else {
-
-            //if ( unorderedDict[ i ].confidence > topConf - 0.20 ) {
-            
-                //sentencesList.push( unorderedDict[i] )
-
-            //}
-
-        //}
-
-    //}
-
-    //sentencesList.sort(compare)
-
-    //return sentencesList
-
-//}
-
-//function fillTranscriptsAndConfidences( alternatives ) {
-
-    //if ( alternatives.length === 0 ) {
-
-        //console.log('no transcripts');
-
-    //}
-
-    //for ( let i=0; i<alternatives.length; i++ ) {
-
-        //synthesisObject[ 'transcript' + i.toString() ] = clipLongTranscripts( alternatives[i] );
-
-    //}
-
-    //resetAllTabs();
-
-//}
-
-//function clipLongTranscripts( t ) {
-
-    //console.log('t', t);
-    //// avoid sending sentence which is too long to server
-    //if ( t.length >= 300 ) {
-
-        //alert('Your sentence was too long and will be shortened. Please check it before sending.')
-
-        //newT = t.slice(0, 299);
-
-    //} else {
-
-        //newT = t.slice(0,t.length);
-
-    //}
-
-    //// lowercase all but first letter
-    ////titled = makeTitle( newT )
-    
-    //return newT
-
-//}
-
-//function makeTitle( s ) {
-
-    //let lowered = $.trim(s.toLowerCase())
-    //let titled = lowered.charAt(0).toUpperCase() + lowered.slice(1);
-
-    //return titled
-
-//}
-
 //// for drawing the volume bar
 var audioContext = null;
 var meter = null;
@@ -584,7 +454,7 @@ var WIDTH_VOL=200;
 var HEIGHT_VOL=100;
 var rafID = null;
 var micIntAud = document.getElementById('micInterferenceClip')
-var micIntAudSources = ["http://127.0.0.1:8000/media/00micInterference04.mp3","http://127.0.0.1:8000/media/00micInterference01.mp3","http://127.0.0.1:8000/media/00micInterference02.mp3","http://127.0.0.1:8000/media/00micInterference03.mp3"];
+var micIntAudSources = [ prefixURL + "media/00micInterference04.mp3", prefixURL + "media/00micInterference01.mp3", prefixURL + "media/00micInterference02.mp3", prefixURL + "media/00micInterference03.mp3" ];
 
 //var micIntAudSources = ["http://erle.ucd.ie/media/00micInterference04.mp3","http://erle.ucd.ie/media/00micInterference01.mp3","http://erle.ucd.ie/media/00micInterference02.mp3","http://erle.ucd.ie/media/00micInterference03.mp3"];
 

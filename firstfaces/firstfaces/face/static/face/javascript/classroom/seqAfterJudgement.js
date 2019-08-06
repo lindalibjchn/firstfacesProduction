@@ -10,11 +10,11 @@ function runAfterJudgement() {
     let nodShakeDur = 0;
     if ( classVariableDict.last_sent.nod !== null ) {
     
-        nodShakeDur = 4 * parseFloat( getNodSpeedInString() ) * 1000 + 500;
+        nodShakeDur = 4 * parseFloat( getNodSpeedInString() ) * 1000;
 
     } else if ( classVariableDict.last_sent.judgement === "D" ) {
 
-        nodShakeDur = 4 * 1000 + 500;
+        nodShakeDur = 3000;
 
     }
 
@@ -204,8 +204,8 @@ function displaySpeechBubblePrompt() {
 
     recTimes.displaySpeechBubblePrompt = Date.now() / 1000;
     //want to fade in the text a bit later
-    $('#speakingWords').hide()
-    $('#speechBubbleCont').fadeIn( tiaTimings.speechBubbleFadeInDuration );
+    //$('#speakingWords').hide()
+    //$('#speechBubbleCont').fadeIn( tiaTimings.speechBubbleFadeInDuration );
 
     $('#speakingWordsInside').text( classVariableDict.tiaToSay );
     
@@ -240,13 +240,24 @@ function displaySpeechBubblePrompt() {
         $('#speakingWords').fadeIn( tiaTimings.speechBubbleFadeInDuration );
 
         recTimes.tiaStartTalking = Date.now() / 1000;
-        synthesisObject.endCount = synthesisObject.synthAudio.duration * 60* 0.75;
+        //synthesisObject.endCount = synthesisObject.synthAudio.duration * 60* 0.75;
         
-        tiaSpeakCount = 0;
-        initTalk();
+        //tiaSpeakCount = 0;
+        //initTalk();
 
-        synthesisObject.synthAudio.play()
-        synthesisObject.synthAudio.onended = returnToLaptop;
+        //synthesisObject.synthAudio.play()
+        //synthesisObject.synthAudio.onended = returnToLaptop;
+        
+        tiaSpeak( classVariableDict.tiaToSay, function() {
+
+            if ( classVariableDict.last_sent.judgement === "D" || classVariableDict.last_sent.judgement === "3" || classVariableDict.last_sent.judgement === "M" ) {
+
+                returnToLaptop( 'try again' );
+
+            }
+
+        });
+
         classVariableDict.promptSpeaking = true;
             
     }, tiaTimings.toTalkExpressionDuration * 1000 );

@@ -485,14 +485,6 @@ def get_text(sentence, judgement, prompt, indexes):
 
         tia_to_say = prompt
 
-    elif judgement == "D":
-
-        tia_to_say = "I'm sorry but I don't understand what you mean"
-
-    elif judgement == "3":
-
-        tia_to_say = " There were more than 3 errors in your sentence. Please simplify and try again"
-
     elif judgement == "M":
 
         unsure_strings = " "
@@ -505,7 +497,7 @@ def get_text(sentence, judgement, prompt, indexes):
                 unsure_word_list.append(sentence[j])
             unsure_strings += "'" + ''.join(unsure_word_list) + "'"
 
-        tia_to_say = "I'm not sure what you mean by" + unsure_strings + ". Could you rephrase that sentence?"
+        tia_to_say = "I'm not sure what you mean by" + unsure_strings + ". Could you rephrase that?"
 
     elif judgement == "B":
 
@@ -540,17 +532,47 @@ def get_tia_tts_for_prompts_early(text, sess_id):
     try:
         response = client.synthesize_speech(input_text, voice, audio_config)
 
-        print('response:', response)
 
         # don't need to keep all synths for class. Remember to delete this when session ends.
-        synthURL = 'media/synths/sent_' + str(sess_id) + '.wav' # + '_' + str(int(time.mktime((timezone.now()).timetuple())))
-        print('rsynthURL:', synthURL)
+        synthURL = 'media/synths/sess_' + str(sess_id) + '.wav' # + '_' + str(int(time.mktime((timezone.now()).timetuple())))
         with open( os.path.join(settings.BASE_DIR, synthURL ), 'wb') as out:
             out.write(response.audio_content)
     except:
         synthURL = 'fault'
 
     return synthURL
+
+def create_hello_wav( u_name ):
+
+    speaking_voice = 'en-GB-Wavenet-C'
+
+    client = texttospeech.TextToSpeechClient()
+    input_text = texttospeech.types.SynthesisInput(text='hello ' + u_name)
+
+    # Note: the voice can also be specified by name.
+    # Names of voices can be retrieved with client.list_voices().
+    voice = texttospeech.types.VoiceSelectionParams(
+        language_code='en-GB',
+        name=speaking_voice
+        # ssml_gender=texttospeech.enums.SsmlVoiceGender.MALE
+        )
+
+    audio_config = texttospeech.types.AudioConfig(
+        audio_encoding=texttospeech.enums.AudioEncoding.MP3,
+        pitch = 1,
+        speaking_rate = 0.9,
+        )
+
+    try:
+        response = client.synthesize_speech(input_text, voice, audio_config)
+
+        # don't need to keep all synths for class. Remember to delete this when session ends.
+        synthURL = 'media/prePreparedTiaPhrases/greetings/' + u_name + '.wav'
+        print('rsynthURL:', synthURL)
+        with open( os.path.join(settings.BASE_DIR, synthURL ), 'wb') as out:
+            out.write(response.audio_content)
+    except:
+        synthURL = 'fault'
 
 
 
