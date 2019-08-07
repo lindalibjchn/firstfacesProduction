@@ -1,0 +1,74 @@
+{
+ "fragments": [
+  {
+   "begin": "0.000",
+   "children": [],
+   "end": "1.520",
+   "id": "f000001",
+   "language": "eng",
+   "lines": [
+    "the"
+   ]
+  },
+  {
+   "begin": "1.520",
+   "children": [],
+   "end": "2.120",
+   "id": "f000002",
+   "language": "eng",
+   "lines": [
+    "grand"
+   ]
+  },
+  {
+   "begin": "2.120",
+   "children": [],
+   "end": "3.000",
+   "id": "f000003",
+   "language": "eng",
+   "lines": [
+    "man"
+   ]
+  },
+  {
+   "begin": "3.000",
+   "children": [],
+   "end": "3.400",
+   "id": "f000004",
+   "language": "eng",
+   "lines": [
+    "walk"
+   ]
+  },
+  {
+   "begin": "3.400",
+   "children": [],
+   "end": "3.800",
+   "id": "f000005",
+   "language": "eng",
+   "lines": [
+    "along"
+   ]
+  },
+  {
+   "begin": "3.800",
+   "children": [],
+   "end": "3.920",
+   "id": "f000006",
+   "language": "eng",
+   "lines": [
+    "the"
+   ]
+  },
+  {
+   "begin": "3.920",
+   "children": [],
+   "end": "5.040",
+   "id": "f000007",
+   "language": "eng",
+   "lines": [
+    "street"
+   ]
+  }
+ ]
+}

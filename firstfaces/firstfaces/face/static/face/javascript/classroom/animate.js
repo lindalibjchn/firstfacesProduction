@@ -58,7 +58,7 @@ function blinkController() {
 
             // call the show time remaining to reload it and keep it up to pace
             
-            //if ( classVariableDict.tutorial === false ) {
+            //if ( classVariables.tutorial === false ) {
 
                 //showTimeRemaining();
     
@@ -120,7 +120,7 @@ function animate () {
 
     }
 
-    if ( mainCount % 2 === 0 ) {
+    //if ( mainCount % 2 === 0 ) {
 
         if ( mouthOpenObject.bool ) {
 
@@ -128,7 +128,7 @@ function animate () {
 
         }
 
-    } else {
+    //} else {
 
         if ( purseLipsObject.bool ) {
 
@@ -136,7 +136,7 @@ function animate () {
 
         }
 
-    }
+    //}
 
     if ( nodObject.bool ) {
 

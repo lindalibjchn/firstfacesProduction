@@ -1,9 +1,8 @@
-
 // text is string and tiaSpeaker is true if it is tia speaking, false if student
-function sendTTS( text, tiaSpeaker, caller ) {
+function sendTTS( text, tiaSpeaker ) {
 
     synthesisObject.ttsServerFault = false;
-    console.log('text:', text);
+    //console.log('text:', text);
 
     // checks if speech has arrived from server
     synthesisObject.gotNewSpeech = false;
@@ -14,15 +13,15 @@ function sendTTS( text, tiaSpeaker, caller ) {
         url: "/tts",
         type: "GET",
         data: {
-            'gender': classVariableDict.gender,
+            'gender': classVariables.gender,
             'sentence': text,
             'tiaSpeaker': tiaSpeaker,
             'pitch': synthesisObject.pitch,
             'speaking_rate': synthesisObject.speaking_rate,
-            'sessionID': classVariableDict.session_id,
-            'caller': caller,
-            'blob_no_text': classVariableDict.blob_no_text,
-            'blob_no_text_sent_id': classVariableDict.blob_no_text_sent_id,
+            'sessionID': classVariables.session_id,
+            //'caller': caller,
+            'blob_no_text': classVariables.blob_no_text,
+            'blob_no_text_sent_id': classVariables.blob_no_text_sent_id,
         },
         success: function(json) {
 
@@ -33,34 +32,33 @@ function sendTTS( text, tiaSpeaker, caller ) {
 
             } else {
 
-                //var synthAudioURL = "https://erle.ucd.ie/" + json.synthURL;
-                var synthAudioURL = "http://127.0.0.1:8000/" + json.synthURL;
+                var synthAudioURL = prefixURL + json.synthURL;
                 synthesisObject.synthAudio = document.getElementById( 'synthClip' );
                 synthesisObject.synthAudio.src = synthAudioURL;
 
                 // now this is true, other functions waiting on it can continue
                 synthesisObject.gotNewSpeech = true;
                 
-                if ( tiaSpeaker ) {
+                //if ( tiaSpeaker ) {
 
-                } else {
+                //} else {
 
-                    // listen is when the user click the listen button so want the audio to play asap
-                    if ( caller === "listen" ) {
+                    //// listen is when the user click the listen button so want the audio to play asap
+                    ////if ( caller === "listen" ) {
 
-                        setTimeout( function() {
+                        ////setTimeout( function() {
 
-                            synthesisObject.synthAudio.play();
+                            ////synthesisObject.synthAudio.play();
 
-                        }, 500 );
+                        ////}, 500 );
 
-                    } else {
+                    ////} else {
                     
-                        console.log('talk speech synth made');
+                        //console.log('talk speech synth made');
 
-                    }
+                    ////}
 
-                }
+                //}
 
             }
 
@@ -77,10 +75,10 @@ function sendBlobToServer( blob_to_send ) {
 
     let fd = new FormData();
     fd.append('data', blob_to_send);
-    fd.append('sessionID', classVariableDict.session_id);
+    fd.append('sessionID', classVariables.session_id);
     fd.append('interference', synthesisObject.interference);
-    fd.append('blob_no_text', classVariableDict.blob_no_text);
-    fd.append('blob_no_text_sent_id', classVariableDict.blob_no_text_sent_id);
+    fd.append('blob_no_text', classVariables.blob_no_text);
+    fd.append('blob_no_text_sent_id', classVariables.blob_no_text_sent_id);
 
     
     $.ajax({
@@ -90,17 +88,17 @@ function sendBlobToServer( blob_to_send ) {
         processData: false,
         contentType: false,
         success: function(json) {
-            classVariableDict.totalAudioLength = json.audio_length;
-            classVariableDict.Aud_Fname = json.audio_file;
-            classVariableDict.blob_no_text = true;
-            classVariableDict.blob_no_text_sent_id = json.sent_id;
+            classVariables.totalAudioLength = json.audio_length;
+            classVariables.Aud_Fname = json.audio_file;
+            classVariables.blob_no_text = true;
+            classVariables.blob_no_text_sent_id = json.sent_id;
             console.log('got response from sending blob to server');
-            classVariableDict.alternatives = json.alternatives;
-            classVariableDict.currentAudID = json.audio_pk;
-            classVariableDict.preSent = classVariableDict.alternatives[ 0 ][ 'transcript' ]
+            classVariables.alternatives = json.alternatives;
+            classVariables.currentAudID = json.audio_pk;
+            classVariables.preSent = classVariables.alternatives[ 0 ][ 'transcript' ]
 
             // if first interference, then want the flinch not to be interfered with by the return motions
-            if ( classVariableDict.interference_count === 1 && synthesisObject.interference ) {
+            if ( classVariables.interference_count === 1 && synthesisObject.interference ) {
 
                 console.log('no return');
 
@@ -112,33 +110,33 @@ function sendBlobToServer( blob_to_send ) {
             }
 
             // dont want to send sentence while doing tutorial
-            if ( classVariableDict.tutorial ) {
+            if ( classVariables.tutorial ) {
 
-                if (classVariableDict.tutorialStep === 5 ) {
+                if (classVariables.tutorialStep === 5 ) {
 
                     $('#recordVoiceBtn').prop( 'disabled', true );
                     $('#talkBtn').prop( 'disabled', true );
 
                     setTimeout( greeting06, 2000 );
 
-                } else if (classVariableDict.tutorialStep === 7 ) {
+                } else if (classVariables.tutorialStep === 7 ) {
 
                     $('#recordVoiceBtn').prop( 'disabled', true );
                     $('#talkBtn').prop( 'disabled', true );
 
                     setTimeout( greeting08, 2000 );
 
-                } else if (classVariableDict.tutorialStep === 14 ) {
+                } else if (classVariables.tutorialStep === 14 ) {
 
-                    classVariableDict.tutorialStep = 3;
+                    classVariables.tutorialStep = 3;
                     $('#recordVoiceBtn').prop( 'disabled', true );
                     $('#talkBtn').prop( 'disabled', true );
 
                     setTimeout( greeting15, 2000 );
 
-                } else if (classVariableDict.tutorialStep === 15 ) {
+                } else if (classVariables.tutorialStep === 15 ) {
 
-                    classVariableDict.tutorialStep = 4;
+                    classVariables.tutorialStep = 4;
                     $('#recordVoiceBtn').prop( 'disabled', true );
                     $('#talkBtn').prop( 'disabled', true );
 
@@ -178,10 +176,10 @@ function correctID(id){
 
 function getRemainingAudio(){
     let fd = new FormData();  
-    fd.append("ids",classVariableDict.correct_audio);
-    fd.append("poss", correctids(classVariableDict.correct_audio));
-    fd.append("fn", classVariableDict.Aud_Fname);
-    fd.append('sessionID',classVariableDict.session_id);
+    fd.append("ids",classVariables.correct_audio);
+    fd.append("poss", correctids(classVariables.correct_audio));
+    fd.append("fn", classVariables.Aud_Fname);
+    fd.append('sessionID',classVariables.session_id);
     $.ajax({                     
         url: "/get_remaining_audio", 
         type: "POST",             
@@ -191,9 +189,9 @@ function getRemainingAudio(){
         success: function(json) {
             var i;
             var base = "http://127.0.0.1:8000/";
-            for(i=0;i<classVariableDict.correct_audio.length;i++){
-                document.getElementById("audio_"+classVariableDict.correct_audio[i]).src = base+json['paths'][i];
-                $("#audio_"+classVariableDict.correct_audio[i]).attr('duration',json['lens'][i]);
+            for(i=0;i<classVariables.correct_audio.length;i++){
+                document.getElementById("audio_"+classVariables.correct_audio[i]).src = base+json['paths'][i];
+                $("#audio_"+classVariables.correct_audio[i]).attr('duration',json['lens'][i]);
             }
             getAudioLength();
         },
@@ -207,18 +205,18 @@ function getRemainingAudio(){
 
 
 function sendSentToServer() {
-    if(classVariableDict.playStage2){
+    if(classVariables.playStage2){
         getRemainingAudio();
         
        //i getAudioLength();
     }
     // reset to false
-    //classVariableDict.promptNIndexesReceived = false;
+    //classVariables.promptNIndexesReceived = false;
     // reset the number of recordings for the sentence to 0.
-    classVariableDict.blobs = 0;
+    classVariables.blobs = 0;
 
     // all below for developing
-    let sent = classVariableDict.preSent;
+    let sent = classVariables.preSent;
 
     if ( sent.length >= 300 ) {
 
@@ -227,7 +225,7 @@ function sendSentToServer() {
     } else {
 
         // set this to false until judgement comes in where it will be changed to true
-        classVariableDict.awaitingJudgement = true;
+        classVariables.awaitingJudgement = true;
 
         // if wh-question and if allowed. If not allowed, raise alert 
         //isItQ = checkIfSentIsQuestion( sent );
@@ -259,9 +257,9 @@ function sendSentToServer() {
                 data: { 
                     'sent': sent,
                     //'isItQ': isItQ,
-                    'blob_no_text': classVariableDict.blob_no_text,
-                    'blob_no_text_sent_id': classVariableDict.blob_no_text_sent_id,
-                    'sessionID': classVariableDict.session_id
+                    'blob_no_text': classVariables.blob_no_text,
+                    'blob_no_text_sent_id': classVariables.blob_no_text_sent_id,
+                    'sessionID': classVariables.session_id
                 },
                 success: function(json) {
                     
@@ -270,7 +268,7 @@ function sendSentToServer() {
                     checkJudgement( json.sent_id );
 
                     // for interference stuff, need to reset
-                    classVariableDict.interference_count_this_sent = 0;
+                    classVariables.interference_count_this_sent = 0;
 
                 },
                 error: function() {
@@ -301,7 +299,7 @@ function checkJudgement( sentId ) {
         url: "/check_judgement",
         type: "GET",
         data: { 
-            'sessId': classVariableDict.session_id,
+            'sessId': classVariables.session_id,
             'sentId': sentId,
         },
         success: function(json) {
@@ -313,8 +311,7 @@ function checkJudgement( sentId ) {
                 if (json.sent_meta.synthURL !== 'fault' ) {
 
                     synthesisObject.synthAudio = document.getElementById( 'synthClip' );
-                    //synthesisObject.synthAudio.src = "https://erle.ucd.ie/" + json.sent_meta.synthURL;
-                    synthesisObject.synthAudio.src = "http://127.0.0.1:8000/" + json.sent_meta.synthURL;
+                    synthesisObject.synthAudio.src = prefixURL + json.sent_meta.synthURL;
 
                 }
 
@@ -336,7 +333,7 @@ function checkJudgement( sentId ) {
 
 }
 
-//classVariableDict.promptNINdexesCount = 0;
+//classVariables.promptNINdexesCount = 0;
 //function checkForPromptNIndexes( sentId ) {
 
     //console.log('in checkForPromptNIndexes');
@@ -351,16 +348,16 @@ function checkJudgement( sentId ) {
             
             //if ( json.sent_meta.receivedPromptNIndexes ) {
 
-                //if ( classVariableDict.promptNIndexesReceived === false ) {
+                //if ( classVariables.promptNIndexesReceived === false ) {
 
                     //console.log('got prompt n indexes');
                     //console.log('indexes:', json.sent_meta.indexes);
-                    //classVariableDict.promptNINdexesCount = 0;
+                    //classVariables.promptNINdexesCount = 0;
                     //promptNIndexesReceived( json.sent_meta )
 
-                    ////if ( classVariableDict.lastSentToBeSent ) {
+                    ////if ( classVariables.lastSentToBeSent ) {
 
-                        ////classVariableDict.classOver = true;
+                        ////classVariables.classOver = true;
 
                     ////}
 
@@ -369,9 +366,9 @@ function checkJudgement( sentId ) {
             //} else {
 
                 //console.log('checking for prompt n indexes again');
-                //classVariableDict.promptNINdexesCount += 1;
+                //classVariables.promptNINdexesCount += 1;
 
-                //if ( classVariableDict.promptNINdexesCount < 20 ) {
+                //if ( classVariables.promptNINdexesCount < 20 ) {
 
                     //setTimeout( function() {
 
@@ -381,7 +378,7 @@ function checkJudgement( sentId ) {
 
                 //} else {
 
-                    //classVariableDict.promptNINdexesCount = 0;
+                    //classVariables.promptNINdexesCount = 0;
                     //setTimeout( function() {
 
                         //synthesisObject.text = "Sorry, my message has take too long to come across the internet. Please continue."
@@ -406,7 +403,7 @@ function checkJudgement( sentId ) {
         //},
         //error: function() {
 
-            //classVariableDict.promptNINdexesCount = 0;
+            //classVariables.promptNINdexesCount = 0;
             //setTimeout( function(){
             
                 //console.log("error awaiting prompt n indexes");
@@ -439,7 +436,7 @@ function checkJudgement( sentId ) {
         //type: "GET",
         //data: { 
             //'choice': choice,
-            //'blob_no_text_sent_id': classVariableDict.blob_no_text_sent_id,
+            //'blob_no_text_sent_id': classVariables.blob_no_text_sent_id,
         //},
         //success: function(json) {
             
@@ -480,18 +477,18 @@ function checkJudgement( sentId ) {
         //url: "/add_listen_synth_data",
         //type: "GET",
         //data: { 
-            //'sessId': classVariableDict.session_id,
+            //'sessId': classVariables.session_id,
             //'diffSent': diffSent,
             //'transcriptCur': transcriptCur,
             //'listenTranscript': listenTranscript,
             //'repeat': repeat,
-            //'blob_no_text': classVariableDict.blob_no_text,
-            //'blob_no_text_sent_id': classVariableDict.blob_no_text_sent_id,
+            //'blob_no_text': classVariables.blob_no_text,
+            //'blob_no_text_sent_id': classVariables.blob_no_text_sent_id,
         //},
         //success: function(json) {
             
-            //classVariableDict.blob_no_text = true;
-            //classVariableDict.blob_no_text_sent_id = json.sent_id;
+            //classVariables.blob_no_text = true;
+            //classVariables.blob_no_text_sent_id = json.sent_id;
 
             //console.log('added pronunciation data');
 
@@ -510,8 +507,8 @@ function checkJudgement( sentId ) {
         //url: "/add_voice_data",
         //type: "GET",
         //data: { 
-            //'blob_no_text_sent_id': classVariableDict.blob_no_text_sent_id,
-            //'transcript': classVariableDict.preSent,
+            //'blob_no_text_sent_id': classVariables.blob_no_text_sent_id,
+            //'transcript': classVariables.preSent,
         //},
         //success: function(json) {
             
@@ -551,7 +548,7 @@ function sendSoundMicToServer( device, TF ) {
 
 function sendTimesToServer() {
 
-    let sentID = classVariableDict.last_sent.sent_id
+    let sentID = classVariables.last_sent.sent_id
 
     $.ajax({
         url: "/timings",

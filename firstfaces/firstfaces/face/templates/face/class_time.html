@@ -6,8 +6,9 @@
 <link rel="stylesheet" type="text/css" href="{% static 'face/css/utils.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'face/css/class.css' %}" />
 
-<!-- black screen which disappears after loading -->
-<div id="foreground" style="opacity: 1">
+<!-- BLACK SCREEN WITH YELLOW SPINNER WHICH DISAPPEARS AFTER EVERYTHING LOADS -->
+
+<div id="foregroundContainer" style="opacity: 1">
 
     <div id="loadingIcon">
 
@@ -17,97 +18,21 @@
 
 </div>
 
-<div id="thoughtBubbleContCont">
+<div id="thoughtBubbleContainer">
 
-    <!--thought bubbles-->
-    <div id="thoughtBubbleCont">
+    <div id="thoughtBubbleInnerContainer">
 
-        <img class="thought-bubbles" id="thoughtBubble03" src="{% static 'face/images/wide-thought-bubble-03.png' %}">
-        <img class="thought-bubbles" id="thoughtBubble02" src="{% static 'face/images/wide-thought-bubble-02.png' %}">
-        <img class="thought-bubbles" id="thoughtBubble01" src="{% static 'face/images/wide-thought-bubble-01.png' %}">
-        <img class="thought-bubbles" id="thoughtBubble00" src="{% static 'face/images/wide-thought-bubble-00.png' %}">
+        <img class="thought-bubbles" id="thoughtBubble3" src="{% static 'face/images/wide-thought-bubble-03.png' %}">
+        <img class="thought-bubbles" id="thoughtBubble2" src="{% static 'face/images/wide-thought-bubble-02.png' %}">
+        <img class="thought-bubbles" id="thoughtBubble1" src="{% static 'face/images/wide-thought-bubble-01.png' %}">
+        <img class="thought-bubbles" id="thoughtBubble0" src="{% static 'face/images/wide-thought-bubble-00.png' %}">
 
-        <div id="thinkingLoading">
+        <div id="thinkingWordsCont">
 
-            <div id="thinkingWords" class="thinking-words"></div>
+            <div id="thinkingWords0" class="thinking-words"></div>
             <div id="thinkingWords1" class="thinking-words"></div>
 
         </div>
-
-    </div>
-
-</div>
-
-<!--will fill this tutorial button with confirmations from tutorial.js-->
-<div class="init-questions-container" id="tutorialBtnSingleCont">
-
-    <div class="w3-row nice-row">
-
-        <button class="w3-btn w3-blue choice-btn" id="tutorialBtnSingle"></button>
-
-    </div>
-
-</div>
-
-<div class="init-questions-container" id="tutorialBtnDoubleCont">
-
-    <div class="w3-row nice-row">
-
-        <div class="w3-half">
-
-            <button class="w3-btn w3-green choice-btn tut-double-btn" id="tutorialBtnDouble0"></button>
-
-        </div>
-
-        <div class="w3-half">
-
-            <button class="w3-btn w3-red choice-btn tut-double-btn" id="tutorialBtnDouble1"></button>
-
-        </div>
-
-    </div>
-
-</div>
-
-<div class="init-questions-container" id="tutorialBtnQuadCont">
-
-    <div class="w3-row nice-row-quad">
-
-        <button class="w3-btn w3-green choice-btn tut-quad-btn" id="tutorialBtnQuad0"></button>
-
-    </div>
-
-    <div class="w3-row nice-row-quad">
-            
-        <button class="w3-btn w3-green choice-btn tut-quad-btn" id="tutorialBtnQuad1"></button>
-
-    </div>
-
-    <div class="w3-row nice-row-quad">
-
-        <button class="w3-btn w3-green choice-btn tut-quad-btn" id="tutorialBtnQuad2"></button>
-
-    </div>
-
-    <div class="w3-row nice-row-quad">
-            
-        <button class="w3-btn w3-green choice-btn tut-quad-btn" id="tutorialBtnQuad3"></button>
-
-    </div>
-
-</div>
-
-<div class="w3-container init-questions-container" id="continueNewChoices">
-
-    <div class="w3-row topic-row">
-
-        <button class="w3-btn w3-green choice-btn" id="newBtn">Choose a different topic</button>
-
-    </div>
-
-    <div class="w3-row topic-row">
-
-        <button class="w3-btn w3-blue choice-btn" id="continueBtn">Continue with the same topic</button>
 
     </div>
 
@@ -663,14 +588,6 @@
 <!-- three.js script -->
 <script src="{% static 'three.min.js' %}"></script>
 
-<!--[> datgui included in development <]-->
-<!--<script src="{% static 'dat.gui.min.js' %}"></script>-->
-<!--<script src="{% static 'face/javascript/datguiOptions.js' %}"></script>-->
-
-<!-- controls -->
-<script src="{% static 'TrackballControls.js' %}"></script>
-<script src="{% static 'OrbitControls.js' %}"></script>
-
 <!-- variables for blender objects from JSON -->
 <script>var face = "{% static 'face/JSON/tia_face.json' %}"</script>
 <script>var mouth = "{% static 'face/JSON/tia_mouth.json' %}"</script>
@@ -685,7 +602,7 @@
 <script>var classroom = "{% static 'face/JSON/classroom.json' %}"</script>
 <script>var speechBubble = "{% static 'face/JSON/speechBubble.json' %}"</script>
 <script>var speechBubble2 = "{% static 'face/JSON/speechBubble2.json' %}"</script>
-<script>var classVariableDict = {{ class_variable_dict|safe }}</script>
+<script>var classVariables = {{ class_variables|safe }}</script>
 
 <!-- fonts -->
 <script>var board_font = "{% static 'face/fonts/monaco_regular.json' %}"</script>

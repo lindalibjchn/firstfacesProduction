@@ -1,7 +1,7 @@
 // CONTAINS THE EXPRESSIONS FOR THE EMOTION WHEEL AND THE LOGIC FOR TURNING THE WHEEL INTO THE EXPRESSIONS //
 
 // if eyelids is false, then the absolute coordinates in AUs is used
-function expressionController( expressionTo, duration ) {
+function expressionController( expressionTo, duration, callback ) {
 
     //// check if blinking, dont want to move mid blink or eyelids wont function
     if ( blinkObject.bool ) {
@@ -350,8 +350,8 @@ function changeExpression() {
     synthesisObject.pitch = 0;
     synthesisObject.speaking_rate = 0.85;
 
-    let emotionCoords = classVariableDict.last_sent['emotion']
-    let surprise = classVariableDict.last_sent['surprise']
+    let emotionCoords = classVariables.last_sent['emotion']
+    let surprise = classVariables.last_sent['surprise']
 
     // check if emotion is in centre of circle - if so there is no change
     let dia = Math.sqrt( emotionCoords[0]**2 + emotionCoords[1]**2 )

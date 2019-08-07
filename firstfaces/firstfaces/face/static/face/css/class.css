@@ -1,3 +1,5 @@
+/*GENERAL SETTINGS FOR ALL MAJOR ELEMENTS*/
+
 button {
 
     outline: none;
@@ -18,6 +20,12 @@ button:active {
 
 }
 
+
+
+/************************************************
+                LOADING ICONS
+************************************************/
+
 #loadingIcon {
 
     position: absolute;
@@ -31,6 +39,71 @@ button:active {
     margin: auto;
 
 }
+
+
+/************************************************
+                THOUGHT BUBBLE
+************************************************/
+
+#thoughtBubbleContainer {
+
+    position: absolute;
+    width: 100%;
+    height: 20%;
+    top: 10%;
+    opacity: 0.8;
+
+}
+
+#thoughtBubbleInnerContainer {
+
+    position: absolute;
+    width: 40%;
+    height: 100%;
+    right: 60%;
+
+}
+
+.thought-bubbles {
+
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: none;
+
+}
+
+#thinkingWordsCont {
+
+    display: none;
+    font-family: Georgia;
+    font-size: 1.2em;
+    font-style: italic;
+    text-align: center;
+    height: 100%;
+    width: 100%;
+    top: 50%;
+    left: 20%;
+    z-index: 120;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /*border: 3px solid red;*/
+}
+
+.thinking-words {
+
+    z-index: 130;
+    /*display: none;*/
+    position: absolute;
+    height: 20%;
+    width: 80%;
+    left: 10%;
+    bottom: 38%;
+    /*border: 2px dashed blue;*/
+
+}
+
 
 .init-questions-container {
 
@@ -1401,65 +1474,6 @@ button:active {
     display: none;
     height: 100%;
     width: 100%;
-
-}
-
-#thoughtBubbleContCont {
-
-    position: absolute;
-    width: 100%;
-    height: 20%;
-    top: 10%;
-    opacity: 0.8;
-
-}
-
-#thoughtBubbleCont {
-
-    position: absolute;
-    width: 40%;
-    height: 100%;
-    right: 60%;
-
-}
-
-.thought-bubbles {
-
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    display: none;
-
-}
-
-#thinkingLoading {
-
-    display: none;
-    font-family: Georgia;
-    font-size: 1.2em;
-    font-style: italic;
-    text-align: center;
-    height: 100%;
-    width: 100%;
-    top: 50%;
-    left: 20%;
-    z-index: 120;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    /*border: 3px solid red;*/
-}
-
-.thinking-words {
-
-    z-index: 130;
-    /*display: none;*/
-    position: absolute;
-    height: 20%;
-    width: 80%;
-    left: 10%;
-    bottom: 38%;
-    /*border: 2px dashed blue;*/
 
 }
 

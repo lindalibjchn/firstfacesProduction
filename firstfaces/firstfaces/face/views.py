@@ -27,13 +27,13 @@ import ast
 from .praat_utils import *
 from .DanUtils import *
 
-
-
-
 logger = logging.getLogger(__name__)
+
 # os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/johnsHDD/PhD_backup/erle-3666ad7eec71.json"
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/johnsHDD/PhD/2018_autumn/erle-3666ad7eec71.json"
-# os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/firstfaces/erle-3666ad7eec71.json"
+if settings.DEBUG:
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/johnsHDD/PhD/2018_autumn/erle-3666ad7eec71.json"
+else:
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/firstfaces/erle-3666ad7eec71.json"
 # os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/user1/Downloads/erle-3666ad7eec71.json"
 
 def out_or_in(request):
@@ -262,6 +262,9 @@ def class_time(request, session_id):
 
     try:
 
+        in_development = settings.DEBUG
+
+
         # when entering a class, must check that a session exists at that url e.g. 'class_time/234'. If a DoesNot
         sess = Session.objects.get(id=session_id)
         
@@ -292,6 +295,11 @@ def class_time(request, session_id):
                 prev_emotion = None
                 first_full_class = False
                 tutorial_complete = Profile.objects.get(learner=request.user).tutorial_complete
+
+                # if first time create .wav of Tia sating 'hello {USERNAME}'
+                if not tutorial_complete:
+                    create_hello_wav(request.user.username)
+
                 try:
                     all_sesss = Session.objects.filter(learner=request.user).exclude(end_time=None)
                     recent_sesss = all_sesss.filter(start_time__gte=sess.start_time-datetime.timedelta(days=30)).filter(tutorial=False).order_by('-pk')
@@ -305,7 +313,7 @@ def class_time(request, session_id):
                         if prev_topic == 'emotion':
                             prev_topic = 'feeling ' + prev_emotion
                         prev_score = recent_sesss[0].score
-                    else:
+                    if len(all_sesss) == 1: # tutorial is one class
                         first_full_class = True
 
                 except:
@@ -411,7 +419,7 @@ def class_time(request, session_id):
                 prof = Profile.objects.get(learner=request.user)
                 gender = prof.gender
 
-                class_variable_dict = {
+                class_variables = {
 
                     'classOver': class_over,
                     'username': request.user.username,
@@ -437,14 +445,15 @@ def class_time(request, session_id):
                     'tutorial': sess.tutorial,
                     'tutorial_complete': tutorial_complete,
                     'endClassSequenceStarted': False,
+                    'inDevelopment': in_development
 
                 }
 
                 context = {
 
-                    'class_variable_dict': json.dumps(class_variable_dict), 
+                    'class_variables': json.dumps(class_variables), 
                     'class': True, # for the navbar to know we are in class
-                    'article': article
+                    'article': article,
 
                 }
 
@@ -763,25 +772,25 @@ def error_typing_used(request):
     pitch_designated = float(request.POST['pitch'])
     speaking_rate_designated = float(request.POST['speaking_rate'])      
 
-    #client = texttospeech.TextToSpeechClient()
-    #input_text = texttospeech.types.SynthesisInput(text=request.POST['trans'])
-    #voice = texttospeech.types.VoiceSelectionParams(language_code='en-GB',name=speaking_voice)
-    #audio_config = texttospeech.types.AudioConfig(audio_encoding=texttospeech.enums.AudioEncoding.LINEAR16,pitch = pitch_designated,speaking_rate = speaking_rate_designated)
-   #try:
-        #response = client.synthesize_speech(input_text, voice, audio_config)
-        #synthURL1 = 'media/synths/session' + session_id + '_'+ 'error' + timezone.now().strftime('%H-%M-%S') + '.mp3'
-        #with open( os.path.join(settings.BASE_DIR, synthURL1 ), 'wb') as out:
-            #out.write(response.audio_content)
+    client = texttospeech.TextToSpeechClient()
+    input_text = texttospeech.types.SynthesisInput(text=request.POST['trans'])
+    voice = texttospeech.types.VoiceSelectionParams(language_code='en-GB',name=speaking_voice)
+    audio_config = texttospeech.types.AudioConfig(audio_encoding=texttospeech.enums.AudioEncoding.LINEAR16,pitch = pitch_designated,speaking_rate = speaking_rate_designated)
+    try:
+        response = client.synthesize_speech(input_text, voice, audio_config)
+        synthURL1 = 'media/synths/session' + session_id + '_'+ 'error' + timezone.now().strftime('%H-%M-%S') + '.mp3'
+        with open( os.path.join(settings.BASE_DIR, synthURL1 ), 'wb') as out:
+            out.write(response.audio_content)
 
-        #synthURL1 = convert_mp3_to_wav(synthURL1)
+        synthURL1 = convert_mp3_to_wav(synthURL1)
 
-    #except:  
-        #synthURL1 = 'fault'
+    except:  
+        synthURL1 = 'fault'
     
-    # Above code works but for development is not being utilised
+    #Above code works but for development is not being utilised
 
-    #synthFN = settings.BASE_DIR + '/' + synthURL1
-    synthFN = generate_synth_audio(request.POST['trans'],fn)
+    synthFN = settings.BASE_DIR + '/' + synthURL1
+    # synthFN = generate_synth_audio(request.POST['trans'],fn)
     start = time.time()
     ref_image = get_spectogram(synthFN,0,"ref_"+session_id+"_"+timezone.now().strftime('%H-%M-%S')+".png",0)
     
@@ -811,8 +820,8 @@ def error_typing_used(request):
     aeca.save();
 
     response_data = {
-            "ref_audio_url":ref_audio,
-            #"ref_audio_url":synthURL1,
+            #"ref_audio_url":ref_audio,
+            "ref_audio_url":synthURL1,
             "ref_image_url":ref_image,
             "hyp_audio_url":hyp_audio,
             "hyp_image_url":hyp_image,
@@ -944,7 +953,7 @@ def tts(request):
     session_id = request.GET['sessionID']
     pitch_designated = float(request.GET['pitch'])
     speaking_rate_designated = float(request.GET['speaking_rate'])
-    caller = request.GET['caller']
+    # caller = request.GET['caller']
     blob_no_text = json.loads(request.GET['blob_no_text'])
     blob_no_text_sent_id = request.GET['blob_no_text_sent_id']
     try:
@@ -969,8 +978,7 @@ def tts(request):
     client = texttospeech.TextToSpeechClient()
     input_text = texttospeech.types.SynthesisInput(text=text)
 
-    # Note: the voice can also be specified by name.
-    # Names of voices can be retrieved with client.list_voices().
+    # Note: the voice can also be specified by name.  # Names of voices can be retrieved with client.list_voices().  
     voice = texttospeech.types.VoiceSelectionParams(
         language_code='en-GB',
         name=speaking_voice
@@ -987,7 +995,7 @@ def tts(request):
         response = client.synthesize_speech(input_text, voice, audio_config)
 
         # don't need to keep all synths for class. Remember to delete this when session ends.
-        synthURL = 'media/synths/session' + session_id # + '_' + str(int(time.mktime((timezone.now()).timetuple()))) + '.wav'
+        synthURL = 'media/synths/session' + session_id + '.wav' # + '_' + str(int(time.mktime((timezone.now()).timetuple()))) + '.wav'
         with open( os.path.join(settings.BASE_DIR, synthURL ), 'wb') as out:
             out.write(response.audio_content)
     except:
@@ -1113,13 +1121,21 @@ def check_judgement(request):
 
                         tia_to_say = get_text(json.loads(s_new.sentence), s_new.judgement, s_new.prompt, json.loads(s_new.indexes))
                         synth_url = get_tia_tts_for_prompts_early(tia_to_say, sess_id)
+                        print('synth_url:', synth_url)
                         received_judgement = True
                         break
 
-                else: # 'D' and '3'
+                elif s_new.judgement == 'D': 
 
-                    tia_to_say = get_text(json.loads(s_new.sentence), s_new.judgement, s_new.prompt, s_new.indexes)
-                    synth_url = get_tia_tts_for_prompts_early(tia_to_say, sess_id)
+                    tia_to_say = "I'm sorry, but I don't understand what you mean. Could you say that sentence in a different way?"
+                    synth_url = "media/prePreparedTiaPhrases/im_sorry_but_i_dont_understand_what_you_mean.wav"
+                    received_judgement = True
+                    break
+
+                elif s_new.judgement == '3': 
+
+                    tia_to_say = "There are more than 3 errors in your sentence. Please simplify and try again"
+                    synth_url = "media/prePreparedTiaPhrases/more_than_three_errors.wav"
                     received_judgement = True
                     break
 

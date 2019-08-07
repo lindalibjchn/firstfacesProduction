@@ -17,9 +17,9 @@ function set_selectable(trans){
 
 function doAllignment(){
     let fd = new FormData();                                                    
-    fd.append('trans',classVariableDict.alternatives[0].transcript);                 
-    fd.append('fn',classVariableDict.Aud_Fname);   
-    fd.append('sessionID',classVariableDict.session_id);
+    fd.append('trans',classVariables.alternatives[0].transcript);                 
+    fd.append('fn',classVariables.Aud_Fname);   
+    fd.append('sessionID',classVariables.session_id);
 
 
     $.ajax({                                                                    
@@ -43,15 +43,15 @@ function doAllignment(){
 $('#forwardErrorSelection').click(function(){
     $('#recordVoiceBtn').hide();
     $('#backCorrection').hide();
-    classVariableDict.originalLength = classVariableDict.totalAudioLength;
-    classVariableDict.totalAudioLength = 0;
+    classVariables.originalLength = classVariables.totalAudioLength;
+    classVariables.totalAudioLength = 0;
     doAllignment();
-    classVariableDict.usePlayAud = true;
+    classVariables.usePlayAud = true;
     //loop through selected words, amalgamate sewuential errors into one
-    classVariableDict.playStage2 = true;
-    var words = classVariableDict.alternatives[0].transcript.split(" ");
+    classVariables.playStage2 = true;
+    var words = classVariables.alternatives[0].transcript.split(" ");
     var i = 0;
-    classVariableDict.uncorrectedErrors = [];
+    classVariables.uncorrectedErrors = [];
     var classes = [];
     var newTran = [];
     var tooLong = false;
@@ -81,7 +81,7 @@ $('#forwardErrorSelection').click(function(){
         $('#lowerSentenceHolder').empty();
         
         tiaSpeak("That is too many words, please choose again",true,function(){
-            reset_text(classVariableDict.alternatives['0'].transcript);
+            reset_text(classVariables.alternatives['0'].transcript);
             $('#talkBtn').show();
             $('#recordVoiceBtn').show();
             $('#listenVoiceBtn').show();
@@ -96,17 +96,17 @@ $('#forwardErrorSelection').click(function(){
     $('#upperSentenceHolder').empty(); 
     $('#lowerSentenceHolder').empty();
     $('#audioclips').empty();
-    classVariableDict.correct_audio= [];
+    classVariables.correct_audio= [];
     //add spans and add onclick function to these
     var j = 0;
-    classVariableDict.tlen = newTran.length;
+    classVariables.tlen = newTran.length;
     for(j=0;j<newTran.length;j++){
         addWord(newTran[j],j,classes[j]);
         if(classes[j] == 'uncorrected-error'){
-            classVariableDict.uncorrectedErrors.push("upper_"+j);
+            classVariables.uncorrectedErrors.push("upper_"+j);
         }
         else{
-            classVariableDict.correct_audio.push(j);
+            classVariables.correct_audio.push(j);
         }
         $('#upperSentenceHolder').append("<span id='hidden_"+j+"' class='hidden-span'></span>");
         if(j<(newTran.length-1)){
@@ -122,13 +122,13 @@ $('#forwardErrorSelection').click(function(){
     $('#backErrorSelection').hide();
     $('#forwardErrorSelection').hide();
 
-    classVariableDict.errors = {};
+    classVariables.errors = {};
  
     //cahneg tias textbox
     //$('#tia-speech-box').text("Select an error to correct it");
     //$('#backCorrection').show();
 
-        animate_open_overlay(classVariableDict.uncorrectedErrors[0]);
+        animate_open_overlay(classVariables.uncorrectedErrors[0]);
     }
 });
 
@@ -142,17 +142,17 @@ function addWord(word, count, cls) {
 }
 
 $('#bottomCent').click(function(){
-    if(classVariableDict.noTransError){                              
+    if(classVariables.noTransError){                              
         removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
-        classVariableDict.noTransError = false;                      
+        classVariables.noTransError = false;                      
     }                                                                
 });
 
 $('#bottomCent').keyup(function(event){
 
-    if(classVariableDict.noTransError){   
+    if(classVariables.noTransError){   
         removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );            
-        classVariableDict.noTransError = false;                                  
+        classVariables.noTransError = false;                                  
     }                                                                            
 
 
@@ -191,8 +191,8 @@ function correctError(idx){
      //Populate top of overaly with error text
     var errText = $('#'+idx).text().trim();
     //Set necessary variables
-    classVariableDict.startIDX = idx.split('_')[1]
-    classVariableDict.endIDX = classVariableDict.startIDX 
+    classVariables.startIDX = idx.split('_')[1]
+    classVariables.endIDX = classVariables.startIDX 
     if(errText.trim().length > 40){
         $('#centeredErrorText').removeClass().addClass('smallText');
         $('#topCentText').removeClass().addClass('smallText');  
@@ -281,10 +281,10 @@ function selectErrWord(idx){
 var currentId;
 function doneError(){
     
-    if(classVariableDict.thirdAttemptError || classVariableDict.noTransError){             
+    if(classVariables.thirdAttemptError || classVariables.noTransError){             
         removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
-        classVariableDict.thirdAttemptError = false;
-        classVariableDict.noTransError = false;
+        classVariables.thirdAttemptError = false;
+        classVariables.noTransError = false;
     }                                                                 
 
 
@@ -325,14 +325,14 @@ function doneError(){
 
         //change span class
     }
-    classVariableDict.stage2 = false;
+    classVariables.stage2 = false;
     //close overlay
     $('#correctionOverlay').hide();
     $('#sentenceHolderParent').show();
     $('#bottomCent').empty();
     //$('#overlayTextBox').append('<span id="typeHereOverlay">Type Here!</span>');
     
-        classVariableDict.uncorrectedErrors = classVariableDict.uncorrectedErrors.filter(e => e !== "upper_"+idx);                                                                             
+        classVariables.uncorrectedErrors = classVariables.uncorrectedErrors.filter(e => e !== "upper_"+idx);                                                                             
 
     //$('#speakingWordsInside').text("Select an error to correct!");
     //closeStage3();
@@ -343,12 +343,12 @@ function doneError(){
         $('#backCorrection').show();
     }
     else{
-        animate_open_overlay(classVariableDict.uncorrectedErrors[0]);   
+        animate_open_overlay(classVariables.uncorrectedErrors[0]);   
     }
-    classVariableDict.preSent = getSentence().trim();
+    classVariables.preSent = getSentence().trim();
     unmoveText(); 
 
-    classVariableDict.correcting = false;
+    classVariables.correcting = false;
     
     
 }
@@ -356,10 +356,10 @@ function doneError(){
 
 
 $('#backCorrection').click(function(){
-    classVariableDict.playStage2 = false;
-    classVariableDict.totalAudioLength = classVariableDict.originalLength;
-    var words = classVariableDict.alternatives[0].transcript.split(" ");
-    classVariableDict.uncorrectedErrors = []; 
+    classVariables.playStage2 = false;
+    classVariables.totalAudioLength = classVariables.originalLength;
+    var words = classVariables.alternatives[0].transcript.split(" ");
+    classVariables.uncorrectedErrors = []; 
     // reset divs
     //empty upper and lower divs
     $('#upperSentenceHolder').empty(); 
@@ -392,13 +392,13 @@ $('#backCorrection').click(function(){
 
 
 $('#closeOverlayArea').click(function(){
-   if(classVariableDict.correctionDone){
+   if(classVariables.correctionDone){
         undoCorrect();
    }
-   if(classVariableDict.thirdAttemptError || classVariableDict.noTransError){               
+   if(classVariables.thirdAttemptError || classVariables.noTransError){               
         removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
-        classVariableDict.thirdAttemptError = false;  
-        classVariableDict.noTransError = false;
+        classVariables.thirdAttemptError = false;  
+        classVariables.noTransError = false;
    }  
 
    $('#backCorrection').show();
@@ -409,12 +409,12 @@ $('#closeOverlayArea').click(function(){
    //$('#overlayTextBox').append('<span id="typeHereOverlay">Type Here!</span>');       
    //$('#speakingWordsInside').text("Select an error to correct!"); 
    
-   if(classVariableDict.stage3){
+   if(classVariables.stage3){
         closeStage3();
    }
 
-   classVariableDict.stage2 = false;
-   classVariableDict.stage3 = false;
+   classVariables.stage2 = false;
+   classVariables.stage3 = false;
 
    // also close prevSentsContainer - J
    $('#prevSentsContainer').fadeOut();
@@ -431,9 +431,9 @@ $('#closeOverlayArea').click(function(){
 $('#keyboardOverlay').click(function(){
     moveText();
 
-    if(classVariableDict.noTransError){   
+    if(classVariables.noTransError){   
         removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );            
-        classVariableDict.noTransError = false;                                  
+        classVariables.noTransError = false;                                  
     }                                                                            
 
 
@@ -456,13 +456,13 @@ $('#keyboardOverlay').click(function(){
 });
 
 $('#backOverlay').click(function(){
-    if(classVariableDict.correctionDone){
+    if(classVariables.correctionDone){
         undoCorrect();
     }
-    if(classVariableDict.thirdAttemptError || classVariableDict.noTransError){       
+    if(classVariables.thirdAttemptError || classVariables.noTransError){       
         removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
-        classVariableDict.thirdAttemptError = false;  
-        classVariableDict.noTransError = false;
+        classVariables.thirdAttemptError = false;  
+        classVariables.noTransError = false;
     }                                                                 
 
     
@@ -474,9 +474,9 @@ $('#backOverlay').click(function(){
     $('#keyboardOverlay').show();
     $('#backOverlay').hide();
     $('#submitOverlay').hide();
-    classVariableDict.stage3 = false;
-    classVariableDict.stage2 = true;
-    classVariableDict.specClicks = [];
+    classVariables.stage3 = false;
+    classVariables.stage2 = true;
+    classVariables.specClicks = [];
     $('#praatCont').hide();
     //Make Ajax call
     closeStage3();
@@ -501,7 +501,7 @@ function openOverlay(){
     $("#reRecordBtn").show();
     
     //Says that modal is openl
-    classVariableDict.stage2 = true;
+    classVariables.stage2 = true;
 
 
     $('#topCent').css('visibility', 'hidden');
@@ -513,12 +513,12 @@ function sendAttemptBlob( new_blob ){
     returnFromListenToErrorAttemptWithSpectrograph();
     let fd = new FormData();
     fd.append('data',new_blob);
-    fd.append('error_pk',classVariableDict.errors[classVariableDict.startIDX]);
-    fd.append('sessionID',classVariableDict.session_id);
-    fd.append('audio_id',classVariableDict.currentAudID);
-    fd.append('correctio_id', classVariableDict.correctionAttemptID);
-    fd.append('clicks', classVariableDict.specClicks); 
-    fd.append('blob_no_text_sent_id',classVariableDict.blob_no_text_sent_id);
+    fd.append('error_pk',classVariables.errors[classVariables.startIDX]);
+    fd.append('sessionID',classVariables.session_id);
+    fd.append('audio_id',classVariables.currentAudID);
+    fd.append('correctio_id', classVariables.correctionAttemptID);
+    fd.append('clicks', classVariables.specClicks); 
+    fd.append('blob_no_text_sent_id',classVariables.blob_no_text_sent_id);
 
     $.ajax({                                                                                 
         url: "/store_attempt_blob",                                           
@@ -528,7 +528,7 @@ function sendAttemptBlob( new_blob ){
         contentType: false,
         success: function(json){
             //john
-            classVariableDict.showingSpectrograms = true;
+            classVariables.showingSpectrograms = true;
             tapKeyFull();
             movementController( movements.blank, '0.5', '1' );
           
@@ -584,25 +584,25 @@ function sendAttemptBlob( new_blob ){
                         }                                                         
                     },750);
                 }
-                classVariableDict.hypLenOriginal = json.hypLen;
-                classVariableDict.hypLen = json.hypLen/classVariableDict.playspeed;
+                classVariables.hypLenOriginal = json.hypLen;
+                classVariables.hypLen = json.hypLen/classVariables.playspeed;
                 //change speed of play
-                document.getElementById('hypAudio').playbackRate = classVariableDict.playspeed;
-                classVariableDict.attemptCount +=1;
-                if(classVariableDict.attemptCount == 3 && !json.correct){
+                document.getElementById('hypAudio').playbackRate = classVariables.playspeed;
+                classVariables.attemptCount +=1;
+                if(classVariables.attemptCount == 3 && !json.correct){
                     //Tia says you can give up
                     disableBtns();
-                    classVariableDict.thirdAttemptError = true;
+                    classVariables.thirdAttemptError = true;
                     tiaSpeak("If you are struggling you can try again another time", needSendTTS=true,enableBtns);
                     $('#exitOverlay').show();
                 }
             }
             else{
                 dealWithBlankTranscription();   
-                classVariableDict.noTransError = true;
+                classVariables.noTransError = true;
                 $('#backOverlay').prop('disabled',"false");
             }
-            classVariableDict.correctionAttemptID = json.att_id; 
+            classVariables.correctionAttemptID = json.att_id; 
             }, 1000);
 
         },
@@ -614,13 +614,13 @@ function sendAttemptBlob( new_blob ){
 
 function closeStage3(){
     let fd = new FormData();
-    fd.append('sessionID',classVariableDict.session_id);
-    fd.append('blob_no_text_sent_id',classVariableDict.blob_no_text_sent_id);
-    fd.append('start_idx',classVariableDict.startIDX);
-    fd.append('error_pk',classVariableDict.errors[classVariableDict.startIDX]);
-    fd.append('audio_id',classVariableDict.currentAudID);
-    fd.append('correctio_id', classVariableDict.correctionAttemptID);
-    fd.append('clicks', classVariableDict.specClicks);
+    fd.append('sessionID',classVariables.session_id);
+    fd.append('blob_no_text_sent_id',classVariables.blob_no_text_sent_id);
+    fd.append('start_idx',classVariables.startIDX);
+    fd.append('error_pk',classVariables.errors[classVariables.startIDX]);
+    fd.append('audio_id',classVariables.currentAudID);
+    fd.append('correctio_id', classVariables.correctionAttemptID);
+    fd.append('clicks', classVariables.specClicks);
     $.ajax({                                                                                 
         url: "/close_attempt",                                                            
         type: "POST",                                                                        
@@ -640,12 +640,12 @@ function sendErrorBlobToServer( new_blob ){
 
     let fd = new FormData();
     fd.append('data',new_blob);
-    fd.append('sessionID',classVariableDict.session_id);
-    fd.append('blob_no_text',classVariableDict.blob_no_txt);
-    fd.append('blob_no_text_sent_id',classVariableDict.blob_no_text_sent_id);
-    fd.append('error_list',JSON.stringify(classVariableDict.errors));
-    fd.append('start_idx',classVariableDict.startIDX);
-    fd.append('audio_id',classVariableDict.currentAudID);
+    fd.append('sessionID',classVariables.session_id);
+    fd.append('blob_no_text',classVariables.blob_no_txt);
+    fd.append('blob_no_text_sent_id',classVariables.blob_no_text_sent_id);
+    fd.append('error_list',JSON.stringify(classVariables.errors));
+    fd.append('start_idx',classVariables.startIDX);
+    fd.append('audio_id',classVariables.currentAudID);
     fd.append('trans', $('#centeredErrorText').text().trim());
 
     $.ajax({
@@ -657,7 +657,7 @@ function sendErrorBlobToServer( new_blob ){
         success: function(json){
             returnFromListenToSpeechSynthesis();
             //add index an foregin key to the errors
-            classVariableDict.errors[json['error_start']] = json['error_pk'];
+            classVariables.errors[json['error_start']] = json['error_pk'];
             //display transcript
             if(json['error_trans'] != ""){
                 //$("#centeredErrorHolder").hide();
@@ -687,12 +687,12 @@ function sendErrorBlobToServer( new_blob ){
                 //save last transcription into class
            }else {
                dealWithBlankTranscription();
-               classVariableDict.noTransError = true;
+               classVariables.noTransError = true;
                $('#backOverlay').prop('disabled',"false");
                $("#reRecordBtn").show().prop( "disabled", false );
                $("#keyboardOverlay").show();
            }
-           classVariableDict.lastAttemptID = json['attempt_pk'];  
+           classVariables.lastAttemptID = json['attempt_pk'];  
         },
         error: function() {
             console.log("that's wrong");
@@ -706,13 +706,13 @@ function sendErrorBlobToServer( new_blob ){
 
 $('#ref_btn').click(function(){
     disableBtns();
-    if(classVariableDict.thirdAttemptError || classVariableDict.noTransError){
+    if(classVariables.thirdAttemptError || classVariables.noTransError){
         removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
-        classVariableDict.thirdAttemptError = false;
-        classVariableDict.noTransError = false;
+        classVariables.thirdAttemptError = false;
+        classVariables.noTransError = false;
     }
     //Store click
-    classVariableDict.specClicks.push(JSON.stringify({"synth":Date.now() / 1000}));
+    classVariables.specClicks.push(JSON.stringify({"synth":Date.now() / 1000}));
     //disable other buttons during playing
     //hide text
     $('#ref_text').hide();
@@ -720,37 +720,37 @@ $('#ref_btn').click(function(){
    document.getElementById("refAudio").play();
    $("#ref_invisible").css("margin-left","-10px");
    $('#ref_invisible').css({"border-left":"10px solid black"});
-   $('#ref_invisible').animate({width:"0"},classVariableDict.refLen);
+   $('#ref_invisible').animate({width:"0"},classVariables.refLen);
    setTimeout(function(){
         $("#ref_invisible").css("border-left","none");
         $('#ref_text').fadeIn(800);
         $('#ref_invisible').css("width","100%");
         enableBtns();
-   },(classVariableDict.refLen+100));
+   },(classVariables.refLen+100));
 });
 
 $('#hyp_btn').click(function(){
-    if(classVariableDict.thirdAttemptError || classVariableDict.noTransError){
+    if(classVariables.thirdAttemptError || classVariables.noTransError){
         removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
-        classVariableDict.thirdAttemptError = false;
-        classVariableDict.noTransError = false;
+        classVariables.thirdAttemptError = false;
+        classVariables.noTransError = false;
     }
 
     disableBtns();
     //store click
-    classVariableDict.specClicks.push(JSON.stringify({"user":Date.now() / 1000}));
+    classVariables.specClicks.push(JSON.stringify({"user":Date.now() / 1000}));
     //hide text
     $('#hyp_text').hide();
     document.getElementById("hypAudio").play();
     $("#hyp_invisible").css("margin-left","-10px");
     $('#hyp_invisible').css({"border-left":"10px solid black"});
-    $('#hyp_invisible').animate({width:"0"},classVariableDict.hypLen);             
+    $('#hyp_invisible').animate({width:"0"},classVariables.hypLen);             
     setTimeout(function(){   
         $("#hyp_invisible").css("border-left","none");                                       
         $('#hyp_text').fadeIn(800);                                                     
         $('#hyp_invisible').css({"width":"100%"});
         enableBtns();
-   },(classVariableDict.hypLen+100));  
+   },(classVariables.hypLen+100));  
 });
 
 
@@ -772,22 +772,22 @@ function submitKeyboard(){
 
     var trans = $('#bottomCent').text().trim();
     var err_trans = $('#centeredErrorText').text().trim();
-    classVariableDict.attemptCount = 0; 
+    classVariables.attemptCount = 0; 
     let fd = new FormData();
-    fd.append("attempt_pk",classVariableDict.lastAttemptID);
+    fd.append("attempt_pk",classVariables.lastAttemptID);
     fd.append("trans",trans);
     fd.append("etrans",err_trans);
-    fd.append('error_list',JSON.stringify(classVariableDict.errors));                        
-    fd.append('start_idx',classVariableDict.startIDX);                                       
-    fd.append('audio_id',classVariableDict.currentAudID);
+    fd.append('error_list',JSON.stringify(classVariables.errors));                        
+    fd.append('start_idx',classVariables.startIDX);                                       
+    fd.append('audio_id',classVariables.currentAudID);
     
-    fd.append('gender', classVariableDict.gender);
+    fd.append('gender', classVariables.gender);
     fd.append('pitch', synthesisObject.pitch);
     fd.append('speaking_rate', synthesisObject.speaking_rate);
-    fd.append('sessionID',classVariableDict.session_id);
+    fd.append('sessionID',classVariables.session_id);
     var val = 0;
     var i;
-    for(i=0;i<parseInt(classVariableDict.startIDX);i++){
+    for(i=0;i<parseInt(classVariables.startIDX);i++){
         val = val +  $('#upper_'+i).text().trim().split(" ").length;
     }
     fd.append("first_word_id",val);
@@ -801,7 +801,7 @@ function submitKeyboard(){
 
             // john
             //  tia taps and looks at student
-            classVariableDict.showingSpectrograms = true;
+            classVariables.showingSpectrograms = true;
             tapKeyFull();
             movementController( movements.blank, '0.5', '1' );
 
@@ -862,28 +862,28 @@ function submitKeyboard(){
 
             $("#backOverlay").show();
         
-            classVariableDict.specClicks = [];
-            classVariableDict.stage3 = true;
-            classVariableDict.stage2 = false;
-            classVariableDict.correctionAttemptID = json.aeca_id;
+            classVariables.specClicks = [];
+            classVariables.stage3 = true;
+            classVariables.stage2 = false;
+            classVariables.correctionAttemptID = json.aeca_id;
 
             //add error id to errors
-            classVariableDict.errors[classVariableDict.startIDX] = json.ae_id;
+            classVariables.errors[classVariables.startIDX] = json.ae_id;
 
             //save lenghts of both audio files
-            classVariableDict.refLen = json.ref_length/classVariableDict.playspeed;
-            classVariableDict.hypLen = json.hyp_length/classVariableDict.playspeed;
+            classVariables.refLen = json.ref_length/classVariables.playspeed;
+            classVariables.hypLen = json.hyp_length/classVariables.playspeed;
             //change speed of play
-            document.getElementById('hypAudio').playbackRate = classVariableDict.playspeed;
-            document.getElementById('refAudio').playbackRate = classVariableDict.playspeed;
+            document.getElementById('hypAudio').playbackRate = classVariables.playspeed;
+            document.getElementById('refAudio').playbackRate = classVariables.playspeed;
 
-            classVariableDict.hypLenOriginal = json.hyp_length;
-            classVariableDict.refLenOriginal = json.ref_length;
+            classVariables.hypLenOriginal = json.hyp_length;
+            classVariables.refLenOriginal = json.ref_length;
 
             
-            var finAudio = document.getElementById("audio_"+classVariableDict.startIDX);             
+            var finAudio = document.getElementById("audio_"+classVariables.startIDX);             
             finAudio.src = hyp_audio_url;                                     
-            $('#audio_'+classVariableDict.startIDX).attr('duration',json.hyp_length);
+            $('#audio_'+classVariables.startIDX).attr('duration',json.hyp_length);
 
         },
         error: function() {
@@ -897,8 +897,8 @@ function submitRecording(){
 
     var trans = $('#overlayTextBox').text().trim();
     let fd = new FormData();
-    fd.append("attempt_pk",classVariableDict.lastAttemptID);
-    fd.append("error_pk",classVariableDict.errors[classVariableDict.startIDX]);
+    fd.append("attempt_pk",classVariables.lastAttemptID);
+    fd.append("error_pk",classVariables.errors[classVariables.startIDX]);
     fd.append("trans",trans);
 
     $.ajax({
@@ -925,7 +925,7 @@ function correct_attempt(){
     var bottom = $('#hyp_btn').offset().top;
     $('#sliderHolder').css('visibility','hidden');
     var diff = (bottom-middle)/2;
-    classVariableDict.animationDistance = diff;
+    classVariables.animationDistance = diff;
     $('#ref_text_layer').hide();
     $('#hyp_text_layer').hide();
 
@@ -941,7 +941,7 @@ function correct_attempt(){
        $('#ref_btn').css('visibility', 'hidden');
        $('#hyp_text_layer').fadeIn(800);
     },2500);
-    classVariableDict.correctionDone = true;
+    classVariables.correctionDone = true;
    
     //disable mic
     $('#reRecordBtn').prop( "disabled", true );
@@ -994,11 +994,11 @@ function submitCorrect(){
 
 function undoCorrect(){
     $('#ref_btn').show();
-    $('#ref_btn').animate({top:'-='+classVariableDict.animationDistance+"px"});         
-    $('#hyp_btn').animate({top:'+='+classVariableDict.animationDistance+"px"});
+    $('#ref_btn').animate({top:'-='+classVariables.animationDistance+"px"});         
+    $('#hyp_btn').animate({top:'+='+classVariables.animationDistance+"px"});
     $('#ref_text_layer').show();                                                             
     $('#hyp_text_layer').show();
-    classVariableDict.correctionDone = false;
+    classVariables.correctionDone = false;
     $("#hyp_btn").css("background-color","red");          
     $("#hyp_invisible").css("background-color","#ffcccb");
     $('#submitOverlay').hide();
@@ -1029,7 +1029,7 @@ function enableBtns(){
 }
 
 function getSentence(){
-    var words = classVariableDict.alternatives[0].transcript.split(" ");
+    var words = classVariables.alternatives[0].transcript.split(" ");
     var curr = 0;
     var i = 0;
     var out= "";
@@ -1052,24 +1052,24 @@ slider.oninput = function() {
     var val = (20 + parseInt(this.value));
     $('#sliderVal').text(val+"%");
     val = val / 100;
-    classVariableDict.playspeed = val;
+    classVariables.playspeed = val;
     //change animation amoutns
-    classVariableDict.hypLen = classVariableDict.hypLenOriginal/val;
-    classVariableDict.refLen = classVariableDict.refLenOriginal/val;
+    classVariables.hypLen = classVariables.hypLenOriginal/val;
+    classVariables.refLen = classVariables.refLenOriginal/val;
 
     document.getElementById('refAudio').playbackRate = val;
     document.getElementById('hypAudio').playbackRate = val;
-    classVariableDict.specClicks.push(JSON.stringify({"speed":Date.now() / 1000,"val":val}));
+    classVariables.specClicks.push(JSON.stringify({"speed":Date.now() / 1000,"val":val}));
 
 }
 
  
 function moveText(){
-    classVariableDict.movedText = true;
+    classVariables.movedText = true;
     var to = $('#topCentText').offset().top;
     var from  = $('#moveText').offset().top;
     var dif_v = from - to;
-    classVariableDict.textDiff = dif_v;
+    classVariables.textDiff = dif_v;
     $('#moveText').animate({top:'-='+dif_v+"px"},800);
     setTimeout(function(){
         $('#bottomCent').show(); 
@@ -1078,9 +1078,9 @@ function moveText(){
 }
 
 function unmoveText(){
-    if(classVariableDict.movedText){
-        $('#moveText').animate({top:'+='+classVariableDict.textDiff+"px"},1);
-        classVariableDict.movedText = false;
+    if(classVariables.movedText){
+        $('#moveText').animate({top:'+='+classVariables.textDiff+"px"},1);
+        classVariables.movedText = false;
     }
 }
 
@@ -1088,7 +1088,7 @@ function unmoveText(){
 
 
 function causeFlash(){
-    var words = classVariableDict.alternatives[0].transcript.split(" ").length;
+    var words = classVariables.alternatives[0].transcript.split(" ").length;
     flash(0,words);
 }
 
@@ -1117,7 +1117,7 @@ function animate_open_overlay(err_id){
 
         $('#backCorrection').hide();
         $('#recordVoiceBtn').hide();
-        classVariableDict.correcting = true;
+        classVariables.correcting = true;
         var original_color = 'yellow';
         var new_color = 'black';
         $('#'+err_id).css({"background-color":new_color,"color":original_color});
@@ -1160,18 +1160,18 @@ function play_nxt(val){
 }
  
 $('#exitOverlay').click(function(){
-    document.getElementById('audio_'+classVariableDict.startIDX).src = document.getElementById('refAudio').src;
-    document.getElementById('audio_'+classVariableDict.startIDX).volume = 0.7;
-    $('#audio_'+classVariableDict.startIDX).attr('duration',classVariableDict.refLenOriginal);
+    document.getElementById('audio_'+classVariables.startIDX).src = document.getElementById('refAudio').src;
+    document.getElementById('audio_'+classVariables.startIDX).volume = 0.7;
+    $('#audio_'+classVariables.startIDX).attr('duration',classVariables.refLenOriginal);
     doneError();
     $('#backCorrection').prop('disabled',false);
     $('#recordVoiceBtn').prop('disabled',false);
     $('#talkBtn').prop('disabled', false);
 
-    if(classVariableDict.thirdAttemptError || classVariableDict.noTransError){              
+    if(classVariables.thirdAttemptError || classVariables.noTransError){              
         removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
-        classVariableDict.thirdAttemptError = false;                 
-        classVariableDict.noTransError = false;
+        classVariables.thirdAttemptError = false;                 
+        classVariables.noTransError = false;
     }                                                                 
 
 
@@ -1184,8 +1184,8 @@ function getAudioLength(){
     for(i=0;i<$('.temp1').length;i++){
         count = count +  parseFloat($('#audio_'+i).attr('duration'));
     }
-    classVariableDict.totalAudioLength = count;
-    //classVariableDict.totalAudioLength += (100*$('.temp1').length);
+    classVariables.totalAudioLength = count;
+    //classVariables.totalAudioLength += (100*$('.temp1').length);
   
 
 }

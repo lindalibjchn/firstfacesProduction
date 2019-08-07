@@ -6,12 +6,26 @@ var loader, fontloader;
 
 // this count increases by 1 after each frame refresh. 60 per second.
 var mainCount = 0;
-
+var prefixURL;
 
 //// FUNCTIONS TO BE CALLED IN INIT() \\\\
 
 function enterOrReEnter() {
 
+    if ( classVariables.inDevelopment ) {
+
+        prefixURL = "http://127.0.0.1:8000/"
+
+    } else {
+
+        prefixURL = "https://erle.ucd.ie/"
+
+    }
+
+    tiaMediaLoc = "media/prePreparedTiaPhrases/";
+
+    //load this early and change .src later
+    synthesisObject.synthAudio = document.getElementById( 'synthClip' );
     //// on first enter the camera starts at the door and entrance sequence is run
     function firstEnter() {
 
@@ -20,7 +34,7 @@ function enterOrReEnter() {
         camera.position.set( CAMERA_SIT_POS.x, CAMERA_SIT_POS.y, CAMERA_SIT_POS.z  );
         camera.rotation.set( CAMERA_SIT_TO_LAPTOP_ROT.x, CAMERA_SIT_TO_LAPTOP_ROT.y, CAMERA_SIT_TO_LAPTOP_ROT.z,);
         //movementController( movements.blank, 0.1, 0.1 );
-        movementController( movements.laptop, 0.1, 0.1 );
+        //movementController( movements.laptop, 0.1, 0.1 );
 
     }
 
@@ -38,7 +52,7 @@ function enterOrReEnter() {
     };
 
     //if first enter then run entrance animation else sitting at chair
-    if ( classVariableDict.first_enter ) {
+    if ( classVariables.first_enter ) {
         
         firstEnter();
 
@@ -58,7 +72,7 @@ function engineRunning() {
     blinkControllerObject.bool = true;
     expressionController( expressionObject.abs.neutral, 0.1 );
     enterOrReEnter();
-    //if ( classVariableDict.tutorial === false ) {
+    //if ( classVariables.tutorial === false ) {
 
         //showTimeRemaining();
         ////showQuestionStreak();
@@ -68,7 +82,7 @@ function engineRunning() {
 
     setTimeout( function() {
         
-        $("#foreground").fadeOut( 1500 );
+        $("#foregroundContainer").fadeOut( 1500 );
     
     }, 500 );
 

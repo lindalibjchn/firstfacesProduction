@@ -9,7 +9,7 @@ $(window).on( 'load', function() {
 
     //fill prevSents
     loadPrevSents( scrollBottom );   
-    classVariableDict.playspeed=1.0;
+    classVariables.playspeed=1.0;
 });
 
 //function resetTranscripts() {
@@ -60,23 +60,23 @@ function readyBtns() {
 
         $('#confirmFinish').hide();
 
-        if ( classVariableDict.tutorial === false ) {
+        if ( classVariables.tutorial === false ) {
 
-            //if ( classVariableDict.awaitingJudgement ) {
+            //if ( classVariables.awaitingJudgement ) {
             
             //} else {
 
-            if ( classVariableDict.id_of_last_sent === null ) {
+            if ( classVariables.id_of_last_sent === null ) {
             
                 endClassNoSentences()
 
             } else {
 
-                if ( classVariableDict.endClassSequenceStarted !== true ) {
+                if ( classVariables.endClassSequenceStarted !== true ) {
 
                     console.log('\n\n\nend class finish button\n\n\n');
                     endClass();
-                    classVariableDict.endClassSequenceStarted = true;
+                    classVariables.endClassSequenceStarted = true;
 
                 }
 
@@ -86,14 +86,13 @@ function readyBtns() {
 
         } else {
 
-            if ( classVariableDict.tutorialStep === 99 ) {
+            if ( classVariables.tutorialStep === 99 ) {
 
                 endTutorial();
 
             } else {
     
-                //window.location.href = "https://erle.ucd.ie/waiting"
-                window.location.href = "http://127.0.0.1:8000/waiting"
+                window.location.href = prefixURL + "waiting"
 
             }
 
@@ -122,8 +121,6 @@ function readyBtns() {
     $('#showCorrectionBtn').on( 'click', showCorrection );
     $('#nextSentenceBtn').on( 'click', nextSentence );
     $('#talkBtn').on( 'click', sendSentToServer );
-    //$('.sent-scores').on( 'click', viewAlternateTranscription );
-    $('#playRobot').on( 'click', prepareSynthPlay );
 
     $('#finishClassBtn').on( 'click', function() {
         
@@ -159,7 +156,7 @@ $('#listenVoiceBtn').on( 'click', function() {
     //sendListenVoice();
 
     // for tutorial
-    if ( classVariableDict.tutorialStep === 6 ) {
+    if ( classVariables.tutorialStep === 6 ) {
 
         $('#listenVoiceBtn').prop( 'disabled', true );
         setTimeout( greeting07, 3000 );
@@ -212,7 +209,7 @@ $('#listenVoiceBtn').on( 'click', function() {
             // Success callback
             .then(function(stream) {
      
-                classVariableDict.audio = true;
+                classVariables.audio = true;
                 console.log( 'audio working' );
                 gotStream( stream );
 
@@ -224,17 +221,17 @@ $('#listenVoiceBtn').on( 'click', function() {
                     removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
 
                     // this is to identify main recording and allow return of mic button if user says nothing
-                    classVariableDict.mainRecord = true;
+                    classVariables.mainRecord = true;
                     //recognition.start();
                     console.log('Voice recognition activated. Try speaking into the microphone.');
                     mediaRecorder.start();
 
                     // tia leans to listen, more so at later stages
-                    if ( classVariableDict.stage2 ) {
+                    if ( classVariables.stage2 ) {
 
                         listenToSpeechSynthesis( 1 );
 
-                    } else if ( classVariableDict.stage3 ) {
+                    } else if ( classVariables.stage3 ) {
                     
                         listenToSpeechSynthesis( 2 );
                         $('#backOverlay').hide();
@@ -245,7 +242,7 @@ $('#listenVoiceBtn').on( 'click', function() {
 
                     }
 
-                    classVariableDict.blobs += 1;
+                    classVariables.blobs += 1;
                     volumeObject.bool = true;// detect volume and be ready to show volume bar
                     synthesisObject.interference = false; // start with no interference which can change if clipping occurs
         
@@ -253,18 +250,18 @@ $('#listenVoiceBtn').on( 'click', function() {
                     showVolumeBar();
 
                     // will check that the user has clicked the stop button by timing them and using this boolean
-                    classVariableDict.recording = true;
+                    classVariables.recording = true;
                     recorder15sTimeout = setTimeout( checkIfClickedStop, 15000 );
 
                     // hide the microphone button
                     $(this).hide();
-		            if(classVariableDict.stage2 || classVariableDict.stage3){
+		            if(classVariables.stage2 || classVariables.stage3){
                         
                         $('#submitOverlay').hide();
                         $('#stopRecordBtn').show();
                         $('#reRecordBtn').prop("disabled",true);
                     
-                        if (classVariableDict.stage2 ) {
+                        if (classVariables.stage2 ) {
 
                             $('#keyboardOverlay').hide();
                             $('#spectrogramBtn').hide();
@@ -285,7 +282,7 @@ $('#listenVoiceBtn').on( 'click', function() {
                 function checkIfClickedStop() {
 
                     // double check the boolean is true
-                    if ( classVariableDict.recording ) {
+                    if ( classVariables.recording ) {
 
                         onStopClick();
 
@@ -314,7 +311,7 @@ $('#listenVoiceBtn').on( 'click', function() {
             // Error callback
             .catch(function(err) {
                 console.log('The following getUserMedia error occured: ' + err);
-                classVariableDict.audio = false;
+                classVariables.audio = false;
                 console.log( 'audio not working' );
                 alert("If you want to speak to Tia, you must allow Chrome to use your microphone. Click the lock, or small 'i' next to the web address and then change the settings to allow the microphone.");
             }
@@ -404,7 +401,7 @@ function onStopClick() {
     console.log( mediaRecorder.state );
     console.log( "recorder stopped" );
 
-    classVariableDict.recording = false;
+    classVariables.recording = false;
 
     $('#stopRecordBtn').hide();
     $('#stopRecordVoiceBtn').hide();
@@ -423,158 +420,31 @@ function onMediaRecorderStop() {
     hideVolumeBar();
 
     //$('#talkBtn').prop( "disabled", true )
-    classVariableDict.blob = new Blob(chunks, { type : 'audio/webm; codecs: opus' });
+    classVariables.blob = new Blob(chunks, { type : 'audio/webm; codecs: opus' });
 
     // create audiourl for easy replay
-    var audioURL = window.URL.createObjectURL(classVariableDict.blob);
+    var audioURL = window.URL.createObjectURL(classVariables.blob);
     aud.src = audioURL;
 
     // reset chunks
     chunks = [];
 
     // send blob to server to be stored, but wait a bit to make sure it has come through
-    //setTimeout( function() {
-   if(!classVariableDict.stage2 && !classVariableDict.stage3){
-    	sendBlobToServer( classVariableDict.blob );
+    // setTimeout( function() {
+    if(!classVariables.stage2 && !classVariables.stage3){
+    	sendBlobToServer( classVariables.blob );
 	}
 	else{
-        if(classVariableDict.stage2){
-	        sendErrorBlobToServer( classVariableDict.blob );
+        if(classVariables.stage2){
+	        sendErrorBlobToServer( classVariables.blob );
         }
         else{
-            sendAttemptBlob( classVariableDict.blob );
+            sendAttemptBlob( classVariables.blob );
         }
 	}
     //}, 1000);
 
 }
-
-function prepareSynthPlay() {
-
-    // checks if play is repeat - dont need to send to server again
-    let textInBox = $('#textInput').val();
-    if ( textInBox === synthesisObject.text ) {
-
-        synthesisObject.synthAudio.play();
-        console.log('repeating play');
-        sendListenSynth( true );
-
-    } else {
-
-        sendListenSynth( false );
-        sendTTS( textInBox, false, "listen" );
-
-    }
-
-    if ( classVariableDict.tutorial ) {
-
-        if ( classVariableDict.tutorialStep === 13 ) {
-
-            setTimeout( greeting14, 2000 );
-
-        } else if ( classVariableDict.tutorialStep === 513 ) {
-
-            setTimeout( greeting0514, 2000 );
-
-        }
-
-    }
-
-}
-
-//// for sorting
-//function compare(a,b) {
-  //if (a.confidence > b.confidence)
-    //return -1;
-  //if (a.confidence < b.confidence)
-    //return 1;
-  //return 0;
-//}
-
-// put all transcriptions into an array
-//function createArrayOfAlternatives( unorderedDict ) {
-
-    //let sentencesList = [];
-    
-    ////store leading confidence and remove lower one if more than 20 points below
-    //var topConf;
-
-    //// get list of scores
-    //for (let i=0; i<unorderedDict.length; i++) {
-
-        //if ( i === 0 ) {
-
-            //topConf = unorderedDict[i].confidence;
-        
-            //sentencesList.push( unorderedDict[i] )
-
-        //} else {
-
-            //if ( unorderedDict[ i ].confidence > topConf - 0.20 ) {
-            
-                //sentencesList.push( unorderedDict[i] )
-
-            //}
-
-        //}
-
-    //}
-
-    //sentencesList.sort(compare)
-
-    //return sentencesList
-
-//}
-
-//function fillTranscriptsAndConfidences( alternatives ) {
-
-    //if ( alternatives.length === 0 ) {
-
-        //console.log('no transcripts');
-
-    //}
-
-    //for ( let i=0; i<alternatives.length; i++ ) {
-
-        //synthesisObject[ 'transcript' + i.toString() ] = clipLongTranscripts( alternatives[i] );
-
-    //}
-
-    //resetAllTabs();
-
-//}
-
-//function clipLongTranscripts( t ) {
-
-    //console.log('t', t);
-    //// avoid sending sentence which is too long to server
-    //if ( t.length >= 300 ) {
-
-        //alert('Your sentence was too long and will be shortened. Please check it before sending.')
-
-        //newT = t.slice(0, 299);
-
-    //} else {
-
-        //newT = t.slice(0,t.length);
-
-    //}
-
-    //// lowercase all but first letter
-    ////titled = makeTitle( newT )
-    
-    //return newT
-
-//}
-
-//function makeTitle( s ) {
-
-    //let lowered = $.trim(s.toLowerCase())
-    //let titled = lowered.charAt(0).toUpperCase() + lowered.slice(1);
-
-    //return titled
-
-//}
 
 //// for drawing the volume bar
 var audioContext = null;
@@ -584,7 +454,7 @@ var WIDTH_VOL=200;
 var HEIGHT_VOL=100;
 var rafID = null;
 var micIntAud = document.getElementById('micInterferenceClip')
-var micIntAudSources = ["http://127.0.0.1:8000/media/00micInterference04.mp3","http://127.0.0.1:8000/media/00micInterference01.mp3","http://127.0.0.1:8000/media/00micInterference02.mp3","http://127.0.0.1:8000/media/00micInterference03.mp3"];
+var micIntAudSources = [ prefixURL + "media/00micInterference04.mp3", prefixURL + "media/00micInterference01.mp3", prefixURL + "media/00micInterference02.mp3", prefixURL + "media/00micInterference03.mp3" ];
 
 //var micIntAudSources = ["http://erle.ucd.ie/media/00micInterference04.mp3","http://erle.ucd.ie/media/00micInterference01.mp3","http://erle.ucd.ie/media/00micInterference02.mp3","http://erle.ucd.ie/media/00micInterference03.mp3"];
 
@@ -625,7 +495,7 @@ function drawLoop() {
             // depending on how far forward Tia is, change the duration of the flinch movement
             function getTimingForFlinch() {
 
-                let leanNo = classVariableDict.blobs
+                let leanNo = classVariables.blobs
                 let dur = 0.5;
 
                 if ( leanNo >= 2 ) {
@@ -713,7 +583,7 @@ function drawLoop() {
 
     if (meter.checkClipping()) {
 
-        if ( classVariableDict.tutorial ) {
+        if ( classVariables.tutorial ) {
 
             if ( synthesisObject.firstClip === false ) {
 
@@ -724,12 +594,12 @@ function drawLoop() {
 
         } else {
 
-            if ( classVariableDict.interference_count === 0 ) {
+            if ( classVariables.interference_count === 0 ) {
 
                 if ( synthesisObject.firstClip === false ) {
 
-                    classVariableDict.interference_count += 1;
-                    classVariableDict.interference_count_this_sent += 1;
+                    classVariables.interference_count += 1;
+                    classVariables.interference_count_this_sent += 1;
                     synthesisObject.firstClip = true;
                     tiaConfusedAfterClipping( true );
 
@@ -740,8 +610,8 @@ function drawLoop() {
                 if ( synthesisObject.firstClip === false ) {
 
                     tiaConfusedAfterClipping( false );
-                    classVariableDict.interference_count_this_sent += 1;
-                    classVariableDict.interference_count += 1;
+                    classVariables.interference_count_this_sent += 1;
+                    classVariables.interference_count += 1;
                     synthesisObject.firstClip = true;
 
                 }
@@ -774,7 +644,7 @@ function hideVolumeBar() {
 
     //$('#altCont').css('visibility', 'visible'); 
     
-    //if ( classVariableDict.tutorial === false ) {
+    //if ( classVariables.tutorial === false ) {
 
         //$('#playRobot').show(); 
     
@@ -841,36 +711,36 @@ function judgementReceived( sentMeta ) {
     console.log('sentMeta:', sentMeta);
 
     // update classVariables to include new sentence. newInd gets index of next sent
-    let newInd = Object.keys(classVariableDict.sentences).length;
+    let newInd = Object.keys(classVariables.sentences).length;
     sentMeta.emotion = JSON.parse(sentMeta.emotion);
-    classVariableDict.sentences[ newInd ] = sentMeta;
-    classVariableDict.sentences[ newInd ].sentence = JSON.parse( sentMeta.sentence );
-    classVariableDict.sentences[ newInd ].indexes = JSON.parse( sentMeta.indexes );
-    classVariableDict.sentences[ newInd ].prompt = sentMeta.prompt;
+    classVariables.sentences[ newInd ] = sentMeta;
+    classVariables.sentences[ newInd ].sentence = JSON.parse( sentMeta.sentence );
+    classVariables.sentences[ newInd ].indexes = JSON.parse( sentMeta.indexes );
+    classVariables.sentences[ newInd ].prompt = sentMeta.prompt;
 
-    classVariableDict.id_of_last_sent = newInd;
-    classVariableDict.tiaToSay = sentMeta.tiaToSay;
+    classVariables.id_of_last_sent = newInd;
+    classVariables.tiaToSay = sentMeta.tiaToSay;
     
-    classVariableDict.last_sent = sentMeta;
-    classVariableDict.last_sent.sentence = sentMeta.sentence;
-    classVariableDict.last_sent.indexes = sentMeta.indexes;
-    classVariableDict.last_sent.prompt = sentMeta.prompt;
+    classVariables.last_sent = sentMeta;
+    classVariables.last_sent.sentence = sentMeta.sentence;
+    classVariables.last_sent.indexes = sentMeta.indexes;
+    classVariables.last_sent.prompt = sentMeta.prompt;
 
     // keeps state of sentence
-    classVariableDict.blob_no_text = false;
-    classVariableDict.awaitingJudgement = false;
+    classVariables.blob_no_text = false;
+    classVariables.awaitingJudgement = false;
 
     // do this here to change voices too
-    if ( classVariableDict.last_sent.judgement === "B" || classVariableDict.last_sent.judgement === "C" || classVariableDict.last_sent.judgement === "P" || classVariableDict.last_sent.judgement === "M" ) {
+    if ( classVariables.last_sent.judgement === "B" || classVariables.last_sent.judgement === "C" || classVariables.last_sent.judgement === "P" || classVariables.last_sent.judgement === "M" ) {
 
-        //if ( classVariableDict.last_sent.judgement !== "C" ) {
+        //if ( classVariables.last_sent.judgement !== "C" ) {
 
             //checkForPromptNIndexes( sentMeta.sent_id );
 
         //}
 
         // calculate changes in expression for these
-        if ( classVariableDict.last_sent.judgement === "M" ) {
+        if ( classVariables.last_sent.judgement === "M" ) {
 
             let singleCalculatedExpressions = createSingleExpression( expressionsRel.confused, 0.5 )
             calculatedExpression = getAbsoluteCoordsOfExpressionTo( singleCalculatedExpressions[ 0 ] )
@@ -882,19 +752,19 @@ function judgementReceived( sentMeta ) {
 
         }
 
-    } else if ( classVariableDict.last_sent.judgement === "D" ) {
+    } else if ( classVariables.last_sent.judgement === "D" ) {
 
         let singleCalculatedExpressions = createSingleExpression( expressionsRel.confused, 1 )
         calculatedExpression = getAbsoluteCoordsOfExpressionTo( singleCalculatedExpressions[ 0 ] )
         calculatedTalkExpression = getAbsoluteCoordsOfExpressionTo( singleCalculatedExpressions[ 1 ] )
 
-    } else if ( classVariableDict.last_sent.judgement === "3" ) {
+    } else if ( classVariables.last_sent.judgement === "3" ) {
 
         let singleCalculatedExpressions = createSingleExpression( expressionsRel.confused, 0.75 )
         calculatedExpression = getAbsoluteCoordsOfExpressionTo( singleCalculatedExpressions[ 0 ] )
         calculatedTalkExpression = getAbsoluteCoordsOfExpressionTo( singleCalculatedExpressions[ 1 ] )
 
-    } else if ( classVariableDict.last_sent.judgement === "I" ) {
+    } else if ( classVariables.last_sent.judgement === "I" ) {
 
         let singleCalculatedExpressions = createSingleExpression( expressionsRel.confused, 1 )
         calculatedExpression = getAbsoluteCoordsOfExpressionTo( singleCalculatedExpressions[ 0 ] )
@@ -908,13 +778,13 @@ function judgementReceived( sentMeta ) {
 
     //console.log('new sent meta:', sentMeta);
 
-    //classVariableDict.promptNIndexesReceived = true;
+    //classVariables.promptNIndexesReceived = true;
 
-    //classVariableDict.sentences[ classVariableDict.id_of_last_sent ].prompt = sentMeta.prompt;
-    //classVariableDict.last_sent.prompt = sentMeta.prompt;
+    //classVariables.sentences[ classVariables.id_of_last_sent ].prompt = sentMeta.prompt;
+    //classVariables.last_sent.prompt = sentMeta.prompt;
 
-    //classVariableDict.sentences[ classVariableDict.id_of_last_sent ].indexes = sentMeta.indexes;
-    //classVariableDict.last_sent.indexes = sentMeta.indexes;
+    //classVariables.sentences[ classVariables.id_of_last_sent ].indexes = sentMeta.indexes;
+    //classVariables.last_sent.indexes = sentMeta.indexes;
 
 //}
 

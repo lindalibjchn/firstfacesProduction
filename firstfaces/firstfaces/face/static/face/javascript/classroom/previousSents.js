@@ -3,11 +3,11 @@ function loadPrevSents( callback ) {
     let node = document.getElementById("prevSents");
     node.innerHTML = '';
 
-    if ( Object.keys( classVariableDict.sentences ).length > 0 ) {
+    if ( Object.keys( classVariables.sentences ).length > 0 ) {
 
-        for ( var i in classVariableDict.sentences ) {
+        for ( var i in classVariables.sentences ) {
 
-            appendExchange( classVariableDict.sentences[ i ], node, i );
+            appendExchange( classVariables.sentences[ i ], node, i );
 
         }
 

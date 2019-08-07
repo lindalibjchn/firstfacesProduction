@@ -9,70 +9,30 @@ var tiaTimings = {};
 //recorder times in browser
 var recTimes = {};
 
-function setTimings() {
-
-    if ( TIA_SPEED === 'slow' ) {
-
-        tiaTimings.delayAfterClickPlayUntilCameraMovesUp = 1000;
-        tiaTimings.cameraMoveUpDuration = 4.0;
-        tiaTimings.tiaLeanDuration = 2.0;
-        tiaTimings.delayUntilSpeakWords = 1500;
-        tiaTimings.delayAfterStudentSpeech = 2000;
-        tiaTimings.delayBeforeGoingToThinkingPos = 3000;
-        tiaTimings.toThinkDuration = 2.5;
-        tiaTimings.delayToAddThoughtBubbles = 2500;
-        tiaTimings.thoughtBubbleAddDelay = 1000;
-        tiaTimings.wordFade = 750;
-        tiaTimings.returnFromThinking = 2.0;
-        tiaTimings.removeThoughtBubble = 2000;
-        
-    } else if ( TIA_SPEED === 'medium' ) {
-       
-        tiaTimings.delayAfterClickPlayUntilCameraMovesUp = 500;
-        tiaTimings.cameraMoveUpDuration = 3.0;
-        tiaTimings.tiaLeanDuration = 1.5;
-        tiaTimings.delayUntilSpeakWords = 1000;
-        tiaTimings.delayAfterStudentSpeech = 1500;
-        tiaTimings.delayBeforeGoingToThinkingPos = 2000;
-        tiaTimings.toThinkDuration = 2.0;
-        tiaTimings.delayToAddThoughtBubbles = 2000;
-        tiaTimings.thoughtBubbleAddDelay = 750;
-        tiaTimings.wordFade = 500;
-        tiaTimings.returnFromThinking = 1.5;
-        tiaTimings.removeThoughtBubble = 1500;
-
-    } else if ( TIA_SPEED === 'fast' ) {
-
-        tiaTimings.delayAfterClickPlayUntilCameraMovesUp = 0;
-        tiaTimings.cameraMoveUpDuration = 2.0;
-        tiaTimings.tiaLeanDuration = 1;
-        tiaTimings.delayUntilSpeakWords = 500;
-        tiaTimings.delayAfterStudentSpeech = 500;
-        tiaTimings.delayBeforeGoingToThinkingPos = 1000;
-        tiaTimings.toThinkDuration = 1.5;
-        tiaTimings.delayToAddThoughtBubbles = 1500;
-        tiaTimings.thoughtBubbleAddDelay = 200;
-        tiaTimings.wordFade = 250;
-        tiaTimings.returnFromThinking = 1;
-        tiaTimings.removeThoughtBubble = 500;
-        tiaTimings.changeExpression = 0.75;
-        tiaTimings.changeExpressionConfused = 0.75;
-        tiaTimings.movementToConfused = 1;
-        tiaTimings.speechBubbleFadeInDuration = 500;
-        tiaTimings.speechBubbleFadeOutDuration = 500;
-        tiaTimings.toTalkExpressionDuration = 1;
-        tiaTimings.delayUntilToTalkPos = 500;
-        tiaTimings.delayBeforeReturnToLaptop = 1000;
-        tiaTimings.delayAfterBubbleShowUntilSpeak = 1000;
-        tiaTimings.turnToBoard = 2;
-        tiaTimings.cameraTurnToBoard = 2;
-        tiaTimings.armIndicate = 1;
-
-    }
-
-}
-
-setTimings();
+tiaTimings.delayAfterClickPlayUntilCameraMovesUp = 0;
+tiaTimings.cameraMoveUpDuration = 2.0;
+tiaTimings.tiaLeanDuration = 1;
+tiaTimings.delayUntilSpeakWords = 500;
+tiaTimings.delayAfterStudentSpeech = 500;
+tiaTimings.delayBeforeGoingToThinkingPos = 1000;
+tiaTimings.toThinkDuration = 1.5;
+tiaTimings.delayToAddThoughtBubbles = 1500;
+tiaTimings.thoughtBubbleAddDelay = 200;
+tiaTimings.wordFade = 250;
+tiaTimings.returnFromThinking = 1;
+tiaTimings.removeThoughtBubble = 500;
+tiaTimings.changeExpression = 0.75;
+tiaTimings.changeExpressionConfused = 0.75;
+tiaTimings.movementToConfused = 1;
+tiaTimings.speechBubbleFadeInDuration = 500;
+tiaTimings.speechBubbleFadeOutDuration = 500;
+tiaTimings.toTalkExpressionDuration = 1;
+tiaTimings.delayUntilToTalkPos = 500;
+tiaTimings.delayBeforeReturnToLaptop = 1000;
+tiaTimings.delayAfterBubbleShowUntilSpeak = 1000;
+tiaTimings.turnToBoard = 2;
+tiaTimings.cameraTurnToBoard = 2;
+tiaTimings.armIndicate = 1;
 
 //// CAMERA \\\\
 
