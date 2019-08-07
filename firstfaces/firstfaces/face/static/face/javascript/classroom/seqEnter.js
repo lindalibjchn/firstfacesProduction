@@ -32,19 +32,19 @@ function mainEnter() {
 
         //initMovement( movements.standingStudent, '0.5', '1');
 
-        let studentName = classVariableDict.username;
+        let studentName = classVariables.username;
         
         //let greeting = ""
         greetingSrc0 = "greetings/" + studentName + ".wav";
         greetingText0 = "Hello " + studentName;
             
-        if ( classVariableDict.tutorial ) {
+        if ( classVariables.tutorial ) {
 
             //// if in tutorial, need this to be true so that responses from the recording and speech synthesis react in the correct way
-            //classVariableDict.tutorialStep = 0;
+            //classVariables.tutorialStep = 0;
 
             //// if user has completed tutorial before, don't need to introduce name
-            //if ( classVariableDict.tutorial_complete ) {
+            //if ( classVariables.tutorial_complete ) {
 
                 //greeting = " Hello " + studentName + ". Welcome to the ERLE tutorial. It will take 5 to 10 minutes to complete. I will speak, and then buttons will appear for you to click.";
         
@@ -54,7 +54,7 @@ function mainEnter() {
         
             //}
 
-        } else if ( classVariableDict.first_full_class ) {
+        } else if ( classVariables.first_full_class ) {
 
             //greeting = " Hello " + studentName + ", welcome to your first full class at ERLE! How are you feeling today?";
             //console.log( 'prefixURL:', prefixURL )
@@ -62,11 +62,11 @@ function mainEnter() {
             greetingSrc1 = "welcome_to_your_first_full_class_at_erle.wav";
             greetingText1 = "Welcome to your first full class at ERLE";
 
-        //} else if ( classVariableDict['prev_topic'] !== null ) {
+        //} else if ( classVariables['prev_topic'] !== null ) {
         
         } else {
 
-            //greeting = " Hello " + studentName + ", nice to see you again! Last time we met you were feeling " + classVariableDict.prev_emotion + ". How are you feeling today?";
+            //greeting = " Hello " + studentName + ", nice to see you again! Last time we met you were feeling " + classVariables.prev_emotion + ". How are you feeling today?";
             greetingSrc1 = "its_great_to_see_you_again.wav"
             greetingText1 = "It's great to see you again"
         
@@ -98,7 +98,7 @@ function mainEnter() {
     } else if ( mainCount === 280 ) {
 
         //tiaSpeak( synthesisObject.text, needSendTTS=false, speakOpening );
-        //classVariableDict.promptSpeaking = true;
+        //classVariables.promptSpeaking = true;
         synthesisObject.synthAudio.src = prefixURL + tiaMediaLoc + greetingSrc0;
         
         tiaSpeak( greetingText0, function() {
@@ -121,7 +121,7 @@ function mainEnter() {
 
 function speakOpening() {
 
-    if ( classVariableDict.tutorial ) {
+    if ( classVariables.tutorial ) {
 
         runTutorial();
 
@@ -159,9 +159,9 @@ function goToAskTopic( emotion ) {
         //synthesisObject.pitch = 1;
         //synthesisObject.speaking_rate = 0.95;
 
-        //if ( classVariableDict['prev_topic'] !== null && classVariableDict.first_full_class !== true ) {
+        //if ( classVariables['prev_topic'] !== null && classVariables.first_full_class !== true ) {
 
-            //speechBubbleObject.sentence = " That's great! Last time you talked about '" + classVariableDict['prev_topic'] + "' and your score was " + classVariableDict.prev_score.toString() + ". Would you like to continue with the same topic, or choose something different?";
+            //speechBubbleObject.sentence = " That's great! Last time you talked about '" + classVariables['prev_topic'] + "' and your score was " + classVariables.prev_score.toString() + ". Would you like to continue with the same topic, or choose something different?";
 
         //} else {
 
@@ -194,9 +194,9 @@ function goToAskTopic( emotion ) {
         //synthesisObject.pitch = -2;
         //synthesisObject.speaking_rate = 0.8;
 
-        //if ( classVariableDict['prev_topic'] !== null && classVariableDict.first_full_class !== true ) {
+        //if ( classVariables['prev_topic'] !== null && classVariables.first_full_class !== true ) {
 
-            //speechBubbleObject.sentence = " I'm sorry to hear that! Last time you talked about '" + classVariableDict['prev_topic'] + "' and your score was " + classVariableDict.prev_score.toString() + ". Would you like to continue with the same topic, or choose something different?";
+            //speechBubbleObject.sentence = " I'm sorry to hear that! Last time you talked about '" + classVariables['prev_topic'] + "' and your score was " + classVariables.prev_score.toString() + ". Would you like to continue with the same topic, or choose something different?";
 
         //} else {
 
@@ -233,7 +233,7 @@ function storeEmotion() {
         type: "POST",
         data: {
             'emotionID': emotion,
-            'sessionID': classVariableDict[ 'session_id' ],
+            'sessionID': classVariables[ 'session_id' ],
         },
         success: function(json) {
 
@@ -280,7 +280,7 @@ function askTopic() {
 
 function speakTopic() {
 
-    //if ( classVariableDict['prev_topic'] !== null && classVariableDict.first_full_class !== true ) {
+    //if ( classVariables['prev_topic'] !== null && classVariables.first_full_class !== true ) {
 
         //showContinueOrNew();
 
@@ -396,14 +396,14 @@ function dealWithEmptyTopic() {
 
     //setTimeout( function() {
 
-        //tiaSpeak( "Did you read today's article? It's title is: '" + classVariableDict.headline + "'", needSendTTS=true, function() { 
+        //tiaSpeak( "Did you read today's article? It's title is: '" + classVariables.headline + "'", needSendTTS=true, function() { 
             
             //showDoubleBtn( "Yes, I read it", "no, I didn't read it", 
                     
                 //function(){ 
                     
                     //removeDoubleBtn();
-                    //storeTopic( 'news: ' + classVariableDict.headline ) 
+                    //storeTopic( 'news: ' + classVariables.headline ) 
                 
                 //},
 
@@ -436,7 +436,7 @@ function storeTopic( topicChoice ) {
         type: "POST",
         data: {
             'topic': topicChoice,
-            'sessionID': classVariableDict[ 'session_id' ],
+            'sessionID': classVariables[ 'session_id' ],
         },
         success: function(json) {
 

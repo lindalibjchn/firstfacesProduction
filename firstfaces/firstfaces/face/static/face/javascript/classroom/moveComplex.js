@@ -616,31 +616,31 @@ function tapKeyFull() {
                 $('#submitOverlay').prop( "disabled", false);
                 //calculateAlternatives();
                 //show play buttons below
-                if ( classVariableDict.tutorial === false ) {
+                if ( classVariables.tutorial === false ) {
 
                     // show john's error box
-                    if ( classVariableDict.tapKeyForErrors ) {
+                    if ( classVariables.tapKeyForErrors ) {
 
-                        classVariableDict.tapKeyForErrors = false;
+                        classVariables.tapKeyForErrors = false;
 
                         movementController( movements.blank, '0.5', '1.5' );
                         // display errors
                         showWrongSentence();
 
-                    } else if ( classVariableDict.tapKeyForCorrection ) {
+                    } else if ( classVariables.tapKeyForCorrection ) {
 
-                        classVariableDict.tapKeyForCorrection = false;
+                        classVariables.tapKeyForCorrection = false;
                         showCorrectionUnderWrongSent();
 
-                    } else if ( classVariableDict.showingSpectrograms ) {
+                    } else if ( classVariables.showingSpectrograms ) {
 
-                        classVariableDict.showingSpectrograms = false;
+                        classVariables.showingSpectrograms = false;
                         $("#praatCont").fadeIn(800);
 
                     // this one is for after listening to the learners speech - Daniel's stuff
                     } else {
                         
-                        if(!classVariableDict.stage2 && !classVariableDict.stage3){
+                        if(!classVariables.stage2 && !classVariables.stage3){
 
                         $('.play-btn').prop( "disabled", false);
                         $('#talkBtn').prop( "disabled", false);
@@ -689,7 +689,7 @@ function tapKeyFull() {
                             
                               
                             
-                            setTimeout( set_selectable(classVariableDict.alternatives[0].transcript) , 1200);   
+                            setTimeout( set_selectable(classVariables.alternatives[0].transcript) , 1200);   
 
                         
                         }}
@@ -710,7 +710,7 @@ function tapKeyFull() {
 
 //fucntion to populate the output box with transcript
 function populateDivs() {
-    var words = classVariableDict.alternatives[0].transcript.split(" ");
+    var words = classVariables.alternatives[0].transcript.split(" ");
     words.forEach(addWords);
     $('#listenVoiceBtn').show();
 }
@@ -790,7 +790,7 @@ function dealWithBlankTranscription() {
     tiaSpeak( "I'm sorry, but I didn't hear anything. Could you try again?", function() {
      
         $('#recordVoiceBtn').show();
-        classVariableDict.mainRecord = false;
+        classVariables.mainRecord = false;
 
         $('#recordBtnsContainer').fadeIn();
         //removeSpeechBubble();
@@ -805,9 +805,9 @@ function returnFromListenToSpeechSynthesis() {
     setTimeout( function() {
         
         // if no sound comes through, don't tap or show empty transcripts
-        if ( classVariableDict.alternatives[ 0 ].transcript === "" ) {
+        if ( classVariables.alternatives[ 0 ].transcript === "" ) {
         
-            if ( classVariableDict.tutorial === false ) {
+            if ( classVariables.tutorial === false ) {
 
                 setTimeout( function() {
 
@@ -820,7 +820,7 @@ function returnFromListenToSpeechSynthesis() {
 
         } else {
            // reset this as main recording is complete with a transcription
-           classVariableDict.mainRecord = false;
+           classVariables.mainRecord = false;
             
             $('#closeOverlayArea').prop( "disabled", true);
             $('#submitOverlay').prop( "disabled", true);

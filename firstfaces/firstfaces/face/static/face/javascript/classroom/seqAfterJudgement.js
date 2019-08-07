@@ -4,23 +4,23 @@ function runAfterJudgement() {
     // logic for different types of judgement
     
     // in return to laptop, movement will only be needed if tia not looking straight at student
-    classVariableDict.tiaLookingAtStudent = true;
+    classVariables.tiaLookingAtStudent = true;
 
     // get duration of nod or shake. Can also be 0o
     let nodShakeDur = 0;
-    if ( classVariableDict.last_sent.nod !== null ) {
+    if ( classVariables.last_sent.nod !== null ) {
     
         nodShakeDur = 4 * parseFloat( getNodSpeedInString() ) * 1000;
 
-    } else if ( classVariableDict.last_sent.judgement === "D" ) {
+    } else if ( classVariables.last_sent.judgement === "D" ) {
 
         nodShakeDur = 3000;
 
     }
 
-    if ( classVariableDict.last_sent.judgement === "C" ) {
+    if ( classVariables.last_sent.judgement === "C" ) {
 
-        if ( classVariableDict.last_sent.nod !== null ) {
+        if ( classVariables.last_sent.nod !== null ) {
                 
             nodOrShakeHead()
             setTimeout( function(){
@@ -47,9 +47,9 @@ function runAfterJudgement() {
 
         }
         
-    } else if ( classVariableDict.last_sent.judgement === "P" ) {
+    } else if ( classVariables.last_sent.judgement === "P" ) {
 
-        if ( classVariableDict.last_sent.nod !== null ) {
+        if ( classVariables.last_sent.nod !== null ) {
 
             nodOrShakeHead()
             setTimeout( prePrepareForPromptSpeech, nodShakeDur );
@@ -60,11 +60,11 @@ function runAfterJudgement() {
 
         }
 
-    } else if ( classVariableDict.last_sent.judgement === "I" ) {
+    } else if ( classVariables.last_sent.judgement === "I" ) {
 
         movementController( movements.confused, tiaTimings.movementToConfused / 2, tiaTimings.movementToConfused );
 
-        addToPrevSents(classVariableDict.last_sent);
+        addToPrevSents(classVariables.last_sent);
         
         setTimeout( function() {
             
@@ -74,25 +74,25 @@ function runAfterJudgement() {
 
         }, tiaTimings.movementToConfused * 500 )
 
-    } else if ( classVariableDict.last_sent.judgement === "B" || classVariableDict.last_sent.judgement === "M" || classVariableDict.last_sent.judgement === "D" || classVariableDict.last_sent.judgement === "3" ) {
+    } else if ( classVariables.last_sent.judgement === "B" || classVariables.last_sent.judgement === "M" || classVariables.last_sent.judgement === "D" || classVariables.last_sent.judgement === "3" ) {
 
         synthesisObject.speaking_rate = 0.8;
         // delay for moving back to laptop and showing sent in prevSents
         //let delay = 5000;
         //var text;
-        if ( classVariableDict.last_sent.judgement === "B" ) {
+        if ( classVariables.last_sent.judgement === "B" ) {
 
             prePrepareForPromptSpeech();
             
-        } else if ( classVariableDict.last_sent.judgement === "M" ) {
+        } else if ( classVariables.last_sent.judgement === "M" ) {
             
             prePrepareForPromptSpeech();
         
-        } else if ( classVariableDict.last_sent.judgement === "3" ) {
+        } else if ( classVariables.last_sent.judgement === "3" ) {
             
             displaySpeechBubblePrompt();
         
-        } else if ( classVariableDict.last_sent.judgement === "D" ) {
+        } else if ( classVariables.last_sent.judgement === "D" ) {
 
             nodOrShakeHead();
             setTimeout( displaySpeechBubblePrompt, nodShakeDur - 500 );
@@ -105,7 +105,7 @@ function runAfterJudgement() {
 
 function getNodSpeedInString() {
 
-    let nodSpeed = classVariableDict.last_sent['nodSpeed']
+    let nodSpeed = classVariables.last_sent['nodSpeed']
     
     if ( nodSpeed <= 0.33 ) {
 
@@ -126,17 +126,17 @@ function getNodSpeedInString() {
 function nodOrShakeHead() {
     
     recTimes.nodOrShakeHead =  Date.now() / 1000;
-    if ( classVariableDict.last_sent.judgement === "D" ) {
+    if ( classVariables.last_sent.judgement === "D" ) {
 
         initShake( 0.5, '0.75' );
 
     } else {
 
-        let nod = classVariableDict.last_sent.nod
+        let nod = classVariables.last_sent.nod
 
         if ( nod !== null ) {
 
-            let nodAmount = 0.4 + 0.5 * classVariableDict.last_sent['nodAmount'];
+            let nodAmount = 0.4 + 0.5 * classVariables.last_sent['nodAmount'];
 
             let nodSpeedString = getNodSpeedInString();
 
@@ -170,7 +170,7 @@ function prePrepareForPromptSpeech() {
 
     //function checkIfPromptReturned() {
 
-        //if ( classVariableDict.promptNIndexesReceived ) {
+        //if ( classVariables.promptNIndexesReceived ) {
 
             //displaySpeechBubblePrompt();
 
@@ -207,28 +207,28 @@ function displaySpeechBubblePrompt() {
     //$('#speakingWords').hide()
     //$('#speechBubbleCont').fadeIn( tiaTimings.speechBubbleFadeInDuration );
 
-    $('#speakingWordsInside').text( classVariableDict.tiaToSay );
+    $('#speakingWordsInside').text( classVariables.tiaToSay );
     
-    //if ( classVariableDict.last_sent.judgement === "P" ) {
+    //if ( classVariables.last_sent.judgement === "P" ) {
             
-        //$('#speakingWordsInside').text( classVariableDict.last_sent.prompt );
+        //$('#speakingWordsInside').text( classVariables.last_sent.prompt );
 
-    //} else if ( classVariableDict.last_sent.judgement === "B" ) {
+    //} else if ( classVariables.last_sent.judgement === "B" ) {
 
-        //let text = createBetterTextForPromptBox( classVariableDict.last_sent );
+        //let text = createBetterTextForPromptBox( classVariables.last_sent );
         //$('#speakingWordsInside').text( text );
     
-    //} else if ( classVariableDict.last_sent.judgement === "M" ) {
+    //} else if ( classVariables.last_sent.judgement === "M" ) {
 
-        //let text = createMeanByTextForPromptBox( classVariableDict.last_sent );
+        //let text = createMeanByTextForPromptBox( classVariables.last_sent );
         //$('#speakingWordsInside').text( text );
         
-    //} else if ( classVariableDict.last_sent.judgement === "3" ) {
+    //} else if ( classVariables.last_sent.judgement === "3" ) {
 
         //let text = "There are more than 3 mistakes in your sentence. Could you simplify and try again?";
         //$('#speakingWordsInside').text( text );
 
-    //} else if ( classVariableDict.last_sent.judgement === "D" ) {
+    //} else if ( classVariables.last_sent.judgement === "D" ) {
 
         //let text = "I'm sorry but I don't understand what you said.";
         //$('#speakingWordsInside').text( text );
@@ -248,9 +248,9 @@ function displaySpeechBubblePrompt() {
         //synthesisObject.synthAudio.play()
         //synthesisObject.synthAudio.onended = returnToLaptop;
         
-        tiaSpeak( classVariableDict.tiaToSay, function() {
+        tiaSpeak( classVariables.tiaToSay, function() {
 
-            if ( classVariableDict.last_sent.judgement === "D" || classVariableDict.last_sent.judgement === "3" || classVariableDict.last_sent.judgement === "M" ) {
+            if ( classVariables.last_sent.judgement === "D" || classVariables.last_sent.judgement === "3" || classVariables.last_sent.judgement === "M" ) {
 
                 returnToLaptop( 'try again' );
 
@@ -258,7 +258,7 @@ function displaySpeechBubblePrompt() {
 
         });
 
-        classVariableDict.promptSpeaking = true;
+        classVariables.promptSpeaking = true;
             
     }, tiaTimings.toTalkExpressionDuration * 1000 );
 
@@ -274,11 +274,11 @@ function returnToLaptop( from ) {
 
     //expressionController( expressionObject.abs.neutral, tiaTimings.changeExpression * 2 );
 
-    //if ( classVariableDict.classOver && classVariableDict.endClassSequenceStarted !== true ) {
+    //if ( classVariables.classOver && classVariables.endClassSequenceStarted !== true ) {
 
         //console.log('\n\n\nend class return to laptop tia looking at student\n\n\n');
         //endClas
-        //classVariableDict.endClassSequenceStarted = true;
+        //classVariables.endClassSequenceStarted = true;
 
     //} else {
 
@@ -295,7 +295,7 @@ function returnToLaptop( from ) {
 function addToPrevSents() {
 
     // create new box in prevSent
-    //appendExchange( classVariableDict.last_sent );
+    //appendExchange( classVariables.last_sent );
     //scrollBottom();
     loadPrevSents( scrollBottom );
     setTimeout( function() {
@@ -324,16 +324,16 @@ function showOptionBtns() {
 function tryAgain() {
 
     recTimes.clickOptionBtn = Date.now() / 1000;
-    let sent = classVariableDict.sentences[ classVariableDict.id_of_last_sent ].sentence;
+    let sent = classVariables.sentences[ classVariables.id_of_last_sent ].sentence;
 
-    classVariableDict.tiaLookingAtStudent = false;
+    classVariables.tiaLookingAtStudent = false;
     returnToLaptop('try again');
 
     $('#prevSents').fadeTo( 500, 1 );
     $('#optionBtns').fadeOut( 500 )
     $('#recordBtnsContainer').fadeIn( 1000 )
 
-    let sentId = classVariableDict.last_sent.sent_id
+    let sentId = classVariables.last_sent.sent_id
     $.ajax({
         url: "/store_try_again",
         type: "GET",
@@ -351,7 +351,7 @@ function tryAgain() {
 function whatsWrong() {
 
     recTimes.clickOptionBtn = Date.now() / 1000;
-    let sentId = classVariableDict.last_sent.sent_id
+    let sentId = classVariables.last_sent.sent_id
 
     $.ajax({
         url: "/store_whats_wrong",
@@ -389,13 +389,13 @@ function showCorrection() {
     $('#tryAgainBtn').prop( "disabled", true).fadeOut( 500 );
     $('#nextSentenceBtn').prop( "disabled", true).fadeOut( 500 );
 
-    let sentId = classVariableDict.last_sent.sent_id
+    let sentId = classVariables.last_sent.sent_id
     $.ajax({
         url: "/store_show_correction",
         type: "GET",
         data: {'sentId': sentId},
         success: function(json) {
-            classVariableDict.last_sent.show_correction = true;
+            classVariables.last_sent.show_correction = true;
         },
         error: function() {
             console.log("that's wrong");
@@ -405,7 +405,7 @@ function showCorrection() {
     setTimeout( function() {
         
         //initArmIndicate('right', 1, 'high', '0.75');
-        classVariableDict.tapKeyForCorrection = true;
+        classVariables.tapKeyForCorrection = true;
         tapKeyFull();
     
         setTimeout( function() {
@@ -431,16 +431,16 @@ function nextSentence() {
     $('.option-btn').prop( "disabled", true);
     $('#sentenceShowHolder').hide;
 
-    if ( classVariableDict.lastSentToBeSent ) {
+    if ( classVariables.lastSentToBeSent ) {
 
-        classVariableDict.classOver = true;
+        classVariables.classOver = true;
 
     }
 
-    classVariableDict.tiaLookingAtStudent = false;
+    classVariables.tiaLookingAtStudent = false;
     returnToLaptop();
 
-    let sentId = classVariableDict.last_sent.sent_id
+    let sentId = classVariables.last_sent.sent_id
     $.ajax({
         url: "/store_next_sentence",
         type: "GET",
@@ -460,7 +460,7 @@ function nextSentence() {
 var reading = false;
 function waitForWrongSlices() {
 
-    let sentId = classVariableDict.last_sent.sent_id
+    let sentId = classVariables.last_sent.sent_id
 
     $.ajax({
         url: "/wait_for_correction",
@@ -470,9 +470,9 @@ function waitForWrongSlices() {
 
             if ( json.indexes !== null ) {
 
-                classVariableDict.last_sent.indexes = JSON.parse( json.indexes );
+                classVariables.last_sent.indexes = JSON.parse( json.indexes );
 
-                classVariableDict.last_sent.correction = JSON.parse( json.correction );
+                classVariables.last_sent.correction = JSON.parse( json.correction );
                 
                 // no longer turning to board in mobile so comment out
                 // turnToBoardToShowErrors();
@@ -496,7 +496,7 @@ function waitForWrongSlices() {
 
 function tapKeyToShowErrors() {
 
-    classVariableDict.tapKeyForErrors = true;
+    classVariables.tapKeyForErrors = true;
     tapKeyFull();
 
 }
@@ -507,9 +507,9 @@ function showWrongSentence() {
 
     $('#submittedNCorrectedSentenceContCont').show()
 
-    for ( w=0; w < classVariableDict.last_sent.sentence.length; w++ ) {
+    for ( w=0; w < classVariables.last_sent.sentence.length; w++ ) {
 
-        if ( classVariableDict.last_sent.sentence[ w ] === ' ' ) {
+        if ( classVariables.last_sent.sentence[ w ] === ' ' ) {
 
 
             $('#submittedSentence').append(
@@ -523,7 +523,7 @@ function showWrongSentence() {
 
             $('#submittedSentence').append(
 
-                "<div class='wrong-words wrong-words-words' id='wrongWord_" + w.toString() + "'>" + classVariableDict.last_sent.sentence[ w ] + "</div>"
+                "<div class='wrong-words wrong-words-words' id='wrongWord_" + w.toString() + "'>" + classVariables.last_sent.sentence[ w ] + "</div>"
 
             );
 
@@ -553,12 +553,12 @@ function showErrorBtns() {
 
 function highlightWrong() {
 
-    classVariableDict.last_sent.indexes.forEach( function(ind, i) {
+    classVariables.last_sent.indexes.forEach( function(ind, i) {
 
         setTimeout( function() {
 
             // for spaces
-            if ( ind.length === 1 && classVariableDict.last_sent.sentence[ ind ] === " " ) {
+            if ( ind.length === 1 && classVariables.last_sent.sentence[ ind ] === " " ) {
 
                 $('#wrongWord_' + ind[0].toString()).css( {
                     //'color': 'red' ,
@@ -581,7 +581,7 @@ function highlightWrong() {
                     });
 
 
-                    if ( classVariableDict.last_sent.sentence[ i ] === " " ) {
+                    if ( classVariables.last_sent.sentence[ i ] === " " ) {
                     
                         $('#wrongWord_' + i.toString()).css( {
                             'color': 'rgba(0,0,0,0)',
@@ -593,7 +593,7 @@ function highlightWrong() {
                            
                             });
 
-                            if ( ind === classVariableDict.last_sent.indexes.length - 1 ) {
+                            if ( ind === classVariables.last_sent.indexes.length - 1 ) {
 
                                 showErrorBtns();
 
@@ -614,7 +614,7 @@ function highlightWrong() {
                                 'background-image': 'none',
                             });
 
-                            if ( ind === classVariableDict.last_sent.indexes.length - 1 ) {
+                            if ( ind === classVariables.last_sent.indexes.length - 1 ) {
 
                                 showErrorBtns();
 
@@ -642,19 +642,19 @@ function showCorrectionUnderWrongSent() {
     let correctParts = [];
     let lenCorrectParts = [];
     let startSlice = 0;
-    for (let i=0; i<classVariableDict.last_sent.indexes.length + 1; i++ ) {
+    for (let i=0; i<classVariables.last_sent.indexes.length + 1; i++ ) {
 
         var slice;
-        if ( i < classVariableDict.last_sent.indexes.length ) {
+        if ( i < classVariables.last_sent.indexes.length ) {
 
-            slice = classVariableDict.last_sent.sentence.slice( startSlice, classVariableDict.last_sent.indexes[ i ][ 0 ])
+            slice = classVariables.last_sent.sentence.slice( startSlice, classVariables.last_sent.indexes[ i ][ 0 ])
             correctParts.push( slice )
 
-            startSlice = classVariableDict.last_sent.indexes[ i ][ classVariableDict.last_sent.indexes[ i ].length - 1] + 1
+            startSlice = classVariables.last_sent.indexes[ i ][ classVariables.last_sent.indexes[ i ].length - 1] + 1
 
         } else {
 
-            slice = classVariableDict.last_sent.sentence.slice( startSlice )
+            slice = classVariables.last_sent.sentence.slice( startSlice )
             correctParts.push( slice )
 
         }
@@ -671,14 +671,14 @@ function showCorrectionUnderWrongSent() {
 
     let wrongParts = [];
     let lenWrongParts = [];
-    classVariableDict.last_sent.indexes.forEach( function(ind) {
+    classVariables.last_sent.indexes.forEach( function(ind) {
 
         lenWrongPart = 0;
         wrongPart = []
         ind.forEach( function( wo ) {
 
-            wrongPart.push( classVariableDict.last_sent.sentence[ wo ] );
-            lenWrongPart += classVariableDict.last_sent.sentence[ wo ].length;
+            wrongPart.push( classVariables.last_sent.sentence[ wo ] );
+            lenWrongPart += classVariables.last_sent.sentence[ wo ].length;
 
         } );
 
@@ -687,7 +687,7 @@ function showCorrectionUnderWrongSent() {
 
     } );
 
-    let corrections = classVariableDict.last_sent.correction
+    let corrections = classVariables.last_sent.correction
     let lenCorrections = [];
     corrections.forEach( function( wp ) {
 
@@ -704,7 +704,7 @@ function showCorrectionUnderWrongSent() {
 
     correct = true;
     count = 0;
-    for ( j=0; j<classVariableDict.last_sent.indexes.length * 2; j++ ) {
+    for ( j=0; j<classVariables.last_sent.indexes.length * 2; j++ ) {
 
         if ( correct ) {
 
@@ -734,7 +734,7 @@ function showCorrectionUnderWrongSent() {
 
         } else {
 
-            classVariableDict.last_sent.correction[ count ].forEach( function( q ) {
+            classVariables.last_sent.correction[ count ].forEach( function( q ) {
 
                 if ( q  === ' ' ) {
 
@@ -815,7 +815,7 @@ function showCorrectionUnderWrongSent() {
     }
     setTimeout( function() {
 
-        for (let i=0; i<classVariableDict.last_sent.indexes.length; i++ ) {
+        for (let i=0; i<classVariables.last_sent.indexes.length; i++ ) {
 
             setTimeout( function() {
 
@@ -850,7 +850,7 @@ function showCorrectionUnderWrongSent() {
                         }
                     });
 
-                    if ( i === classVariableDict.last_sent.indexes.length - 1 ) {
+                    if ( i === classVariables.last_sent.indexes.length - 1 ) {
 
                         $('#nextSentenceBtn').css('display', 'flex');
                         $('#nextSentenceBtn').prop( "disabled", false ).fadeIn( 500 );

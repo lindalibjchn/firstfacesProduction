@@ -350,8 +350,8 @@ function changeExpression() {
     synthesisObject.pitch = 0;
     synthesisObject.speaking_rate = 0.85;
 
-    let emotionCoords = classVariableDict.last_sent['emotion']
-    let surprise = classVariableDict.last_sent['surprise']
+    let emotionCoords = classVariables.last_sent['emotion']
+    let surprise = classVariables.last_sent['surprise']
 
     // check if emotion is in centre of circle - if so there is no change
     let dia = Math.sqrt( emotionCoords[0]**2 + emotionCoords[1]**2 )

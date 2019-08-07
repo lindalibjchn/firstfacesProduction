@@ -12,7 +12,7 @@ var prefixURL;
 
 function enterOrReEnter() {
 
-    if ( classVariableDict.inDevelopment ) {
+    if ( classVariables.inDevelopment ) {
 
         prefixURL = "http://127.0.0.1:8000/"
 
@@ -52,7 +52,7 @@ function enterOrReEnter() {
     };
 
     //if first enter then run entrance animation else sitting at chair
-    if ( classVariableDict.first_enter ) {
+    if ( classVariables.first_enter ) {
         
         firstEnter();
 
@@ -72,7 +72,7 @@ function engineRunning() {
     blinkControllerObject.bool = true;
     expressionController( expressionObject.abs.neutral, 0.1 );
     enterOrReEnter();
-    //if ( classVariableDict.tutorial === false ) {
+    //if ( classVariables.tutorial === false ) {
 
         //showTimeRemaining();
         ////showQuestionStreak();
@@ -82,7 +82,7 @@ function engineRunning() {
 
     setTimeout( function() {
         
-        $("#foreground").fadeOut( 1500 );
+        $("#foregroundContainer").fadeOut( 1500 );
     
     }, 500 );
 

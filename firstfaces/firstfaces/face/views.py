@@ -419,7 +419,7 @@ def class_time(request, session_id):
                 prof = Profile.objects.get(learner=request.user)
                 gender = prof.gender
 
-                class_variable_dict = {
+                class_variables = {
 
                     'classOver': class_over,
                     'username': request.user.username,
@@ -451,7 +451,7 @@ def class_time(request, session_id):
 
                 context = {
 
-                    'class_variable_dict': json.dumps(class_variable_dict), 
+                    'class_variables': json.dumps(class_variables), 
                     'class': True, # for the navbar to know we are in class
                     'article': article,
 

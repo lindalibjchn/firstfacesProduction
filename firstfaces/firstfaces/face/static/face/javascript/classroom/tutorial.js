@@ -137,7 +137,7 @@ function removeQuadBtn() {
 
 function runTutorial() {
 
-    classVariableDict.tutorialStep = 1;
+    classVariables.tutorialStep = 1;
     showSingleBtn('next', greeting02 )
     $('#playRobot').hide();
 
@@ -145,7 +145,7 @@ function runTutorial() {
 
 function greeting02() {
 
-    classVariableDict.tutorialStep = 2;
+    classVariables.tutorialStep = 2;
     removeSingleBtn();
     
     setTimeout( function() {
@@ -162,7 +162,7 @@ function greeting02() {
 
 function greeting0301() {
 
-    classVariableDict.tutorialStep = 301;
+    classVariables.tutorialStep = 301;
     removeDoubleBtn();
     
     setTimeout( function() {
@@ -179,7 +179,7 @@ function greeting0301() {
 
 function greeting03() {
 
-    classVariableDict.tutorialStep = 3;
+    classVariables.tutorialStep = 3;
     removeSingleBtn();
     removeDoubleBtn();
     
@@ -192,7 +192,7 @@ function greeting03() {
                 sendSoundMicToServer( "sound", true );
 
                 // if mic is not enabled
-                if ( classVariableDict.audio ) {
+                if ( classVariables.audio ) {
                 
                     greeting04();                
                 
@@ -212,7 +212,7 @@ function greeting03() {
 
 function greeting0401() {
 
-    classVariableDict.tutorialStep = 401;
+    classVariables.tutorialStep = 401;
     removeDoubleBtn();
     
     setTimeout( function() {
@@ -229,7 +229,7 @@ function greeting0401() {
 
 function greeting0402() {
 
-    classVariableDict.tutorialStep = 402;
+    classVariables.tutorialStep = 402;
     removeSingleBtn();
     
     setTimeout( function() {
@@ -246,7 +246,7 @@ function greeting0402() {
 
 function greeting0403() {
 
-    classVariableDict.tutorialStep = 403;
+    classVariables.tutorialStep = 403;
     removeDoubleBtn();
 
     sendSoundMicToServer( "sound", false );
@@ -265,7 +265,7 @@ function greeting0403() {
 
 function greeting0411() {
 
-    classVariableDict.tutorialStep = 411;
+    classVariables.tutorialStep = 411;
     removeDoubleBtn();
     removeSingleBtn();
 
@@ -283,7 +283,7 @@ function greeting0411() {
 
 function greeting0412() {
 
-    classVariableDict.tutorialStep = 412;
+    classVariables.tutorialStep = 412;
     removeDoubleBtn();
 
     setTimeout( function() {
@@ -298,7 +298,7 @@ function greeting0412() {
 
 function greeting04() {
 
-    classVariableDict.tutorialStep = 4;
+    classVariables.tutorialStep = 4;
     removeDoubleBtn();
     removeSingleBtn();
 
@@ -317,7 +317,7 @@ function greeting04() {
 
 function greeting0501() {
 
-    classVariableDict.tutorialStep = 501;
+    classVariables.tutorialStep = 501;
     removeDoubleBtn();
 
     setTimeout( function(){
@@ -335,7 +335,7 @@ function greeting0501() {
 
 function greeting0502() {
 
-    classVariableDict.tutorialStep = 502;
+    classVariables.tutorialStep = 502;
     removeDoubleBtn();
 
     setTimeout( function(){
@@ -353,9 +353,9 @@ function greeting0502() {
 
 function greeting0503() {
 
-    classVariableDict.tutorialStep = 502;
+    classVariables.tutorialStep = 502;
     removeDoubleBtn();
-    //classVariableDict.tutorialStep = 99;
+    //classVariables.tutorialStep = 99;
 
     setTimeout( function(){
 
@@ -371,7 +371,7 @@ function greeting0503() {
 function greeting0513() {
 
     sendSoundMicToServer( "microphone", false );
-    classVariableDict.tutorialStep = 513;
+    classVariables.tutorialStep = 513;
     removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
     removeSingleBtn();
     removeDoubleBtn();
@@ -401,7 +401,7 @@ function greeting0513() {
 
 function greeting0514() {
 
-    classVariableDict.tutorialStep = 514;
+    classVariables.tutorialStep = 514;
     removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
 
     setTimeout( function() {
@@ -420,7 +420,7 @@ function greeting0514() {
 
         } else {
 
-            classVariableDict.tutorialStep = 513;
+            classVariables.tutorialStep = 513;
 
             tiaSpeak( "That is not quite correct. Try again to type 'nice to meet you'.", needSendTTS=true, function() {
                 
@@ -436,7 +436,7 @@ function greeting0514() {
 
 function greeting05() {
 
-    classVariableDict.tutorialStep = 5;
+    classVariables.tutorialStep = 5;
     removeSingleBtn();
     removeDoubleBtn();
 
@@ -454,7 +454,7 @@ function greeting05() {
         
             });
     
-            classVariableDict.tutorialNoMicCount = 0; // will increase if no audio detected
+            classVariables.tutorialNoMicCount = 0; // will increase if no audio detected
         
         // times 3 to allow time to return to laptop before speaking again
         }, tiaTimings.speechBubbleFadeOutDuration * 3 )
@@ -465,7 +465,7 @@ function greeting05() {
 
 function greeting06() {
 
-    classVariableDict.tutorialStep = 6;
+    classVariables.tutorialStep = 6;
     removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
     
     $('#recordVoiceBtn').show();
@@ -487,10 +487,10 @@ function greeting06() {
 
         } else if ( textOnLaptop === "" ) {
 
-            if ( classVariableDict.tutorialNoMicCount === 0 ) {
+            if ( classVariables.tutorialNoMicCount === 0 ) {
                 
-                classVariableDict.tutorialStep = 5;
-                classVariableDict.tutorialNoMicCount += 1;
+                classVariables.tutorialStep = 5;
+                classVariables.tutorialNoMicCount += 1;
 
                 tiaSpeak( "There seems to be a problem with the microphone. Check the settings and try again to say 'nice to meet you'.", needSendTTS=true, function() { 
 
@@ -500,10 +500,10 @@ function greeting06() {
 
                 } );
 
-            } else if ( classVariableDict.tutorialNoMicCount === 1 ) {
+            } else if ( classVariables.tutorialNoMicCount === 1 ) {
 
-                classVariableDict.tutorialStep = 5;
-                classVariableDict.tutorialNoMicCount += 1;
+                classVariables.tutorialStep = 5;
+                classVariables.tutorialNoMicCount += 1;
 
                 tiaSpeak( "There is still a problem with the microphone. Did you allow Google Chrome to access your microphone. If you click on the small 'i' next to 'erle.ucd.ie', you can turn it on. Then try again to say 'nice to meet you'.", needSendTTS=true, function() { 
 
@@ -529,7 +529,7 @@ function greeting06() {
 
             tiaSpeak( "That is not quite correct. Try again to say 'nice to meet you'.", needSendTTS=true, function() {
                 
-                classVariableDict.tutorialStep = 5;
+                classVariables.tutorialStep = 5;
                 $('.play-btn').prop( 'disabled', true );
                 $('#recordVoiceBtn').prop( 'disabled', false );
                 $('#recordVoiceBtn').show();
@@ -545,7 +545,7 @@ function greeting06() {
 function greeting07() {
 
     removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
-    classVariableDict.tutorialStep = 7;
+    classVariables.tutorialStep = 7;
     hideTextStuff();
     sendSoundMicToServer( "microphone", true );
 
@@ -565,7 +565,7 @@ function greeting07() {
 
 function greeting08() {
 
-    classVariableDict.tutorialStep = 8;
+    classVariables.tutorialStep = 8;
     removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
     
     $('#recordVoiceBtn').show();
@@ -583,7 +583,7 @@ function greeting08() {
 
         } else {
 
-            classVariableDict.tutorialStep = 7;
+            classVariables.tutorialStep = 7;
             tiaSpeak( "Let's try that one more time. Say 'I have half a sandwich, and the will to eat it whole'.", needSendTTS=true, function() {
 
                 $('.play-btn').prop( 'disabled', true );
@@ -599,7 +599,7 @@ function greeting08() {
 
 function greeting09() {
 
-    classVariableDict.tutorialStep = 9;
+    classVariables.tutorialStep = 9;
     $('.sent-scores').off( 'click', greeting09 );
     removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
     
@@ -619,7 +619,7 @@ function greeting09() {
 
 //function greeting10() {
 
-    //classVariableDict.tutorialStep = 10;
+    //classVariables.tutorialStep = 10;
     //removeSingleBtn();
     //removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
     
@@ -637,7 +637,7 @@ function greeting09() {
 
 function greeting11() {
 
-    classVariableDict.tutorialStep = 11;
+    classVariables.tutorialStep = 11;
     removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
     removeSingleBtn();
     
@@ -655,7 +655,7 @@ function greeting11() {
 
 //function greeting12() {
 
-    //classVariableDict.tutorialStep = 12;
+    //classVariables.tutorialStep = 12;
     //removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
     //removeSingleBtn();
     
@@ -673,7 +673,7 @@ function greeting11() {
 
 function greeting13() {
 
-    classVariableDict.tutorialStep = 13;
+    classVariables.tutorialStep = 13;
     removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
     removeSingleBtn();
     
@@ -695,7 +695,7 @@ function greeting13() {
 
 function greeting14() {
 
-    classVariableDict.tutorialStep = 14;
+    classVariables.tutorialStep = 14;
     removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
 
     setTimeout( function() {
@@ -714,7 +714,7 @@ function greeting14() {
 
         } else {
 
-            classVariableDict.tutorialStep = 13;
+            classVariables.tutorialStep = 13;
             tiaSpeak( "That is not quite correct. Try again to type 'she sells seashells by the seashore'.", needSendTTS=true, function() {
                 
                 $('#textInput').focus();
@@ -729,7 +729,7 @@ function greeting14() {
 
 function greeting15() {
 
-    classVariableDict.tutorialStep = 15;
+    classVariables.tutorialStep = 15;
     removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
 
     $('#recordVoiceBtn').show();
@@ -785,7 +785,7 @@ function greeting15() {
 
 //function greeting1601() {
 
-    //classVariableDict.tutorialStep = 1601;
+    //classVariables.tutorialStep = 1601;
     //removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
     //removeDoubleBtn();
     
@@ -820,7 +820,7 @@ function greeting15() {
 //function greeting16() {
 
     //$('#recordVoiceBtn').prop( 'disabled', true );
-    //classVariableDict.tutorialStep = 16;
+    //classVariables.tutorialStep = 16;
     //removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
     //removeSingleBtn();
     //hideTextStuff();
@@ -841,7 +841,7 @@ function greeting15() {
 
 function greeting17() {
 
-    classVariableDict.tutorialStep = 17;
+    classVariables.tutorialStep = 17;
     removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
     removeSingleBtn();
 
@@ -863,7 +863,7 @@ function greeting17() {
 
 function quadBtnFunc() {
 
-    //classVariableDict.quadBtnFuncCount += 1;
+    //classVariables.quadBtnFuncCount += 1;
 
     showQuadBtn( 
 
@@ -884,7 +884,7 @@ function greeting18() {
 
     removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
     removeSingleBtn();
-    classVariableDict.tutorialStep = 99;
+    classVariables.tutorialStep = 99;
     
     setTimeout( function() {
 
@@ -898,7 +898,7 @@ function greeting19() {
 
     removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
     removeQuadBtn();
-    classVariableDict.tutorialStep = 99;
+    classVariables.tutorialStep = 99;
     
     setTimeout( function() {
 
@@ -917,7 +917,7 @@ function greeting20() {
 
     removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
     removeQuadBtn();
-    classVariableDict.tutorialStep = 99;
+    classVariables.tutorialStep = 99;
     
     setTimeout( function() {
 
@@ -936,7 +936,7 @@ function greeting21() {
 
     removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
     removeQuadBtn();
-    classVariableDict.tutorialStep = 99;
+    classVariables.tutorialStep = 99;
     
     setTimeout( function() {
 
@@ -956,7 +956,7 @@ function greeting22() {
 
     removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
     removeQuadBtn();
-    classVariableDict.tutorialStep = 99;
+    classVariables.tutorialStep = 99;
     
     setTimeout( function() {
 
@@ -976,7 +976,7 @@ function greeting22() {
 
     //removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
     //removeQuadBtn();
-    //classVariableDict.tutorialStep = 99;
+    //classVariables.tutorialStep = 99;
 
     //tiaSpeak( "Thank you for finishing the tutorial. I hope to see you again soon!", needSendTTS=true, function() {
      
@@ -1063,7 +1063,7 @@ function greeting22() {
 
         //setTimeout( function(){
 
-            //classVariableDict.tutorialStep = 2;
+            //classVariables.tutorialStep = 2;
             //showSingleBtn( 'I am a quick learner!', greeting11 );
 
         //}, delay )
@@ -1144,7 +1144,7 @@ function greeting22() {
         //tiaSpeak( "You can also type sentences and then listen to native-like pronunciation. Please type 'this is my first class'. Then click the green robot button.", needSendTTS=true, function() {
 
             //$('#playRobot').prop( 'disabled', false );
-            //classVariableDict.tutorialStep = 1;
+            //classVariables.tutorialStep = 1;
             //$('#textInput').focus();
 
         //} )
