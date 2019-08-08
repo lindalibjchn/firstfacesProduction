@@ -3,8 +3,7 @@
   {
    "begin": "0.000",
    "children": [],
-<<<<<<< HEAD
-   "end": "1.680",
+   "end": "1.760",
    "id": "f000001",
    "language": "eng",
    "lines": [
@@ -12,9 +11,9 @@
    ]
   },
   {
-   "begin": "1.680",
+   "begin": "1.760",
    "children": [],
-   "end": "2.320",
+   "end": "2.280",
    "id": "f000002",
    "language": "eng",
    "lines": [
@@ -22,7 +21,7 @@
    ]
   },
   {
-   "begin": "2.320",
+   "begin": "2.280",
    "children": [],
    "end": "3.000",
    "id": "f000003",
@@ -34,7 +33,7 @@
   {
    "begin": "3.000",
    "children": [],
-   "end": "3.760",
+   "end": "4.080",
    "id": "f000004",
    "language": "eng",
    "lines": [
@@ -42,80 +41,13 @@
    ]
   },
   {
-   "begin": "3.760",
+   "begin": "4.080",
    "children": [],
-   "end": "4.280",
+   "end": "4.120",
    "id": "f000005",
    "language": "eng",
    "lines": [
     "3"
-   ]
-  },
-  {
-   "begin": "4.280",
-   "children": [],
-   "end": "4.760",
-   "id": "f000006",
-   "language": "eng",
-   "lines": [
-    "and"
-   ]
-  },
-  {
-   "begin": "4.760",
-   "children": [],
-   "end": "4.800",
-   "id": "f000007",
-   "language": "eng",
-   "lines": [
-    "4"
-=======
-   "end": "0.920",
-   "id": "f000001",
-   "language": "eng",
-   "lines": [
-    "this"
-   ]
-  },
-  {
-   "begin": "0.920",
-   "children": [],
-   "end": "1.320",
-   "id": "f000002",
-   "language": "eng",
-   "lines": [
-    "is"
-   ]
-  },
-  {
-   "begin": "1.320",
-   "children": [],
-   "end": "1.600",
-   "id": "f000003",
-   "language": "eng",
-   "lines": [
-    "a"
-   ]
-  },
-  {
-   "begin": "1.600",
-   "children": [],
-   "end": "2.120",
-   "id": "f000004",
-   "language": "eng",
-   "lines": [
-    "normal"
-   ]
-  },
-  {
-   "begin": "2.120",
-   "children": [],
-   "end": "3.160",
-   "id": "f000005",
-   "language": "eng",
-   "lines": [
-    "sander"
->>>>>>> e138dc4b9d3dfd8921f435ebfe049ff28f636447
    ]
   }
  ]

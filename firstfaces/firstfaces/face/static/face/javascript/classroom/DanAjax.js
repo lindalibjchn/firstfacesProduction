@@ -174,6 +174,11 @@ $('#bottomCent').keyup(function(event){
         $('#bottomCent').removeClass().addClass('mediumText');       
 
     }
+    else if($('#bottomCent').text().trim().length <= 25 && $('centeredErrorText').text().trim().length <= 25){
+        $('#centeredErrorText').removeClass().addClass('bigText'); 
+        $('#topCentText').removeClass().addClass('bigText');       
+        $('#bottomCent').removeClass().addClass('bigText');        
+    }
 
 });
 
@@ -392,6 +397,7 @@ $('#backCorrection').click(function(){
 
 
 $('#closeOverlayArea').click(function(){
+   if(classVariables.stage2 || classVariables.stage3){
    if(classVariables.correctionDone){
         undoCorrect();
    }
@@ -400,7 +406,6 @@ $('#closeOverlayArea').click(function(){
         classVariables.thirdAttemptError = false;  
         classVariables.noTransError = false;
    }  
-
    $('#backCorrection').show();
    $('#recordVoiceBtn').show();
    $('#correctionOverlay').hide();
@@ -425,7 +430,7 @@ $('#closeOverlayArea').click(function(){
    $('#finishClassIconCont').fadeIn();
    $('#backCorrection').prop( "disabled", false );
    unmoveText();   
-
+   }
 });
 
 $('#keyboardOverlay').click(function(){
@@ -474,6 +479,7 @@ $('#backOverlay').click(function(){
     $('#keyboardOverlay').show();
     $('#backOverlay').hide();
     $('#submitOverlay').hide();
+    $('#spectrogramBtn').show();
     classVariables.stage3 = false;
     classVariables.stage2 = true;
     classVariables.specClicks = [];
@@ -493,6 +499,7 @@ function openOverlay(){
     $('#stopRecordBtn').hide();
     $('#spectrogramBtn').hide();
     $('#correctionOverlay').fadeIn(700);
+    unmoveText();
     $('backCorrection').prop( "disabled", true); 
     $('#centeredError').show();
     $('#centeredErrorHolder').show();
@@ -600,7 +607,7 @@ function sendAttemptBlob( new_blob ){
             else{
                 dealWithBlankTranscription();   
                 classVariables.noTransError = true;
-                $('#backOverlay').prop('disabled',"false");
+                $('#backOverlay').prop('disabled',false);
             }
             classVariables.correctionAttemptID = json.att_id; 
             }, 1000);
@@ -805,7 +812,7 @@ function submitKeyboard(){
             tapKeyFull();
             movementController( movements.blank, '0.5', '1' );
 
-            $('#reRecordBtn').show();
+            //$('#reRecordBtn').show();
 
             var refAudioURL = "http://127.0.0.1:8000/" + json.ref_audio_url;
             var refAudio = document.getElementById("refAudio");
@@ -860,7 +867,6 @@ function submitKeyboard(){
                 $('#hyp_invisible').css("background-color","#ffcccb");           
             }
 
-            $("#backOverlay").show();
         
             classVariables.specClicks = [];
             classVariables.stage3 = true;
@@ -944,13 +950,14 @@ function correct_attempt(){
     classVariables.correctionDone = true;
    
     //disable mic
-    $('#reRecordBtn').prop( "disabled", true );
+    $('#reRecordBtn').fadeOut(800);
     setTimeout(function(){
     //show submit
     $('#sliderHolder').css('visibility','visible');
     $('#submitOverlay').show();
     $("#submitOverlay").off("click");                                                
     $("#submitOverlay").click(submitCorrect);
+    $('#backCorrection').prop("disabled",false);
     },3500);
 }
 

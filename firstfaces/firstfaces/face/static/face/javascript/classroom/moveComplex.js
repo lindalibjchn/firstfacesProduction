@@ -636,6 +636,12 @@ function tapKeyFull() {
 
                         classVariables.showingSpectrograms = false;
                         $("#praatCont").fadeIn(800);
+                        setTimeout(function(){
+                            $("#reRecordBtn").fadeIn(800);
+                        },200);
+                        setTimeout(function(){
+                            $("#backOverlay").fadeIn(800);
+                        },400);                           
 
                     // this one is for after listening to the learners speech - Daniel's stuff
                     } else {
