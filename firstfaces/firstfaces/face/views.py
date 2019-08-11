@@ -786,11 +786,10 @@ def store_topic(request):
 
     # except:  
         # synthURL1 = 'fault'
-    
     # #Above code works but for development is not being utilised
 
-    # synthFN = settings.BASE_DIR + '/' + synthURL1
-    # # synthFN = generate_synth_audio(request.POST['trans'],fn)
+    #synthFN = settings.BASE_DIR + '/' + synthURL1
+    # synthFN = generate_synth_audio(request.POST['trans'],fn)
     # start = time.time()
     # ref_image = get_spectogram(synthFN,0,"ref_"+session_id+"_"+timezone.now().strftime('%H-%M-%S')+".png",0)
     
@@ -818,6 +817,19 @@ def store_topic(request):
 
     # aeca = AudioErrorCorrectionAttempt(error=ae)
     # aeca.save();
+    # response_data = {
+            # "ref_audio_url":ref_audio,
+            # #"ref_audio_url":synthURL1,
+            # "ref_image_url":ref_image,
+            # "hyp_audio_url":hyp_audio,
+            # "hyp_image_url":hyp_image,
+            # "hyp_length":hypLen,
+            # "ref_length":refLen,
+            # "aeca_id":aeca.id,
+            # "ae_id":ae.id,
+            # "sim":sim,
+    # }
+    # return JsonResponse(response_data)
 
     # response_data = {
             # #"ref_audio_url":ref_audio,
