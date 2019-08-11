@@ -1,0 +1,110 @@
+.class-data-row {
+
+    height: 50%;
+    /*border: 2px solid green;*/
+
+}
+
+.class-data-col {
+
+    height: 100%;
+    /*border: 2px dashed blue;*/
+
+}
+
+.end-btn-cont {
+
+    width: 100%;
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.finish-class-btns {
+
+    width: 10em;
+
+}
+
+#finishClassIconContainer {
+
+    position: absolute;
+    height: 50px;
+    width: 50px;
+    top: 0;
+    right: 0;
+    margin: 10px;
+
+}
+
+#finishClassIcon {
+
+    position: absolute;
+    height: 50px;
+    width: 50px;
+    z-index: 112;
+
+}
+
+#timeOverlayContainer {
+
+    display: none;
+    position: absolute;
+    width: 100%;
+    height: 50%;
+    left: 0;
+    bottom: 0;
+    background-color: rgba( 256, 256, 256, 1 );
+    z-index: 111;
+
+}
+
+#timeElapsedCont {
+
+    width: 100%;
+    height: 15%;
+    /*border: 2px solid black;*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+#classDataCont {
+
+    width: 100%;
+    height: 65%;
+    /*border: 2px solid red;*/
+    /*display: flex;*/
+    /*justify-content: center;*/
+    /*align-items: center;*/
+
+}
+
+#finishClassCont {
+
+    width: 100%;
+    height: 20%;
+    /*border: 2px solid black;*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+#confirmFinish {
+
+    position: absolute;
+    /*border: 2px solid green;*/
+    display: none;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+

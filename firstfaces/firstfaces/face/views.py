@@ -9,7 +9,7 @@ from .utils import *
 from .speech_to_text_utils import *
 from django.utils import timezone
 import json
-from .models import Session, Sentence, AudioFile, Profile, NewsArticle, PostTalkTimings, Test,AudioErrors,AudioErrorAttempt
+from .models import Conversation, TempSentence, AudioFile, Profile, NewsArticle, PostTalkTiming, AudioError, AudioErrorAttempt, AudioErrorCorrectionAttempt
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 import code
@@ -24,13 +24,16 @@ import math
 from django.core.mail import send_mail
 import re
 import ast
-from .praat_utils import *
-
+# from .praat_utils import *
+# from .DanUtils import *
 
 logger = logging.getLogger(__name__)
+
 # os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/johnsHDD/PhD_backup/erle-3666ad7eec71.json"
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/johnsHDD/PhD/2018_autumn/erle-3666ad7eec71.json"
-# os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/firstfaces/erle-3666ad7eec71.json"
+if settings.DEBUG:
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/johnsHDD/PhD/2018_autumn/erle-3666ad7eec71.json"
+else:
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/firstfaces/erle-3666ad7eec71.json"
 # os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/user1/Downloads/erle-3666ad7eec71.json"
 
 def out_or_in(request):
@@ -161,7 +164,7 @@ def group_data(request):
 
         for u in group_users:
 
-            sessions = Session.objects.filter( learner=u )
+            sessions = Conversation.objects.filter( learner=u )
 
             if sessions.count() != 0:
                 # get dictionary of all previous sessions
@@ -205,20 +208,20 @@ def waiting(request):
         no_live_sessions = get_number_of_current_live_sessions()
 
         # in "Monday 18:00" format
-        next_class, next_class_after_today = get_upcoming_class( availables )
-        schedule_dict[ 'upcomingClass' ] = next_class
-        schedule_dict[ 'upcomingClassAfterToday' ] = next_class_after_today
-        # check if in class or during class
-        sessions = Session.objects.filter( learner=request.user ).filter( tutorial=False )
+        next_conversation, next_conversation_after_today = get_upcoming_conversation( availables )
+        schedule_dict[ 'upcomingClass' ] = next_conversation
+        schedule_dict[ 'upcomingClassAfterToday' ] = next_conversation_after_today
+        # check if in conversation or during conversation
+        sessions = Conversation.objects.filter( learner=request.user ).filter( tutorial=False )
         # returns boolean
-        schedule_dict[ 'class_already_done_today' ] = json.dumps( get_class_already_done_today( sessions ) )
-        schedule_dict[ 'in_class_now' ], schedule_dict[ 'session_id' ] = get_in_class_now( sessions )
+        schedule_dict[ 'conversation_already_done_today' ] = json.dumps( get_conversation_already_done_today( sessions ) )
+        schedule_dict[ 'in_conversation_now' ], schedule_dict[ 'session_id' ] = get_in_conversation_now( sessions )
 
         # get dictionary of all previous sessions
         sessions_dict = get_prev_sessions( request.user )
 
         # get scores of previous tests
-        prev_test_scores = get_test_scores( request.user )
+        # prev_test_scores = get_test_scores( request.user )
 
         # check if user has completed tutorial
         user_profile = Profile.objects.get(learner=request.user)
@@ -234,7 +237,7 @@ def waiting(request):
             article_link = "#"
             news_article = False
 
-        print('prev_test_scores:', prev_test_scores)
+        # print('prev_test_scores:', prev_test_scores)
 
         context = {
 
@@ -248,19 +251,22 @@ def waiting(request):
             'article_link': article_link,
             'no_live_sessions': no_live_sessions,
             'news_article': news_article,
-            'prev_test_scores': json.dumps(prev_test_scores)
+            # 'prev_test_scores': json.dumps(prev_test_scores)
 
         }
 
         return render(request, 'face/waiting.html', context)
 
 @login_required
-def class_time(request, session_id):
+def conversation(request, session_id):
 
     try:
 
-        # when entering a class, must check that a session exists at that url e.g. 'class_time/234'. If a DoesNot
-        sess = Session.objects.get(id=session_id)
+        in_development = settings.DEBUG
+
+
+        # when entering a conversation, must check that a session exists at that url e.g. 'conversation/234'. If a DoesNot
+        sess = Conversation.objects.get(id=session_id)
         
         # if session is ended, return to waiting
         if sess.end_time == None:
@@ -287,10 +293,15 @@ def class_time(request, session_id):
                 prev_topic = None
                 prev_score = None
                 prev_emotion = None
-                first_full_class = False
+                first_full_conversation = False
                 tutorial_complete = Profile.objects.get(learner=request.user).tutorial_complete
+
+                # if first time create .wav of Tia sating 'hello {USERNAME}'
+                if not tutorial_complete:
+                    create_hello_wav(request.user.username)
+
                 try:
-                    all_sesss = Session.objects.filter(learner=request.user).exclude(end_time=None)
+                    all_sesss = Conversation.objects.filter(learner=request.user).exclude(end_time=None)
                     recent_sesss = all_sesss.filter(start_time__gte=sess.start_time-datetime.timedelta(days=30)).filter(tutorial=False).order_by('-pk')
 
                     print('recent_sesss:', recent_sesss)
@@ -302,8 +313,8 @@ def class_time(request, session_id):
                         if prev_topic == 'emotion':
                             prev_topic = 'feeling ' + prev_emotion
                         prev_score = recent_sesss[0].score
-                    else:
-                        first_full_class = True
+                    if len(all_sesss) == 1: # tutorial is one conversation
+                        first_full_conversation = True
 
                 except:
                     pass
@@ -311,6 +322,7 @@ def class_time(request, session_id):
                 blobs = 0;
                 blob_no_text = False
                 blob_no_text_sent_id = None
+                # no longer using these counts below but keep them so system doesn't break
                 interference_count = 0
                 interference_count_this_sent = 0
 
@@ -322,7 +334,7 @@ def class_time(request, session_id):
                 if sess.topic != None:
                     
                     first_enter = False
-                    this_sess_sents = Sentence.objects.filter(session=sess).order_by('pk')
+                    this_sess_sents = PermSentence.objects.filter(session=sess).order_by('pk')
 
                     #check that there are entries in the queryset i.e. not empty
                     if this_sess_sents:
@@ -356,7 +368,7 @@ def class_time(request, session_id):
                                     interference_count += 1;
 
                             # stop error on json.loads when indexes are none
-                            print(type(s.correction))
+                            # print(type(s.correction))
                             if s.indexes != None:
                                 indexes = json.loads(s.indexes)
                             else:
@@ -399,17 +411,17 @@ def class_time(request, session_id):
 
                         last_sent = sentences[id_of_last_sent]
                         
-                # check if class is over
-                class_over = False
+                # check if conversation is over
+                conversation_over = False
                 if sess.end_time != None:
-                    class_over = True
+                    conversation_over = True
 
                 prof = Profile.objects.get(learner=request.user)
                 gender = prof.gender
 
-                class_variable_dict = {
+                conversation_variables = {
 
-                    'classOver': class_over,
+                    'conversationOver': conversation_over,
                     'username': request.user.username,
                     'start_time': start_time * 1000,
                     'session_id': session_id,
@@ -429,27 +441,28 @@ def class_time(request, session_id):
                     'interference_count_this_sent': interference_count_this_sent,
                     'blobs': blobs,
                     'gender': gender,
-                    'first_full_class': first_full_class,
+                    'first_full_conversation': first_full_conversation,
                     'tutorial': sess.tutorial,
                     'tutorial_complete': tutorial_complete,
                     'endClassSequenceStarted': False,
+                    'inDevelopment': in_development
 
                 }
 
                 context = {
 
-                    'class_variable_dict': json.dumps(class_variable_dict), 
-                    'class': True, # for the navbar to know we are in class
-                    'article': article
+                    'conversation_variables': json.dumps(conversation_variables), 
+                    'conversation': True, # for the navbar to know we are in conversation
+                    'article': article,
 
                 }
 
-                return render(request, 'face/class_time.html', context)
+                return render(request, 'face/conversation/main.html', context)
             
             else:
             
-                # user is not the owner of the class
-                logger.error('\n\nerror from inside if in class_time: user is not owner of class')
+                # user is not the owner of the conversation
+                logger.error('\n\nerror from inside if in conversation: user is not owner of conversation')
                 return redirect('waiting')
         
         else:
@@ -458,9 +471,9 @@ def class_time(request, session_id):
             return redirect('waiting')
 
     # if the session doesn't exist from the url the following exception handles it by returning the user to the waiting area:
-    except Session.DoesNotExist as e:
+    except Conversation.DoesNotExist as e:
 
-        logger.error('\n\nerror from try except in class_time:' + str(e) + '\n')
+        logger.error('\n\nerror from try except in conversation:' + str(e) + '\n')
         
         return redirect('waiting')
     
@@ -473,7 +486,7 @@ def book_session(request):
     
     if user is not None:
         
-        session = Session(learner=user, start_time=time_now, tutorial=tutorial) 
+        session = Conversation(learner=user, start_time=time_now, tutorial=tutorial) 
         session.save()
 
         send_mail('Class booked by: ' + request.user.username, 'starts soon', 'ucd.erle@gmail.com', ['john.sloan.1@ucdconnect.ie'])
@@ -540,7 +553,7 @@ def store_sound_mic(request):
 def store_tutorial_end(request):
 
     session_id = request.POST['sessionID']
-    sess = Session.objects.get(pk=session_id)
+    sess = Conversation.objects.get(pk=session_id)
     sess.learner_emotion = "tutorial"
     sess.topic = "tutorial"
     time_now = timezone.now();
@@ -563,7 +576,7 @@ def store_emotion(request):
 
     emotion = request.POST['emotionID']
     session_id = request.POST['sessionID']
-    sess = Session.objects.get(pk=session_id)
+    sess = Conversation.objects.get(pk=session_id)
     sess.learner_emotion = emotion
     sess.save()
 
@@ -577,7 +590,7 @@ def store_topic(request):
 
     topic = request.POST['topic']
     session_id = request.POST['sessionID']
-    sess = Session.objects.get(pk=session_id)
+    sess = Conversation.objects.get(pk=session_id)
     sess.topic = topic
     sess.save()
 
@@ -587,149 +600,283 @@ def store_topic(request):
 
     return JsonResponse(response_data)    
 
-def store_error_blob(request):
-
-    # code.interact(local=locals());
-    blob = request.FILES['data'] 
-    startID = request.POST['start_idx']
-    #`Wsent_id = int(request.POST['blob_no_text_sent_id']) 
-    errors = json.loads(request.POST['error_list'])
-    if startID in errors.keys():
-        primaryKey = errors[startID]
-        af = AudioErrors.objects.get(pk=primaryKey)
-    else:
-        temp = AudioFile.objects.get(pk=request.POST['audio_id'])
-        af = AudioErrors(audio=temp, start_index=startID)
-        af.save()
-    sess = Session.objects.get( pk=request.POST['sessionID'] )
-    s = Sentence(learner=request.user, session=sess)
-    # Create new AudioErrorAttempt
-    filename ="error_"+str(sess.id) + "_" + str(s.id)+ "_" + timezone.now().strftime( '%H-%M-%S' )+ ".webm"
-    blob.name = filename
+# def store_error_blob(request):
+    # # code.interact(local=locals());
+    # blob = request.FILES['data'] 
+    # startID = request.POST['start_idx']
+    # #`Wsent_id = int(request.POST['blob_no_text_sent_id']) 
+    # errors = json.loads(request.POST['error_list'])
+    # if startID in errors.keys():
+        # primaryKey = errors[startID]
+        # af = AudioError.objects.get(pk=primaryKey)
+    # else:
+        # temp = AudioFile.objects.get(pk=request.POST['audio_id'])
+        # af = AudioError(audio=temp, start_index=startID)
+        # af.save()
+    # sess = Conversation.objects.get( pk=request.POST['sessionID'] )
+    # # Create new AudioErrorAttempt
+    # filename ="error_"+str(sess.id) + "_" + "_" + timezone.now().strftime( '%H-%M-%S' )+ ".webm"
+    # blob.name = filename
     
-    aea = AudioErrorAttempt(
-            error = af,
-            audio = blob,
-            correct=False,
-            )
-    aea.save()
-    trans = get_speech_recognition(filename)[0]["transcript"]
-    aea.transcript = trans
-    aea.save()
-    response_data = {
-            'error_trans':trans,
-            'attempt_pk':aea.id,
-            'error_pk':af.id,
-            'error_start':startID,
-    }
+    # aea = AudioErrorAttempt(
+            # error = af,
+            # audio = blob,
+            # correct=False,
+            # )
+    # aea.save()
+    # trans = get_speech_recognition(filename)[0]["transcript"]
+    # audio_url = "media/wav/"+filename[:-4]+"wav"
+    # audio_len = get_audio_length(settings.BASE_DIR+"/"+audio_url);
+    # aea.transcript = trans
+    # aea.save()
+    # response_data = {
+            # 'error_trans':trans,
+            # 'attempt_pk':aea.id,
+            # 'error_pk':af.id,
+            # 'error_start':startID,
+            # 'audio_url':audio_url,
+            # 'audio_len':audio_len,
+    # }
 
-    return JsonResponse(response_data) 
+    # return JsonResponse(response_data) 
 
-def error_recording_used(request):
-    att = request.POST['attempt_pk']
-    err = request.POST['error_pk']
-    trans = request.POST['trans']
+# def close_attempt(request):
+    # att = request.POST['correctio_id']
+    # err = request.POST['error_pk']
+    # aeca = AudioErrorCorrectionAttempt.objects.get(pk=att)
+    # ae = AudioError.objects.get(pk=err)
+    # ae.typed = False
+    # ae.intention = ""
+    # ae.save();
+    # aeca = AudioErrorCorrectionAttempt.objects.get(pk = request.POST['correctio_id'])
+    # clicks = request.POST['clicks']
+    # aeca.clicks = clicks
+    # aeca.save()
+    # response_data = {
 
-    ae = AudioErrors.objects.get(pk=err)
-    aea = AudioErrorAttempt.objects.get(pk=att)
-    ae.typed = False
-    ae.intention = trans
-    ae.save()
+    # }
+    # return JsonResponse(response_data) 
+
+
+# def error_recording_used(request):
+    # att = request.POST['attempt_pk']
+    # err = request.POST['error_pk']
+    # trans = request.POST['trans']
+
+    # ae = AudioError.objects.get(pk=err)
+    # aea = AudioErrorAttempt.objects.get(pk=att)
+    # ae.typed = False
+    # ae.intention = trans
+    # ae.save()
     
-    aea.correct = True
-    aea.save()
+    # aea.correct = True
+    # aea.save()
 
-    response_data = { 
+    # response_data = { 
 
-    }
-    return JsonResponse(response_data)
+    # }
+    # return JsonResponse(response_data)
 
-def error_typing_used(request):
-    startID = request.POST['start_idx']
-    errors = json.loads(request.POST['error_list'])
-    af = AudioFile.objects.get(pk=request.POST['audio_id'])
-    session_id = request.POST['sessionID']
-    #If no Audio error exists create it
-    if startID in errors.keys():
-        #AE exists
-        primaryKey = errors[startID]
-        ae = AudioErrors.objects.get(pk=primaryKey)
-    else:
-        #AE does not exist
-        ae = AudioErrors(audio=af, start_index=startID)
+# def do_allignment(request):
+    # trans= request.POST['trans']
+    # audioPath = request.POST['fn']
+    # sid = request.POST['sessionID']
+    # print('\naudioPath:', audioPath)
+    # f = open(get_text_path(sid),"w+")                                               
+    # for word in trans.split():                                                   
+        # f.write(word.lower()+"\n")                                               
+    # f.close()                                                         
+    # textPath = get_text_path(sid)                                                   
+    # extra_str = '"task_language=eng|os_task_file_format=json|is_text_type=plain"'
+    # outPath = get_out_path(sid)                                                     
+    # aeneasPath = get_aeneas_path()                                               
+    # cwd = os.getcwd()                                                            
+    # command = 'python3 -m aeneas.tools.execute_task '+ settings.BASE_DIR + '/' + audioPath+" "+textPath+" "+extra_str+" "+outPath+" >/dev/null 2>&1"            
+    # sub_proc = subprocess.Popen(command,cwd=get_aeneas_path(),shell=True,stdout=subprocess.PIPE, stderr=subprocess.PIPE)                                                                  
+    # sub_proc.wait()                                                                          
+    # response_data = {                  
+                                               
+            # }                                  
+    # return JsonResponse(response_data) 
 
-    filename = af.audio.name
-    trans = ast.literal_eval(af.alternatives)[0]["transcript"]
-    print("\t-Alligning") 
-    ## generate file for forced allignment
-    f = open(get_text_path(),"w+")
-    for word in trans.split():
-        f.write(word.lower()+"\n")
-    f.close()
-    #convert audio to wav
-    audioPath = convert_audio(filename)
-    textPath = get_text_path()
-    extra_str = '"task_language=eng|os_task_file_format=json|is_text_type=plain"'
-    outPath = get_out_path()
-    aeneasPath = get_aeneas_path()
-    cwd = os.getcwd()
+
+# def get_remaining_audio(request):
+   
+    # sid = request.POST['sessionID']
+    # ids = ast.literal_eval("["+str(request.POST['ids'])+']')
+    # poss = ast.literal_eval("["+str(request.POST['poss'])+']')
+    # paths = []
+    # lens = []
+    # count=0
+    # for i in ids:
+        # idx = i
+        # pos =  poss[count]
+        # count+=1
+        # ts = get_timestamps(pos,pos,sid)
+        # audioPath = request.POST['fn'];
+        # fn = "part_"+str(i)+"_"+timezone.now().strftime( '%H-%M-%S' )+"_aud.wav"
+        # errorPath = play_errored_text(audioPath,ts,fn)
+        # hyp_audio = ref_path(fn)
+        # lens.append(get_audio_length(settings.BASE_DIR+'/'+hyp_audio))
+        # paths.append(hyp_audio)
+    # print("\n\n",paths)
+    # response_data = {                  
+        # "paths":paths,
+        # "lens":lens,
+    # }                                  
+    # return JsonResponse(response_data) 
+
+
+# def error_typing_used(request):
+    # startID = request.POST['start_idx']
+    # errors = json.loads(request.POST['error_list'])
+    # af = AudioFile.objects.get(pk=request.POST['audio_id'])
+    # session_id = request.POST['sessionID']
+    # #If no Audio error exists create it
+
+    # if startID in errors.keys():
+        # #AE exists
+        # primaryKey = errors[startID]
+        # ae = AudioError.objects.get(pk=primaryKey)
+    # else:
+        # #AE does not exist
+        # ae = AudioError(audio=af, start_index=startID)
+
+    # filename = af.audio.name
+    # trans = ast.literal_eval(af.alternatives)[0]["transcript"]
+    # #convert audio to wav
+    # audioPath = convert_audio(filename)
+    # #Get audio
+    # start = time.time()
+    # ERR_trans = request.POST['etrans']
+    # idx = int(request.POST['first_word_id'])
     
-    #Run forced alligner
-    os.chdir(aeneasPath)
-    os.system('python3 -m aeneas.tools.execute_task '+audioPath+" "+textPath+" "+extra_str+" "+outPath+" >/dev/null 2>&1")
-    os.chdir(cwd)
-    print("\t- Cutting audio")
-    #Get audio
-    ERR_trans = request.POST['etrans']
-    idx = int(request.POST['first_word_id'])
+
+    # endid = idx + (len(ERR_trans.strip().split(" "))-1) 
     
-    print('\n\n' + str(idx) + '\n\n')
-
-    endid = idx + (len(ERR_trans.strip().split(" "))-1) 
+    # ts = get_timestamps(idx,endid, session_id)
+    # fn = request.POST['sessionID']+"_"+timezone.now().strftime( '%H-%M-%S' )+"_error.wav"
+    # errorPath = play_errored_text(audioPath,ts,fn)
+    # #cut_wav(errorPath)
     
+    # end = time.time()
+    # print("\n\nGetting Audio - ",(end-start))
+    # #Synth Audio
+    # gender = request.POST['gender']
+    # if gender == 'F':
+        # speaking_voice = 'en-GB-Wavenet-A'
+    # elif gender == 'M':
+        # speaking_voice = 'en-GB-Wavenet-B'
+    # else:
+        # speaking_voice = 'en-GB-Wavenet-A'
+    # pitch_designated = float(request.POST['pitch'])
+    # speaking_rate_designated = float(request.POST['speaking_rate'])      
 
-    ts = get_timestamps(idx,endid)
-    fn = request.POST['sessionID']+"_error.wav"
-    play_errored_text(audioPath,ts,fn)
-    print("\t-getting correct")
-    #Synth Audio
-    gender = request.POST['gender']
-    if gender == 'F':
-        speaking_voice = 'en-GB-Wavenet-A'
-    elif gender == 'M':
-        speaking_voice = 'en-GB-Wavenet-B'
-    else:
-        speaking_voice = 'en-GB-Wavenet-A'
-    print("\t\t-Stage 1")
-    pitch_designated = float(request.POST['pitch'])
-    speaking_rate_designated = float(request.POST['speaking_rate'])      
+    # client = texttospeech.TextToSpeechClient()
+    # input_text = texttospeech.types.SynthesisInput(text=request.POST['trans'])
+    # voice = texttospeech.types.VoiceSelectionParams(language_code='en-GB',name=speaking_voice)
+    # audio_config = texttospeech.types.AudioConfig(audio_encoding=texttospeech.enums.AudioEncoding.LINEAR16,pitch = pitch_designated,speaking_rate = speaking_rate_designated)
+    # try:
+        # response = client.synthesize_speech(input_text, voice, audio_config)
+        # synthURL1 = 'media/synths/session' + session_id + '_'+ 'error' + timezone.now().strftime('%H-%M-%S') + '.mp3'
+        # with open( os.path.join(settings.BASE_DIR, synthURL1 ), 'wb') as out:
+            # out.write(response.audio_content)
 
-    client = texttospeech.TextToSpeechClient()
-    input_text = texttospeech.types.SynthesisInput(text=request.POST['trans'])
-    voice = texttospeech.types.VoiceSelectionParams(language_code='en-GB',name=speaking_voice)
-    audio_config = texttospeech.types.AudioConfig(audio_encoding=texttospeech.enums.AudioEncoding.MP3,pitch = pitch_designated,speaking_rate = speaking_rate_designated)
-    try:
-        print("\t\t-1")
-        print("\t\t-",input_text)
-        print("\t\t-",voice)
-        print("\t\t-",audio_config)
-        response = client.synthesize_speech(input_text, voice, audio_config)
-        print("\t\t-2")
-        synthURL1 = 'media/synths/session' + session_id + '_'+ 'error' + '.wav'
-        print("\t\t" + synthURL1)
-        with open( os.path.join(settings.BASE_DIR, synthURL1 ), 'wb') as out:
-            out.write(response.audio_content)
-        print("\t\t-4")
-    except:  
-        synthURL1 = 'fault'
-    print("\t\t-Stage 4")
+        # synthURL1 = convert_mp3_to_wav(synthURL1)
 
-    ae.typed= True
-    ae.intention = request.POST['trans']
-    ae.save()
-    response_data = {
+    # except:  
+        # synthURL1 = 'fault'
+    
+    # #Above code works but for development is not being utilised
 
-    }
+    # synthFN = settings.BASE_DIR + '/' + synthURL1
+    # # synthFN = generate_synth_audio(request.POST['trans'],fn)
+    # start = time.time()
+    # ref_image = get_spectogram(synthFN,0,"ref_"+session_id+"_"+timezone.now().strftime('%H-%M-%S')+".png",0)
+    
+    # sim = get_sim(ERR_trans,request.POST['trans'])
+    # hin = "hyp_"+session_id+"_"+timezone.now().strftime('%H-%M-%S')+".png"
+    
+    
+    # hyp_image = get_spectogram(errorPath,sim,hin,1) 
+    # end = time.time()
+    # print("\n\nGet images - ",(end-start))
+    # start = time.time()
+    # refLen = get_audio_length(synthFN)
+    # hypLen = get_audio_length(errorPath)
+    # end = time.time()
+    # print("\n\nTime  -",(end-start))
+    # #ref_image, hyp_image = get_rel_praat_paths()
+    # #Error in naming convention
+    # hyp_audio = ref_path(fn) 
+    # ref_audio = get_hyp_audio_path(fn)
+    
+    # #create empty Audio Error Correction Attempt
+    # ae.typed= True
+    # ae.intention = request.POST['trans']
+    # ae.save()
+
+    # aeca = AudioErrorCorrectionAttempt(error=ae)
+    # aeca.save();
+
+    # response_data = {
+            # #"ref_audio_url":ref_audio,
+            # "ref_audio_url":synthURL1,
+            # "ref_image_url":ref_image,
+            # "hyp_audio_url":hyp_audio,
+            # "hyp_image_url":hyp_image,
+            # "hyp_length":hypLen,
+            # "ref_length":refLen,
+            # "aeca_id":aeca.id,
+            # "ae_id":ae.id,
+            # "sim":sim,
+    # }
+    # return JsonResponse(response_data)
+
+# def store_attempt_blob(request):
+    # blob = request.FILES['data']
+    # sess = Conversation.objects.get( pk=request.POST['sessionID'] )
+    # ae_pk = request.POST['error_pk']
+    # ae = AudioError.objects.get( pk=ae_pk )
+
+    # blob_no_text_sent_id = int(request.POST['blob_no_text_sent_id'])
+    # s = TempSentence.objects.get( pk=blob_no_text_sent_id )
+
+    # aeca = AudioErrorCorrectionAttempt.objects.get(pk = request.POST['correctio_id'])
+    # filename = str(sess.id) + "_attempt_" + str(s.id) + "_" + timezone.now().strftime( '%H-%M-%S' ) +".webm"
+    # blob.name = filename 
+    # aeca.audio = blob;
+    # clicks = request.POST['clicks']
+    # aeca.clicks = clicks
+    # aeca.save();
+    
+    # trans = get_speech_recognition(filename)[0]["transcript"]
+    # aeca.transcript = trans
+    # aeca.save()
+    # start = time.time()
+    # sim = get_sim(ae.intention,trans)
+    # end = time.time()
+    # print("\n\nSim = ",end-start,"\n")
+    # correct = False
+    # if ae.intention == trans or sim == 0:
+        # trans = ae.intention
+        # correct = True
+    # audio_url = "media/wav/"+filename[:-4]+"wav"
+    # #cut_wav(settings.BASE_DIR + '/' + audio_url)
+    # pic_name = "att_"+str(aeca.id)+".png" 
+    # pic_url = get_spectogram(settings.BASE_DIR+"/"+audio_url,sim,pic_name,1)
+    # lenAudio = get_audio_length(settings.BASE_DIR+"/"+audio_url)
+    # aeca = AudioErrorCorrectionAttempt(error=ae)
+    # aeca.save()        
+    # response_data = {
+        # "correct":correct,
+        # "audio_url":audio_url,
+        # "image_url":pic_url,
+        # "trans":trans,
+        # "att_id":aeca.id,
+        # "hypLen":lenAudio,
+        # "sim":sim,
+    # }
     return JsonResponse(response_data)
 
 def store_blob(request):
@@ -740,7 +887,7 @@ def store_blob(request):
     # get session
     blob_no_text = json.loads(request.POST['blob_no_text'])
     interference = json.loads(request.POST['interference'])
-    sess = Session.objects.get( pk=request.POST['sessionID'] )
+    sess = Conversation.objects.get( pk=request.POST['sessionID'] )
     # text_from_speech0 = request.POST['transcript0']
     # text_from_speech1 = request.POST['transcript1']
     # text_from_speech2 = request.POST['transcript2']
@@ -752,26 +899,32 @@ def store_blob(request):
     if blob_no_text:
         
         blob_no_text_sent_id = int(request.POST['blob_no_text_sent_id'])
-        s = Sentence.objects.get( pk=blob_no_text_sent_id )
+        # s = PermSentence.objects.get( pk=blob_no_text_sent_id )
+        ps = PermSentence.objects.get( pk=blob_no_text_sent_id )
 
     else:
 
-        s = Sentence(learner=request.user, session=sess)
+        ps = PermSentence(learner=request.user, session=sess)
+        ps.save()
+        s = TempSentence(pk=ps.pk, p_sentence=ps, learner=request.user, session=sess)
         s.save()
 
 
-    filename = str(sess.id) + "_" + str(s.id) + "_" + timezone.now().strftime( '%H-%M-%S' ) + ".webm" 
+    filename = str(sess.id) + "_" + str(ps.id) + "_" + timezone.now().strftime( '%H-%M-%S' ) + ".webm" 
     blob.name = filename
 
     #and then link the recording
     a = AudioFile(
-            sentence=s, 
+            sentence=ps, 
             audio=blob, 
             interference=interference,
             )
     a.save()
     # need to save the file before can acces url to use ffmpeg (in utils.py)
     alternatives = get_speech_recognition(filename)
+    audioFile = "media/wav/"+filename[:-4]+'wav'
+    audioLength = get_audio_length(settings.BASE_DIR+"/"+audioFile)
+    
     # print('transcription_list:', transcription_list)
 
     ## commented out as daniel will be doing his own thing here so wont need alignments
@@ -785,8 +938,10 @@ def store_blob(request):
     response_data = {
 
         'alternatives': alternatives,
-        'sent_id': s.id,
+        'sent_id': ps.id,
         'audio_pk':a.id,
+        'audio_file':audioFile,
+        'audio_length':audioLength,
     }
 
     return JsonResponse(response_data)    
@@ -798,7 +953,7 @@ def tts(request):
     session_id = request.GET['sessionID']
     pitch_designated = float(request.GET['pitch'])
     speaking_rate_designated = float(request.GET['speaking_rate'])
-    caller = request.GET['caller']
+    # caller = request.GET['caller']
     blob_no_text = json.loads(request.GET['blob_no_text'])
     blob_no_text_sent_id = request.GET['blob_no_text_sent_id']
     try:
@@ -823,8 +978,7 @@ def tts(request):
     client = texttospeech.TextToSpeechClient()
     input_text = texttospeech.types.SynthesisInput(text=text)
 
-    # Note: the voice can also be specified by name.
-    # Names of voices can be retrieved with client.list_voices().
+    # Note: the voice can also be specified by name.  # Names of voices can be retrieved with client.list_voices().  
     voice = texttospeech.types.VoiceSelectionParams(
         language_code='en-GB',
         name=speaking_voice
@@ -840,8 +994,8 @@ def tts(request):
     try:
         response = client.synthesize_speech(input_text, voice, audio_config)
 
-        # don't need to keep all synths for class. Remember to delete this when session ends.
-        synthURL = 'media/synths/session' + session_id # + '_' + str(int(time.mktime((timezone.now()).timetuple()))) + '.wav'
+        # don't need to keep all synths for conversation. Remember to delete this when session ends.
+        synthURL = 'media/synths/session' + session_id + '.wav' # + '_' + str(int(time.mktime((timezone.now()).timetuple()))) + '.wav'
         with open( os.path.join(settings.BASE_DIR, synthURL ), 'wb') as out:
             out.write(response.audio_content)
     except:
@@ -861,26 +1015,14 @@ def store_sent(request):
 
     time_now = timezone.now();
 
-    # don't need with new data storage in list
-    # def buffer_text( raw ) :
-
-        # #add a space at beginning and period at end if needed.
-        
-        # stripped = raw.strip()
-        
-        # # buffered left
-        # buff = " " + stripped
-
-        # # buffered right
-        # if buff[-1] not in ['.', '?', '!']:
-            # buff += "."
-        
-        # # remove multiple spaces
-        # buff = re.sub(' +', ' ', buff)
-
-        # return buff
-
     sentence_text = request.POST['sent']
+
+    # change string to padded list
+    sentence_list = [' ']
+    for w in sentence_text.split():
+        sentence_list.append(w)
+        sentence_list.append(' ')
+    sentence_list = json.dumps(sentence_list)
 
     # q = json.loads(request.POST['isItQ'])
     #code.interact(local=locals());
@@ -889,19 +1031,28 @@ def store_sent(request):
     # get session
     blob_no_text = json.loads(request.POST['blob_no_text'])
     blob_no_text_sent_id = request.POST['blob_no_text_sent_id']
-    sess = Session.objects.get(pk=int(request.POST['sessionID']))
+    sess = Conversation.objects.get(pk=int(request.POST['sessionID']))
 
     # if very first attempt or new sent then need to create empty sentence
     if blob_no_text:
 
-        s = Sentence.objects.get( pk=blob_no_text_sent_id )
-        s.sentence = sentence_text
+        s = TempSentence.objects.get( pk=blob_no_text_sent_id )
+        s.sentence = sentence_list
         s.sentence_timestamp = time_now
         s.save()
 
+        ps = PermSentence.objects.get( pk=blob_no_text_sent_id )
+        ps.sentence = sentence_list
+        ps.sentence_timestamp = time_now
+        ps.save()
+
     else:
     
-        s = Sentence(learner=request.user, session=sess, sentence=sentence_text, sentence_timestamp=timezone.now())
+        ps = PermSentence(learner=request.user, session=sess, sentence=sentence_list, sentence_timestamp=timezone.now())
+        ps.sentence_timestamp = time_now
+        ps.save()
+
+        s = TempSentence(pk=ps.pk, p_sentence=ps, learner=request.user, session=sess, sentence=sentence_list, sentence_timestamp=timezone.now())
         s.sentence_timestamp = time_now
         s.save()
 
@@ -919,7 +1070,7 @@ def timings(request):
 
     # code.interact(local=locals());
     sent_id = int(request.GET['sent_id'])
-    sent = Sentence.objects.get(pk=sent_id)
+    sent = PermSentence.objects.get(pk=sent_id)
     timings = json.loads(request.GET['timing_dict'])
 
     t = PostTalkTimings.objects.create(sentence=sent, timings=timings)
@@ -935,7 +1086,8 @@ def timings(request):
 def check_judgement(request):
 
     sent_id = int(request.GET['sentId'])
-
+    sess_id = int(request.GET['sessId'])
+    synth_url = ""
     count = 0;
     while True:
 
@@ -943,12 +1095,49 @@ def check_judgement(request):
         time.sleep(1)
         count += 1
 
-        s_new = Sentence.objects.get(pk=sent_id)
-        
+        s_new = TempSentence.objects.get(pk=sent_id)
+        tia_to_say = None
+
         if s_new.judgement != None:
 
-            received_judgement = True
-            break
+            if s_new.judgement in ["C", "X"]:
+                
+                received_judgement = True
+                break
+
+            elif s_new.judgement == "P":
+
+                if s_new.prompt != None:
+                    tia_to_say = s_new.prompt
+                    synth_url = get_tia_tts_for_prompts_early(tia_to_say, sess_id)
+                    received_judgement = True
+                    break
+
+            else:
+
+                if s_new.judgement in ["M", "B", "P"]:
+                
+                    if s_new.indexes != None or s_new.prompt != None:
+
+                        tia_to_say = get_text(json.loads(s_new.sentence), s_new.judgement, s_new.prompt, json.loads(s_new.indexes))
+                        synth_url = get_tia_tts_for_prompts_early(tia_to_say, sess_id)
+                        print('synth_url:', synth_url)
+                        received_judgement = True
+                        break
+
+                elif s_new.judgement == 'D': 
+
+                    tia_to_say = "I'm sorry, but I don't understand what you mean. Could you say that sentence in a different way?"
+                    synth_url = "media/prePreparedTiaPhrases/im_sorry_but_i_dont_understand_what_you_mean.wav"
+                    received_judgement = True
+                    break
+
+                elif s_new.judgement == '3': 
+
+                    tia_to_say = "There are more than 3 errors in your sentence. Please simplify and try again"
+                    synth_url = "media/prePreparedTiaPhrases/more_than_three_errors.wav"
+                    received_judgement = True
+                    break
 
         elif count == 10:
 
@@ -971,6 +1160,8 @@ def check_judgement(request):
         'nodSpeed': float(s_new.nodSpeed),
         'show_correction': s_new.show_correction,
         'receivedJudgement': received_judgement,
+        'synthURL': synth_url,
+        'tiaToSay': tia_to_say,
     }
 
     response_data = {
@@ -981,61 +1172,61 @@ def check_judgement(request):
 
     return JsonResponse(response_data)    
 
-def check_prompt_indexes(request):
+# def check_prompt_indexes(request):
 
-    sent_id = int(request.GET['sentId'])
+    # sent_id = int(request.GET['sentId'])
 
-    received_prompt_n_ind = False
+    # received_prompt_n_ind = False
 
-    # p_count = 0;
-    # while True:
+    # # p_count = 0;
+    # # while True:
 
-        # print('in while loop')
-        # time.sleep(1)
-        # p_count += 1
+        # # print('in while loop')
+        # # time.sleep(1)
+        # # p_count += 1
 
-    s_new = Sentence.objects.get(pk=sent_id)
+    # s_new = TempSentence.objects.get(pk=sent_id)
     
-    if s_new.judgement == "B":
+    # if s_new.judgement == "B":
 
-        if s_new.indexes != None:
+        # if s_new.indexes != None:
 
-            received_prompt_n_ind = True
-            # break
+            # received_prompt_n_ind = True
+            # # break
 
-    elif s_new.judgement == "P":
+    # elif s_new.judgement == "P":
 
-        if s_new.prompt != None:
+        # if s_new.prompt != None:
 
-            received_prompt_n_ind = True
-            # break
+            # received_prompt_n_ind = True
+            # # break
 
-    elif s_new.judgement == "M":
+    # elif s_new.judgement == "M":
 
-        if s_new.indexes != None:
+        # if s_new.indexes != None:
 
-            received_prompt_n_ind = True
-            # break
+            # received_prompt_n_ind = True
+            # # break
 
-        # elif p_count == 10:
+        # # elif p_count == 10:
 
-            # received_prompt_n_ind = False
-            # break
+            # # received_prompt_n_ind = False
+            # # break
 
-    sent_meta = {
-        'sent_id': s_new.id,
-        'indexes': s_new.indexes,
-        'prompt': s_new.prompt,
-        'receivedPromptNIndexes': received_prompt_n_ind,
-    }
+    # sent_meta = {
+        # 'sent_id': s_new.id,
+        # 'indexes': s_new.indexes,
+        # 'prompt': s_new.prompt,
+        # 'receivedPromptNIndexes': received_prompt_n_ind,
+    # }
 
-    response_data = {
+    # response_data = {
 
-        'sent_meta': sent_meta,
+        # 'sent_meta': sent_meta,
 
-    }
+    # }
 
-    return JsonResponse(response_data)    
+    # return JsonResponse(response_data)    
 
 def delete_session(request):
 
@@ -1043,7 +1234,7 @@ def delete_session(request):
 
         session_id = int(request.GET['sessId'])
 
-        sess = Session.objects.get(pk=session_id)
+        sess = Conversation.objects.get(pk=session_id)
         sess.delete()
 
     except:
@@ -1055,24 +1246,26 @@ def delete_session(request):
     }
 
     return JsonResponse(response_data)    
-def store_class_over(request):
+def store_conversation_over(request):
 
     session_id = int(request.GET['sessId'])
 
-    print('in store_class_over')
+    # print('in store_conversation_over')
 
-    scores = get_scores( session_id )
-    score = math.floor(min(100, sum(scores)))
+    # scores = get_scores( session_id )
+    # score = math.floor(min(100, sum(scores)))
+
+    delete_sentences_from_temp_db(session_id)
 
     time_now = timezone.now();
-    sess = Session.objects.get(pk=session_id)
+    sess = Conversation.objects.get(pk=session_id)
     sess.end_time = time_now
-    sess.score = score
+    # sess.score = score
     sess.save()
 
     response_data = {
 
-        'score': score,
+        # 'score': score,
 
     }
 
@@ -1086,7 +1279,7 @@ def wait_for_correction(request):
 
         # time.sleep(2)
 
-    sent_new = Sentence.objects.get(pk=sent_id)
+    sent_new = TempSentence.objects.get(pk=sent_id)
         
         # if sent_new.correction != '':
 
@@ -1125,9 +1318,12 @@ def store_judgement(request):
     # code.interact(local=locals());
 
     sent_id = int(sent_meta['sent_id'])
-    sent = Sentence.objects.get(pk=sent_id)
+    sent = TempSentence.objects.get(pk=sent_id)
+    p_sent = PermSentence.objects.get(pk=sent_id)
     sent.judgement = sent_meta['judgement']
+    p_sent.judgement = sent_meta['judgement']
     sent.judgement_timestamp = time_now
+    p_sent.judgement_timestamp = time_now
     # sent.indexes = sent_meta['indexes']
     # sent.prompt = sent_meta['prompt']
 
@@ -1139,10 +1335,17 @@ def store_judgement(request):
         sent.nodSpeed = sent_meta['nodSpeed']
         sent.surprise = sent_meta['surprise']
 
+        p_sent.emotion = str(sent_meta['emotion'])
+        p_sent.nod = sent_meta['nod']
+        p_sent.nodAmount = sent_meta['nodAmount']
+        p_sent.nodSpeed = sent_meta['nodSpeed']
+        p_sent.surprise = sent_meta['surprise']
+    
     sent.save()
+    p_sent.save()
 
     #need to update to get the corrent bloody timestamp for judgement, HUMPH!
-    updated_sent = Sentence.objects.get(pk=sent_id)
+    updated_sent = TempSentence.objects.get(pk=sent_id)
     # need to add timestamp
     sent_meta[ "judgement_timestamp" ] = int(time.mktime((updated_sent.judgement_timestamp).timetuple()))
 
@@ -1164,17 +1367,23 @@ def store_prompt(request):
     
     print('promptText:', prompt)
     print('wrongIndexes:', wrongIndexes)
-    sent = Sentence.objects.get(pk=sent_id)
+    sent = TempSentence.objects.get(pk=sent_id)
     sent.prompt = prompt
     sent.prompt_timestamp = time_now
     sent.indexes = wrongIndexes
 
+    p_sent = PermSentence.objects.get(pk=sent_id)
+    p_sent.prompt = prompt
+    p_sent.prompt_timestamp = time_now
+    p_sent.indexes = wrongIndexes
+
     # code.interact(local=locals());
 
     sent.save()
+    p_sent.save()
 
     #need to update to get the corrent bloody timestamp for judgement, HUMPH!
-    # updated_sent = Sentence.objects.get(pk=sent_id)
+    # updated_sent = TempSentence.objects.get(pk=sent_id)
     # need to add timestamp
     # sent_meta[ "judgement_timestamp" ] = int(time.mktime((updated_sent.judgement_timestamp).timetuple()))
 
@@ -1194,8 +1403,12 @@ def store_correction(request):
     sent_meta = json.loads( request.POST['sentMeta'] )
     
     sent_id = int(sent_meta['sent_id'])
-    sent = Sentence.objects.get(pk=sent_id)
+    sent = TempSentence.objects.get(pk=sent_id)
     sent.indexes = sent_meta['indexes']
+
+    p_sent = PermSentence.objects.get(pk=sent_id)
+    p_sent.indexes = sent_meta['indexes']
+    
     corrections_list = sent_meta['correction'].split('\n')
     new_corrections_list = []
     for cor in corrections_list:
@@ -1210,10 +1423,15 @@ def store_correction(request):
 
     sent.correction = json.dumps( new_corrections_list )
     sent.correction_timestamp = time_now
+
+    p_sent.correction = json.dumps( new_corrections_list )
+    p_sent.correction_timestamp = time_now
+    
     sent.save()
+    p_sent.save()
 
     # need to update to get the corrent bloody timestamp for correction, HUMPH!
-    updated_sent = Sentence.objects.get(pk=sent_id)
+    updated_sent = TempSentence.objects.get(pk=sent_id)
     # need to add timestamp
     sent_meta[ 'correction_timestamp' ] = int(time.mktime((updated_sent.correction_timestamp).timetuple()))
     sent_meta[ 'correction' ] = updated_sent.correction
@@ -1232,10 +1450,15 @@ def store_whats_wrong(request):
     time_now = timezone.now();
 
     # code.interact(local=locals());
-    sent = Sentence.objects.get(pk=sent_id)
+    sent = TempSentence.objects.get(pk=sent_id)
     sent.whats_wrong = True
     sent.whats_wrong_timestamp = time_now
     sent.save()
+
+    p_sent = PermSentence.objects.get(pk=sent_id)
+    p_sent.whats_wrong = True
+    p_sent.whats_wrong_timestamp = time_now
+    p_sent.save()
 
     response_data = {
     }
@@ -1248,10 +1471,15 @@ def store_try_again(request):
     time_now = timezone.now();
 
     # code.interact(local=locals());
-    sent = Sentence.objects.get(pk=sent_id)
+    sent = TempSentence.objects.get(pk=sent_id)
     sent.try_again = True
     sent.try_again_timestamp = time_now
     sent.save()
+
+    p_sent = PermSentence.objects.get(pk=sent_id)
+    p_sent.try_again = True
+    p_sent.try_again_timestamp = time_now
+    p_sent.save()
 
     response_data = {
     }
@@ -1264,10 +1492,15 @@ def store_next_sentence(request):
     time_now = timezone.now();
 
     # code.interact(local=locals());
-    sent = Sentence.objects.get(pk=sent_id)
+    sent = TempSentence.objects.get(pk=sent_id)
     sent.next_sentence = True
     sent.next_sentence_timestamp = time_now
     sent.save()
+
+    p_sent = TempSentence.objects.get(pk=sent_id)
+    p_sent.next_sentence = True
+    p_sent.next_sentence_timestamp = time_now
+    p_sent.save()
 
     response_data = {
     }
@@ -1280,10 +1513,15 @@ def store_show_correction(request):
     time_now = timezone.now();
 
     # code.interact(local=locals());
-    sent = Sentence.objects.get(pk=sent_id)
+    sent = TempSentence.objects.get(pk=sent_id)
     sent.show_correction = True
     sent.show_correction_timestamp = time_now
     sent.save()
+
+    p_sent = PermSentence.objects.get(pk=sent_id)
+    p_sent.show_correction = True
+    p_sent.show_correction_timestamp = time_now
+    p_sent.save()
 
     response_data = {
 
@@ -1299,7 +1537,7 @@ def check_for_change(request):
     # get ids of sentences which have blobs but no sentences
     time_now_minus_3s = timezone.now() - datetime.timedelta(seconds=3)
     time_now_minus_10 = timezone.now() - datetime.timedelta(minutes=300)
-    # sentences_with_blobs_but_nosentences_ids = [s.id for s in Sentence.objects.filter(created_at__gte=time_now_minus_10).filter(sentence=None)]
+    # sentences_with_blobs_but_nosentences_ids = [s.id for s in TempSentence.objects.filter(created_at__gte=time_now_minus_10).filter(sentence=None)]
     # print('sentences_with_blobs_but_nosentences_ids:', sentences_with_blobs_but_nosentences_ids)
 
     # check that sents awaiting maybe urgent update have had their 'whats wrong' or 'try again/next sentence' buttons clicked 
@@ -1323,16 +1561,16 @@ def check_for_change(request):
 
                 # return True
     
-        if Sentence.objects.count() > prev_sentences_count:
+        if TempSentence.objects.count() > prev_sentences_count:
 
-            # no_new_sents = Sentence.objects.count() - prev_sentences_count
-            # Sentences.objects.filter(created_at__gte=time_now_minus_3s).order_by('-pk')[:no_new_sents]
+            # no_new_sents = TempSentence.objects.count() - prev_sentences_count
+            # TempSentences.objects.filter(created_at__gte=time_now_minus_3s).order_by('-pk')[:no_new_sents]
 
             return True
 
         else:
             
-            sentences_within_3s = Sentence.objects.filter(sentence_timestamp__gte=time_now_minus_3s)
+            sentences_within_3s = TempSentence.objects.filter(sentence_timestamp__gte=time_now_minus_3s)
 
             if len(sentences_within_3s) != 0:
 
@@ -1369,148 +1607,148 @@ def update_session_object(request):
 
     return JsonResponse(response_data)    
 
-def add_transcription_choice_view(request):
+# def add_transcription_choice_view(request):
 
-    # code.interact(local=locals());
-    blob_no_text_sent_id = request.GET['blob_no_text_sent_id']
-    choice = request.GET['choice']
+    # # code.interact(local=locals());
+    # blob_no_text_sent_id = request.GET['blob_no_text_sent_id']
+    # choice = request.GET['choice']
 
-    s = Sentence.objects.get(pk=int(blob_no_text_sent_id))
-    a = AudioFile.objects.filter(sentence=s).latest('pk')
+    # s = TempSentence.objects.get(pk=int(blob_no_text_sent_id))
+    # a = AudioFile.objects.filter(sentence=s).latest('pk')
     
-    time_now = int(time.mktime((timezone.now()).timetuple()))
+    # time_now = int(time.mktime((timezone.now()).timetuple()))
 
-    if len(a.clicks) < 1700:
+    # if len(a.clicks) < 1700:
 
-        clicks_already = json.loads(a.clicks)
-        clicks_already.append( [choice, time_now] )
+        # clicks_already = json.loads(a.clicks)
+        # clicks_already.append( [choice, time_now] )
 
-        a.clicks = json.dumps(clicks_already)
-        a.save();
+        # a.clicks = json.dumps(clicks_already)
+        # a.save();
     
-    response_data = {
+    # response_data = {
 
-    }
+    # }
 
-    return JsonResponse(response_data)    
+    # return JsonResponse(response_data)    
 
-def add_listen_synth_data(request):
+# def add_listen_synth_data(request):
 
-    # code.interact(local=locals());
-    blob_no_text = json.loads(request.GET['blob_no_text'])
-    blob_no_text_sent_id = request.GET['blob_no_text_sent_id']
-    session_id = int(request.GET['sessId'])
-    diffSent = request.GET['diffSent']
-    transcriptCur = request.GET['transcriptCur']
-    listenTranscript = json.loads(request.GET['listenTranscript'])
-    repeat = json.loads(request.GET['repeat'])
+    # # code.interact(local=locals());
+    # blob_no_text = json.loads(request.GET['blob_no_text'])
+    # blob_no_text_sent_id = request.GET['blob_no_text_sent_id']
+    # session_id = int(request.GET['sessId'])
+    # diffSent = request.GET['diffSent']
+    # transcriptCur = request.GET['transcriptCur']
+    # listenTranscript = json.loads(request.GET['listenTranscript'])
+    # repeat = json.loads(request.GET['repeat'])
 
-    if blob_no_text:
-        s = Sentence.objects.get(pk=int(blob_no_text_sent_id))
-        a = AudioFile.objects.filter(sentence=s).latest('pk')
-        clicks_already = json.loads( a.clicks )
-    else:
-        sess = Session.objects.get(pk=int(session_id))
-        s = Sentence(learner=request.user, session=sess)
-        s.save()
-        a = AudioFile(sentence=s)
-        clicks_already = []
+    # if blob_no_text:
+        # s = TempSentence.objects.get(pk=int(blob_no_text_sent_id))
+        # a = AudioFile.objects.filter(sentence=s).latest('pk')
+        # clicks_already = json.loads( a.clicks )
+    # else:
+        # sess = Conversation.objects.get(pk=int(session_id))
+        # s = TempSentence(learner=request.user, session=sess)
+        # s.save()
+        # a = AudioFile(sentence=s)
+        # clicks_already = []
 
-    #don't store it if too long
-    if len(a.clicks) < 1700:
-        clicks_already = []
+    # #don't store it if too long
+    # if len(a.clicks) < 1700:
+        # clicks_already = []
 
-    #don't store it if too long
-    if len(a.clicks) < 1700:
+    # #don't store it if too long
+    # if len(a.clicks) < 1700:
 
-        time_now = int(time.mktime((timezone.now()).timetuple()))
+        # time_now = int(time.mktime((timezone.now()).timetuple()))
 
-        #if it's a repeat
-        if json.loads( request.GET['repeat'] ):
+        # #if it's a repeat
+        # if json.loads( request.GET['repeat'] ):
 
-            clicks_already.append( ['r', time_now] )
+            # clicks_already.append( ['r', time_now] )
 
-        else:
+        # else:
 
-            if listenTranscript:
+            # if listenTranscript:
 
-                clicks_already.append( [transcriptCur + 's', time_now] )
+                # clicks_already.append( [transcriptCur + 's', time_now] )
 
-            else:
+            # else:
 
-                clicks_already.append( [diffSent, time_now] )
+                # clicks_already.append( [diffSent, time_now] )
 
-        a.clicks = json.dumps(clicks_already)
-        a.save();
+        # a.clicks = json.dumps(clicks_already)
+        # a.save();
 
-    response_data = {
+    # response_data = {
 
-        'sent_id': s.id,
+        # 'sent_id': s.id,
 
-    }
+    # }
 
-    return JsonResponse(response_data)    
+    # return JsonResponse(response_data)    
 
-def add_voice_data(request):
+# def add_voice_data(request):
 
-    # code.interact(local=locals());
-    blob_no_text_sent_id = request.GET['blob_no_text_sent_id']
-    transcriptCur = request.GET['transcriptCur']
+    # # code.interact(local=locals());
+    # blob_no_text_sent_id = request.GET['blob_no_text_sent_id']
+    # transcript = request.GET['transcript']
 
-    s = Sentence.objects.get(pk=int(blob_no_text_sent_id))
-    a = AudioFile.objects.filter(sentence=s).latest('pk')
+    # s = TempSentence.objects.get(pk=int(blob_no_text_sent_id))
+    # a = AudioFile.objects.filter(sentence=s).latest('pk')
 
-    #don't store it if too long
-    if len(a.clicks) < 1700:
+    # #don't store it if too long
+    # if len(a.clicks) < 1700:
 
-        clicks_already = json.loads( a.clicks )
+        # clicks_already = json.loads( a.clicks )
 
-        time_now = int(time.mktime((timezone.now()).timetuple()))
+        # time_now = int(time.mktime((timezone.now()).timetuple()))
 
-        clicks_already.append( [transcriptCur + 'v', time_now] )
+        # clicks_already.append( [transcript + 'v', time_now] )
 
-        a.clicks = json.dumps(clicks_already)
-        a.save();
+        # a.clicks = json.dumps(clicks_already)
+        # a.save();
 
-    response_data = {
+    # response_data = {
 
-        'sent_id': s.id,
+        # 'sent_id': s.id,
 
-    }
+    # }
 
-    return JsonResponse(response_data)    
+    # return JsonResponse(response_data)    
 
-def store_test_begin(request):
+# def store_test_begin(request):
 
-    time_now = timezone.now();
+    # time_now = timezone.now();
 
-    # code.interact(local=locals());
-    test = Test.objects.create(learner=request.user, started_at=time_now)
+    # # code.interact(local=locals());
+    # test = Test.objects.create(learner=request.user, started_at=time_now)
 
-    response_data = {
-    }
+    # response_data = {
+    # }
 
-    return JsonResponse(response_data)    
+    # return JsonResponse(response_data)    
 
-def store_test_score(request):
+# def store_test_score(request):
 
-    time_now = timezone.now();
+    # time_now = timezone.now();
 
-    # code.interact(local=locals());
-    test = Test.objects.filter(learner=request.user).latest('pk');
-    test.score = request.GET['test_score']
-    test.finished_at = time_now
-    test.save()
+    # # code.interact(local=locals());
+    # test = Test.objects.filter(learner=request.user).latest('pk');
+    # test.score = request.GET['test_score']
+    # test.finished_at = time_now
+    # test.save()
 
-    finish_time = int(time.mktime((test.finished_at).timetuple()))
+    # finish_time = int(time.mktime((test.finished_at).timetuple()))
 
-    response_data = {
+    # response_data = {
 
-        'finishTime': finish_time 
+        # 'finishTime': finish_time 
 
-    }
+    # }
 
-    return JsonResponse(response_data)    
+    # return JsonResponse(response_data)    
 
 
 

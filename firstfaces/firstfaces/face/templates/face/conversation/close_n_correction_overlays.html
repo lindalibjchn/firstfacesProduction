@@ -1,0 +1,182 @@
+{% load static %}
+
+<div id="closeOverlayArea"></div>
+
+<div id="correctionOverlay" class="w3-row">
+
+     <div class="w3-col l8 m12 s12" id="overlayHolder"> 
+         
+         <div id="centeredError">
+             
+             <div id="centeredErrorHolder">
+                 
+                 <div id="moveText">
+                     
+                     <span id="centeredErrorText" class="big-text">Error</span>  
+                 
+                 </div>        
+             
+             </div>
+
+            <div id="topCent">
+                
+                <div id="topCentHolder">
+                    
+                    <span id="topCentText" class="big-text">Error</span>
+                
+                </div>
+            
+            </div>
+            
+            <div id="bottomCent" contentEditable="true" class="big-text"></div>
+
+        </div>
+
+        <div id="praatCont">
+            
+            <div id="praatContHolder">
+                
+                <div id ="btnCont">   
+                    
+                    <center>
+                        
+                    <div id="refBtn" class="img-btn">
+                        
+                        <img id="refImg" src="" class="spec-img">
+                        
+                        <div class="text-layer" onclick="">
+                            
+                            <span id="refText" class="big-text">TEST</span>
+                        
+                        </div>
+                        
+                        <div id="refInvisible" class="invisible-layer"></div>
+                    
+                    </div>
+                    
+                    <div id="hypBtn" class="img-btn">
+                        
+                        <center>
+                            
+                            <img src="" id="hypImg" class="spec-img"></center>
+                    
+                        <div id="hypTextLayer" class="text-layer big-text" onclick="">
+                            
+                            <span id="hypText"> TEST</span>    
+                        
+                        </div>
+                    
+                        <div id="hypInvisible" class="invisible-layer"></div>
+                    
+                    </div>
+                    
+                    <div id="sliderHolder">
+                        
+                        <input type="range" min="0" max="80" value="80" id="myRange" class="slider">
+                        
+                        <span id="sliderVal">100%</span>
+                    
+                    </div>
+                
+                    </center>
+
+                </div>
+            
+            </div>        
+        
+        </div>
+
+        <div id="overlayErrorBox">
+            
+            <span id="overlayErrorText">Error</span>
+        
+        </div>
+        
+        <div contentEditable="true" id="overlayTextBox">
+            
+            <span id="typeHereOverlay">Type Here!</span>
+        
+        </div>
+        
+        <div id="overlayBtnBox"> 
+            
+            <div class="w3-col l2 m4 s4" id="overlayLeftBtn">
+                
+                <div class="input-btns">
+
+                    <!--<button class="w3-btn w3-circle w3-red record-btn w3-padding-small play-btn input-btn" id="closeOverlay">                                                           -->
+                        <!--<center> <i class="fa fa-angle-double-left inputfa"></i></center> -->
+                    <!--</button>-->
+                
+                    <button class="w3-btn w3-circle w3-red record-btn w3-padding-medium play-btn input-btn" id="backOverlay">                                                             
+                        
+                        <center> <i class="fa fa-angle-double-left inputfa"></i></center>
+                    
+                    </button>
+                    
+                    <button class="w3-btn w3-round w3-red record-btn w3-padding-small plasy input-btn" id="keyboardOverlay">
+                        
+                        <i class="fa fa-keyboard-o fa-lg inputfa"></i>
+                    
+                    </button> 
+                
+                </div>  
+            
+            </div>
+            
+            <div id="overlayCentreBtn" class="w3-col l2 m4 s4">
+                
+                <div class="input-btns">
+                    
+                    <button id="reRecordBtn" class="w3-btn w3-circle w3-pink record-btn w3-padding-medium plasy input-btn">
+
+                        <i class="fa fa-microphone inputfa"></i>
+                        
+                    </button>
+
+                    <button id="stopRecordBtn" class="w3-btn w3-circle w3-yellow record-btn w3-padding-medium plasy input-btn">                                                               
+                        
+                        <i class="fa fa-stop inputfa"></i>
+                        
+                    </button>  
+
+                </div>
+            
+            </div>
+            
+            <div class="w3-col l2 m4 s4" id="overlayRightBtn">
+                
+                <div class="input-btns">
+                    
+                    <button id="submitOverlay" class="w3-btn w3-circle w3-green record-btn w3-padding-medium plasy input-btn">            
+
+                        <center> <i class="fa fa-check fa-sm inputfa"></i></center>     
+
+                   </button>
+                    
+                   <button class="w3-btn w3-circle w3-green record-btn w3-padding-medium plasy input-btn" id="exitOverlay"> 
+
+                        <center> <i class="fa fa-minus-circle inputfa"></i></center>                
+                   </button>                                                                 
+
+                   <button id="spectrogramBtn" class="w3-btn w3-green w3-round record-btn w3-padding-small plasy input-btn">                                                                 
+
+                        <img id="spectrogramBtnImage" src="{% static 'face/images/spectrogramButton.png' %}">
+                        <div id="textBtnCont">
+                            
+                            <center> <i class="fa fa-angle-double-right inputfa"></i></center> 
+                        
+                        </div>
+                    
+                    </button>
+
+                </div>
+                
+            </div>
+                
+        </div>
+
+    </div>
+
+</div>
+

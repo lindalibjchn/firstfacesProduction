@@ -115,7 +115,7 @@ function updateSentenceObjects() {
             if ( sessions[ key ].sentences[ 0 ] !== undefined ) {
 
                 // push all unjudged sentences to their own array
-                if ( sessions[ key ].sentences[ 0 ].judgement === null && sessions[ key ].sentences[ 0 ].sentence !== null) {
+                if ( sessions[ key ].sentences[ 0 ].judgement === null && sessions[ key ].sentences[ 0 ].sentence.length !== 0) {
 
                     sentencesNeedJudgement.push( sessions[ key ].sentences[0] );
 

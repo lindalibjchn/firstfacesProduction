@@ -4,6 +4,16 @@ import os
 from django.conf import settings
 import subprocess
 
+def convert_mp3_to_wav( input_url ):
+
+    input_aud_loc = os.path.join(settings.BASE_DIR, input_url)
+    output_rel =  os.path.join(input_url[:-3] + 'wav')
+    output_aud_loc = os.path.join(settings.BASE_DIR, input_url[:-3] + 'wav')
+    ffmpeg.input(input_aud_loc).output(output_aud_loc).run()
+    
+    return output_rel
+
+
 def get_speech_recognition( aud_file ):
 
     # loads in the speech recognition package 

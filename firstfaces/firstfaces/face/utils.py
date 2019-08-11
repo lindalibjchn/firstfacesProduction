@@ -1,5 +1,7 @@
-from .models import Available, Sentence, Session, PermSentence, PermAudioFile, Profile, PermPostTalkTimings, Test
+from .models import Available, TempSentence, Conversation, PermSentence, Profile, PostTalkTiming
+
 from django.contrib.auth.models import User
+from django.conf import settings
 import datetime
 import time
 from django.utils import timezone
@@ -7,6 +9,13 @@ from operator import itemgetter
 import math
 import json
 from django.forms.models import model_to_dict
+from google.cloud import texttospeech
+import os
+
+# os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/johnsHDD/PhD_backup/erle-3666ad7eec71.json"
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/johnsHDD/PhD/2018_autumn/erle-3666ad7eec71.json"
+# os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/firstfaces/erle-3666ad7eec71.json"
+# os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/user1/Downloads/erle-3666ad7eec71.json"
 
 def get_this_weeks_dates():
 
@@ -185,7 +194,7 @@ def get_in_class_now( sessions ):
 
 def has_user_clicked_option_btn(s_id):
 
-    sent = Sentence.objects.get(pk=s_id)
+    sent = TempSentence.objects.get(pk=s_id)
 
     if sent.try_again or sent.next_sentence or sent.whats_wrong:
 
@@ -197,7 +206,7 @@ def has_user_clicked_option_btn(s_id):
 
 # def has_user_added_sent_to_blob(s_id):
 
-    # sent = Sentence.objects.get(pk=s_id)
+    # sent = TempSentence.objects.get(pk=s_id)
 
     # print('sent_id:', s_id)
     # print('sent:', sent)
@@ -215,7 +224,7 @@ def get_number_of_current_live_sessions():
 
     print('time now:', timezone.now())
     # get all sessions currently underway
-    sessions_no_end_time = Session.objects.filter(end_time=None)
+    sessions_no_end_time = Conversation.objects.filter(end_time=None)
     remove_those_not_ended_by_user = sessions_no_end_time.filter(start_time__gte=timezone.now()-datetime.timedelta(hours=2))
     remove_tutorials = remove_those_not_ended_by_user.filter(tutorial=False)
     return remove_tutorials.count()
@@ -226,10 +235,10 @@ def fill_sessions_dict():
     sessions = {}
 
     # get all sessions currently underway
-    cur_sessions = Session.objects.filter(end_time=None)
+    cur_sessions = Conversation.objects.filter(end_time=None)
 
     # get total sentences in db in order to check later if this has increased
-    total_sentences = Sentence.objects.count()
+    total_sentences = TempSentence.objects.count()
     sessions[ 'totalSentences' ] = total_sentences
     sessions[ 'numberOf' ] = 0
     sess_id_to_username = {}
@@ -249,7 +258,7 @@ def fill_sessions_dict():
                 
 
                 # get prev sentences
-                this_sess_sents = Sentence.objects.filter(session=s)
+                this_sess_sents = TempSentence.objects.filter(session=s)
                 sents = []
 
                 for sent in this_sess_sents:
@@ -305,99 +314,108 @@ def fill_sessions_dict():
 
     return sessions
 
-def get_scores( sess_id ):
+def delete_sentences_from_temp_db(sess_id): 
 
-    sess = Session.objects.get(pk=sess_id)
-    sentences = Sentence.objects.filter(session=sess).order_by('pk')
+    sess = Conversation.objects.get(pk=sess_id)
+    sentences = TempSentence.objects.filter(session=sess).order_by('pk')
+    
+    for s in sentences:
+        TempSentence.objects.get(pk=s.pk).delete()
 
-    save_to_perm_db( sentences )
 
-    no_sentences = len( sentences )
+# def get_scores( sess_id ):
 
-    if no_sentences == 0:
-        return [0,0,0]
+    # sess = Conversation.objects.get(pk=sess_id)
+    # sentences = TempSentence.objects.filter(session=sess).order_by('pk')
 
-    correct_sentences = [s for s in sentences if s.judgement in ['C', 'B', 'P']]
+    # save_to_perm_db( sentences )
 
-    print('correct_sentences:', correct_sentences);
+    # no_sentences = len( sentences )
 
-    no_correct_sentences = len(correct_sentences)
+    # if no_sentences == 0:
+        # return [0,0,0]
 
-    if no_correct_sentences == 0:
-        return [0,0,0]
+    # correct_sentences = [s for s in sentences if s.judgement in ['C', 'B', 'P']]
 
-    no_incorrect_sentences = no_sentences - no_correct_sentences
+    # print('correct_sentences:', correct_sentences);
 
-    ratio_correct = len(correct_sentences) / no_sentences
+    # no_correct_sentences = len(correct_sentences)
 
-    av_correct_sent_length = sum([len(c_s.sentence.split()) for c_s in correct_sentences]) / no_correct_sentences
-    av_correct_sent_length = min(10, av_correct_sent_length)
+    # if no_correct_sentences == 0:
+        # return [0,0,0]
 
-    emotion_amounts = []
-    for e_s in correct_sentences:
+    # no_incorrect_sentences = no_sentences - no_correct_sentences
 
-        emotion_list = json.loads(e_s.emotion)
-        emotion_amounts.append(math.sqrt(emotion_list[0]**2 + emotion_list[1]**2))
+    # ratio_correct = len(correct_sentences) / no_sentences
 
-    av_correct_emotion = sum(emotion_amounts) / no_correct_sentences
+    # av_correct_sent_length = sum([len(c_s.sentence.split()) for c_s in correct_sentences]) / no_correct_sentences
+    # av_correct_sent_length = min(10, av_correct_sent_length)
 
-    ratio_successful_try_again = 0
-    if no_incorrect_sentences != 0:
-        # try again - if use try again and get it right - bonus points!
-        successful_try_again_count = 0
-        for i, t_s in enumerate(sentences):
+    # emotion_amounts = []
+    # for e_s in correct_sentences:
+
+        # emotion_list = json.loads(e_s.emotion)
+        # emotion_amounts.append(math.sqrt(emotion_list[0]**2 + emotion_list[1]**2))
+
+    # av_correct_emotion = sum(emotion_amounts) / no_correct_sentences
+
+    # ratio_successful_try_again = 0
+    # if no_incorrect_sentences != 0:
+        # # try again - if use try again and get it right - bonus points!
+        # successful_try_again_count = 0
+        # for i, t_s in enumerate(sentences):
             
-            if i != 0:
+            # if i != 0:
 
-                if t_s.judgement in ['C', 'B', 'P']:
+                # if t_s.judgement in ['C', 'B', 'P']:
 
-                    if sentences[i-1].try_again:
+                    # if sentences[i-1].try_again:
 
-                        successful_try_again_count += 1
+                        # successful_try_again_count += 1
         
-        ratio_successful_try_again = successful_try_again_count / no_incorrect_sentences
+        # ratio_successful_try_again = successful_try_again_count / no_incorrect_sentences
 
-    raw_score = ratio_correct * av_correct_sent_length * 10;
-    try_again_bonus = math.ceil(ratio_successful_try_again * 5)
-    emotion_bonus = math.ceil(av_correct_emotion * 5)
+    # raw_score = ratio_correct * av_correct_sent_length * 10;
+    # try_again_bonus = math.ceil(ratio_successful_try_again * 5)
+    # emotion_bonus = math.ceil(av_correct_emotion * 5)
 
-    print('raw score in utils:', raw_score)
+    # print('raw score in utils:', raw_score)
 
-    return [raw_score, try_again_bonus, emotion_bonus]
+    # return [raw_score, try_again_bonus, emotion_bonus]
         
-def save_to_perm_db( sents_tbcopied ):
+# def save_to_perm_db( sents_tbcopied ):
 
-    for s in sents_tbcopied:
+    # for s in sents_tbcopied:
 
-        # print('\n\nsent_tbcopied:', s)
+        # # print('\n\nsent_tbcopied:', s)
 
-        s_dict = model_to_dict( s )
-        s_dict['learner'] = s.learner
-        s_dict['session'] = s.session
-        del(s_dict['id'])
-        ps = PermSentence.objects.create(**s_dict)
+        # s_dict = model_to_dict( s )
+        # s_dict['learner'] = s.learner
+        # s_dict['session'] = s.session
+        # del(s_dict['id'])
+        # ps = PermSentence.objects.create(**s_dict)
 
-        # change audio files over to PermSentence
-        audiofile_set = s.audiofile_set.all().order_by('-pk')
-        for a in audiofile_set.reverse():
-            pa = PermAudioFile.objects.create(sentence=ps, transcription0=a.transcription0, transcription1=a.transcription1, transcription2=a.transcription2, interference=a.interference, clicks=a.clicks, audio=a.audio, created_at=a.created_at)
-            pa.save()
+        # # change audio files over to PermSentence
+        # audiofile_set = s.audiofile_set.all().order_by('-pk')
+        # for a in audiofile_set.reverse():
+            # pa = PermAudioFile.objects.create(sentence=ps, transcription0=a.transcription0, transcription1=a.transcription1, transcription2=a.transcription2, interference=a.interference, clicks=a.clicks, audio=a.audio, created_at=a.created_at)
+            # pa.save()
 
-        # change audio files over to PermSentence
-        talk_timings_set = s.posttalktimings_set.all().order_by('-pk')
-        for t in talk_timings_set.reverse():
-            pt = PermPostTalkTimings.objects.create(
-                    sentence=ps,
-                    timings=t.timings, 
-                    created_at=t.created_at
-                )
-            pt.save()
+        # # change audio files over to PermSentence
+        # talk_timings_set = s.posttalktimings_set.all().order_by('-pk')
+        # for t in talk_timings_set.reverse():
+            # pt = PostTalkTimings.objects.create(
+                    # sentence=ps,
+                    # timings=t.timings, 
+                    # created_at=t.created_at
+                # )
+            # pt.save()
 
-        Sentence.objects.get(pk=s.pk).delete()
+        # TempSentence.objects.get(pk=s.pk).delete()
 
 def get_prev_sessions( user ):
 
-    all_sessions = Session.objects.filter(learner=user)
+    all_sessions = Conversation.objects.filter(learner=user)
 
     sessions_dict = {}
 
@@ -410,7 +428,7 @@ def get_prev_sessions( user ):
 
             for s in sents:
 
-                a_s = s.permaudiofile_set.all().order_by('pk')
+                a_s = s.audiofile_set.all().order_by('pk')
                 a_s_ids = [[a.id, [a.transcription0, a.transcription1, a.transcription2], a.audio.name, json.loads(a.clicks)] for a in a_s]
 
                 sentences.append({
@@ -451,13 +469,114 @@ def check_if_username_is_unique( name ):
 
         return True
 
-def get_test_scores( u ):
+# def get_test_scores( u ):
 
-    prev_test_scores = [[int(time.mktime((t.finished_at).timetuple())), t.score] for t in Test.objects.filter(learner=u) if t.finished_at != None]
+    # prev_test_scores = [[int(time.mktime((t.finished_at).timetuple())), t.score] for t in Test.objects.filter(learner=u) if t.finished_at != None]
 
-    prev_test_scores = sorted(prev_test_scores, key=itemgetter(0))    
+    # prev_test_scores = sorted(prev_test_scores, key=itemgetter(0))    
 
-    print('prev_test_scores:', prev_test_scores)
+    # print('prev_test_scores:', prev_test_scores)
 
-    return prev_test_scores
+    # return prev_test_scores
+
+def get_text(sentence, judgement, prompt, indexes):
+
+    if judgement == "P":
+
+        tia_to_say = prompt
+
+    elif judgement == "M":
+
+        unsure_strings = " "
+
+        for i in range(len(indexes)):
+            if i != 0:
+                unsure_strings += " or "
+            unsure_word_list = []
+            for j in indexes[i]:
+                unsure_word_list.append(sentence[j])
+            unsure_strings += "'" + ''.join(unsure_word_list) + "'"
+
+        tia_to_say = "I'm not sure what you mean by" + unsure_strings + ". Could you rephrase that?"
+
+    elif judgement == "B":
+
+        better_bit = "".join([sentence[k] for k in indexes[0]])
+
+        tia_to_say = "It would be more natural to say '" + prompt + "', instead of '" + better_bit + "'"
+
+    return tia_to_say
+
+
+def get_tia_tts_for_prompts_early(text, sess_id):
+
+    speaking_voice = 'en-GB-Wavenet-C'
+
+    client = texttospeech.TextToSpeechClient()
+    input_text = texttospeech.types.SynthesisInput(text=text)
+
+    # Note: the voice can also be specified by name.
+    # Names of voices can be retrieved with client.list_voices().
+    voice = texttospeech.types.VoiceSelectionParams(
+        language_code='en-GB',
+        name=speaking_voice
+        # ssml_gender=texttospeech.enums.SsmlVoiceGender.MALE
+        )
+
+    audio_config = texttospeech.types.AudioConfig(
+        audio_encoding=texttospeech.enums.AudioEncoding.MP3,
+        pitch = 1,
+        speaking_rate = 0.9,
+        )
+
+    try:
+        response = client.synthesize_speech(input_text, voice, audio_config)
+
+
+        # don't need to keep all synths for class. Remember to delete this when session ends.
+        synthURL = 'media/synths/sess_' + str(sess_id) + '.wav' # + '_' + str(int(time.mktime((timezone.now()).timetuple())))
+        with open( os.path.join(settings.BASE_DIR, synthURL ), 'wb') as out:
+            out.write(response.audio_content)
+    except:
+        synthURL = 'fault'
+
+    return synthURL
+
+def create_hello_wav( u_name ):
+
+    speaking_voice = 'en-GB-Wavenet-C'
+
+    client = texttospeech.TextToSpeechClient()
+    input_text = texttospeech.types.SynthesisInput(text='hello ' + u_name)
+
+    # Note: the voice can also be specified by name.
+    # Names of voices can be retrieved with client.list_voices().
+    voice = texttospeech.types.VoiceSelectionParams(
+        language_code='en-GB',
+        name=speaking_voice
+        # ssml_gender=texttospeech.enums.SsmlVoiceGender.MALE
+        )
+
+    audio_config = texttospeech.types.AudioConfig(
+        audio_encoding=texttospeech.enums.AudioEncoding.MP3,
+        pitch = 1,
+        speaking_rate = 0.9,
+        )
+
+    try:
+        response = client.synthesize_speech(input_text, voice, audio_config)
+
+        # don't need to keep all synths for class. Remember to delete this when session ends.
+        synthURL = 'media/prePreparedTiaPhrases/greetings/' + u_name + '.wav'
+        print('rsynthURL:', synthURL)
+        with open( os.path.join(settings.BASE_DIR, synthURL ), 'wb') as out:
+            out.write(response.audio_content)
+    except:
+        synthURL = 'fault'
+
+
+
+
+
+
 

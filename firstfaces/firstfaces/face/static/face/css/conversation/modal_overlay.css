@@ -1,0 +1,56 @@
+#modalOverlay {
+    position:absolute;
+    width:100%;
+    height:50%;
+    bottom:0;
+    z-index:2;
+    background-color:red;
+}
+
+#modalHolder{
+    height:100%;
+    width:100%;
+    position:absolute;
+    top:0;
+}
+
+#upperModal{
+    height:38%;
+    width:100%;
+    position:absolute;
+    top:0;
+    background-color:green;
+    display: flex;                                                                           
+    align-items: center;                                                                     
+    justify-content: center;                                                                 
+}
+
+#lowerModal{
+    height:38%;
+    width:100%;
+    position:absolute;
+    top:38%;
+    background-color:yellow;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+#buttonModal{
+    height:24%;
+    width:100%;
+    position:absolute;
+    bottom:0;
+    background-color:white;
+}
+
+.sound-btn{
+
+    width:80%;
+    height:50%;
+    background-color:blue;
+    border-radius:20px;
+    display:flex;
+   
+}
+

@@ -1,0 +1,46 @@
+.prev-sents-icons {
+
+    position: absolute;
+    height: 60px;
+    width: 40px;
+
+}
+
+#prevSentsIconContainer {
+
+    position: absolute;
+    height: 50px;
+    width: 50px;
+    margin: 10px;
+    z-index: 112;
+
+}
+
+#iconDark {
+
+    display: none;
+
+}
+
+#prevSentsContainer {
+
+    display: none;
+    position: absolute;
+    width: 100%;
+    height: 50%;
+    left: 0;
+    bottom: 0;
+    background-color: rgba( 0, 0, 0, 1 );
+    z-index: 110;
+
+}
+
+#prevSents {
+
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+
+}
+

@@ -1,21 +1,22 @@
 <html>
 
+    {% load static %}
+
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>faces practice</title>
 
+        <link rel="shortcut icon" href="{% static 'favicon.ico' %}" />
+            
             <style>
 
             body { margin: 0 }
-        	canvas { width: 100%; height: 100% }
 
             </style>
 	
         </head>
 	
         <body>
-            
-            {% load static %}
             
             <!-- w3.css styling -->
             <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
@@ -43,7 +44,7 @@
             
             <!-- navbar -->
                 
-            {% if class %}
+            {% if conversation %}
 
                 <!--<div style="float: left">-->
 
@@ -74,17 +75,17 @@
 
                             <!--<a href="https://www.youtube.com/watch?v=xYNMh4sZu6k" target="_blank" class="w3-bar-item w3-button w3-hover-blue w3-ripple">instructions</a>-->
 
-                            {% if class %}
+                            <!--{% if class %}-->
                             
-                                <a href="#" id="finishClassBtn" class="w3-bar-item w3-button w3-hover-blue w3-ripple">finish</a>
+                                <!--<a href="#" id="finishClassBtn" class="w3-bar-item w3-button w3-hover-blue w3-ripple">finish</a>-->
 
-                            {% else %}
+                            <!--{% else %}-->
 
                                 <a class="w3-bar-item w3-button w3-hover-blue w3-ripple" id="tutorialBtn">tutorial</a>
 
                                 <a href="{% url 'logout' %}" class="w3-bar-item w3-button w3-hover-blue w3-ripple">logout</a>
                             
-                            {% endif %}
+                            <!--{% endif %}-->
 
                         {% else %}
 
