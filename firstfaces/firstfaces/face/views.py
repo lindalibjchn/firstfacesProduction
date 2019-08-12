@@ -16,6 +16,7 @@ import code
 #import soundfile as sf
 import os
 import time
+import string
 from operator import itemgetter
 import datetime
 import logging
@@ -24,8 +25,8 @@ import math
 from django.core.mail import send_mail
 import re
 import ast
-# from .praat_utils import *
-# from .DanUtils import *
+from .praat_utils import *
+from .DanUtils import *
 
 logger = logging.getLogger(__name__)
 
@@ -796,8 +797,8 @@ def error_typing_used(request):
     start = time.time()
     ref_image = get_spectogram(synthFN,0,"ref_"+session_id+"_"+timezone.now().strftime('%H-%M-%S')+".png",0)
     
-    # sim = get_sim(ERR_trans,request.POST['trans'])
-    # hin = "hyp_"+session_id+"_"+timezone.now().strftime('%H-%M-%S')+".png"
+    sim = get_sim(ERR_trans,request.POST['trans'])
+    hin = "hyp_"+session_id+"_"+timezone.now().strftime('%H-%M-%S')+".png"
     
     
     hyp_image = get_spectogram(errorPath,sim,hin,1) 
@@ -830,6 +831,7 @@ def error_typing_used(request):
     return JsonResponse(response_data)
 
 def store_attempt_blob(request):
+    translator = str.maketrans('', '', string.punctuation)
     blob = request.FILES['data']
     sess = Conversation.objects.get( pk=request.POST['sessionID'] )
     ae_pk = request.POST['error_pk']
@@ -847,12 +849,14 @@ def store_attempt_blob(request):
     aeca.save();
     
     trans = get_speech_recognition(filename)[0]["transcript"]
+    trans = trans.translate(translator)
+    temp = ae.intention.translate(translator)
     aeca.transcript = trans
     aeca.save()
-    sim = get_sim(ae.intention,trans)
+    sim = get_sim(temp,trans)
     end = time.time()
     correct = False
-    if ae.intention == trans or sim == 0:
+    if temp == trans or sim == 0:
         trans = ae.intention
         correct = True
     audio_url = "media/wav/"+filename[:-4]+"wav"
