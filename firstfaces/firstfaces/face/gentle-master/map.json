@@ -1,0 +1,254 @@
+{
+  "transcript": "for\nthe\n20th\ntime\nthat\nevening\nbut\ntwo\nmen\nshake\nhands\n",
+  "words": [
+    {
+      "alignedWord": "for",
+      "case": "success",
+      "end": 0.72,
+      "endOffset": 3,
+      "phones": [
+        {
+          "duration": 0.18,
+          "phone": "f_B"
+        },
+        {
+          "duration": 0.07,
+          "phone": "ao_I"
+        },
+        {
+          "duration": 0.08,
+          "phone": "r_E"
+        }
+      ],
+      "start": 0.39,
+      "startOffset": 0,
+      "word": "for"
+    },
+    {
+      "alignedWord": "the",
+      "case": "success",
+      "end": 0.85,
+      "endOffset": 7,
+      "phones": [
+        {
+          "duration": 0.05,
+          "phone": "dh_B"
+        },
+        {
+          "duration": 0.08,
+          "phone": "ah_E"
+        }
+      ],
+      "start": 0.72,
+      "startOffset": 4,
+      "word": "the"
+    },
+    {
+      "alignedWord": "<unk>",
+      "case": "success",
+      "end": 1.4100000000000001,
+      "endOffset": 12,
+      "phones": [
+        {
+          "duration": 0.56,
+          "phone": "oov_S"
+        }
+      ],
+      "start": 0.85,
+      "startOffset": 8,
+      "word": "20th"
+    },
+    {
+      "alignedWord": "time",
+      "case": "success",
+      "end": 2.0,
+      "endOffset": 17,
+      "phones": [
+        {
+          "duration": 0.1,
+          "phone": "t_B"
+        },
+        {
+          "duration": 0.26,
+          "phone": "ay_I"
+        },
+        {
+          "duration": 0.18,
+          "phone": "m_E"
+        }
+      ],
+      "start": 1.46,
+      "startOffset": 13,
+      "word": "time"
+    },
+    {
+      "alignedWord": "that",
+      "case": "success",
+      "end": 2.3400000000000003,
+      "endOffset": 22,
+      "phones": [
+        {
+          "duration": 0.06,
+          "phone": "dh_B"
+        },
+        {
+          "duration": 0.1,
+          "phone": "ae_I"
+        },
+        {
+          "duration": 0.04,
+          "phone": "t_E"
+        }
+      ],
+      "start": 2.14,
+      "startOffset": 18,
+      "word": "that"
+    },
+    {
+      "alignedWord": "evening",
+      "case": "success",
+      "end": 2.88,
+      "endOffset": 30,
+      "phones": [
+        {
+          "duration": 0.14,
+          "phone": "iy_B"
+        },
+        {
+          "duration": 0.07,
+          "phone": "v_I"
+        },
+        {
+          "duration": 0.04,
+          "phone": "n_I"
+        },
+        {
+          "duration": 0.07,
+          "phone": "ih_I"
+        },
+        {
+          "duration": 0.17,
+          "phone": "ng_E"
+        }
+      ],
+      "start": 2.39,
+      "startOffset": 23,
+      "word": "evening"
+    },
+    {
+      "alignedWord": "but",
+      "case": "success",
+      "end": 3.39,
+      "endOffset": 34,
+      "phones": [
+        {
+          "duration": 0.07,
+          "phone": "b_B"
+        },
+        {
+          "duration": 0.06,
+          "phone": "ah_I"
+        },
+        {
+          "duration": 0.06,
+          "phone": "t_E"
+        }
+      ],
+      "start": 3.2,
+      "startOffset": 31,
+      "word": "but"
+    },
+    {
+      "alignedWord": "two",
+      "case": "success",
+      "end": 3.6300000000000003,
+      "endOffset": 38,
+      "phones": [
+        {
+          "duration": 0.08,
+          "phone": "t_B"
+        },
+        {
+          "duration": 0.12,
+          "phone": "uw_E"
+        }
+      ],
+      "start": 3.43,
+      "startOffset": 35,
+      "word": "two"
+    },
+    {
+      "alignedWord": "men",
+      "case": "success",
+      "end": 4.02,
+      "endOffset": 42,
+      "phones": [
+        {
+          "duration": 0.09,
+          "phone": "m_B"
+        },
+        {
+          "duration": 0.13,
+          "phone": "eh_I"
+        },
+        {
+          "duration": 0.17,
+          "phone": "n_E"
+        }
+      ],
+      "start": 3.63,
+      "startOffset": 39,
+      "word": "men"
+    },
+    {
+      "alignedWord": "shake",
+      "case": "success",
+      "end": 4.62,
+      "endOffset": 48,
+      "phones": [
+        {
+          "duration": 0.27,
+          "phone": "sh_B"
+        },
+        {
+          "duration": 0.06,
+          "phone": "ey_I"
+        },
+        {
+          "duration": 0.18,
+          "phone": "k_E"
+        }
+      ],
+      "start": 4.11,
+      "startOffset": 43,
+      "word": "shake"
+    },
+    {
+      "alignedWord": "hands",
+      "case": "success",
+      "end": 5.260000000000001,
+      "endOffset": 54,
+      "phones": [
+        {
+          "duration": 0.1,
+          "phone": "hh_B"
+        },
+        {
+          "duration": 0.16,
+          "phone": "ae_I"
+        },
+        {
+          "duration": 0.09,
+          "phone": "n_I"
+        },
+        {
+          "duration": 0.18,
+          "phone": "z_E"
+        }
+      ],
+      "start": 4.73,
+      "startOffset": 49,
+      "word": "hands"
+    }
+  ]
+}

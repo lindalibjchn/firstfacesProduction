@@ -1,4 +1,3 @@
-
 function set_selectable(trans){
    selected = [];
    var words = trans.split(" ");
@@ -184,9 +183,9 @@ $('#bottomCent').keyup(function(event){
 
     }
     else if($('#bottomCent').text().trim().length <= 25 && $('centeredErrorText').text().trim().length <= 25){
-        $('#centeredErrorText').removeClass().addClass('bigText'); 
-        $('#topCentText').removeClass().addClass('bigText');       
-        $('#bottomCent').removeClass().addClass('bigText');        
+        $('#centeredErrorText').removeClass().addClass('big-text'); 
+        $('#topCentText').removeClass().addClass('big-text');       
+        $('#bottomCent').removeClass().addClass('big-text');        
     }
 
 });
@@ -406,7 +405,7 @@ $('#backCorrection').click(function(){
 
 
 $('#closeOverlayArea').click(function(){
-   if(conversationVariables.stage2 || classVariables.stage3){
+   if(conversationVariables.stage2 || conversationVariables.stage3){
    if(conversationVariables.correctionDone){
         undoCorrect();
    }
@@ -549,10 +548,11 @@ function sendAttemptBlob( new_blob ){
             movementController( movements.blank, '0.5', '1' );
           
             setTimeout( function(){
-
+                
                 $('#reRecordBtn').show();
                 $('#backOverlay').show();
                 $("#reRecordBtn").prop( "disabled", false );
+                $('#backOverlay').prop("disabled",false);
                 if(json.trans.trim() != ""){
                 document.getElementById("hypImg").src = "http://127.0.0.1:8000/"+json.image_url;
                 $("#hypText").text(json.trans);
@@ -588,7 +588,8 @@ function sendAttemptBlob( new_blob ){
                     
                 }
                 else{
-                    var sim = parseFloat(json.sim);                
+                    var sim = parseFloat(json.sim);
+                    alert(sim);
                     incorrect_attempt();
                     setTimeout(function(){
                         if(sim <= 0.15){                                          
@@ -616,8 +617,6 @@ function sendAttemptBlob( new_blob ){
             else{
                 dealWithBlankTranscription();   
                 conversationVariables.noTransError = true;
-                $('#backOverlay').prop('disabled',"false");
-                classVariables.noTransError = true;
                 $('#backOverlay').prop('disabled',false);
             }
             conversationVariables.correctionAttemptID = json.att_id; 
@@ -685,7 +684,7 @@ function sendErrorBlobToServer( new_blob ){
                 moveText();
                 setTimeout(function(){
                     $('#bottomCent').text(json['error_trans']);
-                    $("#bottomCent").attr("contenteditable","false");
+                    $("#bottomCent").attr("contenteditable",false);
 
                     $("#submitOverlay").show();
                     $("#reRecordBtn").show();                                                        
@@ -926,7 +925,7 @@ function submitRecording(){
         contentType: false,
         success: function(json){
             doneError();                                  
-                                                          
+            unmoveText();                                                 
             $('#backCorrection').prop("disabled",false);  
             $('#talkBtn').prop("disabled",false);         
 
@@ -939,11 +938,12 @@ function submitRecording(){
 
 function correct_attempt(){
     var middle = $('#refBtn').offset().top;
+    $('#reRecordBtn').hide(); 
     var bottom = $('#hypBtn').offset().top;
     $('#sliderHolder').css('visibility','hidden');
     var diff = (bottom-middle)/2;
     conversationVariables.animationDistance = diff;
-    $('#refImg').hide();
+    $('#refTextLayer').hide();   
     $('#hypTextLayer').hide();
 
     $('#refBtn').animate({top:'+='+diff+"px"});
@@ -961,14 +961,16 @@ function correct_attempt(){
     conversationVariables.correctionDone = true;
    
     //disable mic
-    $('#reRecordBtn').fadeOut(800);
+    $('#reRecordBtn').hide();
     setTimeout(function(){
     //show submit
+    $('#reRecordBtn').hide();
     $('#sliderHolder').css('visibility','visible');
     $('#submitOverlay').show();
     $("#submitOverlay").off("click");                                                
     $("#submitOverlay").click(submitCorrect);
     $('#backCorrection').prop("disabled",false);
+    $('#backOverlay').prop("disabled",false);
     },3500);
 }
 
@@ -978,7 +980,7 @@ function incorrect_attempt(){
     $('#sliderHolder').css('visibility','hidden');
     var diff = (bottom-middle)/2;
     disableBtns();
-    $('#refImg').hide();
+    $('#refTextLayer').hide();
     $('#hypTextLayer').hide();
 
     $('#refBtn').animate({top:'+='+diff+"px"});
@@ -993,7 +995,7 @@ function incorrect_attempt(){
     },1700);
 
     setTimeout(function(){
-        $("#refImg").fadeIn(800);
+        $("#refTextLayer").fadeIn(800);
         $("#hypTextLayer").fadeIn(800);
         enableBtns();
         $('#sliderHolder').css('visibility','visible');
@@ -1003,8 +1005,8 @@ function incorrect_attempt(){
 
 
 function submitCorrect(){
-    document.getElementById('audio_'+classVariables.startIDX).src = document.getElementById('hypAudio').src;
-    $('#audio_'+classVariables.startIDX).attr('duration',classVariables.hypLenOriginal);
+    document.getElementById('audio_'+conversationVariables.startIDX).src = document.getElementById('hypAudio').src;
+    $('#audio_'+conversationVariables.startIDX).attr('duration',conversationVariables.hypLenOriginal);
     doneError();
 
     $('#backCorrection').prop("disabled",false);
@@ -1014,6 +1016,7 @@ function submitCorrect(){
 
 function undoCorrect(){
     $('#refBtn').show();
+    $('#refTextLayer').show();
     $('#refBtn').animate({top:'-='+conversationVariables.animationDistance+"px"});         
     $('#hypBtn').animate({top:'+='+conversationVariables.animationDistance+"px"});
     $('#refImg').show();                                                             
