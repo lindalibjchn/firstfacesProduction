@@ -646,7 +646,6 @@ function tapKeyFull() {
 
                     // this one is for after listening to the learners speech - Daniel's stuff
                     } else {
-                        
                         if(!conversationVariables.stage2 && !conversationVariables.stage3){
 
                         $('.play-btn').prop( "disabled", false);
