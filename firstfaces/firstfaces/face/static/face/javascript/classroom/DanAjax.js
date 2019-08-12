@@ -69,9 +69,18 @@ $('#forwardErrorSelection').click(function(){
             newTran.push(curStr);
             classes.push("uncorrected-error");
         }else{
-            newTran.push(words[i]);
+            var curStr = '';                     
+            while(!selected.includes(i) && i < words.length){         
+                curStr = curStr + words[i] + " ";
+                i = i+1;                         
+            }                                    
+            newTran.push(curStr);             
             classes.push("normal-word");
-            i = i+1;
+            console.log(i);
+
+            //newTran.push(words[i]);
+            //classes.push("normal-word");
+            //i = i+1;
         }
         
     }
@@ -690,12 +699,12 @@ function sendErrorBlobToServer( new_blob ){
                 $("#submitOverlay").off("click");
                 $("#submitOverlay").click(submitRecording);
                 //make textbox not editable
-                $("#overlayTextBox").attr("contenteditable","false");
+                $("#overlayTextBox").attr("contenteditable",false);
                 //save last transcription into class
            }else {
                dealWithBlankTranscription();
                classVariables.noTransError = true;
-               $('#backOverlay').prop('disabled',"false");
+               $('#backOverlay').prop('disabled',false);
                $("#reRecordBtn").show().prop( "disabled", false );
                $("#keyboardOverlay").show();
            }
@@ -992,6 +1001,8 @@ function incorrect_attempt(){
 
 
 function submitCorrect(){
+    document.getElementById('audio_'+classVariables.startIDX).src = document.getElementById('hypAudio').src;
+    $('#audio_'+classVariables.startIDX).attr('duration',classVariables.hypLenOriginal);
     doneError();
 
     $('#backCorrection').prop("disabled",false);

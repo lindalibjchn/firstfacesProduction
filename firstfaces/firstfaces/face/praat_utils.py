@@ -85,8 +85,8 @@ def load_json(sid):
 def get_timestamps(startIDX,endIDX,sid):
     data = load_json(sid)
     print("\n\n",startIDX," ",endIDX,"\n\n\n")
-    start = float(data['fragments'][startIDX]['begin'])
-    end = float(data['fragments'][endIDX]['end'])
+    start = float(data['words'][startIDX]['start'])
+    end = float(data['words'][endIDX]['end'])
     return start*1000,end*1000
 
 def play_errored_text(wav_path,timestamp,filename):

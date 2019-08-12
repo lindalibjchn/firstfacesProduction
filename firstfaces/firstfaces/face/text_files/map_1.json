@@ -1,54 +1,49 @@
 {
- "fragments": [
-  {
-   "begin": "0.000",
-   "children": [],
-   "end": "1.760",
-   "id": "f000001",
-   "language": "eng",
-   "lines": [
-    "1"
-   ]
-  },
-  {
-   "begin": "1.760",
-   "children": [],
-   "end": "2.280",
-   "id": "f000002",
-   "language": "eng",
-   "lines": [
-    "and"
-   ]
-  },
-  {
-   "begin": "2.280",
-   "children": [],
-   "end": "3.000",
-   "id": "f000003",
-   "language": "eng",
-   "lines": [
-    "2"
-   ]
-  },
-  {
-   "begin": "3.000",
-   "children": [],
-   "end": "4.080",
-   "id": "f000004",
-   "language": "eng",
-   "lines": [
-    "and"
-   ]
-  },
-  {
-   "begin": "4.080",
-   "children": [],
-   "end": "4.120",
-   "id": "f000005",
-   "language": "eng",
-   "lines": [
-    "3"
-   ]
-  }
- ]
+  "transcript": "1\nand\n2\n",
+  "words": [
+    {
+      "alignedWord": "<unk>",
+      "case": "success",
+      "end": 4.26,
+      "endOffset": 1,
+      "phones": [
+        {
+          "duration": 0.36,
+          "phone": "oov_S"
+        }
+      ],
+      "start": 3.9,
+      "startOffset": 0,
+      "word": "1"
+    },
+    {
+      "alignedWord": "and",
+      "case": "success",
+      "end": 4.29,
+      "endOffset": 5,
+      "phones": [
+        {
+          "duration": 0.01,
+          "phone": "ah_B"
+        },
+        {
+          "duration": 0.01,
+          "phone": "n_I"
+        },
+        {
+          "duration": 0.01,
+          "phone": "d_E"
+        }
+      ],
+      "start": 4.26,
+      "startOffset": 2,
+      "word": "and"
+    },
+    {
+      "case": "not-found-in-audio",
+      "endOffset": 7,
+      "startOffset": 6,
+      "word": "2"
+    }
+  ]
 }

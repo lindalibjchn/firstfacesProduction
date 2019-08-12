@@ -177,7 +177,17 @@ function correctID(id){
 function getRemainingAudio(){
     let fd = new FormData();  
     fd.append("ids",classVariables.correct_audio);
-    fd.append("poss", correctids(classVariables.correct_audio));
+    var audio_ends = [];
+    var i;
+    var new_ids = correctids(classVariables.correct_audio);
+    
+    for(i=0;i<new_ids.length;i++){
+        var val = $('#upper_'+classVariables.correct_audio[i]).text().trim().split(" ").length;
+        val = val - 1;
+        audio_ends.push(new_ids[i]+val);
+    }
+    fd.append('ends',audio_ends);
+    fd.append("poss",new_ids);
     fd.append("fn", classVariables.Aud_Fname);
     fd.append('sessionID',classVariables.session_id);
     $.ajax({                     

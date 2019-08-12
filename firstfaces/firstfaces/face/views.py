@@ -691,8 +691,12 @@ def do_allignment(request):
     outPath = get_out_path(sid)                                                     
     aeneasPath = get_aeneas_path()                                               
     cwd = os.getcwd()                                                            
-    command = 'python3 -m aeneas.tools.execute_task '+ settings.BASE_DIR + '/' + audioPath+" "+textPath+" "+extra_str+" "+outPath+" >/dev/null 2>&1"            
-    sub_proc = subprocess.Popen(command,cwd=get_aeneas_path(),shell=True,stdout=subprocess.PIPE, stderr=subprocess.PIPE)                                                                  
+    #command = 'python3 -m aeneas.tools.execute_task '+ settings.BASE_DIR + '/' + audioPath+" "+textPath+" "+extra_str+" "+outPath+" >/dev/null 2>&1"   
+    command = 'python3 align.py '+settings.BASE_DIR + '/'+audioPath+' '+' '+textPath+" -o "+outPath
+    wd = settings.BASE_DIR+'/face/gentle-master/'
+    #ython3 align.py ../../media/wav/1_338_13-14-47.wav ../text_files/allign_1.txt  -o map.json
+    #sub_proc = subprocess.Popen(command,cwd=get_aeneas_path(),shell=True,stdout=subprocess.PIPE, stderr=subprocess.PIPE)   
+    sub_proc = subprocess.Popen(command.split(),cwd=wd)
     sub_proc.wait()                                                                          
     response_data = {                  
                                                
@@ -700,19 +704,20 @@ def do_allignment(request):
     return JsonResponse(response_data) 
 
 
-def get_remaining_audio(request):
-   
+def get_remaining_audio(request): 
     sid = request.POST['sessionID']
     ids = ast.literal_eval("["+str(request.POST['ids'])+']')
     poss = ast.literal_eval("["+str(request.POST['poss'])+']')
+    ends = ast.literal_eval("["+str(request.POST['ends'])+"]")
     paths = []
     lens = []
     count=0
     for i in ids:
         idx = i
         pos =  poss[count]
+        end =  ends[count]
         count+=1
-        ts = get_timestamps(pos,pos,sid)
+        ts = get_timestamps(pos,end,sid)
         audioPath = request.POST['fn'];
         fn = "part_"+str(i)+"_"+timezone.now().strftime( '%H-%M-%S' )+"_aud.wav"
         errorPath = play_errored_text(audioPath,ts,fn)
@@ -769,28 +774,28 @@ def error_typing_used(request):
         speaking_voice = 'en-GB-Wavenet-B'
     else:
         speaking_voice = 'en-GB-Wavenet-A'
-    #pitch_designated = float(request.POST['pitch'])
-    #speaking_rate_designated = float(request.POST['speaking_rate'])      
+    pitch_designated = float(request.POST['pitch'])
+    speaking_rate_designated = float(request.POST['speaking_rate'])      
 
-    #client = texttospeech.TextToSpeechClient()
-    #input_text = texttospeech.types.SynthesisInput(text=request.POST['trans'])
-    #voice = texttospeech.types.VoiceSelectionParams(language_code='en-GB',name=speaking_voice)
-    #audio_config = texttospeech.types.AudioConfig(audio_encoding=texttospeech.enums.AudioEncoding.LINEAR16,pitch = pitch_designated,speaking_rate = speaking_rate_designated)
-    #try:
-        #response = client.synthesize_speech(input_text, voice, audio_config)
-        #synthURL1 = 'media/synths/session' + session_id + '_'+ 'error' + timezone.now().strftime('%H-%M-%S') + '.mp3'
-        #with open( os.path.join(settings.BASE_DIR, synthURL1 ), 'wb') as out:
-            #out.write(response.audio_content)
+    client = texttospeech.TextToSpeechClient()
+    input_text = texttospeech.types.SynthesisInput(text=request.POST['trans'])
+    voice = texttospeech.types.VoiceSelectionParams(language_code='en-GB',name=speaking_voice)
+    audio_config = texttospeech.types.AudioConfig(audio_encoding=texttospeech.enums.AudioEncoding.LINEAR16,pitch = pitch_designated,speaking_rate = speaking_rate_designated)
+    try:
+        response = client.synthesize_speech(input_text, voice, audio_config)
+        synthURL1 = 'media/synths/session' + session_id + '_'+ 'error' + timezone.now().strftime('%H-%M-%S') + '.mp3'
+        with open( os.path.join(settings.BASE_DIR, synthURL1 ), 'wb') as out:
+            out.write(response.audio_content)
 
-        #synthURL1 = convert_mp3_to_wav(synthURL1)
+        synthURL1 = convert_mp3_to_wav(synthURL1)
 
-    #except:  
-        #synthURL1 = 'fault'
+    except:  
+        synthURL1 = 'fault'
     
     #Above code works but for development is not being utilised
 
-    #synthFN = settings.BASE_DIR + '/' + synthURL1
-    synthFN = generate_synth_audio(request.POST['trans'],fn)
+    synthFN = settings.BASE_DIR + '/' + synthURL1
+    #synthFN = generate_synth_audio(request.POST['trans'],fn)
     start = time.time()
     ref_image = get_spectogram(synthFN,0,"ref_"+session_id+"_"+timezone.now().strftime('%H-%M-%S')+".png",0)
     
@@ -820,8 +825,8 @@ def error_typing_used(request):
     aeca.save();
 
     response_data = {
-            "ref_audio_url":ref_audio,
-            #"ref_audio_url":synthURL1,
+            #"ref_audio_url":ref_audio,
+            "ref_audio_url":synthURL1,
             "ref_image_url":ref_image,
             "hyp_audio_url":hyp_audio,
             "hyp_image_url":hyp_image,

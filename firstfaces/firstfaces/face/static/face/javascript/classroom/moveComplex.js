@@ -633,7 +633,6 @@ function tapKeyFull() {
                         showCorrectionUnderWrongSent();
 
                     } else if ( classVariables.showingSpectrograms ) {
-
                         classVariables.showingSpectrograms = false;
                         $("#praatCont").fadeIn(800);
                         setTimeout(function(){
@@ -645,7 +644,6 @@ function tapKeyFull() {
 
                     // this one is for after listening to the learners speech - Daniel's stuff
                     } else {
-                        
                         if(!classVariables.stage2 && !classVariables.stage3){
 
                         $('.play-btn').prop( "disabled", false);
