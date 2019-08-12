@@ -11,22 +11,6 @@ $(window).on( 'load', function() {
     conversationVariables.playspeed=1.0;
 });
 
-//function resetTranscripts() {
-
-    //synthesisObject.recordedSectionCount = 0;
-    //synthesisObject.transcript0 = "";
-    //synthesisObject.transcript1 = "";
-    //synthesisObject.transcript2 = "";
-
-//}
-
-//var recognition// put here so can call in clipping occurs
-var recorder15sTimeout;
-var mediaRecorder;
-var chunks;
-var record;
-var stop;
-var aud;
 function readyBtns() {
  
     //resetTranscripts();

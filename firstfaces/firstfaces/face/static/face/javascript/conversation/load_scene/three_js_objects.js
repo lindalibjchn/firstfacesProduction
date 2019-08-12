@@ -43,7 +43,7 @@ function addTia() {
 
     function addBody( geom, mat ) {
 
-        //// load the materials for the skin and jumper. Only need 2 materials but JSON has all.
+        // load the materials for the skin and jumper. Only need 2 materials but JSON has all.
         mat[0].skinning = true;
         mat[1].skinning = true;
         mat[0].morphtargets = true;
@@ -51,19 +51,8 @@ function addTia() {
 
         tiaObject.mBody = new THREE.SkinnedMesh( geom, mat );
        
-        function getRandomColorForTiasClothes() {
-
-            let n = Math.floor(new Date()/8.64e7).toString()
-            let randIntChangeEveryDay = n[n.length-1]
-            let randIntChangeEveryTenDays = n[n.length-2]
-            let randTwoNumberString = randIntChangeEveryDay + randIntChangeEveryTenDays
-            let hexCol = "0x" + randTwoNumberString + randTwoNumberString + randTwoNumberString;
-
-            return hexCol
-
-        }
-
-        let tiaClothesColour = getRandomColorForTiasClothes()
+        let randTwoNumberString = randStrIntChangeEveryDay + randStrIntChangeEveryTenDays
+        let tiaClothesColour = "0x" + randTwoNumberString + randTwoNumberString + randTwoNumberString;
         mat[0].color.setHex( tiaClothesColour );
 
         // iterate over the bones in the JSON file and put them into the global bodyBones object. Call bones with bodyBones["<bone name>"] 
@@ -81,7 +70,6 @@ function addTia() {
 
     function addFace( geom, mat ) {
 
-        console.log(' in addface ');
         // load the materials for the skin, lips and eyebrows
         mat[0].skinning = true;
         mat[1].skinning = true;
@@ -89,31 +77,6 @@ function addTia() {
         mat[0].morphtargets = true;
         mat[1].morphtargets = true;
         mat[2].morphtargets = true;
-
-        //function componentToHex(c) {
-            //var hex = c.toString(16);
-            //return hex.length == 1 ? "0" + hex : hex;
-        //}
-
-        //function rgbToHex(r, g, b) {
-            //return "0x" + componentToHex(r) + componentToHex(g) + componentToHex(b);
-        //}
-
-        //function randLipstickRGBGenerator() {
-            //let randRed = 200 + Math.floor( Math.random() * 55 );
-            //let randGreen = 90 + Math.floor( Math.random() * 100 );
-            //let randBlue = 100 + Math.floor( Math.random() * 70 );
-
-            //return [ randRed, randGreen, randBlue ]
-        //}
-
-        //let randLipstickRGB = randLipstickRGBGenerator();
-        //console.log( 'randLipstickRGB:', randLipstickRGB );
-
-        //let randLipstickHex = rgbToHex( randLipstickRGB[0], randLipstickRGB[1], randLipstickRGB[2] );
-
-        //mat[1].color.setHex( randLipstickHex );
-        //console.log( 'randLipstickHex:', randLipstickHex );
 
         tiaObject.mFace = new THREE.SkinnedMesh( geom, mat );
 
@@ -134,8 +97,6 @@ function addTia() {
 
     function addMouth( geom, mat ) {
 
-        console.log(' in addMouth ');
-        // load the materials for the skin, lips and eyebrows
         mat[0].skinning = true;
         mat[1].skinning = true;
         mat[0].morphtargets = true;
@@ -206,9 +167,25 @@ function addTia() {
         engineRunning();
 
     }
-        
-    let randBody = [ body, body00, body01, body02, body03 ][ Math.floor( Math.random() * 5 ) ]
-    loader.load( randBody, addBody);    
+    
+    // for change in clothes and color
+    function getTwoRandomIntsBasedOnDate() {
+
+        let n = Math.floor(new Date()/8.64e7).toString()
+        let changeEveryDay = n[n.length-1]
+        let changeEveryTenDays = n[n.length-2]
+
+        return [ changeEveryDay, changeEveryTenDays ];
+
+    }
+
+    let randStrInts = getTwoRandomIntsBasedOnDate();
+    let randStrIntChangeEveryDay = randStrInts[ 0 ];
+    let randStrIntChangeEveryTenDays = randStrInts[ 1 ];
+    
+    let randBody = [ body, body00, body01, body02, body03, body, body00, body01, body02, body03][ parseInt( randStrIntChangeEveryDay ) ];
+    
+    loader.load( randBody, addBody );    
 
 }
 
@@ -272,16 +249,9 @@ function engineRunning() {
     setBaseExpressionsMovements(); // do this after all of Tia is loaded
     animate();
     blinkControllerObject.bool = true;
-    expressionController( expressionObject.abs.neutral, 0.1 );
-    movementController( movements.blank, 0.1, 0.1)
+    expressionController( expressionObject.abs.neutral, 0.01 );
+    movementController( movements.blank, 0.01, 0.01)
     enterOrReEnter();
-    //if ( conversationVariables.tutorial === false ) {
-
-        //showTimeRemaining();
-        ////showQuestionStreak();
-
-    //}
-
 
     setTimeout( function() {
         
