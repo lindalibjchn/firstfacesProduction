@@ -58,7 +58,7 @@ function blinkController() {
 
             // call the show time remaining to reload it and keep it up to pace
             
-            //if ( classVariables.tutorial === false ) {
+            //if ( conversationVariables.tutorial === false ) {
 
                 //showTimeRemaining();
     

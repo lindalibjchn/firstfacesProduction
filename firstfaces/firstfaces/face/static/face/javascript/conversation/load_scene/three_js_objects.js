@@ -1,107 +1,3 @@
-//////////////// LOAD SCENE AND OBJECTS \\\\\\\\\\\\\\\\\\\\\
-
-var scene, renderer, camera;
-var pointLight, ambientLight;
-var loader, fontloader;
-
-// this count increases by 1 after each frame refresh. 60 per second.
-var mainCount = 0;
-var prefixURL;
-
-//// FUNCTIONS TO BE CALLED IN INIT() \\\\
-
-function enterOrReEnter() {
-
-    if ( classVariables.inDevelopment ) {
-
-        prefixURL = "http://127.0.0.1:8000/"
-
-    } else {
-
-        prefixURL = "https://erle.ucd.ie/"
-
-    }
-
-    tiaMediaLoc = "media/prePreparedTiaPhrases/";
-
-    //load this early and change .src later
-    synthesisObject.synthAudio = document.getElementById( 'synthClip' );
-    //// on first enter the camera starts at the door and entrance sequence is run
-    function firstEnter() {
-
-        initMainEnter();
-
-        camera.position.set( CAMERA_SIT_POS.x, CAMERA_SIT_POS.y, CAMERA_SIT_POS.z  );
-        camera.rotation.set( CAMERA_SIT_TO_LAPTOP_ROT.x, CAMERA_SIT_TO_LAPTOP_ROT.y, CAMERA_SIT_TO_LAPTOP_ROT.z,);
-        //movementController( movements.blank, 0.1, 0.1 );
-        //movementController( movements.laptop, 0.1, 0.1 );
-
-    }
-
-    function reEnter() {
- 
-        camera.position.set( CAMERA_SIT_POS.x, CAMERA_SIT_POS.y, CAMERA_SIT_POS.z );
-        //camera.rotation.set( CAMERA_SIT_TO_BOARD_ROT.x, CAMERA_SIT_TO_BOARD_ROT.y, CAMERA_SIT_TO_BOARD_ROT.z );
-        camera.rotation.set( CAMERA_SIT_TO_LAPTOP_ROT.x, CAMERA_SIT_TO_LAPTOP_ROT.y, CAMERA_SIT_TO_LAPTOP_ROT.z );
-        cameraObject.currentState = "laptop";
-
-        talkObject.learning = true;
-        //initCameraMove('laptop', 0.1);
-        initInputReady();
-
-    };
-
-    //if first enter then run entrance animation else sitting at chair
-    if ( classVariables.first_enter ) {
-        
-        firstEnter();
-
-    } else {
-
-        reEnter();
-
-    }
-
-}
-
-// start random movements and calculate stuff after bodyparts loaded
-function engineRunning() {
-
-    setBaseExpressionsMovements(); // do this after all of Tia is loaded
-    animate();
-    blinkControllerObject.bool = true;
-    expressionController( expressionObject.abs.neutral, 0.1 );
-    enterOrReEnter();
-    //if ( classVariables.tutorial === false ) {
-
-        //showTimeRemaining();
-        ////showQuestionStreak();
-
-    //}
-
-
-    setTimeout( function() {
-        
-        $("#foregroundContainer").fadeOut( 1500 );
-    
-    }, 500 );
-
-}
-
-function dealWithResizing() {
-
-    window.addEventListener('resize', function() {
-        
-        WIDTH = window.innerWidth;
-        HEIGHT = window.innerHeight - 22;
-        renderer.setSize( WIDTH, HEIGHT );
-        camera.aspect = WIDTH / HEIGHT;
-        camera.updateProjectionMatrix();
-
-    });
-
-}
-
 function renderScene() {
 
     renderer = new THREE.WebGLRenderer();
@@ -111,24 +7,24 @@ function renderScene() {
 
 }
 
+function dealWithResizing() {
+
+    window.addEventListener('resize', function() {
+        
+        WIDTH = window.innerWidth;
+        HEIGHT = window.innerHeight;
+        renderer.setSize( WIDTH, HEIGHT );
+        camera.aspect = WIDTH / HEIGHT;
+        camera.updateProjectionMatrix();
+
+    });
+
+}
+
 function addCamera() {
 
     camera = new THREE.PerspectiveCamera( 55, WIDTH / HEIGHT, 0.1, 1000 );
     scene.add( camera );
-
-}
-
-function addClassroom( geom, mat ) {
-
-    mClassroom = new THREE.Mesh( geom, mat );
-    mClassroom.scale.set(12,12,12);
-
-    // classroom is at weird height and angle to the avatar. Avatar contains many pieces and so it is easier to change positiona and rotation of the space
-    mClassroom.position.set(-40,-40,10)
-    mClassroom.rotation.y += 1.2;
-
-    scene.add( mClassroom );
-
 
 }
 
@@ -154,14 +50,21 @@ function addTia() {
         mat[1].morphtargets = true;
 
         tiaObject.mBody = new THREE.SkinnedMesh( geom, mat );
-        
-        let randColor00 = Math.floor( 44 + Math.random() * 55).toString()
-        let randColor01 = Math.floor( 44 + Math.random() * 55).toString()
-        let randColor02 = Math.floor( 44 + Math.random() * 55).toString()
+       
+        function getRandomColorForTiasClothes() {
 
-        let hexCol = "0x" + randColor00 + randColor01 + randColor02;
+            let n = Math.floor(new Date()/8.64e7).toString()
+            let randIntChangeEveryDay = n[n.length-1]
+            let randIntChangeEveryTenDays = n[n.length-2]
+            let randTwoNumberString = randIntChangeEveryDay + randIntChangeEveryTenDays
+            let hexCol = "0x" + randTwoNumberString + randTwoNumberString + randTwoNumberString;
 
-        mat[0].color.setHex( hexCol );
+            return hexCol
+
+        }
+
+        let tiaClothesColour = getRandomColorForTiasClothes()
+        mat[0].color.setHex( tiaClothesColour );
 
         // iterate over the bones in the JSON file and put them into the global bodyBones object. Call bones with bodyBones["<bone name>"] 
         for (var i=0; i<tiaObject.mBody.skeleton.bones.length; i++) {
@@ -309,78 +212,84 @@ function addTia() {
 
 }
 
-function loadAllTextElements() {
+function enterOrReEnter() {
 
-    function loadAlphabet() {
+    if ( conversationVariables.inDevelopment ) {
 
-        //// define all characters in the alphabet in a list - ['a', 'b', 'c',... ,'\t']
-        let alphabet = ' abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890,.-_:?/#~()*&^%$@!£[<`||>]{}=+\\;\'\"\n\t'.split('');
+        prefixURL = "http://127.0.0.1:8000/"
 
-        fontloader = new THREE.FontLoader();
+    } else {
+
+        prefixURL = "https://erle.ucd.ie/"
+
+    }
+
+    tiaMediaLoc = "media/prePreparedTiaPhrases/";
+
+    //load this early and change .src later
+    synthesisObject.synthAudio = document.getElementById( 'synthClip' );
+    //// on first enter the camera starts at the door and entrance sequence is run
+    function firstEnter() {
+
+        initMainEnter();
+
+        camera.position.set( CAMERA_SIT_POS.x, CAMERA_SIT_POS.y, CAMERA_SIT_POS.z  );
+        camera.rotation.set( CAMERA_SIT_TO_LAPTOP_ROT.x, CAMERA_SIT_TO_LAPTOP_ROT.y, CAMERA_SIT_TO_LAPTOP_ROT.z,);
+        //movementController( movements.blank, 0.1, 0.1 );
+        //movementController( movements.laptop, 0.1, 0.1 );
+
+    }
+
+    function reEnter() {
+ 
+        camera.position.set( CAMERA_SIT_POS.x, CAMERA_SIT_POS.y, CAMERA_SIT_POS.z );
+        //camera.rotation.set( CAMERA_SIT_TO_BOARD_ROT.x, CAMERA_SIT_TO_BOARD_ROT.y, CAMERA_SIT_TO_BOARD_ROT.z );
+        camera.rotation.set( CAMERA_SIT_TO_LAPTOP_ROT.x, CAMERA_SIT_TO_LAPTOP_ROT.y, CAMERA_SIT_TO_LAPTOP_ROT.z );
+        cameraObject.currentState = "laptop";
+
+        talkObject.learning = true;
+        //initCameraMove('laptop', 0.1);
+        initInputReady();
+
+    };
+
+    //if first enter then run entrance animation else sitting at chair
+    if ( conversationVariables.first_enter ) {
         
-        //// load the board_font from the template
-        fontloader.load( board_font, function( font ) {
-            
-            let textGeom;
+        firstEnter();
 
-            //// create a geom for every letter in the alphabet list
-            for ( l=0; l<alphabet.length; l++ ) {
-                
-                textGeom = new THREE.TextGeometry( alphabet[l], {
+    } else {
 
-                    font: font,
-                    size: 1.7,
-                    height: 0.0,
-                    curveSegments: 1, // keep this low for less vertices
-
-                });
-
-                let materials = [
-                    new THREE.MeshLambertMaterial( { color: 0xffffff, transparent:true, opacity: 0 } ),
-                ];
-
-                sentenceObject.alphabetDict[alphabet[l]] = new THREE.Mesh( textGeom, materials )
-
-            };
-
-        });
+        reEnter();
 
     }
 
-    function loadSentenceBackground() {
+}
 
-        let backgroundGeom = new THREE.PlaneGeometry( sentBackLen.x, sentBackLen.y );
-        let backgroundMat = new THREE.MeshBasicMaterial( { color: 0x0000ff, transparent: true, opacity: 0 } );
-        sentenceObject.background = new THREE.Mesh(backgroundGeom, backgroundMat);
-        sentenceObject.background.position.set( sentBackPOS.x, sentBackPOS.y, sentBackPOS.z );
-        sentenceObject.background.rotation.set( sentBackROT.x, sentBackROT.y, sentBackROT.z );
+// start random movements and calculate stuff after bodyparts loaded
+function engineRunning() {
 
-    }
+    setBaseExpressionsMovements(); // do this after all of Tia is loaded
+    animate();
+    blinkControllerObject.bool = true;
+    expressionController( expressionObject.abs.neutral, 0.1 );
+    movementController( movements.blank, 0.1, 0.1)
+    enterOrReEnter();
+    //if ( conversationVariables.tutorial === false ) {
 
-    function loadWrongHighlights() {
-       
-        let highlightBackgroundGeom = new THREE.PlaneGeometry( charX, charY );
-        let highlightBackgroundMat = new THREE.MeshBasicMaterial( { color: 0xffc4c4 } );
-        correctionObject.highlight = new THREE.Mesh(highlightBackgroundGeom, highlightBackgroundMat);
+        //showTimeRemaining();
+        ////showQuestionStreak();
 
-    }
+    //}
 
-    function loadCorrectionBackground() {
+
+    setTimeout( function() {
         
-        let backgroundGeom = new THREE.PlaneGeometry( sentBackLen.x, sentBackLen.y );
-        let backgroundMat = new THREE.MeshLambertMaterial( { transparent: true, opacity: 0 } );
-        correctionObject.correctionBackground = new THREE.Mesh(backgroundGeom, backgroundMat);
-        correctionObject.correctionBackground.position.set( sentBackPOS.x, correctionBackPOSY, sentBackPOS.z );//just y position changes for sentenceObject.background as the correction shifts lower
-        correctionObject.correctionBackground.rotation.set( sentBackROT.x, sentBackROT.y, sentBackROT.z );
+        $("#foregroundContainer").fadeOut( 1500 );
+    
+    }, 500 );
 
-    }
-        
-    loadAlphabet();
-    loadSentenceBackground();
-    loadWrongHighlights();
-    loadCorrectionBackground();
-
-};
+}
 
 function setBaseExpressionsMovements() {
 
@@ -393,55 +302,32 @@ function setBaseExpressionsMovements() {
 
 }
 
-
-// load all the objects
 function init() {
     
-    //// SCENE \\\\
-    
     scene = new THREE.Scene();
-    
 
-    //// WINDOW \\\\
-
+    // WINDOW
     WIDTH = window.innerWidth;
-    HEIGHT = window.innerHeight - 22;
+    HEIGHT = window.innerHeight;
 
-
-    //// RENDERER \\\\
-
+    // RENDERER
     renderScene();
     dealWithResizing();
 
-
-    //// CAMERA \\\\
-
+    // CAMERA
     addCamera();
 
-
-    //// CAMERA CONTROLS \\\\
-
+    //// CAMERA CONTROLS
     //controls = new THREE.OrbitControls( camera, renderer.domElement );
 
-
-    //// LIGHTS \\\\
-
+    // LIGHTS
     addLights();
 
-
-    //// CREATE JSON LOADER \\\\
-
+    // CREATE JSON LOADER
     loader = new THREE.JSONLoader();
     
-    
-    //// LOAD JSON OBJECTS \\\\
-    
-    //remove classroom for mobile redesign
-    //loader.load( classroom, addClassroom );
-    addTia(); // contains all the loaders for head, body etc.
-    //loadAllTextElements(); // loads all text and backgrounds for text
-
-
+    // LOAD JSON OBJECTS FOR TIA
+    addTia();
 
 }
 

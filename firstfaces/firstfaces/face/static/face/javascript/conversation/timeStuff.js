@@ -1,7 +1,7 @@
 function calcTimePassed() {
 
     let timeNow = new Date();
-    let timePassed = timeNow - classVariables.start_time;
+    let timePassed = timeNow - conversationVariables.start_time;
     let timePassedMinutes = Math.ceil( -60 + timePassed / 60000  );	
     //console.log('time passed minutes:', timePassedMinutes);
 
@@ -35,24 +35,24 @@ function showTime() {
 
         //$('#timeLeft').text( "last sentence" );
         //$('#timeLeft').css( "color", "red" );
-        //classVariables.lastSentToBeSent = true;
+        //conversationVariables.lastSentToBeSent = true;
 
     //} else {
 
-        //classVariables.classOver = true;
+        //conversationVariables.classOver = true;
         //$('#timeLeft').text( "class finished" );
 
         //// just delete class if no sentences when finished
-        //if ( classVariables.id_of_last_sent === null ) {
+        //if ( conversationVariables.id_of_last_sent === null ) {
 
             //endClassNoSentences()
 
         //} else {
 
-            //if ( classVariables.endClassSequenceStarted !== true ) {
+            //if ( conversationVariables.endClassSequenceStarted !== true ) {
 
                 //endClass();
-                //classVariables.endClassSequenceStarted = true;
+                //conversationVariables.endClassSequenceStarted = true;
 
             //}
 
@@ -66,7 +66,7 @@ function endClassNoSentences() {
 
     //$('#finishClassBtn').off('click');
 
-    let sessId = classVariables.session_id;
+    let sessId = conversationVariables.session_id;
     $.ajax({
         url: "/delete_session",
         type: "GET",
@@ -88,24 +88,24 @@ function endClass() {
 
     //$('#finishClassBtn').off('click');
 
-    let sessId = classVariables.session_id;
+    let sessId = conversationVariables.session_id;
     $.ajax({
         url: "/store_class_over",
         type: "GET",
         data: {'sessId': sessId},
         success: function(json) {
 
-            //classVariables.score = json.score
+            //conversationVariables.score = json.score
 
-            if ( classVariables.first_ever_class ) {
+            if ( conversationVariables.first_ever_class ) {
 
                 synthesisObject.text = "It was nice to meet you! Come back again whenever you want to talk.";
 
             } else {
 
-                //if ( classVariables.score > classVariables.prev_score ) {
+                //if ( conversationVariables.score > conversationVariables.prev_score ) {
                 
-                    //let improvement = classVariables.score - classVariables.prev_score;
+                    //let improvement = conversationVariables.score - conversationVariables.prev_score;
                     
                     //let praise = "";
                     //if ( improvement >= 5 ) {
@@ -118,7 +118,7 @@ function endClass() {
                     
                     //}
 
-                    //synthesisObject.text = "Well done today! your score is " + ( classVariables.score ).toString() + ". That is better than last time by " + improvement.toString() + " points." + praise + "I look forward to seeing you again soon!";
+                    //synthesisObject.text = "Well done today! your score is " + ( conversationVariables.score ).toString() + ". That is better than last time by " + improvement.toString() + " points." + praise + "I look forward to seeing you again soon!";
                     
                 //} else {
 
@@ -170,7 +170,7 @@ function goodbyeTalk() {
         
         tiaSpeak( speechBubbleObject.sentence, needSendTTS=false, function() {
         
-            classVariables.promptSpeaking = true;
+            conversationVariables.promptSpeaking = true;
 
             setTimeout( function() {
                 
@@ -206,8 +206,8 @@ function endTutorial() {
         url: "/store_tutorial_end",
         type: "POST",
         data: {
-            'tutorialStep': classVariables.tutorialStep,
-            'sessionID': classVariables[ 'session_id' ],
+            'tutorialStep': conversationVariables.tutorialStep,
+            'sessionID': conversationVariables[ 'session_id' ],
         },
         success: function(json) {
 
@@ -226,38 +226,38 @@ function endTutorial() {
 //function calculateQuestionStreak() {
 
     //let questionStreak = 0;
-    //let lastSentId = classVariables.id_of_last_sent
+    //let lastSentId = conversationVariables.id_of_last_sent
 
-    //if ( lastSentId !== null && classVariables.last_sent.sentence !== null ) {
+    //if ( lastSentId !== null && conversationVariables.last_sent.sentence !== null ) {
 
         ////skip the sentence waiting for judgement    
         //let n = 0;
-        //if ( classVariables.sentences[ lastSentId ].judgement === null && Object.keys( classVariables.sentences ).length !== 1) {
+        //if ( conversationVariables.sentences[ lastSentId ].judgement === null && Object.keys( conversationVariables.sentences ).length !== 1) {
 
             //n = 1;
 
         //}
 
 
-        //if ( classVariables.sentences[ lastSentId - n ].judgement === "C" || classVariables.sentences[ lastSentId - n ].judgement === "B" ) {
+        //if ( conversationVariables.sentences[ lastSentId - n ].judgement === "C" || conversationVariables.sentences[ lastSentId - n ].judgement === "B" ) {
 
-            //if ( classVariables.sentences[ lastSentId - n ].question === false ) {
+            //if ( conversationVariables.sentences[ lastSentId - n ].question === false ) {
             
                 //questionStreak = 1;
 
-                //if ( classVariables.sentences[ lastSentId - 1 - n ] !== undefined ) {
+                //if ( conversationVariables.sentences[ lastSentId - 1 - n ] !== undefined ) {
 
-                    //if ( classVariables.sentences[ lastSentId - 1 - n ].judgement === "C" || classVariables.sentences[ lastSentId - 1 - n ].judgement === "B" ) {
+                    //if ( conversationVariables.sentences[ lastSentId - 1 - n ].judgement === "C" || conversationVariables.sentences[ lastSentId - 1 - n ].judgement === "B" ) {
 
-                        //if ( classVariables.sentences[ lastSentId - 1 - n ].question === false ) {
+                        //if ( conversationVariables.sentences[ lastSentId - 1 - n ].question === false ) {
                 
                             //questionStreak = 2;
 
-                            //if ( classVariables.sentences[ lastSentId - 2 - n ] !== undefined ) {
+                            //if ( conversationVariables.sentences[ lastSentId - 2 - n ] !== undefined ) {
 
-                                //if ( classVariables.sentences[ lastSentId - 2 - n ].judgement === "C" || classVariables.sentences[ lastSentId - 2 - n ].judgement === "B" ) {
+                                //if ( conversationVariables.sentences[ lastSentId - 2 - n ].judgement === "C" || conversationVariables.sentences[ lastSentId - 2 - n ].judgement === "B" ) {
 
-                                    //if ( classVariables.sentences[ lastSentId - 2 - n ].question === false ) {
+                                    //if ( conversationVariables.sentences[ lastSentId - 2 - n ].question === false ) {
                     
                                         //questionStreak = 3;
 

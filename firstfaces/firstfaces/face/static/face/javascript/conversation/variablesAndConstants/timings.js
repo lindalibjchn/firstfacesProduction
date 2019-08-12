@@ -1,0 +1,28 @@
+tiaTimings = {
+
+    delayAfterClickPlayUntilCameraMovesUp: 0,
+    cameraMoveUpDuration: 2.0,
+    tiaLeanDuration: 1,
+    delayUntilSpeakWords: 500,
+    delayAfterStudentSpeech: 500,
+    delayBeforeGoingToThinkingPos: 1000,
+    toThinkDuration: 1.5,
+    delayToAddThoughtBubbles: 1500,
+    thoughtBubbleAddDelay: 200,
+    wordFade: 250,
+    returnFromThinking: 1,
+    removeThoughtBubble: 500,
+    changeExpression: 0.75,
+    changeExpressionConfused: 0.75,
+    movementToConfused: 1,
+    speechBubbleFadeInDuration: 500,
+    speechBubbleFadeOutDuration: 500,
+    toTalkExpressionDuration: 1,
+    delayUntilToTalkPos: 500,
+    delayBeforeReturnToLaptop: 1000,
+    delayAfterBubbleShowUntilSpeak: 1000,
+    turnToBoard: 2,
+    cameraTurnToBoard: 2,
+    armIndicate: 1,
+
+}

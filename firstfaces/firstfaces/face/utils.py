@@ -1,4 +1,4 @@
-from .models import Available, TempSentence, Session, PermSentence, Profile, PostTalkTiming
+from .models import Available, TempSentence, Conversation, PermSentence, Profile, PostTalkTiming
 
 from django.contrib.auth.models import User
 from django.conf import settings
@@ -224,7 +224,7 @@ def get_number_of_current_live_sessions():
 
     print('time now:', timezone.now())
     # get all sessions currently underway
-    sessions_no_end_time = Session.objects.filter(end_time=None)
+    sessions_no_end_time = Conversation.objects.filter(end_time=None)
     remove_those_not_ended_by_user = sessions_no_end_time.filter(start_time__gte=timezone.now()-datetime.timedelta(hours=2))
     remove_tutorials = remove_those_not_ended_by_user.filter(tutorial=False)
     return remove_tutorials.count()
@@ -235,7 +235,7 @@ def fill_sessions_dict():
     sessions = {}
 
     # get all sessions currently underway
-    cur_sessions = Session.objects.filter(end_time=None)
+    cur_sessions = Conversation.objects.filter(end_time=None)
 
     # get total sentences in db in order to check later if this has increased
     total_sentences = TempSentence.objects.count()
@@ -316,7 +316,7 @@ def fill_sessions_dict():
 
 def delete_sentences_from_temp_db(sess_id): 
 
-    sess = Session.objects.get(pk=sess_id)
+    sess = Conversation.objects.get(pk=sess_id)
     sentences = TempSentence.objects.filter(session=sess).order_by('pk')
     
     for s in sentences:
@@ -325,7 +325,7 @@ def delete_sentences_from_temp_db(sess_id):
 
 # def get_scores( sess_id ):
 
-    # sess = Session.objects.get(pk=sess_id)
+    # sess = Conversation.objects.get(pk=sess_id)
     # sentences = TempSentence.objects.filter(session=sess).order_by('pk')
 
     # save_to_perm_db( sentences )
@@ -415,7 +415,7 @@ def delete_sentences_from_temp_db(sess_id):
 
 def get_prev_sessions( user ):
 
-    all_sessions = Session.objects.filter(learner=user)
+    all_sessions = Conversation.objects.filter(learner=user)
 
     sessions_dict = {}
 

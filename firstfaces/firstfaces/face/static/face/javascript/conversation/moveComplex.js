@@ -27,6 +27,7 @@ function initTalk() {
    
     if ( talkObject.bool === false ) {
 
+        let endCount =  Math.max( synthesisObject.synthAudio.duration * 60 - 60, 60 ); 
         talkObject.endCount = mainCount + synthesisObject.endCount;
 
         // start mouth pursed when talking
@@ -616,24 +617,25 @@ function tapKeyFull() {
                 $('#submitOverlay').prop( "disabled", false);
                 //calculateAlternatives();
                 //show play buttons below
-                if ( classVariables.tutorial === false ) {
+                if ( conversationVariables.tutorial === false ) {
 
                     // show john's error box
-                    if ( classVariables.tapKeyForErrors ) {
+                    if ( conversationVariables.tapKeyForErrors ) {
 
-                        classVariables.tapKeyForErrors = false;
+                        conversationVariables.tapKeyForErrors = false;
 
                         movementController( movements.blank, '0.5', '1.5' );
                         // display errors
                         showWrongSentence();
 
-                    } else if ( classVariables.tapKeyForCorrection ) {
+                    } else if ( conversationVariables.tapKeyForCorrection ) {
 
-                        classVariables.tapKeyForCorrection = false;
+                        conversationVariables.tapKeyForCorrection = false;
                         showCorrectionUnderWrongSent();
 
-                    } else if ( classVariables.showingSpectrograms ) {
-                        classVariables.showingSpectrograms = false;
+                    } else if ( conversationVariables.showingSpectrograms ) {
+
+                        conversationVariables.showingSpectrograms = false;
                         $("#praatCont").fadeIn(800);
                         setTimeout(function(){
                             $("#reRecordBtn").fadeIn(800);
@@ -644,7 +646,7 @@ function tapKeyFull() {
 
                     // this one is for after listening to the learners speech - Daniel's stuff
                     } else {
-                        if(!classVariables.stage2 && !classVariables.stage3){
+                        if(!conversationVariables.stage2 && !conversationVariables.stage3){
 
                         $('.play-btn').prop( "disabled", false);
                         $('#talkBtn').prop( "disabled", false);
@@ -693,7 +695,7 @@ function tapKeyFull() {
                             
                               
                             
-                            setTimeout( set_selectable(classVariables.alternatives[0].transcript) , 1200);   
+                            setTimeout( set_selectable(conversationVariables.alternatives[0].transcript) , 1200);   
 
                         
                         }}
@@ -714,7 +716,7 @@ function tapKeyFull() {
 
 //fucntion to populate the output box with transcript
 function populateDivs() {
-    var words = classVariables.alternatives[0].transcript.split(" ");
+    var words = conversationVariables.alternatives[0].transcript.split(" ");
     words.forEach(addWords);
     $('#listenVoiceBtn').show();
 }
@@ -787,16 +789,16 @@ function listenToSpeechSynthesis( intensity ) {
 
 function dealWithBlankTranscription() {
 
-    $('#recordBtnsContainer').hide();
+    $('#recordBtnsCont').hide();
 
 
     synthesisObject.synthAudio.src = prefixURL + tiaMediaLoc + "im_sorry_but_i_didnt_hear_anything.wav";
     tiaSpeak( "I'm sorry, but I didn't hear anything. Could you try again?", function() {
      
         $('#recordVoiceBtn').show();
-        classVariables.mainRecord = false;
+        conversationVariables.mainRecord = false;
 
-        $('#recordBtnsContainer').fadeIn();
+        $('#recordBtnsCont').fadeIn();
         //removeSpeechBubble();
 
     } );
@@ -809,9 +811,9 @@ function returnFromListenToSpeechSynthesis() {
     setTimeout( function() {
         
         // if no sound comes through, don't tap or show empty transcripts
-        if ( classVariables.alternatives[ 0 ].transcript === "" ) {
+        if ( conversationVariables.alternatives[ 0 ].transcript === "" ) {
         
-            if ( classVariables.tutorial === false ) {
+            if ( conversationVariables.tutorial === false ) {
 
                 setTimeout( function() {
 
@@ -824,7 +826,7 @@ function returnFromListenToSpeechSynthesis() {
 
         } else {
            // reset this as main recording is complete with a transcription
-           classVariables.mainRecord = false;
+           conversationVariables.mainRecord = false;
             
             $('#closeOverlayArea').prop( "disabled", true);
             $('#submitOverlay').prop( "disabled", true);

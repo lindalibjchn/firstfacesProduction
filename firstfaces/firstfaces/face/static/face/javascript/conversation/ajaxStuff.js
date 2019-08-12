@@ -13,15 +13,15 @@ function sendTTS( text, tiaSpeaker ) {
         url: "/tts",
         type: "GET",
         data: {
-            'gender': classVariables.gender,
+            'gender': conversationVariables.gender,
             'sentence': text,
             'tiaSpeaker': tiaSpeaker,
             'pitch': synthesisObject.pitch,
             'speaking_rate': synthesisObject.speaking_rate,
-            'sessionID': classVariables.session_id,
+            'sessionID': conversationVariables.session_id,
             //'caller': caller,
-            'blob_no_text': classVariables.blob_no_text,
-            'blob_no_text_sent_id': classVariables.blob_no_text_sent_id,
+            'blob_no_text': conversationVariables.blob_no_text,
+            'blob_no_text_sent_id': conversationVariables.blob_no_text_sent_id,
         },
         success: function(json) {
 
@@ -75,10 +75,10 @@ function sendBlobToServer( blob_to_send ) {
 
     let fd = new FormData();
     fd.append('data', blob_to_send);
-    fd.append('sessionID', classVariables.session_id);
+    fd.append('sessionID', conversationVariables.session_id);
     fd.append('interference', synthesisObject.interference);
-    fd.append('blob_no_text', classVariables.blob_no_text);
-    fd.append('blob_no_text_sent_id', classVariables.blob_no_text_sent_id);
+    fd.append('blob_no_text', conversationVariables.blob_no_text);
+    fd.append('blob_no_text_sent_id', conversationVariables.blob_no_text_sent_id);
 
     
     $.ajax({
@@ -88,17 +88,17 @@ function sendBlobToServer( blob_to_send ) {
         processData: false,
         contentType: false,
         success: function(json) {
-            classVariables.totalAudioLength = json.audio_length;
-            classVariables.Aud_Fname = json.audio_file;
-            classVariables.blob_no_text = true;
-            classVariables.blob_no_text_sent_id = json.sent_id;
+            conversationVariables.totalAudioLength = json.audio_length;
+            conversationVariables.Aud_Fname = json.audio_file;
+            conversationVariables.blob_no_text = true;
+            conversationVariables.blob_no_text_sent_id = json.sent_id;
             console.log('got response from sending blob to server');
-            classVariables.alternatives = json.alternatives;
-            classVariables.currentAudID = json.audio_pk;
-            classVariables.preSent = classVariables.alternatives[ 0 ][ 'transcript' ]
+            conversationVariables.alternatives = json.alternatives;
+            conversationVariables.currentAudID = json.audio_pk;
+            conversationVariables.preSent = conversationVariables.alternatives[ 0 ][ 'transcript' ]
 
             // if first interference, then want the flinch not to be interfered with by the return motions
-            if ( classVariables.interference_count === 1 && synthesisObject.interference ) {
+            if ( conversationVariables.interference_count === 1 && synthesisObject.interference ) {
 
                 console.log('no return');
 
@@ -110,33 +110,33 @@ function sendBlobToServer( blob_to_send ) {
             }
 
             // dont want to send sentence while doing tutorial
-            if ( classVariables.tutorial ) {
+            if ( conversationVariables.tutorial ) {
 
-                if (classVariables.tutorialStep === 5 ) {
+                if (conversationVariables.tutorialStep === 5 ) {
 
                     $('#recordVoiceBtn').prop( 'disabled', true );
                     $('#talkBtn').prop( 'disabled', true );
 
                     setTimeout( greeting06, 2000 );
 
-                } else if (classVariables.tutorialStep === 7 ) {
+                } else if (conversationVariables.tutorialStep === 7 ) {
 
                     $('#recordVoiceBtn').prop( 'disabled', true );
                     $('#talkBtn').prop( 'disabled', true );
 
                     setTimeout( greeting08, 2000 );
 
-                } else if (classVariables.tutorialStep === 14 ) {
+                } else if (conversationVariables.tutorialStep === 14 ) {
 
-                    classVariables.tutorialStep = 3;
+                    conversationVariables.tutorialStep = 3;
                     $('#recordVoiceBtn').prop( 'disabled', true );
                     $('#talkBtn').prop( 'disabled', true );
 
                     setTimeout( greeting15, 2000 );
 
-                } else if (classVariables.tutorialStep === 15 ) {
+                } else if (conversationVariables.tutorialStep === 15 ) {
 
-                    classVariables.tutorialStep = 4;
+                    conversationVariables.tutorialStep = 4;
                     $('#recordVoiceBtn').prop( 'disabled', true );
                     $('#talkBtn').prop( 'disabled', true );
 
@@ -176,7 +176,7 @@ function correctID(id){
 
 function getRemainingAudio(){
     let fd = new FormData();  
-    fd.append("ids",classVariables.correct_audio);
+   fd.append("ids",classVariables.correct_audio);
     var audio_ends = [];
     var i;
     var new_ids = correctids(classVariables.correct_audio);
@@ -190,6 +190,10 @@ function getRemainingAudio(){
     fd.append("poss",new_ids);
     fd.append("fn", classVariables.Aud_Fname);
     fd.append('sessionID',classVariables.session_id);
+    fd.append("ids",conversationVariables.correct_audio);
+    fd.append("poss", new_ids);
+    fd.append("fn", conversationVariables.Aud_Fname);
+    fd.append('sessionID',conversationVariables.session_id);
     $.ajax({                     
         url: "/get_remaining_audio", 
         type: "POST",             
@@ -199,9 +203,9 @@ function getRemainingAudio(){
         success: function(json) {
             var i;
             var base = "http://127.0.0.1:8000/";
-            for(i=0;i<classVariables.correct_audio.length;i++){
-                document.getElementById("audio_"+classVariables.correct_audio[i]).src = base+json['paths'][i];
-                $("#audio_"+classVariables.correct_audio[i]).attr('duration',json['lens'][i]);
+            for(i=0;i<conversationVariables.correct_audio.length;i++){
+                document.getElementById("audio_"+conversationVariables.correct_audio[i]).src = base+json['paths'][i];
+                $("#audio_"+conversationVariables.correct_audio[i]).attr('duration',json['lens'][i]);
             }
             getAudioLength();
         },
@@ -215,18 +219,18 @@ function getRemainingAudio(){
 
 
 function sendSentToServer() {
-    if(classVariables.playStage2){
+    if(conversationVariables.playStage2){
         getRemainingAudio();
         
        //i getAudioLength();
     }
     // reset to false
-    //classVariables.promptNIndexesReceived = false;
+    //conversationVariables.promptNIndexesReceived = false;
     // reset the number of recordings for the sentence to 0.
-    classVariables.blobs = 0;
+    conversationVariables.blobs = 0;
 
     // all below for developing
-    let sent = classVariables.preSent;
+    let sent = conversationVariables.preSent;
 
     if ( sent.length >= 300 ) {
 
@@ -235,7 +239,7 @@ function sendSentToServer() {
     } else {
 
         // set this to false until judgement comes in where it will be changed to true
-        classVariables.awaitingJudgement = true;
+        conversationVariables.awaitingJudgement = true;
 
         // if wh-question and if allowed. If not allowed, raise alert 
         //isItQ = checkIfSentIsQuestion( sent );
@@ -267,9 +271,9 @@ function sendSentToServer() {
                 data: { 
                     'sent': sent,
                     //'isItQ': isItQ,
-                    'blob_no_text': classVariables.blob_no_text,
-                    'blob_no_text_sent_id': classVariables.blob_no_text_sent_id,
-                    'sessionID': classVariables.session_id
+                    'blob_no_text': conversationVariables.blob_no_text,
+                    'blob_no_text_sent_id': conversationVariables.blob_no_text_sent_id,
+                    'sessionID': conversationVariables.session_id
                 },
                 success: function(json) {
                     
@@ -278,7 +282,7 @@ function sendSentToServer() {
                     checkJudgement( json.sent_id );
 
                     // for interference stuff, need to reset
-                    classVariables.interference_count_this_sent = 0;
+                    conversationVariables.interference_count_this_sent = 0;
 
                 },
                 error: function() {
@@ -309,7 +313,7 @@ function checkJudgement( sentId ) {
         url: "/check_judgement",
         type: "GET",
         data: { 
-            'sessId': classVariables.session_id,
+            'sessId': conversationVariables.session_id,
             'sentId': sentId,
         },
         success: function(json) {
@@ -343,7 +347,7 @@ function checkJudgement( sentId ) {
 
 }
 
-//classVariables.promptNINdexesCount = 0;
+//conversationVariables.promptNINdexesCount = 0;
 //function checkForPromptNIndexes( sentId ) {
 
     //console.log('in checkForPromptNIndexes');
@@ -358,16 +362,16 @@ function checkJudgement( sentId ) {
             
             //if ( json.sent_meta.receivedPromptNIndexes ) {
 
-                //if ( classVariables.promptNIndexesReceived === false ) {
+                //if ( conversationVariables.promptNIndexesReceived === false ) {
 
                     //console.log('got prompt n indexes');
                     //console.log('indexes:', json.sent_meta.indexes);
-                    //classVariables.promptNINdexesCount = 0;
+                    //conversationVariables.promptNINdexesCount = 0;
                     //promptNIndexesReceived( json.sent_meta )
 
-                    ////if ( classVariables.lastSentToBeSent ) {
+                    ////if ( conversationVariables.lastSentToBeSent ) {
 
-                        ////classVariables.classOver = true;
+                        ////conversationVariables.classOver = true;
 
                     ////}
 
@@ -376,9 +380,9 @@ function checkJudgement( sentId ) {
             //} else {
 
                 //console.log('checking for prompt n indexes again');
-                //classVariables.promptNINdexesCount += 1;
+                //conversationVariables.promptNINdexesCount += 1;
 
-                //if ( classVariables.promptNINdexesCount < 20 ) {
+                //if ( conversationVariables.promptNINdexesCount < 20 ) {
 
                     //setTimeout( function() {
 
@@ -388,7 +392,7 @@ function checkJudgement( sentId ) {
 
                 //} else {
 
-                    //classVariables.promptNINdexesCount = 0;
+                    //conversationVariables.promptNINdexesCount = 0;
                     //setTimeout( function() {
 
                         //synthesisObject.text = "Sorry, my message has take too long to come across the internet. Please continue."
@@ -413,7 +417,7 @@ function checkJudgement( sentId ) {
         //},
         //error: function() {
 
-            //classVariables.promptNINdexesCount = 0;
+            //conversationVariables.promptNINdexesCount = 0;
             //setTimeout( function(){
             
                 //console.log("error awaiting prompt n indexes");
@@ -446,7 +450,7 @@ function checkJudgement( sentId ) {
         //type: "GET",
         //data: { 
             //'choice': choice,
-            //'blob_no_text_sent_id': classVariables.blob_no_text_sent_id,
+            //'blob_no_text_sent_id': conversationVariables.blob_no_text_sent_id,
         //},
         //success: function(json) {
             
@@ -487,18 +491,18 @@ function checkJudgement( sentId ) {
         //url: "/add_listen_synth_data",
         //type: "GET",
         //data: { 
-            //'sessId': classVariables.session_id,
+            //'sessId': conversationVariables.session_id,
             //'diffSent': diffSent,
             //'transcriptCur': transcriptCur,
             //'listenTranscript': listenTranscript,
             //'repeat': repeat,
-            //'blob_no_text': classVariables.blob_no_text,
-            //'blob_no_text_sent_id': classVariables.blob_no_text_sent_id,
+            //'blob_no_text': conversationVariables.blob_no_text,
+            //'blob_no_text_sent_id': conversationVariables.blob_no_text_sent_id,
         //},
         //success: function(json) {
             
-            //classVariables.blob_no_text = true;
-            //classVariables.blob_no_text_sent_id = json.sent_id;
+            //conversationVariables.blob_no_text = true;
+            //conversationVariables.blob_no_text_sent_id = json.sent_id;
 
             //console.log('added pronunciation data');
 
@@ -517,8 +521,8 @@ function checkJudgement( sentId ) {
         //url: "/add_voice_data",
         //type: "GET",
         //data: { 
-            //'blob_no_text_sent_id': classVariables.blob_no_text_sent_id,
-            //'transcript': classVariables.preSent,
+            //'blob_no_text_sent_id': conversationVariables.blob_no_text_sent_id,
+            //'transcript': conversationVariables.preSent,
         //},
         //success: function(json) {
             
@@ -558,7 +562,7 @@ function sendSoundMicToServer( device, TF ) {
 
 function sendTimesToServer() {
 
-    let sentID = classVariables.last_sent.sent_id
+    let sentID = conversationVariables.last_sent.sent_id
 
     $.ajax({
         url: "/timings",

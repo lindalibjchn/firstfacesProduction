@@ -1,4 +1,3 @@
-
 $(window).on( 'load', function() {
    
     // begins the loading of objects
@@ -9,7 +8,7 @@ $(window).on( 'load', function() {
 
     //fill prevSents
     loadPrevSents( scrollBottom );   
-    classVariables.playspeed=1.0;
+    conversationVariables.playspeed=1.0;
 });
 
 //function resetTranscripts() {
@@ -32,20 +31,20 @@ function readyBtns() {
  
     //resetTranscripts();
 
-    $('#prevSentsIconCont').on( 'click', function() {
+    $('#prevSentsIconContainer').on( 'click', function() {
 
         $('#prevSentsContainer').fadeIn();
-        $('#prevSentsIconCont').hide();
+        $('#prevSentsIconContainer').hide();
 
     });
 
-    $('#finishClassIconCont').on( 'click', function() {
+    $('#finishClassIconContainer').on( 'click', function() {
 
         showTime();
-        $('#prevSentsIconCont').hide();
-        $('#finishClassIconCont').hide();
+        $('#prevSentsIconContainer').hide();
+        $('#finishClassIconContainer').hide();
         $('#dataNFinish').show();
-        $('#timeOverlayCont').fadeIn();
+        $('#timeOverlayContainer').fadeIn();
 
     });
 
@@ -60,23 +59,23 @@ function readyBtns() {
 
         $('#confirmFinish').hide();
 
-        if ( classVariables.tutorial === false ) {
+        if ( conversationVariables.tutorial === false ) {
 
-            //if ( classVariables.awaitingJudgement ) {
+            //if ( conversationVariables.awaitingJudgement ) {
             
             //} else {
 
-            if ( classVariables.id_of_last_sent === null ) {
+            if ( conversationVariables.id_of_last_sent === null ) {
             
                 endClassNoSentences()
 
             } else {
 
-                if ( classVariables.endClassSequenceStarted !== true ) {
+                if ( conversationVariables.endClassSequenceStarted !== true ) {
 
                     console.log('\n\n\nend class finish button\n\n\n');
                     endClass();
-                    classVariables.endClassSequenceStarted = true;
+                    conversationVariables.endClassSequenceStarted = true;
 
                 }
 
@@ -86,7 +85,7 @@ function readyBtns() {
 
         } else {
 
-            if ( classVariables.tutorialStep === 99 ) {
+            if ( conversationVariables.tutorialStep === 99 ) {
 
                 endTutorial();
 
@@ -156,7 +155,7 @@ $('#listenVoiceBtn').on( 'click', function() {
     //sendListenVoice();
 
     // for tutorial
-    if ( classVariables.tutorialStep === 6 ) {
+    if ( conversationVariables.tutorialStep === 6 ) {
 
         $('#listenVoiceBtn').prop( 'disabled', true );
         setTimeout( greeting07, 3000 );
@@ -209,7 +208,7 @@ $('#listenVoiceBtn').on( 'click', function() {
             // Success callback
             .then(function(stream) {
      
-                classVariables.audio = true;
+                conversationVariables.audio = true;
                 console.log( 'audio working' );
                 gotStream( stream );
 
@@ -221,17 +220,17 @@ $('#listenVoiceBtn').on( 'click', function() {
                     removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
 
                     // this is to identify main recording and allow return of mic button if user says nothing
-                    classVariables.mainRecord = true;
+                    conversationVariables.mainRecord = true;
                     //recognition.start();
                     console.log('Voice recognition activated. Try speaking into the microphone.');
                     mediaRecorder.start();
 
                     // tia leans to listen, more so at later stages
-                    if ( classVariables.stage2 ) {
+                    if ( conversationVariables.stage2 ) {
 
                         listenToSpeechSynthesis( 1 );
 
-                    } else if ( classVariables.stage3 ) {
+                    } else if ( conversationVariables.stage3 ) {
                     
                         listenToSpeechSynthesis( 2 );
                         $('#backOverlay').hide();
@@ -242,7 +241,7 @@ $('#listenVoiceBtn').on( 'click', function() {
 
                     }
 
-                    classVariables.blobs += 1;
+                    conversationVariables.blobs += 1;
                     volumeObject.bool = true;// detect volume and be ready to show volume bar
                     synthesisObject.interference = false; // start with no interference which can change if clipping occurs
         
@@ -250,18 +249,18 @@ $('#listenVoiceBtn').on( 'click', function() {
                     showVolumeBar();
 
                     // will check that the user has clicked the stop button by timing them and using this boolean
-                    classVariables.recording = true;
+                    conversationVariables.recording = true;
                     recorder15sTimeout = setTimeout( checkIfClickedStop, 15000 );
 
                     // hide the microphone button
                     $(this).hide();
-		            if(classVariables.stage2 || classVariables.stage3){
+		            if(conversationVariables.stage2 || conversationVariables.stage3){
                         
                         $('#submitOverlay').hide();
                         $('#stopRecordBtn').show();
                         $('#reRecordBtn').prop("disabled",true);
                     
-                        if (classVariables.stage2 ) {
+                        if (conversationVariables.stage2 ) {
 
                             $('#keyboardOverlay').hide();
                             $('#spectrogramBtn').hide();
@@ -282,7 +281,7 @@ $('#listenVoiceBtn').on( 'click', function() {
                 function checkIfClickedStop() {
 
                     // double check the boolean is true
-                    if ( classVariables.recording ) {
+                    if ( conversationVariables.recording ) {
 
                         onStopClick();
 
@@ -311,7 +310,7 @@ $('#listenVoiceBtn').on( 'click', function() {
             // Error callback
             .catch(function(err) {
                 console.log('The following getUserMedia error occured: ' + err);
-                classVariables.audio = false;
+                conversationVariables.audio = false;
                 console.log( 'audio not working' );
                 alert("If you want to speak to Tia, you must allow Chrome to use your microphone. Click the lock, or small 'i' next to the web address and then change the settings to allow the microphone.");
             }
@@ -401,7 +400,7 @@ function onStopClick() {
     console.log( mediaRecorder.state );
     console.log( "recorder stopped" );
 
-    classVariables.recording = false;
+    conversationVariables.recording = false;
 
     $('#stopRecordBtn').hide();
     $('#stopRecordVoiceBtn').hide();
@@ -420,10 +419,10 @@ function onMediaRecorderStop() {
     hideVolumeBar();
 
     //$('#talkBtn').prop( "disabled", true )
-    classVariables.blob = new Blob(chunks, { type : 'audio/webm; codecs: opus' });
+    conversationVariables.blob = new Blob(chunks, { type : 'audio/webm; codecs: opus' });
 
     // create audiourl for easy replay
-    var audioURL = window.URL.createObjectURL(classVariables.blob);
+    var audioURL = window.URL.createObjectURL(conversationVariables.blob);
     aud.src = audioURL;
 
     // reset chunks
@@ -431,15 +430,15 @@ function onMediaRecorderStop() {
 
     // send blob to server to be stored, but wait a bit to make sure it has come through
     // setTimeout( function() {
-    if(!classVariables.stage2 && !classVariables.stage3){
-    	sendBlobToServer( classVariables.blob );
+    if(!conversationVariables.stage2 && !conversationVariables.stage3){
+    	sendBlobToServer( conversationVariables.blob );
 	}
 	else{
-        if(classVariables.stage2){
-	        sendErrorBlobToServer( classVariables.blob );
+        if(conversationVariables.stage2){
+	        sendErrorBlobToServer( conversationVariables.blob );
         }
         else{
-            sendAttemptBlob( classVariables.blob );
+            sendAttemptBlob( conversationVariables.blob );
         }
 	}
     //}, 1000);
@@ -495,7 +494,7 @@ function drawLoop() {
             // depending on how far forward Tia is, change the duration of the flinch movement
             function getTimingForFlinch() {
 
-                let leanNo = classVariables.blobs
+                let leanNo = conversationVariables.blobs
                 let dur = 0.5;
 
                 if ( leanNo >= 2 ) {
@@ -583,7 +582,7 @@ function drawLoop() {
 
     if (meter.checkClipping()) {
 
-        if ( classVariables.tutorial ) {
+        if ( conversationVariables.tutorial ) {
 
             if ( synthesisObject.firstClip === false ) {
 
@@ -594,12 +593,12 @@ function drawLoop() {
 
         } else {
 
-            if ( classVariables.interference_count === 0 ) {
+            if ( conversationVariables.interference_count === 0 ) {
 
                 if ( synthesisObject.firstClip === false ) {
 
-                    classVariables.interference_count += 1;
-                    classVariables.interference_count_this_sent += 1;
+                    conversationVariables.interference_count += 1;
+                    conversationVariables.interference_count_this_sent += 1;
                     synthesisObject.firstClip = true;
                     tiaConfusedAfterClipping( true );
 
@@ -610,8 +609,8 @@ function drawLoop() {
                 if ( synthesisObject.firstClip === false ) {
 
                     tiaConfusedAfterClipping( false );
-                    classVariables.interference_count_this_sent += 1;
-                    classVariables.interference_count += 1;
+                    conversationVariables.interference_count_this_sent += 1;
+                    conversationVariables.interference_count += 1;
                     synthesisObject.firstClip = true;
 
                 }
@@ -630,13 +629,13 @@ function drawLoop() {
 
 function showVolumeBar() {
 
-    $('#meterCont').show(); 
+    $('#meterContainer').show(); 
 
 }
 
 function hideVolumeBar() {
 
-    $('#meterCont').hide(); 
+    $('#meterContainer').hide(); 
 
 }
 
@@ -644,7 +643,7 @@ function hideVolumeBar() {
 
     //$('#altCont').css('visibility', 'visible'); 
     
-    //if ( classVariables.tutorial === false ) {
+    //if ( conversationVariables.tutorial === false ) {
 
         //$('#playRobot').show(); 
     
@@ -710,37 +709,37 @@ function judgementReceived( sentMeta ) {
 
     console.log('sentMeta:', sentMeta);
 
-    // update classVariables to include new sentence. newInd gets index of next sent
-    let newInd = Object.keys(classVariables.sentences).length;
+    // update conversationVariables to include new sentence. newInd gets index of next sent
+    let newInd = Object.keys(conversationVariables.sentences).length;
     sentMeta.emotion = JSON.parse(sentMeta.emotion);
-    classVariables.sentences[ newInd ] = sentMeta;
-    classVariables.sentences[ newInd ].sentence = JSON.parse( sentMeta.sentence );
-    classVariables.sentences[ newInd ].indexes = JSON.parse( sentMeta.indexes );
-    classVariables.sentences[ newInd ].prompt = sentMeta.prompt;
+    conversationVariables.sentences[ newInd ] = sentMeta;
+    conversationVariables.sentences[ newInd ].sentence = JSON.parse( sentMeta.sentence );
+    conversationVariables.sentences[ newInd ].indexes = JSON.parse( sentMeta.indexes );
+    conversationVariables.sentences[ newInd ].prompt = sentMeta.prompt;
 
-    classVariables.id_of_last_sent = newInd;
-    classVariables.tiaToSay = sentMeta.tiaToSay;
+    conversationVariables.id_of_last_sent = newInd;
+    conversationVariables.tiaToSay = sentMeta.tiaToSay;
     
-    classVariables.last_sent = sentMeta;
-    classVariables.last_sent.sentence = sentMeta.sentence;
-    classVariables.last_sent.indexes = sentMeta.indexes;
-    classVariables.last_sent.prompt = sentMeta.prompt;
+    conversationVariables.last_sent = sentMeta;
+    conversationVariables.last_sent.sentence = sentMeta.sentence;
+    conversationVariables.last_sent.indexes = sentMeta.indexes;
+    conversationVariables.last_sent.prompt = sentMeta.prompt;
 
     // keeps state of sentence
-    classVariables.blob_no_text = false;
-    classVariables.awaitingJudgement = false;
+    conversationVariables.blob_no_text = false;
+    conversationVariables.awaitingJudgement = false;
 
     // do this here to change voices too
-    if ( classVariables.last_sent.judgement === "B" || classVariables.last_sent.judgement === "C" || classVariables.last_sent.judgement === "P" || classVariables.last_sent.judgement === "M" ) {
+    if ( conversationVariables.last_sent.judgement === "B" || conversationVariables.last_sent.judgement === "C" || conversationVariables.last_sent.judgement === "P" || conversationVariables.last_sent.judgement === "M" ) {
 
-        //if ( classVariables.last_sent.judgement !== "C" ) {
+        //if ( conversationVariables.last_sent.judgement !== "C" ) {
 
             //checkForPromptNIndexes( sentMeta.sent_id );
 
         //}
 
         // calculate changes in expression for these
-        if ( classVariables.last_sent.judgement === "M" ) {
+        if ( conversationVariables.last_sent.judgement === "M" ) {
 
             let singleCalculatedExpressions = createSingleExpression( expressionsRel.confused, 0.5 )
             calculatedExpression = getAbsoluteCoordsOfExpressionTo( singleCalculatedExpressions[ 0 ] )
@@ -752,19 +751,19 @@ function judgementReceived( sentMeta ) {
 
         }
 
-    } else if ( classVariables.last_sent.judgement === "D" ) {
+    } else if ( conversationVariables.last_sent.judgement === "D" ) {
 
         let singleCalculatedExpressions = createSingleExpression( expressionsRel.confused, 1 )
         calculatedExpression = getAbsoluteCoordsOfExpressionTo( singleCalculatedExpressions[ 0 ] )
         calculatedTalkExpression = getAbsoluteCoordsOfExpressionTo( singleCalculatedExpressions[ 1 ] )
 
-    } else if ( classVariables.last_sent.judgement === "3" ) {
+    } else if ( conversationVariables.last_sent.judgement === "3" ) {
 
         let singleCalculatedExpressions = createSingleExpression( expressionsRel.confused, 0.75 )
         calculatedExpression = getAbsoluteCoordsOfExpressionTo( singleCalculatedExpressions[ 0 ] )
         calculatedTalkExpression = getAbsoluteCoordsOfExpressionTo( singleCalculatedExpressions[ 1 ] )
 
-    } else if ( classVariables.last_sent.judgement === "I" ) {
+    } else if ( conversationVariables.last_sent.judgement === "I" ) {
 
         let singleCalculatedExpressions = createSingleExpression( expressionsRel.confused, 1 )
         calculatedExpression = getAbsoluteCoordsOfExpressionTo( singleCalculatedExpressions[ 0 ] )
@@ -778,13 +777,13 @@ function judgementReceived( sentMeta ) {
 
     //console.log('new sent meta:', sentMeta);
 
-    //classVariables.promptNIndexesReceived = true;
+    //conversationVariables.promptNIndexesReceived = true;
 
-    //classVariables.sentences[ classVariables.id_of_last_sent ].prompt = sentMeta.prompt;
-    //classVariables.last_sent.prompt = sentMeta.prompt;
+    //conversationVariables.sentences[ conversationVariables.id_of_last_sent ].prompt = sentMeta.prompt;
+    //conversationVariables.last_sent.prompt = sentMeta.prompt;
 
-    //classVariables.sentences[ classVariables.id_of_last_sent ].indexes = sentMeta.indexes;
-    //classVariables.last_sent.indexes = sentMeta.indexes;
+    //conversationVariables.sentences[ conversationVariables.id_of_last_sent ].indexes = sentMeta.indexes;
+    //conversationVariables.last_sent.indexes = sentMeta.indexes;
 
 //}
 

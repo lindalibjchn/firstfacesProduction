@@ -1,0 +1,148 @@
+.monospace-sent-font{
+    font-family:monospace;
+    color:green;
+    line-height:2.9;
+}
+
+.submitted-corrected-sentences {
+
+    width: 100%;
+    height: 100%;
+    bottom: 4%;
+    font-family: Courier;
+    padding: 0.3em;
+
+}
+
+#textInputContainer {
+    display: none;
+    position: absolute;
+    width: 100%;
+    height: 40%;
+    /*J deleted so we can have different colours for what we are doing inside*/
+    /*background-color: #a9a9a9;*/
+    /*border: 2px solid red;*/
+    opacity: 0.9;
+    bottom: 10%;
+
+}
+
+#sentenceShowHolder{
+    height:100%;
+    width:100%;
+    position:absolute;
+    top:0;
+    background-color: rgba(255,255,255,0.8);
+}
+
+#sentenceHolderParent{
+    height:100%;
+    width:100%;
+    position:absolute;
+    background-color:transparent;
+}
+
+#upperSentenceHolder{
+    padding-right:2%;
+    padding-left:2%;
+    height:100%;
+    background-color:transparent;
+    width:100%;
+    float:top;
+    position:absolute;
+    top:0;
+    z-index:0;
+    word-wrap:break-word;
+}
+
+#lowerSentenceHolder{
+    padding-left:2%;
+    padding-right:2%;
+    height:100%;
+    width:100%;
+    z-index:1;
+    background-color:transparent;
+    padding-top:1.4em; 
+    word-wrap:break-word;
+}
+
+#textInputBoxCont {
+
+    width: 100%;
+    height: 15%;
+    position: absolute; 
+    bottom: 0;
+    display: none;
+
+}
+
+#textInputBoxInnerCont {
+
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+#textInputBox {
+    display:none;
+    height: 100%;
+    width: 89%;
+    position: relative; 
+    padding: 1%;
+    background-color: black;
+
+}
+
+#textInput {
+
+    width: 100%;
+    height: 100%;
+    background: rgba( 0, 0, 0, 0 );
+    color: #33ff00;
+    font-family: Courier;
+    outline-style: none;
+    box-shadow: none;
+    border: none;
+    resize: none;
+    /*display: none;*/
+
+}
+
+#submittedNCorrectedSentenceCont {
+
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    /*bottom: 4%;*/
+    border: 2px dashed blue;
+    display: none;
+
+}
+
+#submittedNCorrectedSentenceInnerCont {
+
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: white;
+
+}
+
+#submittedSentence {
+
+    position: absolute;
+    /*border: 2px solid red;*/
+
+}
+
+#correctedSentence {
+
+    padding-top: 1.5em;
+    position: absolute;
+    /*border: 2px solid green;*/
+
+}
+

@@ -1,16 +1,16 @@
 function initInputReady( from ) {
-    classVariables.stage2 = false;
-    classVariables.stage3 = false;
+    conversationVariables.stage2 = false;
+    conversationVariables.stage3 = false;
     //$('#textInputContainer').show();
     //hideTextStuff();
     //hideVolumeBar();
     //$('#textInput').val( boxVal );
     //$('#textInput').focus();
-    //$('#recordBtnsContainer').show();
+    //$('#recordBtnsCont').show();
     
     // removes speech bubble after user has a few second to read it
     //removeSpeechBubble( tiaTimings.changeExpression * 2000 );                   
-    if ( classVariables.tutorial === false ) {
+    if ( conversationVariables.tutorial === false ) {
 
         $('.record-btn').prop( "disabled", false );
     
@@ -23,7 +23,7 @@ function initInputReady( from ) {
         $( '#textInputContainer' ).fadeIn();
         $( '#sentenceShowHolder').fadeIn();
         $('.play-btn').hide();
-        reset_text(classVariables.preSent)
+        reset_text(conversationVariables.preSent)
 
     } else {
 
@@ -33,7 +33,7 @@ function initInputReady( from ) {
     }
 
     //playback buttons disabled until recording done
-    $('#recordBtnsContainer').fadeIn(1000)
+    $('#recordBtnsCont').fadeIn(1000)
     //hide correctTranscript
     $('#correctTranscript').hide();
     //hide back button
@@ -52,7 +52,7 @@ function initInputReady( from ) {
     //$('#whatsWrongBtn').hide()
     //$('#showCorrectionBtn').css('display', 'flex')
 
-    //if ( classVariables.tutorial === false ) {
+    //if ( conversationVariables.tutorial === false ) {
 
      //$('#textInput').bind('input propertychange', function() {
 
@@ -112,7 +112,7 @@ function talkToTia() {
     // check that final text box has been changed or not from recording
     // for development
     //synthesisObject.finalTextInBox = $('#textInput').val();
-    synthesisObject.finalTextInBox = classVariables.preSent;
+    synthesisObject.finalTextInBox = conversationVariables.preSent;
 
     ////no change from audio
     //if ( synthesisObject.finalTextInBox === synthesisObject[ 'transcript' + synthesisObject.transcriptCur ] ) {
@@ -134,7 +134,7 @@ function talkToTia() {
     //$('#prevSents').fadeTo( 500, 0.1 );
     //$('#textInputContainer').hide();
     $('.record-btn').prop("disabled", true);
-    $('#recordBtnsContainer').fadeOut( 500 );
+    $('#recordBtnsCont').fadeOut( 500 );
     
     setTimeout( tiaLeanToListen, 500 );
     
@@ -152,9 +152,9 @@ function tiaLeanToListen() {
 
 function speakWords() {
     recTimes.startSpeak = Date.now() / 1000;
-    if(classVariables.usePlayAud){
+    if(conversationVariables.usePlayAud){
         play_audio()      
-        classVariables.usePlayAud = false;
+        conversationVariables.usePlayAud = false;
     }
     else{
         //if ( synthesisObject.originalVoice ) {
@@ -164,7 +164,7 @@ function speakWords() {
         //synthesisObject.gotNewSpeech = false;
         //synthesisObject.waitingForSynthCount = 0;
         }
-    setTimeout( tiaThinkAboutSentence, classVariables.totalAudioLength );
+    setTimeout( tiaThinkAboutSentence, conversationVariables.totalAudioLength );
         
     //} else if ( synthesisObject.gotNewSpeech ) {
 
@@ -201,7 +201,7 @@ function tiaThinkAboutSentence() {
     recTimes.finishSpeak = Date.now() / 1000;
     // gonna make all sentences go through Tia's brain for effect
     // check if quick judgement has come
-    //if ( classVariables.awaitingJudgement === false ) {
+    //if ( conversationVariables.awaitingJudgement === false ) {
 
         ////runAfterJudgement();
         //runAfterJudgementWithoutBeingAtTurnToThink()
@@ -213,7 +213,7 @@ function tiaThinkAboutSentence() {
     //initMove( leanObject, leanObject.coords.middle, tiaTimings.tiaLeanDuration * 2 );
     //setTimeout( function() {
      
-        //if ( classVariables.awaitingJudgement === false ) {
+        //if ( conversationVariables.awaitingJudgement === false ) {
 
             //runAfterJudgementWithoutBeingAtTurnToThink();
             //recTimes.changeExpressionAfterLeanBack = Date.now() / 1000;
@@ -222,7 +222,7 @@ function tiaThinkAboutSentence() {
 
             //setTimeout( function() {
 
-            //if ( classVariables.awaitingJudgement === false ) {
+            //if ( conversationVariables.awaitingJudgement === false ) {
 
                 //recTimes.changeExpressionBeforeTurningToThink = Date.now() / 1000;
                 //runAfterJudgementWithoutBeingAtTurnToThink();
@@ -246,7 +246,7 @@ function tiaThinkAboutSentence() {
 function goToThinkingPos() {
 
     // don't want to run runAfterJudgement if Tia is turning to think
-    //classVariables.goingToThinking = true;
+    //conversationVariables.goingToThinking = true;
 
     movementController( movements.think, tiaTimings.toThinkDuration / 3, tiaTimings.toThinkDuration );
 
@@ -306,11 +306,11 @@ function showTiaThinkingOverWords() {
             $('#thinkingWords').fadeOut( tiaTimings.wordFade );
             $('#thinkingWords1').fadeOut( tiaTimings.wordFade );
 
-            if ( classVariables.awaitingJudgement ) {
+            if ( conversationVariables.awaitingJudgement ) {
 
                 setTimeout( function() {
                     
-                    if ( classVariables.awaitingJudgement ) {
+                    if ( conversationVariables.awaitingJudgement ) {
                     
                         showTiaThinkingOverWords();
                         
@@ -336,7 +336,7 @@ function showTiaThinkingOverWords() {
 
 function addThoughtBubble( no ) {
 
-    //if ( classVariables.awaitingJudgement === false ) {
+    //if ( conversationVariables.awaitingJudgement === false ) {
     
         //removeThoughtBubbles();
         //judgementReceivedInThinkingPos();
@@ -366,9 +366,9 @@ function addThoughtBubble( no ) {
         $('#thinkingWords1').text( '' )
         $('#thinkingWordsCont').css('display', 'flex'); 
         synthesisObject.wordList = synthesisObject.finalTextInBox.split(" ");
-        classVariables.showThoughtBubble = true;
+        conversationVariables.showThoughtBubble = true;
      
-        //if ( classVariables.awaitingJudgement ) {
+        //if ( conversationVariables.awaitingJudgement ) {
 
         setTimeout( function() {
             
@@ -414,7 +414,7 @@ function addThoughtBubbles() {
     //expressionController( expressionObject.abs.thinking, '1.5', false );
 
 
-    //classVariables.goingToThinking = false;
+    //conversationVariables.goingToThinking = false;
     //tiaThinkingObject.thinking = true;
 
     addThoughtBubble( 0 );
@@ -431,7 +431,7 @@ function judgementReceivedInThinkingPos() {
     
     setTimeout( function() {
 
-        if ( classVariables.last_sent.judgement === "I" ) {
+        if ( conversationVariables.last_sent.judgement === "I" ) {
 
             expressionController( calculatedExpression, tiaTimings.changeExpression );
             runAfterJudgement();
@@ -488,7 +488,7 @@ function thinkingEyes() {
 
 //function runAfterJudgementWithoutBeingAtTurnToThink() {
 
-    //if ( classVariables.last_sent.judgement === "I" ) {
+    //if ( conversationVariables.last_sent.judgement === "I" ) {
     
         //runAfterJudgement();
 
@@ -519,20 +519,6 @@ function returnFromThinking() {
     }, tiaTimings.changeExpression * 250 );
 
 } 
-
-function removeSpeechBubble( dur ) {
-
-    $('#speechBubbleCont').fadeOut( dur );
-
-    setTimeout( function() {
-
-        //$('.speech-bubbles').hide();
-        $('.SpeakingWordsInside').text('');
-        $('.SpeakingWordsInside').hide();
-    
-    }, dur )
-
-}
 
 
 

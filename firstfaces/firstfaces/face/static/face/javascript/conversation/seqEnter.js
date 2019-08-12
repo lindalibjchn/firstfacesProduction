@@ -32,19 +32,19 @@ function mainEnter() {
 
         //initMovement( movements.standingStudent, '0.5', '1');
 
-        let studentName = classVariables.username;
+        let studentName = conversationVariables.username;
         
         //let greeting = ""
         greetingSrc0 = "greetings/" + studentName + ".wav";
         greetingText0 = "Hello " + studentName;
             
-        if ( classVariables.tutorial ) {
+        if ( conversationVariables.tutorial ) {
 
             //// if in tutorial, need this to be true so that responses from the recording and speech synthesis react in the correct way
-            //classVariables.tutorialStep = 0;
+            //conversationVariables.tutorialStep = 0;
 
             //// if user has completed tutorial before, don't need to introduce name
-            //if ( classVariables.tutorial_complete ) {
+            //if ( conversationVariables.tutorial_complete ) {
 
                 //greeting = " Hello " + studentName + ". Welcome to the ERLE tutorial. It will take 5 to 10 minutes to complete. I will speak, and then buttons will appear for you to click.";
         
@@ -54,7 +54,7 @@ function mainEnter() {
         
             //}
 
-        } else if ( classVariables.first_full_class ) {
+        } else if ( conversationVariables.first_full_class ) {
 
             //greeting = " Hello " + studentName + ", welcome to your first full class at ERLE! How are you feeling today?";
             //console.log( 'prefixURL:', prefixURL )
@@ -62,11 +62,11 @@ function mainEnter() {
             greetingSrc1 = "welcome_to_your_first_full_class_at_erle.wav";
             greetingText1 = "Welcome to your first full class at ERLE";
 
-        //} else if ( classVariables['prev_topic'] !== null ) {
+        //} else if ( conversationVariables['prev_topic'] !== null ) {
         
         } else {
 
-            //greeting = " Hello " + studentName + ", nice to see you again! Last time we met you were feeling " + classVariables.prev_emotion + ". How are you feeling today?";
+            //greeting = " Hello " + studentName + ", nice to see you again! Last time we met you were feeling " + conversationVariables.prev_emotion + ". How are you feeling today?";
             greetingSrc1 = "its_great_to_see_you_again.wav"
             greetingText1 = "It's great to see you again"
         
@@ -98,7 +98,7 @@ function mainEnter() {
     } else if ( mainCount === 280 ) {
 
         //tiaSpeak( synthesisObject.text, needSendTTS=false, speakOpening );
-        //classVariables.promptSpeaking = true;
+        //conversationVariables.promptSpeaking = true;
         synthesisObject.synthAudio.src = prefixURL + tiaMediaLoc + greetingSrc0;
         
         tiaSpeak( greetingText0, function() {
@@ -121,7 +121,7 @@ function mainEnter() {
 
 function speakOpening() {
 
-    if ( classVariables.tutorial ) {
+    if ( conversationVariables.tutorial ) {
 
         runTutorial();
 
@@ -135,7 +135,7 @@ function speakOpening() {
 
 function showInitEmotionQuestions() {
 
-    $('#emotionQuestionsContainer').fadeIn( tiaTimings.speechBubbleFadeInDuration );
+    $('#emotionQuestionsCont').fadeIn( tiaTimings.speechBubbleFadeInDuration );
 
     // allow emotions to be clickable
     $('.init-emot').on( 'click', storeEmotion );
@@ -159,9 +159,9 @@ function goToAskTopic( emotion ) {
         //synthesisObject.pitch = 1;
         //synthesisObject.speaking_rate = 0.95;
 
-        //if ( classVariables['prev_topic'] !== null && classVariables.first_full_class !== true ) {
+        //if ( conversationVariables['prev_topic'] !== null && conversationVariables.first_full_class !== true ) {
 
-            //speechBubbleObject.sentence = " That's great! Last time you talked about '" + classVariables['prev_topic'] + "' and your score was " + classVariables.prev_score.toString() + ". Would you like to continue with the same topic, or choose something different?";
+            //speechBubbleObject.sentence = " That's great! Last time you talked about '" + conversationVariables['prev_topic'] + "' and your score was " + conversationVariables.prev_score.toString() + ". Would you like to continue with the same topic, or choose something different?";
 
         //} else {
 
@@ -194,9 +194,9 @@ function goToAskTopic( emotion ) {
         //synthesisObject.pitch = -2;
         //synthesisObject.speaking_rate = 0.8;
 
-        //if ( classVariables['prev_topic'] !== null && classVariables.first_full_class !== true ) {
+        //if ( conversationVariables['prev_topic'] !== null && conversationVariables.first_full_class !== true ) {
 
-            //speechBubbleObject.sentence = " I'm sorry to hear that! Last time you talked about '" + classVariables['prev_topic'] + "' and your score was " + classVariables.prev_score.toString() + ". Would you like to continue with the same topic, or choose something different?";
+            //speechBubbleObject.sentence = " I'm sorry to hear that! Last time you talked about '" + conversationVariables['prev_topic'] + "' and your score was " + conversationVariables.prev_score.toString() + ". Would you like to continue with the same topic, or choose something different?";
 
         //} else {
 
@@ -233,7 +233,7 @@ function storeEmotion() {
         type: "POST",
         data: {
             'emotionID': emotion,
-            'sessionID': classVariables[ 'session_id' ],
+            'sessionID': conversationVariables[ 'session_id' ],
         },
         success: function(json) {
 
@@ -241,7 +241,7 @@ function storeEmotion() {
             //document.getElementById("myEmotion").innerHTML = "Why I'm " + emotion;
 
             $('.init-emot').unbind();
-            $('#emotionQuestionsContainer').fadeOut( 500 );
+            $('#emotionQuestionsCont').fadeOut( 500 );
 
             //setTimeout( function() {
                     
@@ -280,7 +280,7 @@ function askTopic() {
 
 function speakTopic() {
 
-    //if ( classVariables['prev_topic'] !== null && classVariables.first_full_class !== true ) {
+    //if ( conversationVariables['prev_topic'] !== null && conversationVariables.first_full_class !== true ) {
 
         //showContinueOrNew();
 
@@ -320,7 +320,7 @@ function showTopicChoices() {
     $('#myEmotion').on( 'click', function() { storeTopic( 'emotion' ) } );
     //$('#todaysNewsArticle').on( 'click', askIfReadNews );
 
-    $('#topicChoices').fadeIn( tiaTimings.speechBubbleFadeInDuration );
+    $('#topicChoicesCont').fadeIn( tiaTimings.speechBubbleFadeInDuration );
 
 }
 
@@ -330,7 +330,7 @@ function showPreChoiceTextInput() {
     //speechBubbleObject.sentence = "Please type your topic below";
     //synthesisObject.text = speechBubbleObject.sentence
 
-    $('#topicChoices').fadeOut( tiaTimings.speechBubbleFadeOutDuration );
+    $('#topicChoicesCont').fadeOut( tiaTimings.speechBubbleFadeOutDuration );
 
     synthesisObject.synthAudio.src = prefixURL + tiaMediaLoc + "type_your_topic_in_the_box_below.wav";
     setTimeout( function() {
@@ -343,12 +343,12 @@ function showPreChoiceTextInput() {
 
 function showChoiceTextInput() {
 
-    $('#textInputBoxContCont').show();
+    $('#textInputBoxInnerCont').show();
     $('#textInputBox').show();
     $('#textInputContainer').fadeIn( tiaTimings.speechBubbleFadeInDuration );
     $('#textInput').focus();
 
-    $('#submitTopicBtnContainer').fadeIn( tiaTimings.speechBubbleFadeInDuration );
+    $('#submitTopicBtnCont').fadeIn( tiaTimings.speechBubbleFadeInDuration );
     $('#submitOwnTopicBtn').on( 'click', getOwnTopicFromTextbox );
     
 }
@@ -360,8 +360,8 @@ function getOwnTopicFromTextbox() {
     
     $('#textInputContainer').fadeOut( tiaTimings.speechBubbleFadeOutDuration );
     $('#textInput').value = '';
-    $('#textInputBoxContCont').fadeOut( tiaTimings.speechBubbleFadeOutDuration );
-    $('#submitTopicBtnContainer').fadeOut( tiaTimings.speechBubbleFadeOutDuration )
+    $('#textInputBoxInnerCont').fadeOut( tiaTimings.speechBubbleFadeOutDuration );
+    $('#submitTopicBtnCont').fadeOut( tiaTimings.speechBubbleFadeOutDuration )
 
     if ( ownTopic === '' ) {
 
@@ -392,18 +392,18 @@ function dealWithEmptyTopic() {
 //function askIfReadNews() {
     
     //removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
-    //$('#topicChoices').fadeOut( tiaTimings.speechBubbleFadeInDuration );
+    //$('#topicChoicesCont').fadeOut( tiaTimings.speechBubbleFadeInDuration );
 
     //setTimeout( function() {
 
-        //tiaSpeak( "Did you read today's article? It's title is: '" + classVariables.headline + "'", needSendTTS=true, function() { 
+        //tiaSpeak( "Did you read today's article? It's title is: '" + conversationVariables.headline + "'", needSendTTS=true, function() { 
             
             //showDoubleBtn( "Yes, I read it", "no, I didn't read it", 
                     
                 //function(){ 
                     
                     //removeDoubleBtn();
-                    //storeTopic( 'news: ' + classVariables.headline ) 
+                    //storeTopic( 'news: ' + conversationVariables.headline ) 
                 
                 //},
 
@@ -436,11 +436,11 @@ function storeTopic( topicChoice ) {
         type: "POST",
         data: {
             'topic': topicChoice,
-            'sessionID': classVariables[ 'session_id' ],
+            'sessionID': conversationVariables[ 'session_id' ],
         },
         success: function(json) {
 
-            $('#topicChoices').fadeOut( 500 );
+            $('#topicChoicesCont').fadeOut( 500 );
             removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
 
             //initNod( 0.4, '0.5' )

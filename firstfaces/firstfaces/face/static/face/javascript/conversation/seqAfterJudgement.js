@@ -4,23 +4,23 @@ function runAfterJudgement() {
     // logic for different types of judgement
     
     // in return to laptop, movement will only be needed if tia not looking straight at student
-    classVariables.tiaLookingAtStudent = true;
+    conversationVariables.tiaLookingAtStudent = true;
 
     // get duration of nod or shake. Can also be 0o
     let nodShakeDur = 0;
-    if ( classVariables.last_sent.nod !== null ) {
+    if ( conversationVariables.last_sent.nod !== null ) {
     
         nodShakeDur = 4 * parseFloat( getNodSpeedInString() ) * 1000;
 
-    } else if ( classVariables.last_sent.judgement === "D" ) {
+    } else if ( conversationVariables.last_sent.judgement === "D" ) {
 
         nodShakeDur = 3000;
 
     }
 
-    if ( classVariables.last_sent.judgement === "C" ) {
+    if ( conversationVariables.last_sent.judgement === "C" ) {
 
-        if ( classVariables.last_sent.nod !== null ) {
+        if ( conversationVariables.last_sent.nod !== null ) {
                 
             nodOrShakeHead()
             setTimeout( function(){
@@ -47,9 +47,9 @@ function runAfterJudgement() {
 
         }
         
-    } else if ( classVariables.last_sent.judgement === "P" ) {
+    } else if ( conversationVariables.last_sent.judgement === "P" ) {
 
-        if ( classVariables.last_sent.nod !== null ) {
+        if ( conversationVariables.last_sent.nod !== null ) {
 
             nodOrShakeHead()
             setTimeout( prePrepareForPromptSpeech, nodShakeDur );
@@ -60,11 +60,11 @@ function runAfterJudgement() {
 
         }
 
-    } else if ( classVariables.last_sent.judgement === "I" ) {
+    } else if ( conversationVariables.last_sent.judgement === "I" ) {
 
         movementController( movements.confused, tiaTimings.movementToConfused / 2, tiaTimings.movementToConfused );
 
-        addToPrevSents(classVariables.last_sent);
+        addToPrevSents(conversationVariables.last_sent);
         
         setTimeout( function() {
             
@@ -74,25 +74,25 @@ function runAfterJudgement() {
 
         }, tiaTimings.movementToConfused * 500 )
 
-    } else if ( classVariables.last_sent.judgement === "B" || classVariables.last_sent.judgement === "M" || classVariables.last_sent.judgement === "D" || classVariables.last_sent.judgement === "3" ) {
+    } else if ( conversationVariables.last_sent.judgement === "B" || conversationVariables.last_sent.judgement === "M" || conversationVariables.last_sent.judgement === "D" || conversationVariables.last_sent.judgement === "3" ) {
 
         synthesisObject.speaking_rate = 0.8;
         // delay for moving back to laptop and showing sent in prevSents
         //let delay = 5000;
         //var text;
-        if ( classVariables.last_sent.judgement === "B" ) {
+        if ( conversationVariables.last_sent.judgement === "B" ) {
 
             prePrepareForPromptSpeech();
             
-        } else if ( classVariables.last_sent.judgement === "M" ) {
+        } else if ( conversationVariables.last_sent.judgement === "M" ) {
             
             prePrepareForPromptSpeech();
         
-        } else if ( classVariables.last_sent.judgement === "3" ) {
+        } else if ( conversationVariables.last_sent.judgement === "3" ) {
             
             displaySpeechBubblePrompt();
         
-        } else if ( classVariables.last_sent.judgement === "D" ) {
+        } else if ( conversationVariables.last_sent.judgement === "D" ) {
 
             nodOrShakeHead();
             setTimeout( displaySpeechBubblePrompt, nodShakeDur - 500 );
@@ -105,7 +105,7 @@ function runAfterJudgement() {
 
 function getNodSpeedInString() {
 
-    let nodSpeed = classVariables.last_sent['nodSpeed']
+    let nodSpeed = conversationVariables.last_sent['nodSpeed']
     
     if ( nodSpeed <= 0.33 ) {
 
@@ -126,17 +126,17 @@ function getNodSpeedInString() {
 function nodOrShakeHead() {
     
     recTimes.nodOrShakeHead =  Date.now() / 1000;
-    if ( classVariables.last_sent.judgement === "D" ) {
+    if ( conversationVariables.last_sent.judgement === "D" ) {
 
         initShake( 0.5, '0.75' );
 
     } else {
 
-        let nod = classVariables.last_sent.nod
+        let nod = conversationVariables.last_sent.nod
 
         if ( nod !== null ) {
 
-            let nodAmount = 0.4 + 0.5 * classVariables.last_sent['nodAmount'];
+            let nodAmount = 0.4 + 0.5 * conversationVariables.last_sent['nodAmount'];
 
             let nodSpeedString = getNodSpeedInString();
 
@@ -170,7 +170,7 @@ function prePrepareForPromptSpeech() {
 
     //function checkIfPromptReturned() {
 
-        //if ( classVariables.promptNIndexesReceived ) {
+        //if ( conversationVariables.promptNIndexesReceived ) {
 
             //displaySpeechBubblePrompt();
 
@@ -207,28 +207,28 @@ function displaySpeechBubblePrompt() {
     //$('#speakingWords').hide()
     //$('#speechBubbleCont').fadeIn( tiaTimings.speechBubbleFadeInDuration );
 
-    $('#speakingWordsInside').text( classVariables.tiaToSay );
+    $('#speakingWordsInside').text( conversationVariables.tiaToSay );
     
-    //if ( classVariables.last_sent.judgement === "P" ) {
+    //if ( conversationVariables.last_sent.judgement === "P" ) {
             
-        //$('#speakingWordsInside').text( classVariables.last_sent.prompt );
+        //$('#speakingWordsInside').text( conversationVariables.last_sent.prompt );
 
-    //} else if ( classVariables.last_sent.judgement === "B" ) {
+    //} else if ( conversationVariables.last_sent.judgement === "B" ) {
 
-        //let text = createBetterTextForPromptBox( classVariables.last_sent );
+        //let text = createBetterTextForPromptBox( conversationVariables.last_sent );
         //$('#speakingWordsInside').text( text );
     
-    //} else if ( classVariables.last_sent.judgement === "M" ) {
+    //} else if ( conversationVariables.last_sent.judgement === "M" ) {
 
-        //let text = createMeanByTextForPromptBox( classVariables.last_sent );
+        //let text = createMeanByTextForPromptBox( conversationVariables.last_sent );
         //$('#speakingWordsInside').text( text );
         
-    //} else if ( classVariables.last_sent.judgement === "3" ) {
+    //} else if ( conversationVariables.last_sent.judgement === "3" ) {
 
         //let text = "There are more than 3 mistakes in your sentence. Could you simplify and try again?";
         //$('#speakingWordsInside').text( text );
 
-    //} else if ( classVariables.last_sent.judgement === "D" ) {
+    //} else if ( conversationVariables.last_sent.judgement === "D" ) {
 
         //let text = "I'm sorry but I don't understand what you said.";
         //$('#speakingWordsInside').text( text );
@@ -248,9 +248,9 @@ function displaySpeechBubblePrompt() {
         //synthesisObject.synthAudio.play()
         //synthesisObject.synthAudio.onended = returnToLaptop;
         
-        tiaSpeak( classVariables.tiaToSay, function() {
+        tiaSpeak( conversationVariables.tiaToSay, function() {
 
-            if ( classVariables.last_sent.judgement === "D" || classVariables.last_sent.judgement === "3" || classVariables.last_sent.judgement === "M" ) {
+            if ( conversationVariables.last_sent.judgement === "D" || conversationVariables.last_sent.judgement === "3" || conversationVariables.last_sent.judgement === "M" ) {
 
                 returnToLaptop( 'try again' );
 
@@ -258,7 +258,7 @@ function displaySpeechBubblePrompt() {
 
         });
 
-        classVariables.promptSpeaking = true;
+        conversationVariables.promptSpeaking = true;
             
     }, tiaTimings.toTalkExpressionDuration * 1000 );
 
@@ -274,11 +274,11 @@ function returnToLaptop( from ) {
 
     //expressionController( expressionObject.abs.neutral, tiaTimings.changeExpression * 2 );
 
-    //if ( classVariables.classOver && classVariables.endClassSequenceStarted !== true ) {
+    //if ( conversationVariables.classOver && conversationVariables.endClassSequenceStarted !== true ) {
 
         //console.log('\n\n\nend class return to laptop tia looking at student\n\n\n');
         //endClas
-        //classVariables.endClassSequenceStarted = true;
+        //conversationVariables.endClassSequenceStarted = true;
 
     //} else {
 
@@ -295,7 +295,7 @@ function returnToLaptop( from ) {
 function addToPrevSents() {
 
     // create new box in prevSent
-    //appendExchange( classVariables.last_sent );
+    //appendExchange( conversationVariables.last_sent );
     //scrollBottom();
     loadPrevSents( scrollBottom );
     setTimeout( function() {
@@ -324,16 +324,16 @@ function showOptionBtns() {
 function tryAgain() {
 
     recTimes.clickOptionBtn = Date.now() / 1000;
-    let sent = classVariables.sentences[ classVariables.id_of_last_sent ].sentence;
+    let sent = conversationVariables.sentences[ conversationVariables.id_of_last_sent ].sentence;
 
-    classVariables.tiaLookingAtStudent = false;
+    conversationVariables.tiaLookingAtStudent = false;
     returnToLaptop('try again');
 
     $('#prevSents').fadeTo( 500, 1 );
     $('#optionBtns').fadeOut( 500 )
-    $('#recordBtnsContainer').fadeIn( 1000 )
+    $('#recordBtnsCont').fadeIn( 1000 )
 
-    let sentId = classVariables.last_sent.sent_id
+    let sentId = conversationVariables.last_sent.sent_id
     $.ajax({
         url: "/store_try_again",
         type: "GET",
@@ -351,7 +351,7 @@ function tryAgain() {
 function whatsWrong() {
 
     recTimes.clickOptionBtn = Date.now() / 1000;
-    let sentId = classVariables.last_sent.sent_id
+    let sentId = conversationVariables.last_sent.sent_id
 
     $.ajax({
         url: "/store_whats_wrong",
@@ -389,13 +389,13 @@ function showCorrection() {
     $('#tryAgainBtn').prop( "disabled", true).fadeOut( 500 );
     $('#nextSentenceBtn').prop( "disabled", true).fadeOut( 500 );
 
-    let sentId = classVariables.last_sent.sent_id
+    let sentId = conversationVariables.last_sent.sent_id
     $.ajax({
         url: "/store_show_correction",
         type: "GET",
         data: {'sentId': sentId},
         success: function(json) {
-            classVariables.last_sent.show_correction = true;
+            conversationVariables.last_sent.show_correction = true;
         },
         error: function() {
             console.log("that's wrong");
@@ -405,7 +405,7 @@ function showCorrection() {
     setTimeout( function() {
         
         //initArmIndicate('right', 1, 'high', '0.75');
-        classVariables.tapKeyForCorrection = true;
+        conversationVariables.tapKeyForCorrection = true;
         tapKeyFull();
     
         setTimeout( function() {
@@ -431,16 +431,16 @@ function nextSentence() {
     $('.option-btn').prop( "disabled", true);
     $('#sentenceShowHolder').hide;
 
-    if ( classVariables.lastSentToBeSent ) {
+    if ( conversationVariables.lastSentToBeSent ) {
 
-        classVariables.classOver = true;
+        conversationVariables.classOver = true;
 
     }
 
-    classVariables.tiaLookingAtStudent = false;
+    conversationVariables.tiaLookingAtStudent = false;
     returnToLaptop();
 
-    let sentId = classVariables.last_sent.sent_id
+    let sentId = conversationVariables.last_sent.sent_id
     $.ajax({
         url: "/store_next_sentence",
         type: "GET",
@@ -453,14 +453,14 @@ function nextSentence() {
         
     });
 
-    $('#submittedNCorrectedSentenceContCont').fadeOut( 500 )
+    $('#submittedNCorrectedSentenceCont').fadeOut( 500 )
 
 }
 
 var reading = false;
 function waitForWrongSlices() {
 
-    let sentId = classVariables.last_sent.sent_id
+    let sentId = conversationVariables.last_sent.sent_id
 
     $.ajax({
         url: "/wait_for_correction",
@@ -470,9 +470,9 @@ function waitForWrongSlices() {
 
             if ( json.indexes !== null ) {
 
-                classVariables.last_sent.indexes = JSON.parse( json.indexes );
+                conversationVariables.last_sent.indexes = JSON.parse( json.indexes );
 
-                classVariables.last_sent.correction = JSON.parse( json.correction );
+                conversationVariables.last_sent.correction = JSON.parse( json.correction );
                 
                 // no longer turning to board in mobile so comment out
                 // turnToBoardToShowErrors();
@@ -496,7 +496,7 @@ function waitForWrongSlices() {
 
 function tapKeyToShowErrors() {
 
-    classVariables.tapKeyForErrors = true;
+    conversationVariables.tapKeyForErrors = true;
     tapKeyFull();
 
 }
@@ -505,11 +505,11 @@ function showWrongSentence() {
 
     $('#textInputContainer').fadeIn();
 
-    $('#submittedNCorrectedSentenceContCont').show()
+    $('#submittedNCorrectedSentenceCont').show()
 
-    for ( w=0; w < classVariables.last_sent.sentence.length; w++ ) {
+    for ( w=0; w < conversationVariables.last_sent.sentence.length; w++ ) {
 
-        if ( classVariables.last_sent.sentence[ w ] === ' ' ) {
+        if ( conversationVariables.last_sent.sentence[ w ] === ' ' ) {
 
 
             $('#submittedSentence').append(
@@ -523,7 +523,7 @@ function showWrongSentence() {
 
             $('#submittedSentence').append(
 
-                "<div class='wrong-words wrong-words-words' id='wrongWord_" + w.toString() + "'>" + classVariables.last_sent.sentence[ w ] + "</div>"
+                "<div class='wrong-words wrong-words-words' id='wrongWord_" + w.toString() + "'>" + conversationVariables.last_sent.sentence[ w ] + "</div>"
 
             );
 
@@ -553,12 +553,12 @@ function showErrorBtns() {
 
 function highlightWrong() {
 
-    classVariables.last_sent.indexes.forEach( function(ind, i) {
+    conversationVariables.last_sent.indexes.forEach( function(ind, i) {
 
         setTimeout( function() {
 
             // for spaces
-            if ( ind.length === 1 && classVariables.last_sent.sentence[ ind ] === " " ) {
+            if ( ind.length === 1 && conversationVariables.last_sent.sentence[ ind ] === " " ) {
 
                 $('#wrongWord_' + ind[0].toString()).css( {
                     //'color': 'red' ,
@@ -581,7 +581,7 @@ function highlightWrong() {
                     });
 
 
-                    if ( classVariables.last_sent.sentence[ i ] === " " ) {
+                    if ( conversationVariables.last_sent.sentence[ i ] === " " ) {
                     
                         $('#wrongWord_' + i.toString()).css( {
                             'color': 'rgba(0,0,0,0)',
@@ -593,7 +593,7 @@ function highlightWrong() {
                            
                             });
 
-                            if ( ind === classVariables.last_sent.indexes.length - 1 ) {
+                            if ( ind === conversationVariables.last_sent.indexes.length - 1 ) {
 
                                 showErrorBtns();
 
@@ -614,7 +614,7 @@ function highlightWrong() {
                                 'background-image': 'none',
                             });
 
-                            if ( ind === classVariables.last_sent.indexes.length - 1 ) {
+                            if ( ind === conversationVariables.last_sent.indexes.length - 1 ) {
 
                                 showErrorBtns();
 
@@ -642,19 +642,19 @@ function showCorrectionUnderWrongSent() {
     let correctParts = [];
     let lenCorrectParts = [];
     let startSlice = 0;
-    for (let i=0; i<classVariables.last_sent.indexes.length + 1; i++ ) {
+    for (let i=0; i<conversationVariables.last_sent.indexes.length + 1; i++ ) {
 
         var slice;
-        if ( i < classVariables.last_sent.indexes.length ) {
+        if ( i < conversationVariables.last_sent.indexes.length ) {
 
-            slice = classVariables.last_sent.sentence.slice( startSlice, classVariables.last_sent.indexes[ i ][ 0 ])
+            slice = conversationVariables.last_sent.sentence.slice( startSlice, conversationVariables.last_sent.indexes[ i ][ 0 ])
             correctParts.push( slice )
 
-            startSlice = classVariables.last_sent.indexes[ i ][ classVariables.last_sent.indexes[ i ].length - 1] + 1
+            startSlice = conversationVariables.last_sent.indexes[ i ][ conversationVariables.last_sent.indexes[ i ].length - 1] + 1
 
         } else {
 
-            slice = classVariables.last_sent.sentence.slice( startSlice )
+            slice = conversationVariables.last_sent.sentence.slice( startSlice )
             correctParts.push( slice )
 
         }
@@ -671,14 +671,14 @@ function showCorrectionUnderWrongSent() {
 
     let wrongParts = [];
     let lenWrongParts = [];
-    classVariables.last_sent.indexes.forEach( function(ind) {
+    conversationVariables.last_sent.indexes.forEach( function(ind) {
 
         lenWrongPart = 0;
         wrongPart = []
         ind.forEach( function( wo ) {
 
-            wrongPart.push( classVariables.last_sent.sentence[ wo ] );
-            lenWrongPart += classVariables.last_sent.sentence[ wo ].length;
+            wrongPart.push( conversationVariables.last_sent.sentence[ wo ] );
+            lenWrongPart += conversationVariables.last_sent.sentence[ wo ].length;
 
         } );
 
@@ -687,7 +687,7 @@ function showCorrectionUnderWrongSent() {
 
     } );
 
-    let corrections = classVariables.last_sent.correction
+    let corrections = conversationVariables.last_sent.correction
     let lenCorrections = [];
     corrections.forEach( function( wp ) {
 
@@ -704,7 +704,7 @@ function showCorrectionUnderWrongSent() {
 
     correct = true;
     count = 0;
-    for ( j=0; j<classVariables.last_sent.indexes.length * 2; j++ ) {
+    for ( j=0; j<conversationVariables.last_sent.indexes.length * 2; j++ ) {
 
         if ( correct ) {
 
@@ -734,7 +734,7 @@ function showCorrectionUnderWrongSent() {
 
         } else {
 
-            classVariables.last_sent.correction[ count ].forEach( function( q ) {
+            conversationVariables.last_sent.correction[ count ].forEach( function( q ) {
 
                 if ( q  === ' ' ) {
 
@@ -815,7 +815,7 @@ function showCorrectionUnderWrongSent() {
     }
     setTimeout( function() {
 
-        for (let i=0; i<classVariables.last_sent.indexes.length; i++ ) {
+        for (let i=0; i<conversationVariables.last_sent.indexes.length; i++ ) {
 
             setTimeout( function() {
 
@@ -850,7 +850,7 @@ function showCorrectionUnderWrongSent() {
                         }
                     });
 
-                    if ( i === classVariables.last_sent.indexes.length - 1 ) {
+                    if ( i === conversationVariables.last_sent.indexes.length - 1 ) {
 
                         $('#nextSentenceBtn').css('display', 'flex');
                         $('#nextSentenceBtn').prop( "disabled", false ).fadeIn( 500 );

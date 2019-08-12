@@ -1,0 +1,215 @@
+{% load static %}
+
+<div id="inputButtonsContainer">
+
+    <!--init questions buttons-->
+    <div class="w3-row" id="emotionQuestionsCont">
+
+        <div class="w3-col l3 w3-hide-medium w3-hide-small">&nbsp</div>
+        
+        <div class="w3-col l2 m4 s4">
+
+            <div class="input-btns">
+            
+                <button id="sad" class="w3-btn w3-red init-emot">sad</button>
+
+            </div>
+
+        </div>
+
+        <div class="w3-col l2 m4 s4">
+
+            <div class="input-btns">
+            
+                <button id="ok" class="w3-btn w3-orange init-emot">ok</button>
+
+            </div>
+
+        </div>
+
+        <div class="w3-col l2 m4 s4">
+
+            <div class="input-btns">
+            
+                <button id="happy" class="w3-btn w3-green init-emot">happy</button>
+
+            </div>
+
+        </div>
+
+        <div class="w3-col l3 w3-hide-medium w3-hide-small">&nbsp</div>
+
+    </div>
+
+    <!--topic choices-->
+    <div class="w3-row" id="topicChoicesCont">
+
+        <div class="w3-col l3 w3-hide-medium w3-hide-small">&nbsp</div>
+
+        <div class="w3-col l2 m4 s4">
+
+            {% if article %}
+
+            <div class="input-btns">
+
+                <button id="todaysNewsArticle" class="w3-btn w3-red choice-btn">today's topic</button>
+
+            </div>
+
+            {% else %}
+
+            <div>&nbsp</div>
+
+            {% endif %}
+
+        </div>
+
+        <div class="w3-col l2 m4 s4">
+
+            <div class="input-btns">
+
+                <button id="myChoice" class="w3-btn w3-blue choice-btn">my choice</button>
+
+            </div>
+
+        </div>
+
+        <div class="w3-col l2 m4 s4">
+
+            <div class="input-btns">
+                
+                <button class="w3-btn w3-green choice-btn" id="myEmotion">my feeling</button>
+
+            </div>
+
+        </div>
+
+        <div class="w3-col l3 w3-hide-medium w3-hide-small">&nbsp</div>
+
+    </div>
+
+
+    <div id="submitTopicBtnCont" class="w3-row">
+
+        <div class="w3-col l3 w3-hide-medium w3-hide-small">&nbsp</div>
+        
+        <div class="w3-col l2 m4 s4">&nbsp</div>
+        
+        <div class="w3-col l2 m4 s4">
+
+            <div class="input-btns">
+
+                <button id="submitOwnTopicBtn" class="w3-btn w3-green">submit</button>
+        
+            </div>
+
+        </div>
+        
+        <div class="w3-col l2 m4 s4">&nbsp</div>
+        
+        <div class="w3-col l3 w3-hide-medium w3-hide-small">&nbsp</div>
+
+    </div>
+
+    <div id="recordBtnsCont" class="w3-row">
+
+        <div class="w3-col l3 w3-hide-medium w3-hide-small">&nbsp</div>
+        
+        <div class="w3-col l2 m4 s4" id="listenAndSynthBtnsContainer">
+             
+            <!-- Adds button needed for  no-->
+            <div id="incorrectTranscriptBtns" class="input-btns">
+                
+                <div id="listenVoiceBtn">
+                    <img id="human" src="{% static 'face/images/human_speech.png' %}">
+                </div>
+                
+                <button class="w3-btn w3-circle w3-red record-btn w3-padding-medium play-btn input-btn" id="backErrorSelection">
+                    <i class="fa fa-angle-double-left inputfa"></i>
+                </button>
+
+                <button class="w3-btn w3-circle w3-red record-btn w3-padding-medium play-btn back-btn-1" id="backCorrection">
+                    <i class="fa fa-angle-double-left inputfa"></i>
+                </button>   
+            
+            </div>
+
+        </div>
+
+        <div class="w3-col l2 m4 s4" id="recordAndStopBtnsContainer">
+
+            <div id="recordAndStopBtns" class="input-btns">
+
+                <button class="w3-btn w3-circle w3-blue input-btn record-btn w3-padding-medium" id="recordVoiceBtn">
+                 
+                    <i class="fa fa-microphone inputfa"></i>
+
+                </button>
+
+                <button class="w3-btn w3-circle w3-red input-btn record-btn w3-padding-medium" id="stopRecordVoiceBtn">
+                 
+                    <i class="fa fa-stop inputfa"></i>
+
+                </button>
+
+            </div>
+
+        </div>
+
+        <div class="w3-col l2 m4 s4" id="talkBtnContainer">
+
+            <div id="talkBtnCont" class="input-btns">
+
+                <button class="w3-btn w3-circle w3-green input-btn input-fa record-btn w3-padding-medium play-btn" id="talkBtn">
+                    
+                    <i class="fa fa-play inputfa" id="yellowPlay"></i>
+               
+                </button>
+
+                <!--<button class="w3-btn w3-circle w3-green input-btn input-fa record-btn w3-padding-small play-btn" id="correctTranscript">-->
+                    <!--<i class="fa fa-check inputfa" id="whiteTick"></i>-->
+                <!--</button>-->
+                
+                <button class="w3-btn w3-circle w3-green input-btn input-fa record-btn w3-padding-medium play-btn" id="forwardErrorSelection">
+                    <i class="fa fa-angle-double-right inputfa"></i>                 
+                </button>
+                
+                <button class="w3-btn w3-circle w3-green input-btn input-fa record-btn w3-padding-medium play-btn" id="submitCorrectedErrors">                                             
+                    <i class="fa fa-angle-double-right inputfa"></i>
+                </button>  
+
+            </div>
+     
+        </div>
+
+        <div class="w3-col l3 w3-hide-medium w3-hide-small">&nbsp</div>
+
+    </div>
+
+    <div class="w3-row" id="optionBtns">
+
+        <div class="w3-col l3 w3-hide-medium w3-hide-small">&nbsp</div>
+        <div class="w3-col l2 m4 s4 option-row" class="input-btns">
+
+            <button class="w3-btn w3-blue option-btn" id="tryAgainBtn">try again</button>
+
+        </div>
+
+        <div class="w3-col l2 m4 s4 option-row" class="input-btns">
+
+            <button class="w3-btn w3-indigo option-btn" id="whatsWrongBtn">what's wrong</button>
+            <button class="w3-btn w3-indigo option-btn" id="showCorrectionBtn">show correction</button>
+
+        </div>
+
+        <div class="w3-col l2 m4 s4 option-row" class="input-btns">
+
+            <button class="w3-btn w3-green option-btn" id="nextSentenceBtn">next sentence</button>
+
+        </div>
+        <div class="w3-col l3 w3-hide-medium w3-hide-small">&nbsp</div>
+
+    </div>
+
+
+</div>

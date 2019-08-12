@@ -4,7 +4,7 @@ from django.utils import timezone
 from django.conf import settings
 import json
 
-class Session(models.Model):
+class Conversation(models.Model):
 
     learner = models.ForeignKey(User, on_delete=models.CASCADE)
     start_time = models.DateTimeField()
@@ -33,7 +33,7 @@ class Available(models.Model):
 
 class PermSentence(models.Model):
     learner = models.ForeignKey(User, on_delete=models.CASCADE)
-    session = models.ForeignKey(Session, on_delete=models.CASCADE)
+    session = models.ForeignKey(Conversation, on_delete=models.CASCADE)
     sentence = models.CharField(max_length=300, default="[]")
     sentence_timestamp = models.DateTimeField(null=True, blank=True)
     question = models.BooleanField(default=False)
@@ -80,7 +80,7 @@ class PermSentence(models.Model):
 class TempSentence(models.Model):
     p_sentence = models.ForeignKey(PermSentence, on_delete=models.CASCADE)
     learner = models.ForeignKey(User, on_delete=models.CASCADE)
-    session = models.ForeignKey(Session, on_delete=models.CASCADE)
+    session = models.ForeignKey(Conversation, on_delete=models.CASCADE)
     sentence = models.CharField(max_length=300, default="[]")
     sentence_timestamp = models.DateTimeField(null=True, blank=True)
     question = models.BooleanField(default=False)

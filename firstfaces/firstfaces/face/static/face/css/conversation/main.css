@@ -1,0 +1,699 @@
+/*GENERAL SETTINGS FOR ALL MAJOR ELEMENTS*/
+
+button {
+
+    outline: none;
+
+}
+
+button:hover {
+
+    transform: scale(1.1);
+    outline: none;
+
+}
+
+button:active {
+
+    transform: scale(1.0);
+    outline: none;
+
+}
+
+.triangle-cont {
+
+    /************************************************
+    SPEECH BUBBLE
+    ************************************************/
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    /*align-items: center;*/
+    justify-content: center;
+
+}
+
+
+.triangle-bottomleft {
+
+    /************************************************
+    SPEECH BUBBLE
+    ************************************************/
+
+    position: absolute;
+    width: 0;
+    height: 0;
+    top: -10px;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid white;
+
+}
+
+.input-btns {
+
+    /************************************************
+    CLOSE AND CORRECTION OVERLAYS
+    ************************************************/
+
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.init-questions-container {
+
+    display: none;
+    [>background: rgba( 256, 256, 256, 0.2 );<]
+    height: 18%;
+    width: 50%;
+    left: 50%;
+    transform: translate( -50%, 0 );
+    bottom: 5%;
+    position: absolute;
+    z-index: 101;
+
+}
+
+#tutorialBtnSingleCont {
+
+    width: 60%;
+
+}
+#tutorialBtnDoubleCont {
+
+    width: 70%;
+
+}
+
+#tutorialBtnQuadCont {
+
+    width: 70%;
+    bottom: 13%;
+
+}
+
+#continueNewChoices {
+
+    display: none;
+
+}
+
+.topic-row {
+
+    height: 33%;
+
+}
+
+.nice-row {
+
+    height: 40%;
+
+}
+
+#continueBtn {
+
+    margin-top: 25px !important;
+
+}
+
+#topicLabel {
+
+    font-size: 22px;
+    color: #2B2A2A;
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+
+}
+
+#topicExample {
+
+    font-size: 18px;
+    color: #605C5C;
+
+}
+
+#ref_btn{
+    background-color:green;
+    width:95%;
+    position:relative;
+}
+
+.corrected-error{
+    background-color:green;
+    opacity:1;
+    padding:0.1em;
+    border:1px solid white;;
+    color:white;
+}
+.lower-error{
+    background-color:red;
+    opacity:1;
+    padding:0.1em;
+    border:1px solid white;
+    color:white;
+}
+
+@media screen and (min-width: 701px) {
+  #textInput {
+    font-size 1.5em;
+    line-height: 1.5em;
+  }
+  .speaking-words-inside {
+      font-size: 1.3em;
+      line-height: 1.3em;
+  }
+    .submitted-corrected-sentences {
+        font-size: 1.5em;
+        line-height: 2.5em;
+    }
+}
+
+/* If the screen size is 600px wide or less, set the font-size of <div> to 30px */
+@media screen and (max-width: 700px) {
+  #textInput {
+    font-size: 1em;
+    line-height: 1.2em;
+  }
+  #sentenceShowHolder{
+    font-size: 1em;
+    line-height: 1.2em;
+  }
+  .speaking-words-inside {
+      font-size: 0.9em;
+      line-height: 1.2em;
+  }
+    
+    .submitted-corrected-sentences {
+        font-size: 1em;
+        line-height: 2.6em;
+    }
+}
+
+#textInput:focus {
+ 
+    outline-style: none;
+    box-shadow: none;
+    border: none;
+
+}
+
+.selectable-word{
+    opacity:0.9;
+    border:1px solid white;
+    border-radius:0.5em;
+    padding:0.1em;
+    cursor:pointer;
+}
+.normal-word{
+    opacity:1;
+    padding:0.1em;
+    border:1px solid transparent;
+}
+
+.uncorrected-error{
+    opacity:1;
+    padding:0.1em;
+    border:1px solid black;
+    background-color:yellow;
+    color:black;
+    border-radius:0.5em;
+}
+
+.hidden-word{
+    opacity:0;
+    padding:0.1em;
+    border:1px solid transparent;
+}
+.hidden-span{
+    opacity:0;
+}
+
+.selected-word{
+    opacity:1;
+    border:1px solid white;
+    background-color:green;
+    color:white;
+    border-radius:0.5em;
+    padding:0.1em;
+    cursor:pointer;
+}
+.selected-word:hover{
+    cursor:pointer;
+}
+
+/*error-word-unselected{}*/
+/*error-word-selected{}*/
+/*correct-error-upper{} */
+/*correct-error-lower{}*/
+
+
+.wrong-words {
+
+    display: inline-block;
+
+}
+
+.correct-words {
+
+    display: inline-block;
+    color: rgba(0,0,0,1);
+
+}
+
+.correction-word {
+
+    color: green;
+
+}
+
+/*put 'a's in place of spaces on Daniel's advice, n then make them disappear. Thi swill help with alignment later*/
+.wrong-words-spaces {
+
+    color: rgba(0, 0, 0, 0);
+
+}
+
+.correct-words-spaces {
+
+    color: rgba(0, 0, 0, 0);
+
+}
+
+.wrong-parts {
+
+    color: rgba(0,0,0,0);
+    /*background-image: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0), green, green, rgba(0,0,0,0), rgba(0,0,0,0));*/
+    font-weight: bold;
+
+}
+
+.wrong-parts-spaces {
+
+    color: rgba(0,0,0,0)
+
+}
+
+.correct-parts {
+
+    color: rgba(0,0,0,0);
+
+}
+
+/*#playRobot {*/
+
+    /*height: 65px;*/
+    /*width: 65px;*/
+    /*background-color: #1b8900;*/
+    /*position: absolute;*/
+    /*right: 0.5%;*/
+    /*bottom: 10%;*/
+
+/*}*/
+
+/*#playRobot:hover {*/
+
+    /*background-color: #33ff00;*/
+    /*cursor: pointer;*/
+
+/*}*/
+
+/*#robot {*/
+
+    /*position: relative;*/
+    /*height: 110%;*/
+    /*left: -2px;*/
+    /*bottom: 5px;*/
+
+/*}*/
+
+/*#altCont {*/
+
+    /*position: relative;*/
+    /*height: 10%;*/
+    /*width: 90%;*/
+    /*[>left: 0;<]*/
+    /*[>top: 0;<]*/
+    /*[>display: none;<]*/
+    /*[>border: 2px solid blue;<]*/
+
+/*}*/
+
+/*.sent-scores-row {*/
+
+    /*[>width: 100%;<]*/
+    /*[>height: 100%;<]*/
+    /*[>position: relative;<]*/
+
+/*}*/
+
+/*.sent-scores {*/
+
+    /*[>width: 45px;<]*/
+    /*height: 100%;*/
+    /*font-size: 1.7vw;*/
+    /*font-weight: bold;*/
+    /*text-align: center;*/
+    /*background-color: #33ff00;*/
+    /*[>position: absolute;<]*/
+    /*[>left: 0;<]*/
+    /*[>top: 0;<]*/
+    /*[>bottom: 0;<]*/
+    /*[>margin: auto;<]*/
+    /*display: flex;*/
+    /*justify-content: center;*/
+    /*align-items: center;*/
+    /*[>color: white;<]*/
+
+/*}*/
+
+/*.sent-scores:hover {*/
+
+    /*cursor: pointer;*/
+    /*background-color: #33ff00 !important;*/
+    /*[>color: black !important;<]*/
+
+/*}*/
+
+/*#alt00 {*/
+
+    /*background-color: #33ff00;*/
+    /*cursor: default;*/
+    /*border-right: 1px solid black;*/
+
+/*}*/
+
+/*#alt00:hover {*/
+
+    /*background-color: #33ff00; !important*/
+
+/*}*/
+
+/*#alt01 {*/
+
+    /*background-color: #1b8900;*/
+    /*border-left: 1px solid black;*/
+    /*border-right: 1px solid black;*/
+
+/*}*/
+
+/*#alt02 {*/
+
+    /*background-color: #1b8900;*/
+    /*border-left: 1px solid black;*/
+
+/*}*/
+
+#meterCont {
+
+    height: 7px;
+    width: 100%;
+    /*display: none;*/
+    /*border: 3px solid white;*/
+    position: absolute;
+    /*right: 0;*/
+    /*top: 10%;*/
+    bottom: 0;
+    /*display: flex;*/
+    /*justify-content: center;*/
+    /*align-items: center;*/
+
+}
+
+#volumeMic {
+
+    /*position: absolute;*/
+    /*padding: 5px;*/
+    /*left: -10px;*/
+    bottom: 0;
+    color: #33ff00;
+    /*margin-top: 5px;*/
+
+}
+
+
+.sentenceBox {
+
+    background-color: white;
+    border-radius: 7px 0px 7px 7px;
+    min-width: 51%;
+    max-width: 90%;
+    margin: 4px;
+    padding: 3%;
+    float: right;
+    font-size: 1.1em;
+    
+}
+
+.noCorrectionYetSent {
+
+    opacity: 0.2;
+    color: grey;
+
+}
+
+.correctSent {
+
+    background-color: rgba( 160, 219, 142, 1 );
+
+}
+
+.meanBySent {
+
+    background-color: rgba( 244, 217, 166, 1 );
+
+}
+
+.correctedSection {
+
+    background-color: red;
+    color: white;
+    /*border-radius: 5px;*/
+
+}
+
+.meanBySection {
+
+    background-color: orange;
+    color: white;
+    /*border-radius: 5px;*/
+
+}
+
+.betterSection {
+
+    background-color: green;
+    color: white;
+
+}
+
+.incorrectSent {
+
+    background-color: rgba( 255, 182, 193, 1 );
+
+}
+
+.promptBox {
+
+    background-color: white;
+    float: left;
+    /*to give edge on other side*/
+    border-radius: 0px 7px 7px 7px;
+
+}
+
+.correctionsBox {
+
+    background-color: teal;
+    color: white;
+    float: left;
+    /*to give edge on other side*/
+    border-radius: 0px 7px 7px 7px;
+
+}
+
+/*new stuff after changing sentence from string to list*/
+.prev-sents-words {
+
+    display: inline-block;
+    
+}
+
+
+#listenVoiceBtn {
+
+    position: absolute;
+    /*left: 90%;*/
+    /*bottom: 100%;*/
+    display: none;
+    height: 35px;
+    width: 35px;
+    /*border-radius: 10px 10px 0px 0px;*/
+    /*z-index: 9;*/
+
+}
+
+#human {
+
+    position: relative;
+    height: 130%;
+    /*left: -10px;*/
+    bottom: 5px;
+
+}
+
+#recordAndStopBtnsContainer {
+
+    height: 100%;
+    /*display: flex;*/
+    /*align-items: center;*/
+    z-index: 10;
+}
+
+#recordAndStopBtns {
+    position: relative;
+}
+
+#incorrectTranscriptBtns{
+    height: 100%;
+}
+
+#talkBtnContainer {
+
+    height: 100%
+
+}
+
+#talkBtnCont {
+
+    height: 100%;
+    display: flex;
+    align-items: center;
+
+}
+
+#talkBtn {
+
+    position: relative;
+    /*width: 80%;*/
+    /*font-size: 1.6vw !important;*/
+    /*font-weight: bold;*/
+    color: yellow !important;
+
+}
+
+#yellowPlay {
+
+    position: relative;
+    left: 12%;
+
+}
+
+.input-btn-large {
+
+    font-size: 3em !important;
+
+}
+
+.input-btn {
+
+    font-size: 1.9em !important;
+    font-weight: bold !important
+
+}
+
+.back-btn-1 {
+
+    font-size: 1.9em !important;
+    font-weight: bold !important
+
+}
+
+.record-btn {
+/*left:0;*/
+/*margin: auto;*/
+/*height: 60px;*/
+/*width: 60px;*/
+
+}
+
+#stopRecordVoiceBtn {
+
+    display: none;
+
+}
+
+.inputfa {
+    color: white;
+}
+.redfa{
+    color: red;
+}
+
+#optionBtns {
+
+    display: none;
+    width: 100%;
+    height: 100%;
+
+}
+
+
+.option-row {
+
+    height: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.option-btn {
+
+    /*height: 40%;*/
+    width: 90%;
+    /*font-size: 1.2vw;*/
+    /*font-weight: bold;*/
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+#showCorrectionBtn {
+
+    display: none;
+
+}
+
+.tut-double-btn {
+
+    width: 98%;
+
+}
+
+.nice-row-quad {
+
+    height: 55px;
+
+}
+.tut-quad-btn {
+
+    width: 80%;
+    height: 50px;
+}
+
+
+
+
+
+
+
+
+
+

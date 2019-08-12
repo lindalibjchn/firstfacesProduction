@@ -9,7 +9,7 @@ from .utils import *
 from .speech_to_text_utils import *
 from django.utils import timezone
 import json
-from .models import Session, TempSentence, AudioFile, Profile, NewsArticle, PostTalkTiming, AudioError, AudioErrorAttempt, AudioErrorCorrectionAttempt
+from .models import Conversation, TempSentence, AudioFile, Profile, NewsArticle, PostTalkTiming, AudioError, AudioErrorAttempt, AudioErrorCorrectionAttempt
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 import code
@@ -24,8 +24,8 @@ import math
 from django.core.mail import send_mail
 import re
 import ast
-from .praat_utils import *
-from .DanUtils import *
+# from .praat_utils import *
+# from .DanUtils import *
 
 logger = logging.getLogger(__name__)
 
@@ -164,7 +164,7 @@ def group_data(request):
 
         for u in group_users:
 
-            sessions = Session.objects.filter( learner=u )
+            sessions = Conversation.objects.filter( learner=u )
 
             if sessions.count() != 0:
                 # get dictionary of all previous sessions
@@ -208,14 +208,14 @@ def waiting(request):
         no_live_sessions = get_number_of_current_live_sessions()
 
         # in "Monday 18:00" format
-        next_class, next_class_after_today = get_upcoming_class( availables )
-        schedule_dict[ 'upcomingClass' ] = next_class
-        schedule_dict[ 'upcomingClassAfterToday' ] = next_class_after_today
-        # check if in class or during class
-        sessions = Session.objects.filter( learner=request.user ).filter( tutorial=False )
+        next_conversation, next_conversation_after_today = get_upcoming_conversation( availables )
+        schedule_dict[ 'upcomingClass' ] = next_conversation
+        schedule_dict[ 'upcomingClassAfterToday' ] = next_conversation_after_today
+        # check if in conversation or during conversation
+        sessions = Conversation.objects.filter( learner=request.user ).filter( tutorial=False )
         # returns boolean
-        schedule_dict[ 'class_already_done_today' ] = json.dumps( get_class_already_done_today( sessions ) )
-        schedule_dict[ 'in_class_now' ], schedule_dict[ 'session_id' ] = get_in_class_now( sessions )
+        schedule_dict[ 'conversation_already_done_today' ] = json.dumps( get_conversation_already_done_today( sessions ) )
+        schedule_dict[ 'in_conversation_now' ], schedule_dict[ 'session_id' ] = get_in_conversation_now( sessions )
 
         # get dictionary of all previous sessions
         sessions_dict = get_prev_sessions( request.user )
@@ -258,15 +258,15 @@ def waiting(request):
         return render(request, 'face/waiting.html', context)
 
 @login_required
-def class_time(request, session_id):
+def conversation(request, session_id):
 
     try:
 
         in_development = settings.DEBUG
 
 
-        # when entering a class, must check that a session exists at that url e.g. 'class_time/234'. If a DoesNot
-        sess = Session.objects.get(id=session_id)
+        # when entering a conversation, must check that a session exists at that url e.g. 'conversation/234'. If a DoesNot
+        sess = Conversation.objects.get(id=session_id)
         
         # if session is ended, return to waiting
         if sess.end_time == None:
@@ -293,7 +293,7 @@ def class_time(request, session_id):
                 prev_topic = None
                 prev_score = None
                 prev_emotion = None
-                first_full_class = False
+                first_full_conversation = False
                 tutorial_complete = Profile.objects.get(learner=request.user).tutorial_complete
 
                 # if first time create .wav of Tia sating 'hello {USERNAME}'
@@ -301,7 +301,7 @@ def class_time(request, session_id):
                     create_hello_wav(request.user.username)
 
                 try:
-                    all_sesss = Session.objects.filter(learner=request.user).exclude(end_time=None)
+                    all_sesss = Conversation.objects.filter(learner=request.user).exclude(end_time=None)
                     recent_sesss = all_sesss.filter(start_time__gte=sess.start_time-datetime.timedelta(days=30)).filter(tutorial=False).order_by('-pk')
 
                     print('recent_sesss:', recent_sesss)
@@ -313,8 +313,8 @@ def class_time(request, session_id):
                         if prev_topic == 'emotion':
                             prev_topic = 'feeling ' + prev_emotion
                         prev_score = recent_sesss[0].score
-                    if len(all_sesss) == 1: # tutorial is one class
-                        first_full_class = True
+                    if len(all_sesss) == 1: # tutorial is one conversation
+                        first_full_conversation = True
 
                 except:
                     pass
@@ -411,17 +411,17 @@ def class_time(request, session_id):
 
                         last_sent = sentences[id_of_last_sent]
                         
-                # check if class is over
-                class_over = False
+                # check if conversation is over
+                conversation_over = False
                 if sess.end_time != None:
-                    class_over = True
+                    conversation_over = True
 
                 prof = Profile.objects.get(learner=request.user)
                 gender = prof.gender
 
-                class_variables = {
+                conversation_variables = {
 
-                    'classOver': class_over,
+                    'conversationOver': conversation_over,
                     'username': request.user.username,
                     'start_time': start_time * 1000,
                     'session_id': session_id,
@@ -441,7 +441,7 @@ def class_time(request, session_id):
                     'interference_count_this_sent': interference_count_this_sent,
                     'blobs': blobs,
                     'gender': gender,
-                    'first_full_class': first_full_class,
+                    'first_full_conversation': first_full_conversation,
                     'tutorial': sess.tutorial,
                     'tutorial_complete': tutorial_complete,
                     'endClassSequenceStarted': False,
@@ -451,18 +451,18 @@ def class_time(request, session_id):
 
                 context = {
 
-                    'class_variables': json.dumps(class_variables), 
-                    'class': True, # for the navbar to know we are in class
+                    'conversation_variables': json.dumps(conversation_variables), 
+                    'conversation': True, # for the navbar to know we are in conversation
                     'article': article,
 
                 }
 
-                return render(request, 'face/class_time.html', context)
+                return render(request, 'face/conversation/main.html', context)
             
             else:
             
-                # user is not the owner of the class
-                logger.error('\n\nerror from inside if in class_time: user is not owner of class')
+                # user is not the owner of the conversation
+                logger.error('\n\nerror from inside if in conversation: user is not owner of conversation')
                 return redirect('waiting')
         
         else:
@@ -471,9 +471,9 @@ def class_time(request, session_id):
             return redirect('waiting')
 
     # if the session doesn't exist from the url the following exception handles it by returning the user to the waiting area:
-    except Session.DoesNotExist as e:
+    except Conversation.DoesNotExist as e:
 
-        logger.error('\n\nerror from try except in class_time:' + str(e) + '\n')
+        logger.error('\n\nerror from try except in conversation:' + str(e) + '\n')
         
         return redirect('waiting')
     
@@ -486,7 +486,7 @@ def book_session(request):
     
     if user is not None:
         
-        session = Session(learner=user, start_time=time_now, tutorial=tutorial) 
+        session = Conversation(learner=user, start_time=time_now, tutorial=tutorial) 
         session.save()
 
         send_mail('Class booked by: ' + request.user.username, 'starts soon', 'ucd.erle@gmail.com', ['john.sloan.1@ucdconnect.ie'])
@@ -553,7 +553,7 @@ def store_sound_mic(request):
 def store_tutorial_end(request):
 
     session_id = request.POST['sessionID']
-    sess = Session.objects.get(pk=session_id)
+    sess = Conversation.objects.get(pk=session_id)
     sess.learner_emotion = "tutorial"
     sess.topic = "tutorial"
     time_now = timezone.now();
@@ -576,7 +576,7 @@ def store_emotion(request):
 
     emotion = request.POST['emotionID']
     session_id = request.POST['sessionID']
-    sess = Session.objects.get(pk=session_id)
+    sess = Conversation.objects.get(pk=session_id)
     sess.learner_emotion = emotion
     sess.save()
 
@@ -590,7 +590,7 @@ def store_topic(request):
 
     topic = request.POST['topic']
     session_id = request.POST['sessionID']
-    sess = Session.objects.get(pk=session_id)
+    sess = Conversation.objects.get(pk=session_id)
     sess.topic = topic
     sess.save()
 
@@ -601,7 +601,6 @@ def store_topic(request):
     return JsonResponse(response_data)    
 
 def store_error_blob(request):
-    # code.interact(local=locals());
     blob = request.FILES['data'] 
     startID = request.POST['start_idx']
     #`Wsent_id = int(request.POST['blob_no_text_sent_id']) 
@@ -613,7 +612,7 @@ def store_error_blob(request):
         temp = AudioFile.objects.get(pk=request.POST['audio_id'])
         af = AudioError(audio=temp, start_index=startID)
         af.save()
-    sess = Session.objects.get( pk=request.POST['sessionID'] )
+    sess = Conversation.objects.get( pk=request.POST['sessionID'] )
     # Create new AudioErrorAttempt
     filename ="error_"+str(sess.id) + "_" + "_" + timezone.now().strftime( '%H-%M-%S' )+ ".webm"
     blob.name = filename
@@ -700,7 +699,7 @@ def do_allignment(request):
     sub_proc.wait()                                                                          
     response_data = {                  
                                                
-            }                                  
+    }                                  
     return JsonResponse(response_data) 
 
 
@@ -755,14 +754,12 @@ def error_typing_used(request):
     start = time.time()
     ERR_trans = request.POST['etrans']
     idx = int(request.POST['first_word_id'])
-    
-
     endid = idx + (len(ERR_trans.strip().split(" "))-1) 
     
     ts = get_timestamps(idx,endid, session_id)
     fn = request.POST['sessionID']+"_"+timezone.now().strftime( '%H-%M-%S' )+"_error.wav"
     errorPath = play_errored_text(audioPath,ts,fn)
-    #cut_wav(errorPath)
+    # #cut_wav(errorPath)
     
     end = time.time()
     print("\n\nGetting Audio - ",(end-start))
@@ -799,19 +796,13 @@ def error_typing_used(request):
     start = time.time()
     ref_image = get_spectogram(synthFN,0,"ref_"+session_id+"_"+timezone.now().strftime('%H-%M-%S')+".png",0)
     
-    sim = get_sim(ERR_trans,request.POST['trans'])
-    hin = "hyp_"+session_id+"_"+timezone.now().strftime('%H-%M-%S')+".png"
+    # sim = get_sim(ERR_trans,request.POST['trans'])
+    # hin = "hyp_"+session_id+"_"+timezone.now().strftime('%H-%M-%S')+".png"
     
     
     hyp_image = get_spectogram(errorPath,sim,hin,1) 
-    end = time.time()
-    print("\n\nGet images - ",(end-start))
-    start = time.time()
     refLen = get_audio_length(synthFN)
     hypLen = get_audio_length(errorPath)
-    end = time.time()
-    print("\n\nTime  -",(end-start))
-    #ref_image, hyp_image = get_rel_praat_paths()
     #Error in naming convention
     hyp_audio = ref_path(fn) 
     ref_audio = get_hyp_audio_path(fn)
@@ -840,7 +831,7 @@ def error_typing_used(request):
 
 def store_attempt_blob(request):
     blob = request.FILES['data']
-    sess = Session.objects.get( pk=request.POST['sessionID'] )
+    sess = Conversation.objects.get( pk=request.POST['sessionID'] )
     ae_pk = request.POST['error_pk']
     ae = AudioError.objects.get( pk=ae_pk )
 
@@ -858,16 +849,13 @@ def store_attempt_blob(request):
     trans = get_speech_recognition(filename)[0]["transcript"]
     aeca.transcript = trans
     aeca.save()
-    start = time.time()
     sim = get_sim(ae.intention,trans)
     end = time.time()
-    print("\n\nSim = ",end-start,"\n")
     correct = False
     if ae.intention == trans or sim == 0:
         trans = ae.intention
         correct = True
     audio_url = "media/wav/"+filename[:-4]+"wav"
-    #cut_wav(settings.BASE_DIR + '/' + audio_url)
     pic_name = "att_"+str(aeca.id)+".png" 
     pic_url = get_spectogram(settings.BASE_DIR+"/"+audio_url,sim,pic_name,1)
     lenAudio = get_audio_length(settings.BASE_DIR+"/"+audio_url)
@@ -892,7 +880,7 @@ def store_blob(request):
     # get session
     blob_no_text = json.loads(request.POST['blob_no_text'])
     interference = json.loads(request.POST['interference'])
-    sess = Session.objects.get( pk=request.POST['sessionID'] )
+    sess = Conversation.objects.get( pk=request.POST['sessionID'] )
     # text_from_speech0 = request.POST['transcript0']
     # text_from_speech1 = request.POST['transcript1']
     # text_from_speech2 = request.POST['transcript2']
@@ -999,7 +987,7 @@ def tts(request):
     try:
         response = client.synthesize_speech(input_text, voice, audio_config)
 
-        # don't need to keep all synths for class. Remember to delete this when session ends.
+        # don't need to keep all synths for conversation. Remember to delete this when session ends.
         synthURL = 'media/synths/session' + session_id + '.wav' # + '_' + str(int(time.mktime((timezone.now()).timetuple()))) + '.wav'
         with open( os.path.join(settings.BASE_DIR, synthURL ), 'wb') as out:
             out.write(response.audio_content)
@@ -1036,7 +1024,7 @@ def store_sent(request):
     # get session
     blob_no_text = json.loads(request.POST['blob_no_text'])
     blob_no_text_sent_id = request.POST['blob_no_text_sent_id']
-    sess = Session.objects.get(pk=int(request.POST['sessionID']))
+    sess = Conversation.objects.get(pk=int(request.POST['sessionID']))
 
     # if very first attempt or new sent then need to create empty sentence
     if blob_no_text:
@@ -1239,7 +1227,7 @@ def delete_session(request):
 
         session_id = int(request.GET['sessId'])
 
-        sess = Session.objects.get(pk=session_id)
+        sess = Conversation.objects.get(pk=session_id)
         sess.delete()
 
     except:
@@ -1251,11 +1239,11 @@ def delete_session(request):
     }
 
     return JsonResponse(response_data)    
-def store_class_over(request):
+def store_conversation_over(request):
 
     session_id = int(request.GET['sessId'])
 
-    # print('in store_class_over')
+    # print('in store_conversation_over')
 
     # scores = get_scores( session_id )
     # score = math.floor(min(100, sum(scores)))
@@ -1263,7 +1251,7 @@ def store_class_over(request):
     delete_sentences_from_temp_db(session_id)
 
     time_now = timezone.now();
-    sess = Session.objects.get(pk=session_id)
+    sess = Conversation.objects.get(pk=session_id)
     sess.end_time = time_now
     # sess.score = score
     sess.save()
@@ -1653,7 +1641,7 @@ def update_session_object(request):
         # a = AudioFile.objects.filter(sentence=s).latest('pk')
         # clicks_already = json.loads( a.clicks )
     # else:
-        # sess = Session.objects.get(pk=int(session_id))
+        # sess = Conversation.objects.get(pk=int(session_id))
         # s = TempSentence(learner=request.user, session=sess)
         # s.save()
         # a = AudioFile(sentence=s)
