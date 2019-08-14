@@ -1,15 +1,60 @@
 const CLASS_TIME_MINUTES = 3000;
 
+var prefixURL;
+function definePrefixURL() {
+
+    if ( conversationVariables.inDevelopment ) {
+
+        prefixURL = "http://127.0.0.1:8000/"
+
+    } else {
+
+        prefixURL = "https://erle.ucd.ie/"
+
+    }
+
+}
+
+definePrefixURL();
+
 var scene, renderer, camera, pointLight, ambientLight, loader
 var mainCount = 0;
-var prefixURL;
+
+var WIDTH;
+var HEIGHT;
 
 var recorder15sTimeout;
 var mediaRecorder;
+var mediaStreamSource = null;
 var chunks;
-var record;
-var stop;
+//var record;
+//var stop;
 var aud;
+//var recordModal;
+//var stopModal;
+var streamy
+
+const AUDIO_N_VIDEO_SETTINGS = {
+    audio: {
+        "mandatory": {
+            "googEchoCancellation": "false",
+            "googAutoGainControl": "false",
+            "googNoiseSuppression": "false",
+            "googHighpassFilter": "false",
+        },    
+    },
+    video: false
+}
+
+//// for drawing the volume bar
+const WIDTH_VOL = 400;
+const HEIGHT_VOL = 100;
+var audioContext = null;
+var meter = null;
+var canvasContext = null;
+var rafID = null;
+var micIntAud = document.getElementById('micInterferenceClip')
+var micIntAudSources = [ prefixURL + "media/00micInterference04.mp3", prefixURL + "media/00micInterference01.mp3", prefixURL + "media/00micInterference02.mp3", prefixURL + "media/00micInterference03.mp3" ];
 
 //recorder times in browser
 var recTimes = {};
