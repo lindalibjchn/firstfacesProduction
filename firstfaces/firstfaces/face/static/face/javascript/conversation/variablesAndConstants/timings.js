@@ -1,5 +1,7 @@
 tiaTimings = {
 
+    flinchDuration: 0.5,
+    delayAfterFlinch: 1500,
     delayAfterClickPlayUntilCameraMovesUp: 0,
     cameraMoveUpDuration: 2.0,
     tiaLeanDuration: 1,

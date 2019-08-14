@@ -27,11 +27,7 @@ var recorder15sTimeout;
 var mediaRecorder;
 var mediaStreamSource = null;
 var chunks;
-//var record;
-//var stop;
 var aud;
-//var recordModal;
-//var stopModal;
 var streamy
 
 const AUDIO_N_VIDEO_SETTINGS = {

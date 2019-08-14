@@ -278,7 +278,7 @@ function init() {
     addCamera();
 
     //// CAMERA CONTROLS
-    //controls = new THREE.OrbitControls( camera, renderer.domElement );
+    controls = new THREE.OrbitControls( camera, renderer.domElement );
 
     // LIGHTS
     addLights();
