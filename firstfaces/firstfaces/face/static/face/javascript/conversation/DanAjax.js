@@ -1,26 +1,32 @@
+
+//Function sets each of the words as selectable 
 function set_selectable(trans){
+   // Resets the list of selected words
    selected = [];
    var words = trans.split(" ");
    var i;
    //Make words selectable 
    for(i=0;i<words.length;i++){
-   var idx = "#upper_"+i;
-   $(idx).attr("class","selectable-word");
+        var idx = "#upper_"+i;
+        $(idx).attr("class","selectable-word");
    }
    causeFlash();
+   //Add on click to words
    var duration = words.length * 125;
    setTimeout(function(){
-    $('.selectable-word').attr("onclick","selectErrWord(this.id)");
+        $('.selectable-word').attr("onclick","selectErrWord(this.id)");
    },duration);
 }
 
+// Calls the forced allignment of audio
 function doAllignment(){
+    
     let fd = new FormData();                                                    
     fd.append('trans',conversationVariables.alternatives[0].transcript);                 
     fd.append('fn',conversationVariables.Aud_Fname);   
     fd.append('sessionID',conversationVariables.session_id);
 
-
+    //Makes ajax call creating allignment file and map.json files
     $.ajax({                                                                    
         url: "/do_allignment",                                             
         type: "POST",                                                           
@@ -39,14 +45,19 @@ function doAllignment(){
 }
 
 
+// Button clicked after users have selected errored words
 $('#forwardErrorSelection').click(function(){
+    //Hides non essential buttons
     $('#recordVoiceBtn').hide();
+    $('#listenVoiceBtn').hide();
     $('#backCorrection').hide();
+    //Sets the lenght of the original audio incase user goes back
     conversationVariables.originalLength = conversationVariables.totalAudioLength;
     conversationVariables.totalAudioLength = 0;
+    //Allignment is done
     doAllignment();
     conversationVariables.usePlayAud = true;
-    //loop through selected words, amalgamate sewuential errors into one
+    //Words are looped theough and sequential blocks of errored and corrrect words are place into their own span tags
     conversationVariables.playStage2 = true;
     var words = conversationVariables.alternatives[0].transcript.split(" ");
     var i = 0;
@@ -75,14 +86,11 @@ $('#forwardErrorSelection').click(function(){
             }                                    
             newTran.push(curStr);             
             classes.push("normal-word");
-            console.log(i);
-
-            //newTran.push(words[i]);
-            //classes.push("normal-word");
-            //i = i+1;
         }
         
     }
+
+    // If an error is over 60 characters in length user is returned to the original page
     if(tooLong){
         $('#forwardErrorSelection').hide();
         $('#upperSentenceHolder').empty();
@@ -94,53 +102,52 @@ $('#forwardErrorSelection').click(function(){
             $('#recordVoiceBtn').show();
             $('#listenVoiceBtn').show();
         });
-    }
-    else{
-    //add audio tags
-     
-        
-
-    //empty upper and lower divs
-    $('#upperSentenceHolder').empty(); 
-    $('#lowerSentenceHolder').empty();
-    $('#audioclips').empty();
-    conversationVariables.correct_audio= [];
-    //add spans and add onclick function to these
-    var j = 0;
-    conversationVariables.tlen = newTran.length;
-    for(j=0;j<newTran.length;j++){
-        addWord(newTran[j],j,classes[j]);
-        if(classes[j] == 'uncorrected-error'){
-            conversationVariables.uncorrectedErrors.push("upper_"+j);
+    }else{
+        //empty upper and lower divs
+        $('#upperSentenceHolder').empty(); 
+        $('#lowerSentenceHolder').empty();
+        $('#audioclips').empty();
+        conversationVariables.correct_audio= [];
+        //add spans and add onclick function to these
+        var j = 0;
+        conversationVariables.tlen = newTran.length;
+        //iterates through each of te new span tags to be added 
+        for(j=0;j<newTran.length;j++){
+            //Adds the span tag
+            addWord(newTran[j],j,classes[j]);
+            //If the span is an error it is added to the list of uncorrected errors
+            if(classes[j] == 'uncorrected-error'){
+                conversationVariables.uncorrectedErrors.push("upper_"+j);
+            }else{
+                //If its not an error it is appended to the list of correct words
+                conversationVariables.correct_audio.push(j);
+            }
+            //Hidden span tags are added to contain padding
+            $('#upperSentenceHolder').append("<span id='hidden_"+j+"' class='hidden-span'></span>");
+            //Audio clips are added for each of the span tags, all but the last span call the play next function on ending
+            if(j<(newTran.length-1)){
+                $('#audioclips').append("<audio id='audio_"+j+"' duration =0 class='temp1' onended='play_nxt("+(j+1)+")'></audio>");
+            }
+            else{
+                $('#audioclips').append("<audio id='audio_"+j+"' class='temp1' duration=0> </audio>");
+            }
         }
-        else{
-            conversationVariables.correct_audio.push(j);
-        }
-        $('#upperSentenceHolder').append("<span id='hidden_"+j+"' class='hidden-span'></span>");
-        if(j<(newTran.length-1)){
-            $('#audioclips').append("<audio id='audio_"+j+"' duration =0 class='temp1' onended='play_nxt("+(j+1)+")'></audio>");
-        }
-        else{
-            $('#audioclips').append("<audio id='audio_"+j+"' class='temp1' duration=0> </audio>");
-        }
-    }
 
-    $(".uncorrected-error").attr("onclick","correctError(this.id)");
-    //add back button and submit button
-    $('#backErrorSelection').hide();
-    $('#forwardErrorSelection').hide();
+        //Correcting errror functionality added to errors
+        $(".uncorrected-error").attr("onclick","correctError(this.id)");
+        //add back button and submit button
+        $('#backCorrection').hide();
+        $('#forwardErrorSelection').hide();
 
-    conversationVariables.errors = {};
- 
-    //cahneg tias textbox
-    //$('#tia-speech-box').text("Select an error to correct it");
-    //$('#backCorrection').show();
-
+        //Dictionary is used to store errors userscorrect
+        conversationVariables.errors = {};
+        //The first error is opened for correction
         animate_open_overlay(conversationVariables.uncorrectedErrors[0]);
     }
 });
 
 
+//Function adds a given string with a gievn class and given id to the upper and lower span tags
 function addWord(word, count, cls) {
     var idx = "'upper_"+count+"'";
     $('#upperSentenceHolder').append("<span id="+idx+" class='"+cls+"'>"+word+"</span>");
@@ -149,6 +156,7 @@ function addWord(word, count, cls) {
     $('#lowerSentenceHolder').append("<span id="+idx+" class='hidden-word' >"+word+"</span> ");
 }
 
+// If the typing box in the modal is clicked and a speech bubble exists it is removed
 $('#bottomCent').click(function(){
     if(conversationVariables.noTransError){                              
         removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
@@ -156,21 +164,25 @@ $('#bottomCent').click(function(){
     }                                                                
 });
 
+// Function is called if any keys are pressed while the typeable div is in focus
 $('#bottomCent').keyup(function(event){
-
+    
+    //If a speecg bubble is present it is removed
     if(conversationVariables.noTransError){   
         removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );            
         conversationVariables.noTransError = false;                                  
     }                                                                            
 
 
+    //If any text is in the box then the submission button is shown
     if($('#bottomCent').text() != ""){
         $('#spectrogramBtn').show(); 
-    }
-    else{
+    }else{
+        //If not it is hidden
         $('#spectrogramBtn').hide(); 
     }
 
+    //Changes the text size up and down depening on the length of both the error and correction
     if($('#bottomCent').text().trim().length > 40 || $('#centeredErrorText').text().trim().length > 40 ){
         $('#centeredErrorText').removeClass().addClass('small-text'); 
         $('#topCentText').removeClass().addClass('small-text');       
@@ -191,7 +203,9 @@ $('#bottomCent').keyup(function(event){
 });
 
 
+// Fucntion is used to open modal overaly for a given error
 function correctError(idx){
+    //Unnecessary buttons are hidden
     $('#backCorrection').hide(); 
     $('#recordVoiceBtn').hide();
     //hide text area
@@ -206,6 +220,7 @@ function correctError(idx){
     //Set necessary variables
     conversationVariables.startIDX = idx.split('_')[1]
     conversationVariables.endIDX = conversationVariables.startIDX 
+    //Text size is set by the lenght of the error text
     if(errText.trim().length > 40){
         $('#centeredErrorText').removeClass().addClass('small-text');
         $('#topCentText').removeClass().addClass('small-text');  
@@ -221,43 +236,15 @@ function correctError(idx){
         $('#topCentText').removeClass().addClass('big-text');      
         $('#bottomCent').removeClass().addClass('big-text');       
     }
-
+    //Text boxes are shown with the errored text 
     $('#overlayErrorText').text(errText);
     $('#centeredErrorText').text(errText);
-    //Have Tia change speech box
-    //$('#speakingWordsInside').text("Please enter what this is meant to be");
 };
 
-$('#closeOverlay').click(function(){
-    $('#correctionOverlay').hide();
-    $('#overlayTextBox').empty();
-    $('#overlayTextBox').append('<span id="typeHereOverlay">Type Here!</span>');
 
-    //$('#speakingWordsInside').text("Select an error to correct it");
-
-});
-
-$('#backErrorSelection').click(function(){
-    //change all words classes back to normal-word
-    $('.selectable-word').addClass("normal-word");
-    $('.selectable-word').attr("onclick","");
-    $('.selectable-word').removeClass("selectable-word");
-    
-    $('.selected-word').addClass("normal-word");
-    $('.selected-word').attr("onclick","");
-    $('.selected-word').removeClass("selected-word");
-
-    //reset text
-    //$('#speakingWordsInside').text("Is this what you meant to say?"); 
-    
-    //reset buttons
-    $('#talkBtn').show();
-    $('#talkBtn').prop( "disabled", false);
-    $('#backErrorSelection').hide();
-    $('#forwardErrorSelection').hide();
-});
 
 var selected = [];
+//Allows for a given word to e selected as beognan error
 function selectErrWord(idx){
     //If clicked append number to selected
     var curr = document.getElementById(idx).className;
@@ -292,8 +279,8 @@ function selectErrWord(idx){
 
 
 var currentId;
-function doneError(){
-    
+//Done error closes modal and places correction ower modal
+function doneError(){  
     if(conversationVariables.thirdAttemptError || conversationVariables.noTransError){             
         removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
         conversationVariables.thirdAttemptError = false;
@@ -343,12 +330,7 @@ function doneError(){
     $('#correctionOverlay').hide();
     $('#sentenceHolderParent').show();
     $('#bottomCent').empty();
-    //$('#overlayTextBox').append('<span id="typeHereOverlay">Type Here!</span>');
-    
-        conversationVariables.uncorrectedErrors = conversationVariables.uncorrectedErrors.filter(e => e !== "upper_"+idx);                                                                             
-
-    //$('#speakingWordsInside').text("Select an error to correct!");
-    //closeStage3();
+    conversationVariables.uncorrectedErrors = conversationVariables.uncorrectedErrors.filter(e => e !== "upper_"+idx);                                                                             
     //Check if all errors are corrected
     if($('.uncorrected-error').length == 0){
         $("#talkBtn").show();
@@ -362,12 +344,9 @@ function doneError(){
     unmoveText(); 
 
     conversationVariables.correcting = false;
-    
-    
 }
 
-
-
+//Resets the text back to allowing users pick errored words in transcription
 $('#backCorrection').click(function(){
     conversationVariables.playStage2 = false;
     conversationVariables.totalAudioLength = conversationVariables.originalLength;
@@ -389,58 +368,54 @@ $('#backCorrection').click(function(){
         $('.selectable-word').attr("onclick","selectErrWord(this.id)");
      },duration);                                                       
 
-
-    // reset tia speech
-    //$('#speakingWordsInside').text("Select the incorrect words");
     // reset buttons
     $('#talkBtn').show();
     $('#backCorrection').hide();
     $('#listenVoiceBtn').css('display','block');
     selected = [];
     $('#forwardErrorSelection').prop("disabled",false);
-    $('#backErrorSelection').prop("disabled",false);
+    $('#backCorrection').prop("disabled",false);
     $('#incorrectTranscriptBtns').show();
-    });
+});
 
 
-
+//Clsoes the moadal
 $('#closeOverlayArea').click(function(){
    if(conversationVariables.stage2 || conversationVariables.stage3){
-   if(conversationVariables.correctionDone){
+    if(conversationVariables.correctionDone){
         undoCorrect();
-   }
-   if(conversationVariables.thirdAttemptError || conversationVariables.noTransError){               
+    }
+    if(conversationVariables.thirdAttemptError || conversationVariables.noTransError){               
         removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
         conversationVariables.thirdAttemptError = false;  
         conversationVariables.noTransError = false;
-   }  
-   $('#backCorrection').show();
-   $('#recordVoiceBtn').show();
-   $('#correctionOverlay').hide();
-   $('#sentenceHolderParent').show();
-   $('#overlayTextBox').empty();
-   //$('#overlayTextBox').append('<span id="typeHereOverlay">Type Here!</span>');       
-   //$('#speakingWordsInside').text("Select an error to correct!"); 
+    }  
+    $('#backCorrection').show();
+    $('#recordVoiceBtn').show();
+    $('#correctionOverlay').hide();
+    $('#sentenceHolderParent').show();
+    $('#overlayTextBox').empty();
    
-   if(conversationVariables.stage3){
+    if(conversationVariables.stage3){
         closeStage3();
-   }
+    }
 
-   conversationVariables.stage2 = false;
-   conversationVariables.stage3 = false;
+    conversationVariables.stage2 = false;
+    conversationVariables.stage3 = false;
 
-   // also close prevSentsContainer - J
-   $('#prevSentsContainer').fadeOut();
-   $('#prevSentsIconContainer').fadeIn();
-   $('#confirmFinish').hide();
-   $('#dataNFinish').show();
-   $('#timeOverlayContainer').fadeOut();
-   $('#finishClassIconContainer').fadeIn();
-   $('#backCorrection').prop( "disabled", false );
-   unmoveText();   
+    // also close prevSentsContainer - J
+    $('#prevSentsContainer').fadeOut();
+    $('#prevSentsIconContainer').fadeIn();
+    $('#confirmFinish').hide();
+    $('#dataNFinish').show();
+    $('#timeOverlayContainer').fadeOut();
+    $('#finishClassIconContainer').fadeIn();
+    $('#backCorrection').prop( "disabled", false );
+    unmoveText();   
    }
 });
 
+//Allows users to type what they meant to say
 $('#keyboardOverlay').click(function(){
     moveText();
 
@@ -451,10 +426,6 @@ $('#keyboardOverlay').click(function(){
 
 
     $('#submitOverlay').hide();
-    //$('#centeredError').hide();
-    //$('#submitOverlay').hide();
-    //$('#overlayErrorBox').show();
-    //$('#overlayTextBox').show();
     $('#keyboardOverlay').hide();
     //clear text area
     $("#bottomCent").empty();
@@ -468,6 +439,7 @@ $('#keyboardOverlay').click(function(){
     },900);
 });
 
+//Allows users to go back after submitting typed correction
 $('#backOverlay').click(function(){
     if(conversationVariables.correctionDone){
         undoCorrect();
@@ -496,6 +468,7 @@ $('#backOverlay').click(function(){
     closeStage3();
 });
 
+//Open overlay fucntion open necessary elements for overlay tp function
 function openOverlay(){
     $('#exitOverlay').hide();
     $('#praatCont').hide();
@@ -524,6 +497,7 @@ function openOverlay(){
 
 }
 
+//Function called if user had submitted  typed correction and then attempted to record
 function sendAttemptBlob( new_blob ){
     returnFromListenToErrorAttemptWithSpectrograph();
     let fd = new FormData();
@@ -589,17 +563,17 @@ function sendAttemptBlob( new_blob ){
                 }
                 else{
                     var sim = parseFloat(json.sim);
-                    alert(sim);
                     incorrect_attempt();
                     setTimeout(function(){
-                        if(sim <= 0.15){                                          
-                            $('#hypBtn').css("background-color","#ffaa00");      
+                        if(sim <= 0.15){              
+                            $('#hypBtn').css("bckgroundColor","#ffaa00");      
                             $('#hypInvisible').css("background-color","#ffaa00");
-                        }else{                                                    
-                            $("#hypBtn").css("background-color","red");          
+                        }else{
+                            $('#hypBtn').css({ "background-color" : "red" });
+                            $('#hypBtn').css('backgroundColor', "red"); 
                             $("#hypInvisible").css("background-color","#ffcccb");
                         }                                                         
-                    },750);
+                    },900);
                 }
                 conversationVariables.hypLenOriginal = json.hypLen;
                 conversationVariables.hypLen = json.hypLen/conversationVariables.playspeed;
@@ -629,6 +603,7 @@ function sendAttemptBlob( new_blob ){
    });
 }
 
+//Function is called if user preses back or closes overlay after typing and not submittitng correction
 function closeStage3(){
     let fd = new FormData();
     fd.append('sessionID',conversationVariables.session_id);
@@ -653,6 +628,7 @@ function closeStage3(){
     });
 }
 
+//Function is calle dif user tries to rerecord audio 
 function sendErrorBlobToServer( new_blob ){
 
     let fd = new FormData();
@@ -677,10 +653,6 @@ function sendErrorBlobToServer( new_blob ){
             conversationVariables.errors[json['error_start']] = json['error_pk'];
             //display transcript
             if(json['error_trans'] != ""){
-                //$("#centeredErrorHolder").hide();
-                //$("#overlayErrorBox").show();
-                //$("#overlayTextBox").show();
-                //$("#overlayTextBox").empty();
                 moveText();
                 setTimeout(function(){
                     $('#bottomCent').text(json['error_trans']);
@@ -720,7 +692,7 @@ function sendErrorBlobToServer( new_blob ){
 
 
 //Keyboard and record have different submit funtionalities
-
+//Function plays audio and contols animation used while audio is played fr both spectograms
 $('#refBtn').click(function(){
     disableBtns();
     if(conversationVariables.thirdAttemptError || conversationVariables.noTransError){
@@ -908,7 +880,7 @@ function submitKeyboard(){
     });
 }
 
-// Recording Submit
+// Function is called if user only uses rerecording functionality
 function submitRecording(){
 
     var trans = $('#overlayTextBox').text().trim();
@@ -936,6 +908,7 @@ function submitRecording(){
     });
 }
 
+//Function controls the animation of the spectograms if a correct attempt is made
 function correct_attempt(){
     var middle = $('#refBtn').offset().top;
     $('#reRecordBtn').hide(); 
@@ -974,6 +947,7 @@ function correct_attempt(){
     },3500);
 }
 
+//Function contols the animation of spectograms if attempt has been incorrect
 function incorrect_attempt(){
     var middle = $('#refBtn').offset().top;                                                 
     var bottom = $('#hypBtn').offset().top;
@@ -1003,17 +977,20 @@ function incorrect_attempt(){
 }
 
 
-
+//Function allows users to submit correction 
 function submitCorrect(){
+    //Sets corrected audio for error
     document.getElementById('audio_'+conversationVariables.startIDX).src = document.getElementById('hypAudio').src;
     $('#audio_'+conversationVariables.startIDX).attr('duration',conversationVariables.hypLenOriginal);
     doneError();
-
+    //Resets text movement and spectograms
     $('#backCorrection').prop("disabled",false);
     $('#talkBtn').prop("disabled",false); 
     undoCorrect();
+    unmoveText();
 }
 
+// Fucntion resets the modal to its original state
 function undoCorrect(){
     $('#refBtn').show();
     $('#refTextLayer').show();
@@ -1022,14 +999,14 @@ function undoCorrect(){
     $('#refImg').show();                                                             
     $('#hypTextLayer').show();
     conversationVariables.correctionDone = false;
-    $("#hypBtn").css("background-color","red");          
-    $("#hypInvisible").css("background-color","#ffcccb");
+    //$("#hypBtn").css("background-color","red");          
+    //$("#hypInvisible").css("background-color","#ffcccb");
     $('#submitOverlay').hide();
     $('#refBtn').css('visibility', 'visible');
     $('#reRecordBtn').prop( "disabled", false);
 }
 
-
+//Function is used to remove the fuctionality of buttons while audio plays
 function disableBtns(){
     $('#submitOverlay').prop( "disabled", true);
     $('#sliderHolder').css('visibility','hidden');
@@ -1039,6 +1016,8 @@ function disableBtns(){
     $('#hypBtn').prop( "disabled", true);
     $('#closeOverlayArea').prop( "disabled", true);    
 }
+
+//Function is used to reinstate the fucntionality to the buttons while audio plays
 function enableBtns(){
     $('#submitOverlay').prop( "disabled", false);                       
     $('#reRecordBtn').show();                                             
@@ -1048,9 +1027,9 @@ function enableBtns(){
     $('#hypBtn').prop( "disabled", false);                      
     $('#closeOverlayArea').prop( "disabled", false);
     $('#backOverlay').prop( "disabled", false);
-
 }
 
+//Gets the current setnece including corrections made to any errors
 function getSentence(){
     var words = conversationVariables.alternatives[0].transcript.split(" ");
     var curr = 0;
@@ -1070,6 +1049,7 @@ function getSentence(){
     return out;
 }
 
+//Slider for changing the playback speed of the spectogram buttons
 var slider = document.getElementById("myRange");
 slider.oninput = function() { 
     var val = (20 + parseInt(this.value));
@@ -1086,7 +1066,7 @@ slider.oninput = function() {
 
 }
 
- 
+//Moved the centered error text to the top of the modal to facilitate typing 
 function moveText(){
     conversationVariables.movedText = true;
     var to = $('#topCentText').offset().top;
@@ -1100,6 +1080,7 @@ function moveText(){
     },900);
 }
 
+//If the text has been moved up it is now moved back to its original position
 function unmoveText(){
     if(conversationVariables.movedText){
         $('#moveText').animate({top:'+='+conversationVariables.textDiff+"px"},1);
@@ -1108,13 +1089,13 @@ function unmoveText(){
 }
 
 
-
-
+//Function flashes the border of each word in the transcription
 function causeFlash(){
     var words = conversationVariables.alternatives[0].transcript.split(" ").length;
     flash(0,words);
 }
 
+//Function flashes the border of all words whos idx is between i and max
 function flash(i,max) {
     if (i == max) return;
     setTimeout(function () {
@@ -1124,6 +1105,7 @@ function flash(i,max) {
     }, 60);
 }
 
+//Function causes border of span tag to flash a lighter colour 
 function flashBorder(id){
     $(id).css('border-color','#eeee90');
     setTimeout(function(){
@@ -1132,17 +1114,17 @@ function flashBorder(id){
 }
 
 
-
+// Function aniimates the opening of the overlay
 function animate_open_overlay(err_id){
-    //have button flash
-
     setTimeout( function() {
-
+        //Buttuns hidden till modal is opened
         $('#backCorrection').hide();
         $('#recordVoiceBtn').hide();
+        
         conversationVariables.correcting = true;
         var original_color = 'yellow';
         var new_color = 'black';
+        //Span tags flash
         $('#'+err_id).css({"background-color":new_color,"color":original_color});
         setTimeout(function(){
             $('#'+err_id).removeAttr( 'style' );
@@ -1152,18 +1134,17 @@ function animate_open_overlay(err_id){
             correctError(err_id)
             
         },1000);
-
+        //Once the verlay is opened the buttons underneath appear again
         setTimeout(function(){
             $('#backCorrection').show();
             $('#recordVoiceBtn').show();
         },2000);
 
     }, 750 );
-
-
 }
 
 
+//Function resets the transcription 
 function reset_text(trans){
     $('#sentenceHolderParent').show();
     $('#upperSentenceHolder').empty();
@@ -1174,23 +1155,29 @@ function reset_text(trans){
     setTimeout( set_selectable(trans) , 1200);
 }
 
-
+//Function plays the first audio file which in turn plays the  rest
 function play_audio(){
     document.getElementById("audio_0").play();
 }
+
+//Function plays the next audio clip
 function play_nxt(val){
     document.getElementById("audio_"+val).play();
 }
- 
+
+//Exit overlay button is called when user is unable to correct the word
 $('#exitOverlay').click(function(){
+    //Sets the audio for the error as the synthesised audio
     document.getElementById('audio_'+conversationVariables.startIDX).src = document.getElementById('refAudio').src;
     document.getElementById('audio_'+conversationVariables.startIDX).volume = 0.7;
     $('#audio_'+conversationVariables.startIDX).attr('duration',conversationVariables.refLenOriginal);
+    //Closes modal overlay
     doneError();
     $('#backCorrection').prop('disabled',false);
     $('#recordVoiceBtn').prop('disabled',false);
     $('#talkBtn').prop('disabled', false);
-
+    
+    //If speech bubble is present ir is now closed
     if(conversationVariables.thirdAttemptError || conversationVariables.noTransError){              
         removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
         conversationVariables.thirdAttemptError = false;                 
@@ -1201,6 +1188,7 @@ $('#exitOverlay').click(function(){
 });
 
 
+// Gets the audio summed audio length for the words for the muxed audio
 function getAudioLength(){
     var i;
     var count = 0;
@@ -1208,9 +1196,6 @@ function getAudioLength(){
         count = count +  parseFloat($('#audio_'+i).attr('duration'));
     }
     conversationVariables.totalAudioLength = count;
-    //conversationVariables.totalAudioLength += (100*$('.temp1').length);
-  
-
 }
 
 

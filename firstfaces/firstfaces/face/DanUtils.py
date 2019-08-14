@@ -29,6 +29,8 @@ similarities = pd.read_csv(sim_path, index_col=0)
 
 idc = 0.8
 
+############# Below This is Emmas Code to work out phonetic similarity #############
+
 def compare(string1, string2):
     r = string1
     h = string2
@@ -203,7 +205,9 @@ def compareDem(word1, word2):
     #print (tb.tabulate(alignment_table, tablefmt='orgtbl'))
     return score_cost
 	
-	
+###################################################################
+        
+#Removes the numerical constant after vowel phones
 def remove_numbers_vowel_phonemes(inp):
     phos = []
     for pho in inp:
@@ -215,7 +219,7 @@ def remove_numbers_vowel_phonemes(inp):
     return phos
 
 
-
+# Function gets phones for given string
 def get_phonemes(word):
     g2p = G2p()
     phos = g2p(word)
@@ -229,23 +233,24 @@ def get_phonemes_num(word):
 #t1 = correct
 #t2 = incorrect
 
-def remove_spaces__list(l):
+## Removes spaces from the list of phones
+def remove_spaces_list(l):
     l = [x.strip(' ') for x in l]
     return list(filter(bool,l))
 
-
+# Gets the phonetic similarity beteewn two strings
 def get_sim(t1,t2):
     p1 = []
     p2 = []
     g2p = G2p()
     for word in t1.split():
-        p1 += remove_numbers_vowel_phonemes(remove_spaces__list(g2p(word)))
+        p1 += remove_numbers_vowel_phonemes(remove_spaces_list(g2p(word)))
     for word in t2.split():
-        p2 += remove_numbers_vowel_phonemes(remove_spaces__list(g2p(word)))
+        p2 += remove_numbers_vowel_phonemes(remove_spaces_list(g2p(word)))
     return compareDem(p1,p2)
 
+#Ununsed but works out what woords in attempt are phontetically same as others
 def replace_phonetically_same_words(t1,t2):
-    
     p1 = get_pho_dict(t1)
     p2 = get_pho_dict(t2)
     
@@ -278,7 +283,7 @@ def replace_phonetically_same_words(t1,t2):
             curr+=1
     return out.strip()
 
-
+# Gets color for spectogram based off similarity 
 def get_cmap(threshold):
     if threshold == 0:
         return "Greens"
@@ -287,6 +292,7 @@ def get_cmap(threshold):
     else:
         return "Reds"
 
+# Generates spectogram 
 def get_spectogram(wav_path,sim,filename,code):
     samplingFrequency, signalData = wavfile.read(wav_path)
     temp = []                                             
@@ -318,11 +324,8 @@ def get_spectogram(wav_path,sim,filename,code):
     return out
 
 
-
+#Crops spectogram to remove unnessary space at top
 def crop_spectogram(inpath,coords,outpath):
-    #image = Image.open(inpath)
-    #crop_im = image.crop(coords)
-    #crop_im.save(outpath)
     img = cv2.imread(inpath)
     crop_img = img[coords[1]:coords[3], coords[0]:coords[2]]
     cv2.imwrite(outpath,crop_img)
@@ -330,6 +333,8 @@ def crop_spectogram(inpath,coords,outpath):
 
 # t1, correct
 # t2, not
+
+#Unnnused but ensues every word in two strings are phonetically the same
 def is_phonetically_same(t1,t2):
     t1 = t1.split()
     t2 = t2.split()
@@ -342,6 +347,8 @@ def is_phonetically_same(t1,t2):
                 return False
     return True
 
+
+# Unnused but cuts empty sapce at start and end of the audio file
 def cut_wav(wav_path):
     print('\n\nin cut_wav\n\n')
     start_pad = 0
