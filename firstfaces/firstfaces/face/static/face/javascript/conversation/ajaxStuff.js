@@ -281,9 +281,6 @@ function sendSentToServer() {
                     //console.log('json.sent_id:', json.sent_id);
                     checkJudgement( json.sent_id );
 
-                    // for interference stuff, need to reset
-                    conversationVariables.interference_count_this_sent = 0;
-
                 },
                 error: function() {
                     alert("sentence failed to send to server");
