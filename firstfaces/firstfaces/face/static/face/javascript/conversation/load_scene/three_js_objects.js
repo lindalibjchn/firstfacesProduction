@@ -191,16 +191,6 @@ function addTia() {
 
 function enterOrReEnter() {
 
-    if ( conversationVariables.inDevelopment ) {
-
-        prefixURL = "http://127.0.0.1:8000/"
-
-    } else {
-
-        prefixURL = "https://erle.ucd.ie/"
-
-    }
-
     tiaMediaLoc = "media/prePreparedTiaPhrases/";
 
     //load this early and change .src later
