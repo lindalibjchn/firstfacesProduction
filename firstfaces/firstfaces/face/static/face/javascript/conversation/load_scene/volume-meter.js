@@ -117,28 +117,25 @@ function drawLoop() {
 
     if ( meter.checkClipping() ) {
 
+        console.log('clipping occurred');
+
         synthesisObject.interference = true;
         
-        if ( conversationVariables.interference_count === 0 ) {
+        if ( synthesisObject.firstClip === false ) {
 
-            if ( synthesisObject.firstClip === false ) {
-
-                conversationVariables.interference_count += 1;
-                synthesisObject.firstClip = true;
+            if ( conversationVariables.interference_count === 0 ) {
+            
                 tiaConfusedAfterClipping( true );
 
-            }
+            } else {
 
-        } else {
-
-            if ( synthesisObject.firstClip === false ) {
-
-                conversationVariables.interference_count += 1;
-                synthesisObject.firstClip = true;
                 tiaConfusedAfterClipping( false );
 
             }
 
+            conversationVariables.interference_count += 1;
+            synthesisObject.firstClip = true;
+            
         }
 
     } else {
@@ -154,89 +151,33 @@ function drawVolumeBar() {
     canvasContext.clearRect(0,0,WIDTH_VOL,HEIGHT_VOL);
 
     // check if we're currently clipping
-    if ( !meter.checkClipping() ) {
+    if ( !synthesisObject.interference ) {
 
         canvasContext.fillStyle = "#33ff00";
         // draw a bar based on the current volume
         canvasContext.fillRect(0, 0, meter.volume*WIDTH_VOL, HEIGHT_VOL);
-        $('#meter').css('border', 'none')
+        //$('#meter').css('border', 'none')
 
+    } else {
+
+        $('#meter').css('background-color', 'red')
+        
     }
 
 }
 
 function tiaConfusedAfterClipping( firstTime ) {
     
+    console.log('in tiaConfusedAfterClipping', firstTime);
+    drawVolumeBar();
     volumeObject.bool = false;
-    canvasContext.fillRect(0, 0, 100, HEIGHT_VOL);
-    canvasContext.fillStyle = "red";
-    $('#meter').css('border', '5px solid orange')
-        
+    
     if ( firstTime ) {
 
         micIntAud.src = micIntAudSources[Math.floor(Math.random()*4)]
         micIntAud.play();//play interference
 
-        // depending on how far forward Tia is, change the duration of the flinch movement
-        function getTimingForFlinch() {
-
-            let leanNo = conversationVariables.blobs
-            let dur = 0.5;
-
-            if ( leanNo >= 2 ) {
-
-                dur = 0.75;
-
-            } else if ( leanNo === 1 ) {
-
-                dur = 0.6;
-
-            }
-
-            return dur;
-
-        }
-
-        let dur = getTimingForFlinch();
-
-        //// first flinch
-        function firstFlinch() {
-
-            onStopClick();
-            setTimeout( function() {
-
-                expressionController( expressionObject.abs.confused, dur )//express confusion 
-                movementController( movements.flinch, dur, dur);
-                
-                //// delay the expression and movement by a bit to create more realistic encounter
-                setTimeout( function() {
-
-                    $('textInputContainer').hide();
-                    hideVolumeBar();//always hide it even if not shown, same as if statement
-
-                    movementController( movements.blank, 1.5, 1.5);
-                    expressionController( expressionObject.abs.blank, 1.5 )//express confusion 
-
-                    setTimeout( function() {
-
-                        tiaSpeak( "That was very loud. Please be careful with the microphone volume.", needSendTTS=true, removeTooLoudWarning );
-
-                        function removeTooLoudWarning() {
-                            
-                            $('#recordVoiceBtn').show();
-                            removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
-
-                        }
-
-                    }, 1500 )
-
-                }, 2000 );
-
-            }, 300 );
-
-        }
-
-        firstFlinch();
+        setTimeout( firstFlinch, 500 );// so Tia seems to react to interference sound
 
     } else {
 
@@ -260,6 +201,35 @@ function showVolumeBar() {
 function hideVolumeBar() {
 
     $('#meterContainer').hide(); 
+
+}
+
+function firstFlinch() {
+
+    onStopClick();
+
+    expressionController( expressionObject.abs.flinch, tiaTimings.flinchDuration / 2 )//express discomfort 
+    movementController( movements.flinch, tiaTimings.flinchDuration, tiaTimings.flinchDuration);
+    
+    //// delay the expression and movement by a bit to create more realistic encounter
+    setTimeout( function() {
+
+        hideVolumeBar();//always hide it even if not shown, same as if statement
+        movementController( movements.blank, 1.5, 1.5);
+        expressionController( expressionObject.abs.blank, 1 ) 
+
+        setTimeout( function() {
+
+            synthesisObject.synthAudio.src = prefixURL + tiaMediaLoc + "that_was_very_loud.wav"
+    
+            tiaSpeak( "That was very loud. Please be careful with the microphone volume", function() {
+    
+                $('#recordVoiceBtn').show();
+            })
+
+        }, 1500 )
+
+    }, tiaTimings.flinchDuration * 1000 + tiaTimings.delayAfterFlinch );
 
 }
 

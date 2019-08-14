@@ -14,8 +14,9 @@ function movementController( movementTo, saccDur, bodyDur ) {
 
     } else {
 
-        console.log( "\nmovement initiated\n" );
         movementObject.bool = false;
+        console.log( "\nmovement initiated\n" );
+
         movementNow = getAbsoluteCoordsOfMovementNow();
         let relativeMovement = createRelativeMovement( movementTo );
         initMovement( relativeMovement, saccDur, bodyDur );

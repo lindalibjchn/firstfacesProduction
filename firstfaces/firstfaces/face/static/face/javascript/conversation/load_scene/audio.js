@@ -138,19 +138,10 @@ function onStopClick() {
     
     }, 250 )
 
-    console.log( mediaRecorder.state );
-    console.log( "recorder stopped" );
-
     conversationVariables.recording = false;
 
     $('#stopRecordBtn').hide();
     $('#stopRecordVoiceBtn').hide();
-
-    //setTimeout( function() { 
-        
-        //recognition.stop();
-
-    //}, 500 );
 
 }
 
@@ -166,11 +157,6 @@ function onMediaRecorderStop() {
     var audioURL = window.URL.createObjectURL(conversationVariables.blob);
     aud.src = audioURL;
 
-    // reset chunks
-    chunks = [];
-
-    // send blob to server to be stored, but wait a bit to make sure it has come through
-    // setTimeout( function() {
     if( !conversationVariables.stage2 && !conversationVariables.stage3 ) {
     	
         sendBlobToServer( conversationVariables.blob );

@@ -40,14 +40,6 @@ const expressionsRel = {
                 'lip_lower_outer': [[0, 0, 0], [0, 0, 0]],
                 'lip_lower_inner': [[0, 0, 0], [0, 0, 0]],
             },
-            //'eyelids': {
-                //'eyelid_upper_inner': [[0, 0, 0], [0, 0, 0]],
-                //'eyelid_upper_middle': [[0, 0, 0], [0, 0, 0]],
-                //'eyelid_upper_outer': [[0, 0, 0], [0, 0, 0]],
-                //'eyelid_lower_inner': [[0, 0, 0], [0, 0, 0]],
-                //'eyelid_lower_middle': [[0, 0, 0], [0, 0, 0]],
-                //'eyelid_lower_outer': [[0, 0, 0], [0, 0, 0]],
-            //},
         },
         'eyelids': 0,
     },
@@ -423,6 +415,37 @@ const expressionsRel = {
         },
         'eyelids': -0.2,
 
+    },
+
+    flinch: {
+
+        'name': 'flinch',
+        'changeVoice': false,
+        'AUs': {
+            'AU1': {
+                'nose': [[0, 0.1, 0], [0, 0, 0]],
+                'jaw': [[0, 0, 0], [-0.05, 0, 0]],
+            },
+            'AU1m': {
+                'jaw_inner': [[0, 0, 0], [0, 0, 0]],
+            },
+            'AU2': {
+                'eyebrow_inner': [[-0.1, 0.1, 0], [0, 0, 0]],
+                'eyebrow_middle': [[-0.05, -0.1, 0], [0, 0, 0]],
+                'eyebrow_outer': [[-0.1, -0.2, 0], [0, 0, 0]],
+                'cheek': [[0, 0.5, 0], [0, 0, 0]],
+                'jaw_upper': [[0.1, 0, 0], [0, 0, 0]],
+                'nose_side': [[0.2, 0.3, 0.2], [0, 0, 0]],
+                'pal_ja_jooreum': [[0, 0.7, 0], [0, 0, 0]],
+                'lip_upper_inner': [[0, 0.2, 0], [0.3, 0, 0]],
+                'lip_upper_outer': [[0, 0.1, 0], [0, 0, 0]],
+                'lip_edge_upper': [[0.1, 0.2, -0.1], [0, 0, -0.2]],
+                'lip_edge_lower': [[0, 0, -0.1], [0, 0, -0.2]],
+                'lip_lower_outer': [[0, 0.0, 0], [0, 0, 0]],
+                'lip_lower_inner': [[0, 0.05, 0], [0, 0, 0]],
+            },
+        },
+        'eyelids': -0.4,
     },
 
     mouthOpen: {
