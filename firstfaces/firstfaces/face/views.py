@@ -36,6 +36,7 @@ if settings.DEBUG:
 else:
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/firstfaces/erle-3666ad7eec71.json"
 # os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/user1/Downloads/erle-3666ad7eec71.json"
+# os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/Users/john/Documents/PhD/firstfaces/erle-3666ad7eec71.json"
 
 def out_or_in(request):
 
@@ -964,6 +965,8 @@ def store_blob(request):
     return JsonResponse(response_data)    
 
 def tts(request):
+
+    print('\n\nintts\n\n')
 
     text = request.GET['sentence']
     tia_speaker = json.loads(request.GET['tiaSpeaker'])
