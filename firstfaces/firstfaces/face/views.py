@@ -605,8 +605,8 @@ def store_topic(request):
 def store_error_blob(request):
     blob = request.FILES['data'] 
     startID = request.POST['start_idx']
-    #`Wsent_id = int(request.POST['blob_no_text_sent_id']) 
     errors = json.loads(request.POST['error_list'])
+    # if the audio error already exists
     if startID in errors.keys():
         primaryKey = errors[startID]
         af = AudioError.objects.get(pk=primaryKey)
@@ -625,6 +625,7 @@ def store_error_blob(request):
             correct=False,
             )
     aea.save()
+    # Get transcript for recording attempt
     trans = get_speech_recognition(filename)[0]["transcript"]
     audio_url = "media/wav/"+filename[:-4]+"wav"
     audio_len = get_audio_length(settings.BASE_DIR+"/"+audio_url);
@@ -641,6 +642,8 @@ def store_error_blob(request):
 
     return JsonResponse(response_data) 
 
+# Function resets the current audio error and audio error attempt if the user submits the keyboard then exits before 
+# submitting a correct recording of what they have typed
 def close_attempt(request):
     att = request.POST['correctio_id']
     err = request.POST['error_pk']
@@ -659,6 +662,7 @@ def close_attempt(request):
     return JsonResponse(response_data) 
 
 
+# Function is used if user uses only the re-recording of an error and submits the resulting transcription
 def error_recording_used(request):
     att = request.POST['attempt_pk']
     err = request.POST['error_pk']
@@ -678,24 +682,28 @@ def error_recording_used(request):
     }
     return JsonResponse(response_data)
 
+# Function does the allignment of words
 def do_allignment(request):
+    # gets transcript of audio file
     trans= request.POST['trans']
     audioPath = request.POST['fn']
     sid = request.POST['sessionID']
-    print('\naudioPath:', audioPath)
+    
+    # writes transcirption one word to a line to a file
     f = open(get_text_path(sid),"w+")                                               
     for word in trans.split():                                                   
         f.write(word.lower()+"\n")                                               
     f.close()                                                         
     textPath = get_text_path(sid)                                                   
-    extra_str = '"task_language=eng|os_task_file_format=json|is_text_type=plain"'
+    
+    # Below lines do the forced allignment, commented lines are those used for Aeneas 
+    # extra_str = '"task_language=eng|os_task_file_format=json|is_text_type=plain"'
     outPath = get_out_path(sid)                                                     
-    aeneasPath = get_aeneas_path()                                               
-    cwd = os.getcwd()                                                            
+    #aeneasPath = get_aeneas_path()                                               
+    #cwd = os.getcwd()                                                            
     #command = 'python3 -m aeneas.tools.execute_task '+ settings.BASE_DIR + '/' + audioPath+" "+textPath+" "+extra_str+" "+outPath+" >/dev/null 2>&1"   
     command = 'python3 align.py '+settings.BASE_DIR + '/'+audioPath+' '+' '+textPath+" -o "+outPath
     wd = settings.BASE_DIR+'/face/gentle-master/'
-    #ython3 align.py ../../media/wav/1_338_13-14-47.wav ../text_files/allign_1.txt  -o map.json
     #sub_proc = subprocess.Popen(command,cwd=get_aeneas_path(),shell=True,stdout=subprocess.PIPE, stderr=subprocess.PIPE)   
     sub_proc = subprocess.Popen(command.split(),cwd=wd)
     sub_proc.wait()                                                                          
@@ -705,14 +713,20 @@ def do_allignment(request):
     return JsonResponse(response_data) 
 
 
+# gets remaining audio of file (all non errored words)
 def get_remaining_audio(request): 
     sid = request.POST['sessionID']
+
+    #ids holds the numerical IDs of span tags holding remaining words
     ids = ast.literal_eval("["+str(request.POST['ids'])+']')
+
+    # poss and ends hold the begining and ending indexs of the words in the transcription
     poss = ast.literal_eval("["+str(request.POST['poss'])+']')
     ends = ast.literal_eval("["+str(request.POST['ends'])+"]")
     paths = []
     lens = []
     count=0
+    # Loop iterates through each word (or sequential set of words) and extracts and saves the audi relating to it
     for i in ids:
         idx = i
         pos =  poss[count]
@@ -723,6 +737,7 @@ def get_remaining_audio(request):
         fn = "part_"+str(i)+"_"+timezone.now().strftime( '%H-%M-%S' )+"_aud.wav"
         errorPath = play_errored_text(audioPath,ts,fn)
         hyp_audio = ref_path(fn)
+        # Saves the audio filename and audio length to lists 
         lens.append(get_audio_length(settings.BASE_DIR+'/'+hyp_audio))
         paths.append(hyp_audio)
     print("\n\n",paths)
@@ -732,14 +747,13 @@ def get_remaining_audio(request):
     }                                  
     return JsonResponse(response_data) 
 
-
+# Function called if user submits a typed correction
 def error_typing_used(request):
     startID = request.POST['start_idx']
     errors = json.loads(request.POST['error_list'])
     af = AudioFile.objects.get(pk=request.POST['audio_id'])
     session_id = request.POST['sessionID']
     #If no Audio error exists create it
-
     if startID in errors.keys():
         #AE exists
         primaryKey = errors[startID]
@@ -753,7 +767,6 @@ def error_typing_used(request):
     #convert audio to wav
     audioPath = convert_audio(filename)
     #Get audio
-    start = time.time()
     ERR_trans = request.POST['etrans']
     idx = int(request.POST['first_word_id'])
     endid = idx + (len(ERR_trans.strip().split(" "))-1) 
@@ -761,10 +774,7 @@ def error_typing_used(request):
     ts = get_timestamps(idx,endid, session_id)
     fn = request.POST['sessionID']+"_"+timezone.now().strftime( '%H-%M-%S' )+"_error.wav"
     errorPath = play_errored_text(audioPath,ts,fn)
-    # #cut_wav(errorPath)
     
-    end = time.time()
-    print("\n\nGetting Audio - ",(end-start))
     #Synth Audio
     gender = request.POST['gender']
     if gender == 'F':
@@ -831,8 +841,13 @@ def error_typing_used(request):
     }
     return JsonResponse(response_data)
 
+
+# Function called is user attempts to record audio after submitting typed correction
 def store_attempt_blob(request):
+    #translator used to remove punctuation from string
     translator = str.maketrans('', '', string.punctuation)
+    
+    # Takes in necessary data 
     blob = request.FILES['data']
     sess = Conversation.objects.get( pk=request.POST['sessionID'] )
     ae_pk = request.POST['error_pk']
@@ -840,24 +855,29 @@ def store_attempt_blob(request):
 
     blob_no_text_sent_id = int(request.POST['blob_no_text_sent_id'])
     s = TempSentence.objects.get( pk=blob_no_text_sent_id )
-
+    
+    # Gets existing audio correction attempt instance
     aeca = AudioErrorCorrectionAttempt.objects.get(pk = request.POST['correctio_id'])
+    # Populates the ACA 
     filename = str(sess.id) + "_attempt_" + str(s.id) + "_" + timezone.now().strftime( '%H-%M-%S' ) +".webm"
     blob.name = filename 
     aeca.audio = blob;
     clicks = request.POST['clicks']
     aeca.clicks = clicks
     aeca.save();
-    
+    #Obtains transcript for audio file
     trans = get_speech_recognition(filename)[0]["transcript"]
+    # removes punctuation 
     trans = trans.translate(translator)
     temp = ae.intention.translate(translator)
     aeca.transcript = trans
     aeca.save()
+    # Works out phonetic similarity between typed correction and recorded transcription
     sim = get_sim(temp,trans)
-    end = time.time()
+    
+    # Works out if transcriptions are considered same
     correct = False
-    if temp == trans or sim == 0:
+    if temp.lower() == trans.lower() or sim == 0:
         trans = ae.intention
         correct = True
     audio_url = "media/wav/"+filename[:-4]+"wav"

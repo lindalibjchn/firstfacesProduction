@@ -1,7 +1,6 @@
 function tiaSpeak( tiaSays, callback ) {
 
-    showSpeechBubble( tiaSays, tiaTimings.showSpeechBubbleDuration )
-
+    showSpeechBubble( tiaSays, tiaTimings.speechBubbleFadeInDuration )
     synthesisObject.synthAudio.play()
 
     initTalk();
