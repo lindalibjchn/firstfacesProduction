@@ -202,8 +202,8 @@ function enterOrReEnter() {
 
         camera.position.set( CAMERA_SIT_POS.x, CAMERA_SIT_POS.y, CAMERA_SIT_POS.z  );
         camera.rotation.set( CAMERA_SIT_TO_LAPTOP_ROT.x, CAMERA_SIT_TO_LAPTOP_ROT.y, CAMERA_SIT_TO_LAPTOP_ROT.z,);
-        //movementController( movements.blank, 0.1, 0.1 );
-        //movementController( movements.laptop, 0.1, 0.1 );
+        //movementController( movementObject.rel.blank, 0.1, 0.1 );
+        //movementController( movementObject.rel.laptop, 0.1, 0.1 );
 
     }
 
@@ -233,14 +233,14 @@ function enterOrReEnter() {
 
 }
 
-// start random movements and calculate stuff after bodyparts loaded
+// start random movementObject.rel and calculate stuff after bodyparts loaded
 function engineRunning() {
 
     setBaseExpressionsMovements(); // do this after all of Tia is loaded
     animate();
     blinkControllerObject.bool = true;
-    expressionController( expressionObject.abs.neutral, 0.01 );
-    movementController( movements.blank, 0.01, 0.01)
+    //expressionController( expressionObject.abs.neutral, 0.01 );
+    //movementController( movementObject.rel.blank, 0.01, 0.01)
     enterOrReEnter();
 
     setTimeout( function() {
@@ -257,8 +257,10 @@ function setBaseExpressionsMovements() {
     expressionObject.now = $.extend( true, {}, expressionObject.base ); // create a copy of this for expression now
     getAbsoluteCoordsOfMainExpressions(); // gets coordinates for all main expressions
     
-    movementBase = getAbsoluteCoordsOfMovementNow(); // same as above for movements
-    movementNow = $.extend( true, {}, movementBase );
+    movementObject.base = getAbsoluteCoordsOfMovementNow(); // same as above for movementObject.rel
+    movementObject.now = $.extend( true, {}, movementObject.base );
+
+    getAbsoluteCoordsOfMainMovements(); // gets coordinates for all main expressions
 
 }
 

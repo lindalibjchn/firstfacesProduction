@@ -910,7 +910,7 @@ function greeting22() {
 
     //tiaSpeak( "Thank you for finishing the tutorial. I hope to see you again soon!", needSendTTS=true, function() {
      
-        //let finalExpression = createSingleExpression( expressionsRel.happy, 0.75 );
+        //let finalExpression = createSingleExpression( expressionObject.rel.happy, 0.75 );
         //calculatedExpression = getAbsoluteCoordsOfExpressionTo( finalExpression[ 0 ] )
         //expressionController( calculatedExpression, tiaTimings.changeExpression );
         //setTimeout( endTutorial, 3000 )

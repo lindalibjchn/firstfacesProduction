@@ -162,7 +162,7 @@ function animate () {
 
     }
 
-    //// Full movements
+    //// Full movementObject.rel
 
     if ( mainEnterObject.bool ) {
 

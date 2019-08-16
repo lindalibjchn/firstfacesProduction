@@ -57,7 +57,7 @@ function judgementReceived( sentMeta ) {
         // calculate changes in expression for these
         if ( conversationVariables.last_sent.judgement === "M" ) {
 
-            let singleCalculatedExpressions = createSingleExpression( expressionsRel.confused, 0.5 )
+            let singleCalculatedExpressions = createSingleExpression( expressionObject.rel.confused, 0.5 )
             calculatedExpression = getAbsoluteCoordsOfExpressionTo( singleCalculatedExpressions[ 0 ] )
             calculatedTalkExpression = getAbsoluteCoordsOfExpressionTo( singleCalculatedExpressions[ 1 ] )
 
@@ -69,19 +69,19 @@ function judgementReceived( sentMeta ) {
 
     } else if ( conversationVariables.last_sent.judgement === "D" ) {
 
-        let singleCalculatedExpressions = createSingleExpression( expressionsRel.confused, 1 )
+        let singleCalculatedExpressions = createSingleExpression( expressionObject.rel.confused, 1 )
         calculatedExpression = getAbsoluteCoordsOfExpressionTo( singleCalculatedExpressions[ 0 ] )
         calculatedTalkExpression = getAbsoluteCoordsOfExpressionTo( singleCalculatedExpressions[ 1 ] )
 
     } else if ( conversationVariables.last_sent.judgement === "3" ) {
 
-        let singleCalculatedExpressions = createSingleExpression( expressionsRel.confused, 0.75 )
+        let singleCalculatedExpressions = createSingleExpression( expressionObject.rel.confused, 0.75 )
         calculatedExpression = getAbsoluteCoordsOfExpressionTo( singleCalculatedExpressions[ 0 ] )
         calculatedTalkExpression = getAbsoluteCoordsOfExpressionTo( singleCalculatedExpressions[ 1 ] )
 
     } else if ( conversationVariables.last_sent.judgement === "I" ) {
 
-        let singleCalculatedExpressions = createSingleExpression( expressionsRel.confused, 1 )
+        let singleCalculatedExpressions = createSingleExpression( expressionObject.rel.confused, 1 )
         calculatedExpression = getAbsoluteCoordsOfExpressionTo( singleCalculatedExpressions[ 0 ] )
         calculatedTalkExpression = getAbsoluteCoordsOfExpressionTo( singleCalculatedExpressions[ 1 ] )
 
