@@ -1,7 +1,7 @@
 // CONTAINS THE EXPRESSIONS FOR THE EMOTION WHEEL AND THE LOGIC FOR TURNING THE WHEEL INTO THE EXPRESSIONS //
 
 // if eyelids is false, then the absolute coordinates in AUs is used
-function expressionController( expressionTo, duration, callback ) {
+function expressionController( expressionTo, duration ) {
 
     //// check if blinking, dont want to move mid blink or eyelids wont function
     if ( blinkObject.bool ) {
@@ -50,22 +50,21 @@ function createRelativeExpression( expTo ){
 
     })
 
-    let eyelidChange = expTo.eyelids - expressionObject.now.eyelids;
-    relativeExpression.eyelids = eyelidChange;
+    relativeExpression.eyelids -= expressionObject.now.eyelids;
 
     return relativeExpression;
 
 }
 
 //// general all-purpose method for all expressions
-function initExpression( expressionMovement, secs ) {
+function initExpression( exp, secs ) {
 
     //// want the sin and sinLength to be in the expressionObject
     assignSinArrayForSpeed( secs, expressionObject, sineArrays );
     expressionObject.startCount = mainCount;
     expressionObject.bool = true;
 
-    initMoveEyelids( expressionMovement.eyelids, -expressionMovement.eyelids, secs );
+    initMoveEyelids( exp.eyelids, -exp.eyelids, secs );
 
 }
 
@@ -274,17 +273,17 @@ function createSingleExpression( exp, mult ) {
 }
 
 var sectors = [ 
-    [ expressionsRel.content, expressionsRel.happy ], 
-    [ expressionsRel.happy, expressionsRel.disgust ],
-    [ expressionsRel.disgust, expressionsRel.fear ],
-    [ expressionsRel.fear, expressionsRel.sad ],
-    [ expressionsRel.sad, expressionsRel.content ]
+    [ expressionObject.rel.content, expressionObject.rel.happy ], 
+    [ expressionObject.rel.happy, expressionObject.rel.disgust ],
+    [ expressionObject.rel.disgust, expressionObject.rel.fear ],
+    [ expressionObject.rel.fear, expressionObject.rel.sad ],
+    [ expressionObject.rel.sad, expressionObject.rel.content ]
 ]
 
 function createCalculatedExpression( twoExpressions, ratio, mult, surp ){
 
-    calcExp = $.extend(true, {}, expressionsRel.blank );
-    calcTalkExp = $.extend(true, {}, expressionsRel.blank );
+    calcExp = $.extend(true, {}, expressionObject.rel.blank );
+    calcTalkExp = $.extend(true, {}, expressionObject.rel.blank );
 
     let zeroMovement = [[0,0,0],[0,0,0]];
 
@@ -306,7 +305,7 @@ function createCalculatedExpression( twoExpressions, ratio, mult, surp ){
             expression02ThisBone = expression02.AUs[ AU ][ bone ];
 
             //maybe no surprise at all
-            var surpriseExpressionThisBone = expressionsRel.surprise.AUs[ AU ][ bone ];
+            var surpriseExpressionThisBone = expressionObject.rel.surprise.AUs[ AU ][ bone ];
 
             if ( expression01ThisBone === zeroMovement && expression02ThisBone === zeroMovement && surpriseExpressionThisBone === zeroMovement ) { 
 
@@ -382,7 +381,7 @@ function changeExpression() {
 
     } else {
 
-        let singleCalculatedExpressions = createSingleExpression( expressionsRel.blank, 1 )
+        let singleCalculatedExpressions = createSingleExpression( expressionObject.rel.blank, 1 )
         calculatedExpression = getAbsoluteCoordsOfExpressionTo( singleCalculatedExpressions[ 0 ] )
         calculatedTalkExpression = getAbsoluteCoordsOfExpressionTo( singleCalculatedExpressions[ 1 ] )
 
@@ -393,7 +392,7 @@ function changeExpression() {
 
 function getAbsoluteCoordsOfExpressionNow() {
 
-    let absExpression = $.extend(true, {}, expressionsRel.blank);
+    let absExpression = $.extend(true, {}, expressionObject.rel.blank);
 
     Object.keys( absExpression.AUs.AU2 ).forEach( function( key ) {
 
@@ -497,9 +496,9 @@ function getAbsoluteCoordsOfExpressionTo( exp ) {
 
 function getAbsoluteCoordsOfMainExpressions() {
 
-    Object.keys( expressionsRel ).forEach( function( exp ) {
+    Object.keys( expressionObject.rel ).forEach( function( exp ) {
 
-        indExpRel = expressionsRel[ exp ];
+        indExpRel = expressionObject.rel[ exp ];
         let expression = $.extend( true, {}, indExpRel );
 
         Object.keys( indExpRel.AUs.AU2 ).forEach( function( key ) {
@@ -514,12 +513,6 @@ function getAbsoluteCoordsOfMainExpressions() {
 
         })
             
-        //Object.keys( expression.AUs.eyelids ).forEach( function( key ) {
-
-            //expression.AUs.eyelids[ key ][ 0 ][ 1 ] += expressionObject.base.AUs.eyelids[ key ][ 0 ][ 1 ];
-
-        //})
-
         Object.keys( expressionObject.base.AUs.AU1 ).forEach( function( key ) {
 
             expression.AUs.AU1[ key ][ 0 ][ 0 ] += expressionObject.base.AUs.AU1[ key ][ 0 ][ 0 ];

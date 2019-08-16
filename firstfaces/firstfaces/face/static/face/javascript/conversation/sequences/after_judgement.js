@@ -62,7 +62,7 @@ function runAfterJudgement() {
 
     } else if ( conversationVariables.last_sent.judgement === "I" ) {
 
-        movementController( movements.confused, tiaTimings.movementToConfused / 2, tiaTimings.movementToConfused );
+        movementController( movementObject.rel.confused, tiaTimings.movementToConfused / 2, tiaTimings.movementToConfused );
 
         addToPrevSents(conversationVariables.last_sent);
         
@@ -268,7 +268,7 @@ function returnToLaptop( from ) {
 
     recTimes.returnToLaptop = Date.now() / 1000;
     //console.log( 'in return to laptop');
-    //movementController( movements.blank, 0.5, 1 );
+    //movementController( movementObject.rel.blank, 0.5, 1 );
     addToPrevSents();
     initInputReady( from )
 
@@ -370,7 +370,7 @@ function whatsWrong() {
     
     //whenAllMovFinished( function() {
 
-        movementController( movements.laptop, '0.5', '1.5' );
+        movementController( movementObject.rel.laptop, '0.5', '1.5' );
 
     //});
 

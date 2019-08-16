@@ -209,13 +209,13 @@ function firstFlinch() {
     onStopClick();
 
     expressionController( expressionObject.abs.flinch, tiaTimings.flinchDuration / 2 )//express discomfort 
-    movementController( movements.flinch, tiaTimings.flinchDuration, tiaTimings.flinchDuration);
+    movementController( movementObject.rel.flinch, tiaTimings.flinchDuration, tiaTimings.flinchDuration);
     
     //// delay the expression and movement by a bit to create more realistic encounter
     setTimeout( function() {
 
         hideVolumeBar();//always hide it even if not shown, same as if statement
-        movementController( movements.blank, 1.5, 1.5);
+        movementController( movementObject.rel.blank, 1.5, 1.5);
         expressionController( expressionObject.abs.blank, 1 ) 
 
         setTimeout( function() {

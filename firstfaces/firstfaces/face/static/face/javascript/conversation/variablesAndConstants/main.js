@@ -99,15 +99,6 @@ function eyeLineOfSightHelper() {
 
 }
 
-
-//// MOVEMENTS \\\\
-
-// abs coords of expression on enter - completely blank
-var movementBase;
-
-// abs coords of expression at current moment
-var movementNow;
-
 ////////// EYELIDS
 
 // fill with open and closed y-coord for upper middle and lower middle eyelids = {

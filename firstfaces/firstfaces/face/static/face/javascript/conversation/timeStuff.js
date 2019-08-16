@@ -152,7 +152,7 @@ function endClass() {
     //$('#controllerContainer').fadeOut( 500 );
 
 
-    let singleCalculatedExpressions = createSingleExpression( expressionsRel.happy, 0.7 )
+    let singleCalculatedExpressions = createSingleExpression( expressionObject.rel.happy, 0.7 )
     calculatedExpression = getAbsoluteCoordsOfExpressionTo( singleCalculatedExpressions[ 0 ] )
     calculatedTalkExpression = getAbsoluteCoordsOfExpressionTo( singleCalculatedExpressions[ 1 ] )
 

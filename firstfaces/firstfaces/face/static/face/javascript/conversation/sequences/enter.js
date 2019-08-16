@@ -10,27 +10,27 @@ function mainEnter() {
 
     if ( mainCount === 10 ) {
         
-        movementController( movements.laptop, 0.1, 0.1 );
+        movementController( movementObject.rel.laptop, 0.1, 0.1 );
  
     } else if ( mainCount === 60 ) {
 
-        movementController( movements.blank, 0.5, 1 );
+        movementController( movementObject.rel.blank, 0.5, 1 );
 
     } else if ( mainCount === 110 ) {
 
-        let calculatedExpressions = createSingleExpression( expressionsRel.happy, 0.75 );
+        let calculatedExpressions = createSingleExpression( expressionObject.rel.happy, 0.75 );
         calculatedExpression = getAbsoluteCoordsOfExpressionTo( calculatedExpressions[0] );
         calculatedTalkExpression = getAbsoluteCoordsOfExpressionTo( calculatedExpressions[1] );
         expressionController( calculatedExpression, tiaTimings.changeExpression );
 
     //} else if ( mainCount === 430 ) {
 
-        //movementController( movements.lookChair, '0.5', '1');
+        //movementController( movementObject.rel.lookChair, '0.5', '1');
         //initArmIndicate('left', 1, 'low', '1');
 
     //} else if ( mainCount === 180 ) {
 
-        //initMovement( movements.standingStudent, '0.5', '1');
+        //initMovement( movementObject.rel.standingStudent, '0.5', '1');
 
         let studentName = conversationVariables.username;
         
@@ -89,7 +89,7 @@ function mainEnter() {
     //} else if ( mainCount === 590 ) {
 
         //initEnterCameraMove('chair', '3');
-        //movementController( movements.blank, '3', '3');
+        //movementController( movementObject.rel.blank, '3', '3');
 
     } else if ( mainCount === 210 ) {
 
@@ -150,7 +150,7 @@ function goToAskTopic( emotion ) {
 
     if ( emotion === "happy" ) {
 
-        calculatedExpressions = createCalculatedExpression([expressionsRel.happy, expressionsRel.content], 0.95, 0.6, 0.2)
+        calculatedExpressions = createCalculatedExpression([expressionObject.rel.happy, expressionObject.rel.content], 0.95, 0.6, 0.2)
         //calculatedExpression = getAbsoluteCoordsOfExpressionTo( calculatedExpressions[ 0 ] );
         //calculatedTalkExpression = getAbsoluteCoordsOfExpressionTo( calculatedExpressions[ 1 ] );
         
@@ -179,14 +179,14 @@ function goToAskTopic( emotion ) {
 
     } else if ( emotion === "ok" ) {
 
-        calculatedExpressions = createCalculatedExpression([expressionsRel.content, expressionsRel.happy], 0.98, 0.5, 0);
+        calculatedExpressions = createCalculatedExpression([expressionObject.rel.content, expressionObject.rel.happy], 0.98, 0.5, 0);
         //calculatedExpression = getAbsoluteCoordsOfExpressionTo( calculatedExpressions[0] );
         //calculatedTalkExpression = getAbsoluteCoordsOfExpressionTo( calculatedExpressions[1] );
         //expressionController( calculatedExpression, tiaTimings.changeExpression );
     
     } else if ( emotion === "sad" ) {
 
-        calculatedExpressions = createCalculatedExpression([expressionsRel.sad, expressionsRel.fear], 0.98, 0.5, 0);
+        calculatedExpressions = createCalculatedExpression([expressionObject.rel.sad, expressionObject.rel.fear], 0.98, 0.5, 0);
         //calculatedExpression = getAbsoluteCoordsOfExpressionTo( calculatedExpressions[0] );
         //calculatedTalkExpression = getAbsoluteCoordsOfExpressionTo( calculatedExpressions[1] );
         //expressionController( calculatedExpression, tiaTimings.changeExpression );
