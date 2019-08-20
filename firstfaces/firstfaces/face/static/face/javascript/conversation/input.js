@@ -248,7 +248,7 @@ function goToThinkingPos() {
     // don't want to run runAfterJudgement if Tia is turning to think
     //conversationVariables.goingToThinking = true;
 
-    movementController( movementObject.rel.think, tiaTimings.toThinkDuration / 3, tiaTimings.toThinkDuration );
+    movementController( movementObject.abs.think, tiaTimings.toThinkDuration / 3, tiaTimings.toThinkDuration );
 
 }
 
@@ -512,7 +512,7 @@ function returnFromThinking() {
 
     setTimeout( function() {
 
-        movementController( movementObject.rel.blank, tiaTimings.returnFromThinking / 2, tiaTimings.returnFromThinking );
+        movementController( movementObject.abs.blank, tiaTimings.returnFromThinking / 2, tiaTimings.returnFromThinking );
 
         setTimeout( runAfterJudgement, tiaTimings.returnFromThinking * 750 ); // want nod to happen before movement back ends
     

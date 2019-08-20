@@ -10,11 +10,11 @@ function mainEnter() {
 
     if ( mainCount === 10 ) {
         
-        movementController( movementObject.rel.laptop, 0.1, 0.1 );
+        movementController( movementObject.abs.laptop, 0.1, 0.1 );
  
     } else if ( mainCount === 60 ) {
 
-        movementController( movementObject.rel.blank, 0.5, 1 );
+        movementController( movementObject.abs.blank, 0.5, 1 );
 
     } else if ( mainCount === 110 ) {
 
@@ -25,12 +25,12 @@ function mainEnter() {
 
     //} else if ( mainCount === 430 ) {
 
-        //movementController( movementObject.rel.lookChair, '0.5', '1');
+        //movementController( movementObject.abs.lookChair, '0.5', '1');
         //initArmIndicate('left', 1, 'low', '1');
 
     //} else if ( mainCount === 180 ) {
 
-        //initMovement( movementObject.rel.standingStudent, '0.5', '1');
+        //initMovement( movementObject.abs.standingStudent, '0.5', '1');
 
         let studentName = conversationVariables.username;
         
@@ -89,7 +89,7 @@ function mainEnter() {
     //} else if ( mainCount === 590 ) {
 
         //initEnterCameraMove('chair', '3');
-        //movementController( movementObject.rel.blank, '3', '3');
+        //movementController( movementObject.abs.blank, '3', '3');
 
     } else if ( mainCount === 210 ) {
 

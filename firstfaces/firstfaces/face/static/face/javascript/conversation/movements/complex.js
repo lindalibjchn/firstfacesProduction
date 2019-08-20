@@ -1,6 +1,6 @@
 function backNReadALine() {
 
-    var randomReadingMovement = $.extend( true, {}, movementObject.rel.laptop );
+    var randomReadingMovement = $.extend( true, {}, movementObject.abs.laptop );
 
     let plusOrMinusX = Math.random() - 0.5; 
     let plusOrMinusY = Math.random() - 0.5; 
@@ -46,7 +46,7 @@ function initTalk() {
 
     } else {
 
-        console.log( "can't talk while still talking!" );
+        //console.log( "can't talk while still talking!" );
 
     }
 
@@ -250,7 +250,7 @@ function initOpenMouth( to, secs ) {
 
 function openMouth( main ) {
 
-    console.log('in openMouth');
+    //console.log('in openMouth');
     let main_start = main - mouthOpenObject[ 'startCount' ];
 
     let sinAmount = mouthOpenObject[ 'sin' ][ main_start ]
@@ -373,7 +373,7 @@ function initMoveEyelids( upperPos, lowerPos, secs ) {
 
     if ( eyelidObject.bool ) {
 
-        console.log( 'initMoveEyelids called when the bool is true. What gives?')
+        //console.log( 'initMoveEyelids called when the bool is true. What gives?')
 
     } else {
 
@@ -441,7 +441,7 @@ function initNod( depth, secs ) {
 
     if ( nodObject.bool ) {
 
-        console.log('can move while still moving man!!')
+        //console.log('can move while still moving man!!')
 
     } else {
     
@@ -492,7 +492,7 @@ function nod( main ) {
         } else {
 
             nodObject.iter = 0;
-            movementController( movementObject.rel.blank, nodObject.secs, nodObject.secs );
+            movementController( movementObject.abs.blank, nodObject.secs, nodObject.secs );
 
         }
 
@@ -505,7 +505,7 @@ function initShake( depth, secs ) {
 
     if ( shakeObject.bool ) {
 
-        console.log('can move while still moving man!!')
+        //console.log('can move while still moving man!!')
 
     } else {
     
@@ -554,7 +554,7 @@ function shake( main ) {
         } else {
 
             shakeObject.iter = 0;
-            movementController( movementObject.rel.blank, shakeObject.secs, shakeObject.secs );
+            movementController( movementObject.abs.blank, shakeObject.secs, shakeObject.secs );
 
         }
 
@@ -624,7 +624,7 @@ function tapKeyFull() {
 
                         conversationVariables.tapKeyForErrors = false;
 
-                        movementController( movementObject.rel.blank, '0.5', '1.5' );
+                        movementController( movementObject.abs.blank, '0.5', '1.5' );
                         // display errors
                         showWrongSentence();
 
@@ -764,124 +764,6 @@ function addWords(word,count) {
     //$('#textInput').focus();
 
 //}
-
-/////////// LISTEN TO SPEECH SYNTHESIS
-
-function listenToSpeechSynthesis( intensity ) {
-
-    if ( intensity === 0 ) {
-
-        movementController( movementObject.rel.speechRecognitionInput01, 1, 1 )
-
-    } else if ( intensity === 1 ) {
-
-        movementController( movementObject.rel.speechRecognitionInput02, 1.25, 1.25 )
-
-    } else {
-
-        movementController( movementObject.rel.speechRecognitionInput03, 1.5, 1.5 )
-
-    }
-
-    expressionController( expressionObject.abs.speechRecognition, 0.3 )
-
-}
-
-function dealWithBlankTranscription() {
-
-    $('#recordBtnsCont').hide();
-
-
-    synthesisObject.synthAudio.src = prefixURL + tiaMediaLoc + "im_sorry_but_i_didnt_hear_anything.wav";
-    tiaSpeak( "I'm sorry, but I didn't hear anything. Could you try again?", function() {
-     
-        $('#recordVoiceBtn').show();
-        conversationVariables.mainRecord = false;
-
-        $('#recordBtnsCont').fadeIn();
-        //removeSpeechBubble();
-
-    } );
-
-}
-
-function returnFromListenToSpeechSynthesis() {
-
-    movementController( movementObject.rel.blank, 1, 1 );
-    setTimeout( function() {
-        
-        // if no sound comes through, don't tap or show empty transcripts
-        if ( conversationVariables.alternatives[ 0 ].transcript === "" ) {
-        
-            if ( conversationVariables.tutorial === false ) {
-
-                setTimeout( function() {
-
-                    initShake(0.2, 0.5)
-                    setTimeout( dealWithBlankTranscription, 1500 );
-
-                }, 1000);
-        
-            }
-
-        } else {
-           // reset this as main recording is complete with a transcription
-           conversationVariables.mainRecord = false;
-            
-            $('#closeOverlayArea').prop( "disabled", true);
-            $('#submitOverlay').prop( "disabled", true);
-            tapKeyFull();
-    
-            setTimeout( function() {
-
-                expressionController( expressionObject.abs.neutral, 0.5 )
-            
-                //setTimeout( function() {
-
-                    //$('#recordVoiceBtn').show();
-                
-                //}, 1000 );
-
-            }, 300);
-
-        }
-
-    }, 200 );
-
-}
-
-function returnFromListenToErrorAttemptWithSpectrograph() {
-
-    movementController( movementObject.rel.laptop, 0.5, 1 );
-
-}
-
-/////////// RANDOM MOVEMENTS ALL THE TIME
-
-function breathe( remaining ) {
-
-    let mult = breatheObject.direction * breatheObject.scaleMult * breatheObject.sin[ remaining ];
-
-    tiaObject.bodyBones.spineUpper.scale.x += mult * 12;
-    tiaObject.bodyBones.spineUpper.scale.y += mult;
-    tiaObject.bodyBones.spineUpper.scale.z += mult; 
-    tiaObject.faceBones['shoulder.L'].position.y += breatheObject.direction * breatheObject.yPosMult * breatheObject.sin[ remaining ];
-    tiaObject.faceBones['shoulder.R'].position.y += breatheObject.direction * breatheObject.yPosMult * breatheObject.sin[ remaining ];
-
-}
-
-function randomTiltSpine( remaining ) {
-
-    tiaObject.bodyBones.spineLower.rotation.z = spineRandomTiltObject.direction * spineRandomTiltObject.mult * spineRandomTiltObject.sin[ remaining ];
-
-}
-
-function randomTiltNeck( remaining ) {
-
-    tiaObject.faceBones.neck.rotation.z = neckRandomTiltObject.direction * neckRandomTiltObject.mult * neckRandomTiltObject.sin[ remaining ];
-
-}
-
 
 
 

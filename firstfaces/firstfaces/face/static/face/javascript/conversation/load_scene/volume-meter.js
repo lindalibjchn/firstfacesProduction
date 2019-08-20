@@ -1,5 +1,7 @@
 function initMicVolumeBar() {
 
+    // CALLED EACH TIME THE MIC BUTTON IS PRESSED
+
     audioContext = new AudioContext();
     
     // Create an AudioNode from the stream.
@@ -177,11 +179,13 @@ function tiaConfusedAfterClipping( firstTime ) {
         micIntAud.src = micIntAudSources[Math.floor(Math.random()*4)]
         micIntAud.play();//play interference
 
-        setTimeout( firstFlinch, 500 );// so Tia seems to react to interference sound
+        setTimeout( firstFlinch, 250 );// so Tia seems to react to interference sound
 
     } else {
 
         // actually just face contorting a bit
+        
+        expressionController( expressionObject.abs.flinch, tiaTimings.flinchDuration / 2 )//express discomfort 
         //expressionController( expressionObject.abs.blank, 0.5 )//express confusion 
         // don't return to normal face cause the setTimeout could conflict with the students clicking of the stop button
 
@@ -201,35 +205,6 @@ function showVolumeBar() {
 function hideVolumeBar() {
 
     $('#meterContainer').hide(); 
-
-}
-
-function firstFlinch() {
-
-    onStopClick();
-
-    expressionController( expressionObject.abs.flinch, tiaTimings.flinchDuration / 2 )//express discomfort 
-    movementController( movementObject.rel.flinch, tiaTimings.flinchDuration, tiaTimings.flinchDuration);
-    
-    //// delay the expression and movement by a bit to create more realistic encounter
-    setTimeout( function() {
-
-        hideVolumeBar();//always hide it even if not shown, same as if statement
-        movementController( movementObject.rel.blank, 1.5, 1.5);
-        expressionController( expressionObject.abs.blank, 1 ) 
-
-        setTimeout( function() {
-
-            synthesisObject.synthAudio.src = prefixURL + tiaMediaLoc + "that_was_very_loud.wav"
-    
-            tiaSpeak( "That was very loud. Please be careful with the microphone volume", function() {
-    
-                $('#recordVoiceBtn').show();
-            })
-
-        }, 1500 )
-
-    }, tiaTimings.flinchDuration * 1000 + tiaTimings.delayAfterFlinch );
 
 }
 
