@@ -292,7 +292,7 @@ def get_cmap(threshold):
     else:
         return "Reds"
 
-# Generates spectogram 
+
 def get_spectogram(wav_path,sim,filename,code):
     samplingFrequency, signalData = wavfile.read(wav_path)
     temp = []                                             
@@ -314,11 +314,8 @@ def get_spectogram(wav_path,sim,filename,code):
     out = "media/images/"+filename
     plt.savefig(settings.BASE_DIR+'/'+out, transparent= True, bbox_inches = 'tight', pad_inches = 0)
     if code !=0:
-        start = time.time()
         new_out = "media/images/"+filename[:-4]+"_crop.png"
         crop_spectogram(settings.BASE_DIR+'/'+out,(0,162,1416,376), settings.BASE_DIR+'/'+new_out)
-        end = time.time()
-        print("\n\nCut - ",end-start,"\n\n")
     
         return new_out
     return out
@@ -346,6 +343,7 @@ def is_phonetically_same(t1,t2):
             if get_phonemes_num(t1[i].lower()) != get_phonemes_num(t2[i].lower()):
                 return False
     return True
+
 
 
 # Unnused but cuts empty sapce at start and end of the audio file
