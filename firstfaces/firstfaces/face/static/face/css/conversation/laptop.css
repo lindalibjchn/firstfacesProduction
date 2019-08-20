@@ -13,7 +13,7 @@
 
 #laptopInnerContainer {
 
-    width: 94%;
+    width: 100%;
     height: 100%;
     /*background-color: #191919;*/
     bottom: 0;
@@ -26,7 +26,6 @@
 #laptopImage {
 
     width: 100%;
-    border-top: 5px solid rgb(180, 180, 180, 1);
 
 }
 

@@ -17,6 +17,9 @@ function definePrefixURL() {
 
 definePrefixURL();
 
+const tiaMediaLoc = "media/prePreparedTiaPhrases/";
+
+
 var scene, renderer, camera, pointLight, ambientLight, loader
 var mainCount = 0;
 
@@ -57,18 +60,15 @@ var recTimes = {};
 
 //// CAMERA \\\\
 
-const CAMERA_ENTER_POS = { x: -48, y: 15, z: 150 }
-const CAMERA_ENTER_ROT = { x: -0.1, y: 0.05, z: 0 }
+//const CAMERA_SIT_POS = { x: 0, y: -2, z: 39 };
 
-const CAMERA_DESK_POS = { x: -10, y: 5, z: 49 }
-const CAMERA_DESK_ROT = { x: -0.15, y: -0.2, z: 0 }
+//const CAMERA_SIT_ROT = { x: -0.29, y: 0, z: 0 };
 
-const CAMERA_SIT_POS = { x: 0, y: -2, z: 39 };
+// for dev when looking at face closely
 
-const CAMERA_SIT_TO_LAPTOP_ROT = { x: -0.29, y: 0, z: 0 };
-const CAMERA_SIT_TO_TIA_ROT = { x: 0, y: 0, z: 0 };
-const CAMERA_SIT_TO_BOARD_ROT = { x: 0.1, y: 0.6, z: 0 };
+const CAMERA_SIT_POS = { x: 0, y: -3.0, z: 19 };
 
+const CAMERA_SIT_ROT = { x: -0.05, y: 0, z: 0 };
 
 //// LIGHT \\\\
 

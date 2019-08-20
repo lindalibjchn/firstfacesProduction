@@ -519,7 +519,7 @@ function sendAttemptBlob( new_blob ){
             //john
             conversationVariables.showingSpectrograms = true;
             tapKeyFull();
-            movementController( movementObject.rel.blank, '0.5', '1' );
+            movementController( movementObject.abs.blank, '0.5', '1' );
           
             setTimeout( function(){
                 
@@ -749,7 +749,7 @@ function submitKeyboard(){
 
     // john
     // tia looks at laptop while waiting for images to return
-    movementController( movementObject.rel.laptop, '0.5', '1' );
+    movementController( movementObject.abs.laptop, '0.5', '1' );
 
 
     //hide other buttons
@@ -792,7 +792,7 @@ function submitKeyboard(){
             //  tia taps and looks at student
             conversationVariables.showingSpectrograms = true;
             tapKeyFull();
-            movementController( movementObject.rel.blank, '0.5', '1' );
+            movementController( movementObject.abs.blank, '0.5', '1' );
 
             //$('#reRecordBtn').show();
 

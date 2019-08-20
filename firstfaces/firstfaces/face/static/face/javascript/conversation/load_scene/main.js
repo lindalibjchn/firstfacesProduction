@@ -1,9 +1,9 @@
 $(window).on( 'load', function() {
    
-    // begins the loading of objects
+    // LOADS OBJECTS <three_js_objects.js>
+    // AFTER LOADING 'enterOrReEnter()' WILL BE CALLED BELOW
     init();
 
-    //get audio ready
     readyBtns();
 
     readyAudio();
@@ -17,6 +17,86 @@ $(window).on( 'load', function() {
     canvasContext.transform(1, 0, 0, -1, 0, HEIGHT_VOL)
 
 });
+
+function enterOrReEnter() {
+
+    //load this early and change .src later
+    synthesisObject.synthAudio = document.getElementById( 'synthClip' );
+
+    camera.position.set( CAMERA_SIT_POS.x, CAMERA_SIT_POS.y, CAMERA_SIT_POS.z  );
+    camera.rotation.set( CAMERA_SIT_ROT.x, CAMERA_SIT_ROT.y, CAMERA_SIT_ROT.z,);
+
+    function firstEnter() {
+
+        initMainEnter();
+
+    }
+
+    function reEnter() {
+ 
+        cameraObject.currentState = "laptop";
+
+        talkObject.learning = true;
+        //initCameraMove('laptop', 0.1);
+        initInputReady();
+
+    };
+
+    //if first enter then run entrance animation else sitting at chair
+    if ( conversationVariables.first_enter ) {
+        
+        firstEnter();
+
+    } else {
+
+        reEnter();
+
+    }
+
+}
+
+// start random movementObject.abs and calculate stuff after bodyparts loaded
+function engineRunning() {
+
+    setBaseExpressionsMovements(); // do this after all of Tia is loaded
+    animate();
+    blinkControllerObject.bool = true;
+    expressionController( expressionObject.abs.neutral, 0.01 );
+    movementController( movementObject.abs.blank, 0.01, 0.01)
+    enterOrReEnter();
+
+    runUCDGif();
+    setTimeout( function() {
+        
+        $("#foregroundContainer").fadeOut( 1500 );
+    
+        // for developing visemes
+        expressionController( expressionObject.abs.talkNeutral, 0.3)
+
+    }, 2200 );
+
+}
+
+function runUCDGif() {
+
+    $("#foregroundImage").hide();
+    $("#foregroundImageNoHarp").show();
+    $("#foregroundImageGif").show();
+
+}
+
+function setBaseExpressionsMovements() {
+
+    expressionObject.base = getAbsoluteCoordsOfExpressionNow(); // get absolute position of base expression
+    expressionObject.now = $.extend( true, {}, expressionObject.base ); // create a copy of this for expression now
+    getAbsoluteCoordsOfMainExpressions(); // gets coordinates for all main expressions
+    
+    movementObject.base = getAbsoluteCoordsOfMovementNow(); // same as above for movementObject.abs
+    movementObject.now = $.extend( true, {}, movementObject.base );
+
+    getAbsoluteCoordsOfMainMovements(); // gets coordinates for all main expressions
+
+}
 
 
 

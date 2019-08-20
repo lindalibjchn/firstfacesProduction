@@ -1,9 +1,17 @@
+{% load static %}
+
 <div id="foregroundContainer" style="opacity: 1">
 
-    <div id="loadingIcon">
+    <div id="behindForegroundCountainer">
 
-        <i class="fa fa-5x fa-spinner fa-pulse"></i>
+        <div id="blueSky"></div>
+        <div id="greenGrass"></div>
+
 
     </div>
+
+    <img id="foregroundImage" src="{% static 'gif_animation/gifBackgroundImage.png' %}">
+    <img id="foregroundImageNoHarp" src="{% static 'gif_animation/gifBackgroundImageNoHarp.png' %}">
+    <img id="foregroundImageGif" src="{% static 'gif_animation/ERLE_logo_animation.gif' %}">
 
 </div>
