@@ -440,13 +440,13 @@ def conversation(request, session_id):
                     'prev_score': prev_score,
                     'prev_emotion': prev_emotion,
                     'interference_count': interference_count,
-                    'interference_count_this_sent': interference_count_this_sent,
+                    # 'interference_count_this_sent': interference_count_this_sent,
                     'blobs': blobs,
                     'gender': gender,
                     'first_full_conversation': first_full_conversation,
                     'tutorial': sess.tutorial,
                     'tutorial_complete': tutorial_complete,
-                    'endClassSequenceStarted': False,
+                    # 'endClassSequenceStarted': False,
                     'inDevelopment': in_development
 
                 }

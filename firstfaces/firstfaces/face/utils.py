@@ -560,7 +560,7 @@ def create_hello_wav( u_name ):
     audio_config = texttospeech.types.AudioConfig(
         audio_encoding=texttospeech.enums.AudioEncoding.MP3,
         pitch = 1,
-        speaking_rate = 0.9,
+        speaking_rate = 0.7,
         )
 
     try:

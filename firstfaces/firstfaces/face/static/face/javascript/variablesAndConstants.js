@@ -1,6 +1,6 @@
 ///////////// SINE ARRAYS
 
-const SINEARRAYFRAMES = [ 3, 6, 9, 12, 15, 18, 21, 25, 30, 40, 50, 60, 75, 90, 120, 180, 210, 240, 270, 300, 360, 420, 480, 540, 600 ];
+const SINEARRAYFRAMES = [ 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 15, 18, 21, 25, 30, 40, 50, 60, 75, 90, 120, 180, 210, 240, 270, 300, 360, 420, 480, 540, 600 ];
 
 //// converts seconds to the number of frames
 function secsToFrames( secs ) {
@@ -79,7 +79,7 @@ function assignSinArrayForSpeed( secs, object, sArrays ) {
     //// get no of frames from the seconds input
     let frames = secsToFrames( secs );
 
-    object.sin = sArrays[ frames.toString() ];
+    object.sin = sArrays[ frames ];
 
     object.sinLength = object.sin.length;
     

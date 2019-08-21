@@ -22,349 +22,349 @@ function backNReadALine() {
 
 }
 
-var talkRootExp;
-function initTalk() {
+//var talkRootExp;
+//function initTalk() {
    
-    if ( talkObject.bool === false ) {
+    //if ( talkObject.bool === false ) {
 
-        let endCount =  Math.max( synthesisObject.synthAudio.duration * 60 - 60, 60 ); 
-        talkObject.endCount = mainCount + synthesisObject.endCount;
+        //let endCount =  Math.max( synthesisObject.synthAudio.duration * 60 - 60, 60 ); 
+        //talkObject.endCount = mainCount + synthesisObject.endCount;
 
-        // start mouth pursed when talking
-        talkObject.bool = true;
-        talkObject.startCount = mainCount;
+        //// start mouth pursed when talking
+        //talkObject.bool = true;
+        //talkObject.startCount = mainCount;
 
-        talkRootExp = getAbsoluteCoordsOfExpressionNow();
-        initPurseLips( 0.4, '0.5' );
+        //talkRootExp = getAbsoluteCoordsOfExpressionNow();
+        //initPurseLips( 0.4, '0.5' );
 
-        setTimeout( function() {
+        //setTimeout( function() {
 
-            mouthOpenLoop();
-            purseLipsLoop();
+            //mouthOpenLoop();
+            //purseLipsLoop();
 
-        }, 600 );
+        //}, 600 );
 
-    } else {
+    //} else {
 
-        //console.log( "can't talk while still talking!" );
+        ////console.log( "can't talk while still talking!" );
 
-    }
+    //}
 
-}
+//}
 
-// to stop the lips from keeping moving after speech has stopped on slow computers
-function resetTalk() {
+//// to stop the lips from keeping moving after speech has stopped on slow computers
+//function resetTalk() {
 
-    talkObject.bool = false;
-    mouthOpenObject.bool = false;
-    purseLipsObject.bool = false;
-    expressionController( talkRootExp, 0.5 )
+    //talkObject.bool = false;
+    //mouthOpenObject.bool = false;
+    //purseLipsObject.bool = false;
+    //expressionController( talkRootExp, 0.5 )
 
-}
+//}
 
-function whenPurseLipsEnds( funcToCall ) {
+//function whenPurseLipsEnds( funcToCall ) {
 
-    if ( purseLipsObject.bool ) {
+    //if ( purseLipsObject.bool ) {
 
-        setTimeout( function() {
+        //setTimeout( function() {
              
-            whenPurseLipsEnds( funcToCall )
+            //whenPurseLipsEnds( funcToCall )
 
-        }, 500 );
+        //}, 500 );
 
-    } else {
+    //} else {
 
-        funcToCall()
+        //funcToCall()
 
-    }
+    //}
 
-}
+//}
 
-function whenOpenMouthEnds( funcToCall ) {
+//function whenOpenMouthEnds( funcToCall ) {
 
-    if ( mouthOpenObject.bool ) {
+    //if ( mouthOpenObject.bool ) {
 
-        setTimeout( function() {
+        //setTimeout( function() {
              
-            whenOpenMouthEnds( funcToCall )
+            //whenOpenMouthEnds( funcToCall )
 
-        }, 500 );
+        //}, 500 );
 
-    } else {
+    //} else {
 
-        funcToCall()
+        //funcToCall()
 
-    }
+    //}
 
-}
-
-
-function mouthOpenLoop() {
-
-    mouthOpenObject.dur = [ 0.3, 0.4, 0.5 ][Math.floor(Math.random() * 3)];
-    mouthOpenObject.amount = Math.random() * 0.25;
-
-    initOpenMouth( mouthOpenObject.amount, mouthOpenObject.dur );
-
-    setTimeout( function() {
-
-        initOpenMouth( -mouthOpenObject.amount, mouthOpenObject.dur );
-
-        setTimeout( function() {
-
-            if ( mainCount <= talkObject.endCount ) {
-
-                whenOpenMouthEnds( mouthOpenLoop );
-
-            }
-
-        }, mouthOpenObject.dur * 1000 + 100 )
-
-    }, mouthOpenObject.dur * 1000 + 100 );
-
-}
-
-function purseLipsLoop() {
-
-    purseLipsObject.dur = [ 0.3, 0.4, 0.5 ][Math.floor(Math.random() * 3)];
-    purseLipsObject.amount = Math.random() * 1.25;
-
-    initPurseLips( purseLipsObject.amount, purseLipsObject.dur );
-
-    setTimeout( function() {
-
-        initPurseLips( -purseLipsObject.amount, purseLipsObject.dur );
-
-        setTimeout( function() {
-
-            if ( mainCount <= talkObject.endCount ) {
-
-                whenPurseLipsEnds( purseLipsLoop );
-
-            } else {
-
-                initPurseLips( -0.4, '0.5' );
-
-                setTimeout( function() {
-
-                    whenPurseLipsEnds( function() {
-
-                        talkObject.bool = false;
-
-                    })
-
-                }, 550 );
-
-            }
-
-        }, purseLipsObject.dur * 1000 + 100 );
-
-    }, purseLipsObject.dur * 1000 + 100 );
-
-}
+//}
 
 
-//PURSE LIPS
-function initPurseLips( to, secs ) {
+//function mouthOpenLoop() {
 
-    assignSinArrayForSpeed( secs / 2, purseLipsObject, sineArrays ) 
+    //mouthOpenObject.dur = [ 0.3, 0.4, 0.5 ][Math.floor(Math.random() * 3)];
+    //mouthOpenObject.amount = Math.random() * 0.25;
 
-    purseLipsObject.startCount = mainCount;
-    purseLipsObject.amount = to;
+    //initOpenMouth( mouthOpenObject.amount, mouthOpenObject.dur );
 
-    purseLipsObject.bool = true;
+    //setTimeout( function() {
+
+        //initOpenMouth( -mouthOpenObject.amount, mouthOpenObject.dur );
+
+        //setTimeout( function() {
+
+            //if ( mainCount <= talkObject.endCount ) {
+
+                //whenOpenMouthEnds( mouthOpenLoop );
+
+            //}
+
+        //}, mouthOpenObject.dur * 1000 + 100 )
+
+    //}, mouthOpenObject.dur * 1000 + 100 );
+
+//}
+
+//function purseLipsLoop() {
+
+    //purseLipsObject.dur = [ 0.3, 0.4, 0.5 ][Math.floor(Math.random() * 3)];
+    //purseLipsObject.amount = Math.random() * 1.25;
+
+    //initPurseLips( purseLipsObject.amount, purseLipsObject.dur );
+
+    //setTimeout( function() {
+
+        //initPurseLips( -purseLipsObject.amount, purseLipsObject.dur );
+
+        //setTimeout( function() {
+
+            //if ( mainCount <= talkObject.endCount ) {
+
+                //whenPurseLipsEnds( purseLipsLoop );
+
+            //} else {
+
+                //initPurseLips( -0.4, '0.5' );
+
+                //setTimeout( function() {
+
+                    //whenPurseLipsEnds( function() {
+
+                        //talkObject.bool = false;
+
+                    //})
+
+                //}, 550 );
+
+            //}
+
+        //}, purseLipsObject.dur * 1000 + 100 );
+
+    //}, purseLipsObject.dur * 1000 + 100 );
+
+//}
 
 
-}
+////PURSE LIPS
+//function initPurseLips( to, secs ) {
 
-function purseLips( main ) {
+    //assignSinArrayForSpeed( secs / 2, purseLipsObject, sineArrays ) 
 
-    let main_start = main - purseLipsObject.startCount;
+    //purseLipsObject.startCount = mainCount;
+    //purseLipsObject.amount = to;
 
-    let sinAmount = purseLipsObject.sin[ main_start ]
+    //purseLipsObject.bool = true;
+
+
+//}
+
+//function purseLips( main ) {
+
+    //let main_start = main - purseLipsObject.startCount;
+
+    //let sinAmount = purseLipsObject.sin[ main_start ]
     
-    if ( main_start < purseLipsObject.sinLength ) {
+    //if ( main_start < purseLipsObject.sinLength ) {
 
-        // Pos x-axis
+        //// Pos x-axis
         
-        tiaObject.faceBones['lip_upper_inner.L'].position.x += sinAmount * expressionObject.rel.purseLips.AUs.AU2['lip_upper_inner'][0][0] * purseLipsObject.amount;
-        tiaObject.faceBones['lip_upper_inner.R'].position.x -= sinAmount * expressionObject.rel.purseLips.AUs.AU2['lip_upper_inner'][0][0] * purseLipsObject.amount;
+        //tiaObject.faceBones['lip_upper_inner.L'].position.x += sinAmount * expressionObject.rel.purseLips.AUs.AU2['lip_upper_inner'][0][0] * purseLipsObject.amount;
+        //tiaObject.faceBones['lip_upper_inner.R'].position.x -= sinAmount * expressionObject.rel.purseLips.AUs.AU2['lip_upper_inner'][0][0] * purseLipsObject.amount;
 
-        tiaObject.faceBones['lip_upper_outer.L'].position.x += sinAmount * expressionObject.rel.purseLips.AUs.AU2['lip_upper_outer'][0][0] * purseLipsObject.amount;
-        tiaObject.faceBones['lip_upper_outer.R'].position.x -= sinAmount * expressionObject.rel.purseLips.AUs.AU2['lip_upper_outer'][0][0] * purseLipsObject.amount;
+        //tiaObject.faceBones['lip_upper_outer.L'].position.x += sinAmount * expressionObject.rel.purseLips.AUs.AU2['lip_upper_outer'][0][0] * purseLipsObject.amount;
+        //tiaObject.faceBones['lip_upper_outer.R'].position.x -= sinAmount * expressionObject.rel.purseLips.AUs.AU2['lip_upper_outer'][0][0] * purseLipsObject.amount;
 
-        tiaObject.faceBones['lip_edge_upper.L'].position.x += sinAmount * expressionObject.rel.purseLips.AUs.AU2['lip_edge_upper'][0][0] * purseLipsObject.amount;
-        tiaObject.faceBones['lip_edge_upper.R'].position.x -= sinAmount * expressionObject.rel.purseLips.AUs.AU2['lip_edge_upper'][0][0] * purseLipsObject.amount;
+        //tiaObject.faceBones['lip_edge_upper.L'].position.x += sinAmount * expressionObject.rel.purseLips.AUs.AU2['lip_edge_upper'][0][0] * purseLipsObject.amount;
+        //tiaObject.faceBones['lip_edge_upper.R'].position.x -= sinAmount * expressionObject.rel.purseLips.AUs.AU2['lip_edge_upper'][0][0] * purseLipsObject.amount;
 
-        tiaObject.faceBones['lip_edge_lower.L'].position.x += sinAmount * expressionObject.rel.purseLips.AUs.AU2['lip_edge_lower'][0][0] * purseLipsObject.amount;
-        tiaObject.faceBones['lip_edge_lower.R'].position.x -= sinAmount * expressionObject.rel.purseLips.AUs.AU2['lip_edge_lower'][0][0] * purseLipsObject.amount;
+        //tiaObject.faceBones['lip_edge_lower.L'].position.x += sinAmount * expressionObject.rel.purseLips.AUs.AU2['lip_edge_lower'][0][0] * purseLipsObject.amount;
+        //tiaObject.faceBones['lip_edge_lower.R'].position.x -= sinAmount * expressionObject.rel.purseLips.AUs.AU2['lip_edge_lower'][0][0] * purseLipsObject.amount;
 
-        tiaObject.faceBones['lip_lower_outer.L'].position.x += sinAmount * expressionObject.rel.purseLips.AUs.AU2['lip_lower_outer'][0][0] * purseLipsObject.amount;
-        tiaObject.faceBones['lip_lower_outer.R'].position.x -= sinAmount * expressionObject.rel.purseLips.AUs.AU2['lip_lower_outer'][0][0] * purseLipsObject.amount;
+        //tiaObject.faceBones['lip_lower_outer.L'].position.x += sinAmount * expressionObject.rel.purseLips.AUs.AU2['lip_lower_outer'][0][0] * purseLipsObject.amount;
+        //tiaObject.faceBones['lip_lower_outer.R'].position.x -= sinAmount * expressionObject.rel.purseLips.AUs.AU2['lip_lower_outer'][0][0] * purseLipsObject.amount;
 
-        tiaObject.faceBones['lip_lower_inner.L'].position.x += sinAmount * expressionObject.rel.purseLips.AUs.AU2['lip_lower_inner'][0][0] * purseLipsObject.amount;
-        tiaObject.faceBones['lip_lower_inner.R'].position.x -= sinAmount * expressionObject.rel.purseLips.AUs.AU2['lip_lower_inner'][0][0] * purseLipsObject.amount;
+        //tiaObject.faceBones['lip_lower_inner.L'].position.x += sinAmount * expressionObject.rel.purseLips.AUs.AU2['lip_lower_inner'][0][0] * purseLipsObject.amount;
+        //tiaObject.faceBones['lip_lower_inner.R'].position.x -= sinAmount * expressionObject.rel.purseLips.AUs.AU2['lip_lower_inner'][0][0] * purseLipsObject.amount;
 
-        //// Pos z-axis
+        ////// Pos z-axis
 
-        tiaObject.faceBones['lip_upper_outer.L'].position.z += sinAmount * expressionObject.rel.purseLips.AUs.AU2['lip_upper_outer'][0][2] * purseLipsObject.amount;
-        tiaObject.faceBones['lip_upper_outer.R'].position.z += sinAmount * expressionObject.rel.purseLips.AUs.AU2['lip_upper_outer'][0][2] * purseLipsObject.amount;
+        //tiaObject.faceBones['lip_upper_outer.L'].position.z += sinAmount * expressionObject.rel.purseLips.AUs.AU2['lip_upper_outer'][0][2] * purseLipsObject.amount;
+        //tiaObject.faceBones['lip_upper_outer.R'].position.z += sinAmount * expressionObject.rel.purseLips.AUs.AU2['lip_upper_outer'][0][2] * purseLipsObject.amount;
 
-        tiaObject.faceBones['lip_upper_inner.L'].position.z += sinAmount * expressionObject.rel.purseLips.AUs.AU2['lip_upper_inner'][0][2] * purseLipsObject.amount;
-        tiaObject.faceBones['lip_upper_inner.R'].position.z += sinAmount * expressionObject.rel.purseLips.AUs.AU2['lip_upper_inner'][0][2] * purseLipsObject.amount;
+        //tiaObject.faceBones['lip_upper_inner.L'].position.z += sinAmount * expressionObject.rel.purseLips.AUs.AU2['lip_upper_inner'][0][2] * purseLipsObject.amount;
+        //tiaObject.faceBones['lip_upper_inner.R'].position.z += sinAmount * expressionObject.rel.purseLips.AUs.AU2['lip_upper_inner'][0][2] * purseLipsObject.amount;
 
-        tiaObject.faceBones['lip_edge_upper.L'].position.z += sinAmount * expressionObject.rel.purseLips.AUs.AU2['lip_edge_upper'][0][2] * purseLipsObject.amount; 
-        tiaObject.faceBones['lip_edge_upper.R'].position.z += sinAmount * expressionObject.rel.purseLips.AUs.AU2['lip_edge_upper'][0][2] * purseLipsObject.amount;
+        //tiaObject.faceBones['lip_edge_upper.L'].position.z += sinAmount * expressionObject.rel.purseLips.AUs.AU2['lip_edge_upper'][0][2] * purseLipsObject.amount; 
+        //tiaObject.faceBones['lip_edge_upper.R'].position.z += sinAmount * expressionObject.rel.purseLips.AUs.AU2['lip_edge_upper'][0][2] * purseLipsObject.amount;
 
-        tiaObject.faceBones['lip_edge_lower.L'].position.z += sinAmount * expressionObject.rel.purseLips.AUs.AU2['lip_edge_lower'][0][2] * purseLipsObject.amount;
-        tiaObject.faceBones['lip_edge_lower.R'].position.z += sinAmount * expressionObject.rel.purseLips.AUs.AU2['lip_edge_lower'][0][2] * purseLipsObject.amount;
+        //tiaObject.faceBones['lip_edge_lower.L'].position.z += sinAmount * expressionObject.rel.purseLips.AUs.AU2['lip_edge_lower'][0][2] * purseLipsObject.amount;
+        //tiaObject.faceBones['lip_edge_lower.R'].position.z += sinAmount * expressionObject.rel.purseLips.AUs.AU2['lip_edge_lower'][0][2] * purseLipsObject.amount;
 
-        tiaObject.faceBones['lip_lower_outer.L'].position.z += sinAmount * expressionObject.rel.purseLips.AUs.AU2['lip_lower_outer'][0][2] * purseLipsObject.amount;
-        tiaObject.faceBones['lip_lower_outer.R'].position.z += sinAmount * expressionObject.rel.purseLips.AUs.AU2['lip_lower_outer'][0][2] * purseLipsObject.amount;
+        //tiaObject.faceBones['lip_lower_outer.L'].position.z += sinAmount * expressionObject.rel.purseLips.AUs.AU2['lip_lower_outer'][0][2] * purseLipsObject.amount;
+        //tiaObject.faceBones['lip_lower_outer.R'].position.z += sinAmount * expressionObject.rel.purseLips.AUs.AU2['lip_lower_outer'][0][2] * purseLipsObject.amount;
 
-        tiaObject.faceBones['lip_lower_inner.L'].position.z += sinAmount * expressionObject.rel.purseLips.AUs.AU2['lip_lower_inner'][0][2] * purseLipsObject.amount;
-        tiaObject.faceBones['lip_lower_inner.R'].position.z += sinAmount * expressionObject.rel.purseLips.AUs.AU2['lip_lower_inner'][0][2] * purseLipsObject.amount;
+        //tiaObject.faceBones['lip_lower_inner.L'].position.z += sinAmount * expressionObject.rel.purseLips.AUs.AU2['lip_lower_inner'][0][2] * purseLipsObject.amount;
+        //tiaObject.faceBones['lip_lower_inner.R'].position.z += sinAmount * expressionObject.rel.purseLips.AUs.AU2['lip_lower_inner'][0][2] * purseLipsObject.amount;
 
-    } else {
+    //} else {
 
-        purseLipsObject.bool = false;
+        //purseLipsObject.bool = false;
 
-    }
+    //}
 
-}
-
-
-// OPEN MOUTH
-
-function initOpenMouth( to, secs ) {
-
-    assignSinArrayForSpeed( secs / 2, mouthOpenObject, sineArrays ) 
-
-    mouthOpenObject.startCount = mainCount;
-    mouthOpenObject.rotationMult = to;
-
-    mouthOpenObject.bool = true;
-
-}
+//}
 
 
-function openMouth( main ) {
+//// OPEN MOUTH
 
-    //console.log('in openMouth');
-    let main_start = main - mouthOpenObject[ 'startCount' ];
+//function initOpenMouth( to, secs ) {
 
-    let sinAmount = mouthOpenObject[ 'sin' ][ main_start ]
+    //assignSinArrayForSpeed( secs / 2, mouthOpenObject, sineArrays ) 
+
+    //mouthOpenObject.startCount = mainCount;
+    //mouthOpenObject.rotationMult = to;
+
+    //mouthOpenObject.bool = true;
+
+//}
+
+
+//function openMouth( main ) {
+
+    ////console.log('in openMouth');
+    //let main_start = main - mouthOpenObject[ 'startCount' ];
+
+    //let sinAmount = mouthOpenObject[ 'sin' ][ main_start ]
     
-    if ( main_start < mouthOpenObject.sinLength ) {
+    //if ( main_start < mouthOpenObject.sinLength ) {
 
-        let rotationMult = mouthOpenObject.rotationMult;
+        //let rotationMult = mouthOpenObject.rotationMult;
 
-        // jaw rotate x-axis
+        //// jaw rotate x-axis
 
-        tiaObject.faceBones['jaw'].rotation.x += sinAmount * rotationMult * 0.2;
-        tiaObject.mouthBones['jaw_inner'].rotation.x += sinAmount * rotationMult * 0.2;
-
-
-        // Pos y-axis 
-
-        tiaObject.faceBones['lip_upper_inner.L'].position.y += sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_upper_inner'][0][1] * rotationMult;
-        tiaObject.faceBones['lip_upper_inner.R'].position.y += sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_upper_inner'][0][1] * rotationMult;
-
-        tiaObject.faceBones['lip_upper_outer.L'].position.y += sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_upper_outer'][0][1] * rotationMult;
-        tiaObject.faceBones['lip_upper_outer.R'].position.y += sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_upper_outer'][0][1] * rotationMult;
-
-        tiaObject.faceBones['lip_edge_upper.L'].position.y += sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_edge_upper'][0][1] * rotationMult;
-        tiaObject.faceBones['lip_edge_upper.R'].position.y += sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_edge_upper'][0][1] * rotationMult;
-
-        tiaObject.faceBones['lip_edge_lower.L'].position.y += sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_edge_lower'][0][1] * rotationMult;
-        tiaObject.faceBones['lip_edge_lower.R'].position.y += sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_edge_lower'][0][1] * rotationMult;
-
-        tiaObject.faceBones['lip_lower_outer.L'].position.y += sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_lower_outer'][0][1] * rotationMult;
-        tiaObject.faceBones['lip_lower_outer.R'].position.y += sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_lower_outer'][0][1] * rotationMult;
-
-        tiaObject.faceBones['lip_lower_inner.L'].position.y += sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_lower_inner'][0][1] * rotationMult;
-        tiaObject.faceBones['lip_lower_inner.R'].position.y += sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_lower_inner'][0][1] * rotationMult;
+        //tiaObject.faceBones['jaw'].rotation.x += sinAmount * rotationMult * 0.2;
+        //tiaObject.mouthBones['jaw_inner'].rotation.x += sinAmount * rotationMult * 0.2;
 
 
-        // Pos x+axis
+        //// Pos y-axis 
+
+        //tiaObject.faceBones['lip_upper_inner.L'].position.y += sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_upper_inner'][0][1] * rotationMult;
+        //tiaObject.faceBones['lip_upper_inner.R'].position.y += sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_upper_inner'][0][1] * rotationMult;
+
+        //tiaObject.faceBones['lip_upper_outer.L'].position.y += sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_upper_outer'][0][1] * rotationMult;
+        //tiaObject.faceBones['lip_upper_outer.R'].position.y += sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_upper_outer'][0][1] * rotationMult;
+
+        //tiaObject.faceBones['lip_edge_upper.L'].position.y += sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_edge_upper'][0][1] * rotationMult;
+        //tiaObject.faceBones['lip_edge_upper.R'].position.y += sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_edge_upper'][0][1] * rotationMult;
+
+        //tiaObject.faceBones['lip_edge_lower.L'].position.y += sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_edge_lower'][0][1] * rotationMult;
+        //tiaObject.faceBones['lip_edge_lower.R'].position.y += sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_edge_lower'][0][1] * rotationMult;
+
+        //tiaObject.faceBones['lip_lower_outer.L'].position.y += sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_lower_outer'][0][1] * rotationMult;
+        //tiaObject.faceBones['lip_lower_outer.R'].position.y += sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_lower_outer'][0][1] * rotationMult;
+
+        //tiaObject.faceBones['lip_lower_inner.L'].position.y += sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_lower_inner'][0][1] * rotationMult;
+        //tiaObject.faceBones['lip_lower_inner.R'].position.y += sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_lower_inner'][0][1] * rotationMult;
+
+
+        //// Pos x+axis
         
-        tiaObject.faceBones['lip_upper_outer.L'].position.x += sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_upper_outer'][0][0] * rotationMult;
-        tiaObject.faceBones['lip_upper_outer.R'].position.x -= sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_upper_outer'][0][0] * rotationMult;
+        //tiaObject.faceBones['lip_upper_outer.L'].position.x += sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_upper_outer'][0][0] * rotationMult;
+        //tiaObject.faceBones['lip_upper_outer.R'].position.x -= sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_upper_outer'][0][0] * rotationMult;
 
-        tiaObject.faceBones['lip_edge_upper.L'].position.x += sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_edge_upper'][0][0] * rotationMult;
-        tiaObject.faceBones['lip_edge_upper.R'].position.x -= sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_edge_upper'][0][0] * rotationMult;
+        //tiaObject.faceBones['lip_edge_upper.L'].position.x += sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_edge_upper'][0][0] * rotationMult;
+        //tiaObject.faceBones['lip_edge_upper.R'].position.x -= sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_edge_upper'][0][0] * rotationMult;
 
-        tiaObject.faceBones['lip_edge_lower.L'].position.x += sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_edge_lower'][0][0] * rotationMult;
-        tiaObject.faceBones['lip_edge_lower.R'].position.x -= sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_edge_lower'][0][0] * rotationMult;
+        //tiaObject.faceBones['lip_edge_lower.L'].position.x += sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_edge_lower'][0][0] * rotationMult;
+        //tiaObject.faceBones['lip_edge_lower.R'].position.x -= sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_edge_lower'][0][0] * rotationMult;
 
-        tiaObject.faceBones['lip_lower_outer.L'].position.x += sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_lower_outer'][0][0] * rotationMult;
-        tiaObject.faceBones['lip_lower_outer.R'].position.x -= sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_lower_outer'][0][0] * rotationMult;
-
-
-        // Pos z+axis
-
-        //if smiling need to stop bottom teeth coming through with multiplier based on state of smile
-
-        tiaObject.faceBones['lip_edge_upper.L'].position.z += sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_edge_upper'][0][2] * rotationMult;
-        tiaObject.faceBones['lip_edge_upper.R'].position.z += sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_edge_upper'][0][2] * rotationMult;
-
-        tiaObject.faceBones['lip_edge_lower.L'].position.z += sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_edge_lower'][0][2] * rotationMult;
-        tiaObject.faceBones['lip_edge_lower.R'].position.z += sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_edge_lower'][0][2] * rotationMult;
-
-        tiaObject.faceBones['lip_lower_outer.L'].position.z += sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_lower_outer'][0][2] * rotationMult;
-        tiaObject.faceBones['lip_lower_outer.R'].position.z += sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_lower_outer'][0][2] * rotationMult;
-
-        tiaObject.faceBones['lip_lower_inner.L'].position.z += sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_lower_inner'][0][2] * rotationMult;
-        tiaObject.faceBones['lip_lower_inner.R'].position.z += sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_lower_inner'][0][2] * rotationMult;
+        //tiaObject.faceBones['lip_lower_outer.L'].position.x += sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_lower_outer'][0][0] * rotationMult;
+        //tiaObject.faceBones['lip_lower_outer.R'].position.x -= sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_lower_outer'][0][0] * rotationMult;
 
 
-        // z-rot
+        //// Pos z+axis
 
-        tiaObject.faceBones['lip_upper_inner.L'].rotation.z += sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_upper_inner'][1][2] * rotationMult;
-        tiaObject.faceBones['lip_upper_inner.R'].rotation.z -= sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_upper_inner'][1][2] * rotationMult;
+        ////if smiling need to stop bottom teeth coming through with multiplier based on state of smile
 
-        tiaObject.faceBones['lip_edge_upper.L'].rotation.z += sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_edge_upper'][1][2] * rotationMult;
-        tiaObject.faceBones['lip_edge_upper.R'].rotation.z -= sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_edge_upper'][1][2] * rotationMult;
+        //tiaObject.faceBones['lip_edge_upper.L'].position.z += sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_edge_upper'][0][2] * rotationMult;
+        //tiaObject.faceBones['lip_edge_upper.R'].position.z += sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_edge_upper'][0][2] * rotationMult;
 
-        tiaObject.faceBones['lip_edge_lower.L'].rotation.z += sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_edge_lower'][1][2] * rotationMult;
-        tiaObject.faceBones['lip_edge_lower.R'].rotation.z -= sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_edge_lower'][1][2] * rotationMult;
+        //tiaObject.faceBones['lip_edge_lower.L'].position.z += sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_edge_lower'][0][2] * rotationMult;
+        //tiaObject.faceBones['lip_edge_lower.R'].position.z += sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_edge_lower'][0][2] * rotationMult;
 
-        tiaObject.faceBones['lip_lower_outer.L'].rotation.z += sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_lower_outer'][1][2] * rotationMult;
-        tiaObject.faceBones['lip_lower_outer.R'].rotation.z -= sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_lower_outer'][1][2] * rotationMult;
+        //tiaObject.faceBones['lip_lower_outer.L'].position.z += sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_lower_outer'][0][2] * rotationMult;
+        //tiaObject.faceBones['lip_lower_outer.R'].position.z += sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_lower_outer'][0][2] * rotationMult;
 
-        // x-rot
-
-        tiaObject.faceBones['lip_lower_outer.L'].rotation.x -= sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_lower_outer'][1][0] * rotationMult;
-        tiaObject.faceBones['lip_lower_outer.R'].rotation.x -= sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_lower_outer'][1][0] * rotationMult;
-
-        tiaObject.faceBones['lip_lower_inner.L'].rotation.x -= sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_lower_inner'][1][0] * rotationMult;
-        tiaObject.faceBones['lip_lower_inner.R'].rotation.x -= sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_lower_inner'][1][0] * rotationMult;
-
-        // y-rot
-
-        //tiaObject.faceBones['lip_lower_outer.L'].rotation.y += bottomTeethMult * yRotSmileOpenRatios[4];
-        //tiaObject.faceBones['lip_lower_outer.R'].rotation.y += bottomTeethMult * yRotSmileOpenRatios[4];
-
-        // cheek
-        tiaObject.faceBones['cheek.L'].position.x -= sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['cheek'][0][0] * rotationMult;
-        tiaObject.faceBones['cheek.R'].position.x -= sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['cheek'][0][0] * rotationMult;
-
-        // paljajooreum
-        tiaObject.faceBones['pal_ja_jooreum.L'].position.y -= sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['pal_ja_jooreum'][0][1] * rotationMult;
-        tiaObject.faceBones['pal_ja_jooreum.R'].position.y -= sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['pal_ja_jooreum'][0][1] * rotationMult;
-
-        // jaw upper
-        tiaObject.faceBones['jaw_upper.L'].position.z -= sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['jaw_upper'][0][2] * rotationMult;
-        tiaObject.faceBones['jaw_upper.R'].position.z += sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['jaw_upper'][0][2] * rotationMult;
+        //tiaObject.faceBones['lip_lower_inner.L'].position.z += sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_lower_inner'][0][2] * rotationMult;
+        //tiaObject.faceBones['lip_lower_inner.R'].position.z += sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_lower_inner'][0][2] * rotationMult;
 
 
-    } else {
+        //// z-rot
 
-        mouthOpenObject.bool = false;
+        //tiaObject.faceBones['lip_upper_inner.L'].rotation.z += sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_upper_inner'][1][2] * rotationMult;
+        //tiaObject.faceBones['lip_upper_inner.R'].rotation.z -= sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_upper_inner'][1][2] * rotationMult;
 
-    }
+        //tiaObject.faceBones['lip_edge_upper.L'].rotation.z += sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_edge_upper'][1][2] * rotationMult;
+        //tiaObject.faceBones['lip_edge_upper.R'].rotation.z -= sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_edge_upper'][1][2] * rotationMult;
 
-}
+        //tiaObject.faceBones['lip_edge_lower.L'].rotation.z += sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_edge_lower'][1][2] * rotationMult;
+        //tiaObject.faceBones['lip_edge_lower.R'].rotation.z -= sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_edge_lower'][1][2] * rotationMult;
+
+        //tiaObject.faceBones['lip_lower_outer.L'].rotation.z += sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_lower_outer'][1][2] * rotationMult;
+        //tiaObject.faceBones['lip_lower_outer.R'].rotation.z -= sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_lower_outer'][1][2] * rotationMult;
+
+        //// x-rot
+
+        //tiaObject.faceBones['lip_lower_outer.L'].rotation.x -= sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_lower_outer'][1][0] * rotationMult;
+        //tiaObject.faceBones['lip_lower_outer.R'].rotation.x -= sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_lower_outer'][1][0] * rotationMult;
+
+        //tiaObject.faceBones['lip_lower_inner.L'].rotation.x -= sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_lower_inner'][1][0] * rotationMult;
+        //tiaObject.faceBones['lip_lower_inner.R'].rotation.x -= sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['lip_lower_inner'][1][0] * rotationMult;
+
+        //// y-rot
+
+        ////tiaObject.faceBones['lip_lower_outer.L'].rotation.y += bottomTeethMult * yRotSmileOpenRatios[4];
+        ////tiaObject.faceBones['lip_lower_outer.R'].rotation.y += bottomTeethMult * yRotSmileOpenRatios[4];
+
+        //// cheek
+        //tiaObject.faceBones['cheek.L'].position.x -= sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['cheek'][0][0] * rotationMult;
+        //tiaObject.faceBones['cheek.R'].position.x -= sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['cheek'][0][0] * rotationMult;
+
+        //// paljajooreum
+        //tiaObject.faceBones['pal_ja_jooreum.L'].position.y -= sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['pal_ja_jooreum'][0][1] * rotationMult;
+        //tiaObject.faceBones['pal_ja_jooreum.R'].position.y -= sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['pal_ja_jooreum'][0][1] * rotationMult;
+
+        //// jaw upper
+        //tiaObject.faceBones['jaw_upper.L'].position.z -= sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['jaw_upper'][0][2] * rotationMult;
+        //tiaObject.faceBones['jaw_upper.R'].position.z += sinAmount * expressionObject.rel.mouthOpen.AUs.AU2['jaw_upper'][0][2] * rotationMult;
+
+
+    //} else {
+
+        //mouthOpenObject.bool = false;
+
+    //}
+
+//}
 
 
 /////////// EYELIDS
