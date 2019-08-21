@@ -76,7 +76,7 @@ function runAfterJudgement() {
 
     } else if ( conversationVariables.last_sent.judgement === "B" || conversationVariables.last_sent.judgement === "M" || conversationVariables.last_sent.judgement === "D" || conversationVariables.last_sent.judgement === "3" ) {
 
-        synthesisObject.speaking_rate = 0.8;
+        synthesisObject.speaking_rate = 0.7;
         // delay for moving back to laptop and showing sent in prevSents
         //let delay = 5000;
         //var text;

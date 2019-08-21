@@ -1,14 +1,14 @@
 /////////////////// OBJECTS
 
 
-var sentenceObject = {
-    alphabetDict: {},
-    background: {},
-    sentence: " this is a sentence 1 this is a sentence 2 this is a sentence 3 this is a sentence 4 this is a sentence 5 this is a sentence 6 this is a sentence 7 this is a sentence 8 this is a sentence 9 this is a sentence 10 this is a sentence 11 this is a sentence 13 this is a sentence 1 this is a sentence 2 this is a sentence 3 this is a sentence 4 this is a sentence 5 this is a sentence 6 this is a sentence 7 this is a sentence 8 this is a sentence 9 this is a sentence 10 this is a sentence 11 this is a sentence 13.",
-    splitIndexes: [],
-    cloneLetters: [],
-    wrongIndexes: [[3,6]],
-}
+//var sentenceObject = {
+    //alphabetDict: {},
+    //background: {},
+    //sentence: " this is a sentence 1 this is a sentence 2 this is a sentence 3 this is a sentence 4 this is a sentence 5 this is a sentence 6 this is a sentence 7 this is a sentence 8 this is a sentence 9 this is a sentence 10 this is a sentence 11 this is a sentence 13 this is a sentence 1 this is a sentence 2 this is a sentence 3 this is a sentence 4 this is a sentence 5 this is a sentence 6 this is a sentence 7 this is a sentence 8 this is a sentence 9 this is a sentence 10 this is a sentence 11 this is a sentence 13.",
+    //splitIndexes: [],
+    //cloneLetters: [],
+    //wrongIndexes: [[3,6]],
+//}
 
 var correctionObject = {
     correctionBackground: {},
@@ -31,17 +31,17 @@ var speechBubbleObject = {
 // movement stuff
 
 // controls all movements on first entry to class
-var mainEnterObject = {
-    bool: false
-}
+//var mainEnterObject = {
+    //bool: false
+//}
 
-var cameraObject = {
-    'currentState': 'tia',
-    'bool': false,
-    'startCount': 0,
-    'sin': cumSineArrays[ '120' ],
-    'sinLength': 0,
-};
+//var cameraObject = {
+    //'currentState': 'tia',
+    //'bool': false,
+    //'startCount': 0,
+    //'sin': cumSineArrays[ '120' ],
+    //'sinLength': 0,
+//};
 
 //second cameraObject for entry
 var enterCameraObject = {
@@ -110,19 +110,19 @@ eyelidObject.coords = {
 }
 eyelidObject.name = 'eyelid';
 
-var eyebrowObject = new MoveObj();
-eyebrowObject.coords = {
-    raised: [[1, 1, 0], [0, 0, 0]]
-}
-eyebrowObject.name = 'eyebrow';
+//var eyebrowObject = new MoveObj();
+//eyebrowObject.coords = {
+    //raised: [[1, 1, 0], [0, 0, 0]]
+//}
+//eyebrowObject.name = 'eyebrow';
 
-var leanObject = new MoveObj();
-leanObject.coords = {
-    middle: [[0, 0, 0], [0, 0, 0]],
-    close: [[0, 0, 0], [0.1, 0, 0]],
-    far: [[0, 0, 0], [-0.1, 0, 0]]
-}
-leanObject.name = 'lean';
+//var leanObject = new MoveObj();
+//leanObject.coords = {
+    //middle: [[0, 0, 0], [0, 0, 0]],
+    //close: [[0, 0, 0], [0.1, 0, 0]],
+    //far: [[0, 0, 0], [-0.1, 0, 0]]
+//}
+//leanObject.name = 'lean';
 
 
 
@@ -190,21 +190,21 @@ var neckRandomTiltObject = {
     'to': true,
 }
 
-var purseLipsObject = {
-    'bool': false,
-    'startCount': 0,
-    'sin': [ ],
-    'sinLength': 0,
-    'amount': 0,
-};
+//var purseLipsObject = {
+    //'bool': false,
+    //'startCount': 0,
+    //'sin': [ ],
+    //'sinLength': 0,
+    //'amount': 0,
+//};
 
-var mouthOpenObject = {
-    'bool': false,
-    'startCount': 0,
-    'sin': [ ],
-    'sinLength': 0,
-    'amount': 0,
-};
+//var mouthOpenObject = {
+    //'bool': false,
+    //'startCount': 0,
+    //'sin': [ ],
+    //'sinLength': 0,
+    //'amount': 0,
+//};
 
 var nodObject = {
     'bool': false,
@@ -226,13 +226,13 @@ var shakeObject = {
     'iter': 0,
 };
 
-var armIndicateObject = {
-    'currentState': 0,
-    'startCount': 0,
-    'sin': [],
-    'sinLength': 0,
-    'bool': false,
-}
+//var armIndicateObject = {
+    //'currentState': 0,
+    //'startCount': 0,
+    //'sin': [],
+    //'sinLength': 0,
+    //'bool': false,
+//}
 
 var talkObject = {
     bool: false,
@@ -250,11 +250,89 @@ var talkObject = {
 // SPEECH STUFF
 
 var synthesisObject = {
-    finalTextInBox : "blank",
-    text: "",
+    //finalTextInBox : "blank",
+    //text: "",
+    audio: null, // dom element added in <load_scene/main.js>
     pitch: 0,
-    speaking_rate: 0.85,
+    speaking_rate: 0.70,
     firstClip: false,
+    now: {}, 
+    data: {
+
+        mustTypeChoice: {
+
+            URLs: [ prefixURL + tiaMediaLoc + "you_must_type_your_choice_of_topic_in_the_box_below.wav" ],
+            texts: [ "you must type your choice of topic in the box below" ],
+            phones: [[
+
+                'vowelMedium',
+                'vowelRound',
+                'bilabial',
+                'vowelMedium',
+                'alveolar',
+                'alveolar',
+                'alveolar',
+                'vowelMedium',
+                'bilabial',
+                'vowelMedium',
+                'alveolar',
+                'alveolar',
+                'vowelMedium',
+                'alveolar',
+                'vowelMedium',
+                'labioDental',
+                'alveolar',
+                'vowelMedium',
+                'bilabial',
+                'vowelMedium',
+                'belar',
+                'vowelMedium',
+                'alveolar',
+                'dentalFricative',
+                'vowelMedium',
+                'bilabial',
+                'vowelMedium',
+                'belar',
+                'alveolar',
+                'bilabial',
+                'vowelMedium',
+                'alveolar',
+                'vowelRound'
+
+            ]],
+
+        },
+
+        beginWhenYou: {
+
+            URLs: [ prefixURL + tiaMediaLoc + "begin_when_you_are_ready.wav" ],
+            texts: [ "begin when you are ready" ],
+            phones: [[
+
+
+                'bilabial',
+                'vowelMedium',
+                'belar',
+                'vowelMedium',
+                'alveolar',
+                'vowelRound',
+                'vowelMedium',
+                'alveolar',
+                'vowelMedium',
+                'vowelRound',
+                'vowelMedium',
+                'alveolar',
+                'alveolar',
+                'vowelMedium',
+                'alveolar',
+                'vowelEe'
+
+            ]],
+
+        }
+
+    }
+
 }
 
 var volumeObject = {
@@ -271,5 +349,12 @@ var tiaThinkingObject = {
     maxY: 0.15,
 
 }
+
+
+
+
+
+
+
 
 

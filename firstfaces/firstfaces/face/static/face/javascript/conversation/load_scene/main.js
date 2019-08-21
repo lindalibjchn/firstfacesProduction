@@ -21,8 +21,17 @@ $(window).on( 'load', function() {
 function enterOrReEnter() {
 
     //load this early and change .src later
-    synthesisObject.synthAudio = document.getElementById( 'synthClip' );
+    synthesisObject.audio = document.getElementById( 'synthClip' );
 
+    //// DEVELOPMENT
+    //if ( conversationVariables.inDevelopment ) {
+
+        //CAMERA_SIT_POS = { x: 0, y: -3.0, z: 19 };
+        //CAMERA_SIT_ROT = { x: -0.05, y: 0, z: 0 };
+
+    //}
+    ////////////////
+    
     camera.position.set( CAMERA_SIT_POS.x, CAMERA_SIT_POS.y, CAMERA_SIT_POS.z  );
     camera.rotation.set( CAMERA_SIT_ROT.x, CAMERA_SIT_ROT.y, CAMERA_SIT_ROT.z,);
 
@@ -34,7 +43,7 @@ function enterOrReEnter() {
 
     function reEnter() {
  
-        cameraObject.currentState = "laptop";
+        //cameraObject.currentState = "laptop";
 
         talkObject.learning = true;
         //initCameraMove('laptop', 0.1);
@@ -58,7 +67,8 @@ function enterOrReEnter() {
 // start random movementObject.abs and calculate stuff after bodyparts loaded
 function engineRunning() {
 
-    setBaseExpressionsMovements(); // do this after all of Tia is loaded
+    setBaseExpressionsAndMovements(); // do this after all of Tia is loaded
+    loadSynthURLs(); //loads the phrases Tia may say and creates the format for later prompts to follow
     animate();
     blinkControllerObject.bool = true;
     expressionController( expressionObject.abs.neutral, 0.01 );
@@ -70,22 +80,23 @@ function engineRunning() {
         
         $("#foregroundContainer").fadeOut( 1500 );
     
-        // for developing visemes
-        expressionController( expressionObject.abs.talkNeutral, 0.3)
+        //// DEVELOPMENT
+        if ( conversationVariables.inDevelopment ) {
+
+            expressionController( expressionObject.abs.talkBase, 0.3, function(){console.log('no expression calback')});
+
+            synthesisObject.now = synthesisObject.data.beginWhenYou;
+            synthesisObject.audio.src = synthesisObject.now.URLs[ 0 ]
+            //synthesisObject.synthAudio.src = prefixURL + tiaMediaLoc + synthesisObject.synthAudio.text.replace(/ /g, "_") +".wav"
+
+        }
+        ////////////////
 
     }, 2200 );
 
 }
 
-function runUCDGif() {
-
-    $("#foregroundImage").hide();
-    $("#foregroundImageNoHarp").show();
-    $("#foregroundImageGif").show();
-
-}
-
-function setBaseExpressionsMovements() {
+function setBaseExpressionsAndMovements() {
 
     expressionObject.base = getAbsoluteCoordsOfExpressionNow(); // get absolute position of base expression
     expressionObject.now = $.extend( true, {}, expressionObject.base ); // create a copy of this for expression now
@@ -98,6 +109,19 @@ function setBaseExpressionsMovements() {
 
 }
 
+function loadSynthURLs() {
+
+    
+
+}
+
+function runUCDGif() {
+
+    $("#foregroundImage").hide();
+    $("#foregroundImageNoHarp").show();
+    $("#foregroundImageGif").show();
+
+}
 
 
 

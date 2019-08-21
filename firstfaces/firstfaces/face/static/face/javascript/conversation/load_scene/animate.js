@@ -1,16 +1,16 @@
 function animate () {
 
-    if ( cameraObject[ 'bool' ] ) {
+    //if ( cameraObject[ 'bool' ] ) {
 
-        rotateCamera( mainCount );
+        //rotateCamera( mainCount );
 
-    }
+    //}
 
-    if ( enterCameraObject[ 'bool' ] ) {
+    //if ( enterCameraObject[ 'bool' ] ) {
 
-        enterCameraMove( mainCount );
+        //enterCameraMove( mainCount );
 
-    }
+    //}
 
     if ( volumeObject.bool ) {
 
@@ -48,23 +48,23 @@ function animate () {
 
     }
 
-    //if ( mainCount % 2 === 0 ) {
+    ////if ( mainCount % 2 === 0 ) {
 
-        if ( mouthOpenObject.bool ) {
+        //if ( mouthOpenObject.bool ) {
 
-            openMouth( mainCount )
+            //openMouth( mainCount )
 
-        }
+        //}
 
-    //} else {
+    ////} else {
 
-        if ( purseLipsObject.bool ) {
+        //if ( purseLipsObject.bool ) {
 
-            purseLips( mainCount )
+            //purseLips( mainCount )
 
-        }
+        //}
 
-    //}
+    ////}
 
     if ( nodObject.bool ) {
 
@@ -78,25 +78,25 @@ function animate () {
 
     }
 
-    if ( leanObject.bool ) {
+    //if ( leanObject.bool ) {
 
-        lean( mainCount )
+        //lean( mainCount )
 
-    }
+    //}
 
-    if ( armIndicateObject.bool ) {
+    //if ( armIndicateObject.bool ) {
 
-        armIndicate( mainCount );
+        //armIndicate( mainCount );
 
-    }
+    //}
 
-    //// Full movementObject.abs
+    ////// Full movementObject.abs
 
-    if ( mainEnterObject.bool ) {
+    //if ( mainEnterObject.bool ) {
 
-        mainEnter();
+        //mainEnter();
 
-    }
+    //}
 
     // CONTINUOUS AND RANDOM MOVEMENTS
     

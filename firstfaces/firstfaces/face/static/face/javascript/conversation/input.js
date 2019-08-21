@@ -142,7 +142,7 @@ function talkToTia() {
 
 function tiaLeanToListen() {
 
-    initMove( leanObject, leanObject.coords.close, tiaTimings.tiaLeanDuration );
+    movementController( movementObject.abs.speechRecognitionInput01, tiaTimings.tiaLeanDuration, tiaTimings.tiaLeanDuration );
     expressionController( expressionObject.abs.listening, 0.3) 
     
     synthesisObject.waitingForSynthCount = 0;

@@ -14,11 +14,9 @@ function definePrefixURL() {
     }
 
 }
-
 definePrefixURL();
 
 const tiaMediaLoc = "media/prePreparedTiaPhrases/";
-
 
 var scene, renderer, camera, pointLight, ambientLight, loader
 var mainCount = 0;
@@ -60,15 +58,8 @@ var recTimes = {};
 
 //// CAMERA \\\\
 
-//const CAMERA_SIT_POS = { x: 0, y: -2, z: 39 };
-
-//const CAMERA_SIT_ROT = { x: -0.29, y: 0, z: 0 };
-
-// for dev when looking at face closely
-
-const CAMERA_SIT_POS = { x: 0, y: -3.0, z: 19 };
-
-const CAMERA_SIT_ROT = { x: -0.05, y: 0, z: 0 };
+var CAMERA_SIT_POS = { x: 0, y: -2, z: 39 };
+var CAMERA_SIT_ROT = { x: -0.29, y: 0, z: 0 };
 
 //// LIGHT \\\\
 
