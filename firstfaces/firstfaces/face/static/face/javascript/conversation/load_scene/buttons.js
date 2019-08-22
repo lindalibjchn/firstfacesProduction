@@ -29,6 +29,9 @@ function readyBtns() {
 
     $('#talkBtn').on( 'click', sendSentToServer );
     
+    //// LISTEN TO TIAS NEXT SENTENCE
+
+    $('#listenNextSentenceBtn').on( 'click', listenToNextSentence )
 
     //// PREVIOUS SENTENCES
 

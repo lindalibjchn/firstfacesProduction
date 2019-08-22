@@ -83,10 +83,15 @@ function engineRunning() {
         //// DEVELOPMENT
         if ( conversationVariables.inDevelopment ) {
 
+            // hide mic button
+            $('#recordBtnsCont').hide();
+            $('#meterContainer').hide();
+
             expressionController( expressionObject.abs.talkBase, 0.3, function(){console.log('no expression calback')});
 
             synthesisObject.now = synthesisObject.data.beginWhenYou;
             synthesisObject.audio.src = synthesisObject.now.URLs[ 0 ]
+
             //synthesisObject.synthAudio.src = prefixURL + tiaMediaLoc + synthesisObject.synthAudio.text.replace(/ /g, "_") +".wav"
 
         }
