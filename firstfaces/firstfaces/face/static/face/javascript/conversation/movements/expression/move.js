@@ -85,41 +85,80 @@ function expression( main ) {
     
     if ( main_start < expressionObject.sinLength ) {
 
-        Object.keys( expressionObject.movement.AUs.AU2 ).forEach( function( key ) {
+        if ( !synthesisObject.talking ) {
+
+            Object.keys( expressionObject.movement.AUs.AU2 ).forEach( function( key ) {
+
+                // pos x
+
+                tiaObject.faceBones[ key + '.L'].position.x += sinAmount * expressionObject.movement.AUs.AU2[ key ][ 0 ][ 0 ];
+                tiaObject.faceBones[ key + '.R'].position.x -= sinAmount * expressionObject.movement.AUs.AU2[ key ][ 0 ][ 0 ];
+
+                // pos y
+                
+                tiaObject.faceBones[ key + '.L'].position.y += sinAmount * expressionObject.movement.AUs.AU2[ key ][ 0 ][ 1 ];
+                tiaObject.faceBones[ key + '.R'].position.y += sinAmount * expressionObject.movement.AUs.AU2[ key ][ 0 ][ 1 ];
+
+                // pos z
+                
+                tiaObject.faceBones[ key + '.L'].position.z += sinAmount * expressionObject.movement.AUs.AU2[ key ][ 0 ][ 2 ];
+                tiaObject.faceBones[ key + '.R'].position.z += sinAmount * expressionObject.movement.AUs.AU2[ key ][ 0 ][ 2 ];
+
+
+                // rot x 
+                
+                tiaObject.faceBones[ key + '.L'].rotation.x += sinAmount * expressionObject.movement.AUs.AU2[ key ][ 1 ][ 0 ];
+                tiaObject.faceBones[ key + '.R'].rotation.x += sinAmount * expressionObject.movement.AUs.AU2[ key ][ 1 ][ 0 ];
+
+                // rot y 
+                
+                tiaObject.faceBones[ key + '.L'].rotation.y += sinAmount * expressionObject.movement.AUs.AU2[ key ][ 1 ][ 1 ];
+                tiaObject.faceBones[ key + '.R'].rotation.y -= sinAmount * expressionObject.movement.AUs.AU2[ key ][ 1 ][ 1 ];
+
+                // rot z
+
+                tiaObject.faceBones[ key + '.L'].rotation.z += sinAmount * expressionObject.movement.AUs.AU2[ key ][ 1 ][ 2 ];
+                tiaObject.faceBones[ key + '.R'].rotation.z -= sinAmount * expressionObject.movement.AUs.AU2[ key ][ 1 ][ 2 ];
+                
+            })
+
+        }
+
+        Object.keys( expressionObject.movement.AUs.AU2t ).forEach( function( key ) {
 
             // pos x
 
-            tiaObject.faceBones[ key + '.L'].position.x += sinAmount * expressionObject.movement.AUs.AU2[ key ][ 0 ][ 0 ];
-            tiaObject.faceBones[ key + '.R'].position.x -= sinAmount * expressionObject.movement.AUs.AU2[ key ][ 0 ][ 0 ];
+            tiaObject.faceBones[ key + '.L'].position.x += sinAmount * expressionObject.movement.AUs.AU2t[ key ][ 0 ][ 0 ];
+            tiaObject.faceBones[ key + '.R'].position.x -= sinAmount * expressionObject.movement.AUs.AU2t[ key ][ 0 ][ 0 ];
 
             // pos y
             
-            tiaObject.faceBones[ key + '.L'].position.y += sinAmount * expressionObject.movement.AUs.AU2[ key ][ 0 ][ 1 ];
-            tiaObject.faceBones[ key + '.R'].position.y += sinAmount * expressionObject.movement.AUs.AU2[ key ][ 0 ][ 1 ];
+            tiaObject.faceBones[ key + '.L'].position.y += sinAmount * expressionObject.movement.AUs.AU2t[ key ][ 0 ][ 1 ];
+            tiaObject.faceBones[ key + '.R'].position.y += sinAmount * expressionObject.movement.AUs.AU2t[ key ][ 0 ][ 1 ];
 
             // pos z
             
-            tiaObject.faceBones[ key + '.L'].position.z += sinAmount * expressionObject.movement.AUs.AU2[ key ][ 0 ][ 2 ];
-            tiaObject.faceBones[ key + '.R'].position.z += sinAmount * expressionObject.movement.AUs.AU2[ key ][ 0 ][ 2 ];
+            tiaObject.faceBones[ key + '.L'].position.z += sinAmount * expressionObject.movement.AUs.AU2t[ key ][ 0 ][ 2 ];
+            tiaObject.faceBones[ key + '.R'].position.z += sinAmount * expressionObject.movement.AUs.AU2t[ key ][ 0 ][ 2 ];
 
 
             // rot x 
             
-            tiaObject.faceBones[ key + '.L'].rotation.x += sinAmount * expressionObject.movement.AUs.AU2[ key ][ 1 ][ 0 ];
-            tiaObject.faceBones[ key + '.R'].rotation.x += sinAmount * expressionObject.movement.AUs.AU2[ key ][ 1 ][ 0 ];
+            tiaObject.faceBones[ key + '.L'].rotation.x += sinAmount * expressionObject.movement.AUs.AU2t[ key ][ 1 ][ 0 ];
+            tiaObject.faceBones[ key + '.R'].rotation.x += sinAmount * expressionObject.movement.AUs.AU2t[ key ][ 1 ][ 0 ];
 
             // rot y 
             
-            tiaObject.faceBones[ key + '.L'].rotation.y += sinAmount * expressionObject.movement.AUs.AU2[ key ][ 1 ][ 1 ];
-            tiaObject.faceBones[ key + '.R'].rotation.y -= sinAmount * expressionObject.movement.AUs.AU2[ key ][ 1 ][ 1 ];
+            tiaObject.faceBones[ key + '.L'].rotation.y += sinAmount * expressionObject.movement.AUs.AU2t[ key ][ 1 ][ 1 ];
+            tiaObject.faceBones[ key + '.R'].rotation.y -= sinAmount * expressionObject.movement.AUs.AU2t[ key ][ 1 ][ 1 ];
 
             // rot z
 
-            tiaObject.faceBones[ key + '.L'].rotation.z += sinAmount * expressionObject.movement.AUs.AU2[ key ][ 1 ][ 2 ];
-            tiaObject.faceBones[ key + '.R'].rotation.z -= sinAmount * expressionObject.movement.AUs.AU2[ key ][ 1 ][ 2 ];
+            tiaObject.faceBones[ key + '.L'].rotation.z += sinAmount * expressionObject.movement.AUs.AU2t[ key ][ 1 ][ 2 ];
+            tiaObject.faceBones[ key + '.R'].rotation.z -= sinAmount * expressionObject.movement.AUs.AU2t[ key ][ 1 ][ 2 ];
             
         })
-            
+
         if ( expressionObject.movement.eyelidsTrue === false ) {
 
             Object.keys( expressionObject.movement.AUs.eyelids ).forEach( function( key ) {

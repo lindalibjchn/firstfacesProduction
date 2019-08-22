@@ -17,6 +17,18 @@ function getAbsoluteCoordsOfMainExpressions() {
 
         })
             
+        Object.keys( indExpRel.AUs.AU2t ).forEach( function( key ) {
+
+            expression.AUs.AU2t[ key ][ 0 ][ 0 ] += expressionObject.base.AUs.AU2t[ key ][ 0 ][ 0 ];
+            expression.AUs.AU2t[ key ][ 0 ][ 1 ] += expressionObject.base.AUs.AU2t[ key ][ 0 ][ 1 ];
+            expression.AUs.AU2t[ key ][ 0 ][ 2 ] += expressionObject.base.AUs.AU2t[ key ][ 0 ][ 2 ];
+
+            expression.AUs.AU2t[ key ][ 1 ][ 0 ] += expressionObject.base.AUs.AU2t[ key ][ 1 ][ 0 ];
+            expression.AUs.AU2t[ key ][ 1 ][ 1 ] += expressionObject.base.AUs.AU2t[ key ][ 1 ][ 1 ];
+            expression.AUs.AU2t[ key ][ 1 ][ 2 ] += expressionObject.base.AUs.AU2t[ key ][ 1 ][ 2 ];
+
+        })
+            
         Object.keys( expressionObject.base.AUs.AU1 ).forEach( function( key ) {
 
             expression.AUs.AU1[ key ][ 0 ][ 0 ] += expressionObject.base.AUs.AU1[ key ][ 0 ][ 0 ];
@@ -63,6 +75,18 @@ function getAbsoluteCoordsOfExpressionNow() {
         absExpression.AUs.AU2[ key ][ 1 ][ 0 ] = tiaObject.faceBones[ key + '.L'].rotation.x;
         absExpression.AUs.AU2[ key ][ 1 ][ 1 ] = tiaObject.faceBones[ key + '.L'].rotation.y;
         absExpression.AUs.AU2[ key ][ 1 ][ 2 ] = tiaObject.faceBones[ key + '.L'].rotation.z;
+
+    })
+        
+    Object.keys( absExpression.AUs.AU2t ).forEach( function( key ) {
+
+        absExpression.AUs.AU2t[ key ][ 0 ][ 0 ] = tiaObject.faceBones[ key + '.L'].position.x;
+        absExpression.AUs.AU2t[ key ][ 0 ][ 1 ] = tiaObject.faceBones[ key + '.L'].position.y;
+        absExpression.AUs.AU2t[ key ][ 0 ][ 2 ] = tiaObject.faceBones[ key + '.L'].position.z;
+
+        absExpression.AUs.AU2t[ key ][ 1 ][ 0 ] = tiaObject.faceBones[ key + '.L'].rotation.x;
+        absExpression.AUs.AU2t[ key ][ 1 ][ 1 ] = tiaObject.faceBones[ key + '.L'].rotation.y;
+        absExpression.AUs.AU2t[ key ][ 1 ][ 2 ] = tiaObject.faceBones[ key + '.L'].rotation.z;
 
     })
         
@@ -116,6 +140,18 @@ function getAbsoluteCoordsOfExpressionTo( exp ) {
         expression.AUs.AU2[ key ][ 1 ][ 0 ] += expressionObject.base.AUs.AU2[ key ][ 1 ][ 0 ];
         expression.AUs.AU2[ key ][ 1 ][ 1 ] += expressionObject.base.AUs.AU2[ key ][ 1 ][ 1 ];
         expression.AUs.AU2[ key ][ 1 ][ 2 ] += expressionObject.base.AUs.AU2[ key ][ 1 ][ 2 ];
+
+    })
+        
+    Object.keys( expression.AUs.AU2t ).forEach( function( key ) {
+
+        expression.AUs.AU2t[ key ][ 0 ][ 0 ] += expressionObject.base.AUs.AU2t[ key ][ 0 ][ 0 ];
+        expression.AUs.AU2t[ key ][ 0 ][ 1 ] += expressionObject.base.AUs.AU2t[ key ][ 0 ][ 1 ];
+        expression.AUs.AU2t[ key ][ 0 ][ 2 ] += expressionObject.base.AUs.AU2t[ key ][ 0 ][ 2 ];
+
+        expression.AUs.AU2t[ key ][ 1 ][ 0 ] += expressionObject.base.AUs.AU2t[ key ][ 1 ][ 0 ];
+        expression.AUs.AU2t[ key ][ 1 ][ 1 ] += expressionObject.base.AUs.AU2t[ key ][ 1 ][ 1 ];
+        expression.AUs.AU2t[ key ][ 1 ][ 2 ] += expressionObject.base.AUs.AU2t[ key ][ 1 ][ 2 ];
 
     })
         
