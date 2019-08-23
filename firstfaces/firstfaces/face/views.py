@@ -31,12 +31,12 @@ import ast
 logger = logging.getLogger(__name__)
 
 # os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/johnsHDD/PhD_backup/erle-3666ad7eec71.json"
-# if settings.DEBUG:
-    # os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/johnsHDD/PhD/2018_autumn/erle-3666ad7eec71.json"
-# else:
-    # os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/firstfaces/erle-3666ad7eec71.json"
+if settings.DEBUG:
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/johnsHDD/PhD/2018_autumn/erle-3666ad7eec71.json"
+else:
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/firstfaces/erle-3666ad7eec71.json"
 # os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/user1/Downloads/erle-3666ad7eec71.json"
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/Users/john/Documents/PhD/firstfaces/erle-3666ad7eec71.json"
+# os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/Users/john/Documents/PhD/firstfaces/erle-3666ad7eec71.json"
 
 def out_or_in(request):
 
@@ -1627,148 +1627,148 @@ def update_session_object(request):
 
     return JsonResponse(response_data)    
 
-# def add_transcription_choice_view(request):
+def add_transcription_choice_view(request):
 
-    # # code.interact(local=locals());
-    # blob_no_text_sent_id = request.GET['blob_no_text_sent_id']
-    # choice = request.GET['choice']
+    # code.interact(local=locals());
+    blob_no_text_sent_id = request.GET['blob_no_text_sent_id']
+    choice = request.GET['choice']
 
-    # s = TempSentence.objects.get(pk=int(blob_no_text_sent_id))
-    # a = AudioFile.objects.filter(sentence=s).latest('pk')
+    s = TempSentence.objects.get(pk=int(blob_no_text_sent_id))
+    a = AudioFile.objects.filter(sentence=s).latest('pk')
     
-    # time_now = int(time.mktime((timezone.now()).timetuple()))
+    time_now = int(time.mktime((timezone.now()).timetuple()))
 
-    # if len(a.clicks) < 1700:
+    if len(a.clicks) < 1700:
 
-        # clicks_already = json.loads(a.clicks)
-        # clicks_already.append( [choice, time_now] )
+        clicks_already = json.loads(a.clicks)
+        clicks_already.append( [choice, time_now] )
 
-        # a.clicks = json.dumps(clicks_already)
-        # a.save();
+        a.clicks = json.dumps(clicks_already)
+        a.save();
     
-    # response_data = {
+    response_data = {
 
-    # }
+    }
 
-    # return JsonResponse(response_data)    
+    return JsonResponse(response_data)    
 
-# def add_listen_synth_data(request):
+def add_listen_synth_data(request):
 
-    # # code.interact(local=locals());
-    # blob_no_text = json.loads(request.GET['blob_no_text'])
-    # blob_no_text_sent_id = request.GET['blob_no_text_sent_id']
-    # session_id = int(request.GET['sessId'])
-    # diffSent = request.GET['diffSent']
-    # transcriptCur = request.GET['transcriptCur']
-    # listenTranscript = json.loads(request.GET['listenTranscript'])
-    # repeat = json.loads(request.GET['repeat'])
+    # code.interact(local=locals());
+    blob_no_text = json.loads(request.GET['blob_no_text'])
+    blob_no_text_sent_id = request.GET['blob_no_text_sent_id']
+    session_id = int(request.GET['sessId'])
+    diffSent = request.GET['diffSent']
+    transcriptCur = request.GET['transcriptCur']
+    listenTranscript = json.loads(request.GET['listenTranscript'])
+    repeat = json.loads(request.GET['repeat'])
 
-    # if blob_no_text:
-        # s = TempSentence.objects.get(pk=int(blob_no_text_sent_id))
-        # a = AudioFile.objects.filter(sentence=s).latest('pk')
-        # clicks_already = json.loads( a.clicks )
-    # else:
-        # sess = Conversation.objects.get(pk=int(session_id))
-        # s = TempSentence(learner=request.user, session=sess)
-        # s.save()
-        # a = AudioFile(sentence=s)
-        # clicks_already = []
+    if blob_no_text:
+        s = TempSentence.objects.get(pk=int(blob_no_text_sent_id))
+        a = AudioFile.objects.filter(sentence=s).latest('pk')
+        clicks_already = json.loads( a.clicks )
+    else:
+        sess = Conversation.objects.get(pk=int(session_id))
+        s = TempSentence(learner=request.user, session=sess)
+        s.save()
+        a = AudioFile(sentence=s)
+        clicks_already = []
 
-    # #don't store it if too long
-    # if len(a.clicks) < 1700:
-        # clicks_already = []
+    #don't store it if too long
+    if len(a.clicks) < 1700:
+        clicks_already = []
 
-    # #don't store it if too long
-    # if len(a.clicks) < 1700:
+    #don't store it if too long
+    if len(a.clicks) < 1700:
 
-        # time_now = int(time.mktime((timezone.now()).timetuple()))
+        time_now = int(time.mktime((timezone.now()).timetuple()))
 
-        # #if it's a repeat
-        # if json.loads( request.GET['repeat'] ):
+        #if it's a repeat
+        if json.loads( request.GET['repeat'] ):
 
-            # clicks_already.append( ['r', time_now] )
+            clicks_already.append( ['r', time_now] )
 
-        # else:
+        else:
 
-            # if listenTranscript:
+            if listenTranscript:
 
-                # clicks_already.append( [transcriptCur + 's', time_now] )
+                clicks_already.append( [transcriptCur + 's', time_now] )
 
-            # else:
+            else:
 
-                # clicks_already.append( [diffSent, time_now] )
+                clicks_already.append( [diffSent, time_now] )
 
-        # a.clicks = json.dumps(clicks_already)
-        # a.save();
+        a.clicks = json.dumps(clicks_already)
+        a.save();
 
-    # response_data = {
+    response_data = {
 
-        # 'sent_id': s.id,
+        'sent_id': s.id,
 
-    # }
+    }
 
-    # return JsonResponse(response_data)    
+    return JsonResponse(response_data)    
 
-# def add_voice_data(request):
+def add_voice_data(request):
 
-    # # code.interact(local=locals());
-    # blob_no_text_sent_id = request.GET['blob_no_text_sent_id']
-    # transcript = request.GET['transcript']
+    # code.interact(local=locals());
+    blob_no_text_sent_id = request.GET['blob_no_text_sent_id']
+    transcript = request.GET['transcript']
 
-    # s = TempSentence.objects.get(pk=int(blob_no_text_sent_id))
-    # a = AudioFile.objects.filter(sentence=s).latest('pk')
+    s = TempSentence.objects.get(pk=int(blob_no_text_sent_id))
+    a = AudioFile.objects.filter(sentence=s).latest('pk')
 
-    # #don't store it if too long
-    # if len(a.clicks) < 1700:
+    #don't store it if too long
+    if len(a.clicks) < 1700:
 
-        # clicks_already = json.loads( a.clicks )
+        clicks_already = json.loads( a.clicks )
 
-        # time_now = int(time.mktime((timezone.now()).timetuple()))
+        time_now = int(time.mktime((timezone.now()).timetuple()))
 
-        # clicks_already.append( [transcript + 'v', time_now] )
+        clicks_already.append( [transcript + 'v', time_now] )
 
-        # a.clicks = json.dumps(clicks_already)
-        # a.save();
+        a.clicks = json.dumps(clicks_already)
+        a.save();
 
-    # response_data = {
+    response_data = {
 
-        # 'sent_id': s.id,
+        'sent_id': s.id,
 
-    # }
+    }
 
-    # return JsonResponse(response_data)    
+    return JsonResponse(response_data)    
 
-# def store_test_begin(request):
+def store_test_begin(request):
 
-    # time_now = timezone.now();
+    time_now = timezone.now();
 
-    # # code.interact(local=locals());
-    # test = Test.objects.create(learner=request.user, started_at=time_now)
+    # code.interact(local=locals());
+    test = Test.objects.create(learner=request.user, started_at=time_now)
 
-    # response_data = {
-    # }
+    response_data = {
+    }
 
-    # return JsonResponse(response_data)    
+    return JsonResponse(response_data)    
 
-# def store_test_score(request):
+def store_test_score(request):
 
-    # time_now = timezone.now();
+    time_now = timezone.now();
 
-    # # code.interact(local=locals());
-    # test = Test.objects.filter(learner=request.user).latest('pk');
-    # test.score = request.GET['test_score']
-    # test.finished_at = time_now
-    # test.save()
+    # code.interact(local=locals());
+    test = Test.objects.filter(learner=request.user).latest('pk');
+    test.score = request.GET['test_score']
+    test.finished_at = time_now
+    test.save()
 
-    # finish_time = int(time.mktime((test.finished_at).timetuple()))
+    finish_time = int(time.mktime((test.finished_at).timetuple()))
 
-    # response_data = {
+    response_data = {
 
-        # 'finishTime': finish_time 
+        'finishTime': finish_time 
 
-    # }
+    }
 
-    # return JsonResponse(response_data)    
+    return JsonResponse(response_data)    
 
 
 
