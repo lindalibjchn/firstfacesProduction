@@ -1,5 +1,7 @@
 function tiaSpeak( tiaSays, cb ) {
 
+    $('#recordBtnsCont').hide();
+    synthesisObject.sentenceNo = 0;
     // put this on page load somewhere so not calling it every time
     synthesisObject.audio.ondurationchange = function() {
 
@@ -26,7 +28,12 @@ function tiaSpeakIndividualSentences() {
     
     animateFirstPhoneSlowly( function() {
             
-        synthesisObject.audio.play();
+        setTimeout( function() {
+            
+            synthesisObject.audio.play();
+
+        }, 100 );
+
         animatePhonesInOrder();
 
     });
@@ -97,7 +104,7 @@ function initPronunciation() {
     if ( synthesisObject.now.phones[ synthesisObject.sentenceNo ][ synthesisObject.now.phoneCount ][ 0 ] === 'v' ) {
 
         // -1 cause the frames run over
-        expressionObject.sinLength = synthesisObject.now.noOfFramesPerPhone - 1;
+        expressionObject.sinLength = synthesisObject.now.noOfFramesPerPhone - 2;
         expressionObject.sin = sineArrays[ expressionObject.sinLength ];
     
     } else {

@@ -255,7 +255,7 @@ var synthesisObject = {
     audio: null, // dom element added in <load_scene/main.js>
     sentenceNo: 0, //if multiple sentences it will start at first, iterates in <tiaSpeech.js>
     pitch: 0,
-    durationOfFirstAndLastPhones: 0.3,
+    durationOfFirstAndLastPhones: 0.75,
     speaking_rate: 0.70,
     firstClip: false,
     now: {}, 
@@ -265,32 +265,9 @@ var synthesisObject = {
 
             URLs: [ prefixURL + tiaMediaLoc + "begin_when_you_are_ready.wav" ],
             texts: [ "begin when you are ready" ],
-            phones: [[
-
-
-                'bilabial',
-                'vowelMedium',
-                
-                'belar',
-                'vowelMedium',
-                'alveolar',
-                
-                'vowelRound',
-                'vowelMedium',
-                'alveolar',
-                
-                'vowelMedium',
-                'vowelRound',
-
-                'vowelMedium',
-                'alveolar',
-                
-                'alveolar',
-                'vowelMedium',
-                'alveolar',
-                'vowelEe'
-
-            ]],
+            phones: [
+                [ 'b','e','k','e','t',  'w','e','t',  'e','u',  'e',  'r','e','t','i']
+            ],
 
         },
 
@@ -298,31 +275,9 @@ var synthesisObject = {
 
             URLs: [ prefixURL + tiaMediaLoc + "goodbye_see_you_next_time.wav" ],
             texts: [ "goodbye see you next time" ],
-            phones: [[
-
-                'belar',
-                'vowelMedium',
-                'alveolar',
-                'bilabial',
-                'vowelMedium',
-                
-                'alveolar',
-                'vowelEe',
-
-                'vowelMedium',
-                'vowelRound',
-
-                'alveolar',
-                'vowelMedium',
-                'belar',
-                'alveolar',
-                'alveolar',
-
-                'alveolar',
-                'vowelMedium',
-                'bilabial'
-
-            ]],
+            phones: [
+                ['k','e','t','b','e',  's','i',  'e','u',  't','e','k','s','t',  't','e','b']
+            ],
 
         },
 
@@ -330,29 +285,9 @@ var synthesisObject = {
 
             URLs: [ prefixURL + tiaMediaLoc + "how_are_you_feeling_today.wav" ],
             texts: [ "how are you feeling today?" ],
-            phones: [[
-
-                'vowelMedium',
-                'vowelRound',
-
-                'vowelMedium',
-                'vowelMedium',
-
-                'vowelMedium',
-                'vowelRound',
-
-                'labioDental',
-                'vowelEe',
-                'alveolar',
-                'vowelMedium',
-                'belar',
-
-                'alveolar',
-                'vowelMedium',
-                'alveolar',
-                'vowelMedium',
-
-            ]],
+            phones: [
+                ['e','w',  'e','r',  'e','u',  'f','i','l','e','k',  't','e','t','e']
+            ],
 
         },
 
@@ -360,47 +295,10 @@ var synthesisObject = {
 
             URLs: [ prefixURL + tiaMediaLoc + "i_couldnt_hear_anything_00.wav", prefixURL + tiaMediaLoc + "i_couldnt_hear_anything_01.wav" ],
             texts: [ "I couldn't hear anything", "can you try again?" ],
-            phones: [[
-
-                'vowelMedium',
-    
-                'belar',
-                'vowelMedium',
-                'alveolar',
-                'alveolar',
-                'alveolar',
-    
-                'belar',
-                'vowelEe',
-                'alveolar',
-
-                'vowelMedium',
-                'alveolar',
-                'vowelEe',
-                'dentalFricative',
-                'vowelMedium',
-                'belar',
-
+            phones: [
+                ['e',  'k','e','t','t','t',  'e','i','r',  'e','t','i','th','e','k'],
+                ['k','e','t',  'e','u',  't','r','e',  'e','k','e','t']
             ],
-            [
-
-                'belar',
-                'vowelMedium',
-                'alveolar',
-
-                'vowelMedium',
-                'vowelRound',
-
-                'alveolar',
-                'alveolar',
-                'vowelMedium',
-
-                'vowelMedium',
-                'belar',
-                'vowelMedium',
-                'alveolar',
-
-            ]],
 
         },
 
@@ -408,80 +306,10 @@ var synthesisObject = {
 
             URLs: [ prefixURL + tiaMediaLoc + "i_dont_understand_what_you_mean_00.wav", prefixURL + tiaMediaLoc + "i_dont_understand_what_you_mean_01.wav" ],
             texts: [ "I don't understand what you mean", "try to say that sentence in a different way" ],
-            phones: [[
-
-                'vowelMedium',
-    
-                'alveolar',
-                'vowelMedium',
-                'alveolar',
-                'alveolar',
-                
-                'vowelMedium',
-                'alveolar',
-                'alveolar',
-                'vowelMedium',
-                'alveolar',
-                'alveolar',
-                'alveolar',
-                'vowelMedium',
-                'alveolar',
-                'alveolar',
-                
-                'vowelRound',
-                'vowelMedium',
-                'alveolar',
-                
-                'vowelMedium',
-                'vowelRound',
-                
-                'bilabial',
-                'vowelEe',
-                'alveolar',
-
+            phones: [
+                ['e',  't','e','t','t',  'e','t','t','e','r','s','t','e','t','t',  'w','e','t',  'e','u',  'b','i','t'],
+                ['t','r','e',  't','u',  's','e',  'th','e','t',  's','e','t','t','e','t','s',  'e','t',  'e',  't','e','f','e','r','e','t','t',  'w','e']
             ],
-            [
-
-                'alveolar',
-                'alveolar',
-                'vowelMedium',
-        
-                'alveolar',
-                'vowelRound',
-
-                'alveolar',
-                'vowelMedium',
-
-                'dentalFricative',
-                'vowelMedium',
-                'alveolar',
-
-                'alveolar',
-                'vowelMedium',
-                'alveolar',
-                'alveolar',
-                'vowelMedium',
-                'alveolar',
-                'alveolar',
-
-                'vowelMedium',
-                'alveolar',
-
-                'vowelMedium',
-
-                'alveolar',
-                'vowelMedium',
-                'labioDental',
-                'vowelMedium',
-                'alveolar',
-                'vowelMedium',
-                'alveolar',
-                'alveolar',
-
-                'vowelRound',
-                'vowelMedium',
-
-            ]],
 
         },
 
@@ -489,28 +317,9 @@ var synthesisObject = {
 
             URLs: [ prefixURL + tiaMediaLoc + "im_sorry_to_hear_that.wav" ],
             texts: [ "I'm sorry to hear that" ],
-            phones: [[
-
-                'vowelMedium',
-                'bilabial',
-
-                'alveolar',
-                'vowelMedium',
-                'alveolar',
-                'vowelEe',
-
-                'alveolar',
-                'vowelMedium',
-
-                'belar',
-                'vowelMedium',
-                'alveolar',
-
-                'dentalFricative',
-                'vowelMedium',
-                'alveolar',
-
-            ]],
+            phones: [
+                ['e','b',  's','e','r','i',  't','e',  'e','r',  'th','e','t']
+            ],
 
         },
 
@@ -518,32 +327,20 @@ var synthesisObject = {
 
             URLs: [ prefixURL + tiaMediaLoc + "its_great_to_see_you_again.wav" ],
             texts: [ "It's great to see you again" ],
-            phones: [[
+            phones: [
+                ['e','t','s',  'k','r','e','t',  't','u',  's','i',  'e','u',  'e','k','e','t']
+            ],
 
-                'vowelMedium',
-                'alveolar',
-                'alveolar',
+        },
 
-                'belar',
-                'alveolar',
-                'vowelMedium',
-                'alveolar',
+        'moreThanThree': {
 
-                'alveolar',
-                'vowelRound',
-
-                'alveolar',
-                'vowelEe',
-
-                'vowelMedium',
-                'vowelRound',
-
-                'vowelMedium',
-                'belar',
-                'vowelMedium',
-                'alveolar',
-
-            ]],
+            URLs: [ prefixURL + tiaMediaLoc + "more_than_three_errors_00.wav", prefixURL + tiaMediaLoc + "more_than_three_errors_01.wav" ],
+            texts: [ "There are more than 3 errors in your sentence", "Simplify and try again" ],
+            phones: [
+                ['th','e','r', 'e','r',  'b','e','r',  'th','e','t',  'th','r','i',  'e','r','e','r','s',  'e','t',  'e','u','r',  's','e','t','t','e','t','s'],
+                ['s','e','b','b','l','e','f','e',  'e','t','t',  't','r','e',  'e','k','e','t']
+            ],
 
         },
 
@@ -551,61 +348,40 @@ var synthesisObject = {
 
             URLs: [ prefixURL + tiaMediaLoc + "that_was_very_loud_00.wav", prefixURL + tiaMediaLoc + "that_was_very_loud_01.wav" ],
             texts: [ "that was very loud", "be careful with the microphone volume" ],
-            phones: [[
-
-                'dentalFricative',
-                'vowelMedium',
-                'alveolar',
-
-                'vowelRound',
-                'vowelMedium',
-                'alveolar',
-
-                'labioDental',
-                'vowelMedium',
-                'alveolar',
-                'vowelEe',
-
-                'alveolar',
-                'vowelRound',
-                'alveolar',
-
+            phones: [
+                ['th','e','t',  'w','e','s',  'f','e','r','i',  'l','e','t'],
+                ['b','i',  'k','e','r','f','e','l',  'w','e','th',  'th','e',  'b','e','k','l','e','f','e','t',  'f','e','l','u','b']
             ],
-            [
 
-                'bilabial',
-                'vowelEe',
+        },
 
-                'belar',
-                'vowelMedium',
-                'alveolar',
-                'labioDental',
-                'vowelMedium',
-                'alveolar',
+        'thatsGreat': {
 
-                'vowelRound',
-                'vowelMedium',
-                'dentalFricative',
+            URLs: [ prefixURL + tiaMediaLoc + "thats_great.wav" ],
+            texts: [ "that's great" ],
+            phones: [
+                ['th','e','t','s',  'k','r','e','t']
+            ],
 
-                'dentalFricative',
-                'vowelMedium',
+        },
 
-                'bilabial',
-                'vowelMedium',
-                'belar',
-                'alveolar',
-                'vowelMedium',
-                'labioDental',
-                'vowelMedium',
-                'alveolar',
+        'welcomeToFirst': {
 
-                'labioDental',
-                'vowelMedium',
-                'alveolar',
-                'vowelRound',
-                'bilabial',
+            URLs: [ prefixURL + tiaMediaLoc + "welcome_to_your_first_full_class_at_erle.wav" ],
+            texts: [ "Welcome to your first full class at ERLE" ],
+            phones: [
+                ['u','e','l','k','e','b',  't','u',  'e','u','r',  'f','e','r','s','t',  'f','e','l',  'k','l','e','s',  'e','t',  'e','r','l']
+            ],
 
-            ]],
+        },
+
+        'talkAbout': {
+
+            URLs: [ prefixURL + tiaMediaLoc + "what_would_you_like_to_talk_about_today.wav" ],
+            texts: [ "What would you like to talk about today?" ],
+            phones: [
+                ['w','e','t',  'w','e','t',  'e','u',  'l','e','k',  't','u',  't','e','k',  'e','b','e','t',  't','u','t','e']
+            ],
 
         },
 
@@ -613,53 +389,9 @@ var synthesisObject = {
 
             URLs: [ prefixURL + tiaMediaLoc + "you_must_type_your_choice_of_topic_in_the_box_below.wav" ],
             texts: [ "you must type your choice of topic in the box below" ],
-            phones: [[
-
-                'vowelMedium',
-                'vowelRound',
-
-                'bilabial',
-                'vowelMedium',
-                'alveolar',
-                'alveolar',
-                
-                'alveolar',
-                'vowelMedium',
-                'bilabial',
-                
-                'vowelMedium',
-                'alveolar',
-                
-                'alveolar',
-                'vowelMedium',
-                'alveolar',
-                
-                'vowelMedium',
-                'labioDental',
-                
-                'alveolar',
-                'vowelMedium',
-                'bilabial',
-                'vowelMedium',
-                'belar',
-                
-                'vowelMedium',
-                'alveolar',
-                
-                'dentalFricative',
-                'vowelMedium',
-                
-                'bilabial',
-                'vowelMedium',
-                'belar',
-                'alveolar',
-                
-                'bilabial',
-                'vowelMedium',
-                'alveolar',
-                'vowelRound'
-
-            ]],
+            phones: [
+                ['e','u',  'b','e','s','t',  't','e','b',  'e','u','r',  't','e','t',  'e','f',  't','e','b','e','k',  'e','t',  'th','e',  'b','e', 'k','s',  'b','e','l','w']
+            ],
 
         },
 
