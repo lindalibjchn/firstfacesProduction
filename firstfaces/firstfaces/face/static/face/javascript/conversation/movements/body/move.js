@@ -1,6 +1,6 @@
 //// general all-purpose method for main body movementObject.abs
 
-function movementController( movementTo, saccDur, bodyDur ) {
+function movementController( movementTo, saccDur, bodyDur, moveCb=function(){} ) {
 
     //// check if blinking, dont want to move mid blink or eyelids wont function
     if ( blinkObject.bool ) {
@@ -16,6 +16,8 @@ function movementController( movementTo, saccDur, bodyDur ) {
 
         movementObject.bool = false;
         //console.log( "\nmovement initiated\n" );
+
+        movementObject.callback = moveCb;
 
         movementObject.now = getAbsoluteCoordsOfMovementNow();
         movementObject.movement = createRelativeMovement( movementTo );
@@ -152,6 +154,7 @@ function movement( main ) {
 
         movementObject.bool = false;
         movementNow = getAbsoluteCoordsOfMovementNow();
+        movementObject.callback();
 
     }
 

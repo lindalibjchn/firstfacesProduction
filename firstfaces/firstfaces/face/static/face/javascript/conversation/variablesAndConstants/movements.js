@@ -4,6 +4,7 @@ var movementObject = {
     'mult': 0,
     'sin': [],
     'sinLength': 0,
+    'callback': function(){},
     'now': {},
     'base': {},//abs coordinates on enter with no movement
     'movement': {}, // how much movement to be done

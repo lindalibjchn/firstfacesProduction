@@ -76,7 +76,7 @@ function sendBlobToServer( blob_to_send ) {
     let fd = new FormData();
     fd.append('data', blob_to_send);
     fd.append('sessionID', conversationVariables.session_id);
-    fd.append('interference', synthesisObject.interference);
+    fd.append('interference', conversationVariables.interference);
     fd.append('blob_no_text', conversationVariables.blob_no_text);
     fd.append('blob_no_text_sent_id', conversationVariables.blob_no_text_sent_id);
 
@@ -98,7 +98,7 @@ function sendBlobToServer( blob_to_send ) {
             conversationVariables.preSent = conversationVariables.alternatives[ 0 ][ 'transcript' ]
 
             // if first interference, then want the flinch not to be interfered with by the return motions
-            if ( conversationVariables.interference_count === 1 && synthesisObject.interference ) {
+            if ( conversationVariables.interference_count === 1 && conversationVariables.interference ) {
 
                 console.log('no return');
 

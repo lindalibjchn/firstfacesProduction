@@ -15,6 +15,7 @@ $(window).on( 'load', function() {
     //// FOR VOLUME BAR
     canvasContext = document.getElementById( "meter" ).getContext("2d");
     canvasContext.transform(1, 0, 0, -1, 0, HEIGHT_VOL)
+    canvasContext.fillStyle = "#33ff00";
 
 });
 
@@ -24,6 +25,7 @@ function enterOrReEnter() {
     synthesisObject.audio = document.getElementById( 'synthClip' );
 
     //// DEVELOPMENT
+    //// close up of Tia's lips
     //if ( conversationVariables.inDevelopment ) {
 
         //CAMERA_SIT_POS = { x: 0, y: -3.0, z: 19 };
@@ -84,15 +86,17 @@ function engineRunning() {
         if ( conversationVariables.inDevelopment ) {
 
             // hide mic button
-            $('#recordBtnsCont').hide();
-            $('#meterContainer').hide();
+            //$('#recordBtnsCont').hide();
+            //$('#meterContainer').hide();
 
-            expressionController( expressionObject.abs.talkBase, 0.3, function(){console.log('no expression calback')});
+            //expressionController( expressionObject.abs.talkBase, 0.3, function(){console.log('no expression calback')});
 
-            synthesisObject.now = synthesisObject.data.beginWhenYou;
-            synthesisObject.audio.src = synthesisObject.now.URLs[ 0 ]
+            //synthesisObject.now = synthesisObject.data.beginWhenYou;
+            //synthesisObject.audio.src = synthesisObject.now.URLs[ 0 ]
 
             //synthesisObject.synthAudio.src = prefixURL + tiaMediaLoc + synthesisObject.synthAudio.text.replace(/ /g, "_") +".wav"
+
+            conversationVariables.interference_count = 0;
 
         }
         ////////////////
