@@ -257,6 +257,7 @@ var synthesisObject = {
     pitch: 0,
     durationOfFirstAndLastPhones: 0.75,
     speaking_rate: 0.70,
+    continuous: true,
     firstClip: false,
     now: {}, 
     data: {

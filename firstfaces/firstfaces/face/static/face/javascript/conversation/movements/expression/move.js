@@ -1,7 +1,7 @@
 // CONTAINS THE EXPRESSIONS FOR THE EMOTION WHEEL AND THE LOGIC FOR TURNING THE WHEEL INTO THE EXPRESSIONS //
 
 // if eyelids is false, then the absolute coordinates in AUs is used
-function expressionController( expressionTo, duration, cb ) {
+function expressionController( expressionTo, duration, expressCb=function(){} ) {
 
     //// check if blinking, dont want to move mid blink or eyelids wont function
     if ( blinkObject.bool ) {
@@ -21,15 +21,8 @@ function expressionController( expressionTo, duration, cb ) {
 
         expressionObject.now = getAbsoluteCoordsOfExpressionNow();
         expressionObject.movement = createRelativeExpression( expressionTo );
-        if ( cb !== undefined ) {
 
-            expressionObject.callback = cb;
-
-        } else {
-
-            expressionObject.callback = function(){};
-
-        }
+        expressionObject.callback = expressCb;
 
         initExpression( expressionObject.movement, duration );
 

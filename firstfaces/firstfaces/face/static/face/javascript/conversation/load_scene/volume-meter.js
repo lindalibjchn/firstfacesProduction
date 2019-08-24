@@ -119,14 +119,13 @@ function drawLoop() {
 
     if ( meter.checkClipping() ) {
 
-        console.log('clipping occurred');
+        stopDrawingVolumeBar();
 
-        synthesisObject.interference = true;
+        if ( conversationVariables.interference_count === 0 ) {
         
-        if ( synthesisObject.firstClip === false ) {
-
-            if ( conversationVariables.interference_count === 0 ) {
-            
+            if ( !conversationVariables.stage2 && !conversationVariables.stage3 ) {
+               // don't want to do full flinch animation in later stages
+                conversationVariables.interference = true;
                 tiaConfusedAfterClipping( true );
 
             } else {
@@ -135,10 +134,13 @@ function drawLoop() {
 
             }
 
-            conversationVariables.interference_count += 1;
-            synthesisObject.firstClip = true;
-            
+        } else {
+
+            tiaConfusedAfterClipping( false );
+
         }
+
+        conversationVariables.interference_count += 1;
 
     } else {
 
@@ -151,31 +153,31 @@ function drawLoop() {
 function drawVolumeBar() {
 
     canvasContext.clearRect(0,0,WIDTH_VOL,HEIGHT_VOL);
+    canvasContext.fillRect(0, 0, meter.volume*WIDTH_VOL, HEIGHT_VOL);
 
-    // check if we're currently clipping
-    if ( !synthesisObject.interference ) {
+}
 
-        canvasContext.fillStyle = "#33ff00";
-        // draw a bar based on the current volume
-        canvasContext.fillRect(0, 0, meter.volume*WIDTH_VOL, HEIGHT_VOL);
-        //$('#meter').css('border', 'none')
+function stopDrawingVolumeBar() {
 
-    } else {
+    volumeObject.bool = false;
 
-        $('#meter').css('background-color', 'red')
-        
-    }
+}
+
+function beginDrawingVolumeBar() {
+
+    volumeObject.bool = true;
+    canvasContext.fillStyle = "#33ff00";
 
 }
 
 function tiaConfusedAfterClipping( firstTime ) {
     
-    console.log('in tiaConfusedAfterClipping', firstTime);
-    drawVolumeBar();
-    volumeObject.bool = false;
-    
+    canvasContext.fillStyle = "#ff0000";
+    canvasContext.fillRect(0, 0, WIDTH_VOL, HEIGHT_VOL);
+
     if ( firstTime ) {
 
+        clearTimeout( recorder15sTimeout );
         micIntAud.src = micIntAudSources[Math.floor(Math.random()*4)]
         micIntAud.play();//play interference
 
@@ -185,26 +187,23 @@ function tiaConfusedAfterClipping( firstTime ) {
 
         // actually just face contorting a bit
         
-        expressionController( expressionObject.abs.flinch, tiaTimings.flinchDuration / 2 )//express discomfort 
-        //expressionController( expressionObject.abs.blank, 0.5 )//express confusion 
-        // don't return to normal face cause the setTimeout could conflict with the students clicking of the stop button
+        subsequentFlinches();
 
     }
-
-    setTimeout( function() { synthesisObject.firstClip = false; }, 2000 );
-    synthesisObject.interference = false;
 
 }
 
 function showVolumeBar() {
 
     $('#meterContainer').show(); 
+    volumeObject.bool = true;
 
 }
 
 function hideVolumeBar() {
 
     $('#meterContainer').hide(); 
+    volumeObject.bool = false;
 
 }
 

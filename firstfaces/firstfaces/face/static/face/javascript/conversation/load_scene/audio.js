@@ -57,7 +57,7 @@ function resetOnRecordVariables() {
 
     conversationVariables.blobs += 1;
     removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
-    synthesisObject.interference = false; // start with no interference which can change if clipping occurs
+    conversationVariables.interference = false; // start with no interference which can change if clipping occurs
     // identifies main recording and allow return of mic button if user says nothing
     conversationVariables.mainRecord = true; // ??
     // will check that the user has clicked the stop button by timing them and using this boolean
@@ -68,15 +68,11 @@ function resetOnRecordVariables() {
 
 function dealWithInputBtns() {
 
-    // hide the microphone button
-    $('#recordVoiceBtn').hide();
-    $('#reRecordBtn').hide();
-            
+    buttonsAfterMicClicked();
+
     if ( conversationVariables.stage2 || conversationVariables.stage3 ) {
         
         $('#submitOverlay').hide();
-        $('#stopRecordBtn').show();
-        $('#reRecordBtn').prop("disabled",true);
     
         if (conversationVariables.stage2 ) {
 
@@ -87,10 +83,6 @@ function dealWithInputBtns() {
 
     }
     
-    $('#stopRecordVoiceBtn').show();
-    $('.play-btn').prop( "disabled", true);
-    $('#talkBtn').prop( "disabled", true);
-
 }
 
 function tiaLeanToListenToRecording() {
@@ -118,6 +110,10 @@ function checkIfClickedStop() {
     // double check the boolean is true
     if ( conversationVariables.recording ) {
 
+        conversationVariables.over15secs = true;
+
+        hideVolumeBar();
+
         onStopClick();
 
         alert('You have 15 seconds to say each sentence. If it is a very long sentence, try breaking it up into smaller sentences.')
@@ -140,39 +136,43 @@ function onStopClick() {
 
     conversationVariables.recording = false;
 
-    $('#stopRecordBtn').hide();
-    $('#stopRecordVoiceBtn').hide();
+    buttonsHideAllStop();
+
 
 }
 
 function onMediaRecorderStop() {
 
-    volumeObject.bool = false;// stop measuring volume and hide volume bar
-    hideVolumeBar();
+    // i first interference then dont need to do any of this stuff
+    if ( !conversationVariables.interference && !conversationVariables.over15secs ) {
 
-    //$('#talkBtn').prop( "disabled", true )
-    conversationVariables.blob = new Blob(chunks, { type : 'audio/webm; codecs: opus' });
+        hideVolumeBar();
 
-    // create audiourl for easy replay
-    var audioURL = window.URL.createObjectURL(conversationVariables.blob);
-    aud.src = audioURL;
+        //$('#talkBtn').prop( "disabled", true )
+        conversationVariables.blob = new Blob(chunks, { type : 'audio/webm; codecs: opus' });
 
-    if( !conversationVariables.stage2 && !conversationVariables.stage3 ) {
-    	
-        sendBlobToServer( conversationVariables.blob );
-	
-    } else {
-        
-        if( conversationVariables.stage2 ){
-	        
-            sendErrorBlobToServer( conversationVariables.blob );
-        
+        // create audiourl for easy replay
+        var audioURL = window.URL.createObjectURL(conversationVariables.blob);
+        aud.src = audioURL;
+
+        if( !conversationVariables.stage2 && !conversationVariables.stage3 ) {
+            
+            sendBlobToServer( conversationVariables.blob );
+            
         } else {
             
-            sendAttemptBlob( conversationVariables.blob );
-        
-        }
+            if( conversationVariables.stage2 ){
+                    
+                sendErrorBlobToServer( conversationVariables.blob );
+            
+            } else {
+                
+                sendAttemptBlob( conversationVariables.blob );
+            
+            }
 
+        }
+        
     }
 
 }

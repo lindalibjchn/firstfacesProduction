@@ -1,7 +1,17 @@
-function tiaSpeak( tiaSays, cb ) {
+function tiaSpeak( tiaSays, cont=true, speakCb=function(){} ) {
+
+    // tiaSays is an identifier in the synthesisObject object which contains the string, phones and URL for the wav file
+    // cont=true if tia speaks multiple sentences one after the other. If false (usually prompt) a button will apppear for the user to click before continuing
 
     $('#recordBtnsCont').hide();
-    synthesisObject.sentenceNo = 0;
+    synthesisObject.sentenceNo = 0; // this iterates when multiple sentences need to be spoken
+    
+    if ( !cont ) {
+
+        synthesisObject.continuous = false;
+
+    }
+
     // put this on page load somewhere so not calling it every time
     synthesisObject.audio.ondurationchange = function() {
 
@@ -16,6 +26,7 @@ function tiaSpeak( tiaSays, cb ) {
     }
 
     synthesisObject.now = synthesisObject.data[ tiaSays ];
+    synthesisObject.callback = speakCb;
     showSpeechBubble( synthesisObject.now.texts[ 0 ], tiaTimings.speechBubbleFadeInDuration )
     tiaSpeakIndividualSentences();
 
@@ -61,13 +72,21 @@ function animatePhonesInOrder() {
         //if last sentence then just show mic, but if more sentences to come then show 'next' button
             if ( synthesisObject.sentenceNo === synthesisObject.now.texts.length - 1 ) {
 
-                // clicking the utton in this activates the function below 'listenToNextSentence'
-                $('#recordBtnsCont').show();
+                synthesisObject.callback();
+                buttonsMicrophoneOnly();
 
             } else {
 
-                $('#listenNextSentenceBtnCont').show();
+                if ( synthesisObject.continuous ) {
+
+                    listenToNextSentence();
+
+                } else {
+
+                    buttonsListenNextSentence();;
                
+                }    
+
             }
 
         })

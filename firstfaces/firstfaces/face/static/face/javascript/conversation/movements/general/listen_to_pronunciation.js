@@ -2,15 +2,15 @@ function listenToSpeechSynthesis( intensity ) {
 
     if ( intensity === 0 ) {
 
-        movementController( movementObject.abs.speechRecognitionInput01, 7, 0.75 )
+        movementController( movementObject.abs.speechRecognitionInput01, 0.5, 0.5 )
 
     } else if ( intensity === 1 ) {
 
-        movementController( movementObject.abs.speechRecognitionInput02, 1, 1 )
+        movementController( movementObject.abs.speechRecognitionInput02, 0.75, 0.75 )
 
     } else {
 
-        movementController( movementObject.abs.speechRecognitionInput03, 1.2, 1.25 )
+        movementController( movementObject.abs.speechRecognitionInput03, 1, 1 )
 
     }
 
@@ -25,17 +25,13 @@ function returnFromListenToSpeechSynthesis() {
         
         // if no sound comes through, don't tap or show empty transcripts
         if ( conversationVariables.alternatives[ 0 ].transcript === "" ) {
-        
-            if ( conversationVariables.tutorial === false ) {
 
-                setTimeout( function() {
+            setTimeout( function() {
 
-                    initShake(0.2, 0.5)
-                    setTimeout( dealWithBlankTranscription, 1500 );
+                initShake(0.2, 0.5)
+                setTimeout( dealWithBlankTranscription, 1500 );
 
-                }, 1000);
-        
-            }
+            }, 1000);
 
         } else {
            // reset this as main recording is complete with a transcription
@@ -75,27 +71,45 @@ function firstFlinch() {
     onStopClick();
 
     expressionController( expressionObject.abs.flinch, tiaTimings.flinchDuration / 2 )//express discomfort 
-    movementController( movementObject.abs.flinch, tiaTimings.flinchDuration, tiaTimings.flinchDuration);
-    
-    //// delay the expression and movement by a bit to create more realistic encounter
-    setTimeout( function() {
-
-        hideVolumeBar();//always hide it even if not shown, same as if statement
-        movementController( movementObject.abs.flinch, 0.2, 0.4);
-        expressionController( expressionObject.abs.flinch, 0.1 ) 
-
+    movementController( movementObject.abs.flinch, tiaTimings.flinchDuration, tiaTimings.flinchDuration, moveCb=function(){ 
+        
         setTimeout( function() {
 
-            synthesisObject.synthAudio.src = prefixURL + tiaMediaLoc + "that_was_very_loud.wav"
-    
-            tiaSpeak( "That was very loud. Please be careful with the microphone volume", function() {
-    
-                $('#recordVoiceBtn').show();
-            })
+                //hideVolumeBar();//always hide it even if not shown, same as if statement
+                expressionController( expressionObject.abs.blank, 1 ) 
+                movementController( movementObject.abs.blank, 0.5, 1.5, moveCb=function(){tiaSpeak( "veryLoud", cont=true, speakCb=function(){
+                 
+                        conversationVariables.interference = false;  
+                        canvasContext.fillStyle = "#33ff00";
+                   
+                    })
+                
+                });
 
-        }, 1500 )
+            }, tiaTimings.delayAfterFlinch );
 
-    }, tiaTimings.flinchDuration * 1000 + tiaTimings.delayAfterFlinch );
+        }
+
+    )
+
+}
+
+function subsequentFlinches() {
+    console.log('in subsequentFlinches');
+
+    expressionController( expressionObject.abs.halfFlinch, tiaTimings.flinchDuration / 4, expressCb=function(){
+       
+        setTimeout( function() {
+
+            expressionController( expressionObject.abs.speechRecognition, tiaTimings.flinchDuration, expressCb=function(){
+         
+                setTimeout( beginDrawingVolumeBar, 1000 );
+
+            } ); 
+
+        }, tiaTimings.delayAfterFlinch / 4 )    
+
+    });
 
 }
 
