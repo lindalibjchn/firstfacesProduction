@@ -24,6 +24,20 @@ function enterOrReEnter() {
     //load this early and change .src later
     synthesisObject.audio = document.getElementById( 'synthClip' );
 
+    synthesisObject.audio.ondurationchange = function() {
+
+        synthesisObject.now.noOfPhones = synthesisObject.now.phones[ synthesisObject.sentenceNo ].length;
+
+        synthesisObject.now.noOfFrames = Math.floor( synthesisObject.audio.duration * 60 )
+        synthesisObject.now.noOfFramesPerPhone = Math.floor( synthesisObject.now.noOfFrames / ( synthesisObject.now.noOfPhones - 1 ) );
+
+        synthesisObject.now.noOfLeftoverFrames = synthesisObject.now.noOfFrames - synthesisObject.now.noOfFramesPerPhone * synthesisObject.now.noOfPhones;
+
+        synthesisObject.gotNewDuration = true;
+
+    }
+
+
     //// DEVELOPMENT
     //// close up of Tia's lips
     //if ( conversationVariables.inDevelopment ) {
@@ -73,6 +87,9 @@ function engineRunning() {
     loadSynthURLs(); //loads the phrases Tia may say and creates the format for later prompts to follow
     animate();
     blinkControllerObject.bool = true;
+    expressionObject.calculated = expressionObject.abs.neutral; 
+    expressionObject.half = expressionObject.abs.neutral;
+    expressionObject.quarter = expressionObject.abs.neutral;
     expressionController( expressionObject.abs.neutral, 0.01 );
     movementController( movementObject.abs.blank, 0.01, 0.01)
     enterOrReEnter();
@@ -111,9 +128,9 @@ function setBaseExpressionsAndMovements() {
     expressionObject.now = $.extend( true, {}, expressionObject.base ); // create a copy of this for expression now
     getAbsoluteCoordsOfMainExpressions(); // gets coordinates for all main expressions
     
+
     movementObject.base = getAbsoluteCoordsOfMovementNow(); // same as above for movementObject.abs
     movementObject.now = $.extend( true, {}, movementObject.base );
-
     getAbsoluteCoordsOfMainMovements(); // gets coordinates for all main expressions
 
 }
@@ -176,7 +193,7 @@ function judgementReceived( sentMeta ) {
 
         } else {
 
-            changeExpression();
+            changeExpressionDuration();
 
         }
 

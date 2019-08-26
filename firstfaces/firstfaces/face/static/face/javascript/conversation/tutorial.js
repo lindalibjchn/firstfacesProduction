@@ -912,7 +912,7 @@ function greeting22() {
      
         //let finalExpression = createSingleExpression( expressionObject.rel.happy, 0.75 );
         //calculatedExpression = getAbsoluteCoordsOfExpressionTo( finalExpression[ 0 ] )
-        //expressionController( calculatedExpression, tiaTimings.changeExpression );
+        //expressionController( calculatedExpression, tiaTimings.changeExpressionDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDuration );
         //setTimeout( endTutorial, 3000 )
         
     //})

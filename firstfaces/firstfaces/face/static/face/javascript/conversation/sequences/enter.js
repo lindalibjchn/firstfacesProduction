@@ -18,10 +18,8 @@ function mainEnter() {
 
     } else if ( mainCount === 110 ) {
 
-        let calculatedExpressions = createSingleExpression( expressionObject.rel.happy, 0.75 );
-        calculatedExpression = getAbsoluteCoordsOfExpressionTo( calculatedExpressions[0] );
-        calculatedTalkExpression = getAbsoluteCoordsOfExpressionTo( calculatedExpressions[1] );
-        expressionController( calculatedExpression, tiaTimings.changeExpression );
+        createSingleExpression( expressionObject.rel.happy, 0.75 );
+        expressionController( expressionObject.calculated, tiaTimings.changeExpression );
 
     //} else if ( mainCount === 430 ) {
 
@@ -77,7 +75,7 @@ function mainEnter() {
 
         //initArmIndicate('left', 0, 'low', '1');
         //in entrance so need to not return to laptop after talking when not learning
-        talkObject.learning = false;
+        //talkObject.learning = false;
 
         //synthesisObject.pitch = 0;
         //synthesisObject.speaking_rate = 0.85;
@@ -93,7 +91,7 @@ function mainEnter() {
 
     } else if ( mainCount === 210 ) {
 
-        expressionController( calculatedTalkExpression, '1', false );
+        expressionController( expressionObject.half, tiaTimings.changeExpressionDuration );
 
     } else if ( mainCount === 280 ) {
 

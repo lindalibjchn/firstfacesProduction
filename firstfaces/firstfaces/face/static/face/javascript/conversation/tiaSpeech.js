@@ -5,30 +5,22 @@ function tiaSpeak( tiaSays, cont=true, speakCb=function(){} ) {
 
     $('#recordBtnsCont').hide();
     synthesisObject.sentenceNo = 0; // this iterates when multiple sentences need to be spoken
-    
-    if ( !cont ) {
-
-        synthesisObject.continuous = false;
-
-    }
+    synthesisObject.continuous = cont;
+    synthesisObject.talking = true; 
 
     // put this on page load somewhere so not calling it every time
-    synthesisObject.audio.ondurationchange = function() {
-
-        synthesisObject.now.noOfPhones = synthesisObject.now.phones[ synthesisObject.sentenceNo ].length;
-
-        synthesisObject.now.noOfFrames = Math.floor( synthesisObject.audio.duration * 60 )
-        synthesisObject.now.noOfFramesPerPhone = Math.floor( synthesisObject.now.noOfFrames / ( synthesisObject.now.noOfPhones - 1 ) );
-
-        synthesisObject.now.noOfLeftoverFrames = synthesisObject.now.noOfFrames - synthesisObject.now.noOfFramesPerPhone * synthesisObject.now.noOfPhones;
-        console.log('duration changed')
-
-    }
-
     synthesisObject.now = synthesisObject.data[ tiaSays ];
     synthesisObject.callback = speakCb;
     showSpeechBubble( synthesisObject.now.texts[ 0 ], tiaTimings.speechBubbleFadeInDuration )
-    tiaSpeakIndividualSentences();
+
+    getIntoSpeakingPosition();
+
+}
+
+function getIntoSpeakingPosition() {
+
+        // move from whatever expression into the half of it
+        expressionController( expressionObject.half, tiaTimings.changeExpressionDuration );
 
 }
 
@@ -37,45 +29,77 @@ function tiaSpeakIndividualSentences() {
     synthesisObject.audio.src = synthesisObject.now.URLs[ synthesisObject.sentenceNo ];
     synthesisObject.now.phoneCount = 1;
     
-    animateFirstPhoneSlowly( function() {
-            
-        setTimeout( function() {
-            
-            synthesisObject.audio.play();
-
-        }, 100 );
-
-        animatePhonesInOrder();
-
-    });
+    holdOnUntilNewAudioDurationIsAvailable()
 
 }
 
-function animateFirstPhoneSlowly( cb ) {
+function holdOnUntilNewAudioDurationIsAvailable() {
 
-        expressionController( expressionObject.abs[ synthesisObject.now.phones[ synthesisObject.sentenceNo ][ 0 ] ], synthesisObject.durationOfFirstAndLastPhones, cb )
+    // this should upload automatically from 'ondurationchange' in <load_scene/main.js>, but it sometimes takes a while... so need to do this before carrying on with next step
+    if ( synthesisObject.gotNewDuration ) {
+
+        console.log( 'duration updated' );
+        synthesisObject.gotNewDuration = false;
+
+        animateFirstPhoneSlowly();
+
+
+    } else {
+
+        console.log( 'waiting for duration to update' );
+        setTimeout( holdOnUntilNewAudioDurationIsAvailable, 200 );
+
+    }
+
+}
+
+function animateFirstPhoneSlowly() {
+
+    console.log( 'in animateFirstPhoneSlowly' );
+    expressionController( expressionObject.abs[ synthesisObject.now.phones[ synthesisObject.sentenceNo ][ 0 ] ], synthesisObject.durationOfFirstAndLastPhones, slightlyDelayAudioPlay )
+
+}
+
+function slightlyDelayAudioPlay() {
+
+    console.log( 'in slightlyDelayAudioPlay' );
+    setTimeout( function() {
+        
+        synthesisObject.audio.play();
+
+    }, 100 );
+
+    animatePhonesInOrder();
 
 }
 
 function animatePhonesInOrder() {
 
+    if ( synthesisObject.now.phoneCount === 1 ) {console.log( 'in animatePhonesInOrder' );}
     if ( synthesisObject.now.phoneCount < synthesisObject.now.noOfPhones ) {
 
+        //console.log( 'in startingPronunciationController' );
         pronunciationController( expressionObject.abs[ synthesisObject.now.phones[ synthesisObject.sentenceNo ][ synthesisObject.now.phoneCount ] ], animatePhonesInOrder )
         synthesisObject.now.phoneCount += 1;
 
     // check for last phone to also be run slowly
     } else if ( synthesisObject.now.phoneCount === synthesisObject.now.noOfPhones ) { 
         
-        expressionController( expressionObject.abs.talkBase, synthesisObject.durationOfFirstAndLastPhones, function(){
-
         //if last sentence then just show mic, but if more sentences to come then show 'next' button
-            if ( synthesisObject.sentenceNo === synthesisObject.now.texts.length - 1 ) {
+        if ( synthesisObject.sentenceNo === synthesisObject.now.texts.length - 1 ) {
+
+             //console.log( 'in endPhoneCount' );
+            expressionController( expressionObject.quarter, tiaTimings.changeExpressionDuration, function() {
 
                 synthesisObject.callback();
+                synthesisObject.talking = false;
                 buttonsMicrophoneOnly();
+            
+            }) 
 
-            } else {
+        } else {
+
+            expressionController( expressionObject.abs.talkBase, tiaTimings.changeExpressionDuration, function() {
 
                 if ( synthesisObject.continuous ) {
 
@@ -83,13 +107,13 @@ function animatePhonesInOrder() {
 
                 } else {
 
-                    buttonsListenNextSentence();;
+                    buttonsListenNextSentence();
                
                 }    
 
-            }
+            })
 
-        })
+        }
 
     }
 
@@ -120,7 +144,7 @@ function pronunciationController( expressionTo, cb ) {
 //// general all-purpose method for all expressions
 function initPronunciation() {
 
-    if ( synthesisObject.now.phones[ synthesisObject.sentenceNo ][ synthesisObject.now.phoneCount ][ 0 ] === 'v' ) {
+    if ( [ 'i', 'e', 'u' ].includes( synthesisObject.now.phones[ synthesisObject.sentenceNo ][ synthesisObject.now.phoneCount ][ 0 ] ) ) {
 
         // -1 cause the frames run over
         expressionObject.sinLength = synthesisObject.now.noOfFramesPerPhone - 2;
@@ -133,7 +157,7 @@ function initPronunciation() {
         expressionObject.sin = sineArrays[ expressionObject.sinLength ];
 
     }
-    console.log(synthesisObject.now.noOfFramesPerPhone)
+    //console.log(synthesisObject.now.noOfFramesPerPhone)
     expressionObject.startCount = mainCount;
     expressionObject.bool = true;
 

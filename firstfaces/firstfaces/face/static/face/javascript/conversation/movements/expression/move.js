@@ -9,8 +9,8 @@ function expressionController( expressionTo, duration, expressCb=function(){} ) 
         //// try aagain in 200ms after blink finished
         setTimeout( function() {
 
-            expressionController( expressionTo, duration );
-            //console.log( 'tried to express while blinking so retry in 200ms' );
+            expressionController( expressionTo, duration, expressCb=expressCb );
+            console.log( 'tried to express while blinking so retry in 200ms' );
 
         }, 200 );
 

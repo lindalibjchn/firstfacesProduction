@@ -62,17 +62,17 @@ function runAfterJudgement() {
 
     } else if ( conversationVariables.last_sent.judgement === "I" ) {
 
-        movementController( movementObject.abs.confused, tiaTimings.movementToConfused / 2, tiaTimings.movementToConfused );
+        movementController( movementObject.abs.confused, tiaTimings.movementToConfusedDuration / 2, tiaTimings.movementToConfusedDuration );
 
         addToPrevSents(conversationVariables.last_sent);
         
         setTimeout( function() {
             
-            expressionController( expressionObject.abs.confused, tiaTimings.changeExpressionConfused );
+            expressionController( expressionObject.abs.confused, tiaTimings.changeExpressionDuration );
 
-            setTimeout( showOptionBtns, tiaTimings.changeExpressionConfused * 1000 );
+            setTimeout( showOptionBtns, tiaTimings.changeExpressionDuration * 1000 );
 
-        }, tiaTimings.movementToConfused * 500 )
+        }, tiaTimings.movementToConfusedDuration * 500 )
 
     } else if ( conversationVariables.last_sent.judgement === "B" || conversationVariables.last_sent.judgement === "M" || conversationVariables.last_sent.judgement === "D" || conversationVariables.last_sent.judgement === "3" ) {
 
@@ -272,7 +272,7 @@ function returnToLaptop( from ) {
     addToPrevSents();
     initInputReady( from )
 
-    //expressionController( expressionObject.abs.neutral, tiaTimings.changeExpression * 2 );
+    //expressionController( expressionObject.abs.neutral, tiaTimings.changeExpressionDuration * 2 );
 
     //if ( conversationVariables.classOver && conversationVariables.endClassSequenceStarted !== true ) {
 

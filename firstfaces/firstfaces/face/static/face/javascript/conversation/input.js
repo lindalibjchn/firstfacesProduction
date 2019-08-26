@@ -9,7 +9,6 @@ function initInputReady( from ) {
     //$('#recordBtnsCont').show();
     
     // removes speech bubble after user has a few second to read it
-    //removeSpeechBubble( tiaTimings.changeExpression * 2000 );                   
     if ( conversationVariables.tutorial === false ) {
 
         $('.record-btn').prop( "disabled", false );
@@ -142,11 +141,11 @@ function talkToTia() {
 
 function tiaLeanToListen() {
 
-    movementController( movementObject.abs.speechRecognitionInput01, tiaTimings.tiaLeanDuration, tiaTimings.tiaLeanDuration );
+    movementController( movementObject.abs.speechRecognitionInput01, tiaTimings.leanToListenToSpeechSynthesisDuration, tiaTimings.leanToListenToSpeechSynthesisDuration );
     expressionController( expressionObject.abs.listening, 0.3) 
     
     synthesisObject.waitingForSynthCount = 0;
-    setTimeout( speakWords, tiaTimings.tiaLeanDuration * 2 );
+    setTimeout( speakWords, tiaTimings.leanToListenToSpeechSynthesisDuration * 2 );
 
 }
 
@@ -205,18 +204,18 @@ function tiaThinkAboutSentence() {
 
         ////runAfterJudgement();
         //runAfterJudgementWithoutBeingAtTurnToThink()
-        //recTimes.changeExpressionImmediately = Date.now() / 1000;
+        //recTimes.changeExpressionDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationImmediately = Date.now() / 1000;
     
     //} else {
 
     goToThinkingPos();
-    //initMove( leanObject, leanObject.coords.middle, tiaTimings.tiaLeanDuration * 2 );
+    //initMove( leanObject, leanObject.coords.middle, tiaTimings.leanToListenToSpeechSynthesisDuration * 2 );
     //setTimeout( function() {
      
         //if ( conversationVariables.awaitingJudgement === false ) {
 
             //runAfterJudgementWithoutBeingAtTurnToThink();
-            //recTimes.changeExpressionAfterLeanBack = Date.now() / 1000;
+            //recTimes.changeExpressionDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationAfterLeanBack = Date.now() / 1000;
 
         //} else {
 
@@ -224,7 +223,7 @@ function tiaThinkAboutSentence() {
 
             //if ( conversationVariables.awaitingJudgement === false ) {
 
-                //recTimes.changeExpressionBeforeTurningToThink = Date.now() / 1000;
+                //recTimes.changeExpressionDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationBeforeTurningToThink = Date.now() / 1000;
                 //runAfterJudgementWithoutBeingAtTurnToThink();
 
             //} else {
@@ -252,197 +251,26 @@ function goToThinkingPos() {
 
 }
 
-var wordThinkingCount = 0;
-function showTiaThinkingOverWords() {
-
-    if ( wordThinkingCount % 2 === 0 ) {
-
-        if (wordThinkingCount === 0 ) {
-
-            $('#thinkingWords').hide();
-            $('#thinkingWords1').hide();
-            $('#thinkingWords').text( synthesisObject.wordList[ wordThinkingCount ] );
-            $('#thinkingWords').fadeIn( tiaTimings.wordFade );
-
-        } else {
-
-            $('#thinkingWords').text( synthesisObject.wordList[ wordThinkingCount ] );
-
-            $('#thinkingWords1').fadeOut( tiaTimings.wordFade );
-            setTimeout( function() {
-
-                $('#thinkingWords').fadeIn( tiaTimings.wordFade );
-
-            }, 50 );
-
-        }
-
-    } else {
-
-        $('#thinkingWords1').text( synthesisObject.wordList[ wordThinkingCount ] );
-
-        $('#thinkingWords').fadeOut( tiaTimings.wordFade );
-        setTimeout( function() {
-
-            $('#thinkingWords1').fadeIn( tiaTimings.wordFade );
-
-        }, 50 );
-
-    }
-
-    let wordLength = synthesisObject.wordList[ wordThinkingCount ].length
-    let wordDelay = tiaTimings.wordFade + wordLength * tiaTimings.wordFade / 2;
-    wordThinkingCount += 1;
-
-    if ( wordThinkingCount < synthesisObject.wordList.length ) {
-        
-        setTimeout( showTiaThinkingOverWords, wordDelay );
-
-    } else {
-
-        wordThinkingCount = 0;
-        setTimeout( function() {
-
-            $('#thinkingWords').fadeOut( tiaTimings.wordFade );
-            $('#thinkingWords1').fadeOut( tiaTimings.wordFade );
-
-            if ( conversationVariables.awaitingJudgement ) {
-
-                setTimeout( function() {
-                    
-                    if ( conversationVariables.awaitingJudgement ) {
-                    
-                        showTiaThinkingOverWords();
-                        
-                    } else {
-
-                        judgementReceivedInThinkingPos();
-
-                    }
-
-                }, 1500 );
-
-            } else {
-
-                judgementReceivedInThinkingPos();
-
-            }
-
-        }, wordDelay * 2 )
-
-    }
-
-}
-
-function addThoughtBubble( no ) {
-
-    //if ( conversationVariables.awaitingJudgement === false ) {
-    
-        //removeThoughtBubbles();
-        //judgementReceivedInThinkingPos();
-
-    //} else {
-
-    recTimes.thoughtBubblesAdded = Date.now() / 1000;
-    if ( no === 0 ) {
-
-        $('#thoughtBubble0').fadeIn( 250 );
-
-    } else if ( no === 1 ) {
-
-        $('#thoughtBubble1').fadeIn( 250 );
-        $('#thoughtBubble0').fadeOut( 250 );
-        
-    } else if ( no === 2 ) {
-
-        $('#thoughtBubble1').fadeOut( 250 );
-        $('#thoughtBubble2').fadeIn( 250 );
-        
-    } else if ( no === 3 ) {
-
-        $('#thoughtBubble2').fadeOut( 1000 );
-        $('#thoughtBubble3').fadeIn( 1000 );
-        $('#thinkingWords0').text( '' )
-        $('#thinkingWords1').text( '' )
-        $('#thinkingWordsCont').css('display', 'flex'); 
-        synthesisObject.wordList = synthesisObject.finalTextInBox.split(" ");
-        conversationVariables.showThoughtBubble = true;
-     
-        //if ( conversationVariables.awaitingJudgement ) {
-
-        setTimeout( function() {
-            
-            showTiaThinkingOverWords();
-
-        }, 1500 );
-
-        //} else {
-
-            //judgementReceivedInThinkingPos();
-
-        //}
-
-    }
-
-    setTimeout( function() {
-
-        if ( no < 4 ) {
-
-            addThoughtBubble( no + 1 );
-
-        } else {
-
-            thinkingEyes();
-
-        }
-
-    }, tiaTimings.thoughtBubbleAddDelay )
-
-    //}
-
-}
-
-function removeThoughtBubbles() {
-
-    $('.thought-bubbles').fadeOut( tiaTimings.removeThoughtBubble );
-    $('#thinkingWordsCont').css('display', 'none'); 
-
-}
-
-function addThoughtBubbles() {
-
-    //expressionController( expressionObject.abs.thinking, '1.5', false );
-
-
-    //conversationVariables.goingToThinking = false;
-    //tiaThinkingObject.thinking = true;
-
-    addThoughtBubble( 0 );
-
-    //whenAllMovFinished( firstCheckAfterThinking );
-
-}
-
 function judgementReceivedInThinkingPos() {
 
     recTimes.judgementReceivedInThinkingPos = Date.now() / 1000;
     tiaThinkingObject.thinking = false;
-    removeThoughtBubbles();
+    removeThoughtBubbleDurations();
     
     setTimeout( function() {
 
         if ( conversationVariables.last_sent.judgement === "I" ) {
 
-            expressionController( calculatedExpression, tiaTimings.changeExpression );
+            expressionController( calculatedExpression, tiaTimings.changeExpressionDuration );
             runAfterJudgement();
 
         } else {
 
-            returnFromThinking();
+            returnFromThinkingDuration();
 
         }
 
-    }, tiaTimings.removeThoughtBubble );
+    }, tiaTimings.removeThoughtBubbleDuration );
 
 }
 
@@ -494,29 +322,29 @@ function thinkingEyes() {
 
     //} else {
 
-        //expressionController( calculatedExpression, tiaTimings.changeExpression );
+        //expressionController( calculatedExpression, tiaTimings.changeExpressionDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDuration );
     
         //setTimeout( function() {
             
             //runAfterJudgement();
 
-        //}, tiaTimings.changeExpression * 750 ) // want nod/move to confused to happen before expression change ends
+        //}, tiaTimings.changeExpressionDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDurationDuration * 750 ) // want nod/move to confused to happen before expression change ends
 
     //}
 
 //}
 
-function returnFromThinking() {
+function returnFromThinkingDuration() {
 
-    expressionController( calculatedExpression, tiaTimings.changeExpression );
+    expressionController( calculatedExpression, tiaTimings.changeExpressionDuration );
 
     setTimeout( function() {
 
-        movementController( movementObject.abs.blank, tiaTimings.returnFromThinking / 2, tiaTimings.returnFromThinking );
+        movementController( movementObject.abs.blank, tiaTimings.returnFromThinkingDuration / 2, tiaTimings.returnFromThinkingDuration );
 
-        setTimeout( runAfterJudgement, tiaTimings.returnFromThinking * 750 ); // want nod to happen before movement back ends
+        setTimeout( runAfterJudgement, tiaTimings.returnFromThinkingDuration * 750 ); // want nod to happen before movement back ends
     
-    }, tiaTimings.changeExpression * 250 );
+    }, tiaTimings.changeExpressionDuration );
 
 } 
 

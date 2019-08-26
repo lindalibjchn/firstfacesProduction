@@ -6,10 +6,11 @@ from .forms import UserForm, SignUpForm, SignUpUserForm
 from django.contrib.auth.password_validation import validate_password
 from django.http import JsonResponse
 from .utils import *
+from .utils.sentence import *
 from .speech_to_text_utils import *
 from django.utils import timezone
 import json
-from .models import Conversation, TempSentence, AudioFile, Profile, NewsArticle, PostTalkTiming, AudioError, AudioErrorAttempt, AudioErrorCorrectionAttempt
+from .models import Conversation, TempSentence, PermSentence, AudioFile, Profile, NewsArticle, PostTalkTiming, AudioError, AudioErrorAttempt, AudioErrorCorrectionAttempt
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 import code
@@ -1033,20 +1034,11 @@ def tts(request):
 
 def store_sent(request):
 
-    time_now = timezone.now();
-
-    sentence_text = request.POST['sent']
-
-    # change string to padded list
-    sentence_list = [' ']
-    for w in sentence_text.split():
-        sentence_list.append(w)
-        sentence_list.append(' ')
-    sentence_list = json.dumps(sentence_list)
-
-    # q = json.loads(request.POST['isItQ'])
     #code.interact(local=locals());
-    # print('q:', type(q))
+
+    time_now = timezone.now();
+    sentence_text = request.POST['sent']
+    sentence_list = pos_tag_sentence(sentence_text)
 
     # get session
     blob_no_text = json.loads(request.POST['blob_no_text'])
@@ -1080,6 +1072,7 @@ def store_sent(request):
     response_data = {
 
         'sent_id': s.id,
+        'sentenceList': sentence_list,
 
     }
 

@@ -77,7 +77,8 @@ function createSingleExpression( exp, mult ) {
     }
 
     let calcExp = $.extend(true, {}, exp);
-    let talkCalcExp = $.extend(true, {}, exp);
+    let halfCalcExp = $.extend(true, {}, exp);
+    let quartCalcExp = $.extend(true, {}, exp);
 
     Object.keys( exp.AUs ).forEach( function( AU ) {
 
@@ -90,10 +91,12 @@ function createSingleExpression( exp, mult ) {
                 for ( var k=0; k < 3; k++ ) {
 
                     let movementAmount = expThisBone[ j ][ k ] * mult;
-                    let talkAmount = 0.5 * expThisBone[ j ][ k ] * mult
+                    let halfAmount = 0.5 * expThisBone[ j ][ k ] * mult;
+                    let quartAmount = 0.25 * expThisBone[ j ][ k ] * mult;
 
                     calcExp.AUs[ AU ][ bone ][ j ][ k ] = movementAmount;
-                    talkCalcExp.AUs[ AU ][ bone ][ j ][ k ] = talkAmount;
+                    halfCalcExp.AUs[ AU ][ bone ][ j ][ k ] = halfAmount;
+                    quartCalcExp.AUs[ AU ][ bone ][ j ][ k ] = quartAmount;
 
                 }
 
@@ -105,9 +108,12 @@ function createSingleExpression( exp, mult ) {
 
     let eyelidMovementAmount = exp.eyelids * mult;
     calcExp.eyelids = eyelidMovementAmount;
-    talkCalcExp.eyelids = 0.5 * eyelidMovementAmount;
+    halfCalcExp.eyelids = 0.5 * eyelidMovementAmount;
+    quartCalcExp.eyelids = 0.25 * eyelidMovementAmount;
 
-    return [ calcExp, talkCalcExp ];
+    expressionObject.calculated = getAbsoluteCoordsOfExpressionTo( calcExp ); 
+    expressionObject.half = getAbsoluteCoordsOfExpressionTo( halfCalcExp );
+    expressionObject.quarter = getAbsoluteCoordsOfExpressionTo( quartCalcExp );
 
 }
 
@@ -122,7 +128,8 @@ var sectors = [
 function createCalculatedExpression( twoExpressions, ratio, mult, surp ){
 
     calcExp = $.extend(true, {}, expressionObject.rel.blank );
-    calcTalkExp = $.extend(true, {}, expressionObject.rel.blank );
+    halfCalcExp = $.extend(true, {}, expressionObject.rel.blank );
+    quartCalcExp = $.extend(true, {}, expressionObject.rel.blank );
 
     let zeroMovement = [[0,0,0],[0,0,0]];
 
@@ -151,18 +158,21 @@ function createCalculatedExpression( twoExpressions, ratio, mult, surp ){
             } else {
 
                 calcExp.AUs[ AU ][ bone ] = [[],[]];
-                calcTalkExp.AUs[ AU ][ bone ] = [[],[]];
+                halfCalcExp.AUs[ AU ][ bone ] = [[],[]];
+                quartCalcExp.AUs[ AU ][ bone ] = [[],[]];
 
                 for ( var j=0; j < 2; j++ ) {
 
                     for ( var k=0; k < 3; k++ ) {
 
                         let movementAmount = expression01ThisBone[ j ][ k ] * expression01Amount + expression02ThisBone[ j ][ k ] * expression02Amount + surpriseExpressionThisBone[ j ][ k ] * surp;
-                        let talkAmount = 0.5 * expression01ThisBone[ j ][ k ] * expression01Amount + 0.5 * expression02ThisBone[ j ][ k ] * expression02Amount + surpriseExpressionThisBone[ j ][ k ] * 0.05; // small surprise to open mouth a wee bit
+                        let halfAmount = 0.5 * expression01ThisBone[ j ][ k ] * expression01Amount + 0.5 * expression02ThisBone[ j ][ k ] * expression02Amount + 0.5 * surpriseExpressionThisBone[ j ][ k ]// * 0.05; // small surprise to open mouth a wee bit
+                        let quartAmount = 0.25 * expression01ThisBone[ j ][ k ] * expression01Amount + 0.25 * expression02ThisBone[ j ][ k ] * expression02Amount + 0.25 * surpriseExpressionThisBone[ j ][ k ]// * 0.05; // small surprise to open mouth a wee bit
 
                         calcExp.AUs[ AU ][ bone ][ j ][ k ] = movementAmount;
-                        calcTalkExp.AUs[ AU ][ bone ][ j ][ k ] = talkAmount;
-                        //only for talk
+                        halfCalcExp.AUs[ AU ][ bone ][ j ][ k ] = halfAmount;
+                        quartCalcExp.AUs[ AU ][ bone ][ j ][ k ] = quartAmount;
+                        //only for half
                         //negativeCalculatedExpression.AUs[ AU ][ bone ][ j ][ k ] = -movementAmount;
 
                     }
@@ -177,13 +187,16 @@ function createCalculatedExpression( twoExpressions, ratio, mult, surp ){
 
     let eyelidMovementAmount = expression01.eyelids * expression01Amount + expression02.eyelids * expression02Amount + expressionObject.abs.surprise.eyelids * surp
     calcExp.eyelids = eyelidMovementAmount;
-    calcTalkExp.eyelids = 0.5 * expression01.eyelids * expression01Amount + 0.5 * expression02.eyelids * expression02Amount;
+    halfCalcExp.eyelids = 0.5 * eyelidMovementAmount;
+    quartCalcExp.eyelids = 0.25 * eyelidMovementAmount;
 
-    return [ calcExp, calcTalkExp ];
+    expressionObject.calculated = getAbsoluteCoordsOfExpressionTo( calcExp ); 
+    expressionObject.half = getAbsoluteCoordsOfExpressionTo( halfCalcExp );
+    expressionObject.quarter = getAbsoluteCoordsOfExpressionTo( halfCalcExp );
 
 }
 
-function changeExpression() {
+function changeExpressionDuration() {
 
     synthesisObject.pitch = 0;
     synthesisObject.speaking_rate = 0.7;
@@ -194,37 +207,20 @@ function changeExpression() {
     // check if emotion is in centre of circle - if so there is no change
     let dia = Math.sqrt( emotionCoords[0]**2 + emotionCoords[1]**2 )
 
-    if ( dia >= 0.2 ) {
+    let sectorNRatio = getTwoExpressions( emotionCoords );
+    let exp01 = sectors[ sectorNRatio[ 0 ] ][ 0 ];
+    let exp02 = sectors[ sectorNRatio[ 0 ] ][ 1 ];
+    let pitch01 = exp01.pitch;
+    let pitch02 = exp02.pitch;
+    let speech_rate01 = exp01.speaking_rate;
+    let speech_rate02 = exp02.speaking_rate;
+    let ratio = sectorNRatio[ 1 ];
 
-        let sectorNRatio = getTwoExpressions( emotionCoords );
-        let exp01 = sectors[ sectorNRatio[ 0 ] ][ 0 ];
-        let exp02 = sectors[ sectorNRatio[ 0 ] ][ 1 ];
-        let pitch01 = exp01.pitch;
-        let pitch02 = exp02.pitch;
-        let speech_rate01 = exp01.speaking_rate;
-        let speech_rate02 = exp02.speaking_rate;
+    synthesisObject.pitch += dia * ( ( 1 - ratio ) * pitch02 + ratio * pitch01 ) + surprise;
+    synthesisObject.speaking_rate += dia * ( ( 1 - ratio ) * speech_rate02 + ratio * speech_rate01 ) + surprise / 10;
 
-        console.log('dia');
-
-        let ratio = sectorNRatio[ 1 ];
-
-        synthesisObject.pitch += dia * ( ( 1 - ratio ) * pitch02 + ratio * pitch01 ) + surprise;
-        synthesisObject.speaking_rate += dia * ( ( 1 - ratio ) * speech_rate02 + ratio * speech_rate01 ) + surprise / 10;
-
-        //arguments are [happyExpression, contentExpression], ratio of 1st to 2nd, diameter/amount, surprise amount
-        let calculatedExpressions = createCalculatedExpression( sectors[ sectorNRatio[ 0 ] ], ratio,  dia, surprise );
-        console.log('calculatedExpressions:', calculatedExpressions);
-        //need to get absolute vals
-        calculatedExpression = getAbsoluteCoordsOfExpressionTo( calculatedExpressions[ 0 ] )
-        calculatedTalkExpression = getAbsoluteCoordsOfExpressionTo( calculatedExpressions[ 1 ] )
-
-    } else {
-
-        let singleCalculatedExpressions = createSingleExpression( expressionObject.rel.blank, 1 )
-        calculatedExpression = getAbsoluteCoordsOfExpressionTo( singleCalculatedExpressions[ 0 ] )
-        calculatedTalkExpression = getAbsoluteCoordsOfExpressionTo( singleCalculatedExpressions[ 1 ] )
-
-    }
+    //arguments are [happyExpression, contentExpression], ratio of 1st to 2nd, diameter/amount, surprise amount
+    createCalculatedExpression( sectors[ sectorNRatio[ 0 ] ], ratio,  dia, surprise );
 
 }
 

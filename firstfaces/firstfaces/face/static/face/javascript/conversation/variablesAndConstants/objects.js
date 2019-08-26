@@ -254,6 +254,7 @@ var synthesisObject = {
     //text: "",
     audio: null, // dom element added in <load_scene/main.js>
     sentenceNo: 0, //if multiple sentences it will start at first, iterates in <tiaSpeech.js>
+    talking: false,
     pitch: 0,
     durationOfFirstAndLastPhones: 0.75,
     speaking_rate: 0.70,
@@ -337,7 +338,7 @@ var synthesisObject = {
         'moreThanThree': {
 
             URLs: [ prefixURL + tiaMediaLoc + "more_than_three_errors_00.wav", prefixURL + tiaMediaLoc + "more_than_three_errors_01.wav" ],
-            texts: [ "There are more than 3 errors in your sentence", "Simplify and try again" ],
+            texts: [ "There are more than 3 errors in your sentence", "Simplify and then try again" ],
             phones: [
                 ['th','e','r', 'e','r',  'b','e','r',  'th','e','t',  'th','r','i',  'e','r','e','r','s',  'e','t',  'e','u','r',  's','e','t','t','e','t','s'],
                 ['s','e','b','b','l','e','f','e',  'e','t','t',  't','r','e',  'e','k','e','t']

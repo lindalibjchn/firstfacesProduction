@@ -26,12 +26,38 @@
 
 }
 
+/*CLASSES FOR CHANGING TEXT DEPENDING ON POS TAG*/
+
+.pos-det {
+
+    color: blue;
+    /*font-weight: bold;*/
+    font-style: none;
+    text-decoration: underline;
+
+}
+
+.pos-verb {
+
+    color: green;
+    /*font-weight: bold;*/
+    font-style: italic;
+    text-decoration: underline;
+
+}
+
+/*.pos-prep {*/
+
+    /*color: orange;*/
+
+/*}*/
+
 #thinkingWordsCont {
 
     display: none;
     font-family: Georgia;
     font-size: 1.2em;
-    font-style: italic;
+    /*font-style: italic;*/
     text-align: center;
     height: 100%;
     width: 100%;
