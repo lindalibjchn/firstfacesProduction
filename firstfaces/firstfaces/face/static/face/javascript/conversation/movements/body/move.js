@@ -7,7 +7,7 @@ function movementController( movementTo, saccDur, bodyDur, moveCb=function(){} )
 
         setTimeout( function() {
 
-            movementController( movementTo, saccDur, bodyDur );
+            movementController( movementTo, saccDur, bodyDur, moveCb=moveCb );
             //console.log( 'tried to move while blinking so retry in 200ms' );
 
         }, 200 );

@@ -96,56 +96,7 @@ function sendBlobToServer( blob_to_send ) {
             conversationVariables.alternatives = json.alternatives;
             conversationVariables.currentAudID = json.audio_pk;
             conversationVariables.preSent = conversationVariables.alternatives[ 0 ][ 'transcript' ]
-
-            // if first interference, then want the flinch not to be interfered with by the return motions
-            if ( conversationVariables.interference_count === 1 && conversationVariables.interference ) {
-
-                console.log('no return');
-
-            } else {
-
-                console.log('return');
-                returnFromListenToSpeechSynthesis();
-
-            }
-
-            // dont want to send sentence while doing tutorial
-            if ( conversationVariables.tutorial ) {
-
-                if (conversationVariables.tutorialStep === 5 ) {
-
-                    $('#recordVoiceBtn').prop( 'disabled', true );
-                    $('#talkBtn').prop( 'disabled', true );
-
-                    setTimeout( greeting06, 2000 );
-
-                } else if (conversationVariables.tutorialStep === 7 ) {
-
-                    $('#recordVoiceBtn').prop( 'disabled', true );
-                    $('#talkBtn').prop( 'disabled', true );
-
-                    setTimeout( greeting08, 2000 );
-
-                } else if (conversationVariables.tutorialStep === 14 ) {
-
-                    conversationVariables.tutorialStep = 3;
-                    $('#recordVoiceBtn').prop( 'disabled', true );
-                    $('#talkBtn').prop( 'disabled', true );
-
-                    setTimeout( greeting15, 2000 );
-
-                } else if (conversationVariables.tutorialStep === 15 ) {
-
-                    conversationVariables.tutorialStep = 4;
-                    $('#recordVoiceBtn').prop( 'disabled', true );
-                    $('#talkBtn').prop( 'disabled', true );
-
-                    setTimeout( greeting1601, 2000 );
-
-                }
-
-            }
-
+            returnFromListenToSpeechSynthesis();
         },
         error: function() {
             console.log("that's wrong");
@@ -241,21 +192,6 @@ function sendSentToServer() {
         // set this to false until judgement comes in where it will be changed to true
         conversationVariables.awaitingJudgement = true;
 
-        // if wh-question and if allowed. If not allowed, raise alert 
-        //isItQ = checkIfSentIsQuestion( sent );
-        //let allowed = true;
-        //if ( isItQ ) {
-
-            //if ( calculateQuestionStreak() !== 3 ) {
-               
-                //allowed = false;
-            
-            //}
-
-        //}
-
-        //if ( allowed ) { 
-
         if ( sent.length > 2 ) {
             
             // fade out text box
@@ -280,6 +216,7 @@ function sendSentToServer() {
                     console.log('sentence successfully sent to server');
                     //console.log('json.sent_id:', json.sent_id);
                     checkJudgement( json.sent_id );
+                    conversationVariables.sentenceList = JSON.parse( json.sentenceList );
 
                 },
                 error: function() {

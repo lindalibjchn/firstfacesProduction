@@ -1,32 +1,37 @@
 tiaTimings = {
 
+    // FLINCH
     flinchDuration: 0.5,
     delayAfterFlinch: 1500,
-    delayAfterClickPlayUntilCameraMovesUp: 0,
-    cameraMoveUpDuration: 2.0,
-    tiaLeanDuration: 1,
-    delayUntilSpeakWords: 500,
-    delayAfterStudentSpeech: 500,
-    delayBeforeGoingToThinkingPos: 1000,
+
+    // LEANING TO LISTEN
+    leanToListenToSpeechSynthesisDuration: 1,
+
+    // THINK POSITION
     toThinkDuration: 1.5,
+    returnFromThinkingDuration: 1,
+
+    // THOUGHT BUBBLE
     delayToAddThoughtBubbles: 1500,
-    thoughtBubbleAddDelay: 200,
-    wordFade: 250,
-    returnFromThinking: 1,
-    removeThoughtBubble: 500,
-    changeExpression: 0.75,
-    changeExpressionConfused: 0.75,
-    movementToConfused: 1,
+    thoughtBubbleAddDelay: 300,
+    wordFadeDelay: 300,
+    removeThoughtBubbleDuration: 500,
+    
+    // SPEECH BUBBLE
     speechBubbleFadeInDuration: 500,
-    speechBubbleFadeInDuration: 500,
+    speechTextFadeInDuration: 500,
+    speechBubbleFadeOutDuration: 200,
     speechTextFadeOutDuration: 200,
-    speechTextFadeOutDuration: 200,
+
+    // EXPRESSIONS
+    changeExpressionDuration: 0.75,
+    movementToConfusedDuration: 1,    
     toTalkExpressionDuration: 1,
+    
+    // TALK
     delayUntilToTalkPos: 500,
+    
+    // RETURN
     delayBeforeReturnToLaptop: 1000,
-    delayAfterBubbleShowUntilSpeak: 1000,
-    turnToBoard: 2,
-    cameraTurnToBoard: 2,
-    armIndicate: 1,
 
 }

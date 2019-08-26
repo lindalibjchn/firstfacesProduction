@@ -22,7 +22,6 @@ function buttonsListenNextSentence() {
     $('#topicChoicesCont').hide();
     $('#submitTopicBtnCont').hide();
     $('#optionBtns').hide();
-    $('#listenNextSentenceBtnCont').hide();
 
 }
 
