@@ -11,7 +11,6 @@ function tiaSpeak( tiaSays, cont=true, speakCb=function(){} ) {
     // put this on page load somewhere so not calling it every time
     synthesisObject.now = synthesisObject.data[ tiaSays ];
     synthesisObject.callback = speakCb;
-    showSpeechBubble( synthesisObject.now.texts[ 0 ], tiaTimings.speechBubbleFadeInDuration )
 
     getIntoSpeakingPosition();
 
@@ -19,8 +18,8 @@ function tiaSpeak( tiaSays, cont=true, speakCb=function(){} ) {
 
 function getIntoSpeakingPosition() {
 
-        // move from whatever expression into the half of it
-        expressionController( expressionObject.half, tiaTimings.changeExpressionDuration );
+    // move from whatever expression into the half of it
+    expressionController( expressionObject.half, tiaTimings.changeExpressionDuration, tiaSpeakIndividualSentences );
 
 }
 
@@ -47,7 +46,7 @@ function holdOnUntilNewAudioDurationIsAvailable() {
     } else {
 
         console.log( 'waiting for duration to update' );
-        setTimeout( holdOnUntilNewAudioDurationIsAvailable, 200 );
+        setTimeout( holdOnUntilNewAudioDurationIsAvailable, 100 );
 
     }
 
@@ -56,6 +55,7 @@ function holdOnUntilNewAudioDurationIsAvailable() {
 function animateFirstPhoneSlowly() {
 
     console.log( 'in animateFirstPhoneSlowly' );
+    initSpeakingBreath( 1 );
     expressionController( expressionObject.abs[ synthesisObject.now.phones[ synthesisObject.sentenceNo ][ 0 ] ], synthesisObject.durationOfFirstAndLastPhones, slightlyDelayAudioPlay )
 
 }
@@ -63,6 +63,13 @@ function animateFirstPhoneSlowly() {
 function slightlyDelayAudioPlay() {
 
     console.log( 'in slightlyDelayAudioPlay' );
+
+    if ( synthesisObject.sentenceNo === 0 ) { // only fade in bubble firt time
+
+        showSpeechBubble( synthesisObject.now.texts[ 0 ], tiaTimings.speechBubbleFadeInDuration )
+    
+    }
+
     setTimeout( function() {
         
         synthesisObject.audio.play();
@@ -89,7 +96,7 @@ function animatePhonesInOrder() {
         if ( synthesisObject.sentenceNo === synthesisObject.now.texts.length - 1 ) {
 
              //console.log( 'in endPhoneCount' );
-            expressionController( expressionObject.quarter, tiaTimings.changeExpressionDuration, function() {
+            expressionController( expressionObject.quarter, tiaTimings.changeExpressionDuration * 1.5, function() {
 
                 synthesisObject.callback();
                 synthesisObject.talking = false;

@@ -163,11 +163,20 @@ var blinkObject = {
 }
 
 var breatheObject = {
-    'sin': sineArrays[ secsOneBreath.toString() ],
-    'scaleMult': 0.4 / secsOneBreath,
+    'bool': true,
+    'sin': sineArrays[ secsOneBreath ],
+    'scaleMultX': 1.25 / secsOneBreath,
+    'scaleMultY': 2.5 / secsOneBreath,
+    'scaleMultZ': 10 / secsOneBreath,
     // from experimenting the y position of shoulder is 13 times greater than scale of upperspine
-    'yPosMult': 20 / secsOneBreath,
+    'yPosMult': 40 / secsOneBreath,
     'direction': -1,
+    'normalBreatheStopCount': null, 
+    'normalBreatheStopDirection': null, 
+    'speakingBreath': {
+        'inCount': null,
+        'outCount': 4,
+    }
 };
 
 var spineRandomTiltObject = {
@@ -256,7 +265,7 @@ var synthesisObject = {
     sentenceNo: 0, //if multiple sentences it will start at first, iterates in <tiaSpeech.js>
     talking: false,
     pitch: 0,
-    durationOfFirstAndLastPhones: 0.75,
+    durationOfFirstAndLastPhones: 1,
     speaking_rate: 0.70,
     continuous: true,
     firstClip: false,

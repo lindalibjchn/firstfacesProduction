@@ -87,10 +87,8 @@ function engineRunning() {
     loadSynthURLs(); //loads the phrases Tia may say and creates the format for later prompts to follow
     animate();
     blinkControllerObject.bool = true;
-    expressionObject.calculated = expressionObject.abs.neutral; 
-    expressionObject.half = expressionObject.abs.neutral;
-    expressionObject.quarter = expressionObject.abs.neutral;
-    expressionController( expressionObject.abs.neutral, 0.01 );
+    createSingleExpression(expressionObject.rel.happy, 1)
+    expressionController( expressionObject.calculated, 0.01 );
     movementController( movementObject.abs.blank, 0.01, 0.01)
     enterOrReEnter();
 

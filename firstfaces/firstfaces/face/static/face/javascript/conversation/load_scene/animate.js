@@ -102,18 +102,17 @@ function animate () {
     
 
     // normal breathing
-    let breatheRemaining = mainCount % secsOneBreath;
+    if ( breatheObject.bool ) {
 
-    // change breathing direction
-    if ( breatheRemaining === 0 ) {
+        normalBreathing();
 
-        breatheObject.direction *= -1;
+    // breathing for speech
+    } else {
+
+        speakingBreathing()
 
     }
 
-    breathe( breatheRemaining )
-
-    
     ////normal blinking
     
     if ( blinkControllerObject.bool ) {
