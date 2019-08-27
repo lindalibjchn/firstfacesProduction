@@ -6,7 +6,7 @@ from .forms import UserForm, SignUpForm, SignUpUserForm
 from django.contrib.auth.password_validation import validate_password
 from django.http import JsonResponse
 from .utils import *
-from .utils.sentence import *
+from .helper_utils.sentence_utils import change_sentence_to_list_n_add_data
 from .speech_to_text_utils import *
 from django.utils import timezone
 import json
@@ -1038,7 +1038,9 @@ def store_sent(request):
 
     time_now = timezone.now();
     sentence_text = request.POST['sent']
-    sentence_list = pos_tag_sentence(sentence_text)
+    sentence_data = change_sentence_to_list_n_add_data(sentence_text) #[[['a', 'DT', ['e']], ['boy', 'NNS', ['b', 'e', 'i']],...
+    sentence_list = json.dumps([s[:2] for s in sentence_data]) # removes visemes cause don't need to store these in db
+
 
     # get session
     blob_no_text = json.loads(request.POST['blob_no_text'])
@@ -1072,7 +1074,7 @@ def store_sent(request):
     response_data = {
 
         'sent_id': s.id,
-        'sentenceList': sentence_list,
+        'sentenceData': sentence_data,
 
     }
 
