@@ -63,12 +63,12 @@ function showTiaThinkingOverWords() {
 
             $('#thinkingWords0').hide();
             $('#thinkingWords1').hide();
-            $('#thinkingWords0').text( conversationVariables.sentenceList[ wordThinkingCount ][ 0 ] );
+            $('#thinkingWords0').text( conversationVariables.sentenceData[ wordThinkingCount ][ 0 ] );
             $('#thinkingWords0').fadeIn( tiaTimings.wordFadeDelay );
 
         } else {
 
-            $('#thinkingWords0').text( conversationVariables.sentenceList[ wordThinkingCount ][ 0 ] );
+            $('#thinkingWords0').text( conversationVariables.sentenceData[ wordThinkingCount ][ 0 ] );
 
             $('#thinkingWords1').fadeOut( tiaTimings.wordFadeDelay, removeClasses );
             
@@ -80,11 +80,11 @@ function showTiaThinkingOverWords() {
 
         }
         
-        colorNounVerbPrep( $('#thinkingWords0'), conversationVariables.sentenceList[ wordThinkingCount ][ 1 ] );
+        colorNounVerbPrep( $('#thinkingWords0'), conversationVariables.sentenceData[ wordThinkingCount ][ 1 ] );
 
     } else {
 
-        $('#thinkingWords1').text( conversationVariables.sentenceList[ wordThinkingCount ][ 0 ] );
+        $('#thinkingWords1').text( conversationVariables.sentenceData[ wordThinkingCount ][ 0 ] );
 
         $('#thinkingWords0').fadeOut( tiaTimings.wordFadeDelay, removeClasses );
         setTimeout( function() {
@@ -93,15 +93,15 @@ function showTiaThinkingOverWords() {
 
         }, 50 );
 
-        colorNounVerbPrep( $('#thinkingWords1'), conversationVariables.sentenceList[ wordThinkingCount ][ 1 ] );
+        colorNounVerbPrep( $('#thinkingWords1'), conversationVariables.sentenceData[ wordThinkingCount ][ 1 ] );
 
     }
 
-    let wordLength = conversationVariables.sentenceList[ wordThinkingCount ][ 0 ].length
+    let wordLength = conversationVariables.sentenceData[ wordThinkingCount ][ 0 ].length
     let wordDelay = tiaTimings.wordFadeDelay + wordLength * tiaTimings.wordFadeDelay / 2;
     wordThinkingCount += 1;
 
-    if ( wordThinkingCount < conversationVariables.sentenceList.length ) {
+    if ( wordThinkingCount < conversationVariables.sentenceData.length ) {
         
         setTimeout( showTiaThinkingOverWords, wordDelay );
 

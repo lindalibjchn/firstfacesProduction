@@ -216,7 +216,7 @@ function sendSentToServer() {
                     console.log('sentence successfully sent to server');
                     //console.log('json.sent_id:', json.sent_id);
                     checkJudgement( json.sent_id );
-                    conversationVariables.sentenceList = JSON.parse( json.sentenceList );
+                    conversationVariables.sentenceData = json.sentenceData;
 
                 },
                 error: function() {
