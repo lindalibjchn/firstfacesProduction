@@ -109,7 +109,7 @@ function animate () {
     // breathing for speech
     } else {
 
-        speakingBreathing()
+        singleBreathing()
 
     }
 

@@ -170,12 +170,14 @@ var breatheObject = {
     'scaleMultZ': 10 / secsOneBreath,
     // from experimenting the y position of shoulder is 13 times greater than scale of upperspine
     'yPosMult': 40 / secsOneBreath,
+    'yPosHeadMult': 10 / secsOneBreath,
     'direction': -1,
     'normalBreatheStopCount': null, 
     'normalBreatheStopDirection': null, 
-    'speakingBreath': {
-        'inCount': null,
-        'outCount': 4,
+    'speakingBreathMult': 1.75,
+    'singleBreath': {
+        'startCount': null,
+        'endCount': null,
     }
 };
 
