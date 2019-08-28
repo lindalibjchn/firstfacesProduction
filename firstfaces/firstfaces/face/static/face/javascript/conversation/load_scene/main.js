@@ -35,6 +35,8 @@ function enterOrReEnter() {
 
         synthesisObject.gotNewDuration = true;
 
+        breatheObject.singleBreath.outCount = synthesisObject.audio.duration
+
     }
 
 

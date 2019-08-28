@@ -37,7 +37,6 @@ function holdOnUntilNewAudioDurationIsAvailable() {
     // this should upload automatically from 'ondurationchange' in <load_scene/main.js>, but it sometimes takes a while... so need to do this before carrying on with next step
     if ( synthesisObject.gotNewDuration ) {
 
-        console.log( 'duration updated' );
         synthesisObject.gotNewDuration = false;
 
         animateFirstPhoneSlowly();
@@ -45,7 +44,6 @@ function holdOnUntilNewAudioDurationIsAvailable() {
 
     } else {
 
-        console.log( 'waiting for duration to update' );
         setTimeout( holdOnUntilNewAudioDurationIsAvailable, 100 );
 
     }
@@ -54,15 +52,12 @@ function holdOnUntilNewAudioDurationIsAvailable() {
 
 function animateFirstPhoneSlowly() {
 
-    console.log( 'in animateFirstPhoneSlowly' );
-    initSpeakingBreath( 1 );
     expressionController( expressionObject.abs[ synthesisObject.now.phones[ synthesisObject.sentenceNo ][ 0 ] ], synthesisObject.durationOfFirstAndLastPhones, slightlyDelayAudioPlay )
+    initSingleBreath( 1, breatheObject.speakingBreathMult, synthesisObject.durationOfFirstAndLastPhones );
 
 }
 
 function slightlyDelayAudioPlay() {
-
-    console.log( 'in slightlyDelayAudioPlay' );
 
     if ( synthesisObject.sentenceNo === 0 ) { // only fade in bubble firt time
 
@@ -76,16 +71,15 @@ function slightlyDelayAudioPlay() {
 
     }, 100 );
 
+    initSingleBreath( -1, breatheObject.speakingBreathMult, synthesisObject.audio.duration );
     animatePhonesInOrder();
 
 }
 
 function animatePhonesInOrder() {
 
-    if ( synthesisObject.now.phoneCount === 1 ) {console.log( 'in animatePhonesInOrder' );}
     if ( synthesisObject.now.phoneCount < synthesisObject.now.noOfPhones ) {
 
-        //console.log( 'in startingPronunciationController' );
         pronunciationController( expressionObject.abs[ synthesisObject.now.phones[ synthesisObject.sentenceNo ][ synthesisObject.now.phoneCount ] ], animatePhonesInOrder )
         synthesisObject.now.phoneCount += 1;
 
