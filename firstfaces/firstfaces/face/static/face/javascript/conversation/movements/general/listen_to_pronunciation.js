@@ -2,15 +2,15 @@ function listenToSpeechSynthesis( intensity ) {
 
     if ( intensity === 0 ) {
 
-        movementController( movementObject.abs.speechRecognitionInput01, 0.5, 0.5 )
+        movementController( movementObject.abs.listenToSpeechNormal, 0.5, 0.5 )
 
     } else if ( intensity === 1 ) {
 
-        movementController( movementObject.abs.speechRecognitionInput02, 0.75, 0.75 )
+        movementController( movementObject.abs.listenToSpeechNormal, 0.75, 0.75 )
 
     } else {
 
-        movementController( movementObject.abs.speechRecognitionInput03, 1, 1 )
+        movementController( movementObject.abs.listenToSpeechIntent, 1, 1 )
 
     }
 

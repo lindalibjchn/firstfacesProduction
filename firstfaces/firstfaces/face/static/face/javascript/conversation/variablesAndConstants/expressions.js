@@ -347,9 +347,46 @@ var expressionObject = {
 
         },
 
-        'thinking': {
+        'thinkingNeutral': {
+            'name': 'thinkingNeutral',
+            'changeVoice': true,
+            'pitch': 0,
+            'speaking_rate': 0,
+            'AUs': {
+                'AU1': {
+                    'nose': [[0, 0, 0], [0, 0, 0]],
+                    'jaw': [[0, 0, 0], [0, 0, 0]],
+                },
+                'AU1m': {
+                    'jaw_inner': [[0, 0, 0], [-0.02, 0, 0]],
+                    'tongue_root': [[0, 0, 0], [0, 0, 0]],
+                    'tounge_tip': [[0, 0.3, 0.8], [0, 0, 0]],
+                },
+                'AU2': {
+                    'eyebrow_inner': [[0, 0, 0], [0, 0, 0]],
+                    'eyebrow_middle': [[0, 0, 0], [0, 0, 0]],
+                    'eyebrow_outer': [[0, 0, 0], [0, 0, 0]],
+                    'nose_side': [[0, 0, 0], [0, 0, 0]],
+                    'cheek': [[0, 0, 0], [0, 0, 0]],
+                },
+                'AU2t': {    
+                    'jaw_upper': [[0, 0, 0], [0, 0, 0]],
+                    'pal_ja_jooreum': [[0, 0, 0], [0, 0, 0]],
+                    'philtrum': [[0, 0, 0], [0, 0, 0]],
+                    'lip_upper_inner': [[0.04, 0.05, -0.08], [0.08, 0, 0]],
+                    'lip_upper_outer': [[0.06, 0.05, -0.04], [0.08, 0, 0]],
+                    'lip_edge_upper': [[0.08, 0.06, -0.08], [0, 0, -0.1]],
+                    'lip_edge_lower': [[0.08, 0.06, -0.08], [0, 0, -0.13]],
+                    'lip_lower_outer': [[0.06, 0.04, -0.08], [0, 0, 0]],
+                    'lip_lower_inner': [[0.04, 0.05, -0.04], [0, 0, 0]],
+                },
+            },
+            'eyelids': -0.05,
+        },
 
-            'name': 'thinking',
+        'thinkingHard': {
+
+            'name': 'thinkingHard',
             'changeVoice': false,
             'AUs': {
                 'AU1': {

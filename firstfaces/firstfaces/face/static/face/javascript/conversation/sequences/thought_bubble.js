@@ -1,172 +1,234 @@
-function addThoughtBubbles() {
+function initAddThoughtBubbles() {
 
-    addThoughtBubble( 0 );
+    thoughtBubbleObject.loop = 0;
+    addThoughtBubbles( 0, '#thoughtBubbleWhite', tiaTimings.thoughtBubbleAddDelay, tiaTimings.lastThoughtBubbleAddDelay, function() {
 
+        initCycleThroughWords();
+        initThinkingEyes();
+
+    });
+        
 }
 
-function addThoughtBubble( no ) {
+function addThoughtBubbles( no, imgId, delay, lastDelay, cb ) {
 
     recTimes.thoughtBubblesAdded = Date.now() / 1000;
 
-    if ( no === 0 ) {
+    if ( no < 3 ) {
 
-        $('#thoughtBubble0').fadeIn( tiaTimings.thoughtBubbleAddDelay );
+        $( imgId + no.toString() ).fadeIn( delay, function(){ addThoughtBubbles( no + 1, imgId, delay, lastDelay, cb ) } );
 
-    } else if ( no === 1 ) {
+    } else {
 
-        $('#thoughtBubble1').fadeIn( tiaTimings.thoughtBubbleAddDelay );
-        $('#thoughtBubble0').fadeOut( tiaTimings.thoughtBubbleAddDelay );
-        
-    } else if ( no === 2 ) {
-
-        $('#thoughtBubble1').fadeOut( tiaTimings.thoughtBubbleAddDelay );
-        $('#thoughtBubble2').fadeIn( tiaTimings.thoughtBubbleAddDelay );
-        
-    } else if ( no === 3 ) {
-
-        $('#thoughtBubble2').fadeOut( 1000 );
-        $('#thoughtBubble3').fadeIn( 1000 );
-        $('#thinkingWords0').text( '' )
-        $('#thinkingWords1').text( '' )
-        $('#thinkingWordsCont').css('display', 'flex'); 
-
-        setTimeout( function() {
-            
-            showTiaThinkingOverWords();
-
-        }, 1500 );
+        $( imgId + '3').fadeIn( lastDelay, cb );
 
     }
-
-    setTimeout( function() {
-
-        if ( no < 4 ) {
-
-            addThoughtBubble( no + 1 );
-
-        } else {
-
-            thinkingEyes();
-
-        }
-
-    }, tiaTimings.thoughtBubbleAddDelay )
 
 }
 
-var wordThinkingCount = 0;
-function showTiaThinkingOverWords() {
+function removeColourThoughtBubbles( dur ) {
 
-    if ( wordThinkingCount % 2 === 0 ) {
+    let colors = ['blue', 'orange', 'pink'];
 
-        if (wordThinkingCount === 0 ) {
+    colors.forEach( function( c ) {
 
-            $('#thinkingWords0').hide();
-            $('#thinkingWords1').hide();
-            $('#thinkingWords0').text( conversationVariables.sentenceData[ wordThinkingCount ][ 0 ] );
-            $('#thinkingWords0').fadeIn( tiaTimings.wordFadeDelay );
+        $( '.thought-bubble-' + c ).fadeOut( dur )
+           
+    } );
 
-        } else {
+}
 
-            $('#thinkingWords0').text( conversationVariables.sentenceData[ wordThinkingCount ][ 0 ] );
+function initCycleThroughWords() {
 
-            $('#thinkingWords1').fadeOut( tiaTimings.wordFadeDelay, removeClasses );
-            
-            setTimeout( function() {
+    thoughtBubbleObject.wordThinkingCount = 0;
+    cycleThroughWords();
 
-                $('#thinkingWords0').fadeIn( tiaTimings.wordFadeDelay );
+}
 
-            }, 50 );
+function cycleThroughWords() {
 
-        }
-        
-        colorNounVerbPrep( $('#thinkingWords0'), conversationVariables.sentenceData[ wordThinkingCount ][ 1 ] );
+    wordShowDuration();
+    
+}
+
+function wordShowDuration() {
+
+    let wordData = conversationVariables.last_sent.sentence[ thoughtBubbleObject.wordThinkingCount ]
+    let wordLength = wordData[ 0 ].length
+    let wordDur = tiaTimings.charDur + wordLength * tiaTimings.charDur / 2;
+
+    thoughtBubbleObject.wordShowDuration = wordDur;
+    showNextWord();
+
+}
+    
+function showNextWord() {
+
+    // 2 divs, one fades out and one fades in then vice versa
+    determineToBeShownNHidden();
+
+    if ( thoughtBubbleObject.wordThinkingCount === 0 ) {
+
+        showFirstWord();
 
     } else {
 
-        $('#thinkingWords1').text( conversationVariables.sentenceData[ wordThinkingCount ][ 0 ] );
+        showFurtherWords();
+    }
+    
+}
 
-        $('#thinkingWords0').fadeOut( tiaTimings.wordFadeDelay, removeClasses );
-        setTimeout( function() {
+function determineToBeShownNHidden() {
 
-            $('#thinkingWords1').fadeIn( tiaTimings.wordFadeDelay );
+    if ( thoughtBubbleObject.wordThinkingCount % 2 !== 0 ) {
 
-        }, 50 );
+        thoughtBubbleObject.toBeShownDiv = '#thinkingWords1';
+        thoughtBubbleObject.toBeHiddenDiv = '#thinkingWords0';
 
-        colorNounVerbPrep( $('#thinkingWords1'), conversationVariables.sentenceData[ wordThinkingCount ][ 1 ] );
+    } else {
 
+        thoughtBubbleObject.toBeShownDiv = '#thinkingWords0';
+        thoughtBubbleObject.toBeHiddenDiv = '#thinkingWords1';
+   
     }
 
-    let wordLength = conversationVariables.sentenceData[ wordThinkingCount ][ 0 ].length
-    let wordDelay = tiaTimings.wordFadeDelay + wordLength * tiaTimings.wordFadeDelay / 2;
-    wordThinkingCount += 1;
+}
 
-    if ( wordThinkingCount < conversationVariables.sentenceData.length ) {
+function showFirstWord() {
+
+    removeColourThoughtBubbles( tiaTimings.removeColourThoughtBubbleDuration );
+    $( thoughtBubbleObject.toBeShownDiv ).hide();
+    $( thoughtBubbleObject.toBeHiddenDiv ).hide();
+    $( thoughtBubbleObject.toBeShownDiv ).text( conversationVariables.last_sent.sentence[ thoughtBubbleObject.wordThinkingCount ][ 0 ] );
+    $( thoughtBubbleObject.toBeShownDiv ).fadeIn( tiaTimings.wordFadeIn, endOfSingleWordCycle );
+
+}
+
+function showFurtherWords() {
+
+    removeColourThoughtBubbles( tiaTimings.removeColourThoughtBubbleDuration );
+    $( thoughtBubbleObject.toBeShownDiv ).text( conversationVariables.last_sent.sentence[ thoughtBubbleObject.wordThinkingCount ][ 0 ] );
+
+    $( thoughtBubbleObject.toBeHiddenDiv ).fadeOut( tiaTimings.wordFadeOut, function() {
         
-        setTimeout( showTiaThinkingOverWords, wordDelay );
+        removeClasses('#thinkingWords0');
+        removeClasses('#thinkingWords1');
 
-    } else {
+        $( thoughtBubbleObject.toBeShownDiv ).fadeIn( tiaTimings.wordFadeIn, endOfSingleWordCycle );
 
-        wordThinkingCount = 0;
-        setTimeout( function() {
+    });
 
-            $('#thinkingWords0').fadeOut( tiaTimings.wordFadeDelay, removeClasses );
-            $('#thinkingWords1').fadeOut( tiaTimings.wordFadeDelay, removeClasses );
+}
 
-            if ( conversationVariables.awaitingJudgement ) {
+function endOfSingleWordCycle() {
+
+    if ( thoughtBubbleObject.wordThinkingCount < conversationVariables.last_sent.sentence.length ) {
+
+            //console.log('wordThinkingCount:', thoughtBubbleObject.wordThinkingCount );
+            //console.log('pos:', conversationVariables.last_sent.sentence[ thoughtBubbleObject.wordThinkingCount ]);
+        
+        if ( Object.keys( grammarObject ).includes( conversationVariables.last_sent.sentence[ thoughtBubbleObject.wordThinkingCount ][ 1 ][0] ) ) {
+        
+            if ( grammarObject[ conversationVariables.last_sent.sentence[ thoughtBubbleObject.wordThinkingCount ][ 1 ][ 0 ] ].show ) {
 
                 setTimeout( function() {
-                    
-                    if ( conversationVariables.awaitingJudgement ) {
-                    
-                        showTiaThinkingOverWords();
-                        
-                    } else {
 
-                        judgementReceivedInThinkingPos();
+                    colorNounVerbPrep( $( thoughtBubbleObject.toBeShownDiv ), conversationVariables.last_sent.sentence[ thoughtBubbleObject.wordThinkingCount ][ 1 ]);
+                    thoughtBubbleObject.wordThinkingCount += 1;
+                    setTimeout( cycleThroughWords, 3 * tiaTimings.littleColorBubblesAppearDuration + tiaTimings.mainColorBubbleAppearsDuration + tiaTimings.delayAfterColorInFinalBubble );
 
-                    }
-
-                }, 1500 );
+                }, thoughtBubbleObject.wordShowDuration + tiaTimings.delayForNodding )
 
             } else {
 
-                judgementReceivedInThinkingPos();
+                thoughtBubbleObject.wordThinkingCount += 1;
+                setTimeout( cycleThroughWords, thoughtBubbleObject.wordShowDuration );
 
             }
+        
+        } else {
 
-        }, wordDelay * 2 )
+            thoughtBubbleObject.wordThinkingCount += 1;
+            setTimeout( cycleThroughWords, thoughtBubbleObject.wordShowDuration );
+
+        }
+
+    } else {
+
+        console.log('in endOfSingleWordCycle');
+        //endOfSingleSentenceThoughtLoop();
+
+    };
+
+}
+
+function calcWordShowDuration() {
+
+    let wordData = conversationVariables.last_sent.sentence[ thoughtBubbleObject.wordThinkingCount ]
+    let wordLength = wordData[ 0 ].length
+    let wordDur = tiaTimings.charDur + wordLength * tiaTimings.charDur / 2;
+
+    if ( grammarObject[ wordData[ 1 ][ 0 ] ] ) { //adds delay for ones we are interested in
+
+        wordDur += tiaTimings.littleColorBubblesAppearDuration * 3 + tiaTimings.mainColorBubbleAppearsDuration;
 
     }
+    
+    thoughtBubbleObject.wordShowDuration = wordDur;
+
+}
+    
+function endOfSingleSentenceThoughtLoop() {
+
+    checkJudgement(); // this ajax call will run after judgement if judegement received, and startNextSentenceThoughtLoop if not
+
+}
+
+function startNextSentenceThoughtLoop() {
+
+    thoughtBubbleObject.wordThinkingCount = 0;
+    thoughtBubbleObject.loop += 1;
+    cycleThroughWords();
 
 }
 
 function colorNounVerbPrep( domEl, POSTag ) {
 
-    console.log( 'domEl:', domEl )
-    console.log( 'POSTag:', POSTag )
+    if ( grammarObject[ POSTag[ 0 ]].show ) { //check this is one we are interested in
+        if ( thoughtBubbleObject.loop === 0 ) {
 
-    if ( POSTag === "DT" ) {
+            addThoughtBubbles( 0, "#thoughtBubble" + grammarObject[ POSTag[ 0 ]].color, tiaTimings.littleColorBubblesAppearDuration, tiaTimings.mainColorBubbleAppearsDuration, function() {
+             
+                domEl.addClass( grammarObject[ POSTag[ 0 ]].class )
 
-        domEl.addClass( 'pos-det' );
+            } )
 
-    } else if ( POSTag[ 0 ] === "V" ) {
+        } else {
 
-        domEl.addClass( 'pos-verb' );
+            if ( POSTag === "DT" ) {
 
-    //} else if ( POSTag === "IN" ) {
+                domEl.addClass( 'pos-det' );
 
-        //domEl.addClass( 'pos-prep' );
-        
+            } else if ( POSTag[ 0 ] === "V" ) {
+
+                domEl.addClass( 'pos-verb' );
+
+            } else if ( POSTag === "IN" || POSTag === "TO" ) {
+
+                domEl.addClass( 'pos-prep' );
+                
+            }
+
+        }
+
     }
 
 }
 
-function removeClasses() {
+function removeClasses( div ) {
 
-    console.log('removeClasses:', this.id );
-    $('#' + this.id).removeClass( 'pos-det' );
-    $('#' + this.id).removeClass( 'pos-verb' );
-    //$('#' + this.id).removeClass( 'pos-prep' );
+    $( div ).removeClass( 'pos-det' );
+    $( div ).removeClass( 'pos-verb' );
+    $( div ).removeClass( 'pos-prep' );
 
 }
