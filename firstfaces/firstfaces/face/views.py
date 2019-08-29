@@ -1103,61 +1103,46 @@ def check_judgement(request):
     sent_id = int(request.GET['sentId'])
     sess_id = int(request.GET['sessId'])
     synth_url = ""
-    count = 0;
-    while True:
+    received_judgement = False
 
-        # print('in check judgement while loop')
-        time.sleep(1)
-        count += 1
+    s_new = TempSentence.objects.get(pk=sent_id)
+    tia_to_say = None
 
-        s_new = TempSentence.objects.get(pk=sent_id)
-        tia_to_say = None
+    if s_new.judgement != None:
 
-        if s_new.judgement != None:
+        if s_new.judgement in ["C", "X"]:
+            
+            received_judgement = True
 
-            if s_new.judgement in ["C", "X"]:
-                
+        elif s_new.judgement == "P":
+
+            if s_new.prompt != None:
+                tia_to_say = s_new.prompt
+                synth_url = get_tia_tts_for_prompts_early(tia_to_say, sess_id)
                 received_judgement = True
-                break
 
-            elif s_new.judgement == "P":
+        else:
 
-                if s_new.prompt != None:
-                    tia_to_say = s_new.prompt
+            if s_new.judgement in ["M", "B", "P"]:
+            
+                if s_new.indexes != None or s_new.prompt != None:
+
+                    tia_to_say = get_text(json.loads(s_new.sentence), s_new.judgement, s_new.prompt, json.loads(s_new.indexes))
                     synth_url = get_tia_tts_for_prompts_early(tia_to_say, sess_id)
                     received_judgement = True
-                    break
 
-            else:
+            elif s_new.judgement == 'D': 
 
-                if s_new.judgement in ["M", "B", "P"]:
-                
-                    if s_new.indexes != None or s_new.prompt != None:
+                tia_to_say = "I'm sorry, but I don't understand what you mean. Could you say that sentence in a different way?"
+                synth_url = "media/prePreparedTiaPhrases/im_sorry_but_i_dont_understand_what_you_mean.wav"
+                received_judgement = True
 
-                        tia_to_say = get_text(json.loads(s_new.sentence), s_new.judgement, s_new.prompt, json.loads(s_new.indexes))
-                        synth_url = get_tia_tts_for_prompts_early(tia_to_say, sess_id)
-                        print('synth_url:', synth_url)
-                        received_judgement = True
-                        break
+            elif s_new.judgement == '3': 
 
-                elif s_new.judgement == 'D': 
+                tia_to_say = "There are more than 3 errors in your sentence. Please simplify and try again"
+                synth_url = "media/prePreparedTiaPhrases/more_than_three_errors.wav"
+                received_judgement = True
 
-                    tia_to_say = "I'm sorry, but I don't understand what you mean. Could you say that sentence in a different way?"
-                    synth_url = "media/prePreparedTiaPhrases/im_sorry_but_i_dont_understand_what_you_mean.wav"
-                    received_judgement = True
-                    break
-
-                elif s_new.judgement == '3': 
-
-                    tia_to_say = "There are more than 3 errors in your sentence. Please simplify and try again"
-                    synth_url = "media/prePreparedTiaPhrases/more_than_three_errors.wav"
-                    received_judgement = True
-                    break
-
-        elif count == 10:
-
-            received_judgement = False
-            break
 
     # deal with nonetypes for the bleeding decimals
 

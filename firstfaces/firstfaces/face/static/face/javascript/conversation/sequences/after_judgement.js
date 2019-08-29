@@ -3,9 +3,6 @@ function runAfterJudgement() {
     recTimes.runAfterJudgement =  Date.now() / 1000;
     // logic for different types of judgement
     
-    // in return to laptop, movement will only be needed if tia not looking straight at student
-    conversationVariables.tiaLookingAtStudent = true;
-
     // get duration of nod or shake. Can also be 0o
     let nodShakeDur = 0;
     if ( conversationVariables.last_sent.nod !== null ) {
@@ -122,6 +119,20 @@ function getNodSpeedInString() {
     }
 
 }
+
+//function returnFromThinking() {
+
+    //expressionController( calculatedExpression, tiaTimings.changeExpressionDuration );
+
+    //setTimeout( function() {
+
+        //movementController( movementObject.abs.blank, tiaTimings.returnFromThinkingDuration / 2, tiaTimings.returnFromThinkingDuration );
+
+        //setTimeout( runAfterJudgement, tiaTimings.returnFromThinkingDuration * 750 ); // want nod to happen before movement back ends
+    
+    //}, tiaTimings.changeExpressionDuration );
+
+//} 
 
 function nodOrShakeHead() {
     

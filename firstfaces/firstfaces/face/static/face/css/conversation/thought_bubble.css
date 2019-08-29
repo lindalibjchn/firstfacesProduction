@@ -11,9 +11,9 @@
 #thoughtBubbleInnerContainer {
 
     position: absolute;
-    width: 40%;
+    width: 45%;
     height: 100%;
-    right: 60%;
+    right: 55%;
 
 }
 
@@ -30,33 +30,35 @@
 
 .pos-det {
 
-    color: blue;
+    color: white;
     /*font-weight: bold;*/
-    font-style: none;
-    text-decoration: underline;
+    /*text-decoration: underline;*/
 
 }
 
 .pos-verb {
 
-    color: green;
+    color: white;
     /*font-weight: bold;*/
-    font-style: italic;
-    text-decoration: underline;
+    /*font-style: italic;*/
+    /*text-decoration: underline;*/
 
 }
 
-/*.pos-prep {*/
+.pos-prep {
 
-    /*color: orange;*/
+    color: white;
+    /*font-weight: bold;*/
+    /*font-style: italic;*/
+    /*text-decoration: underline;*/
 
-/*}*/
+}
 
 #thinkingWordsCont {
 
     display: none;
     font-family: Georgia;
-    font-size: 1.2em;
+    font-size: 1.1em;
     /*font-style: italic;*/
     text-align: center;
     height: 100%;
@@ -78,7 +80,7 @@
     height: 20%;
     width: 80%;
     left: 10%;
-    bottom: 38%;
+    bottom: 35%;
     /*border: 2px dashed blue;*/
 
 }

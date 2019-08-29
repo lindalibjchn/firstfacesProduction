@@ -1,5 +1,30 @@
 /////////////////// OBJECTS
 
+// determines what is highlighted in thought bubble when Tia thinks
+var grammarObject = {
+
+    'D': {
+       'show': false,
+       'color': 'Blue',
+       'class': 'pos-det',
+    },
+    'V': {
+       'show': true,
+       'color': 'Pink',
+       'class': 'pos-verb',
+    },
+    'I': {
+       'show': true,
+       'color': 'Orange',
+       'class': 'pos-prep',
+    },
+    'T': {
+       'show': true,
+       'color': 'Orange',
+       'class': 'pos-prep',
+    },
+
+}
 
 //var sentenceObject = {
     //alphabetDict: {},
@@ -10,15 +35,15 @@
     //wrongIndexes: [[3,6]],
 //}
 
-var correctionObject = {
-    correctionBackground: {},
-    highlightBackground: {},
-    cloneLetters: [],
-    splitIndexes: [],
-    correctionsIndexes: [],
-    corrections: [],
-    correctionString: ""
-}
+//var correctionObject = {
+    //correctionBackground: {},
+    //highlightBackground: {},
+    //cloneLetters: [],
+    //splitIndexes: [],
+    //correctionsIndexes: [],
+    //corrections: [],
+    //correctionString: ""
+//}
 
 var speechBubbleObject = {
     bubble: {},
@@ -418,12 +443,18 @@ var volumeObject = {
     display: false,
 }
 
-var tiaThinkingObject = {
+var thoughtBubbleObject = {
 
-    thinking: false,
-    startX: - 0.1,
-    startY: 0.2,
-    maxX: 0.075,
+    wordThinkingCount: 0,
+
+}
+
+var thinkingEyesObject = {
+
+    bool: false,
+    startX: - 0.05,
+    startY: 0.25,
+    maxX: 0.15,
     maxY: 0.15,
 
 }

@@ -1,7 +1,5 @@
-function buttonsMicrophoneOnly() {
 
-    $('#recordBtnsCont').show();
-    $('#recordVoiceBtn').show();
+function buttonsHideAllContainers() {
 
     $('#meterContainer').hide();
     $('#emotionQuestionsCont').hide();
@@ -9,20 +7,23 @@ function buttonsMicrophoneOnly() {
     $('#submitTopicBtnCont').hide();
     $('#optionBtns').hide();
     $('#listenNextSentenceBtnCont').hide();
+    $('#recordBtnsCont').hide();
+
+}
+
+function buttonsMicrophoneOnly() {
+
+    buttonsHideAllContainers();
+    $('#recordBtnsCont').show();
+    $('#recordVoiceBtn').show();
 
 }
 
 function buttonsListenNextSentence() {
 
+    buttonsHideAllContainers();
     $('#listenNextSentenceBtnCont').show();
     
-    $('#recordBtnsCont').hide();
-    $('#meterContainer').hide();
-    $('#emotionQuestionsCont').hide();
-    $('#topicChoicesCont').hide();
-    $('#submitTopicBtnCont').hide();
-    $('#optionBtns').hide();
-
 }
 
 function buttonsAfterMicClicked() {
@@ -40,5 +41,4 @@ function buttonsHideAllStop() {
     $('#stopRecordVoiceBtn').hide();
 
 }
-
 
