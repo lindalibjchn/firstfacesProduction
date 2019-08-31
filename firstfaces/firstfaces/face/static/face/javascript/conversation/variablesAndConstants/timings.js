@@ -13,17 +13,18 @@ tiaTimings = {
 
     // THOUGHT BUBBLE
     //delayToAddThoughtBubbles: 1500,
+    delayBeforeFirstWordShownInBubble: 500,
     thoughtBubbleAddDelay: 300,
     lastThoughtBubbleAddDelay: 1000,
     wordFadeIn: 100,
     wordFadeOut: 500,
-    charDur: 100,
+    charDur: 90,
     removeThoughtBubbleDuration: 500,
     removeColourThoughtBubbleDuration: 750,
-    littleColorBubblesAppearDuration: 75,
-    mainColorBubbleAppearsDuration: 10,
-    delayAfterColorInFinalBubble: 1500,
-    delayForNodding: 500,
+    littleColorBubblesAppearDuration: 25,
+    mainColorBubbleAppearsDuration: 250,
+    delayAfterColorInFinalBubble: 0,
+    mouthingFramesPerPhone: 8,
     
     // SPEECH BUBBLE
     speechBubbleFadeInDuration: 500,

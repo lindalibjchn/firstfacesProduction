@@ -4,22 +4,26 @@
 var grammarObject = {
 
     'D': {
-       'show': false,
+       'show': true,
        'color': 'Blue',
        'class': 'pos-det',
+       'movement': 'thinkSentenceArmArticle',
+       'handMov1Dur': 0.75,
     },
     'V': {
        'show': true,
        'color': 'Pink',
        'class': 'pos-verb',
+       'movement': 'thinkSentenceArmVerb',
+       'handMov1Dur': 1,
     },
     'I': {
-       'show': true,
+       'show': false,
        'color': 'Orange',
        'class': 'pos-prep',
     },
     'T': {
-       'show': true,
+       'show': false,
        'color': 'Orange',
        'class': 'pos-prep',
     },
@@ -284,6 +288,16 @@ var talkObject = {
 
 
 // SPEECH STUFF
+var mouthingObject = {
+
+    wordNo: 0,
+    mouthing: false,
+    durationOfFirstAndLastPhones: 0.4,
+    phoneCount: 0,
+    noOfPhones: 0,
+    emphasis: false, // if emphasis on Noun or Verb so slower and raised eyebrows n had movement
+
+}
 
 var synthesisObject = {
     //finalTextInBox : "blank",

@@ -42,12 +42,12 @@ function enterOrReEnter() {
 
     //// DEVELOPMENT
     //// close up of Tia's lips
-    //if ( conversationVariables.inDevelopment ) {
+    if ( conversationVariables.inDevelopment ) {
 
         //CAMERA_SIT_POS = { x: 0, y: -3.0, z: 19 };
         //CAMERA_SIT_ROT = { x: -0.05, y: 0, z: 0 };
 
-    //}
+    }
     ////////////////
     
     camera.position.set( CAMERA_SIT_POS.x, CAMERA_SIT_POS.y, CAMERA_SIT_POS.z  );
@@ -105,7 +105,8 @@ function engineRunning() {
             //$('#recordBtnsCont').hide();
             //$('#meterContainer').hide();
 
-            //expressionController( expressionObject.abs.talkBase, 0.3, function(){console.log('no expression calback')});
+            //$('#laptopContainer').hide();
+            //expressionController( expressionObject.abs.e, 0.3, function(){console.log('no expression calback')});
 
             //synthesisObject.now = synthesisObject.data.beginWhenYou;
             //synthesisObject.audio.src = synthesisObject.now.URLs[ 0 ]
