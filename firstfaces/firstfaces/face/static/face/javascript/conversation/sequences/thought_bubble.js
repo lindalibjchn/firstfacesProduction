@@ -26,82 +26,17 @@ function addThoughtBubbles( no, imgId, delay, lastDelay, cb ) {
 
 }
 
-function removeColourThoughtBubbles( dur ) {
-
-    let colors = ['blue', 'orange', 'pink'];
-
-    colors.forEach( function( c ) {
-
-        $( '.thought-bubble-' + c ).fadeOut( dur )
-           
-    } );
-
-}
-
 function initCycleThroughWords() {
 
     thoughtBubbleObject.wordThinkingCount = 0;
-    cycleThroughWords();
-
-}
-
-function cycleThroughWords() {
-
-    wordShowDuration();
-    
-}
-
-function wordShowDuration() {
-
-    let wordData = conversationVariables.last_sent.sentence[ thoughtBubbleObject.wordThinkingCount ]
-    let wordLength = wordData[ 0 ].length
-    let wordDur = tiaTimings.charDur + wordLength * tiaTimings.charDur / 2;
-
-    thoughtBubbleObject.wordShowDuration = wordDur;
     setTimeout( showNextWord, tiaTimings.delayBeforeFirstWordShownInBubble );
 
 }
-    
+
 function showNextWord() {
 
     // 2 divs, one fades out and one fades in then vice versa
     determineToBeShownNHidden();
-    mouthingObject.emphasis = false;
-
-    let POS1 = conversationVariables.last_sent.sentence[ thoughtBubbleObject.wordThinkingCount ][ 1 ][0]
-    console.log( 'POS1:', POS1 );
-    // check if it is a grammar word (DET or VERB usually)
-    if ( Object.keys( grammarObject ).includes( POS1 ) ) {
-    
-        if ( grammarObject[ POS1 ].show ) {
-
-            movementController( movementObject.abs[ grammarObject[ POS1 ].movement ], grammarObject[ POS1 ].handMov1Dur, grammarObject[ POS1 ].handMov1Dur, function() {
-            let phoneSequence = conversationVariables.last_sent.sentence[ thoughtBubbleObject.wordThinkingCount ][ 2 ]
-            let handMov2Dur = phoneSequence.length * 0.2; 
-
-                if ( phoneSequence.length === 1 ) {
-
-                    handMov2Dur *= 2; //so not overly abrupt on 'a'
-
-                }
-
-                movementController( movementObject.abs.thinkSentenceArmNeutral, handMov2Dur, handMov2Dur );
-                mouthingObject.emphasis = true;
-                tiaMouthPhoneSequence( phoneSequence, tiaTimings.mouthingFramesPerPhone * 1.5 ) // to <speech/mouthong.js>
-               
-            } );
-            
-        } else {
-
-            tiaMouthPhoneSequence( conversationVariables.last_sent.sentence[ thoughtBubbleObject.wordThinkingCount ][ 2 ], tiaTimings.mouthingFramesPerPhone ) // to <speech/mouthong.js>
-
-        }
-
-    } else {
-
-        tiaMouthPhoneSequence( conversationVariables.last_sent.sentence[ thoughtBubbleObject.wordThinkingCount ][ 2 ], tiaTimings.mouthingFramesPerPhone ) // to <speech/mouthong.js>
-
-    }
 
     if ( thoughtBubbleObject.wordThinkingCount === 0 ) {
 
@@ -111,7 +46,9 @@ function showNextWord() {
 
         showFurtherWords();
     }
-    
+
+    mouthWordController();
+
 }
 
 function determineToBeShownNHidden() {
@@ -147,12 +84,60 @@ function showFurtherWords() {
 
     $( thoughtBubbleObject.toBeHiddenDiv ).fadeOut( tiaTimings.wordFadeOut, function() {
         
-        removeClasses('#thinkingWords0');
-        removeClasses('#thinkingWords1');
-
         $( thoughtBubbleObject.toBeShownDiv ).fadeIn( tiaTimings.wordFadeIn );
 
     });
+
+}
+
+
+function mouthWordController() {
+
+    mouthingObject.emphasis = false;
+
+    let POS1 = conversationVariables.last_sent.sentence[ thoughtBubbleObject.wordThinkingCount ][ 1 ][0]
+
+        // check if it is a grammar word (DET or VERB usually)
+    if ( Object.keys( grammarObject ).includes( POS1 ) ) {
+    
+        if ( grammarObject[ POS1 ].show ) {
+
+            let word = conversationVariables.last_sent.sentence[ thoughtBubbleObject.wordThinkingCount ][ 0 ]
+            let phoneSeq = conversationVariables.last_sent.sentence[ thoughtBubbleObject.wordThinkingCount ][ 2 ]
+            performHandMovementWithMouthing( POS1, word, phoneSeq );
+
+            
+        } else {
+
+            tiaMouthPhoneSequence( conversationVariables.last_sent.sentence[ thoughtBubbleObject.wordThinkingCount ][ 2 ], tiaTimings.mouthingFramesPerPhone ) // to <speech/mouthing.js>
+
+        }
+
+    } else {
+
+        tiaMouthPhoneSequence( conversationVariables.last_sent.sentence[ thoughtBubbleObject.wordThinkingCount ][ 2 ], tiaTimings.mouthingFramesPerPhone ); 
+
+    }
+
+}
+
+function performHandMovementWithMouthing( POS1, word, phoneSequence ) {
+
+    // this changes the eyebrows and mouthing emphasis in mouthing.js
+    mouthingObject.emphasis = true;
+    let grammarObjectWord = grammarObject[ POS1 ][ 'types' ][ word ]
+
+    // movement 1
+    movementController( movementObject.abs[ grammarObjectWord[ 'movement' ] ], grammarObjectWord[ 'handMov1Dur' ], grammarObjectWord[ 'handMov1Dur' ], function() {
+        
+        // movement 2
+        let phoneSeqLen = Math.max( phoneSequence.length, 3 );
+        let handMov2Dur = phoneSeqLen * tiaTimings.handMov2Mult; 
+
+        movementController( movementObject.abs.thinkSentenceArmNeutral, handMov2Dur, handMov2Dur );
+        tiaMouthPhoneSequence( phoneSequence, tiaTimings.emphasisedMouthingFramesPerPhone ) // to <speech/mouthong.js>
+       
+    } );
 
 }
 
@@ -165,55 +150,64 @@ function endOfSingleWordCycle() {
         delayToShowNextWord += 3 * tiaTimings.littleColorBubblesAppearDuration + tiaTimings.mainColorBubbleAppearsDuration + tiaTimings.delayAfterColorInFinalBubble
     }
 
-    if ( thoughtBubbleObject.wordThinkingCount < conversationVariables.last_sent.sentence.length ) {
-
-            //console.log('wordThinkingCount:', thoughtBubbleObject.wordThinkingCount );
-            //console.log('pos:', conversationVariables.last_sent.sentence[ thoughtBubbleObject.wordThinkingCount ]);
-        
-
-                //setTimeout( function() {
+    if ( thoughtBubbleObject.wordThinkingCount < conversationVariables.last_sent.sentence.length - 1 ) {
 
         thoughtBubbleObject.wordThinkingCount += 1;
-        setTimeout( cycleThroughWords, delayToShowNextWord );
-
-                //}, thoughtBubbleObject.wordShowDuration + tiaTimings.delayForNodding )
+        setTimeout( showNextWord, delayToShowNextWord );
 
     } else {
 
-        console.log('in endOfSingleWordCycle');
-        //endOfSingleSentenceThoughtLoop();
+        checkJudgement();
 
     };
 
 }
 
-function calcWordShowDuration() {
-
-    let wordData = conversationVariables.last_sent.sentence[ thoughtBubbleObject.wordThinkingCount ]
-    let wordLength = wordData[ 0 ].length
-    let wordDur = tiaTimings.charDur + wordLength * tiaTimings.charDur / 2;
-
-    if ( grammarObject[ wordData[ 1 ][ 0 ] ] ) { //adds delay for ones we are interested in
-
-        wordDur += tiaTimings.littleColorBubblesAppearDuration * 3 + tiaTimings.mainColorBubbleAppearsDuration;
-
-    }
-    
-    thoughtBubbleObject.wordShowDuration = wordDur;
-
-}
-    
-function endOfSingleSentenceThoughtLoop() {
-
-    checkJudgement(); // this ajax call will run after judgement if judegement received, and startNextSentenceThoughtLoop if not
-
-}
-
-function startNextSentenceThoughtLoop() {
+function startNextSentenceThoughtLoop( errorInGettingResponse=false ) {
 
     thoughtBubbleObject.wordThinkingCount = 0;
     thoughtBubbleObject.loop += 1;
-    cycleThroughWords();
+
+    setTimeout( goToThinkingHard, tiaTimings.delayUntilGoingToThinkingHard );
+
+}
+
+function goToThinkingHard() {
+
+    expressionController( expressionObject.abs.thinkingHard, tiaTimings.toThinkingHardDuration )
+    movementController( movementObject.abs.thinkSentenceHardArmNeutral, tiaTimings.toThinkingHardDuration, tiaTimings.toThinkingHardDuration, function() {
+        
+        $('.thinking-words').fadeOut( tiaTimings.timeInThinkingHardPosition / 2 );
+        setTimeout( returnFromThinkingHard, tiaTimings.timeInThinkingHardPosition );
+
+    } )
+
+    setTimeout( function() {
+            
+        let toThinkingHardMillisecs = tiaTimings.toThinkingHardDuration * 1000;
+        $('#thoughtBubbleWhite0').animate({left: '+=40px', top: '+=30px'}, toThinkingHardMillisecs );
+        $('#thoughtBubbleWhite1').animate({left: '+=30px', top: '+=18px'}, toThinkingHardMillisecs );
+        $('#thoughtBubbleWhite2').animate({left: '+=20px', top: '+=9px'}, toThinkingHardMillisecs );
+
+    }, 200 )
+
+}
+
+function returnFromThinkingHard() {
+
+    movementController( movementObject.abs.thinkSentenceArmNeutral, tiaTimings.fromThinkingHardDuration, tiaTimings.fromThinkingHardDuration, function() {
+        setTimeout( showNextWord, tiaTimings.delayUntilStartLoopAgain )
+
+    })
+
+    setTimeout( function() {
+
+        let fromThinkingHardMillisecs = tiaTimings.fromThinkingHardDuration * 1000;
+        $('#thoughtBubbleWhite0').animate({left: '-=40px', top: '-=30px'}, fromThinkingHardMillisecs );
+        $('#thoughtBubbleWhite1').animate({left: '-=30px', top: '-=18px'}, fromThinkingHardMillisecs );
+        $('#thoughtBubbleWhite2').animate({left: '-=20px', top: '-=9px'}, fromThinkingHardMillisecs );
+
+    }, 100 );
 
 }
 
@@ -250,10 +244,28 @@ function colorNounVerbPrep( domEl, POSTag ) {
 
 }
 
-function removeClasses( div ) {
+function removeThoughtBubbles( dur, cb ) {
 
-    $( div ).removeClass( 'pos-det' );
-    $( div ).removeClass( 'pos-verb' );
-    $( div ).removeClass( 'pos-prep' );
+    $( '.thought-bubbles' ).fadeOut( dur );
+    $( '#thinkingWordsCont' ).fadeOut( dur );
+     
+    setTimeout( function() {
+
+        cb();
+
+    }, dur )
 
 }
+
+function removeColourThoughtBubbles( dur ) {
+
+    let colors = ['blue', 'orange', 'pink'];
+
+    colors.forEach( function( c ) {
+
+        $( '.thought-bubble-' + c ).fadeOut( dur )
+           
+    } );
+
+}
+

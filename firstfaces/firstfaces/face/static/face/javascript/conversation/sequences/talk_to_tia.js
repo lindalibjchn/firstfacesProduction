@@ -37,14 +37,11 @@ function goToThinkingPos() {
     recTimes.finishSpeak = Date.now() / 1000;
 
     expressionController( expressionObject.abs.talkBase, tiaTimings.toThinkDuration );
-    movementController( movementObject.abs.thinkSentenceArmNeutral, tiaTimings.toThinkDuration / 2, tiaTimings.toThinkDuration, initAddThoughtBubbles );
+    movementController( movementObject.abs.thinkSentenceArmNeutral, tiaTimings.toThinkDuration / 2, tiaTimings.toThinkDuration, function() {
+        
+        setTimeout( initAddThoughtBubbles, tiaTimings.delayToAddThoughtBubbles );
+
+    })
 
 }
-
-//function moveArmToThinking() {
-
-   //movementController( movementObject.abs.thinkSentenceArmNeutral, tiaTimings.moveArmToThinkPosDuration, tiaTimings.moveArmToThinkPosDuration, initAddThoughtBubbles ); 
-
-
-//}
 
