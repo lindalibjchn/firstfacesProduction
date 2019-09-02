@@ -99,8 +99,7 @@ function checkJudgement() {
         },
         error: function() {
             
-            console.log( "error awaiting judgement" );
-            startNextSentenceThoughtLoop();
+            startNextSentenceThoughtLoop( errorInGettingResponse=true );
         
         },
 

@@ -14,11 +14,11 @@ function animateFirstMouthPhoneSlowly() {
 
     if ( mouthingObject.emphasis ) {
 
-        expressionController( expressionObject.abs[ mouthingObject.phones[ 0 ] + 'Emp' ], mouthingObject.durationOfFirstAndLastPhones, animateMouthPhonesInOrder )
+        expressionController( expressionObject.abs[ mouthingObject.phones[ 0 ] + 'Emp' ], tiaTimings.durationOfEmphasisedFirstAndLastMouthingPhones, animateMouthPhonesInOrder )
 
     } else {
 
-        expressionController( expressionObject.abs[ mouthingObject.phones[ 0 ] ], mouthingObject.durationOfFirstAndLastPhones, animateMouthPhonesInOrder )
+        expressionController( expressionObject.abs[ mouthingObject.phones[ 0 ] ], tiaTimings.durationOfFirstAndLastMouthingPhones, animateMouthPhonesInOrder )
 
     }
 
@@ -42,8 +42,6 @@ function animateMouthPhonesInOrder() {
 
     } else {
 
-        //expressionController( expressionObject.abs.talkBase, mouthingObject.durationOfFirstAndLastPhones )
-        
         endOfSingleWordCycle(); //back to <sequences/thought_bubble.js>
 
     }
@@ -51,7 +49,7 @@ function animateMouthPhonesInOrder() {
 }
 
 function pronunciationController( expressionTo, cb ) {
-
+    
     expressionObject.bool = false;//if other expression delayed, just stop it before calculating absolute position
     expressionObject.now = getAbsoluteCoordsOfExpressionNow();
     expressionObject.movement = createRelativeExpression( expressionTo );

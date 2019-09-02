@@ -7,11 +7,19 @@ var grammarObject = {
        'show': true,
        'color': 'Blue',
        'class': 'pos-det',
-       'movement': 'thinkSentenceArmArticle',
-       'handMov1Dur': 0.75,
+       'types': {
+           'a': {
+                'movement': 'thinkSentenceArmArticleA',
+                'handMov1Dur': 0.7,
+            },
+           'the': {
+                'movement': 'thinkSentenceArmArticleThe',
+                'handMov1Dur': 0.7,
+            },
+        },
     },
     'V': {
-       'show': true,
+       'show': false,
        'color': 'Pink',
        'class': 'pos-verb',
        'movement': 'thinkSentenceArmVerb',
@@ -292,7 +300,6 @@ var mouthingObject = {
 
     wordNo: 0,
     mouthing: false,
-    durationOfFirstAndLastPhones: 0.4,
     phoneCount: 0,
     noOfPhones: 0,
     emphasis: false, // if emphasis on Noun or Verb so slower and raised eyebrows n had movement
@@ -306,7 +313,6 @@ var synthesisObject = {
     sentenceNo: 0, //if multiple sentences it will start at first, iterates in <tiaSpeech.js>
     talking: false,
     pitch: 0,
-    durationOfFirstAndLastPhones: 1,
     speaking_rate: 0.70,
     continuous: true,
     firstClip: false,
