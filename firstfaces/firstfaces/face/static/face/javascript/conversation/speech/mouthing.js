@@ -14,7 +14,12 @@ function animateFirstMouthPhoneSlowly() {
 
     if ( mouthingObject.emphasis ) {
 
-        expressionController( expressionObject.abs[ mouthingObject.phones[ 0 ] + 'Emp' ], tiaTimings.durationOfEmphasisedFirstAndLastMouthingPhones, animateMouthPhonesInOrder )
+        expressionController( expressionObject.abs[ mouthingObject.phones[ 0 ] + 'Emp' ], tiaTimings.durationOfEmphasisedFirstAndLastMouthingPhones, function() {
+           
+            movementController( movementObject.abs.thinkSentenceArmNeutral, thoughtBubbleObject.handMov2Dur, thoughtBubbleObject.handMov2Dur, animateMouthPhonesInOrder);
+            moveThoughtBubblesToToFollowNoddingHead( false, thoughtBubbleObject.handMov2Dur );
+
+        });
 
     } else {
 
@@ -26,29 +31,30 @@ function animateFirstMouthPhoneSlowly() {
 
 function animateMouthPhonesInOrder() {
 
+    let express_ = expressionObject.abs[ mouthingObject.phones[ mouthingObject.phoneCount ] ];
+    let durLast_ = tiaTimings.durationOfFirstAndLastMouthingPhones;
+    if ( mouthingObject.emphasis ) {
+        
+        express_ = expressionObject.abs[ mouthingObject.phones[ mouthingObject.phoneCount ] + 'Emp' ]
+        durLast_ = tiaTimings.durationOfEmphasisedFirstAndLastMouthingPhones;
+
+    }
+
     if ( mouthingObject.phoneCount < mouthingObject.noOfPhones ) {
 
-        if ( mouthingObject.emphasis ) {
-
-            pronunciationController( expressionObject.abs[ mouthingObject.phones[ mouthingObject.phoneCount ] + 'Emp' ], animateMouthPhonesInOrder )
-        
-        } else {
-                
-            pronunciationController( expressionObject.abs[ mouthingObject.phones[ mouthingObject.phoneCount ] ], animateMouthPhonesInOrder )
+        mouthingController( express_, animateMouthPhonesInOrder )
             
-        }
-        
         mouthingObject.phoneCount += 1;
 
     } else {
 
-        endOfSingleWordCycle(); //back to <sequences/thought_bubble.js>
+        expressionController( expressionObject.abs.talkBase, durLast_, endOfSingleWordCycle )
 
     }
 
 }
 
-function pronunciationController( expressionTo, cb ) {
+function mouthingController( expressionTo, cb ) {
     
     expressionObject.bool = false;//if other expression delayed, just stop it before calculating absolute position
     expressionObject.now = getAbsoluteCoordsOfExpressionNow();

@@ -52,7 +52,7 @@ function holdOnUntilNewAudioDurationIsAvailable() {
 
 function animateFirstPhoneSlowly() {
 
-    expressionController( expressionObject.abs[ synthesisObject.now.phones[ synthesisObject.sentenceNo ][ 0 ] ], tiaTImings.durationOfFirstAndLastSpeakingPhones, slightlyDelayAudioPlay )
+    expressionController( expressionObject.abs[ synthesisObject.now.phones[ synthesisObject.sentenceNo ][ 0 ] ], tiaTimings.durationOfFirstAndLastSpeakingPhones, slightlyDelayAudioPlay )
     initSingleBreath( 1, breatheObject.speakingBreathMult, tiaTimings.durationOfFirstAndLastSpeakingPhones );
 
 }
