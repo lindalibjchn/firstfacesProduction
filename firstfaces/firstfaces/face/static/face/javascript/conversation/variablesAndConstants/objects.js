@@ -211,7 +211,7 @@ var breatheObject = {
     'direction': -1,
     'normalBreatheStopCount': null, 
     'normalBreatheStopDirection': null, 
-    'speakingBreathMult': 1.75,
+    'speakingBreathMult': 1.5,
     'singleBreath': {
         'startCount': null,
         'endCount': null,
@@ -449,6 +449,17 @@ var synthesisObject = {
             texts: [ "you must type your choice of topic in the box below" ],
             phones: [
                 ['e','u',  'b','e','s','t',  't','e','b',  'e','u','r',  't','e','t',  'e','f',  't','e','b','e','k',  'e','t',  'th','e',  'b','e', 'k','s',  'b','e','l','w']
+            ],
+
+        },
+
+        'notSureAbout': {
+
+            URLs: [ prefixURL + tiaMediaLoc + "im_not_sure_about_that_sentence_00.wav", prefixURL + tiaMediaLoc + "im_not_sure_about_that_sentence_01.wav" ],
+            texts: [ "I'm not sure about that sentence", "continue with your topic and I will check it again later" ],
+            phones: [
+                ['e','b',   't','e','t',  's','e','r',  'e','b','e','t',  'th','e','t',  's','e','t','t','e','t','s' ],
+                ['k','e','t','t','e','t','u',  'w','e','th',  'u','r',  't','e','b','e','k',  'e','t','t',  'e',  'w','e','l',  's','e','k',  'e','t',  'e','k','e','t',  'l','e','t','r' ]
             ],
 
         },
