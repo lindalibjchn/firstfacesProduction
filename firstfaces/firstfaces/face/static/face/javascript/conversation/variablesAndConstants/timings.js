@@ -9,7 +9,7 @@ tiaTimings = {
 
     // THINK POSITION
     toThinkDuration: 1.5,
-    returnFromThinkingDuration: 1,
+    returnFromThinkingDuration: 1.5,
 
     // THOUGHT BUBBLE
     delayToAddThoughtBubbles: 200,
@@ -22,7 +22,7 @@ tiaTimings = {
     handMov2Mult: 0.2,
     durationOfFirstAndLastMouthingPhones: 0.25,
     durationOfEmphasisedFirstAndLastMouthingPhones: 0.5,
-    removeThoughtBubbleDuration: 1000,
+    removeThoughtBubbleDuration: 500,
     //removeColourThoughtBubbleDuration: 500,
     //littleColorBubblesAppearDuration: 10,
     //mainColorBubbleAppearsDuration: 400,

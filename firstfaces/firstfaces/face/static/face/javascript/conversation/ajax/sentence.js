@@ -81,13 +81,6 @@ function checkJudgement() {
             
             if ( json.sent_meta.receivedJudgement ) {
 
-                if (json.sent_meta.synthURL !== 'fault' ) {
-
-                    synthesisObject.synthAudio = document.getElementById( 'synthClip' );
-                    synthesisObject.synthAudio.src = prefixURL + json.sent_meta.synthURL;
-
-                }
-
                 judgementReceived( json.sent_meta )
             
             } else {

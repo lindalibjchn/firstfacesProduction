@@ -1,9 +1,15 @@
 function judgementReceived( sentMeta ) {
 
+    conversationVariables.awaitingJudgement = false;
+
     updateConversationVariablesWithNewSentence( sentMeta );
     
+    preparePromptForTiaSpeak();
+
     prepareExpression();
     
+    thinkingEyesObject.bool = false
+    removeThoughtBubbles( tiaTimings.removeThoughtBubbleDuration )
     runAfterJudgement();
 
 }
@@ -15,19 +21,36 @@ function updateConversationVariablesWithNewSentence( sentMeta ) {
     conversationVariables.sentences[ newInd ] = sentMeta;
     conversationVariables.sentences[ newInd ].sentence = JSON.parse( sentMeta.sentence );
     conversationVariables.sentences[ newInd ].indexes = JSON.parse( sentMeta.indexes );
-    conversationVariables.sentences[ newInd ].prompt = sentMeta.prompt;
+    //conversationVariables.sentences[ newInd ].prompt = sentMeta.prompt;
 
     conversationVariables.id_of_last_sent = newInd;
-    conversationVariables.tiaToSay = sentMeta.tiaToSay;
+    //conversationVariables.tiaToSay = sentMeta.tiaToSay;
     
-    conversationVariables.last_sent = sentMeta;
-    conversationVariables.last_sent.sentence = sentMeta.sentence;
-    conversationVariables.last_sent.indexes = sentMeta.indexes;
-    conversationVariables.last_sent.prompt = sentMeta.prompt;
+    conversationVariables.last_sent = conversationVariables.sentences[ newInd ];
+    //conversationVariables.last_sent.sentence = sentMeta.sentence;
+    //conversationVariables.last_sent.indexes = sentMeta.indexes;
+    //conversationVariables.last_sent.prompt = sentMeta.prompt;
 
     // keeps state of sentence
     conversationVariables.blob_no_text = false;
-    conversationVariables.awaitingJudgement = false;
+
+}
+
+function preparePromptForTiaSpeak() {
+
+   if ( ['P', 'M', 'B'].includes( conversationVariables.last_sent.judgement ) ) {
+
+       synthesisObject.data.prompt = conversationVariables.last_sent.forPrompt;
+
+    } else if ( conversationVariables.last_sent.judgement === 'D' ) {
+
+       synthesisObject.data.prompt = synthesisObject.data.iDontUnderstand;
+
+    } else {
+
+       synthesisObject.data.prompt = synthesisObject.data.moreThanThree;
+
+    }
 
 }
 
@@ -60,27 +83,4 @@ function prepareExpression() {
     }
                 
 }
-
-//function judgementReceivedInThinkingPos() {
-
-    //recTimes.judgementReceivedInThinkingPos = Date.now() / 1000;
-    //tiaThinkingObject.thinking = false;
-    //removeThoughtBubble();
-    
-    //setTimeout( function() {
-
-        //if ( conversationVariables.last_sent.judgement === "I" ) {
-
-            //expressionController( calculatedExpression, tiaTimings.changeExpressionDuration );
-            //runAfterJudgement();
-
-        //} else {
-
-            //returnFromThinking();
-
-        //}
-
-    //}, tiaTimings.removeThoughtBubbleDuration );
-
-//}
 

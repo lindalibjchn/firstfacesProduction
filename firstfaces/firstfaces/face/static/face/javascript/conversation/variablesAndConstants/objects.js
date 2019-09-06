@@ -319,6 +319,14 @@ var synthesisObject = {
     now: {}, 
     data: {
 
+        'prompt': {
+
+            URLs: [],
+            texts: [],
+            phones: [[]],
+
+        },
+
         'beginWhenYou': {
 
             URLs: [ prefixURL + tiaMediaLoc + "begin_when_you_are_ready.wav" ],
@@ -460,6 +468,17 @@ var synthesisObject = {
             phones: [
                 ['e','b',   't','e','t',  's','e','r',  'e','b','e','t',  'th','e','t',  's','e','t','t','e','t','s' ],
                 ['k','e','t','t','e','t','u',  'w','e','th',  'u','r',  't','e','b','e','k',  'e','t','t',  'e',  'w','e','l',  's','e','k',  'e','t',  'e','k','e','t',  'l','e','t','r' ]
+            ],
+
+        },
+
+        'tryToSay': {
+
+            URLs: [ prefixURL + tiaMediaLoc + "try_to_say_00.wav", prefixURL + tiaMediaLoc + "try_to_say_01.wav" ],
+            texts: [ "Try to say...", "'the valuable supply'" ],
+            phones: [
+                ['t','r','e',  't','e',  's','e'],
+                ['thEmp','eEmp',  'fEmp','eEmp','lEmp','uEmp','bEmp','lEmp',  'sEmp','eEmp','bEmp','lEmp','eEmp','iEmp']
             ],
 
         },

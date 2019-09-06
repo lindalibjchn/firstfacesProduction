@@ -44,8 +44,8 @@ function enterOrReEnter() {
     //// close up of Tia's lips
     if ( conversationVariables.inDevelopment ) {
 
-        CAMERA_SIT_POS = { x: 0, y: -3.0, z: 19 };
-        CAMERA_SIT_ROT = { x: -0.05, y: 0, z: 0 };
+        //CAMERA_SIT_POS = { x: 0, y: -3.0, z: 19 };
+        //CAMERA_SIT_ROT = { x: -0.05, y: 0, z: 0 };
 
     }
     ////////////////
@@ -105,8 +105,8 @@ function engineRunning() {
             //$('#recordBtnsCont').hide();
             //$('#meterContainer').hide();
 
-            $('#laptopContainer').hide();
-            expressionController( expressionObject.abs.iEmp, 0.3, function(){console.log('no expression calback')});
+            //$('#laptopContainer').hide();
+            //expressionController( expressionObject.abs.iEmp, 0.3, function(){console.log('no expression calback')});
 
             //synthesisObject.now = synthesisObject.data.beginWhenYou;
             //synthesisObject.audio.src = synthesisObject.now.URLs[ 0 ]

@@ -6,8 +6,8 @@ def change_sentence_to_list_n_add_data(s_):
 
     text = word_tokenize(s_) # {"I", "have,..
     pos_tags = pos_tag_sentence(text) # ["PR", "VBP",..
-    phonemes = get_phonemes_for_sentence(text) # ["AA", "TH",..
-    visemes = convert_phonemes_to_visemes(phonemes) # ['e', 'th',..
+    phonemes = get_phonemes_for_sentence(text) # [["AA", "TH",..
+    visemes = convert_phonemes_to_visemes(phonemes) # [['e', 'th',..
 
     return [list(a) for a in zip(text, pos_tags, visemes)]
 

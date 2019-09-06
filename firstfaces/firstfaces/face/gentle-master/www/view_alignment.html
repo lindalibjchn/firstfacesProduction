@@ -383,6 +383,7 @@ function update() {
             } else if (ret.status == 'OK') {
                 $preloader.style.visibility = 'hidden';
 		// XXX: should we fetch the align.json?
+                console.log('reloading in gentle');
 		window.location.reload();
                 show_downloads();
             } else if (ret.status == 'ENCODING' || ret.status == 'STARTED') {
