@@ -196,7 +196,7 @@ function createCalculatedExpression( twoExpressions, ratio, mult, surp ){
 
 }
 
-function changeExpressionDuration() {
+function changeExpression() {
 
     synthesisObject.pitch = 0;
     synthesisObject.speaking_rate = 0.7;

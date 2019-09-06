@@ -207,7 +207,7 @@ function thinkHard() {
 
 function thinkingJustWordsController() {
 
-    let mult = Math.max( conversationVariables.last_sent.sentence[ thoughtBubbleObject.wordThinkingCount ][ 0 ].length, 3 );
+    let mult = Math.max( conversationVariables.last_sent.sentence[ thoughtBubbleObject.wordThinkingCount ][ 0 ].length, 2 );
     let wordDur = mult * tiaTimings.singleCharacterDuration;
     setTimeout( endOfSingleWordCycle, wordDur );
 

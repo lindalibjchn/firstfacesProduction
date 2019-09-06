@@ -6,7 +6,8 @@ from .forms import UserForm, SignUpForm, SignUpUserForm
 from django.contrib.auth.password_validation import validate_password
 from django.http import JsonResponse
 from .utils import *
-from .helper_utils.sentence_utils import change_sentence_to_list_n_add_data
+from .views_utils.sentence import change_sentence_to_list_n_add_data
+from .views_utils.text_to_speech import create_tia_speak_sentences_synthesis_data, get_text
 from .speech_to_text_utils import *
 from django.utils import timezone
 import json
@@ -1010,6 +1011,7 @@ def tts(request):
         audio_encoding=texttospeech.enums.AudioEncoding.MP3,
         pitch = pitch_designated,
         speaking_rate = speaking_rate_designated,
+        # volume_gain_db = 6,
         )
 
     try:
@@ -1102,7 +1104,7 @@ def check_judgement(request):
 
     sent_id = int(request.GET['sentId'])
     sess_id = int(request.GET['sessId'])
-    synth_url = ""
+    for_prompt = {}
     received_judgement = False
 
     s_new = TempSentence.objects.get(pk=sent_id)
@@ -1118,7 +1120,7 @@ def check_judgement(request):
 
             if s_new.prompt != None:
                 tia_to_say = s_new.prompt
-                synth_url = get_tia_tts_for_prompts_early(tia_to_say, sess_id)
+                for_prompt = create_tia_speak_sentences_synthesis_data(tia_to_say, sess_id)
                 received_judgement = True
 
         else:
@@ -1128,19 +1130,15 @@ def check_judgement(request):
                 if s_new.indexes != None or s_new.prompt != None:
 
                     tia_to_say = get_text(json.loads(s_new.sentence), s_new.judgement, s_new.prompt, json.loads(s_new.indexes))
-                    synth_url = get_tia_tts_for_prompts_early(tia_to_say, sess_id)
+                    for_prompt = create_tia_speak_sentences_synthesis_data(tia_to_say, sess_id)
                     received_judgement = True
 
             elif s_new.judgement == 'D': 
 
-                tia_to_say = "I'm sorry, but I don't understand what you mean. Could you say that sentence in a different way?"
-                synth_url = "media/prePreparedTiaPhrases/im_sorry_but_i_dont_understand_what_you_mean.wav"
                 received_judgement = True
 
             elif s_new.judgement == '3': 
 
-                tia_to_say = "There are more than 3 errors in your sentence. Please simplify and try again"
-                synth_url = "media/prePreparedTiaPhrases/more_than_three_errors.wav"
                 received_judgement = True
 
 
@@ -1160,8 +1158,8 @@ def check_judgement(request):
         'nodSpeed': float(s_new.nodSpeed),
         'show_correction': s_new.show_correction,
         'receivedJudgement': received_judgement,
-        'synthURL': synth_url,
-        'tiaToSay': tia_to_say,
+        'forPrompt': for_prompt,
+        # 'tiaToSay': tia_to_say,
     }
 
     response_data = {

@@ -1,63 +1,50 @@
 function runAfterJudgement() {
 
     recTimes.runAfterJudgement =  Date.now() / 1000;
-    // logic for different types of judgement
     
     // get duration of nod or shake. Can also be 0o
-    let nodShakeDur = 0;
-    if ( conversationVariables.last_sent.nod !== null ) {
+    //let nodShakeDur = 0;
+    //if ( conversationVariables.last_sent.nod !== null ) {
     
-        nodShakeDur = 4 * parseFloat( getNodSpeedInString() ) * 1000;
+        //nodShakeDur = 4 * parseFloat( getNodSpeedInString() ) * 1000;
 
-    } else if ( conversationVariables.last_sent.judgement === "D" ) {
+    //} else if ( conversationVariables.last_sent.judgement === "D" ) {
 
-        nodShakeDur = 3000;
+        //nodShakeDur = 3000;
 
-    }
+    //}
 
-    if ( conversationVariables.last_sent.judgement === "C" ) {
+    //if ( conversationVariables.last_sent.judgement === "C" ) {
 
-        if ( conversationVariables.last_sent.nod !== null ) {
+        //if ( conversationVariables.last_sent.nod !== null ) {
                 
-            nodOrShakeHead()
-            setTimeout( function(){
+            //nodOrShakeHead()
+            //setTimeout( function(){
             
-                expressionController( calculatedTalkExpression, tiaTimings.toTalkExpressionDuration );
+                //expressionController( expressionObject.half, tiaTimings.toTalkExpressionDuration );
                 
-                setTimeout( returnToLaptop, tiaTimings.toTalkExpressionDuration );
+                //setTimeout( returnToLaptop, tiaTimings.toTalkExpressionDuration );
             
-            }, nodShakeDur );
+            //}, nodShakeDur );
 
-        } else {
+        //} else {
 
-            setTimeout( function() {
+            //setTimeout( function() {
 
-                setTimeout( function(){
+                //setTimeout( function(){
                 
-                    expressionController( calculatedTalkExpression, tiaTimings.toTalkExpressionDuration );
+                    //expressionController( expressionObject.half, tiaTimings.toTalkExpressionDuration );
                     
-                    setTimeout( returnToLaptop, tiaTimings.toTalkExpressionDuration );
+                    //setTimeout( returnToLaptop, tiaTimings.toTalkExpressionDuration );
                 
-                }, nodShakeDur );
+                //}, nodShakeDur );
 
-            }, tiaTimings.delayBeforeReturnToLaptop );
+            //}, tiaTimings.delayBeforeReturnToLaptop );
 
-        }
+        //}
         
-    } else if ( conversationVariables.last_sent.judgement === "P" ) {
 
-        if ( conversationVariables.last_sent.nod !== null ) {
-
-            nodOrShakeHead()
-            setTimeout( prePrepareForPromptSpeech, nodShakeDur );
-
-        } else {
-
-            setTimeout( prePrepareForPromptSpeech, tiaTimings.delayUntilToTalkPos );
-
-        }
-
-    } else if ( conversationVariables.last_sent.judgement === "I" ) {
+    if ( conversationVariables.last_sent.judgement === "I" ) {
 
         movementController( movementObject.abs.confused, tiaTimings.movementToConfusedDuration / 2, tiaTimings.movementToConfusedDuration );
 
@@ -71,30 +58,16 @@ function runAfterJudgement() {
 
         }, tiaTimings.movementToConfusedDuration * 500 )
 
-    } else if ( conversationVariables.last_sent.judgement === "B" || conversationVariables.last_sent.judgement === "M" || conversationVariables.last_sent.judgement === "D" || conversationVariables.last_sent.judgement === "3" ) {
+    } else {
 
-        synthesisObject.speaking_rate = 0.7;
-        // delay for moving back to laptop and showing sent in prevSents
-        //let delay = 5000;
-        //var text;
-        if ( conversationVariables.last_sent.judgement === "B" ) {
+        //if ( conversationVariables.last_sent.nod !== null ) {
 
-            prePrepareForPromptSpeech();
-            
-        } else if ( conversationVariables.last_sent.judgement === "M" ) {
-            
-            prePrepareForPromptSpeech();
-        
-        } else if ( conversationVariables.last_sent.judgement === "3" ) {
-            
-            displaySpeechBubblePrompt();
-        
-        } else if ( conversationVariables.last_sent.judgement === "D" ) {
+            //nodOrShakeHead()
+            //setTimeout( prePrepareForPromptSpeech, nodShakeDur );
 
-            nodOrShakeHead();
-            setTimeout( displaySpeechBubblePrompt, nodShakeDur - 500 );
+        //} else {
 
-        }
+        runP( conversationVariables.last_sent.judgement );
 
     }
     
@@ -167,113 +140,83 @@ function nodOrShakeHead() {
 
 }
 
-function prePrepareForPromptSpeech() {
+function runP( judg ) {
 
     recTimes.prePrepareForPromptSpeech =  Date.now() / 1000;
     // return to talking pos
     console.log('in prePrepareForPromptSpeech');
-    expressionController( calculatedTalkExpression, tiaTimings.toTalkExpressionDuration );
-
-    displaySpeechBubblePrompt();
     
-    ////display waiting bubble
-    //speechBubbleObject.dotsAppear = false;
+    movementController( movementObject.abs.blank, tiaTimings.returnFromThinkingDuration / 2, tiaTimings.returnFromThinkingDuration, function() {
+       
+       tiaSpeak( 'prompt' );
 
-    //function checkIfPromptReturned() {
+    });
+    expressionController( expressionObject.calculated, tiaTimings.returnFromThinkingDuration / 2 );
 
-        //if ( conversationVariables.promptNIndexesReceived ) {
+}
 
-            //displaySpeechBubblePrompt();
+//function displaySpeechBubblePrompt() {
 
-        //} else {
+    //recTimes.displaySpeechBubblePrompt = Date.now() / 1000;
+    ////want to fade in the text a bit later
+    ////$('#speakingWords').hide()
+    ////$('#speechBubbleCont').fadeIn( tiaTimings.speechBubbleFadeInDuration );
 
-            //setTimeout( checkIfPromptReturned, 2000 );
+    
+    ////if ( conversationVariables.last_sent.judgement === "P" ) {
             
-            //if ( speechBubbleObject.dotsAppear === false ) {
+        ////$('#speakingWordsInside').text( conversationVariables.last_sent.prompt );
 
-                //$('#speechBubbleCont').fadeIn();
+    ////} else if ( conversationVariables.last_sent.judgement === "B" ) {
 
-                //$('.thinkingOfSpeaking').fadeIn( 2000 );
-                //speechBubbleObject.dotsAppear = true;
+        ////let text = createBetterTextForPromptBox( conversationVariables.last_sent );
+        ////$('#speakingWordsInside').text( text );
+    
+    ////} else if ( conversationVariables.last_sent.judgement === "M" ) {
 
-            //}
+        ////let text = createMeanByTextForPromptBox( conversationVariables.last_sent );
+        ////$('#speakingWordsInside').text( text );
+        
+    ////} else if ( conversationVariables.last_sent.judgement === "3" ) {
 
-        //}
+        ////let text = "There are more than 3 mistakes in your sentence. Could you simplify and try again?";
+        ////$('#speakingWordsInside').text( text );
 
-    //}
+    ////} else if ( conversationVariables.last_sent.judgement === "D" ) {
+
+        ////let text = "I'm sorry but I don't understand what you said.";
+        ////$('#speakingWordsInside').text( text );
+    
+    ////}
 
     //setTimeout( function() {
 
-        //setTimeout( checkIfPromptReturned, tiaTimings.toTalkExpressionDuration * 1000 );
-        ////displaySpeechBubble( "high", tiaTimings.toTalkExpressionDuration * 1000, 0.5 )
-    
+        //$('#speakingWords').fadeIn( tiaTimings.speechBubbleFadeInDuration );
+
+        //recTimes.tiaStartTalking = Date.now() / 1000;
+        ////synthesisObject.endCount = synthesisObject.synthAudio.duration * 60* 0.75;
+        
+        ////tiaSpeakCount = 0;
+        ////initTalk();
+
+        ////synthesisObject.synthAudio.play()
+        ////synthesisObject.synthAudio.onended = returnToLaptop;
+        
+        //tiaSpeak( conversationVariables.tiaToSay, function() {
+
+            //if ( conversationVariables.last_sent.judgement === "D" || conversationVariables.last_sent.judgement === "3" || conversationVariables.last_sent.judgement === "M" ) {
+
+                //returnToLaptop( 'try again' );
+
+            //}
+
+        //});
+
+        //conversationVariables.promptSpeaking = true;
+            
     //}, tiaTimings.toTalkExpressionDuration * 1000 );
 
-}
-
-function displaySpeechBubblePrompt() {
-
-    recTimes.displaySpeechBubblePrompt = Date.now() / 1000;
-    //want to fade in the text a bit later
-    //$('#speakingWords').hide()
-    //$('#speechBubbleCont').fadeIn( tiaTimings.speechBubbleFadeInDuration );
-
-    $('#speakingWordsInside').text( conversationVariables.tiaToSay );
-    
-    //if ( conversationVariables.last_sent.judgement === "P" ) {
-            
-        //$('#speakingWordsInside').text( conversationVariables.last_sent.prompt );
-
-    //} else if ( conversationVariables.last_sent.judgement === "B" ) {
-
-        //let text = createBetterTextForPromptBox( conversationVariables.last_sent );
-        //$('#speakingWordsInside').text( text );
-    
-    //} else if ( conversationVariables.last_sent.judgement === "M" ) {
-
-        //let text = createMeanByTextForPromptBox( conversationVariables.last_sent );
-        //$('#speakingWordsInside').text( text );
-        
-    //} else if ( conversationVariables.last_sent.judgement === "3" ) {
-
-        //let text = "There are more than 3 mistakes in your sentence. Could you simplify and try again?";
-        //$('#speakingWordsInside').text( text );
-
-    //} else if ( conversationVariables.last_sent.judgement === "D" ) {
-
-        //let text = "I'm sorry but I don't understand what you said.";
-        //$('#speakingWordsInside').text( text );
-    
-    //}
-
-    setTimeout( function() {
-
-        $('#speakingWords').fadeIn( tiaTimings.speechBubbleFadeInDuration );
-
-        recTimes.tiaStartTalking = Date.now() / 1000;
-        //synthesisObject.endCount = synthesisObject.synthAudio.duration * 60* 0.75;
-        
-        //tiaSpeakCount = 0;
-        //initTalk();
-
-        //synthesisObject.synthAudio.play()
-        //synthesisObject.synthAudio.onended = returnToLaptop;
-        
-        tiaSpeak( conversationVariables.tiaToSay, function() {
-
-            if ( conversationVariables.last_sent.judgement === "D" || conversationVariables.last_sent.judgement === "3" || conversationVariables.last_sent.judgement === "M" ) {
-
-                returnToLaptop( 'try again' );
-
-            }
-
-        });
-
-        conversationVariables.promptSpeaking = true;
-            
-    }, tiaTimings.toTalkExpressionDuration * 1000 );
-
-}
+//}
     
 function returnToLaptop( from ) {
 
