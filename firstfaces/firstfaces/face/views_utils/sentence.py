@@ -47,7 +47,7 @@ def convert_phonemes_to_visemes(p_l_):
 
     viseme_list = []
     for p in p_l_:
-        viseme_list.append([p2v_dict[i] for i in p])
+        viseme_list.append([p2v_dict[i] for i in p if i in p2v_dict_keys])
 
     return viseme_list
 
@@ -92,4 +92,20 @@ p2v_dict = {
     'Z': 's',
     'ZH': 's'
 }
+
+p2v_dict_keys = p2v_dict.keys()
+
+def jsonify_or_none(item_from_db):
+
+    if item_from_db != None:
+        return json.loads(item_from_db)
+    else:
+        return None
+
+def floatify( decimal_from_db ):
+
+    if decimal_from_db != None:
+        return float(decimal_from_db)
+    else:
+        return None
 

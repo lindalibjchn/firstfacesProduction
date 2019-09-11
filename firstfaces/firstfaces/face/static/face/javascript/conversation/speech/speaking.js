@@ -6,7 +6,6 @@ function tiaSpeak( tiaSays, cont=true, speakCb=function(){} ) {
     $('#recordBtnsCont').hide();
     synthesisObject.sentenceNo = 0; // this iterates when multiple sentences need to be spoken
     synthesisObject.continuous = cont;
-    synthesisObject.talking = true; 
 
     // put this on page load somewhere so not calling it every time
     synthesisObject.now = synthesisObject.data[ tiaSays ];
@@ -19,12 +18,13 @@ function tiaSpeak( tiaSays, cont=true, speakCb=function(){} ) {
 function getIntoSpeakingPosition() {
 
     // move from whatever expression into the half of it
-    expressionController( expressionObject.half, tiaTimings.changeExpressionDuration, tiaSpeakIndividualSentences );
+    expressionController( expressionObject.half, tiaTimings.getIntoSpeakingPositionDuration, tiaSpeakIndividualSentences );
 
 }
 
 function tiaSpeakIndividualSentences() {
 
+    synthesisObject.talking = true; 
     synthesisObject.audio.src = synthesisObject.now.URLs[ synthesisObject.sentenceNo ];
     synthesisObject.now.phoneCount = 1;
     
@@ -50,10 +50,15 @@ function holdOnUntilNewAudioDurationIsAvailable() {
 
 }
 
+
 function animateFirstPhoneSlowly() {
 
-    expressionController( expressionObject.abs[ synthesisObject.now.phones[ synthesisObject.sentenceNo ][ 0 ] ], tiaTimings.durationOfFirstAndLastSpeakingPhones, slightlyDelayAudioPlay )
-    initSingleBreath( 1, breatheObject.speakingBreathMult, tiaTimings.durationOfFirstAndLastSpeakingPhones );
+    initSingleBreath( 1, breatheObject.speakingBreathMult, tiaTimings.durationOfFirstBreath );
+    setTimeout( function() {
+
+        expressionController( expressionObject.abs[ synthesisObject.now.phones[ synthesisObject.sentenceNo ][ 0 ] ], tiaTimings.durationOfFirstSpeakingPhones, slightlyDelayAudioPlay )
+
+    }, tiaTimings.durationOfFirstBreath * 0.875 ) 
 
 }
 
@@ -89,18 +94,18 @@ function animatePhonesInOrder() {
         //if last sentence then just show mic, but if more sentences to come then show 'next' button
         if ( synthesisObject.sentenceNo === synthesisObject.now.texts.length - 1 ) {
 
+            synthesisObject.talking = false;
              //console.log( 'in endPhoneCount' );
-            expressionController( expressionObject.quarter, tiaTimings.changeExpressionDuration * 1.5, function() {
+            expressionController( expressionObject.quarter, tiaTimings.durationOfReturnToExpressionAfterVeryLastSpeakingPhone, function() {
 
                 synthesisObject.callback();
-                synthesisObject.talking = false;
                 buttonsMicrophoneOnly();
             
             }) 
 
         } else {
 
-            expressionController( expressionObject.abs.talkBase, tiaTimings.changeExpressionDuration, function() {
+            expressionController( expressionObject.abs.talkBase, tiaTimings.durationOfLastSpeakingPhones, function() {
 
                 if ( synthesisObject.continuous ) {
 
@@ -145,6 +150,8 @@ function pronunciationController( expressionTo, cb ) {
 //// general all-purpose method for all expressions
 function initPronunciation() {
 
+    // incase of really long phones bugginf out 
+    synthesisObject.now.noOfFramesPerPhone = Math.min( synthesisObject.now.noOfFramesPerPhone, 60 );
     if ( [ 'i', 'e', 'u' ].includes( synthesisObject.now.phones[ synthesisObject.sentenceNo ][ synthesisObject.now.phoneCount ][ 0 ] ) ) {
 
         // -1 cause the frames run over

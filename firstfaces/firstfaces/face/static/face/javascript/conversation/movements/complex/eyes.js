@@ -98,7 +98,7 @@ function thinkingEyes() {
             let saccCoords = [[0,0,0],[randomSaccX, randomSaccY, 0]];
 
             movementNow.sacc = saccCoords;
-            initSacc( saccCoords, '0.75', false );
+            initSacc( saccCoords, tiaTimings.thinkingEyesSaccadeDuration, false );
 
         }
 

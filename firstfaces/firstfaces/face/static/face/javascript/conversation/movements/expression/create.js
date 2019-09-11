@@ -1,4 +1,31 @@
 //// LOGIC FOR TURNING WHEEL COORDINATES INTO EXPRESSIONS
+function changeExpression() {
+
+    synthesisObject.pitch = 0;
+    synthesisObject.speaking_rate = 0.7;
+
+    let emotionCoords = conversationVariables.last_sent['emotion']
+    let surprise = conversationVariables.last_sent['surprise']
+
+    // check if emotion is in centre of circle - if so there is no change
+    let dia = Math.sqrt( emotionCoords[0]**2 + emotionCoords[1]**2 )
+
+    let sectorNRatio = getTwoExpressions( emotionCoords );
+    let exp01 = sectors[ sectorNRatio[ 0 ] ][ 0 ];
+    let exp02 = sectors[ sectorNRatio[ 0 ] ][ 1 ];
+    let pitch01 = exp01.pitch;
+    let pitch02 = exp02.pitch;
+    let speech_rate01 = exp01.speaking_rate;
+    let speech_rate02 = exp02.speaking_rate;
+    let ratio = sectorNRatio[ 1 ];
+
+    synthesisObject.pitch += dia * ( ( 1 - ratio ) * pitch02 + ratio * pitch01 ) + surprise;
+    synthesisObject.speaking_rate += dia * ( ( 1 - ratio ) * speech_rate02 + ratio * speech_rate01 ) + surprise / 10;
+
+    //arguments are [happyExpression, contentExpression], ratio of 1st to 2nd, diameter/amount, surprise amount
+    createCalculatedExpression( sectors[ sectorNRatio[ 0 ] ], ratio,  dia, surprise );
+
+}
 
 function getTwoExpressions( eCo ) {
 
@@ -166,8 +193,8 @@ function createCalculatedExpression( twoExpressions, ratio, mult, surp ){
                     for ( var k=0; k < 3; k++ ) {
 
                         let movementAmount = expression01ThisBone[ j ][ k ] * expression01Amount + expression02ThisBone[ j ][ k ] * expression02Amount + surpriseExpressionThisBone[ j ][ k ] * surp;
-                        let halfAmount = 0.5 * expression01ThisBone[ j ][ k ] * expression01Amount + 0.5 * expression02ThisBone[ j ][ k ] * expression02Amount + 0.5 * surpriseExpressionThisBone[ j ][ k ]// * 0.05; // small surprise to open mouth a wee bit
-                        let quartAmount = 0.25 * expression01ThisBone[ j ][ k ] * expression01Amount + 0.25 * expression02ThisBone[ j ][ k ] * expression02Amount + 0.25 * surpriseExpressionThisBone[ j ][ k ]// * 0.05; // small surprise to open mouth a wee bit
+                        let halfAmount = 0.5 * expression01ThisBone[ j ][ k ] * expression01Amount + 0.5 * expression02ThisBone[ j ][ k ] * expression02Amount + 0.5 * surpriseExpressionThisBone[ j ][ k ] * surp// * 0.05; // small surprise to open mouth a wee bit
+                        let quartAmount = 0.25 * expression01ThisBone[ j ][ k ] * expression01Amount + 0.25 * expression02ThisBone[ j ][ k ] * expression02Amount + 0.25 * surpriseExpressionThisBone[ j ][ k ] * surp// * 0.05; // small surprise to open mouth a wee bit
 
                         calcExp.AUs[ AU ][ bone ][ j ][ k ] = movementAmount;
                         halfCalcExp.AUs[ AU ][ bone ][ j ][ k ] = halfAmount;
@@ -192,35 +219,7 @@ function createCalculatedExpression( twoExpressions, ratio, mult, surp ){
 
     expressionObject.calculated = getAbsoluteCoordsOfExpressionTo( calcExp ); 
     expressionObject.half = getAbsoluteCoordsOfExpressionTo( halfCalcExp );
-    expressionObject.quarter = getAbsoluteCoordsOfExpressionTo( halfCalcExp );
-
-}
-
-function changeExpression() {
-
-    synthesisObject.pitch = 0;
-    synthesisObject.speaking_rate = 0.7;
-
-    let emotionCoords = conversationVariables.last_sent['emotion']
-    let surprise = conversationVariables.last_sent['surprise']
-
-    // check if emotion is in centre of circle - if so there is no change
-    let dia = Math.sqrt( emotionCoords[0]**2 + emotionCoords[1]**2 )
-
-    let sectorNRatio = getTwoExpressions( emotionCoords );
-    let exp01 = sectors[ sectorNRatio[ 0 ] ][ 0 ];
-    let exp02 = sectors[ sectorNRatio[ 0 ] ][ 1 ];
-    let pitch01 = exp01.pitch;
-    let pitch02 = exp02.pitch;
-    let speech_rate01 = exp01.speaking_rate;
-    let speech_rate02 = exp02.speaking_rate;
-    let ratio = sectorNRatio[ 1 ];
-
-    synthesisObject.pitch += dia * ( ( 1 - ratio ) * pitch02 + ratio * pitch01 ) + surprise;
-    synthesisObject.speaking_rate += dia * ( ( 1 - ratio ) * speech_rate02 + ratio * speech_rate01 ) + surprise / 10;
-
-    //arguments are [happyExpression, contentExpression], ratio of 1st to 2nd, diameter/amount, surprise amount
-    createCalculatedExpression( sectors[ sectorNRatio[ 0 ] ], ratio,  dia, surprise );
+    expressionObject.quarter = getAbsoluteCoordsOfExpressionTo( quartCalcExp );
 
 }
 

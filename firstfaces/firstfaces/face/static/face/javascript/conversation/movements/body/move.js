@@ -8,7 +8,7 @@ function movementController( movementTo, saccDur, bodyDur, moveCb=function(){} )
         setTimeout( function() {
 
             movementController( movementTo, saccDur, bodyDur, moveCb=moveCb );
-            //console.log( 'tried to move while blinking so retry in 200ms' );
+            console.log( 'tried to move while blinking or eye moving so retry in 200ms' );
 
         }, 200 );
 

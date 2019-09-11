@@ -10,6 +10,7 @@ tiaTimings = {
     // THINK POSITION
     toThinkDuration: 1.5,
     returnFromThinkingDuration: 1.5,
+    thinkingEyesSaccadeDuration: 0.25,
 
     // THOUGHT BUBBLE
     delayToAddThoughtBubbles: 200,
@@ -41,7 +42,11 @@ tiaTimings = {
     speechTextFadeInDuration: 500,
     speechBubbleFadeOutDuration: 200,
     speechTextFadeOutDuration: 200,
-    durationOfFirstAndLastSpeakingPhones: 0.75,
+    getIntoSpeakingPositionDuration: 1,
+    durationOfFirstBreath: 1,
+    durationOfFirstSpeakingPhones: 0.6,
+    durationOfLastSpeakingPhones: 0.4,
+    durationOfReturnToExpressionAfterVeryLastSpeakingPhone: 1.25,
 
     // EXPRESSIONS
     changeExpressionDuration: 0.75,
