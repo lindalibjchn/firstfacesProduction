@@ -15,6 +15,7 @@ function initInputReady( from ) {
     
     }
 
+    setLastSent();
     //$('#controllerContainer').fadeIn( 1000 );
 
     if ( from === 'try again' ) {
@@ -65,6 +66,19 @@ function initInputReady( from ) {
 }
 
 
+function setLastSent() {
+
+   if ( Object.keys(conversationVariables.sentences).length > 0 ) {
+    
+        conversationVariables.last_sent = conversationVariables.sentences[Object.keys(conversationVariables.sentences).length - 1];
+
+    } else {
+
+        conversationVariables.last_sent = null;
+
+    }
+
+}
 
 
 
