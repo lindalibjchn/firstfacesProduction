@@ -66,7 +66,7 @@ function readyBtns() {
 
         $('#confirmFinish').hide();
 
-        if ( conversationVariables.id_of_last_sent === null ) {
+        if ( conversationVariables.ind_of_last_sent === null ) {
         
             endClassNoSentences()
 

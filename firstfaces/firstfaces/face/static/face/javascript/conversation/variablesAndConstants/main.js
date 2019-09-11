@@ -103,13 +103,14 @@ var eyelidsAbs = {
 
 // Breathe
 
-const secsOneBreath = 180;
+const secsOneBreath = 150;
 
 
 ///////////// SINE ARRAYS
 
 //const SINETYPEARRAYSECONDS = [ 30, 45, 60 ];
 const SINEARRAYFORBREATHESECONDS = [ 180, 210, 240, 270, 300 ]
+const SINEARRAYFORTILTSECONDS = [ 120, 150, 180, 210, 240, 270, 300 ]
 
 
 

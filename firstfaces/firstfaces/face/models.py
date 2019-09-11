@@ -31,45 +31,44 @@ class Available(models.Model):
     def __str__(self):
         return timezone.localtime(self.start_availability).strftime("%a %d %H:%M") + " -- " + timezone.localtime(self.end_availability).strftime("%H:%M")
 
+JUDGEMENT_CHOICES = (
+    ('C', 'correct'),
+    ('B', 'better'),
+    ('P', 'prompt'),
+    ('M', 'mean_by'),
+    ('I', 'incorrect'),
+    ('D', 'dunno'),
+    ('3', 'more_than_three')
+)
+
 class PermSentence(models.Model):
     learner = models.ForeignKey(User, on_delete=models.CASCADE)
     session = models.ForeignKey(Conversation, on_delete=models.CASCADE)
-    sentence = models.CharField(max_length=300, default="[]")
+    sentence = models.CharField(max_length=300, null=True, blank=True)
     sentence_timestamp = models.DateTimeField(null=True, blank=True)
-    question = models.BooleanField(default=False)
-
-    JUDGEMENT_CHOICES = (
-        ('C', 'correct'),
-        ('B', 'better'),
-        ('P', 'prompt'),
-        ('M', 'mean_by'),
-        ('I', 'incorrect'),
-        ('D', 'dunno'),
-        ('3', 'more_than_three')
-    )
 
     judgement = models.CharField(max_length=1, choices=JUDGEMENT_CHOICES, null=True, blank=True)
     judgement_timestamp = models.DateTimeField(null=True, blank=True)
     emotion = models.CharField(max_length=12, default="[0, 0]")
     # True is nod. False is shake and null is nothing
-    nod = models.NullBooleanField(null=True)
-    nodSpeed = models.DecimalField(max_digits=2, decimal_places=1, default=0.0)
-    nodAmount = models.DecimalField(max_digits=2, decimal_places=1, default=0.0)
-    surprise = models.DecimalField(max_digits=2, decimal_places=1, default=0.0)
+    nod = models.NullBooleanField(null=True, blank=True)
+    nodSpeed = models.DecimalField(max_digits=2, decimal_places=1, null=True, blank=True)
+    nodAmount = models.DecimalField(max_digits=2, decimal_places=1, null=True, blank=True)
+    surprise = models.DecimalField(max_digits=2, decimal_places=1, null=True, blank=True)
     indexes = models.CharField(max_length=50, null=True, blank=True)
-    correction = models.CharField(max_length=300, blank=True)
+    correction = models.CharField(max_length=300, null=True, blank=True)
     correction_timestamp = models.DateTimeField(null=True, blank=True)
     #this was for checking if correction has come in previous version. could be removed if not needed later
-    whats_wrong = models.NullBooleanField(null=True)
+    whats_wrong = models.NullBooleanField(null=True, blank=True)
     whats_wrong_timestamp = models.DateTimeField(null=True, blank=True)
-    try_again = models.NullBooleanField(null=True)
+    try_again = models.NullBooleanField(null=True, blank=True)
     try_again_timestamp = models.DateTimeField(null=True, blank=True)
-    show_correction = models.NullBooleanField(null=True)
+    show_correction = models.NullBooleanField(null=True, blank=True)
     show_correction_timestamp = models.DateTimeField(null=True, blank=True)
-    next_sentence = models.NullBooleanField(null=True)
+    next_sentence = models.NullBooleanField(null=True, blank=True)
     next_sentence_timestamp = models.DateTimeField(null=True, blank=True)
     #if native wants to say something in speech bubble
-    prompt = models.CharField(max_length=300, null=True, blank=True, default=None)
+    prompt = models.CharField(max_length=300, null=True, blank=True)
     prompt_timestamp = models.DateTimeField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -81,45 +80,35 @@ class TempSentence(models.Model):
     p_sentence = models.ForeignKey(PermSentence, on_delete=models.CASCADE)
     learner = models.ForeignKey(User, on_delete=models.CASCADE)
     session = models.ForeignKey(Conversation, on_delete=models.CASCADE)
-    sentence = models.CharField(max_length=300, default="[]")
+    sentence = models.CharField(max_length=300, null=True, blank=True)
     sentence_timestamp = models.DateTimeField(null=True, blank=True)
-    question = models.BooleanField(default=False)
-
-    JUDGEMENT_CHOICES = (
-        ('C', 'correct'),
-        ('P', 'prompt'),
-        ('B', 'better'),
-        ('M', 'mean_by'),
-        ('I', 'incorrect'),
-        ('D', 'dunno'),
-        ('3', 'more_than_three')
-    )
 
     judgement = models.CharField(max_length=1, choices=JUDGEMENT_CHOICES, null=True, blank=True)
     judgement_timestamp = models.DateTimeField(null=True, blank=True)
     emotion = models.CharField(max_length=12, default="[0, 0]")
     # True is nod. False is shake and null is nothing
-    nod = models.NullBooleanField(null=True)
-    nodSpeed = models.DecimalField(max_digits=2, decimal_places=1, default=0.0)
-    nodAmount = models.DecimalField(max_digits=2, decimal_places=1, default=0.0)
-    surprise = models.DecimalField(max_digits=2, decimal_places=1, default=0.0)
+    nod = models.NullBooleanField(null=True, blank=True)
+    nodSpeed = models.DecimalField(max_digits=2, decimal_places=1, null=True, blank=True)
+    nodAmount = models.DecimalField(max_digits=2, decimal_places=1, null=True, blank=True)
+    surprise = models.DecimalField(max_digits=2, decimal_places=1, null=True, blank=True)
     indexes = models.CharField(max_length=50, null=True, blank=True)
-    correction = models.CharField(max_length=300, blank=True)
+    correction = models.CharField(max_length=300, null=True, blank=True)
     correction_timestamp = models.DateTimeField(null=True, blank=True)
     #this was for checking if correction has come in previous version. could be removed if not needed later
-    whats_wrong = models.NullBooleanField(null=True)
+    whats_wrong = models.NullBooleanField(null=True, blank=True)
     whats_wrong_timestamp = models.DateTimeField(null=True, blank=True)
-    try_again = models.NullBooleanField(null=True)
+    try_again = models.NullBooleanField(null=True, blank=True)
     try_again_timestamp = models.DateTimeField(null=True, blank=True)
-    show_correction = models.NullBooleanField(null=True)
+    show_correction = models.NullBooleanField(null=True, blank=True)
     show_correction_timestamp = models.DateTimeField(null=True, blank=True)
-    next_sentence = models.NullBooleanField(null=True)
+    next_sentence = models.NullBooleanField(null=True, blank=True)
     next_sentence_timestamp = models.DateTimeField(null=True, blank=True)
     #if native wants to say something in speech bubble
-    prompt = models.CharField(max_length=300, null=True, blank=True, default=None)
+    prompt = models.CharField(max_length=300, null=True, blank=True)
     prompt_timestamp = models.DateTimeField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    for_prompt = models.CharField(max_length=1000, null=True, blank=True)
 
     def __str__(self):
         return  str(self.pk) + ": " + str(self.sentence)

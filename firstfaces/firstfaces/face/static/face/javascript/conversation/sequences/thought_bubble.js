@@ -230,7 +230,7 @@ function tiaTellsStudentNoFeedback() {
 
     thinkingEyesObject.bool = false
     moveThoughtBubblesToToFollowThinkingHead( false );
-    removeThoughtBubbles( tiaTimings.removeThoughtBubbleDuration, function(){
+    removeThoughtBubbles( tiaTimings.removeThoughtBubbleDuration, removeTBCb=function(){
 
         movementController( movementObject.abs.blank, tiaTimings.fromThinkingHardDuration / 2, tiaTimings.fromThinkingHardDuration, function() {
 
@@ -271,14 +271,15 @@ function moveThoughtBubblesToToFollowNoddingHead( up, dur ) {
 
 }
 
-function removeThoughtBubbles( dur, cb ) {
+function removeThoughtBubbles( dur, removeTBCb=function(){} ) {
 
     $( '.thought-bubbles' ).fadeOut( dur );
     $( '#thinkingWordsCont' ).fadeOut( dur );
      
+
     setTimeout( function() {
 
-        cb();
+        removeTBCb();
 
     }, dur )
 

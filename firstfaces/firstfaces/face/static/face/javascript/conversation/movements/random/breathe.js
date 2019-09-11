@@ -16,7 +16,6 @@ function normalBreathing() {
 function singleBreathing() {
 
     let singleBreatheCount = mainCount - breatheObject.singleBreath.startCount;
-    //console.log('singleBreatheCount:', singleBreatheCount );
     
     if ( mainCount < breatheObject.singleBreath.endCount ) {
 

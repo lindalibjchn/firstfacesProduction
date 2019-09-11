@@ -76,12 +76,12 @@ function checkJudgement() {
             'sessId': conversationVariables.session_id,
             'sentId': conversationVariables.last_sent.sent_id,
         },
-        timeout: 5000,
         success: function(json) {
             
-            if ( json.sent_meta.receivedJudgement ) {
+            console.log('receivedJudgement:', json.receivedJudgement)
+            if ( json.receivedJudgement ) {
 
-                judgementReceived( json.sent_meta )
+                judgementReceived( json )
             
             } else {
 
@@ -92,6 +92,7 @@ function checkJudgement() {
         },
         error: function() {
             
+            console.log('in error');
             startNextSentenceThoughtLoop( errorInGettingResponse=true );
         
         },

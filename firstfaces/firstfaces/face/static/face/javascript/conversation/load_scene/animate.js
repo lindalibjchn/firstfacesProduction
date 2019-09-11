@@ -1,17 +1,5 @@
 function animate () {
 
-    //if ( cameraObject[ 'bool' ] ) {
-
-        //rotateCamera( mainCount );
-
-    //}
-
-    //if ( enterCameraObject[ 'bool' ] ) {
-
-        //enterCameraMove( mainCount );
-
-    //}
-
     if ( volumeObject.bool ) {
 
         drawLoop( mainCount );
@@ -42,29 +30,11 @@ function animate () {
 
     }
 
-    if ( armTapObject[ 'bool' ] ) {
+    //if ( armTapObject[ 'bool' ] ) {
 
-        armTap( mainCount );
+        //armTap( mainCount );
 
-    }
-
-    ////if ( mainCount % 2 === 0 ) {
-
-        //if ( mouthOpenObject.bool ) {
-
-            //openMouth( mainCount )
-
-        //}
-
-    ////} else {
-
-        //if ( purseLipsObject.bool ) {
-
-            //purseLips( mainCount )
-
-        //}
-
-    ////}
+    //}
 
     if ( nodObject.bool ) {
 
@@ -77,26 +47,6 @@ function animate () {
         shake( mainCount )
 
     }
-
-    //if ( leanObject.bool ) {
-
-        //lean( mainCount )
-
-    //}
-
-    //if ( armIndicateObject.bool ) {
-
-        //armIndicate( mainCount );
-
-    //}
-
-    ////// Full movementObject.abs
-
-    //if ( mainEnterObject.bool ) {
-
-        //mainEnter();
-
-    //}
 
     // CONTINUOUS AND RANDOM MOVEMENTS
     
@@ -151,8 +101,6 @@ function animate () {
         randomTiltNeck( randomTiltNeckRemaining )
 
     }
-
-
 
     mainCount += 1;
 

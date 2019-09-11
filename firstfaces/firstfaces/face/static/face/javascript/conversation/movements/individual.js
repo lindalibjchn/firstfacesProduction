@@ -99,98 +99,98 @@ function armTap( main ) {
 //////////////// MOVE ARM TO INDICATE 
 
 
-function initArmIndicate( arm, to, height, secs ) {
+//function initArmIndicate( arm, to, height, secs ) {
 
-    if ( armIndicateObject.bool ) {
+    //if ( armIndicateObject.bool ) {
 
-        console.log('can move while still moving man!!')
+        //console.log('can move while still moving man!!')
 
-    } else {
+    //} else {
 
-        let from = armIndicateObject.currentState;
+        //let from = armIndicateObject.currentState;
 
-        if ( from !== to ) {
+        //if ( from !== to ) {
 
-            assignSinArrayForSpeed( secs, armIndicateObject, sineArrays ) 
+            //assignSinArrayForSpeed( secs, armIndicateObject, sineArrays ) 
 
-            armIndicateObject.startCount = mainCount;
-            var armDir;
+            //armIndicateObject.startCount = mainCount;
+            //var armDir;
             
-            if ( arm === "left" ) {
+            //if ( arm === "left" ) {
             
-                armIndicateObject.upperArm = tiaObject.bodyBones['upperArm.L'];
-                armIndicateObject.lowerArm = tiaObject.bodyBones['lowerArm.L'];
-                armIndicateObject.hand = tiaObject.bodyBones['hand.L'];
-                armDir = 1;
+                //armIndicateObject.upperArm = tiaObject.bodyBones['upperArm.L'];
+                //armIndicateObject.lowerArm = tiaObject.bodyBones['lowerArm.L'];
+                //armIndicateObject.hand = tiaObject.bodyBones['hand.L'];
+                //armDir = 1;
 
-            } else {
+            //} else {
 
-                armIndicateObject.upperArm = tiaObject.bodyBones['upperArm.R'];
-                armIndicateObject.lowerArm = tiaObject.bodyBones['lowerArm.R'];
-                armIndicateObject.hand = tiaObject.bodyBones['hand.R'];
-                armDir = -1;
+                //armIndicateObject.upperArm = tiaObject.bodyBones['upperArm.R'];
+                //armIndicateObject.lowerArm = tiaObject.bodyBones['lowerArm.R'];
+                //armIndicateObject.hand = tiaObject.bodyBones['hand.R'];
+                //armDir = -1;
 
-            }
+            //}
 
-            let mult = to - from;
+            //let mult = to - from;
 
-            armIndicateObject.currentState = to;
+            //armIndicateObject.currentState = to;
 
-            if ( height === "high" ) {
+            //if ( height === "high" ) {
             
-                armIndicateObject.upperArmRotY = mult * 0.5 * armDir;
-                armIndicateObject.upperArmRotZ = mult * 0.5 * armDir;
-                armIndicateObject.upperArmRotX = mult * -0.6;
+                //armIndicateObject.upperArmRotY = mult * 0.5 * armDir;
+                //armIndicateObject.upperArmRotZ = mult * 0.5 * armDir;
+                //armIndicateObject.upperArmRotX = mult * -0.6;
                 
-            } else {
+            //} else {
 
-                armIndicateObject.upperArmRotY = mult * 0.2 * armDir;
-                armIndicateObject.upperArmRotZ = mult * 0.2 * armDir;
-                armIndicateObject.upperArmRotX = mult * -0.3;
+                //armIndicateObject.upperArmRotY = mult * 0.2 * armDir;
+                //armIndicateObject.upperArmRotZ = mult * 0.2 * armDir;
+                //armIndicateObject.upperArmRotX = mult * -0.3;
                 
-            }
+            //}
 
-            armIndicateObject.lowerArmRotY = mult * 0.3 * armDir;
-            armIndicateObject.lowerArmRotZ = mult * -0.6 * armDir;
-            armIndicateObject.handRotZ = mult * 0.9 * armDir;
+            //armIndicateObject.lowerArmRotY = mult * 0.3 * armDir;
+            //armIndicateObject.lowerArmRotZ = mult * -0.6 * armDir;
+            //armIndicateObject.handRotZ = mult * 0.9 * armDir;
 
-            armIndicateObject[ 'bool' ] = true;
+            //armIndicateObject[ 'bool' ] = true;
             
-        } else {
+        //} else {
 
-            console.log('same amount for armIndicate');
+            //console.log('same amount for armIndicate');
         
-        }
+        //}
 
-    }
+    //}
 
-}
+//}
 
-function armIndicate( main ) {
+//function armIndicate( main ) {
 
-    let main_start = main - armIndicateObject.startCount;
+    //let main_start = main - armIndicateObject.startCount;
 
-    let sinArray = armIndicateObject.sin;
+    //let sinArray = armIndicateObject.sin;
 
-    let sinAmount = sinArray[ main_start ]
+    //let sinAmount = sinArray[ main_start ]
     
-    if ( main_start < armIndicateObject.sinLength ) {
+    //if ( main_start < armIndicateObject.sinLength ) {
 
-        // rotation outward
-        armIndicateObject.upperArm.rotation.x += armIndicateObject.upperArmRotX * sinAmount;
-        armIndicateObject.upperArm.rotation.y += armIndicateObject.upperArmRotY * sinAmount;
-        armIndicateObject.upperArm.rotation.z += armIndicateObject.upperArmRotZ * sinAmount;
-        armIndicateObject.lowerArm.rotation.y += armIndicateObject.lowerArmRotY * sinAmount;
-        armIndicateObject.lowerArm.rotation.z += armIndicateObject.lowerArmRotZ * sinAmount;
-        armIndicateObject.hand.rotation.z -= armIndicateObject.handRotZ * sinAmount;
+        //// rotation outward
+        //armIndicateObject.upperArm.rotation.x += armIndicateObject.upperArmRotX * sinAmount;
+        //armIndicateObject.upperArm.rotation.y += armIndicateObject.upperArmRotY * sinAmount;
+        //armIndicateObject.upperArm.rotation.z += armIndicateObject.upperArmRotZ * sinAmount;
+        //armIndicateObject.lowerArm.rotation.y += armIndicateObject.lowerArmRotY * sinAmount;
+        //armIndicateObject.lowerArm.rotation.z += armIndicateObject.lowerArmRotZ * sinAmount;
+        //armIndicateObject.hand.rotation.z -= armIndicateObject.handRotZ * sinAmount;
 
-    } else {
+    //} else {
 
-        armIndicateObject.bool = false;
+        //armIndicateObject.bool = false;
 
-    }
+    //}
 
-}
+//}
 
 // special one off blink where it is possible to set secs and pause when closed
 function initSelectBlink( len, pauseClosed ) {

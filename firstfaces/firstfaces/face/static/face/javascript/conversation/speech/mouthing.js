@@ -14,7 +14,7 @@ function animateFirstMouthPhoneSlowly() {
 
     if ( mouthingObject.emphasis ) {
 
-        expressionController( expressionObject.abs[ mouthingObject.phones[ 0 ] + 'Emp' ], tiaTimings.durationOfEmphasisedFirstAndLastMouthingPhones, function() {
+        expressionController( expressionObject.abs[ mouthingObject.phones[ 0 ] + 'Emp' ], tiaTimings.durationOfEmphasisedFirstMouthingPhones, function() {
            
             movementController( movementObject.abs.thinkSentenceArmNeutral, thoughtBubbleObject.handMov2Dur, thoughtBubbleObject.handMov2Dur, animateMouthPhonesInOrder);
             moveThoughtBubblesToToFollowNoddingHead( false, thoughtBubbleObject.handMov2Dur );
@@ -23,7 +23,7 @@ function animateFirstMouthPhoneSlowly() {
 
     } else {
 
-        expressionController( expressionObject.abs[ mouthingObject.phones[ 0 ] ], tiaTimings.durationOfFirstAndLastMouthingPhones, animateMouthPhonesInOrder )
+        expressionController( expressionObject.abs[ mouthingObject.phones[ 0 ] ], tiaTimings.durationOfFirstMouthingPhones, animateMouthPhonesInOrder )
 
     }
 
@@ -32,11 +32,11 @@ function animateFirstMouthPhoneSlowly() {
 function animateMouthPhonesInOrder() {
 
     let express_ = expressionObject.abs[ mouthingObject.phones[ mouthingObject.phoneCount ] ];
-    let durLast_ = tiaTimings.durationOfFirstAndLastMouthingPhones;
+    let durLast_ = tiaTimings.durationOfFirstMouthingPhones;
     if ( mouthingObject.emphasis ) {
         
         express_ = expressionObject.abs[ mouthingObject.phones[ mouthingObject.phoneCount ] + 'Emp' ]
-        durLast_ = tiaTimings.durationOfEmphasisedFirstAndLastMouthingPhones;
+        durLast_ = tiaTimings.durationOfEmphasisedFirstMouthingPhones;
 
     }
 

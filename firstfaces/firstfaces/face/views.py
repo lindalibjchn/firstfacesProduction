@@ -6,7 +6,7 @@ from .forms import UserForm, SignUpForm, SignUpUserForm
 from django.contrib.auth.password_validation import validate_password
 from django.http import JsonResponse
 from .utils import *
-from .views_utils.sentence import change_sentence_to_list_n_add_data
+from .views_utils.sentence import change_sentence_to_list_n_add_data, jsonify_or_none, floatify
 from .views_utils.text_to_speech import create_tia_speak_sentences_synthesis_data, get_text
 from .speech_to_text_utils import *
 from django.utils import timezone
@@ -283,20 +283,20 @@ def conversation(request, session_id):
 
                 # get news article details. This will set the 'headline' and 'article_link' variables
                 date_now = timezone.localtime(timezone.now()).date()
-                try:
-                    todays_news_article = NewsArticle.objects.get(date=date_now)
-                    headline = todays_news_article.title
-                    article_link = todays_news_article.link
-                    article = True
-                except:
-                    headline = "no article today"
-                    article_link = "#"
-                    article = False
+                # try:
+                    # todays_news_article = NewsArticle.objects.get(date=date_now)
+                    # headline = todays_news_article.title
+                    # article_link = todays_news_article.link
+                    # article = True
+                # except:
+                    # headline = "no article today"
+                    # article_link = "#"
+                    # article = False
 
-                # get previous session details
-                prev_topic = None
-                prev_score = None
-                prev_emotion = None
+                # # get previous session details
+                # prev_topic = None
+                # prev_score = None
+                # prev_emotion = None
                 first_full_conversation = False
                 tutorial_complete = Profile.objects.get(learner=request.user).tutorial_complete
 
@@ -306,17 +306,17 @@ def conversation(request, session_id):
 
                 try:
                     all_sesss = Conversation.objects.filter(learner=request.user).exclude(end_time=None)
-                    recent_sesss = all_sesss.filter(start_time__gte=sess.start_time-datetime.timedelta(days=30)).filter(tutorial=False).order_by('-pk')
+                    # recent_sesss = all_sesss.filter(start_time__gte=sess.start_time-datetime.timedelta(days=30)).filter(tutorial=False).order_by('-pk')
 
-                    print('recent_sesss:', recent_sesss)
+                    # print('recent_sesss:', recent_sesss)
 
-                    if len(recent_sesss) > 0:
+                    # if len(recent_sesss) > 0:
                         
-                        prev_topic = recent_sesss[0].topic
-                        prev_emotion = recent_sesss[0].learner_emotion
-                        if prev_topic == 'emotion':
-                            prev_topic = 'feeling ' + prev_emotion
-                        prev_score = recent_sesss[0].score
+                        # prev_topic = recent_sesss[0].topic
+                        # prev_emotion = recent_sesss[0].learner_emotion
+                        # if prev_topic == 'emotion':
+                            # prev_topic = 'feeling ' + prev_emotion
+                        # prev_score = recent_sesss[0].score
                     if len(all_sesss) == 1: # tutorial is one conversation
                         first_full_conversation = True
 
@@ -328,13 +328,13 @@ def conversation(request, session_id):
                 blob_no_text_sent_id = None
                 # no longer using these counts below but keep them so system doesn't break
                 interference_count = 0
-                interference_count_this_sent = 0
+                # interference_count_this_sent = 0
 
                 #check if learner entered a topic. If so then it is not first entry
                 first_enter = True 
                 sentences = {}
-                id_of_last_sent = None
-                last_sent = {}
+                # id_of_last_sent = None
+                # last_sent = {}
                 if sess.topic != None:
                     
                     first_enter = False
@@ -344,26 +344,10 @@ def conversation(request, session_id):
                     if this_sess_sents:
 
                         #this is to be the index of the sentence
-                        id_of_last_sent = this_sess_sents.count() - 1
+                        ind_of_last_sent = this_sess_sents.count() - 1
 
                         for i, s in enumerate(this_sess_sents):
 
-                            # have to change from decimal in db to float
-                            float_nodSpeed = None
-                            float_nodAmount = None
-                            float_surprise = None
-
-                            if s.nodSpeed != None:
-
-                                float_nodSpeed = float(s.nodSpeed)
-
-                            if s.nodAmount != None:
-
-                                float_nodAmount = float(s.nodAmount)
-
-                            if s.surprise != None:
-
-                                float_surprise = float(s.surprise)
 
                             #count the interference
                             audio_files = s.audiofile_set.all()
@@ -371,29 +355,17 @@ def conversation(request, session_id):
                                 if a.interference:
                                     interference_count += 1;
 
-                            # stop error on json.loads when indexes are none
-                            # print(type(s.correction))
-                            if s.indexes != None:
-                                indexes = json.loads(s.indexes)
-                            else:
-                                indexes = None
-
-                            if s.correction != '':
-                                correction = json.loads(s.correction)
-                            else:
-                                correction = None
-
                             sentences[i] = {
                                 'sent_id': s.id,
-                                'sentence': json.loads(s.sentence),
+                                'sentence': jsonify_or_none(s.sentence),
                                 'judgement': s.judgement,
-                                'emotion': s.emotion,
+                                'emotion': jsonify_or_none(s.emotion),
                                 'nod': s.nod,
-                                'nodSpeed': float_nodSpeed,
-                                'nodAmount': float_nodAmount,
-                                'surprise': float_surprise,
-                                'indexes': indexes,
-                                'correction': correction,
+                                'nodSpeed': floatify(s.nodSpeed),
+                                'nodAmount': floatify(s.nodAmount),
+                                'surprise': floatify(s.surprise),
+                                'indexes': jsonify_or_none(s.indexes),
+                                'correction': jsonify_or_none(s.correction),
                                 'prompt': s.prompt,
                                 'show_correction': s.show_correction,
                             }
@@ -409,11 +381,8 @@ def conversation(request, session_id):
                             last_sent_audio_files = last_sent.audiofile_set.all()
                             for b in audio_files:
                                 blobs += 1
-                                if b.interference:
-                                    interference_count_this_sent += 1;
 
-
-                        last_sent = sentences[id_of_last_sent]
+                        # last_sent = sentences[id_of_last_sent]
                         
                 # check if conversation is over
                 conversation_over = False
@@ -423,6 +392,11 @@ def conversation(request, session_id):
                 prof = Profile.objects.get(learner=request.user)
                 gender = prof.gender
 
+                last_sent = None
+                if len(sentences) > 0:
+                    print('sentences:', sentences)
+                    last_sent = sentences[ind_of_last_sent]
+
                 conversation_variables = {
 
                     'conversationOver': conversation_over,
@@ -431,22 +405,23 @@ def conversation(request, session_id):
                     'session_id': session_id,
                     'first_enter': first_enter,
                     'sentences': sentences,
+                    'last_sent': last_sent,
                     'blob_no_text': blob_no_text,
                     'blob_no_text_sent_id': blob_no_text_sent_id,
-                    'id_of_last_sent': id_of_last_sent,
-                    'last_sent': last_sent,
-                    'thinking': False,
-                    'headline': headline,
-                    'article_link': article_link,
-                    'prev_topic': prev_topic,
-                    'prev_score': prev_score,
-                    'prev_emotion': prev_emotion,
+                    # 'id_of_last_sent': id_of_last_sent,
+                    # 'last_sent': last_sent,
+                    # 'thinking': False,
+                    # 'headline': headline,
+                    # 'article_link': article_link,
+                    # 'prev_topic': prev_topic,
+                    # 'prev_score': prev_score,
+                    # 'prev_emotion': prev_emotion,
                     'interference_count': interference_count,
                     # 'interference_count_this_sent': interference_count_this_sent,
                     'blobs': blobs,
                     'gender': gender,
                     'first_full_conversation': first_full_conversation,
-                    'tutorial': sess.tutorial,
+                    # 'tutorial': sess.tutorial,
                     'tutorial_complete': tutorial_complete,
                     # 'endClassSequenceStarted': False,
                     'inDevelopment': in_development
@@ -457,7 +432,7 @@ def conversation(request, session_id):
 
                     'conversation_variables': json.dumps(conversation_variables), 
                     'conversation': True, # for the navbar to know we are in conversation
-                    'article': article,
+                    # 'article': article,
 
                 }
 
@@ -1103,128 +1078,42 @@ def timings(request):
 def check_judgement(request):
 
     sent_id = int(request.GET['sentId'])
-    sess_id = int(request.GET['sessId'])
-    for_prompt = {}
     received_judgement = False
 
-    s_new = TempSentence.objects.get(pk=sent_id)
-    tia_to_say = None
+    s = TempSentence.objects.get(pk=sent_id)
 
-    if s_new.judgement != None:
+    if s.judgement != None:
 
-        if s_new.judgement in ["C", "X"]:
+        if s.judgement in ["M", "B", "P"]:
             
+            if s.for_prompt != None:
+
+                received_judgement = True
+
+        else: #i C, X,  D and 3
+
             received_judgement = True
 
-        elif s_new.judgement == "P":
-
-            if s_new.prompt != None:
-                tia_to_say = s_new.prompt
-                for_prompt = create_tia_speak_sentences_synthesis_data(tia_to_say, sess_id)
-                received_judgement = True
-
-        else:
-
-            if s_new.judgement in ["M", "B", "P"]:
-            
-                if s_new.indexes != None or s_new.prompt != None:
-
-                    tia_to_say = get_text(json.loads(s_new.sentence), s_new.judgement, s_new.prompt, json.loads(s_new.indexes))
-                    for_prompt = create_tia_speak_sentences_synthesis_data(tia_to_say, sess_id)
-                    received_judgement = True
-
-            elif s_new.judgement == 'D': 
-
-                received_judgement = True
-
-            elif s_new.judgement == '3': 
-
-                received_judgement = True
-
-
-    # deal with nonetypes for the bleeding decimals
+    print('received_judgement:', received_judgement)
 
     sent_meta = {
-        'sent_id': s_new.id,
-        'sentence': s_new.sentence,
-        'judgement': s_new.judgement,
-        'emotion': s_new.emotion,
-        'indexes': s_new.indexes,
-        'correction': s_new.correction,
-        'prompt': s_new.prompt,
-        'surprise': float(s_new.surprise),
-        'nod': s_new.nod,
-        'nodAmount': float(s_new.nodAmount),
-        'nodSpeed': float(s_new.nodSpeed),
-        'show_correction': s_new.show_correction,
+        'sent_id': s.id,
+        'sentence': jsonify_or_none(s.sentence),
+        'judgement': s.judgement,
+        'emotion': jsonify_or_none(s.emotion),
+        'indexes': jsonify_or_none(s.indexes),
+        'correction': s.correction,
+        'prompt': s.prompt,
+        'surprise': floatify(s.surprise),
+        'nod': s.nod,
+        'nodAmount': floatify(s.nodAmount),
+        'nodSpeed': floatify(s.nodSpeed),
+        'show_correction': s.show_correction,
         'receivedJudgement': received_judgement,
-        'forPrompt': for_prompt,
-        # 'tiaToSay': tia_to_say,
+        'forPrompt': jsonify_or_none(s.for_prompt),
     }
 
-    response_data = {
-
-        'sent_meta': sent_meta,
-
-    }
-
-    return JsonResponse(response_data)    
-
-# def check_prompt_indexes(request):
-
-    # sent_id = int(request.GET['sentId'])
-
-    # received_prompt_n_ind = False
-
-    # # p_count = 0;
-    # # while True:
-
-        # # print('in while loop')
-        # # time.sleep(1)
-        # # p_count += 1
-
-    # s_new = TempSentence.objects.get(pk=sent_id)
-    
-    # if s_new.judgement == "B":
-
-        # if s_new.indexes != None:
-
-            # received_prompt_n_ind = True
-            # # break
-
-    # elif s_new.judgement == "P":
-
-        # if s_new.prompt != None:
-
-            # received_prompt_n_ind = True
-            # # break
-
-    # elif s_new.judgement == "M":
-
-        # if s_new.indexes != None:
-
-            # received_prompt_n_ind = True
-            # # break
-
-        # # elif p_count == 10:
-
-            # # received_prompt_n_ind = False
-            # # break
-
-    # sent_meta = {
-        # 'sent_id': s_new.id,
-        # 'indexes': s_new.indexes,
-        # 'prompt': s_new.prompt,
-        # 'receivedPromptNIndexes': received_prompt_n_ind,
-    # }
-
-    # response_data = {
-
-        # 'sent_meta': sent_meta,
-
-    # }
-
-    # return JsonResponse(response_data)    
+    return JsonResponse(sent_meta)    
 
 def delete_session(request):
 
@@ -1244,6 +1133,7 @@ def delete_session(request):
     }
 
     return JsonResponse(response_data)    
+
 def store_conversation_over(request):
 
     session_id = int(request.GET['sessId'])
@@ -1314,6 +1204,7 @@ def store_judgement(request):
     sent_meta = json.loads( request.POST['sentMeta'] )
     
     # code.interact(local=locals());
+    # print('sent_meta:', sent_meta)
 
     sent_id = int(sent_meta['sent_id'])
     sent = TempSentence.objects.get(pk=sent_id)
@@ -1360,11 +1251,10 @@ def store_prompt(request):
     time_now = timezone.now();
 
     sent_id = int(request.POST['sentId'])
+    sessId = int(request.POST['sessId'])
     prompt = request.POST['promptText']
     wrongIndexes = json.loads(request.POST['wrongIndexesForServer'])
     
-    print('promptText:', prompt)
-    print('wrongIndexes:', wrongIndexes)
     sent = TempSentence.objects.get(pk=sent_id)
     sent.prompt = prompt
     sent.prompt_timestamp = time_now
@@ -1376,9 +1266,22 @@ def store_prompt(request):
     p_sent.indexes = wrongIndexes
 
     # code.interact(local=locals());
+    sent.prompt_created = False
 
     sent.save()
     p_sent.save()
+
+    if sent.judgement in ["M", "B", "P"]:
+    
+        if sent.judgement == "P":
+
+            tia_to_say = sent.prompt
+    
+        else:
+
+            tia_to_say = get_text(json.loads(sent.sentence), sent.judgement, sent.prompt, wrongIndexes)
+        
+        create_tia_speak_sentences_synthesis_data(tia_to_say, sessId, sent)
 
     #need to update to get the corrent bloody timestamp for judgement, HUMPH!
     # updated_sent = TempSentence.objects.get(pk=sent_id)

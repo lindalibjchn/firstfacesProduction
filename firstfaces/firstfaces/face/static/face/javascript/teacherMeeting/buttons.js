@@ -139,6 +139,7 @@ function emotionClicked() {
 function sendPromptToServer() {
 
     let sentId = sentencesNeedJudgement[ 0 ].sent_id;
+    let sessId = sentencesNeedJudgement[ 0 ].sess_id;
     let promptText = $('#promptText').val();
     let wrongIndexesForServer;
     // for correct datatype to be saved in db
@@ -192,40 +193,42 @@ function sendPromptToServer() {
         type: "POST",
         data: { 
             sentId: sentId,
+            sessId: sessId,
             promptText: promptText,
             wrongIndexesForServer: JSON.stringify(wrongIndexesForServer),
         }, 
         success: function(json) {
            
-            //s = JSON.parse( json.sent_meta )
-
-            // add judgement to sents in prev sents
-            sessions[ sentencesNeedJudgement[0].sess_id ].sentences[ 0 ].prompt = promptText;
-            sessions[ sentencesNeedJudgement[0].sess_id ].sentences[ 0 ].indexes = wrongIndexesForServer;
-
-            // remove sentence from array
-            //sentencesNeedJudgement.shift();
-
-            updateSentenceObjects();
-            updatePrevSentences();
-            updateWrongSentences();
-            loadNextSentenceNeedingJudgement();
-
-            $('#PBM').css( 'border', 'none' );
-            $('.judgement-btns').prop('disabled', false);
-
-            if ( sentForCorrection === undefined ) { 
-            
-                updateSentenceForCorrection();
-        
-            }
+            console.log("sentence prompt submitted");
 
         },
         error: function() {
             console.log("that's wrong");
         },
 
+
     });
+
+    // add judgement to sents in prev sents
+    sessions[ sentencesNeedJudgement[0].sess_id ].sentences[ 0 ].prompt = promptText;
+    sessions[ sentencesNeedJudgement[0].sess_id ].sentences[ 0 ].indexes = wrongIndexesForServer;
+
+    // remove sentence from array
+    //sentencesNeedJudgement.shift();
+
+    updateSentenceObjects();
+    updatePrevSentences();
+    updateWrongSentences();
+    loadNextSentenceNeedingJudgement();
+
+    $('#PBM').css( 'border', 'none' );
+    $('.judgement-btns').prop('disabled', false);
+
+    if ( sentForCorrection === undefined ) { 
+    
+        updateSentenceForCorrection();
+
+    }
 
 }
 

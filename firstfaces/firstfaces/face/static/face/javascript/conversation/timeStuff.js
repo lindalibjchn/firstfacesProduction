@@ -43,7 +43,7 @@ function showTime() {
         //$('#timeLeft').text( "class finished" );
 
         //// just delete class if no sentences when finished
-        //if ( conversationVariables.id_of_last_sent === null ) {
+        //if ( conversationVariables.ind_of_last_sent === null ) {
 
             //endClassNoSentences()
 
@@ -226,7 +226,7 @@ function endTutorial() {
 //function calculateQuestionStreak() {
 
     //let questionStreak = 0;
-    //let lastSentId = conversationVariables.id_of_last_sent
+    //let lastSentId = conversationVariables.ind_of_last_sent
 
     //if ( lastSentId !== null && conversationVariables.last_sent.sentence !== null ) {
 

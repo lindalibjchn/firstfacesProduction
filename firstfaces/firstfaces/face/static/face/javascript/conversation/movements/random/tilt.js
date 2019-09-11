@@ -10,13 +10,13 @@ function newTilt( boneObject ) {
 
     } else {
         
-        let newSinAmount = SINEARRAYFORBREATHESECONDS[ Math.floor( Math.random() *  SINEARRAYFORBREATHESECONDS.length ) ];
+        let newSinAmount = SINEARRAYFORTILTSECONDS[ Math.floor( Math.random() *  SINEARRAYFORTILTSECONDS.length ) ];
         boneObject.sin = sineArrays[ newSinAmount.toString() ];
         boneObject.sinLength = boneObject.sin.length;
         boneObject.direction *= Math.random() < 0.5 ? -1 : 1;
         if ( boneObject === neckRandomTiltObject ) {
          
-            boneObject.mult =  2 * Math.random();
+            boneObject.mult =  2.5 * Math.random();
 
         } else {
 

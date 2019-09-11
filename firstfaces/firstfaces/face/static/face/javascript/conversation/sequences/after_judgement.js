@@ -148,7 +148,7 @@ function runP( judg ) {
     
     movementController( movementObject.abs.blank, tiaTimings.returnFromThinkingDuration / 2, tiaTimings.returnFromThinkingDuration, function() {
        
-       tiaSpeak( 'prompt' );
+       tiaSpeak( 'prompt', cont=false );
 
     });
     expressionController( expressionObject.calculated, tiaTimings.returnFromThinkingDuration / 2 );
@@ -278,7 +278,7 @@ function showOptionBtns() {
 function tryAgain() {
 
     recTimes.clickOptionBtn = Date.now() / 1000;
-    let sent = conversationVariables.sentences[ conversationVariables.id_of_last_sent ].sentence;
+    let sent = conversationVariables.sentences[ conversationVariables.ind_of_last_sent ].sentence;
 
     conversationVariables.tiaLookingAtStudent = false;
     returnToLaptop('try again');
