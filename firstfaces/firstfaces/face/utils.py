@@ -1,4 +1,4 @@
-from .models import Available, TempSentence, Conversation, PermSentence, Profile, PostTalkTiming
+from face.models import Available, TempSentence, Conversation, PermSentence, Profile, PostTalkTiming
 
 from django.contrib.auth.models import User
 from django.conf import settings

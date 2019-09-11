@@ -1,6 +1,6 @@
 from google.cloud import texttospeech
 from nltk.tokenize import sent_tokenize
-from .sentence import change_sentence_to_list_n_add_data
+from face.views.conversation.utils.sentence import change_sentence_to_list_n_add_data
 import os
 from django.conf import settings
 import time
