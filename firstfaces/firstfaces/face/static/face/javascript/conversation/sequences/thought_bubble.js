@@ -87,7 +87,7 @@ function showFirstWord() {
 
 function showFurtherWords() {
 
-    //removeColourThoughtBubbles( tiaTimings.removeColourThoughtBubbleDuration );
+    //console.log('word:', conversationVariables.last_sent.sentence[ thoughtBubbleObject.wordThinkingCount ][ 0 ]);
     $( thoughtBubbleObject.toBeShownDiv ).text( conversationVariables.last_sent.sentence[ thoughtBubbleObject.wordThinkingCount ][ 0 ] );
 
     $( thoughtBubbleObject.toBeHiddenDiv ).fadeOut( tiaTimings.wordFadeOut, function() {
