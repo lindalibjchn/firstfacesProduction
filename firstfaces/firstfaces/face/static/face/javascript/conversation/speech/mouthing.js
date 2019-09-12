@@ -1,10 +1,11 @@
 function tiaMouthPhoneSequence( phoneSeq, framesPerPhone ) {
 
-    console.log( 'in tiaMouthPhoneSequence' );
+    //console.log( 'in tiaMouthPhoneSequence' );
     mouthingObject.mouthing = true; 
     mouthingObject.phones = phoneSeq;
     mouthingObject.phoneCount = 1;
     mouthingObject.framesPerPhone = framesPerPhone;
+    //console.log('frames per phone:', framesPerPhone);
     mouthingObject.noOfPhones = phoneSeq.length;
     animateFirstMouthPhoneSlowly();
 
@@ -14,7 +15,8 @@ function animateFirstMouthPhoneSlowly() {
 
     if ( mouthingObject.emphasis ) {
 
-        expressionController( expressionObject.abs[ mouthingObject.phones[ 0 ] + 'Emp' ], tiaTimings.durationOfEmphasisedFirstMouthingPhones, function() {
+        //console.log('durationOfEmphasisedFirstAndLastMouthingPhones:', tiaTimings.durationOfEmphasisedFirstAndLastMouthingPhones);
+        expressionController( expressionObject.abs[ mouthingObject.phones[ 0 ] + 'Emp' ], tiaTimings.durationOfEmphasisedFirstAndLastMouthingPhones, function() {
            
             movementController( movementObject.abs.thinkSentenceArmNeutral, thoughtBubbleObject.handMov2Dur, thoughtBubbleObject.handMov2Dur, animateMouthPhonesInOrder);
             moveThoughtBubblesToToFollowNoddingHead( false, thoughtBubbleObject.handMov2Dur );
@@ -23,7 +25,7 @@ function animateFirstMouthPhoneSlowly() {
 
     } else {
 
-        expressionController( expressionObject.abs[ mouthingObject.phones[ 0 ] ], tiaTimings.durationOfFirstMouthingPhones, animateMouthPhonesInOrder )
+        expressionController( expressionObject.abs[ mouthingObject.phones[ 0 ] ], tiaTimings.durationOfFirstAndLastMouthingPhones, animateMouthPhonesInOrder )
 
     }
 
@@ -32,11 +34,11 @@ function animateFirstMouthPhoneSlowly() {
 function animateMouthPhonesInOrder() {
 
     let express_ = expressionObject.abs[ mouthingObject.phones[ mouthingObject.phoneCount ] ];
-    let durLast_ = tiaTimings.durationOfFirstMouthingPhones;
+    let durLast_ = tiaTimings.durationOfFirstAndLastMouthingPhones;
     if ( mouthingObject.emphasis ) {
         
         express_ = expressionObject.abs[ mouthingObject.phones[ mouthingObject.phoneCount ] + 'Emp' ]
-        durLast_ = tiaTimings.durationOfEmphasisedFirstMouthingPhones;
+        durLast_ = tiaTimings.durationOfEmphasisedFirstAndLastMouthingPhones;
 
     }
 
