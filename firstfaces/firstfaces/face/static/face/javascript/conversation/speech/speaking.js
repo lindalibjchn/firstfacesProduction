@@ -58,7 +58,7 @@ function animateFirstPhoneSlowly() {
 
         expressionController( expressionObject.abs[ synthesisObject.now.phones[ synthesisObject.sentenceNo ][ 0 ] ], tiaTimings.durationOfFirstSpeakingPhones, slightlyDelayAudioPlay )
 
-    }, tiaTimings.durationOfFirstBreath * 0.875 ) 
+    }, tiaTimings.durationOfFirstBreath * 500 ) 
 
 }
 
@@ -71,13 +71,18 @@ function slightlyDelayAudioPlay() {
     }
 
     setTimeout( function() {
+
+        setTimeout( function() {
+            
+            synthesisObject.audio.play();
+
+            initSingleBreath( -1, breatheObject.speakingBreathMult, synthesisObject.audio.duration );
+
+        }, tiaTimings.delayAudioPlay );
+
+        animatePhonesInOrder();
         
-        synthesisObject.audio.play();
-
-    }, 100 );
-
-    initSingleBreath( -1, breatheObject.speakingBreathMult, synthesisObject.audio.duration );
-    animatePhonesInOrder();
+    }, tiaTimings.delaySpeakingAfterBreathingIn );
 
 }
 

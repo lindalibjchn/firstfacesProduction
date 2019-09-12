@@ -45,8 +45,10 @@ tiaTimings = {
     getIntoSpeakingPositionDuration: 1,
     durationOfFirstBreath: 1,
     durationOfFirstSpeakingPhones: 0.6,
+    delaySpeakingAfterBreathingIn: 500,
+    delayAudioPlay: 100,
     durationOfLastSpeakingPhones: 0.4,
-    durationOfReturnToExpressionAfterVeryLastSpeakingPhone: 1.25,
+    durationOfReturnToExpressionAfterVeryLastSpeakingPhone: 1,
 
     // EXPRESSIONS
     changeExpressionDuration: 0.75,
