@@ -1,0 +1,79 @@
+#nodShakeContainer {
+
+    position: relative;
+    height: 60%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    /*border: 2px solid black;*/
+
+}
+
+#nodShakeInnerContainer {
+
+    height: 90%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /*border: 2px solid red;*/
+    position: absolute;;
+    bottom: 0;
+    /*left: 0;*/
+
+}
+
+#nodShakeCont {
+
+    height: 100%;
+    width: 75%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /*border: 2px dashed yellow;*/
+    /*position: absolute;;*/
+    /*bottom: 0;*/
+    /*left: 0;*/
+
+}
+
+#nodShakeSemiCircle {
+
+    /*padding-top: 100%;*/
+    width: 7.2vw;
+    height: 3.6vw;
+    border-bottom-left-radius: 100px;
+    border-bottom-right-radius: 100px;
+    background-color: white;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+    cursor: cell;
+}
+
+#nodShakeCont {
+
+    opacity: 0.8;
+
+}
+
+#nodShakeCont:hover {
+
+    opacity: 1;
+
+}
+
+#nodLabel {
+
+    right: 14%;
+    bottom: 10%;
+
+}
+
+#shakeLabel {
+
+    left: 14%;
+    bottom: 10%;
+
+}
+

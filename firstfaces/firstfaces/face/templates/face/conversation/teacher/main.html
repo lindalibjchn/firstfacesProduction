@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<!----------------------------------------------------------------------- 
+STYLESHEETS
+-------------------------------------------------------------------------->
+{% include 'face/conversation/teacher/stylesheets.html' %}
+
+<div id="UCDBackground">
+    <div id="topBackgroundSky"></div>
+    <div id="midBackgroundSea"></div>
+    <div id="lowBackgroundLand"></div>
+</div>
+
+
+<div class="w3-row teacher-row">
+
+    <div class="w3-col judgement-col">
+
+        <div class="w3-row" id="tiaRow">
+
+            <div class="w3-col tia-col">
+
+                <div id="tia"></div>
+
+            </div>
+
+            <div class="w3-col emotion-col">
+
+                <!----------------------------------------------------------------------- 
+                EMOTION WHEEL
+                -------------------------------------------------------------------------->
+                {% include 'face/conversation/teacher/emotion_wheel.html' %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="w3-row teacher-row">
+
+    <div class="w3-col judgement-col">
+
+        <div class="w3-row" id="tiaOverflowRow">
+
+            <div class="w3-col tia-col">
+
+            </div>
+
+            <div class="w3-col emotion-col">
+
+                <!----------------------------------------------------------------------- 
+                SURPRISE
+                -------------------------------------------------------------------------->
+                {% include 'face/conversation/teacher/surprise.html' %}
+                            
+                <!----------------------------------------------------------------------- 
+                NOD AND SHAKE
+                -------------------------------------------------------------------------->
+                {% include 'face/conversation/teacher/nod_shake.html' %}
+                    
+            </div>
+
+        </div>
+
+        <div class="w3-row" id="judgementButtonsRow">
+
+            <!----------------------------------------------------------------------- 
+            JUDGEMENT BUTTONS
+            -------------------------------------------------------------------------->
+            {% include 'face/conversation/teacher/judgement_buttons.html' %}
+
+        </div>
+
+    </div>
+
+
+</div>
+
+<div class="w3-row teacher-row">
+
+    <div class="w3-col judgement-col">
+
+        <!----------------------------------------------------------------------- 
+        SENTENCE FOR JUDGEMENT
+        -------------------------------------------------------------------------->
+        {% include 'face/conversation/teacher/sentence_for_judgement.html' %}
+
+    </div>
+
+</div>
+
+<div class="w3-row teacher-row">
+
+    <div class="w3-col judgement-col">
+
+        <!----------------------------------------------------------------------- 
+        SELECTED SECTIONS
+        -------------------------------------------------------------------------->
+        {% include 'face/conversation/teacher/prompt_box.html' %}
+
+    </div>
+
+</div>
+
+<!----------------------------------------------------------------------- 
+STUDENTS
+-------------------------------------------------------------------------->
+{% include 'face/conversation/teacher/students.html' %}
+
+
+<!----------------------------------------------------------------------- 
+AUDIO
+-------------------------------------------------------------------------->
+{% include 'face/conversation/teacher/audio.html' %}
+
+<!----------------------------------------------------------------------- 
+SCRIPTS
+-------------------------------------------------------------------------->
+{% include 'face/conversation/teacher/scripts.html' %}
+
+
+{% endblock %}

@@ -1,0 +1,101 @@
+#surpriseContainer {
+
+    position: relative;
+    height: 30%;
+    width: 100%
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    margin-top: 5%;
+    /*border: 2px solid black;*/
+
+}
+
+#surpriseInnerContainer {
+
+    position: relative;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /*border: 2px solid red;*/
+
+}
+
+#surpriseCont {
+
+    position: relative;
+    height: 100%;
+    width: 70%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.8; /* Set transparency (for mouse-over effects on hover) */
+    /*border: 2px solid white;*/
+    transition: opacity .2s;
+    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+
+}
+
+#surpriseCont:hover {
+    
+    opacity: 1; /* Fully shown on mouse-over */
+
+}
+/* The slider itself */
+.slider {
+    
+    width: 68%;
+    -webkit-appearance: none;  /* Override default CSS styles */
+    appearance: none;
+    height: 8px; /* Specified height */
+    background-color: white;
+    outline: none; /* Remove outline */
+}
+
+/* Mouse-over effects */
+.slider:hover {
+    cursor: pointer; /* Cursor on hover */
+}
+
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */ 
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    width: 6px; /* Set a specific slider handle width */
+    height: 16px; /* Slider handle height */
+    border: 1px solid black;
+    /*background-image: url('https://p7.hiclipart.com/preview/384/850/391/like-button-emoticon-computer-icons-facebook-clip-art-surprised-expression.jpg');*/
+    /*background-repeat: no-repeat;*/
+    /*background-size: contain;*/
+    background: white;
+    cursor: pointer; /* Cursor on hover */
+}
+
+.slider::-moz-range-thumb {
+    width: 20px; /* Set a specific slider handle width */
+    height: 20px; /* Slider handle height */
+    /*background-image: url('https://p7.hiclipart.com/preview/384/850/391/like-button-emoticon-computer-icons-facebook-clip-art-surprised-expression.jpg');*/
+    /*background-repeat: no-repeat;*/
+    /*background-size: contain;*/
+    background: white;
+    border: 1px solid black;
+    cursor: pointer; /* Cursor on hover */
+}
+
+#neutralLabel {
+
+    left: -7%;
+    top: 3%;
+
+}
+
+#surpriseLabel {
+
+    right: -7%;
+    top: 3%;
+
+}
+
+

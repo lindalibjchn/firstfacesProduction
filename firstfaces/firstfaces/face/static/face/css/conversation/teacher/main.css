@@ -1,0 +1,391 @@
+/*.content-container {*/
+
+    /*height: 100%;*/
+
+/*}*/
+#UCDBackground {
+
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+}
+
+#topBackgroundSky {
+
+    width: 100%;
+    height: 50%;
+    background-color: #188ac7;
+
+}
+
+#midBackgroundSea {
+
+    width: 100%;
+    height: 30%;
+    background-color: #102858;
+
+}
+
+#lowBackgroundLand {
+
+    width: 100%;
+    height: 20%;
+    background-color: #1fb030;
+
+}
+
+.teacher-row {
+
+    position: relative;
+    height: 25%;
+
+}
+
+.judgement-col {
+
+    position: relative;
+    height: 100%;
+    width: 32%;
+    /*background-color: #188ac7;*/
+
+}
+
+.student-container-col {
+
+    height: 100%;
+    width: 68%;
+
+}
+
+.student-row {
+
+    height: 100%;
+    width: 100%;
+    border-top: 1px solid grey;
+
+}
+
+.student-col {
+
+    height: 100%;
+    width: 25%;
+    border-left: 1px solid grey;
+
+}
+
+.tiaRow {
+
+    position: relative;
+    width: 100%;
+    height: 100%;
+
+}
+
+.tia-col {
+
+    position: relative;
+    width: 50%;
+    height: 100%;
+
+}
+
+#tia {
+
+    position: absolute;
+    width: 100%;
+    height: 160%;
+    z-index: 10;
+
+}
+
+.emotion-col {
+
+    position: relative;
+    width: 50%;
+
+}
+
+#tiaOverflowRow {
+
+    width: 100%;
+    height: 60%;
+
+}
+
+#judgementButtonsRow {
+
+    height: 40%;
+
+}
+
+#judgementCol {
+
+    position: relative;
+    height: 100%;
+
+}
+
+#judgementOuter {
+
+    position: absolute;
+    height: 92%;
+    width: 100%;
+    bottom: 0;
+
+}
+
+#topJudgementRow {
+
+    margin-top: 2%;
+    height: 60%;
+    width: 100%;
+
+}
+
+#judgementButtonsContainer {
+
+    height: 100%;
+
+}
+
+#submitClickable {
+
+    height: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+#uncertainSelectionsContainer {
+
+    height: 100%;
+
+}
+
+#meanByBetterBtnsContainer {
+
+    position: relative;
+    height: 100%;
+
+}
+
+#sentenceForSelectionRow {
+
+    position: relative;
+    height: 37%;
+    /*border: 2px solid red;*/
+    bottom: 0;;
+
+}
+
+/*middle bit for prompts*/
+
+#PBM {
+    
+    position: relative;
+    bottom: 0;
+    height: 100%;
+
+}
+
+#promptInput {
+
+    height: 40%;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+
+}
+
+#promptText {
+
+    width: 80%;
+    height: 100%;
+
+}
+
+#confirmPromptBtn {
+
+    top: 0;
+    position: absolute;
+    margin: 5px;
+
+}
+
+/* WRONG SENTENCES ON THE RIGHT */
+
+#sentForCorrectionNow {
+
+    /*display: flex;*/
+    /*flex-direction: column;*/
+    width: 100%;
+    margin-top: 50px;
+    height: 30%; 
+    padding: 2%;
+
+}
+
+.individual-words {
+
+    display: inline-block;
+    height: 20%;
+
+}
+
+#wrongSentForCorrectionNow {
+
+    /*display: flex;*/
+    /*flex-direction: column;*/
+    width: 100%;
+    height: 100%;
+    font-size: 18px;
+    font-weight: bold;
+    color: black;
+    letter-spacing: 0.4vw;
+
+}
+
+#wrongSents {
+
+    height: 41%;
+    padding: 1%;
+    overflow-y: scroll;
+
+}
+
+.wrong-sents {
+
+    width: 100%;
+    font-size: 1.2vw;
+
+}
+
+.wrong-sents-individual-container {
+
+    margin-bottom: 5px;
+    padding: 5px;
+
+}
+
+.wrong-sent-btn-cont {
+
+
+}
+
+#wrongInputRow {
+
+    height: 18%;
+
+}
+
+#wrongInput {
+
+    height: 100%;
+
+}
+
+#wrongText {
+
+    width: 100%;
+    height: 100%;
+
+}
+
+
+/*STUFF FOR PREVIOUS SENTENCES*/
+
+#students-top-row {
+
+    height: 50%;
+
+}
+
+#students-bottom-row {
+
+    height: 50%;
+
+}
+
+.students-box-outer {
+
+    height: 100%;
+    overflow-y: scroll;
+    border: 1px solid black
+
+}
+
+.student-box-title {
+
+    border: 2px solid red;
+    width: 98%;
+
+}
+
+.prev-username {
+
+    background-color: pink;
+
+}
+
+.prev-minutes {
+
+    background-color: grey;
+
+}
+
+.student-box-content {
+
+    /*overflow-y: scroll;*/
+    width: 98%;
+
+}
+
+.prev-sents {
+
+    color: white;
+    margin: 1px;
+    background-color: blue;
+
+}
+
+.prev-judgements{
+
+    color: white;
+    margin: 1px;
+    background-color: red;
+
+}
+
+.prev-corrections{
+
+    color: white;
+    margin: 1px;
+    margin-bottom: 5px;
+    background-color: green;
+
+}
+
+.prev-try-again {
+
+    color: white;
+    margin: 1px;
+    margin-bottom: 5px;
+    background-color: orange;
+
+}
+
+#feedback { font-size: 1.4em; }
+#wrongSentForCorrectionNow .ui-selecting { background: #FECA40; }
+#wrongSentForCorrectionNow .ui-selected { background: #000000; color: white; }
+/*#wrongSentForCorrectionNow { list-style-type: none; margin: 0; padding: 0; width: 60%; }*/
+/*#wrongSentForCorrectionNow div { margin: 3px; padding: 0.4em; font-size: 1.4em; height: 18px; }*/
+
+.individual-words: hover {
+
+    cursor: pointer;
+
+}
+
