@@ -1,0 +1,22 @@
+#sentenceForJudgementContainer {
+
+    height: 100%;
+    width: 100%;
+    position: relative;
+    
+}
+
+#sentenceForJudgement {
+
+    height: 100%;
+    width: 100%;
+    position: relative;
+    letter-spacing: 0.1em;
+    font-size: 1em;
+    font-weight: bold;
+    color: white;
+    
+}
+
+#sentenceForJudgement .ui-selecting { background: #FECA40; }
+#sentenceForJudgement .ui-selected { background: #000000; color: white; }

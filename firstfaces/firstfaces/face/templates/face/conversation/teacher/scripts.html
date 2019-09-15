@@ -1,0 +1,37 @@
+{% load static %}
+
+<!-- variables for blender objects from JSON -->
+<script>var face = "{% static 'face/JSON/tia_face.json' %}"</script>
+<script>var mouth = "{% static 'face/JSON/tia_mouth.json' %}"</script>
+<script>var eye = "{% static 'face/JSON/tia_eye.json' %}"</script>
+<script>var hair = "{% static 'face/JSON/tia_hair.json' %}"</script>
+<script>var hair00 = "{% static 'face/JSON/tia_hair00.json' %}"</script>
+<script>var body = "{% static 'face/JSON/tia_body.json' %}"</script>
+<script>var body00 = "{% static 'face/JSON/tia_body00.json' %}"</script>
+<script>var body01 = "{% static 'face/JSON/tia_body01.json' %}"</script>
+<script>var body02 = "{% static 'face/JSON/tia_body02.json' %}"</script>
+<script>var body03 = "{% static 'face/JSON/tia_body03.json' %}"</script>
+
+<!--<script>var newSentSound = new Audio("{% static 'face/sounds/to-the-point.mp3' %}")</script>-->
+<!--<script>var newClassSound = new Audio("{% static 'face/sounds/chimes-glassy.mp3' %}")</script>-->
+<script>var sessions = {{ sessions|safe }}</script>
+<script src="{% static 'ajaxPost.js' %}"></script>
+
+<!--main-->
+<script src="{% static 'face/javascript/conversation/teacher/main.js' %}"></script>
+<script src="{% static 'face/javascript/conversation/teacher/buttons.js' %}"></script>
+
+<!--tia-->
+<!--from overall-->
+<script src="{% static 'face/javascript/variables_and_constants.js' %}"></script>
+<!--from 'conversation/student-->
+<script src="{% static 'face/javascript/conversation/student/variables_and_constants/expressions.js' %}"></script>
+<script src="{% static 'face/javascript/conversation/teacher/load_tia/animate.js' %}"></script>
+<script src="{% static 'face/javascript/conversation/teacher/load_tia/three_js_objects.js' %}"></script>
+<script src="{% static 'face/javascript/conversation/teacher/load_tia/variables_and_constants.js' %}"></script>
+
+<!-- EXPRESSION -->
+<script src="{% static 'face/javascript/conversation/student/movements/expression/create.js' %}"></script>
+<script src="{% static 'face/javascript/conversation/student/movements/expression/get_expressions.js' %}"></script>
+<script src="{% static 'face/javascript/conversation/student/movements/expression/move.js' %}"></script>
+<script src="{% static 'face/javascript/conversation/student/movements/complex/eyes.js' %}"></script>
