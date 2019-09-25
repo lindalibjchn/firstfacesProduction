@@ -49,15 +49,11 @@ class PermSentence(models.Model):
 
     judgement = models.CharField(max_length=1, choices=JUDGEMENT_CHOICES, null=True, blank=True)
     judgement_timestamp = models.DateTimeField(null=True, blank=True)
-    emotion = models.CharField(max_length=12, default="[0, 0]")
+    emotion = models.CharField(max_length=12, null=True, blank=True)
     # True is nod. False is shake and null is nothing
-    nod = models.NullBooleanField(null=True, blank=True)
-    nodSpeed = models.DecimalField(max_digits=2, decimal_places=1, null=True, blank=True)
-    nodAmount = models.DecimalField(max_digits=2, decimal_places=1, null=True, blank=True)
-    surprise = models.DecimalField(max_digits=2, decimal_places=1, null=True, blank=True)
+    nod_shake = models.CharField(max_length=30, null=True, blank=True)
+    surprise = models.DecimalField(max_digits=3, decimal_places=2, null=True, blank=True)
     indexes = models.CharField(max_length=50, null=True, blank=True)
-    correction = models.CharField(max_length=300, null=True, blank=True)
-    correction_timestamp = models.DateTimeField(null=True, blank=True)
     #this was for checking if correction has come in previous version. could be removed if not needed later
     whats_wrong = models.NullBooleanField(null=True, blank=True)
     whats_wrong_timestamp = models.DateTimeField(null=True, blank=True)
@@ -69,7 +65,6 @@ class PermSentence(models.Model):
     next_sentence_timestamp = models.DateTimeField(null=True, blank=True)
     #if native wants to say something in speech bubble
     prompt = models.CharField(max_length=300, null=True, blank=True)
-    prompt_timestamp = models.DateTimeField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -85,15 +80,11 @@ class TempSentence(models.Model):
 
     judgement = models.CharField(max_length=1, choices=JUDGEMENT_CHOICES, null=True, blank=True)
     judgement_timestamp = models.DateTimeField(null=True, blank=True)
-    emotion = models.CharField(max_length=12, default="[0, 0]")
+    emotion = models.CharField(max_length=12, null=True, blank=True)
     # True is nod. False is shake and null is nothing
-    nod = models.NullBooleanField(null=True, blank=True)
-    nodSpeed = models.DecimalField(max_digits=2, decimal_places=1, null=True, blank=True)
-    nodAmount = models.DecimalField(max_digits=2, decimal_places=1, null=True, blank=True)
-    surprise = models.DecimalField(max_digits=2, decimal_places=1, null=True, blank=True)
+    nod_shake = models.CharField(max_length=30, null=True, blank=True)
+    surprise = models.DecimalField(max_digits=3, decimal_places=2, null=True, blank=True)
     indexes = models.CharField(max_length=50, null=True, blank=True)
-    correction = models.CharField(max_length=300, null=True, blank=True)
-    correction_timestamp = models.DateTimeField(null=True, blank=True)
     #this was for checking if correction has come in previous version. could be removed if not needed later
     whats_wrong = models.NullBooleanField(null=True, blank=True)
     whats_wrong_timestamp = models.DateTimeField(null=True, blank=True)
@@ -105,7 +96,6 @@ class TempSentence(models.Model):
     next_sentence_timestamp = models.DateTimeField(null=True, blank=True)
     #if native wants to say something in speech bubble
     prompt = models.CharField(max_length=300, null=True, blank=True)
-    prompt_timestamp = models.DateTimeField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     for_prompt = models.CharField(max_length=1000, null=True, blank=True)
@@ -239,6 +229,7 @@ class Profile(models.Model):
     education = models.CharField(max_length=1, choices=EDUCATION_CHOICES, null=True, blank=False)
     english_level = models.CharField(max_length=1, choices=LEVEL_CHOICES, null=True, blank=False)
     lived_in_english_speaking_country = models.CharField(max_length=1, choices=LIVED_CHOICES, null=True, blank=False)
+    info = models.CharField(max_length=1000, null=True, blank=False)
     consent = models.BooleanField(default=True)
     sound = models.NullBooleanField()
     microphone = models.NullBooleanField()

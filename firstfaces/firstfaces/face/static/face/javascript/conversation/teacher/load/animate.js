@@ -6,11 +6,18 @@ function animate () {
 
     }
 
-    ////if ( movementObject.bool ) {
+    if ( movementObject.bool ) {
 
-        ////movement( mainCount );
+        movement( mainCount );
 
-    ////}
+    }
+
+    if ( eyeObject[ 'bool' ] ) {
+
+        moveEyes( mainCount );
+
+    }
+
 
     if ( eyelidObject.bool ) {
 

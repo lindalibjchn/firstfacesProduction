@@ -1,16 +1,22 @@
 //// LOGIC FOR TURNING WHEEL COORDINATES INTO EXPRESSIONS
-function changeExpression() {
+function changeExpression( emotionCoords, surprise ) {
+
+    // stop problem with all zeros in angle calcuation
+    if ( emotionCoords[ 0 ] === 0 && emotionCoords[ 1 ] === 0 ) {
+
+        emotionCoords = [ 0.05, 0.05 ];
+
+    };
+    console.log('emotionCoordsInChangeexpression:', emotionCoords);
 
     synthesisObject.pitch = 0;
     synthesisObject.speaking_rate = 0.7;
-
-    let emotionCoords = conversationVariables.last_sent['emotion']
-    let surprise = conversationVariables.last_sent['surprise']
 
     // check if emotion is in centre of circle - if so there is no change
     let dia = Math.sqrt( emotionCoords[0]**2 + emotionCoords[1]**2 )
 
     let sectorNRatio = getTwoExpressions( emotionCoords );
+    //console.log('sectorNRatio:', sectorNRatio);
     let exp01 = sectors[ sectorNRatio[ 0 ] ][ 0 ];
     let exp02 = sectors[ sectorNRatio[ 0 ] ][ 1 ];
     let pitch01 = exp01.pitch;

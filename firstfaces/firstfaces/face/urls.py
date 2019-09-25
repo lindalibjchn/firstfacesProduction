@@ -48,8 +48,8 @@ urlpatterns = [
     # AJAX
     # store
     path('store_judgement', teacher_sentence.store_judgement, name='store_judgement'),
-    path('store_prompt', teacher_sentence.store_prompt, name='store_prompt'),
-    path('store_correction', teacher_sentence.store_correction, name='store_correction'),
+    # path('store_prompt', teacher_sentence.store_prompt, name='store_prompt'),
+    # path('store_correction', teacher_sentence.store_correction, name='store_correction'),
     # check db
     path('check_for_change', updates.check_for_change, name='check_for_change'),
     # update

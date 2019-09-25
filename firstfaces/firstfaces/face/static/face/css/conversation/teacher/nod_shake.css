@@ -41,38 +41,35 @@
 #nodShakeSemiCircle {
 
     /*padding-top: 100%;*/
-    width: 7.2vw;
-    height: 3.6vw;
+    width: 6.6vw;
+    height: 3.3vw;
     border-bottom-left-radius: 100px;
     border-bottom-right-radius: 100px;
     background-color: white;
     -webkit-transition: .2s;
     transition: opacity .2s;
-    cursor: cell;
+    cursor: pointer;
 }
 
-#nodShakeCont {
-
-    opacity: 0.8;
-
-}
-
-#nodShakeCont:hover {
-
-    opacity: 1;
-
+#nodShakeClickedLocation {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background-color: #188ac7;
+    border: 1px solid white;
+    cursor: pointer;
 }
 
 #nodLabel {
 
-    right: 14%;
+    right: 10%;
     bottom: 10%;
 
 }
 
 #shakeLabel {
 
-    left: 14%;
+    left: 10%;
     bottom: 10%;
 
 }

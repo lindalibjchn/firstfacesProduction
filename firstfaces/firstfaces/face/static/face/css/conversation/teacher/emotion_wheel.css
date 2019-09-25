@@ -42,7 +42,8 @@
 
 #emotionWheel {
 
-    opacity: 0.8;
+    position: relative;
+    opacity: 0.7;
     -webkit-transition: .2s; /* 0.2 seconds transition on hover */
     transition: opacity .2s;
     height: 0;
@@ -53,7 +54,8 @@
     /*background-image: url('https://donnageorgeblog.files.wordpress.com/2014/12/color_wheel_730.png');*/
     /*background-repeat: no-repeat;*/
     /*background-size: contain;*/
-    cursor: cell;
+    /*border: 2px dashed black;*/
+    cursor: pointer;
 
 }
 
@@ -61,6 +63,15 @@
 
     opacity: 1;
 
+}
+
+#emotionClickedLocation {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background-color: #188ac7;
+    border: 1px solid white;
+    cursor: pointer;
 }
 
 .emotion-labels {
@@ -79,35 +90,35 @@
 
 #happyLabel {
 
-    right: -22%;
-    top: -5%;
+    right: -30%;
+    top: -13%;
 
 }
 
 #contentLabel {
 
-    right: -22%;
-    top: 77%;
+    right: -30%;
+    top: 81%;
 
 }
 
 #sadLabel {
 
-    right: 58%;
-    top: 101%;
+    right: 60%;
+    top: 103%;
 
 }
 
 #fearLabel {
 
-    right: 104%;
+    right: 106%;
     top: 35%;
 
 }
 
 #disgustLabel {
 
-    right: 58%;
-    top: -29%;
+    right: 60%;
+    top: -37%;
 
 }

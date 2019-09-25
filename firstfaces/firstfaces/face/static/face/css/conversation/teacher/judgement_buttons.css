@@ -13,7 +13,7 @@
 #judgementBtnsInnerContainer {
 
     position: relative;
-    width: 90%;
+    width: 80%;
     height: 80%;
     display: flex;
     align-items: center;
@@ -75,23 +75,38 @@
     bottom: 0;
     color: #188ac7 !important;
     font-weight: bold;
-    opacity: 0.8;
+    opacity: 0.7;
 
 }
 
-.judgement-btns:hover {
+.dunno-btn:hover {
 
     background-color: white !important;
     color: #188ac7 !important;
-    font-weight: bold;
     opacity: 1;
+
+}
+
+.wrong-btn:hover {
+
+    background-color: white !important;
+    color: #188ac7 !important;
+    opacity: 1;
+
+}
+
+.correct-btn:hover {
+
+    background-color: white !important;
+    color: #188ac7 !important;
+    /*opacity: 0.3;*/
 
 }
 
 .judgement-btn-right {
 
     left: 0;
-    margin-left: 3px;
+    margin-left: 2px;
     border-bottom: 3px solid black;
 
 }
@@ -99,7 +114,7 @@
 .judgement-btn-left {
 
     right: 0;
-    margin-right: 3px;
+    margin-right: 2px;
     border-bottom: 3px solid black;
     border-left: 2px solid black;
 
