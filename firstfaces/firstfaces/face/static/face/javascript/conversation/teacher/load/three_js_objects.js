@@ -149,7 +149,9 @@ function addTia() {
         tiaObject.eyeBones.eyeL.rotation.set( EYEL_ROT.x, EYEL_ROT.y, EYEL_ROT.z );
         tiaObject.eyeBones.eyeR.rotation.set( EYER_ROT.x, EYER_ROT.y, EYER_ROT.z );
 
-        loader.load( hair00, addHair)
+        scene.add( tiaObject.mBody );
+        engineRunning();
+        //loader.load( hair00, addHair)
     
     }
 
@@ -165,9 +167,9 @@ function addTia() {
 
         //// SET CAMERAS AND TIA UP DEPENDING ON ENTER OR REENTER \\\\
 
-        scene.add( tiaObject.mBody );
+        //scene.add( tiaObject.mBody );
 
-        engineRunning();
+        //engineRunning();
 
     }
     
@@ -208,6 +210,11 @@ function setBaseExpressionsAndMovements() {
     expressionObject.base = getAbsoluteCoordsOfExpressionNow(); // get absolute position of base expression
     expressionObject.now = $.extend( true, {}, expressionObject.base ); // create a copy of this for expression now
     getAbsoluteCoordsOfMainExpressions(); // gets coordinates for all main expressions
+    
+
+    movementObject.base = getAbsoluteCoordsOfMovementNow(); // same as above for movementObject.abs
+    movementObject.now = $.extend( true, {}, movementObject.base );
+    getAbsoluteCoordsOfMainMovements(); // gets coordinates for all main expressions
 
 }
 

@@ -4,19 +4,14 @@ import datetime
 import time
 from operator import itemgetter
 import json
+from face.views.conversation.student.utils.sentence import jsonify_or_none, floatify
 
 def fill_sessions_dict():
 
-    # create JSON object containing all info for teacher meeting
     sessions = {}
-
-    # get all sessions currently underway
     cur_sessions = Conversation.objects.filter(end_time=None)
 
     # get total sentences in db in order to check later if this has increased
-    total_sentences = TempSentence.objects.count()
-    sessions[ 'totalSentences' ] = total_sentences
-    sessions[ 'numberOf' ] = 0
     sess_id_to_username = {}
     for s in cur_sessions:
         
@@ -25,7 +20,6 @@ def fill_sessions_dict():
             # 1000 hours is for development
             if s.start_time > timezone.now() - datetime.timedelta(hours=1000):
             
-                sessions[ 'numberOf' ] += 1
                 sessions[s.pk] = {}
                 sessions[s.pk]["user_id"] = s.learner.pk
                 sessions[s.pk]["username"] = s.learner.username
@@ -68,13 +62,15 @@ def fill_sessions_dict():
                     sent_meta = {
                         "sess_id": s.pk,
                         "sent_id": sent.id, 
-                        "sentence": json.loads(sent.sentence),
+                        "sentence": jsonify_or_none(sent.sentence),
                         "sentence_timestamp": sent_time,
                         "judgement": sent.judgement,
                         "judgement_timestamp": judge_time,
-                        "indexes": sent.indexes,
+                        "emotion": jsonify_or_none(sent.emotion),
+                        "surprise": floatify(sent.surprise),
+                        "nod_shake": jsonify_or_none(sent.nod_shake),
+                        "indexes": jsonify_or_none(sent.indexes),
                         "prompt": sent.prompt,
-                        "correction": sent.correction,
                         "whats_wrong": sent.whats_wrong,
                         "whats_wrong_timestamp": whats_wrong_time,
                         "try_again": sent.try_again,

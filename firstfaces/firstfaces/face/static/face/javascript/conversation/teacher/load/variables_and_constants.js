@@ -20,7 +20,7 @@ const EYER_POS = { x: -3.09, y: 5.57, z: 1.92 };
 const EYEL_ROT = { x: -0.02, y: -0.055, z: 0 };
 const EYER_ROT = { x: -0.02, y: 0.055, z: 0 };
 const CAMERA_SIT_POS = { x: 0, y: -2, z: 42 };
-const CAMERA_SIT_ROT = { x: 0.065, y: 0, z: 0 };
+const CAMERA_SIT_ROT = { x: 0.081, y: 0.02, z: 0 };
 
 // to make all face work ok
 var synthesisObject = {
@@ -53,6 +53,9 @@ function MoveObj() {
     this.sinLengh = 0;
 
 }
+
+var eyeObject = new MoveObj();
+eyeObject.name = 'eye'
 
 var eyelidObject = new MoveObj();
 eyelidObject.coords = {

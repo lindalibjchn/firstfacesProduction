@@ -3,6 +3,7 @@
 // if eyelids is false, then the absolute coordinates in AUs is used
 function expressionController( expressionTo, duration, expressCb=function(){} ) {
 
+    console.log('in expression controller');
     //// check if blinking, dont want to move mid blink or eyelids wont function
     if ( blinkObject.bool ) {
 

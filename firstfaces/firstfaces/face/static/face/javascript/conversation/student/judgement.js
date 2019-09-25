@@ -54,7 +54,7 @@ function prepareExpression() {
 
         } else {
 
-            changeExpression();
+            changeExpression( conversationVariables.last_sent['emotion'], conversationVariables.last_sent['surprise'] );
 
         }
 

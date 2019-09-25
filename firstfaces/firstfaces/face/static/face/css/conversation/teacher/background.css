@@ -1,0 +1,33 @@
+#UCDBackground {
+
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+}
+
+#topBackgroundSky {
+
+    width: 100%;
+    height: 50%;
+    background-color: #188ac7;
+
+}
+
+#midBackgroundSea {
+
+    width: 100%;
+    height: 30%;
+    background-color: #102858;
+
+}
+
+#lowBackgroundLand {
+
+    width: 100%;
+    height: 20%;
+    background-color: #1fb030;
+
+}
+
+
