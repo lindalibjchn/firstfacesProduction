@@ -1,21 +1,28 @@
-function afterSendingJudgement() {
+function resetJudgement() {
 
-    // remove sentence from array
-    teacherVars.sentencesNeedJudgement.shift();
-
-    resetTempJudgement();
-
-    resetTia();
-
+    clearJudgement();
+    removeJudgedSetence();
     putNextSentenceNeedingJudgementUpForViewing();
-
     setKeydownEvents();
+
+}
+
+function removeJudgedSetence() {
+
+    $('#sentenceForJudgement').empty() 
+    $('#sentenceForJudgement').css( 'opacity', '0.7' ); 
+    $( '#promptText' ).val() = '';
 
 }
 
 function putNextSentenceNeedingJudgementUpForViewing() {
 
     if (teacherVars.sentencesNeedJudgement.length > 0 ) {
+
+        $( '#judgementBtnsCover' ).css( 'z-index', '1' );
+        $( '#judgementCol' ).css( 'opacity', '1' );
+        $( '.dunno-btn' ).attr( 'disabled', false );
+        $( '.wrong-btn' ).attr( 'disabled', false );
 
         // get next sentence needing judgement
         let sentNeedingJudgement = teacherVars.sentencesNeedJudgement[ 0 ].sentence;
@@ -45,14 +52,20 @@ function putNextSentenceNeedingJudgementUpForViewing() {
 
         }
 
+    } else {
+
+        $( '#judgementCol' ).css( 'opacity', '0.7' );
+        $( '#judgementBtnsCover' ).css( 'z-index', '3' );
+
     }
 
 }
 
-function resetTia() {
+function resetButtonOpacities() {
 
-    movementController( movementObject.abs.blank, 0.5, function(){});
-
+    $( '.dunno-btn' ).css( 'opacity', '0.7' );
+    $( '.wrong-btn' ).css( 'opacity', '0.7' );
+    $( '.correct-btn' ).css( 'opacity', '0.3' );
 
 }
 

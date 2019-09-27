@@ -10,6 +10,16 @@
 
 }
 
+#judgementBtnsCover {
+
+    position: absolute;
+    background-color: #188ac7;
+    width: 100%;
+    height: 95%;
+    opacity: 0.7;
+    z-index: 1;
+}
+
 #judgementBtnsInnerContainer {
 
     position: relative;
@@ -18,6 +28,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 2;
     /*border: solid white 2px;*/
 
 }

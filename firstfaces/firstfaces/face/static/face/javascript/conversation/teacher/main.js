@@ -3,16 +3,20 @@ var teacherVars = {};
 $(window).on( 'load', function() {
 
     init(); // load tia
-    insertPhones();
     setTeacherVars();
     setAudio();
+    insertPhones();
     setEmotionSurpriseNodShakeEvents();
     setKeydownEvents()
     setButtonEvents();
         
     //checkForChange();
-    updateAll();
+
+    updateSentencesNeedJudgement();
+    //updatePrevSentences();
     
+    putNextSentenceNeedingJudgementUpForViewing();    
+
 });
 
 $( window ).on( 'resize',  function() {
@@ -103,12 +107,14 @@ function setKeydownEvents() {
         } else if (e.keyCode == 81 && e.ctrlKey) {
             console.log('Ctrl-Q pressed');
             e.preventDefault();
+            clearCorrection();
         } else if (e.keyCode == 87 && e.ctrlKey) {
             console.log('Ctrl-W pressed');
             e.preventDefault();
+            wipeAllCorrections();
         } else if (e.keyCode == 69 && e.ctrlKey) {
             console.log('Ctrl-E pressed');
-            e.preventDefault();
+            clearJudgement();
         } else if(e.keyCode == 13 && e.ctrlKey) {
             console.log('Ctrl-Enter pressed');
             e.preventDefault();
@@ -121,16 +127,6 @@ function setKeydownEvents() {
 function setButtonEvents() {
 
     $('.judgement-btns').on( 'click', prepareJudgement );
-
-}
-
-function updateAll() {
-
-    updateSentencesNeedJudgement();
-    //updatePrevSentences();
-    //updateWrongSentences();
-    //updateSentenceForCorrection();
-    loadNextSentenceNeedingJudgement();
 
 }
 

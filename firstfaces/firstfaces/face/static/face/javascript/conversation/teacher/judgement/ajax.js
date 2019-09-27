@@ -1,7 +1,7 @@
 function storeJudgement() {
 
     $(document).off( 'keydown' );
-
+    
     $.ajax({
         url: "/store_judgement",
         type: "POST",
@@ -19,7 +19,8 @@ function storeJudgement() {
 
     });
 
-    afterSendingJudgement();
+    teacherVars.sentencesNeedJudgement.shift();
+    resetJudgement();
 
 }
 

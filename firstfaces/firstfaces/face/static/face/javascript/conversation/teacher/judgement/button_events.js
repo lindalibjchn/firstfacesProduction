@@ -98,5 +98,57 @@ function storePromptNConfirmTempJudgementsThenSend() {
 
 }
 
+function wipeAllCorrections() {
+
+    let noCorrections = teacherVars.tempJudgement.indexes.length
+    for( let i=0; i<noCorrections; i++ ) {
+
+        clearCorrection();
+
+    } 
+    
+    unHighlightAndFocusOnPromptBox();
+
+}
+
+function clearCorrection() {
+
+    if ( teacherVars.tempJudgement.indexes.length > 0 ) {
+
+        let promptText = $( '#promptText' ).val();
+        let promptTextArray = promptText.split( '\n' );
+        promptTextArray.pop();
+        $( '#promptText' ).val( promptTextArray.join( '\n' ) );
+
+        let indexesToBeUnHighlighted = teacherVars.tempJudgement.indexes.pop();
+        indexesToBeUnHighlighted.forEach( function( i ) {
+
+            if ( $( '#indWord_' + i.toString() ).text() === '#' ) {
+
+                $( '#indWord_' + i.toString() ).css( 'color', '#102858');
+
+            } else {
+
+                $( '#indWord_' + i.toString() ).css( 'color', 'white');
+            
+            }
+                
+            $( '#indWord_' + i.toString() ).removeClass( 'ui-selected');
+
+        } )
+
+    } 
+
+}
+
+function clearJudgement() {
+
+    wipeAllCorrections();
+    resetButtonOpacities();
+    resetEmotionSurpriseNodShakeEvents();
+    resetTempJudgement();
+    removeSelectable();
+
+}
 
 

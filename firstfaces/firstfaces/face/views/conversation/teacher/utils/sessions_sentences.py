@@ -1,10 +1,11 @@
-from face.models import TempSentence, Conversation
+from face.models import TempSentence, Conversation, Profile
 from django.utils import timezone
 import datetime
 import time
 from operator import itemgetter
 import json
 from face.views.conversation.student.utils.sentence import jsonify_or_none, floatify
+from django.conf import settings
 
 def fill_sessions_dict():
 
@@ -23,6 +24,13 @@ def fill_sessions_dict():
                 sessions[s.pk] = {}
                 sessions[s.pk]["user_id"] = s.learner.pk
                 sessions[s.pk]["username"] = s.learner.username
+
+                learner_profile = Profile.objects.get(learner=s.learner)
+                sessions[s.pk]["nationality"] = get_nationality_code(learner_profile.nationality)
+                sessions[s.pk]["gender"] = learner_profile.gender
+                sessions[s.pk]["age"] = get_learner_age(learner_profile.born)
+                print('info:', learner_profile.info)
+                sessions[s.pk]["info"] = jsonify_or_none(learner_profile.info)
                 # need to convert to basic time units for JS
                 sessions[s.pk]["start_time"] = int(time.mktime(timezone.localtime(s.start_time).timetuple())) * 1000
                 
@@ -85,4 +93,19 @@ def fill_sessions_dict():
                 sessions[s.pk]["sentences"]= sents
 
     return sessions
+
+def get_nationality_code( country_name ):
+
+    with open( settings.BASE_DIR + '/face/static/face/images/country-flags/countries_flipped.json') as f:
+        countries = json.load( f )
+        
+    return countries.get( country_name )
+
+def get_learner_age( years_of_birth ):
+
+    current_year = datetime.date.today().year
+    birth_year = int( years_of_birth[-4:] )
+
+    return current_year - birth_year
+    
 
