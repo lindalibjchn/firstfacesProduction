@@ -27,11 +27,4 @@ function updateSentencesNeedJudgement() {
 
 }
 
-function loadNextSentenceNeedingJudgement() {
-
-    // put next sentence needing judgement up for viewing
-    putNextSentenceNeedingJudgementUpForViewing();    
-
-}
-
 

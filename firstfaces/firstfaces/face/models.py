@@ -229,7 +229,7 @@ class Profile(models.Model):
     education = models.CharField(max_length=1, choices=EDUCATION_CHOICES, null=True, blank=False)
     english_level = models.CharField(max_length=1, choices=LEVEL_CHOICES, null=True, blank=False)
     lived_in_english_speaking_country = models.CharField(max_length=1, choices=LIVED_CHOICES, null=True, blank=False)
-    info = models.CharField(max_length=1000, null=True, blank=False)
+    info = models.CharField(max_length=1000, null=True, blank=True)
     consent = models.BooleanField(default=True)
     sound = models.NullBooleanField()
     microphone = models.NullBooleanField()

@@ -47,7 +47,7 @@ def conversation_student(request, session_id):
 
             #check if learner entered a topic. If so then it is not first entry
             first_enter = True 
-            sentences = {}
+            sentences_data = {}
             last_sent = None
             if sess.topic != None:
                 
@@ -150,12 +150,9 @@ def fill_sentences(this_sess_sents_):
             'sentence': jsonify_or_none(s.sentence),
             'judgement': s.judgement,
             'emotion': jsonify_or_none(s.emotion),
-            'nod': s.nod,
-            'nodSpeed': floatify(s.nodSpeed),
-            'nodAmount': floatify(s.nodAmount),
+            'nod_shake': jsonify_or_none(s.nod_shake),
             'surprise': floatify(s.surprise),
             'indexes': jsonify_or_none(s.indexes),
-            'correction': jsonify_or_none(s.correction),
             'prompt': s.prompt,
             'show_correction': s.show_correction,
         }
