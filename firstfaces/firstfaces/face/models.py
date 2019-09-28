@@ -9,7 +9,7 @@ class Conversation(models.Model):
     learner = models.ForeignKey(User, on_delete=models.CASCADE)
     start_time = models.DateTimeField()
     end_time = models.DateTimeField(null=True, blank=True)
-    learner_emotion = models.CharField(max_length=12, null=True, blank=True)
+    emotion = models.SmallIntegerField(null=True, blank=True)
     topic = models.CharField(max_length=100, null=True, blank=True)
     score = models.SmallIntegerField(null=True, blank=True)
     tutorial = models.BooleanField(default=False)
@@ -43,7 +43,7 @@ JUDGEMENT_CHOICES = (
 
 class PermSentence(models.Model):
     learner = models.ForeignKey(User, on_delete=models.CASCADE)
-    session = models.ForeignKey(Conversation, on_delete=models.CASCADE)
+    conversation = models.ForeignKey(Conversation, on_delete=models.CASCADE)
     sentence = models.CharField(max_length=300, null=True, blank=True)
     sentence_timestamp = models.DateTimeField(null=True, blank=True)
 
@@ -74,7 +74,7 @@ class PermSentence(models.Model):
 class TempSentence(models.Model):
     p_sentence = models.ForeignKey(PermSentence, on_delete=models.CASCADE)
     learner = models.ForeignKey(User, on_delete=models.CASCADE)
-    session = models.ForeignKey(Conversation, on_delete=models.CASCADE)
+    conversation = models.ForeignKey(Conversation, on_delete=models.CASCADE)
     sentence = models.CharField(max_length=300, null=True, blank=True)
     sentence_timestamp = models.DateTimeField(null=True, blank=True)
 

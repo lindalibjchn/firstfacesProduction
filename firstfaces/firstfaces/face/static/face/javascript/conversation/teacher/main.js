@@ -41,8 +41,8 @@ function setAudio() {
 function setTeacherVars() {
 
     teacherVars.checkForChangeCount = 0;
-    teacherVars.sessions = sessions;
-    teacherVars.noSessions = Object.keys( teacherVars.sessions ).length;
+    teacherVars.conversations = conversations;
+    teacherVars.noSessions = Object.keys( teacherVars.conversations ).length;
     teacherVars.inDevelopment = inDevelopment;
     teacherVars.sentencesNeedJudgement = [];
     teacherVars.emotionWheel = {};

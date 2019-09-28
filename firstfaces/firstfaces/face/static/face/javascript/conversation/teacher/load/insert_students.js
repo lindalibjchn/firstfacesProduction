@@ -2,7 +2,6 @@ function loadStudents() {
 
     let phoneCount = 0
     let sessions = Object.keys(teacherVars.sessions)
-    console.log( 'sessions:', sessions );
     
     sessions.forEach( function() {
 

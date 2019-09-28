@@ -1,98 +1,95 @@
-from face.models import TempSentence, Conversation, Profile
-from django.utils import timezone
+from face.models import TempSentence, PermSentence, Conversation, Profile
 import datetime
-import time
 from operator import itemgetter
 import json
-from face.views.conversation.student.utils.sentence import jsonify_or_none, floatify
+from face.views.conversation.student.utils.sentence import jsonify_or_none, floatify, int_time_or_none
 from django.conf import settings
+from django.contrib.auth.models import User
 
-def fill_sessions_dict():
+def get_students_in_conversation_now_ids():
+    
+    cur_conversations = Conversation.objects.filter(end_time=None)
 
-    sessions = {}
-    cur_sessions = Conversation.objects.filter(end_time=None)
+    students_in_conversation_now_ids = []
+    for c in cur_conversations:
 
-    # get total sentences in db in order to check later if this has increased
-    sess_id_to_username = {}
-    for s in cur_sessions:
+        students_in_conversation_now_ids.append(c.learner.pk)
+
+    return students_in_conversation_now_ids
+
+def get_students_conversations(students_in_conversation_now_ids_):
+
+    students_conversations = {}
         
-        if s.tutorial == False:
+    for student_id in students_in_conversation_now_ids_:
 
-            # 1000 hours is for development
-            if s.start_time > timezone.now() - datetime.timedelta(hours=1000):
-            
-                sessions[s.pk] = {}
-                sessions[s.pk]["user_id"] = s.learner.pk
-                sessions[s.pk]["username"] = s.learner.username
+        learner_profile = Profile.objects.get(learner__id=student_id)
+        students_conversations[student_id] = {
+            "username": User.objects.get(pk=student_id).username,
+            "nationality": get_nationality_code(learner_profile.nationality),
+            "gender": learner_profile.gender,
+            "age": get_learner_age(learner_profile.born),
+            "info": jsonify_or_none(learner_profile.info),
+            "conversations": get_student_conversations(student_id)
+        }
 
-                learner_profile = Profile.objects.get(learner=s.learner)
-                sessions[s.pk]["nationality"] = get_nationality_code(learner_profile.nationality)
-                sessions[s.pk]["gender"] = learner_profile.gender
-                sessions[s.pk]["age"] = get_learner_age(learner_profile.born)
-                print('info:', learner_profile.info)
-                sessions[s.pk]["info"] = jsonify_or_none(learner_profile.info)
-                # need to convert to basic time units for JS
-                sessions[s.pk]["start_time"] = int(time.mktime(timezone.localtime(s.start_time).timetuple())) * 1000
-                
+    return students_conversations
 
-                # get prev sentences
-                this_sess_sents = TempSentence.objects.filter(session=s)
-                sents = []
+def get_student_conversations(student_id_):
+        
+    student_conversation_objects = Conversation.objects.filter(learner__id=student_id_)
+    print('student_conversation_objects:', student_conversation_objects)
 
-                for sent in this_sess_sents:
+    conversations = []
+    for c in student_conversation_objects:
 
-                    # timestamps only work if there is an actual time, else None
-                    sent_time = None
-                    judge_time = None
-                    whats_wrong_time = None
-                    try_again_time = None
-                    next_sentence_time = None
-                    if sent.sentence_timestamp != None:
+        conversation = {}
+        if c.tutorial == False:
 
-                        sent_time = int(time.mktime((sent.sentence_timestamp).timetuple()))
-                        
-                    if sent.judgement_timestamp != None:
+            conversation["id"] = c.pk
+            conversation["start_time"] = int_time_or_none(c.start_time)
+            conversation["end_time"] = int_time_or_none(c.end_time)
+            conversation["topic"] = c.topic
+            conversation["emotion"] = c.emotion
+            conversation["sentences"] = []
 
-                        judge_time = int(time.mktime((sent.judgement_timestamp).timetuple()))
+            # get prev sentences
+            sent_objects = PermSentence.objects.filter(conversation=c)
 
-                    if sent.whats_wrong_timestamp != None:
+            for sent in sent_objects:
 
-                        whats_wrong_time = int(time.mktime((sent.whats_wrong_timestamp).timetuple()))
+                # timestamps only work if there is an actual time, else None
+                sent_time = int_time_or_none(sent.sentence_timestamp)
+                judge_time = int_time_or_none(sent.judgement_timestamp)
+                whats_wrong_time = int_time_or_none(sent.whats_wrong_timestamp)
+                try_again_time = int_time_or_none(sent.try_again_timestamp)
+                next_sentence_time = int_time_or_none(sent.next_sentence_timestamp)
 
-                    if sent.try_again_timestamp != None:
+                sent_meta = {
+                    "sent_id": sent.id, 
+                    "sentence": jsonify_or_none(sent.sentence),
+                    "sentence_timestamp": sent_time,
+                    "judgement": sent.judgement,
+                    "judgement_timestamp": judge_time,
+                    "emotion": jsonify_or_none(sent.emotion),
+                    "surprise": floatify(sent.surprise),
+                    "nod_shake": jsonify_or_none(sent.nod_shake),
+                    "indexes": jsonify_or_none(sent.indexes),
+                    "prompt": sent.prompt,
+                    "whats_wrong": sent.whats_wrong,
+                    "whats_wrong_timestamp": whats_wrong_time,
+                    "try_again": sent.try_again,
+                    "try_again_timestamp": try_again_time,
+                    "next_sentence": sent.next_sentence,
+                    "next_sentence_timestamp": next_sentence_time,
+                }
+                conversation["sentences"].append(sent_meta)
 
-                        try_again_time = int(time.mktime((sent.try_again_timestamp).timetuple()))
+            conversation["sentences"] = sorted(conversation["sentences"], key=itemgetter("sent_id"), reverse=True)
 
-                    if sent.next_sentence_timestamp != None:
+        conversations.append(conversation)
 
-                        next_sentence_time = int(time.mktime((sent.next_sentence_timestamp).timetuple()))
-
-                    sent_meta = {
-                        "sess_id": s.pk,
-                        "sent_id": sent.id, 
-                        "sentence": jsonify_or_none(sent.sentence),
-                        "sentence_timestamp": sent_time,
-                        "judgement": sent.judgement,
-                        "judgement_timestamp": judge_time,
-                        "emotion": jsonify_or_none(sent.emotion),
-                        "surprise": floatify(sent.surprise),
-                        "nod_shake": jsonify_or_none(sent.nod_shake),
-                        "indexes": jsonify_or_none(sent.indexes),
-                        "prompt": sent.prompt,
-                        "whats_wrong": sent.whats_wrong,
-                        "whats_wrong_timestamp": whats_wrong_time,
-                        "try_again": sent.try_again,
-                        "try_again_timestamp": try_again_time,
-                        "next_sentence": sent.next_sentence,
-                        "next_sentence_timestamp": next_sentence_time,
-                    }
-                    sents.append(sent_meta)
-
-                sents = sorted(sents, key=itemgetter("sent_id"), reverse=True)
-
-                sessions[s.pk]["sentences"]= sents
-
-    return sessions
+    return conversations
 
 def get_nationality_code( country_name ):
 

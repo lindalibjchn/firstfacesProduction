@@ -1,16 +1,16 @@
 from django.shortcuts import render
-from face.views.conversation.teacher.utils.sessions_sentences import fill_sessions_dict
+from face.views.conversation.teacher.utils.sessions_sentences import get_students_in_conversation_now_ids, get_students_conversations
 from django.conf import settings
 import json
 
 def conversation_teacher(request):
 
-    sessions = fill_sessions_dict()
-    print('in_development:', settings.DEBUG)
+    students_in_conversation_now_ids = get_students_in_conversation_now_ids()
+    conversations = get_students_conversations(students_in_conversation_now_ids)
 
     context = {
 
-        "sessions": json.dumps(sessions),
+        "conversations": json.dumps(conversations),
         "conversation": True,
         "in_development": json.dumps(settings.DEBUG),
 

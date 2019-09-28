@@ -1,6 +1,8 @@
 from nltk import word_tokenize, pos_tag
 import json
 from g2p_en import G2p
+from django.utils import timezone
+import time
 
 def change_sentence_to_list_n_add_data(s_):
 
@@ -106,6 +108,13 @@ def floatify( decimal_from_db ):
 
     if decimal_from_db != None:
         return float(decimal_from_db)
+    else:
+        return None
+
+def int_time_or_none( timestamp_from_db ):
+
+    if timestamp_from_db != None:
+        return int(time.mktime(timezone.localtime(timestamp_from_db).timetuple())) * 1000
     else:
         return None
 
