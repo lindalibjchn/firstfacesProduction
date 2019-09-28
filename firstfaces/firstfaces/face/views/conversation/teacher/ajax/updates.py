@@ -3,7 +3,7 @@ from django.utils import timezone
 import datetime
 import json
 from django.http import JsonResponse
-from face.views.conversation.teacher.utils.sessions_sentences import fill_sessions_dict
+from face.views.conversation.teacher.utils.sessions_sentences import get_students_conversations
 
 def check_for_change(request):
 
@@ -72,11 +72,11 @@ def check_for_change(request):
 
 def update_session_object(request):
 
-    sessions = fill_sessions_dict()
+    # sessions = get()
 
     response_data = {
 
-        'sessions': json.dumps(sessions),
+        # 'sessions': json.dumps(sessions),
 
     };
 
