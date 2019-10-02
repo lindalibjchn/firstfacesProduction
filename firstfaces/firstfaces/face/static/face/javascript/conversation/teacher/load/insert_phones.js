@@ -56,18 +56,19 @@ function createStudentHTML( no ) {
 
                     '<div class="student-nationality-container">' +
 
-                        //'<img class="flag" src="static/face/images/country-flags/svg/cn.svg">' +
                         '<img class="flag" id="flag' + no + '">' +
+
+                        '<div class="flag-fade-out" id="flagFadeOutRight' + no + '"></div>' +
+
+                        '<div class="flag-fade-out" id="flagFadeOutBottom' + no + '"></div>' +
                     
                     '</div>' +
 
                     '<div class="student-name-container w3-row">' +
 
                         '<div class="w3-col m2">&nbsp</div>' +
-                        //'<div class="student-gender w3-col m1" id="studentGender' + no + '"><i class="fa fa-mars"></i></div>' +
 
                         '<div class="student-name w3-col m8" id="studentName' + no + '"></div>' +
-
 
                         '<div class="student-age-container w3-col m2" id="studentAgeGender">' +
                         
@@ -93,35 +94,13 @@ function createStudentHTML( no ) {
 
                 '</div>' +
 
-                '<div class="w3-row conversation-details prev-conversation-details" id="prevConversationDetails' + no + '">' +
-
-                    '<div class="w3-col m2 conversation-emotion prev-conversation-emotion" id="prevConversationEmotion' + no + '"></div>' +
-
-                    '<div class="w3-col m2 conversation-time prev-conversation-time" id="prevConversationTime' + no + '"></div>' +
-
-                    '<div class="w3-col m6 conversation-topic prev-conversation-topic" id="prevConversationTopic' + no + '"></div>' +
-
-                    '<div class="w3-col m2 conversation-rating prev-conversation-rating" id="prevConversationRating' + no + '"></div>' +
-
-                '</div>' +
-
-                '<div class="w3-row conversation-details current-conversation-details" id="currentAttempt' + no + '">' +
-
-                    '<div class="w3-col m2 conversation-emotion current-conversation-emotion" id="currentConversationEmotion' + no + '"></div>' +
-
-                    '<div class="w3-col m2 conversation-time current-conversation-time" id="currentConversationTime' + no + '"></div>' +
-
-                    '<div class="w3-col m6 conversation-topic current-conversation-topic" id="currentConversationTopic' + no + '"></div>' +
-
-                    '<div class="w3-col m2 conversation-rating current-conversation-rating" id="currentConversationRating' + no + '"></div>' +
-
-                '</div>' +
+                '<div class="w3-row conversation-meta" id="conversationMeta' + no + '"></div>' +
 
                 '<div class="current-attempt" id="currentAttempt' + no + '">' +
 
                 '</div>' +
 
-                '<div class="previous-sents" id="prevSents' + no + '">' +
+                '<div class="previous-sents-container" id="prevSentsContainer' + no + '">' +
 
                 '</div>' +
 
@@ -135,6 +114,11 @@ function createStudentHTML( no ) {
         '</div>'
 
     return studentHTML
+
+}
+
+function insertPrevConversations( no ) {
+
 
 }
 

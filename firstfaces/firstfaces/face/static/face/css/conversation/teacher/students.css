@@ -2,7 +2,6 @@
 
     height: 33%;
     width: 100%;
-    /*border: 1px dashed white;*/
 
 }
 
@@ -93,19 +92,52 @@
 .student-nationality-container {
 
     width: 100%;
+    height: 100%;
     position: absolute;
 
 }
 
 .flag {
 
-    width: 32%;
+    width: 20%;
     /*height: 100%;*/
-    position: relative;
-    mask-image: linear-gradient(to right, rgba(0,0,0,1), rgba(0,0,0,1), rgba(0,0,0,0), rgba(0,0,0,0), rgba(0,0,0,0));
-    -webkit-mask-image: linear-gradient(to right, rgba(0,0,0,0.7), rgba(0,0,0,0.4), rgba(0,0,0,0.1), rgba(0,0,0,0));
+    position: absolute;
+    /*mask-image: linear-gradient(to right, rgba(0,0,0,1), rgba(0,0,0,1), rgba(0,0,0,0), rgba(0,0,0,0), rgba(0,0,0,0));*/
+    /*-webkit-mask-image: linear-gradient(to right, rgba(0,0,0,0.7), rgba(0,0,0,0.4), rgba(0,0,0,0.1), rgba(0,0,0,0));*/
     
     /*opacity: 0.3;*/
+
+}
+
+.flag-fade-out {
+
+    position: absolute;
+    width: 20%;
+    height: 70%;
+
+}
+
+.flag-fade-out-right-M {
+
+    background-image: linear-gradient(to right, rgba(204,221,255,0), rgba(204,221,255,0), rgba(204,221,255, 0.3), rgba(204,221,255, 0.7), rgba(204,221,255,1));
+
+}
+
+.flag-fade-out-bottom-M {
+
+    background-image: linear-gradient(to bottom, rgba(204,221,255,0), rgba(204,221,255,0), rgba(204,221,255, 0.3), rgba(204,221,255, 0.7), rgba(204,221,255,1), rgba(204,221,255,1));
+
+}
+
+.flag-fade-out-right-F {
+
+    background-image: linear-gradient(to right, rgba(255,204,230,0), rgba(255,204,230,0), rgba(255,204,230,0.3), rgba(255,204,230,0.7), rgba(255,204,230,1));
+
+}
+
+.flag-fade-out-bottom-F {
+
+    background-image: linear-gradient(to bottom, rgba(255,204,230,0), rgba(255,204,230,0), rgba(255,204,230,0.3), rgba(255,204,230,0.7), rgba(255,204,230,1), rgba(255,204,230,1));
 
 }
 
@@ -292,26 +324,34 @@
 
 /* CONVERSATION DETAILS */
 
-.conversation-details {
+.conversation-meta {
 
     width: 100%;
     height: 12%;
-    border: 1px dashed black;
+    border-top: 1px solid white;
+    border-bottom: 1px solid white;
+    overflow-y: scroll;
+
+}
+
+.conversation-meta-each {
+ 
+    margin-bottom: 1px solid white;
+    height: 100%;
+    width: 100%;
 
 }
 
 .conversation-emotion {
 
     height: 100%;
-    border: 1px solid orange;
+    border-right: 1px solid white;
 
 }
 
-.conversation-time {
+.student-emotion-emojis {
 
-    height: 100%;
-    /*width: 15%;*/
-    border: 1px solid blue;
+    width: 100%;
 
 }
 
@@ -319,32 +359,49 @@
 
     height: 100%;
     /*width: 55%;*/
-    border: 1px solid green;
+    /*border: 1px solid green;*/
+    font-size: 0.75vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-right: 1px solid white;
 
 }
 
-.conversation-rating {
+.conversation-time {
 
     height: 100%;
     /*width: 15%;*/
-    border: 1px solid gold;
+    font-size: 0.75vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
 }
 
+.prev-conv-time {
+
+    font-size: 0.6vw;
+
+
+}
 
 .current-attempt {
 
     width: 100%;
-    height: 12%;
-    border: 1px dashed red;
+    height: 24%;
+    /*border: 1x dashed red;*/
+    border-bottom: 1px white solid;
 
 }
 
-.previous-sents {
+.previous-sents-container {
 
+    position: relative;
     width: 100%;
     height: 32%;
-    border: 1px dashed blue;
+    /*border: 1px dashed blue;*/
+    border-bottom: 1px white solid;
 
 }
 
@@ -352,7 +409,7 @@
 
     width: 100%;
     height: 17%;
-    border: 1px dashed orange;
+    /*border: 1px dashed orange;*/
 
 }
 
@@ -362,6 +419,7 @@
     height: 100%;
     resize: none;
     font-size: 0.75vw;
+    border: none;
 
 }
 
