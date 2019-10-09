@@ -1,70 +1,47 @@
-from face.models import TempSentence
+from face.models import TempSentence, Profile
 from django.utils import timezone
 import datetime
 import json
+import time
 from django.http import JsonResponse
-from face.views.conversation.teacher.utils.sessions_sentences import get_students_conversations
+from face.views.conversation.teacher.utils.sessions_sentences import get_students_conversations, convert_django_sentence_object_to_json
+from face.views.conversation.student.utils.sentence import jsonify_or_none
+from face.views.conversation import database_updates
 
 def check_for_change(request):
 
-    # code.interact(local=locals());
-
-    # get ids of sentences which have blobs but no sentences
-    time_now_minus_3s = timezone.now() - datetime.timedelta(seconds=3)
-    time_now_minus_10 = timezone.now() - datetime.timedelta(minutes=300)
-    # sentences_with_blobs_but_nosentences_ids = [s.id for s in TempSentence.objects.filter(created_at__gte=time_now_minus_10).filter(sentence=None)]
-    # print('sentences_with_blobs_but_nosentences_ids:', sentences_with_blobs_but_nosentences_ids)
-
-    # check that sents awaiting maybe urgent update have had their 'whats wrong' or 'try again/next sentence' buttons clicked 
-    sents_awaiting_maybe_urgent_update = json.loads( request.GET['sentsAwaitingMaybeUrgentUpdate'] )
-    prev_sentences_count = int(json.loads( request.GET['totalSents'] ))
-    
-    sents_awaiting_maybe_urgent_update_ids = [s['sent_id'] for s in sents_awaiting_maybe_urgent_update]
-
-    # get ids of sentences which have changed
-    def check_each_change():
-
-        for s_id in sents_awaiting_maybe_urgent_update_ids:
-
-            if has_user_clicked_option_btn(s_id):
-
-                return True
-
-        # for s_b_id in sentences_with_blobs_but_nosentences_ids:
-
-            # if has_user_added_sent_to_blob(s_b_id):
-
-                # return True
-    
-        if TempSentence.objects.count() > prev_sentences_count:
-
-            # no_new_sents = TempSentence.objects.count() - prev_sentences_count
-            # TempSentences.objects.filter(created_at__gte=time_now_minus_3s).order_by('-pk')[:no_new_sents]
-
-            return True
-
+    check_for_change_count = 0
+    while not database_updates.database_updated_by_student:
+        if check_for_change_count < 30:
+            print('database_updated_by_student:', database_updates.database_updated_by_student, check_for_change_count)
+            check_for_change_count += 1
+            time.sleep(1)
         else:
-            
-            sentences_within_3s = TempSentence.objects.filter(sentence_timestamp__gte=time_now_minus_3s)
-
-            if len(sentences_within_3s) != 0:
-
-                for s in sentences_within_3s:
-
-                    #if the time difference between being created and the sentence created is greater than 1 then it is a recording
-                    if s.sentence_timestamp - s.created_at > datetime.timedelta(seconds=1):
-
-                        return True
+            return JsonResponse({'change': False})    
 
 
+    
+    print('database_updated_by_student:', database_updates.database_updated_by_student)
 
-        return False
+    database_updates.database_updated_by_student = False
 
-    changed = check_each_change()
+    sentences_being_recorded_or_not_judged_objects = TempSentence.objects.filter(judgement=None)
+    sentences_being_recorded_objects = sentences_being_recorded_or_not_judged_objects.filter(sentence=None)
+    sentences_not_judged_objects = sentences_being_recorded_or_not_judged_objects.exclude(sentence=None).order_by('sentence_timestamp')
+
+    sentences_being_recorded = []
+    for s_b in sentences_being_recorded_objects:
+        sentences_being_recorded.append( convert_django_sentence_object_to_json(s_b, s_b.learner.id, s_b.conversation.id))
+
+    sentences_not_judged = []
+    for s_n in sentences_not_judged_objects:
+        sentences_not_judged.append( convert_django_sentence_object_to_json(s_n, s_n.learner.id, s_n.conversation.id))
 
     response_data = {
 
-        'changed': changed,
+        'change': True,
+        'sentences_being_recorded': sentences_being_recorded,
+        'sentences_not_judged': sentences_not_judged,
 
     };
 
@@ -81,4 +58,34 @@ def update_session_object(request):
     };
 
     return JsonResponse(response_data)    
+
+def update_info(request):
+
+    user_id = request.POST['user_id']
+    new_info = request.POST['new_info']
+
+    profile = Profile.objects.get(learner=user_id)
+    
+    existing_info = jsonify_or_none(profile.info)
+
+    if existing_info: 
+
+        existing_info.append(new_info)
+
+    else:
+
+        existing_info = [new_info]
+
+    profile.info = json.dumps(existing_info)
+    profile.save()
+
+    response_data = {
+
+        'updated_info': existing_info,
+
+    };
+
+    return JsonResponse(response_data)    
+
+
 

@@ -14,7 +14,7 @@ def store_judgement(request):
     
     # code.interact(local=locals());
 
-    sess_id = sent_meta['sess_id']
+    conv_id = sent_meta['conv_id']
     sent_id = int(sent_meta['sent_id'])
     t_sent = TempSentence.objects.get(pk=sent_id)
     p_sent = PermSentence.objects.get(pk=sent_id)
@@ -28,15 +28,15 @@ def store_judgement(request):
     # if correct or better then need to store expression data too
     if sent_meta['judgement'] in ['B', 'P', 'X', 'M']:
 
-        t_sent.prompt = json.dumps(sent_meta['prompt'])
-        p_sent.prompt = json.dumps(sent_meta['prompt'])
-   
+        t_sent.prompt = sent_meta['prompt']
+        p_sent.prompt = sent_meta['prompt']   
+
         if sent_meta['judgement'] != 'P':
 
             t_sent.indexes = json.dumps(sent_meta['indexes'])
             p_sent.indexes = json.dumps(sent_meta['indexes'])
 
-        if sent_meta['judgement'] != 'X':
+        if sent_meta['judgement'] not in ['X', 'M']:
         
             t_sent.emotion = json.dumps(sent_meta['emotion'])
             p_sent.emotion = json.dumps(sent_meta['emotion'])
@@ -54,7 +54,7 @@ def store_judgement(request):
     response_data = {
 
         'judgement_timestamp': judgement_timestamp,
-        'sess_id': sess_id,
+        'conv_id': conv_id,
 
     }
 

@@ -22,18 +22,18 @@ logger = logging.getLogger(__name__)
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/Users/john/Documents/PhD/firstfaces/erle-3666ad7eec71.json"
 
 @login_required
-def conversation_student(request, session_id):
+def conversation_student(request, conversation_id):
 
     try:
 
-        # when entering a conversation, must check that a session exists at that url e.g. 'conversation/234'. If a DoesNot
-        sess = Conversation.objects.get(id=session_id)
+        # when entering a conversation, must check that a conversation exists at that url e.g. 'conversation/234'. If a DoesNot
+        conv = Conversation.objects.get(id=conversation_id)
         
-        # if session is ended, or user not the owner, return to waiting
-        if sess.end_time == None and request.user == sess.learner:
+        # if conversation is ended, or user not the owner, return to waiting
+        if conv.end_time == None and request.user == conv.learner:
 
             # changes the datetime objct into unix time
-            start_time = int(time.mktime((sess.start_time).timetuple()))
+            start_time = int(time.mktime((conv.start_time).timetuple()))
        
             tutorial_complete = Profile.objects.get(learner=request.user).tutorial_complete
 
@@ -49,19 +49,19 @@ def conversation_student(request, session_id):
             first_enter = True 
             sentences_data = {}
             last_sent = None
-            if sess.topic != None:
+            if conv.topic != None:
                 
                 first_enter = False
-                this_sess_sents = PermSentence.objects.filter(session=sess).order_by('pk')
+                this_conv_sents = PermSentence.objects.filter(conversation=conv).order_by('pk')
 
                 #check that there are entries in the queryset i.e. not empty
-                if this_sess_sents:
+                if this_conv_sents:
 
                     # adds all data about the sentences
-                    sentences_data = fill_sentences(this_sess_sents)
+                    sentences_data = fill_sentences(this_conv_sents)
 
                     #need to check if sentence has blob but no text
-                    last_sent = list(this_sess_sents)[-1]
+                    last_sent = list(this_conv_sents)[-1]
                     if last_sent.sentence == None: 
 
                         blob_no_text = True
@@ -79,7 +79,7 @@ def conversation_student(request, session_id):
 
                 'username': request.user.username,
                 'start_time': start_time * 1000,
-                'session_id': session_id,
+                'conversation_id': conversation_id,
                 'first_enter': first_enter,
                 'sentences': sentences_data,
                 # 'last_sent': last_sent.sentence,
@@ -106,11 +106,11 @@ def conversation_student(request, session_id):
             
         else:
 
-            # session has already ended or user not owner
+            # conversation has already ended or user not owner
             logger.error('\n\nerror: conversation is finished or user is not owner of conversation')
             return redirect('waiting')
 
-    # if the session doesn't exist from the url the following exception handles it by returning the user to the waiting area:
+    # if the conversation doesn't exist from the url the following exception handles it by returning the user to the waiting area:
     except Conversation.DoesNotExist as e:
 
         logger.error('\n\nerror from try except in conversation:' + str(e) + '\n')
@@ -126,18 +126,18 @@ def determine_if_first_full_conversation(u, tutorial_complete_):
         create_hello_wav(u.username)
 
     try:
-        all_sesss = Conversation.objects.filter(learner=u).exclude(end_time=None)
-        if len(all_sesss) == 1: # tutorial is one conversation
+        all_convs = Conversation.objects.filter(learner=u).exclude(end_time=None)
+        if len(all_convs) == 1: # tutorial is one conversation
             first_full_conversation = True
     except:
         pass
 
     return first_full_conversation
 
-def fill_sentences(this_sess_sents_):
+def fill_sentences(this_conv_sents_):
 
     sentences_ = {}
-    for i, s in enumerate(this_sess_sents_):
+    for i, s in enumerate(this_conv_sents_):
 
         #count the interference
         audio_files = s.audiofile_set.all()

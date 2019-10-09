@@ -82,7 +82,7 @@ function createStudentHTML( no ) {
 
                     '</div>' +
 
-                    '<div class="student-info-container">' +
+                    '<div class="student-info-container" id="studentInfoContainer' + no + '">' +
                         
                         '<div class="marquee">' +
                         
@@ -114,11 +114,6 @@ function createStudentHTML( no ) {
         '</div>'
 
     return studentHTML
-
-}
-
-function insertPrevConversations( no ) {
-
 
 }
 

@@ -1,17 +1,40 @@
 function resetJudgement() {
 
+    addJudgedSentenceToPrevSentences();
     clearJudgement();
-    removeJudgedSetence();
+    removeJudgedSentence();
     putNextSentenceNeedingJudgementUpForViewing();
     setKeydownEvents();
+    resetPhoneColoursNeedJudgement();
+    resetTempEmotionStates();
 
 }
 
-function removeJudgedSetence() {
+function clearJudgement() {
+
+    //wipeAllCorrections();
+    resetButtonOpacities();
+    resetEmotionSurpriseNodShakeEvents();
+    removeSelectable();
+
+}
+
+function removeJudgedSentence() {
 
     $('#sentenceForJudgement').empty() 
     $('#sentenceForJudgement').css( 'opacity', '0.7' ); 
-    $( '#promptText' ).val() = '';
+    $( '#promptText' ).val('');
+
+}
+
+function addJudgedSentenceToPrevSentences() {
+
+    let judgedSentence = teacherVars.sentencesNeedJudgement.shift();
+    teacherVars.conversations[ judgedSentence.user_id ].conversations[ 0 ].completed_sentences.unshift( judgedSentence )
+
+    let phoneId = teacherVars.studentIdToPhone[ judgedSentence.user_id ];
+    let divForPuttingInPrevSentences = document.getElementById( 'prevSentsContainer' + phoneId );
+    addPreviousSentences( teacherVars.conversations[ judgedSentence.user_id ].conversations[ 0 ], phoneId );
 
 }
 
@@ -54,7 +77,7 @@ function putNextSentenceNeedingJudgementUpForViewing() {
 
     } else {
 
-        $( '#judgementCol' ).css( 'opacity', '0.7' );
+        $( '#judgementCol' ).css( 'opacity', '0.8' );
         $( '#judgementBtnsCover' ).css( 'z-index', '3' );
 
     }
@@ -68,4 +91,26 @@ function resetButtonOpacities() {
     $( '.correct-btn' ).css( 'opacity', '0.3' );
 
 }
+
+function resetPhoneColoursNeedJudgement() {
+
+    $('.phone-outer').removeClass('phone-needs-correction-now phone-needs-correction-next');
+    for( let i=0; i<teacherVars.sentencesNeedJudgement.length; i++ ) {
+
+        let phoneId = teacherVars.studentIdToPhone[ teacherVars.sentencesNeedJudgement[ i ].user_id ];
+        
+        if ( i === 0 ) {
+
+            $('#phone' + phoneId).addClass( 'phone-needs-correction-now' );
+        
+        } else {
+
+            $('#phone' + phoneId).addClass( 'phone-needs-correction-next' );
+        
+        }
+
+    };
+
+}
+
 

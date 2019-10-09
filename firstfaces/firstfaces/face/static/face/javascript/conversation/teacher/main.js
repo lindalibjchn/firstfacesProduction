@@ -12,10 +12,11 @@ $(window).on( 'load', function() {
         
     //checkForChange();
 
-    updateSentencesNeedJudgement();
+    //updateSentencesNeedJudgement();
     //updatePrevSentences();
     
     putNextSentenceNeedingJudgementUpForViewing();    
+    resetPhoneColoursNeedJudgement();
 
 });
 
@@ -41,16 +42,56 @@ function setAudio() {
 function setTeacherVars() {
 
     teacherVars.checkForChangeCount = 0;
-    teacherVars.conversations = conversations;
+    teacherVars.sentencesNeedJudgement = conversations.sentences_awaiting_judgement;
+    teacherVars.sentencesBeingRecorded = conversations.sentences_being_recorded;
+    teacherVars.conversations = conversations.all_conversations;
     teacherVars.noSessions = Object.keys( teacherVars.conversations ).length;
     teacherVars.inDevelopment = inDevelopment;
-    teacherVars.sentencesNeedJudgement = [];
     teacherVars.emotionWheel = {};
     teacherVars.nodShakeSemiCircle = {};
-    resetTempJudgement();
+    teacherVars.phoneToStudentId = {};
+    teacherVars.studentIdToPhone = {};
+    teacherVars.sentencesNeedJudgement = [];
+    resetTempEmotionStates();
+    //teacherVars.mostRecentSentId = calcMostRecentSentId();
+    //resetTempJudgement();
     setPrefixURL()
 
 }
+
+function resetTempEmotionStates() {
+
+    teacherVars.tempEmotionStates = {
+    
+        surprise: 0,
+        emotion: [0.1, 0.1],
+        nodShake: [0, 0]
+
+    };
+
+}
+
+//function calcMostRecentSentId() {
+
+    //let mostRecentSentId = 0;
+
+    //Object.keys( teacherVars.conversations ).forEach( function( c ) {
+
+        //if ( teacherVars.conversations[ c ].conversations[ 0 ].sentences.length > 0 ) {
+
+            //if ( teacherVars.conversations[ c ].conversations[ 0 ].sentences[ 0 ].sent_id > mostRecentSentId ) {
+
+                //mostRecentSentId = teacherVars.conversations[ c ].conversations[ 0 ].sentences[ 0 ].sent_id;
+
+            //}
+
+        //}
+
+    //});
+
+    //return mostRecentSentId;
+
+//}
 
 function resetTempJudgement() {
 
@@ -115,10 +156,13 @@ function setKeydownEvents() {
         } else if (e.keyCode == 69 && e.ctrlKey) {
             console.log('Ctrl-E pressed');
             clearJudgement();
+        } else if (e.keyCode == 77 && e.ctrlKey) {
+            console.log('Ctrl-M pressed');
+            sendNewInfoToServer();
         } else if(e.keyCode == 13 && e.ctrlKey) {
             console.log('Ctrl-Enter pressed');
             e.preventDefault();
-            storePromptNConfirmTempJudgementsThenSend();
+            storePromptThenSend();
         }
     });
 
@@ -127,6 +171,7 @@ function setKeydownEvents() {
 function setButtonEvents() {
 
     $('.judgement-btns').on( 'click', prepareJudgement );
+    $('.student-info-container').click( focusAddInfo );
 
 }
 

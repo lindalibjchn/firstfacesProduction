@@ -22,12 +22,12 @@
 
     position: relative;
     width: 100%;
-    padding-top: 140%;
+    padding-top: 130%;
     background-color: white;
     border-radius: 10px;
-    border: 3px solid black;
-    border-top: 10px solid black;
-    border-bottom: 10px solid black;
+    border: 3px solid #323232;
+    border-top: 10px solid #323232;
+    border-bottom: 10px solid #323232;
     transition: transform 0.2s;
 
 }
@@ -41,8 +41,7 @@
 .phone-outer-yes-student:hover {
 
     cursor: pointer; 
-    opacity: 1;
-    transform: scale(1.08);
+    transform: scale(1.14);
 
 
 }
@@ -50,6 +49,33 @@
 .phone-outer-no-student {
 
     opacity: 0.1;
+
+}
+
+.phone-needs-correction-now {
+
+    transform: scale(1.12);
+    opacity: 1;
+    border: 3px solid black;
+    border-top: 10px solid black;
+    border-bottom: 10px solid black;
+    z-index: 11;
+
+}
+
+.phone-needs-correction-now:hover {
+
+    transform: scale(1.24);
+    opacity: 1;
+
+}
+
+.phone-needs-correction-next {
+
+    opacity: 1;
+    border: 3px solid #191919;
+    border-top: 10px solid #191919;
+    border-bottom: 10px solid #191919;
 
 }
 
@@ -389,9 +415,15 @@
 .current-attempt {
 
     width: 100%;
-    height: 24%;
+    height: 18%;
     /*border: 1x dashed red;*/
     border-bottom: 1px white solid;
+
+}
+
+.recording {
+
+    background-color: red;
 
 }
 
@@ -399,7 +431,7 @@
 
     position: relative;
     width: 100%;
-    height: 32%;
+    height: 40%;
     /*border: 1px dashed blue;*/
     border-bottom: 1px white solid;
 
@@ -408,7 +440,7 @@
 .message-to-student {
 
     width: 100%;
-    height: 17%;
+    height: 15%;
     /*border: 1px dashed orange;*/
 
 }

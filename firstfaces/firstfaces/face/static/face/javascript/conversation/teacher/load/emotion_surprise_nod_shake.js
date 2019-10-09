@@ -39,17 +39,25 @@ function getEmotionCoords(e) {
     let Yraw = teacherVars.emotionWheel.centre[ 1 ] - mouseY;
     let X = Math.round( 10 * Xraw / teacherVars.emotionWheel.radius ) / 10;
     let Y = Math.round( 10 * Yraw / teacherVars.emotionWheel.radius ) / 10;
-    teacherVars.tempJudgement.emotion = [X, Y]
+
+    teacherVars.tempEmotionStates.emotion = [X, Y]
+
+    if ( teacherVars.sentencesNeedJudgement[0] !== undefined ) {
+
+        teacherVars.sentencesNeedJudgement[0].emotion = [X, Y]
+    
+    }
+
     //teacherVars.emotionRawCoords = [Xraw, Yraw]
     //console.log('emotionCoords:', teacherVars.emotionCoords)
 
-    if ( teacherVars.tempJudgement.surprise === undefined ) {
+    if ( teacherVars.sentencesNeedJudgement[ 0 ] !== undefined ) {
 
-        teacherVars.tempJudgement.surprise = 0;
+        teacherVars.sentencesNeedJudgement[ 0 ].surprise = 0;
 
     }
 
-    changeExpression( teacherVars.tempJudgement.emotion, teacherVars.tempJudgement.surprise );
+    changeExpression( teacherVars.tempEmotionStates.emotion, teacherVars.tempEmotionStates.surprise );
     expressionController(expressionObject.calculated, 0.5, function(){})
     setPositionOfClickedEmotionWheelMarker( Xraw, Yraw, true );
 
@@ -129,7 +137,14 @@ function getNodShakeCoords( e ) {
     let Yraw = teacherVars.nodShakeSemiCircle.centre[ 1 ] - mouseY;
     let X = Math.round( 10 * Xraw / teacherVars.nodShakeSemiCircle.radius ) / 10;
     let Y = Math.round ( (( Math.round( 10 * ( Yraw / teacherVars.nodShakeSemiCircle.radius ) ) / 10 ) - 1) * 10 ) / 10;
-    teacherVars.tempJudgement.nodShake = [X, Y];
+    
+    teacherVars.tempEmotionStates.nodShake = [X, Y];
+    if ( teacherVars.sentencesNeedJudgement[0] !== undefined ) {
+
+        teacherVars.sentencesNeedJudgement[0].nodShake = [X, Y];
+    
+    }
+        
     //teacherVars.nodShakeRawCoords = [Xraw, Yraw]
     
     if ( X > 0 ) {
@@ -182,18 +197,19 @@ function setPositionOfClickedNodShakeSemiCircleMarker( x, y, highlight ) {
 
 function getSurpriseVal() {
 
-    teacherVars.tempJudgement.surprise = Math.round( parseInt($('#surpriseRange').val())) / 100;
+    teacherVars.tempEmotionStates.surprise = Math.round( parseInt($('#surpriseRange').val())) / 100;
     makeCorrectButtonsAvailable();
-    console.log('surpriseAmount:', teacherVars.tempJudgement.surprise);
+    //console.log('surpriseAmount:', teacherVars.sentencesNeedJudgement[0].surprise);
 
-    if ( teacherVars.tempJudgement.emotion === null ) {
+    if ( teacherVars.sentencesNeedJudgement[0] !== undefined ) {
+        
+        teacherVars.sentencesNeedJudgement[0].surprise = teacherVars.tempEmotionStates.surprise;
+        
+    } 
 
-        teacherVars.tempJudgement.emotion = [ 0.1, 0.1 ];
+    //console.log('teacherVars.emotionCoords:', teacherVars.sentencesNeedJudgement[0].emotion);
 
-    }
-    console.log('teacherVars.emotionCoords:', teacherVars.tempJudgement.emotion);
-
-    changeExpression( teacherVars.tempJudgement.emotion, teacherVars.tempJudgement.surprise );
+    changeExpression( teacherVars.tempEmotionStates.emotion, teacherVars.tempEmotionStates.surprise );
     expressionController(expressionObject.calculated, 0.5, function(){})
 
     $( "#surpriseCont" ).hover( function(e) {

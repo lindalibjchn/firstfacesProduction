@@ -9,10 +9,12 @@ import string
 import math
 import ast
 from face.views.conversation.student.utils.sentence import change_sentence_to_list_n_add_data, jsonify_or_none, floatify
+from face.views.conversation import database_updates
 
 def store_sent(request):
 
     #code.interact(local=locals());
+    database_updates.database_updated_by_student = True
 
     time_now = timezone.now();
     sentence_text = request.POST['sent']
@@ -23,7 +25,7 @@ def store_sent(request):
     # get session
     blob_no_text = json.loads(request.POST['blob_no_text'])
     blob_no_text_sent_id = request.POST['blob_no_text_sent_id']
-    sess = Conversation.objects.get(pk=int(request.POST['sessionID']))
+    conv = Conversation.objects.get(pk=int(request.POST['conversation_id']))
 
     # if very first attempt or new sent then need to create empty sentence
     if blob_no_text:
@@ -40,11 +42,11 @@ def store_sent(request):
 
     else:
     
-        ps = PermSentence(learner=request.user, session=sess, sentence=sentence_list, sentence_timestamp=timezone.now())
+        ps = PermSentence(learner=request.user, conversation=conv, sentence=sentence_list, sentence_timestamp=timezone.now())
         ps.sentence_timestamp = time_now
         ps.save()
 
-        s = TempSentence(pk=ps.pk, p_sentence=ps, learner=request.user, session=sess, sentence=sentence_list, sentence_timestamp=timezone.now())
+        s = TempSentence(pk=ps.pk, p_sentence=ps, learner=request.user, conversation=conv, sentence=sentence_list, sentence_timestamp=timezone.now())
         s.sentence_timestamp = time_now
         s.save()
 
@@ -52,7 +54,7 @@ def store_sent(request):
     response_data = {
 
         'sent_id': s.id,
-        'sentenceData': sentence_data,
+        'sentence_data': sentence_data,
 
     }
 
