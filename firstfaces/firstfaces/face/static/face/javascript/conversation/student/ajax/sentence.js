@@ -37,12 +37,12 @@ function sendSentToServer() {
                     'sent': sent,
                     'blob_no_text': conversationVariables.blob_no_text,
                     'blob_no_text_sent_id': conversationVariables.blob_no_text_sent_id,
-                    'sessionID': conversationVariables.session_id
+                    'conversation_id': conversationVariables.conversation_id
                 },
                 success: function(json) {
                     
                     console.log('sentence successfully sent to server');
-                    resetLastSent( json.sent_id, json.sentenceData );
+                    resetLastSent( json.sent_id, json.sentence_data );
 
                 },
                 error: function() {

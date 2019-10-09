@@ -7,6 +7,8 @@ function loadStudents() {
 
         let thisUser = teacherVars.conversations[ c ];
         thisUser.phoneId = phoneCount;
+        teacherVars.phoneToStudentId[ phoneCount ] = parseInt( c );
+        teacherVars.studentIdToPhone[ parseInt( c ) ] = phoneCount;
 
         // increase opacity of phone and add hover event
         $( '#phone' + thisUser.phoneId ).removeClass( 'phone-outer-no-student' ).addClass( 'phone-outer-yes-student' );
@@ -19,13 +21,13 @@ function loadStudents() {
 
         $( '#studentDetailsContainer' + thisUser.phoneId ).addClass( 'gender-' + thisUser.gender );
         $( '#studentAge' + thisUser.phoneId ).text( thisUser.age );
-        $( '#studentInfoText' + thisUser.phoneId ).text( teacherVars.conversations[ c ].info.join(' + ') );
+        $( '#studentInfoText' + thisUser.phoneId ).text( teacherVars.conversations[ c ].info.join(', ') );
 
         setMarqueeScrollingSpeed( phoneCount );
         addConversationMeta( thisUser );
 
         let divForPuttingInPrevSentences = document.getElementById( 'prevSentsContainer' + phoneCount );
-        addPreviousSentences( divForPuttingInPrevSentences, thisUser.conversations[ 0 ] );
+        addPreviousSentences( thisUser.conversations[ 0 ], phoneCount );
 
         phoneCount += 1;
 
@@ -77,7 +79,8 @@ function addConversationMeta( thisUser_ ) {
 
     }) 
 
-    updateScroll( 'conversationMeta' + thisUser_.phoneId )
+    let prevConversations = document.getElementById( 'conversationMeta' + thisUser_.phoneId )
+    updateScroll( prevConversations );
 
 }
 
@@ -96,13 +99,5 @@ function getEmojiUrl( emotionInt ) {
     return intToEmojiUrl[ emotionInt ];
 
 }
-
-function updateScroll( el ) {
-
-    var element = document.getElementById( el );
-    element.scrollTop = element.scrollHeight;
-
-}
-
 
 

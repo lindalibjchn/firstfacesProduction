@@ -1,29 +1,19 @@
-function updateSentencesNeedJudgement() {
+function updateSentencesNeedJudgement( updatedSentencesNeedJudgement ) {
 
-    //var timeNow = new Date();
-    teacherVars.sentencesNeedJudgement = [];
+    let lengthCurSentencesNeedJudgement = teacherVars.sentencesNeedJudgement.length;
+    let lengthUpdatedSentencesNeedJudgement = updatedSentencesNeedJudgement.length;
 
-    for ( var key in teacherVars.sessions ) {
+    if ( lengthUpdatedSentencesNeedJudgement > lengthCurSentencesNeedJudgement ) {
 
-        //check that there is a sentence in a session - if not it is anew session
-        if ( sessions[ key ].sentences[ 0 ] !== undefined ) {
+        let noNewSents = lengthUpdatedSentencesNeedJudgement - lengthCurSentencesNeedJudgement;
 
-            // push all unjudged sentences to their own array
-            if ( sessions[ key ].sentences[ 0 ].judgement === null && sessions[ key ].sentences[ 0 ].sentence.length !== 0) {
+        for ( let i=0; i<noNewSents; i++ ) {
 
-                teacherVars.sentencesNeedJudgement.push( sessions[ key ].sentences[0] );
-
-            }
-
+            teacherVars.sentencesNeedJudgement.push( updatedSentencesNeedJudgement[ lengthCurSentencesNeedJudgement + i ] );
 
         }
 
     }
-
-    // sor these sentences so oldest sent is at position 0
-    teacherVars.sentencesNeedJudgement.sort(function (a, b) {
-          return a.sentence_timestamp - b.sentence_timestamp;
-    });
 
 }
 

@@ -8,6 +8,7 @@ def conversation_teacher(request):
     students_in_conversation_now_ids = get_students_in_conversation_now_ids()
     conversations = get_students_conversations(students_in_conversation_now_ids)
 
+    # print( 'conversations:', conversations )
     context = {
 
         "conversations": json.dumps(conversations),

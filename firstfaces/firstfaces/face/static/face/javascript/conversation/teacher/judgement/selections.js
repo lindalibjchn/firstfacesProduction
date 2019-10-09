@@ -35,7 +35,13 @@ var appendCorrectionSection = function( copy ) {
 
     idArray = removeAccidentallySelectedSpacesAtBeginningAndEndOfSelection( idArray );
     
-    teacherVars.tempJudgement.indexes.push( idArray );
+    if ( teacherVars.sentencesNeedJudgement[ 0 ].indexes === null ) {
+
+        teacherVars.sentencesNeedJudgement[ 0 ].indexes = [];
+    
+    }
+
+    teacherVars.sentencesNeedJudgement[ 0 ].indexes.push( idArray );
 
     let sent = makeSentForPromptBox( idArray );
     

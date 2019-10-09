@@ -9,7 +9,7 @@ function storeJudgement() {
         success: function(json) {
            
             // add timestamp to sent
-            teacherVars.sessions[ json.sess_id ].sentences[ 0 ].judgement_timestamp = json.judgement_timestamp;
+            //teacherVars.sessions[ json.sess_id ].sentences[ 0 ].judgement_timestamp = json.judgement_timestamp;
             console.log('judgement successfully sent to server')
 
         },
@@ -19,7 +19,6 @@ function storeJudgement() {
 
     });
 
-    teacherVars.sentencesNeedJudgement.shift();
     resetJudgement();
 
 }

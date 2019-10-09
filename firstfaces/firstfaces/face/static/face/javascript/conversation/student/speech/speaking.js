@@ -58,7 +58,7 @@ function animateFirstPhoneSlowly() {
 
         expressionController( expressionObject.abs[ synthesisObject.now.phones[ synthesisObject.sentenceNo ][ 0 ] ], tiaTimings.durationOfFirstSpeakingPhones, slightlyDelayAudioPlay )
 
-    }, tiaTimings.durationOfFirstBreath * 500 ) 
+    }, tiaTimings.durationOfFirstBreath * 1000 ) 
 
 }
 

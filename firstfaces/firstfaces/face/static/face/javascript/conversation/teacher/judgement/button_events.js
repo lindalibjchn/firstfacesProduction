@@ -5,25 +5,25 @@ function prepareJudgement( e ) {
 
     if ( btnId === "promptBtn" ) {
 
-        teacherVars.tempJudgement.judgement = "P";
+        teacherVars.sentencesNeedJudgement[ 0 ].judgement = "P";
         highlightAndFocusOnPromptBox();
         removeSelectable();
 
     } else if ( btnId === "betterBtn" ) {
 
-        teacherVars.tempJudgement.judgement = "B";
+        teacherVars.sentencesNeedJudgement[ 0 ].judgement = "B";
         unHighlightAndFocusOnPromptBox();
         setSelectable();
 
     } else if ( btnId === "wrongBtn" ) {
 
-        teacherVars.tempJudgement.judgement = "I";
+        teacherVars.sentencesNeedJudgement[ 0 ].judgement = "I";
         unHighlightAndFocusOnPromptBox();
         setSelectable();
 
     } else if ( btnId === "meanByBtn" ) {
 
-        teacherVars.tempJudgement.judgement = "M";
+        teacherVars.sentencesNeedJudgement[ 0 ].judgement = "M";
         unHighlightAndFocusOnPromptBox();
         setSelectable();
 
@@ -51,7 +51,7 @@ function highlightClick( id ) {
     });
 
 
-    if ( teacherVars.tempJudgement.emotion === null && teacherVars.tempJudgement.surprise === null && teacherVars.tempJudgement.nodShake === null ) {
+    if ( teacherVars.sentencesNeedJudgement[ 0 ].emotion === null && teacherVars.sentencesNeedJudgement[ 0 ].surprise === null && teacherVars.sentencesNeedJudgement[ 0 ].nodShake === null ) {
         
         $('.correct-btn').css("opacity",  "0.3");
 
@@ -83,24 +83,22 @@ function unHighlightAndFocusOnPromptBox() {
 
 }
 
-function storePromptNConfirmTempJudgementsThenSend() {
+function storePromptThenSend() {
 
     let promptText = $( '#promptText' ).val();
-    teacherVars.sentencesNeedJudgement[ 0 ].prompt = promptText.split( '\n' );
+    if ( promptText !== '' ) {
 
-    teacherVars.sentencesNeedJudgement[ 0 ].judgement = teacherVars.tempJudgement.judgement;
-    teacherVars.sentencesNeedJudgement[ 0 ].emotion = teacherVars.tempJudgement.emotion;
-    teacherVars.sentencesNeedJudgement[ 0 ].surprise = teacherVars.tempJudgement.surprise;
-    teacherVars.sentencesNeedJudgement[ 0 ].nod_shake = teacherVars.tempJudgement.nodShake;
-    teacherVars.sentencesNeedJudgement[ 0 ].indexes = teacherVars.tempJudgement.indexes;
-    
+        teacherVars.sentencesNeedJudgement[ 0 ].prompt = promptText.split( '\n' );
+
+    }
+
     storeJudgement();
 
 }
 
 function wipeAllCorrections() {
 
-    let noCorrections = teacherVars.tempJudgement.indexes.length
+    let noCorrections = teacherVars.sentencesNeedJudgement[ 0 ].indexes.length
     for( let i=0; i<noCorrections; i++ ) {
 
         clearCorrection();
@@ -113,14 +111,14 @@ function wipeAllCorrections() {
 
 function clearCorrection() {
 
-    if ( teacherVars.tempJudgement.indexes.length > 0 ) {
+    if ( teacherVars.sentencesNeedJudgement[ 0 ].indexes.length > 0 ) {
 
         let promptText = $( '#promptText' ).val();
         let promptTextArray = promptText.split( '\n' );
         promptTextArray.pop();
         $( '#promptText' ).val( promptTextArray.join( '\n' ) );
 
-        let indexesToBeUnHighlighted = teacherVars.tempJudgement.indexes.pop();
+        let indexesToBeUnHighlighted = teacherVars.sentencesNeedJudgement[ 0 ].indexes.pop();
         indexesToBeUnHighlighted.forEach( function( i ) {
 
             if ( $( '#indWord_' + i.toString() ).text() === '#' ) {
@@ -138,16 +136,6 @@ function clearCorrection() {
         } )
 
     } 
-
-}
-
-function clearJudgement() {
-
-    wipeAllCorrections();
-    resetButtonOpacities();
-    resetEmotionSurpriseNodShakeEvents();
-    resetTempJudgement();
-    removeSelectable();
 
 }
 

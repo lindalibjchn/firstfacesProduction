@@ -13,7 +13,7 @@ from face.views.conversation.teacher.ajax import updates
 urlpatterns = [
     # CONVERSATION
     # MAIN
-    path('conversation_student/<int:session_id>', student_conversation_main.conversation_student, name="conversation_student"),
+    path('conversation_student/<int:conversation_id>', student_conversation_main.conversation_student, name="conversation_student"),
     # AJAX
     # conversation
     path('store_emotion', conversation.store_emotion, name='store_emotion'),
@@ -54,6 +54,7 @@ urlpatterns = [
     path('check_for_change', updates.check_for_change, name='check_for_change'),
     # update
     path('update_session_object', updates.update_session_object, name='update_session_object'),
+    path('update_info', updates.update_info, name='update_info'),
 
 
     path('', views_temp.out_or_in, name="out_or_in"),

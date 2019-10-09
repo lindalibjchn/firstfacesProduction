@@ -1,17 +1,21 @@
-function addPreviousSentences( div, conversation_ ) {
+function addPreviousSentences( conversation_, phoneId ) {
 
+    $( '#prevSentsInnerContainer' + phoneId ).remove()
     let prevSentsInnerContainer = document.createElement("div");
     prevSentsInnerContainer.className = "prev-sents-inner-container";
+    prevSentsInnerContainer.id = "prevSentsInnerContainer" + phoneId;
     //console.log( 'conversation_:', conversation_ );
-    conversation_.sentences.forEach( function( exchange ) {
+    conversation_.completed_sentences.forEach( function( exchange ) {
 
         let exchangeHTML = createExchangeHTML( exchange );
         //console.log('exchangeHTML:', exchangeHTML);
-        prevSentsInnerContainer.append( exchangeHTML );
-        div.append( prevSentsInnerContainer );
+        prevSentsInnerContainer.prepend( exchangeHTML );
+        $( '#prevSentsContainer' + phoneId ).append( prevSentsInnerContainer );
         makeWrongSentsHighlighted( exchange );
 
     });
+
+    updateScroll( prevSentsInnerContainer )
 
 }
 
@@ -299,143 +303,10 @@ function makeWrongSentsHighlighted( exchange_ ) {
 
 }
 
+function updateScroll( el ) {
 
-
-//function appendExchange( sentenceMeta, node, sentIndex ) {
-
-    //// this creates the boxes and sets the sentence variable
-    //createExchangeOutput = createExchange( sentenceMeta, sentIndex );
-    //newExchange = createExchangeOutput[ 0 ]
-    //sentenceBox = createExchangeOutput[ 1 ];
-    //node.appendChild( newExchange );
-
-    //// change background colour iand other stuf if correct/wrongetc.
-    //if ( sentenceMeta.judgement === "C" || sentenceMeta.judgement === "P" ) {
-
-        //sentenceBox.className += " correctSent";
-    
-    //} else if ( sentenceMeta.judgement === "I" ) {
-
-        //sentenceBox.className += " incorrectSent";
-        //makeHighlightedSent( sentenceMeta, sentIndex );
-        
-    //} else if ( sentenceMeta.judgement === "M" ) {
-
-        //sentenceBox.className += " meanBySent";
-        //makeHighlightedSent( sentenceMeta, sentIndex );
-
-        //let meanByText = createMeanByTextForPromptBox( sentenceMeta ); 
-        //newExchange.appendChild( createPromptBox( meanByText ) );
-
-    //} else if ( sentenceMeta.judgement === "B" ) {
-
-        //sentenceBox.className += " correctSent";
-        //makeHighlightedSent( sentenceMeta, sentIndex );
-    
-        //let betterText = createBetterTextForPromptBox( sentenceMeta ); 
-        //newExchange.appendChild( createPromptBox( betterText ) );
-
-    //} else if ( sentenceMeta.judgement === "D" ) {
-
-        //sentenceBox.className += " meanBySent";
-        //newExchange.appendChild( createPromptBox( "I'm sorry but I don't understand what you said." ) );
-
-    //} else if ( sentenceMeta.judgement === "3" ) {
-
-        //sentenceBox.className += " meanBySent";
-        //newExchange.appendChild( createPromptBox( "There are more than 3 mistakes in your sentence. Could you simplify and try again?" ) );
-
-    //} else if ( sentenceMeta.judgement === null ) {
-
-        //sentenceBox.className += " noCorrectionYetSent";
-    
-    //}
-
-    //if ( sentenceMeta.prompt !== null ) {
-
-        //if ( sentenceMeta.judgement !== "B" && sentenceMeta.judgement !== "M" ) {
-
-            //newExchange.appendChild( createPromptBox( sentenceMeta.prompt ) );
-
-        //}
-
-    //}
-
-    //if ( sentenceMeta.correction !== "" ) {
-
-        //if ( sentenceMeta.judgement === "I" ) {
-
-            //if ( sentenceMeta.show_correction ) {
-
-                //newExchange.appendChild( createCorrectionsBox( sentenceMeta.correction ) );
-            
-            //}
-
-        //}
-
-    //}
-
-//}
-
-//function createExchange( sM, sentI ) {
-
-    //let exchange = document.createElement("div");
-    //exchange.className = "exchangeCont"
-
-    //let sentenceBox = document.createElement("div");
-    //sentenceBox.className = "sentenceBox";
-
-    //let newInnerHTML = "";
-    //sM.sentence.forEach( function(w, i) {
-
-        //if ( w === " " ) {
-
-            //newInnerHTML += "<div class='prev-sents-words' id='word_" + sentI.toString() + "_" + i.toString() + "'>" + "&nbsp</div>"
-
-        //} else {
-
-            //newInnerHTML += "<div class='prev-sents-words' id='word_" + sentI.toString() + "_" + i.toString() + "'>" + w + "</div>"
-
-        //}
-
-    //});
-
-    //sentenceBox.innerHTML = newInnerHTML;
-
-    //exchange.appendChild( sentenceBox );
-
-    //return [exchange, sentenceBox]
-//}
-
-function scrollBottom() {
-
-    scrollNode =  document.getElementById("prevSents");
-    scrollNode.scrollTop = scrollNode.scrollHeight;
+    el.scrollTop = el.scrollHeight;
 
 }
-
-//function createPromptBox( promptText ) {
-
-    //let promptBox = document.createElement("div");
-    
-    //promptBox.innerHTML = promptText;
-
-    //promptBox.className = "sentenceBox promptBox";
-
-    //return promptBox;
-
-//}
-
-//function createCorrectionsBox( correctionsText ) {
-
-    //let correctionsBox = document.createElement("div");
-    
-    //correctionsBox.innerHTML = correctionsText;
-
-    //correctionsBox.className = "sentenceBox correctionsBox";
-
-    //return correctionsBox;
-
-//}
 
 
