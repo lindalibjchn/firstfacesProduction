@@ -1,0 +1,96 @@
+#surpriseContainer {
+
+    position: relative;
+    height: 30%;
+    width: 100%
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    margin-top: 0%;
+    /*border: 2px solid black;*/
+
+}
+
+#surpriseInnerContainer {
+
+    position: relative;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /*border: 2px solid red;*/
+
+}
+
+#surpriseCont {
+
+    position: relative;
+    height: 100%;
+    width: 70%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /*border: 2px solid white;*/
+    transition: opacity .2s;
+    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+
+}
+
+/* The slider itself */
+.slider {
+    
+    width: 68%;
+    -webkit-appearance: none;  /* Override default CSS styles */
+    appearance: none;
+    height: 8px; /* Specified height */
+    background-color: white;
+    outline: none; /* Remove outline */
+}
+
+/* Mouse-over effects */
+.slider:hover {
+    cursor: pointer; /* Cursor on hover */
+}
+
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */ 
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    width: 8px; /* Set a specific slider handle width */
+    height: 8px; /* Slider handle height */
+    /*background-image: url('https://p7.hiclipart.com/preview/384/850/391/like-button-emoticon-computer-icons-facebook-clip-art-surprised-expression.jpg');*/
+    /*background-repeat: no-repeat;*/
+    /*background-size: contain;*/
+    background-color: #188ac7;
+    border: 1px solid white;
+    cursor: pointer; /* Cursor on hover */
+}
+
+/*.slider::-moz-range-thumb {*/
+    /*width: 20px; [> Set a specific slider handle width <]*/
+    /*height: 20px; [> Slider handle height <]*/
+    /*[>background-image: url('https://p7.hiclipart.com/preview/384/850/391/like-button-emoticon-computer-icons-facebook-clip-art-surprised-expression.jpg');<]*/
+    /*[>background-repeat: no-repeat;<]*/
+    /*[>background-size: contain;<]*/
+    /*background-color: #188ac7;*/
+    /*border: 1px solid white;*/
+    /*cursor: pointer; [> Cursor on hover <]*/
+    /*visibility: hidden;*/
+/*}*/
+
+#neutralLabel {
+
+    left: -13%;
+    top: 2%;
+
+}
+
+#surpriseLabel {
+
+    right: -13%;
+    top: 2%;
+
+}
+
+

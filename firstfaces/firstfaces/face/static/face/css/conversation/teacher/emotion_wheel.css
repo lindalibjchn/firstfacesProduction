@@ -1,0 +1,124 @@
+#emotionWheelContainer {
+
+    position: relative;
+    height: 105%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /*border: 2px solid black;*/
+    z-index: 10;
+
+}
+
+#emotionWheelInnerContainer {
+
+    position: relative;
+    bottom: 0;
+    left: 0;
+    height: 75%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /*border: 2px solid red;*/
+
+}
+
+#emotionWheelCont {
+
+    position: relative;
+    /*bottom: 0;*/
+    /*left: 0;*/
+    /*height: 55%;*/
+    /*padding-top: 55%;*/
+    width: 45%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /*border: 2px dashed yellow;*/
+
+}
+
+#emotionWheel {
+
+    position: relative;
+    opacity: 0.7;
+    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+    transition: opacity .2s;
+    height: 0;
+    width: 100%;
+    padding-top: 100%;
+    border-radius: 50%;
+    background-color: white;
+    /*background-image: url('https://donnageorgeblog.files.wordpress.com/2014/12/color_wheel_730.png');*/
+    /*background-repeat: no-repeat;*/
+    /*background-size: contain;*/
+    /*border: 2px dashed black;*/
+    cursor: pointer;
+
+}
+
+#emotionWheel:hover {
+
+    opacity: 1;
+
+}
+
+#emotionClickedLocation {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background-color: #188ac7;
+    border: 1px solid white;
+    cursor: pointer;
+}
+
+.emotion-labels {
+
+    height: 2.3vw;
+    width: 2.3vw;
+    position: absolute;
+
+}
+
+.emotion-labels:hover {
+
+    cursor: default;
+    
+}
+
+#happyLabel {
+
+    right: -30%;
+    top: -13%;
+
+}
+
+#contentLabel {
+
+    right: -30%;
+    top: 81%;
+
+}
+
+#sadLabel {
+
+    right: 60%;
+    top: 103%;
+
+}
+
+#fearLabel {
+
+    right: 106%;
+    top: 35%;
+
+}
+
+#disgustLabel {
+
+    right: 60%;
+    top: -37%;
+
+}

@@ -1,0 +1,111 @@
+.prev-sents-inner-container {
+
+    height: 100%;
+    width: 100%;
+    overflow-y: scroll;
+
+}
+
+.sentence-container {
+
+    /*border: 1px dashed black;*/
+    overflow: hidden;/* makes float: right below work (https://stackoverflow.com/questions/804926/make-outer-div-be-automatically-the-same-height-as-its-floating-content)*/;
+
+}
+
+.box {
+
+    margin: 1px;
+    background-color: white;
+    font-size: 0.65vw;
+    width: 90%;
+
+}
+
+.sentence-box {
+
+    float: right;
+    border-radius: 5px 0px 5px 5px;
+
+}
+
+.prompt-box {
+
+    float: left;
+    border-radius: 0px 5px 5px 5px;
+
+}
+
+.prev-sents-words {
+
+    display: inline-block;
+
+}
+
+.correct-sent {
+
+    background-color: #b2d8b2;
+
+}
+
+.incorrect-sent {
+
+    background-color: #ffb2b2;
+
+}
+
+.mean-by-sent {
+
+    background-color: #ffe4b2;
+
+}
+
+.better-sent {
+
+    background-color: #b2ffb2;
+
+}
+
+.dunno-sent {
+
+    background-color: #e4bfbf;
+
+}
+
+.three-sent {
+
+    background-color: #e4bfbf;
+
+}
+
+.no-correction-yet-sent {
+
+    background-color: #d8d8d8;
+
+}
+
+/* highlighted words */
+
+.corrected-section {
+
+    background-color: red;
+    color: white;
+    /*border-radius: 5px;*/
+
+}
+
+.mean-by-section {
+
+    background-color: orange;
+    color: white;
+    /*border-radius: 5px;*/
+
+}
+
+.better-section {
+
+    background-color: green;
+    color: white;
+
+}
+

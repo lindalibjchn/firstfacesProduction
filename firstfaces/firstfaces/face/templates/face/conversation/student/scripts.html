@@ -1,0 +1,88 @@
+{% load static %}
+
+<!-- three.js script -->
+<!--<script src="{% static 'three.min.js' %}"></script>-->
+
+<!-- variables for blender objects from JSON -->
+<script>var face = "{% static 'face/JSON/tia_face.json' %}"</script>
+<script>var mouth = "{% static 'face/JSON/tia_mouth.json' %}"</script>
+<script>var eye = "{% static 'face/JSON/tia_eye.json' %}"</script>
+<script>var hair = "{% static 'face/JSON/tia_hair.json' %}"</script>
+<script>var hair00 = "{% static 'face/JSON/tia_hair00.json' %}"</script>
+<script>var body = "{% static 'face/JSON/tia_body.json' %}"</script>
+<script>var body00 = "{% static 'face/JSON/tia_body00.json' %}"</script>
+<script>var body01 = "{% static 'face/JSON/tia_body01.json' %}"</script>
+<script>var body02 = "{% static 'face/JSON/tia_body02.json' %}"</script>
+<script>var body03 = "{% static 'face/JSON/tia_body03.json' %}"</script>
+<!--<script>var conversation = "{% static 'face/JSON/conversation.json' %}"</script>-->
+<!--<script>var speechBubble = "{% static 'face/JSON/speechBubble.json' %}"</script>-->
+<!--<script>var speechBubble2 = "{% static 'face/JSON/speechBubble2.json' %}"</script>-->
+<script>var conversationVariables = {{ conversation_variables|safe }}</script>
+
+<!-- VARIABLES AND CONSTANTS -->
+<script src="{% static 'face/javascript/variables_and_constants.js' %}"></script>
+<script src="{% static 'face/javascript/conversation/student/variables_and_constants/main.js' %}"></script>
+<script src="{% static 'face/javascript/conversation/student/variables_and_constants/expressions.js' %}"></script>
+<script src="{% static 'face/javascript/conversation/student/variables_and_constants/movements.js' %}"></script>
+<script src="{% static 'face/javascript/conversation/student/variables_and_constants/timings.js' %}"></script>
+<script src="{% static 'face/javascript/conversation/student/variables_and_constants/objects.js' %}"></script>
+
+<!-- LOAD SCENE -->
+<script src="{% static 'face/javascript/conversation/student/load_scene/three_js_objects.js' %}"></script>
+<script src="{% static 'face/javascript/conversation/student/load_scene/audio.js' %}"></script>
+<script src="{% static 'face/javascript/conversation/student/load_scene/buttons.js' %}"></script>
+<script src="{% static 'face/javascript/conversation/student/load_scene/volume-meter.js' %}"></script>
+<script src="{% static 'face/javascript/conversation/student/load_scene/main.js' %}"></script>
+<script src="{% static 'face/javascript/conversation/student/load_scene/animate.js' %}"></script>
+
+<!-- SEQUENCES -->
+<script src="{% static 'face/javascript/conversation/student/sequences/after_judgement.js' %}"></script>
+<script src="{% static 'face/javascript/conversation/student/sequences/enter.js' %}"></script>
+<script src="{% static 'face/javascript/conversation/student/sequences/thought_bubble.js' %}"></script>
+<script src="{% static 'face/javascript/conversation/student/sequences/talk_to_tia.js' %}"></script>
+
+<!-- HELPER FUNCTIONS -->
+<script src="{% static 'face/javascript/conversation/student/helper_functions/buttons.js' %}"></script>
+<script src="{% static 'face/javascript/conversation/student/helper_functions/tia.js' %}"></script>
+<script src="{% static 'face/javascript/conversation/student/helper_functions/updateConversationVariables.js' %}"></script>
+
+<!-- MOVEMENTS -->
+<!-- BODY -->
+<script src="{% static 'face/javascript/conversation/student/movements/body/get_movements.js' %}"></script>
+<script src="{% static 'face/javascript/conversation/student/movements/body/move.js' %}"></script>
+<!-- COMPLEX -->
+<script src="{% static 'face/javascript/conversation/student/movements/complex/eyes.js' %}"></script>
+<script src="{% static 'face/javascript/conversation/student/movements/complex/nod_shake.js' %}"></script>
+<script src="{% static 'face/javascript/conversation/student/movements/complex/read_laptop.js' %}"></script>
+<script src="{% static 'face/javascript/conversation/student/movements/complex/type.js' %}"></script>
+<!-- EXPRESSION -->
+<script src="{% static 'face/javascript/conversation/student/movements/expression/create.js' %}"></script>
+<script src="{% static 'face/javascript/conversation/student/movements/expression/get_expressions.js' %}"></script>
+<script src="{% static 'face/javascript/conversation/student/movements/expression/move.js' %}"></script>
+<script src="{% static 'face/javascript/conversation/student/movements/individual.js' %}"></script>
+<!-- GENERAL -->
+<script src="{% static 'face/javascript/conversation/student/movements/general/listen_to_pronunciation.js' %}"></script>
+<!-- RANDOM -->
+<script src="{% static 'face/javascript/conversation/student/movements/random/blink.js' %}"></script>
+<script src="{% static 'face/javascript/conversation/student/movements/random/breathe.js' %}"></script>
+<script src="{% static 'face/javascript/conversation/student/movements/random/tilt.js' %}"></script>
+
+<script src="{% static 'face/javascript/conversation/student/movements/individual.js' %}"></script>
+
+<!-- AJAX -->
+<script src="{% static 'face/javascript/conversation/student/ajax/sentence.js' %}"></script>
+
+<!-- SPEECH -->
+<script src="{% static 'face/javascript/conversation/student/speech/speaking.js' %}"></script>
+<script src="{% static 'face/javascript/conversation/student/speech/mouthing.js' %}"></script>
+
+<script src="{% static 'face/javascript/conversation/student/tutorial.js' %}"></script>
+<script src="{% static 'face/javascript/conversation/student/judgement.js' %}"></script>
+<script src="{% static 'face/javascript/conversation/student/input.js' %}"></script>
+<script src="{% static 'face/javascript/conversation/student/time_stuff.js' %}"></script>
+<script src="{% static 'face/javascript/conversation/student/previous_sents.js' %}"></script>
+<script src="{% static 'face/javascript/conversation/student/ajax_stuff.js' %}"></script>
+
+<!-- Daniel's Scripts -->
+<script src="{% static 'face/javascript/conversation/student/dan_ajax.js' %}"></script>
+
