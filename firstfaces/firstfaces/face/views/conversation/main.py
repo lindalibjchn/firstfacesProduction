@@ -81,7 +81,7 @@ def conversation(request, session_id):
                 'start_time': start_time * 1000,
                 'session_id': session_id,
                 'first_enter': first_enter,
-                'sentences': sentences_data,
+                #'sentences': sentences_data,
                 # 'last_sent': last_sent.sentence,
                 'blob_no_text': blob_no_text,
                 'blob_no_text_sent_id': blob_no_text_sent_id,
