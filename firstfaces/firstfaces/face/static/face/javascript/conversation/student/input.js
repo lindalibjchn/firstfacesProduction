@@ -15,7 +15,7 @@ function initInputReady( from ) {
     
     }
 
-    setLastSent();
+    //setLastSent();
     //$('#controllerContainer').fadeIn( 1000 );
 
     if ( from === 'try again' ) {
@@ -66,19 +66,19 @@ function initInputReady( from ) {
 }
 
 
-function setLastSent() {
+//function setLastSent() {
 
-   if ( Object.keys(conversationVariables.sentences).length > 0 ) {
+   //if ( Object.keys(conversationVariables.sentences).length > 0 ) {
     
-        conversationVariables.last_sent = conversationVariables.sentences[Object.keys(conversationVariables.sentences).length - 1];
+        //conversationVariables.last_sent = conversationVariables.sentences[Object.keys(conversationVariables.sentences).length - 1];
 
-    } else {
+    //} else {
 
-        conversationVariables.last_sent = null;
+        //conversationVariables.last_sent = null;
 
-    }
+    //}
 
-}
+//}
 
 
 

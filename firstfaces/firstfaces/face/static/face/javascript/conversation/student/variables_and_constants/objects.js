@@ -211,7 +211,7 @@ var breatheObject = {
     'direction': -1,
     'normalBreatheStopCount': null, 
     'normalBreatheStopDirection': null, 
-    'speakingBreathMult': 1.5,
+    'speakingBreathMult': 1.25,
     'singleBreath': {
         'startCount': null,
         'endCount': null,

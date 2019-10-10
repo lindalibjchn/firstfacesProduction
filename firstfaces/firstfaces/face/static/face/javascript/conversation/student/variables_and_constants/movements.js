@@ -66,6 +66,34 @@ var movementObject = {
             'sacc': [[0,0,0],[0.2,0,0]],
         },
 
+        'laptop_glance': {
+            'name': 'laptop_glance',
+            'symmetry': 'B',
+            'AUs': {
+                'AU1': {
+                    'head': [[0, 0, 0], [0.05, 0, 0]],
+                    'neck': [[0, 0, 0], [0, 0.025, 0]],
+                },
+                'AU1b': {
+                    'spineUpperInner': [[0, 0, 0], [0, 0, 0]],
+                    'spineLower': [[0, 0, 0], [0, 0, 0]],
+                    'spineUpper': [[0, 0, 0], [0, 0, 0]],
+                },
+                'AU2': {
+                    'shoulder': [[0, 0, 0], [0, 0, 0]],
+                },
+                'AU2b': {
+                    'upperArm.L': [[0, 0, 0], [0.2, -0.25, 0]],
+                    'upperArm.R': [[0, 0, 0], [0.2, 0.25, 0]],
+                    'hand.L': [[0, 0, 0], [0, 0, 0]],
+                    'hand.R': [[0, 0, 0], [0, 0, 0]],
+                    'lowerArm.L': [[0, 0, 0], [0, 0, 0]],
+                    'lowerArm.R': [[0, 0, 0], [0, 0, 0]],
+                },
+            },
+            'sacc': [[0,0,0],[0.2,0,0]],
+        },
+
         'thinkSentence': {
             'name': 'thinkSentence',
             'symmetry': 'B',

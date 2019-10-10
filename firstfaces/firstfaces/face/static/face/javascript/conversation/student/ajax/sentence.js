@@ -4,13 +4,9 @@ function sendSentToServer() {
         
        //i getAudioLength();
     }
-    // reset to false
-    //conversationVariables.promptNIndexesReceived = false;
-    // reset the number of recordings for the sentence to 0.
-    conversationVariables.blobs = 0;
 
     // all below for developing
-    let sent = conversationVariables.preSent;
+    let sent = conversationVariables.sentence_being_recorded_audio.alternatives[ 0 ].transcript;
 
     if ( sent.length >= 300 ) {
 
@@ -35,9 +31,8 @@ function sendSentToServer() {
                 type: "POST",
                 data: { 
                     'sent': sent,
-                    'blob_no_text': conversationVariables.blob_no_text,
-                    'blob_no_text_sent_id': conversationVariables.blob_no_text_sent_id,
-                    'conversation_id': conversationVariables.conversation_id
+                    'sent_id': conversationVariables.sentence_being_recorded.sent_id,
+                    'conversation_id': conversationVariables.sentence_being_recorded.conv_id
                 },
                 success: function(json) {
                     
@@ -56,12 +51,6 @@ function sendSentToServer() {
             alert('this is not a sentence');
 
         }
-
-        //} else {
-
-            //alert("you can only ask a 'Wh-' or 'How' question after 3 correct non-question sentences. The small red circle with the number in it will turn green when you can ask these questions.");
-
-        //}
 
     }
 

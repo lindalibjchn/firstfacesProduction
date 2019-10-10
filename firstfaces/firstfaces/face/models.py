@@ -41,7 +41,7 @@ JUDGEMENT_CHOICES = (
     ('3', 'more_than_three')
 )
 
-class PermSentence(models.Model):
+class Sentence(models.Model):
     learner = models.ForeignKey(User, on_delete=models.CASCADE)
     conversation = models.ForeignKey(Conversation, on_delete=models.CASCADE)
     sentence = models.CharField(max_length=300, null=True, blank=True)
@@ -67,53 +67,18 @@ class PermSentence(models.Model):
     prompt = models.CharField(max_length=300, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return  str(self.pk) + ": " + str(self.sentence)
-
-class TempSentence(models.Model):
-    p_sentence = models.ForeignKey(PermSentence, on_delete=models.CASCADE)
-    learner = models.ForeignKey(User, on_delete=models.CASCADE)
-    conversation = models.ForeignKey(Conversation, on_delete=models.CASCADE)
-    sentence = models.CharField(max_length=300, null=True, blank=True)
-    sentence_timestamp = models.DateTimeField(null=True, blank=True)
-
-    judgement = models.CharField(max_length=1, choices=JUDGEMENT_CHOICES, null=True, blank=True)
-    judgement_timestamp = models.DateTimeField(null=True, blank=True)
-    emotion = models.CharField(max_length=12, null=True, blank=True)
-    # True is nod. False is shake and null is nothing
-    nod_shake = models.CharField(max_length=30, null=True, blank=True)
-    surprise = models.DecimalField(max_digits=3, decimal_places=2, null=True, blank=True)
-    indexes = models.CharField(max_length=50, null=True, blank=True)
-    #this was for checking if correction has come in previous version. could be removed if not needed later
-    whats_wrong = models.NullBooleanField(null=True, blank=True)
-    whats_wrong_timestamp = models.DateTimeField(null=True, blank=True)
-    try_again = models.NullBooleanField(null=True, blank=True)
-    try_again_timestamp = models.DateTimeField(null=True, blank=True)
-    show_correction = models.NullBooleanField(null=True, blank=True)
-    show_correction_timestamp = models.DateTimeField(null=True, blank=True)
-    next_sentence = models.NullBooleanField(null=True, blank=True)
-    next_sentence_timestamp = models.DateTimeField(null=True, blank=True)
-    #if native wants to say something in speech bubble
-    prompt = models.CharField(max_length=300, null=True, blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    for_prompt = models.CharField(max_length=1000, null=True, blank=True)
 
     def __str__(self):
         return  str(self.pk) + ": " + str(self.sentence)
 
 # may need multiple audio files per sentence as student attempts and re-attempts
 class AudioFile(models.Model):
-    sentence = models.ForeignKey(PermSentence, on_delete=models.CASCADE)
+    sentence = models.ForeignKey(Sentence, on_delete=models.CASCADE)
     alternatives = models.CharField(max_length=5000, blank=True, null=True)
     interference = models.NullBooleanField(null=True)
     clicks = models.CharField(max_length=2000, default='[]')
     audio = models.FileField(upload_to="")
     created_at = models.DateTimeField(auto_now_add=True)
-
-    # def __str__(self):
-        # return  str(json.loads(self.transcriptions))
 
 class AudioError(models.Model):
     audio = models.ForeignKey(AudioFile, on_delete=models.CASCADE)
@@ -140,7 +105,7 @@ class AudioErrorCorrectionAttempt(models.Model):
         return  str(self.error)
 
 # class PermAudioFile(models.Model):
-    # sentence = models.ForeignKey(PermSentence, on_delete=models.CASCADE)
+    # sentence = models.ForeignKey(Sentence, on_delete=models.CASCADE)
     # alternatives = models.CharField(max_length=5000, blank=True, null=True)
     # clicks = models.CharField(max_length=2000, default='[]')
     # interference = models.NullBooleanField(null=True)
@@ -159,13 +124,13 @@ class AudioErrorCorrectionAttempt(models.Model):
     # def __str__(self):
          # return  str(self.learner) + ": " + str(self.score)
 
-class PostTalkTiming(models.Model):
-    sentence = models.ForeignKey(PermSentence, on_delete=models.CASCADE)
-    timings = models.CharField(max_length=1000, blank=True, null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+# class PostTalkTiming(models.Model):
+    # sentence = models.ForeignKey(Sentence, on_delete=models.CASCADE)
+    # timings = models.CharField(max_length=1000, blank=True, null=True)
+    # created_at = models.DateTimeField(auto_now_add=True)
 
 # class PermPostTalkTimings(models.Model):
-    # sentence = models.ForeignKey(PermSentence, on_delete=models.CASCADE)
+    # sentence = models.ForeignKey(Sentence, on_delete=models.CASCADE)
     # timings = models.CharField(max_length=1000, blank=True, null=True)
     # created_at = models.DateTimeField(auto_now_add=True)
 
@@ -238,10 +203,10 @@ class Profile(models.Model):
     def __str__(self):
         return str(self.learner)
 
-class NewsArticle(models.Model):
-    title = models.CharField(max_length=100, null=False, blank=False)
-    link = models.URLField(null=False, blank=False)
-    date = models.DateField()
+# class NewsArticle(models.Model):
+    # title = models.CharField(max_length=100, null=False, blank=False)
+    # link = models.URLField(null=False, blank=False)
+    # date = models.DateField()
 
-    def __str__(self):
-        return self.date.strftime("%a %d %b %Y") + " -- " + self.title
+    # def __str__(self):
+        # return self.date.strftime("%a %d %b %Y") + " -- " + self.title

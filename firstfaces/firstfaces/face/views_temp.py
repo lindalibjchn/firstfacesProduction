@@ -9,7 +9,7 @@ from face.utils import *
 # from face.speech_to_text_utils import *
 from django.utils import timezone
 import json
-from face.models import Conversation, TempSentence, PermSentence, AudioFile, Profile, NewsArticle, PostTalkTiming, AudioError, AudioErrorAttempt, AudioErrorCorrectionAttempt
+from face.models import Conversation, Sentence, AudioFile, Profile, AudioError, AudioErrorAttempt, AudioErrorCorrectionAttempt
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 import code
@@ -220,15 +220,15 @@ def waiting(request):
         user_profile = Profile.objects.get(learner=request.user)
         tutorial_complete = user_profile.tutorial_complete
 
-        news_article = True
-        try:
-            todays_news_article = NewsArticle.objects.get(date=date_now)
-            headline = todays_news_article.title
-            article_link = todays_news_article.link
-        except:
-            headline = "no article today"
-            article_link = "#"
-            news_article = False
+        # news_article = True
+        # try:
+            # todays_news_article = NewsArticle.objects.get(date=date_now)
+            # headline = todays_news_article.title
+            # article_link = todays_news_article.link
+        # except:
+            # headline = "no article today"
+            # article_link = "#"
+            # news_article = False
 
         # print('prev_test_scores:', prev_test_scores)
 
@@ -240,10 +240,10 @@ def waiting(request):
             'tutorial_complete': json.dumps(tutorial_complete),
             'waiting': True,
             'timeNow': time_now,
-            'headline': headline,
-            'article_link': article_link,
+            # 'headline': headline,
+            # 'article_link': article_link,
             'no_live_sessions': no_live_sessions,
-            'news_article': news_article,
+            # 'news_article': news_article,
             # 'prev_test_scores': json.dumps(prev_test_scores)
 
         }

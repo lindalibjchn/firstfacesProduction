@@ -1,8 +1,9 @@
-from face.models import TempSentence, PermSentence, Conversation, Profile
+from face.models import Sentence, Conversation, Profile
 import datetime
 from operator import itemgetter
 import json
-from face.views.conversation.student.utils.sentence import jsonify_or_none, floatify, int_time_or_none
+from face.views.conversation.all.modify_data import jsonify_or_none, floatify, int_time_or_none
+from face.views.conversation.all.sentences import get_student_conversation
 from django.conf import settings
 from django.contrib.auth.models import User
 
@@ -57,49 +58,20 @@ def get_student_conversations(student_id_):
     # print('student_conversation_objects:', student_conversation_objects)
 
     conversations = []
-    sentence_awaiting_judgement = None
-    sentence_being_recorded = None
     for i, c in enumerate(student_conversation_objects):
 
-        conversation = {}
         if c.tutorial == False:
 
-            conversation["id"] = c.pk
-            conversation["start_time"] = int_time_or_none(c.start_time)
-            conversation["end_time"] = int_time_or_none(c.end_time)
-            conversation["topic"] = c.topic
-            conversation["emotion"] = c.emotion
-            conversation["completed_sentences"] = []
+            current_conv = False
+            if i == len(student_conversation_objects) - 1:
+                current_conv = True
 
-            # get prev sentences
-            sent_objects = PermSentence.objects.filter(conversation=c)
-
-            for sent in sent_objects:
-
-                # print('conv:', c.pk)
-                # print('sent:', sent)
-                # print('sent.sentence:', sent.sentence)
-                sent_meta = convert_django_sentence_object_to_json(sent, student_id_, c.pk)
-                # timestamps only work if there is an actual time, else None
-                if sent.judgement != None :
-                    conversation["completed_sentences"].append(sent_meta)
-                
-                elif i == len(student_conversation_objects) - 1:
-                    
-                    # print('conv:', c.pk)
-                    # print('sent:', sent)
-                    # print('sent.sentence:', sent.sentence)
-                    if sent.sentence != None:
-                        sentence_awaiting_judgement = sent_meta
-                    else:
-                        sentence_being_recorded = sent_meta 
-
-
-            conversation["completed_sentences"] = sorted(conversation["completed_sentences"], key=itemgetter("sent_id"), reverse=True)
-
+            conversation, sentence_awaiting_judgement, sentence_being_recorded = get_student_conversation(c, student_id_, current_conv)
+            
         conversations.append(conversation)
 
     return conversations, sentence_awaiting_judgement, sentence_being_recorded
+
 
 def get_nationality_code( country_name ):
 
@@ -115,34 +87,3 @@ def get_learner_age( years_of_birth ):
 
     return current_year - birth_year
     
-def convert_django_sentence_object_to_json(sent, student_id_, conv_id):
-
-    sent_time = int_time_or_none(sent.sentence_timestamp)
-    judge_time = int_time_or_none(sent.judgement_timestamp)
-    whats_wrong_time = int_time_or_none(sent.whats_wrong_timestamp)
-    try_again_time = int_time_or_none(sent.try_again_timestamp)
-    next_sentence_time = int_time_or_none(sent.next_sentence_timestamp)
-
-    sent_meta = {
-        "user_id": student_id_,
-        "conv_id": conv_id,
-        "sent_id": sent.id, 
-        "sentence": jsonify_or_none(sent.sentence),
-        "sentence_timestamp": sent_time,
-        "judgement": sent.judgement,
-        "judgement_timestamp": judge_time,
-        "emotion": jsonify_or_none(sent.emotion),
-        "surprise": floatify(sent.surprise),
-        "nod_shake": jsonify_or_none(sent.nod_shake),
-        "indexes": jsonify_or_none(sent.indexes),
-        "prompt": jsonify_or_none(sent.prompt),
-        "whats_wrong": sent.whats_wrong,
-        "whats_wrong_timestamp": whats_wrong_time,
-        "try_again": sent.try_again,
-        "try_again_timestamp": try_again_time,
-        "next_sentence": sent.next_sentence,
-        "next_sentence_timestamp": next_sentence_time,
-    }
-
-    return sent_meta
-                

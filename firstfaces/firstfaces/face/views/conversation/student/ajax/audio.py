@@ -1,8 +1,10 @@
 from django.http import JsonResponse
-from face.utils import *
+from face.views.conversation.student.utils.speech_to_text import convert_mp3_to_wav, get_speech_recognition
+from face.views.conversation.all.sentences import convert_django_sentence_object_to_json
+from face.praat_utils import get_audio_length
 from django.utils import timezone
 import json
-from face.models import Conversation, TempSentence, PermSentence, AudioFile, AudioError, AudioErrorAttempt, AudioErrorCorrectionAttempt
+from face.models import Conversation, Sentence, AudioFile, AudioError, AudioErrorAttempt, AudioErrorCorrectionAttempt
 from django.conf import settings
 import code
 import os
@@ -80,44 +82,32 @@ def tts(request):
     return JsonResponse(response_data) 
 
 def store_blob(request):
-
-    blob = request.FILES['data']
     # code.interact(local=locals());
 
-    # get session
-    blob_no_text = json.loads(request.POST['blob_no_text'])
-    interference = json.loads(request.POST['interference'])
-    sess = Conversation.objects.get( pk=request.POST['sessionID'] )
-    # text_from_speech0 = request.POST['transcript0']
-    # text_from_speech1 = request.POST['transcript1']
-    # text_from_speech2 = request.POST['transcript2']
-
-    #check if this recording is a retry
-    #get prev sents for this user in this session
+    blob = request.FILES['data']
+    conv = Conversation.objects.get( pk=request.POST['conversation_id'] )
+    sent_id = json.loads(request.POST['sentence_being_recorded_id'])
+    print('sent_id:', sent_id)
 
     # if very first attempt or new sent then need to create empty sentence
-    if blob_no_text:
+    if sent_id != None:
         
-        blob_no_text_sent_id = int(request.POST['blob_no_text_sent_id'])
-        # s = PermSentence.objects.get( pk=blob_no_text_sent_id )
-        ps = PermSentence.objects.get( pk=blob_no_text_sent_id )
+        s = Sentence.objects.get( pk=sent_id )
 
     else:
 
-        ps = PermSentence(learner=request.user, session=sess)
-        ps.save()
-        s = TempSentence(pk=ps.pk, p_sentence=ps, learner=request.user, session=sess)
+        s = Sentence(learner=request.user, conversation=conv)
         s.save()
 
 
-    filename = str(sess.id) + "_" + str(ps.id) + "_" + timezone.now().strftime( '%H-%M-%S' ) + ".webm" 
+    filename = str(conv.id) + "_" + str(s.id) + "_" + timezone.now().strftime( '%H-%M-%S' ) + ".webm" 
     blob.name = filename
 
     #and then link the recording
     a = AudioFile(
-            sentence=ps, 
+            sentence=s, 
             audio=blob, 
-            interference=interference,
+            # interference=interference,
             )
     a.save()
     # need to save the file before can acces url to use ffmpeg (in utils.py)
@@ -137,11 +127,12 @@ def store_blob(request):
 
     response_data = {
 
+        'sentence': convert_django_sentence_object_to_json(s, request.user.id, conv.id),
         'alternatives': alternatives,
-        'sent_id': ps.id,
         'audio_pk':a.id,
         'audio_file':audioFile,
         'audio_length':audioLength,
+    
     }
 
     return JsonResponse(response_data)    
@@ -398,7 +389,7 @@ def store_attempt_blob(request):
     ae = AudioError.objects.get( pk=ae_pk )
 
     blob_no_text_sent_id = int(request.POST['blob_no_text_sent_id'])
-    s = TempSentence.objects.get( pk=blob_no_text_sent_id )
+    s = Sentence.objects.get( pk=blob_no_text_sent_id )
     
     # Gets existing audio correction attempt instance
     aeca = AudioErrorCorrectionAttempt.objects.get(pk = request.POST['correctio_id'])

@@ -15,13 +15,17 @@ function loadStudents() {
         $( '#phone' + thisUser.phoneId ).addClass( 'gender-' + thisUser.gender );
 
         $( '#studentName' + thisUser.phoneId ).text( thisUser.username );
-        $( '#flag' + thisUser.phoneId ).attr( 'src', 'static/face/images/country-flags/svg/' + thisUser.nationality + '.svg' );
+        $( '#flag' + thisUser.phoneId ).attr( 'src', 'static/face/images/country-flags/svg/' + thisUser.nationality.toLowerCase() + '.svg' );
         $( '#flagFadeOutRight' + thisUser.phoneId ).addClass( 'flag-fade-out-right-' + thisUser.gender );
         $( '#flagFadeOutBottom' + thisUser.phoneId ).addClass( 'flag-fade-out-bottom-' + thisUser.gender );
 
         $( '#studentDetailsContainer' + thisUser.phoneId ).addClass( 'gender-' + thisUser.gender );
         $( '#studentAge' + thisUser.phoneId ).text( thisUser.age );
-        $( '#studentInfoText' + thisUser.phoneId ).text( teacherVars.conversations[ c ].info.join(', ') );
+        if ( teacherVars.conversations[ c ].info !== null ) {
+        
+            $( '#studentInfoText' + thisUser.phoneId ).text( teacherVars.conversations[ c ].info.join(', ') );
+
+        }
 
         setMarqueeScrollingSpeed( phoneCount );
         addConversationMeta( thisUser );

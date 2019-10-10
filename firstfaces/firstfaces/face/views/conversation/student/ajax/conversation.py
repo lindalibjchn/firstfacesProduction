@@ -2,7 +2,7 @@ from django.http import JsonResponse
 from face.utils import *
 from django.utils import timezone
 import json
-from face.models import Conversation, PermSentence, Profile, PostTalkTiming
+from face.models import Conversation, Sentence, Profile
 import code
 import string
 import math
@@ -33,27 +33,27 @@ import ast
 
     # return JsonResponse(response_data)    
 
-def store_tutorial_end(request):
+# def store_tutorial_end(request):
 
-    session_id = request.POST['sessionID']
-    sess = Conversation.objects.get(pk=session_id)
-    sess.learner_emotion = "tutorial"
-    sess.topic = "tutorial"
-    time_now = timezone.now();
-    sess.end_time = time_now
-    sess.save()
+    # session_id = request.POST['sessionID']
+    # sess = Conversation.objects.get(pk=session_id)
+    # sess.learner_emotion = "tutorial"
+    # sess.topic = "tutorial"
+    # time_now = timezone.now();
+    # sess.end_time = time_now
+    # sess.save()
 
-    tutorial_step = int(request.POST['tutorialStep'])
-    if tutorial_step == 99:
-        prof = Profile.objects.get(learner=request.user)
-        prof.tutorial_complete = True;
-        prof.save()
+    # tutorial_step = int(request.POST['tutorialStep'])
+    # if tutorial_step == 99:
+        # prof = Profile.objects.get(learner=request.user)
+        # prof.tutorial_complete = True;
+        # prof.save()
 
-    response_data = {
+    # response_data = {
 
-    }
+    # }
 
-    return JsonResponse(response_data)    
+    # return JsonResponse(response_data)    
 
 def store_emotion(request):
 
@@ -83,22 +83,22 @@ def store_topic(request):
 
     return JsonResponse(response_data)    
 
-def timings(request):
+# def timings(request):
 
-    # code.interact(local=locals());
-    sent_id = int(request.GET['sent_id'])
-    sent = PermSentence.objects.get(pk=sent_id)
-    timings = json.loads(request.GET['timing_dict'])
+    # # code.interact(local=locals());
+    # sent_id = int(request.GET['sent_id'])
+    # sent = Sentence.objects.get(pk=sent_id)
+    # timings = json.loads(request.GET['timing_dict'])
 
-    t = PostTalkTimings.objects.create(sentence=sent, timings=timings)
+    # t = PostTalkTimings.objects.create(sentence=sent, timings=timings)
 
-    t.save()
+    # t.save()
 
-    response_data = {
+    # response_data = {
 
-    }
+    # }
 
-    return JsonResponse(response_data)    
+    # return JsonResponse(response_data)    
 
 def delete_session(request):
 

@@ -22,7 +22,7 @@ function set_selectable(trans){
 function doAllignment(){
     
     let fd = new FormData();                                                    
-    fd.append('trans',conversationVariables.alternatives[0].transcript);                 
+    fd.append('trans',conversationVariables.sentence_being_recorded_audio.alternatives[0].transcript);                 
     fd.append('fn',conversationVariables.Aud_Fname);   
     fd.append('sessionID',conversationVariables.session_id);
 
@@ -59,7 +59,7 @@ $('#forwardErrorSelection').click(function(){
     conversationVariables.usePlayAud = true;
     //Words are looped theough and sequential blocks of errored and corrrect words are place into their own span tags
     conversationVariables.playStage2 = true;
-    var words = conversationVariables.alternatives[0].transcript.split(" ");
+    var words = conversationVariables.sentence_being_recorded_audio.alternatives[0].transcript.split(" ");
     var i = 0;
     conversationVariables.uncorrectedErrors = [];
     var classes = [];
@@ -97,7 +97,7 @@ $('#forwardErrorSelection').click(function(){
         $('#lowerSentenceHolder').empty();
         
         tiaSpeak("That is too many words, please choose again",true,function(){
-            reset_text(conversationVariables.alternatives['0'].transcript);
+            reset_text(conversationVariables.sentence_being_recorded_audio.alternatives['0'].transcript);
             $('#talkBtn').show();
             $('#recordVoiceBtn').show();
             $('#listenVoiceBtn').show();
@@ -350,7 +350,7 @@ function doneError(){
 $('#backCorrection').click(function(){
     conversationVariables.playStage2 = false;
     conversationVariables.totalAudioLength = conversationVariables.originalLength;
-    var words = conversationVariables.alternatives[0].transcript.split(" ");
+    var words = conversationVariables.sentence_being_recorded_audio.alternatives[0].transcript.split(" ");
     conversationVariables.uncorrectedErrors = []; 
     // reset divs
     //empty upper and lower divs
@@ -648,7 +648,7 @@ function sendErrorBlobToServer( new_blob ){
         processData: false,
         contentType: false,
         success: function(json){
-            returnFromListenToSpeechSynthesis();
+            returnFromListenToSentence();
             //add index an foregin key to the errors
             conversationVariables.errors[json['error_start']] = json['error_pk'];
             //display transcript
@@ -1031,7 +1031,7 @@ function enableBtns(){
 
 //Gets the current setnece including corrections made to any errors
 function getSentence(){
-    var words = conversationVariables.alternatives[0].transcript.split(" ");
+    var words = conversationVariables.sentence_being_recorded_audio.alternatives[0].transcript.split(" ");
     var curr = 0;
     var i = 0;
     var out= "";
@@ -1091,7 +1091,7 @@ function unmoveText(){
 
 //Function flashes the border of each word in the transcription
 function causeFlash(){
-    var words = conversationVariables.alternatives[0].transcript.split(" ").length;
+    var words = conversationVariables.sentence_being_recorded_audio.alternatives[0].transcript.split(" ").length;
     flash(0,words);
 }
 
