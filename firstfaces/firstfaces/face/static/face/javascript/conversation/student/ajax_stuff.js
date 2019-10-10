@@ -71,41 +71,6 @@ function sendTTS( text, tiaSpeaker ) {
 
 }
 
-function sendBlobToServer( blob_to_send ) {
-
-    let fd = new FormData();
-    fd.append('data', blob_to_send);
-    fd.append('sessionID', conversationVariables.session_id);
-    fd.append('interference', conversationVariables.interference);
-    fd.append('blob_no_text', conversationVariables.blob_no_text);
-    fd.append('blob_no_text_sent_id', conversationVariables.blob_no_text_sent_id);
-
-    
-    $.ajax({
-        url: "/store_blob",
-        type: "POST",
-        data: fd,
-        processData: false,
-        contentType: false,
-        success: function(json) {
-            conversationVariables.totalAudioLength = json.audio_length;
-            conversationVariables.Aud_Fname = json.audio_file;
-            conversationVariables.blob_no_text = true;
-            conversationVariables.blob_no_text_sent_id = json.sent_id;
-            console.log('got response from sending blob to server');
-            conversationVariables.alternatives = json.alternatives;
-            conversationVariables.currentAudID = json.audio_pk;
-            conversationVariables.preSent = conversationVariables.alternatives[ 0 ][ 'transcript' ]
-            returnFromListenToSpeechSynthesis();
-        },
-        error: function() {
-            console.log("that's wrong");
-        },
-
-    });
-
-}
-
 function correctids(ids){
  var i;
  var out =[];

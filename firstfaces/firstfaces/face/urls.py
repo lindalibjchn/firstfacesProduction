@@ -18,8 +18,8 @@ urlpatterns = [
     # conversation
     path('store_emotion', conversation.store_emotion, name='store_emotion'),
     path('store_topic', conversation.store_topic, name='store_topic'),
-    path('store_tutorial_end', conversation.store_tutorial_end, name='store_tutorial_end'),
-    path('timings', conversation.timings, name='timings'),
+    # path('store_tutorial_end', conversation.store_tutorial_end, name='store_tutorial_end'),
+    # path('timings', conversation.timings, name='timings'),
     path('delete_session', conversation.delete_session, name='delete_session'),
     path('store_conversation_over', conversation.store_conversation_over, name='store_conversation_over'),
     # sentence

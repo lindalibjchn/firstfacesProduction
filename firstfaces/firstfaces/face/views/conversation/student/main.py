@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from face.views.conversation.student.utils.sentence import jsonify_or_none, floatify
+from face.views.conversation.all.modify_data import jsonify_or_none, floatify
 from face.views.conversation.student.utils.text_to_speech import create_hello_wav
+from face.views.conversation.teacher.utils.sessions_sentences import get_student_conversation 
 from django.utils import timezone
 import json
-from face.models import Conversation, TempSentence, PermSentence, AudioFile, Profile, PostTalkTiming, AudioError, AudioErrorAttempt, AudioErrorCorrectionAttempt
+from face.models import Conversation, Sentence, AudioFile, Profile, AudioError, AudioErrorAttempt, AudioErrorCorrectionAttempt
 from django.conf import settings
 from face.utils import * #for now
 import time
@@ -27,50 +28,16 @@ def conversation_student(request, conversation_id):
     try:
 
         # when entering a conversation, must check that a conversation exists at that url e.g. 'conversation/234'. If a DoesNot
-        conv = Conversation.objects.get(id=conversation_id)
+        conversation_object = Conversation.objects.get(id=conversation_id)
         
         # if conversation is ended, or user not the owner, return to waiting
-        if conv.end_time == None and request.user == conv.learner:
+        if conversation_object.end_time == None and request.user == conversation_object.learner:
 
-            # changes the datetime objct into unix time
-            start_time = int(time.mktime((conv.start_time).timetuple()))
-       
-            tutorial_complete = Profile.objects.get(learner=request.user).tutorial_complete
+            # boolean values for each of the following
+            first_conversation = determine_if_first_full_conversation(request.user)
+            first_enter = determine_if_first_entry(conversation_object) 
 
-            # true or false
-            first_full_conversation = determine_if_first_full_conversation(request.user, tutorial_complete)
-
-            blobs = 0;
-            blob_no_text = False
-            blob_no_text_sent_id = None
-            interference_count = 0
-
-            #check if learner entered a topic. If so then it is not first entry
-            first_enter = True 
-            sentences_data = {}
-            last_sent = None
-            if conv.topic != None:
-                
-                first_enter = False
-                this_conv_sents = PermSentence.objects.filter(conversation=conv).order_by('pk')
-
-                #check that there are entries in the queryset i.e. not empty
-                if this_conv_sents:
-
-                    # adds all data about the sentences
-                    sentences_data = fill_sentences(this_conv_sents)
-
-                    #need to check if sentence has blob but no text
-                    last_sent = list(this_conv_sents)[-1]
-                    if last_sent.sentence == None: 
-
-                        blob_no_text = True
-                        blob_no_text_sent_id = last_sent.id
-
-                        # interference for last sentence
-                        last_sent_audio_files = last_sent.audiofile_set.all()
-                        for b in audio_files:
-                            blobs += 1
+            conversation_dict, sentence_awaiting_judgement, sentence_being_recorded = get_student_conversation(conversation_object, request.user.id, True)
 
             prof = Profile.objects.get(learner=request.user)
             gender = prof.gender
@@ -78,18 +45,12 @@ def conversation_student(request, conversation_id):
             conversation_variables = {
 
                 'username': request.user.username,
-                'start_time': start_time * 1000,
-                'conversation_id': conversation_id,
                 'first_enter': first_enter,
-                #'sentences': sentences_data,
-                # 'last_sent': last_sent.sentence,
-                'blob_no_text': blob_no_text,
-                'blob_no_text_sent_id': blob_no_text_sent_id,
-                'interference_count': interference_count,
-                'blobs': blobs,
+                'conversation_dict': conversation_dict,
+                'sentence_awaiting_judgement': sentence_awaiting_judgement,
+                'sentence_being_recorded': sentence_being_recorded,
                 'gender': gender,
-                'first_full_conversation': first_full_conversation,
-                'tutorial_complete': tutorial_complete,
+                'first_conversation': first_conversation,
                 'inDevelopment': settings.DEBUG,
 
             }
@@ -117,22 +78,30 @@ def conversation_student(request, conversation_id):
         return redirect('waiting')
     
 
-def determine_if_first_full_conversation(u, tutorial_complete_):
+def determine_if_first_full_conversation(u):
 
     first_full_conversation = False
 
     # if first time create .wav of Tia sating 'hello {USERNAME}'
-    if not tutorial_complete_:
-        create_hello_wav(u.username)
+    # if not tutorial_complete_:
+        # create_hello_wav(u.username)
 
     try:
-        all_convs = Conversation.objects.filter(learner=u).exclude(end_time=None)
-        if len(all_convs) == 1: # tutorial is one conversation
+        all_convs = Conversation.objects.filter(learner=u)
+        if len(all_convs) == 1:
             first_full_conversation = True
     except:
         pass
 
     return first_full_conversation
+
+def determine_if_first_entry(c):
+
+    first_enter = True
+    if c.topic != None:    
+        first_enter = False
+
+    return first_enter
 
 def fill_sentences(this_conv_sents_):
 

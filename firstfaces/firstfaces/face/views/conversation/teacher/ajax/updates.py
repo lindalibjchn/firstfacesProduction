@@ -1,11 +1,12 @@
-from face.models import TempSentence, Profile
+from face.models import Sentence, Profile
 from django.utils import timezone
 import datetime
 import json
 import time
 from django.http import JsonResponse
-from face.views.conversation.teacher.utils.sessions_sentences import get_students_conversations, convert_django_sentence_object_to_json
-from face.views.conversation.student.utils.sentence import jsonify_or_none
+from face.views.conversation.teacher.utils.sessions_sentences import get_students_conversations
+from face.views.conversation.all.sentences import convert_django_sentence_object_to_json
+from face.views.conversation.all.modify_data import jsonify_or_none
 from face.views.conversation import database_updates
 
 def check_for_change(request):
@@ -25,7 +26,7 @@ def check_for_change(request):
 
     database_updates.database_updated_by_student = False
 
-    sentences_being_recorded_or_not_judged_objects = TempSentence.objects.filter(judgement=None)
+    sentences_being_recorded_or_not_judged_objects = Sentence.objects.filter(judgement=None)
     sentences_being_recorded_objects = sentences_being_recorded_or_not_judged_objects.filter(sentence=None)
     sentences_not_judged_objects = sentences_being_recorded_or_not_judged_objects.exclude(sentence=None).order_by('sentence_timestamp')
 

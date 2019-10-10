@@ -25,96 +25,10 @@ function tapKeyFull() {
         
             } else {
 
-                $('#closeOverlayArea').prop( "disabled", false);
-                $('#submitOverlay').prop( "disabled", false);
-                //calculateAlternatives();
-                //show play buttons below
-                if ( conversationVariables.tutorial === false ) {
+                dealWithAfterTap();
 
-                    // show john's error box
-                    if ( conversationVariables.tapKeyForErrors ) {
 
-                        conversationVariables.tapKeyForErrors = false;
-
-                        movementController( movementObject.abs.blank, '0.5', '1.5' );
-                        // display errors
-                        showWrongSentence();
-
-                    } else if ( conversationVariables.tapKeyForCorrection ) {
-
-                        conversationVariables.tapKeyForCorrection = false;
-                        showCorrectionUnderWrongSent();
-
-                    } else if ( conversationVariables.showingSpectrograms ) {
-
-                        conversationVariables.showingSpectrograms = false;
-                        $("#praatCont").fadeIn(800);
-                        setTimeout(function(){
-                            $("#reRecordBtn").fadeIn(800);
-                        },200);
-                        setTimeout(function(){
-                            $("#backOverlay").fadeIn(800);
-                        },400);                           
-
-                    // this one is for after listening to the learners speech - Daniel's stuff
-                    } else {
-                        if(!conversationVariables.stage2 && !conversationVariables.stage3){
-
-                        $('.play-btn').prop( "disabled", false);
-                        $('#talkBtn').prop( "disabled", false);
-                        $('#recordVoiceBtn').show();
-
-                        if (($(".selectable-word").length > 0)||($(".selected-word").length >0)){
-                            //reset text
-                            //$('#tia-speech-box').text("Is this what you meant to say?");
-                            //hide backward and forward buttons
-                            $('#backErrorSelection').hide();
-                            $('#forwardErrorSelection').hide();
-                        }
-                        if(($(".uncorrected-error").length > 0)|| ($(".corrected-error").length > 0) ){
-                            //reset speech
-                            //$("#tia-speech-box").text("Is this what you meant to say?");
-                            //hide buttons
-                            $("#submitCorrectedErrors").hide();
-                            $("#backCorrection").hide();
-                        }
-                        
-                        if ( $('#upperSentenceHolder').children().length > 0 ) {
-                           $('#upperSentenceHolder').empty();
-                           $('#lowerSentenceHolder').empty();
-                        }
-                       
-                        
-
-                        //reset what tia is saying and add back in the two buttons
-                        $('.play-btn').prop( "disabled", false);
-                        $('#talkBtn').prop( "disabled", false);
-                        $('#recordVoiceBtn').show();
-                        
-                        //Daniel
-
-                        $('#talkBtn').show();
-                        //change correct transcipt to #talkBtn
-                        //$('#correctTranscript').show();
-                        //Adding speech bubble for tia 
-
-                        //Displaying hypothesised transcript
-                        $('#textInputContainer').show();
-                        $('#sentenceShowHolder').show();
-                        //$('#speechBubbleCont').show();
-                          
-                        populateDivs();
-                            
-                              
-                            
-                            setTimeout( set_selectable(conversationVariables.alternatives[0].transcript) , 1200);   
-
-                        
-                        }}
-
-                }
-
-                initMove( armTapObject, [[0,0,0],[0,0,0]], 0.8 )
+                //initMove( armTapObject, [[0,0,0],[0,0,0]], 0.8 )
 
             }
 
@@ -126,9 +40,97 @@ function tapKeyFull() {
 
 }
 
+function dealWithAfterTap() {
+
+    movementController( movementObject.abs.blank, '0.5', '1.5' );
+
+    $('#closeOverlayArea').prop( "disabled", false);
+    $('#submitOverlay').prop( "disabled", false);
+    //show play buttons below
+
+    // show john's error box
+    if ( conversationVariables.tapKeyForErrors ) {
+
+        conversationVariables.tapKeyForErrors = false;
+
+        // display errors
+        showWrongSentence();
+
+    } else if ( conversationVariables.tapKeyForCorrection ) {
+
+        conversationVariables.tapKeyForCorrection = false;
+        showCorrectionUnderWrongSent();
+
+    } else if ( conversationVariables.showingSpectrograms ) {
+
+        conversationVariables.showingSpectrograms = false;
+        $("#praatCont").fadeIn(800);
+        setTimeout(function(){
+            $("#reRecordBtn").fadeIn(800);
+        },200);
+        setTimeout(function(){
+            $("#backOverlay").fadeIn(800);
+        },400);                           
+
+    // this one is for after listening to the learners speech - Daniel's stuff
+    } else {
+
+        if(!conversationVariables.stage2 && !conversationVariables.stage3){
+
+            $('.play-btn').prop( "disabled", false);
+            $('#talkBtn').prop( "disabled", false);
+            $('#recordVoiceBtn').show();
+
+            if (($(".selectable-word").length > 0)||($(".selected-word").length >0)){
+                //reset text
+                //$('#tia-speech-box').text("Is this what you meant to say?");
+                //hide backward and forward buttons
+                $('#backErrorSelection').hide();
+                $('#forwardErrorSelection').hide();
+            }
+            if(($(".uncorrected-error").length > 0)|| ($(".corrected-error").length > 0) ){
+                //reset speech
+                //$("#tia-speech-box").text("Is this what you meant to say?");
+                //hide buttons
+                $("#submitCorrectedErrors").hide();
+                $("#backCorrection").hide();
+            }
+            
+            if ( $('#upperSentenceHolder').children().length > 0 ) {
+               $('#upperSentenceHolder').empty();
+               $('#lowerSentenceHolder').empty();
+            }
+
+            //reset what tia is saying and add back in the two buttons
+            $('.play-btn').prop( "disabled", false);
+            $('#talkBtn').prop( "disabled", false);
+            $('#recordVoiceBtn').show();
+            
+            //Daniel
+
+            $('#talkBtn').show();
+            //change correct transcipt to #talkBtn
+            //$('#correctTranscript').show();
+            //Adding speech bubble for tia 
+
+            //Displaying hypothesised transcript
+            $('#textInputContainer').show();
+            $('#sentenceShowHolder').show();
+            //$('#speechBubbleCont').show();
+              
+            populateDivs();
+                
+            setTimeout( set_selectable(conversationVariables.sentence_being_recorded_audio.alternatives[0].transcript) , 1200);   
+        
+        }
+
+    }
+
+}
+
 //fucntion to populate the output box with transcript
 function populateDivs() {
-    var words = conversationVariables.alternatives[0].transcript.split(" ");
+    var words = conversationVariables.sentence_being_recorded_audio.alternatives[0].transcript.split(" ");
     words.forEach(addWords);
     $('#listenVoiceBtn').show();
 }

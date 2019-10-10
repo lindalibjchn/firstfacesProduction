@@ -55,7 +55,6 @@ function onRecord() {
 
 function resetOnRecordVariables() {
 
-    conversationVariables.blobs += 1;
     removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
     conversationVariables.interference = false; // start with no interference which can change if clipping occurs
     // identifies main recording and allow return of mic button if user says nothing
@@ -90,16 +89,16 @@ function tiaLeanToListenToRecording() {
     // tia leans to listen, more so at later stages
     if ( conversationVariables.stage2 ) {
 
-        listenToSpeechSynthesis( 1 );
+        listenToRecording( 1 );
 
     } else if ( conversationVariables.stage3 ) {
     
-        listenToSpeechSynthesis( 2 );
+        listenToRecording( 2 );
         $('#backOverlay').hide();
 
     } else {
 
-        listenToSpeechSynthesis( 0 );
+        listenToRecording( 0 );
 
     }
 

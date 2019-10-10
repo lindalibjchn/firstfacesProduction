@@ -24,17 +24,17 @@ function animate () {
 
     }
 
-    if ( eyeObject[ 'bool' ] ) {
+    if ( eyeObject.bool ) {
 
         moveEyes( mainCount );
 
     }
 
-    //if ( armTapObject[ 'bool' ] ) {
+    if ( armTapObject.bool ) {
 
-        //armTap( mainCount );
+        armTap( mainCount );
 
-    //}
+    }
 
     if ( nodObject.bool ) {
 

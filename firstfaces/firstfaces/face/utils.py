@@ -1,4 +1,4 @@
-from face.models import Available, TempSentence, Conversation, PermSentence, Profile, PostTalkTiming
+from face.models import Available, Sentence, Conversation, Profile
 
 from django.contrib.auth.models import User
 from django.conf import settings
@@ -194,7 +194,7 @@ def get_in_class_now( sessions ):
 
 def has_user_clicked_option_btn(s_id):
 
-    sent = TempSentence.objects.get(pk=s_id)
+    sent = Sentence.objects.get(pk=s_id)
 
     if sent.try_again or sent.next_sentence or sent.whats_wrong:
 
@@ -229,13 +229,13 @@ def get_number_of_current_live_sessions():
     remove_tutorials = remove_those_not_ended_by_user.filter(tutorial=False)
     return remove_tutorials.count()
 
-def delete_sentences_from_temp_db(sess_id): 
+# def delete_sentences_from_temp_db(sess_id): 
 
-    sess = Conversation.objects.get(pk=sess_id)
-    sentences = TempSentence.objects.filter(session=sess).order_by('pk')
+    # sess = Conversation.objects.get(pk=sess_id)
+    # sentences = Sentence.objects.filter(session=sess).order_by('pk')
     
-    for s in sentences:
-        TempSentence.objects.get(pk=s.pk).delete()
+    # for s in sentences:
+        # TempSentence.objects.get(pk=s.pk).delete()
 
 
 # def get_scores( sess_id ):
@@ -338,7 +338,7 @@ def get_prev_sessions( user ):
 
         if not sess.tutorial and sess.score != None:
 
-            sents = PermSentence.objects.filter(session=sess).order_by('pk')
+            sents = Sentence.objects.filter(session=sess).order_by('pk')
             sentences = []
 
             for s in sents:

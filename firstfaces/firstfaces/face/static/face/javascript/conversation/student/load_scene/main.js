@@ -9,7 +9,7 @@ $(window).on( 'load', function() {
     readyAudio();
 
     //fill prevSents
-    loadPrevSents( scrollBottom );   
+    //addPreviousSentences(, 0 );   
     conversationVariables.playspeed=1.0;
     
     //// FOR VOLUME BAR
