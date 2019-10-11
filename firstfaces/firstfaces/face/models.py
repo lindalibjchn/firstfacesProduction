@@ -12,7 +12,6 @@ class Conversation(models.Model):
     emotion = models.SmallIntegerField(null=True, blank=True)
     topic = models.CharField(max_length=100, null=True, blank=True)
     score = models.SmallIntegerField(null=True, blank=True)
-    tutorial = models.BooleanField(default=False)
                          
     def __str__(self):
         return  str(self.pk) + "___" + self.learner.username + '___' + str(self.start_time.strftime("%a %d %b %H:%M")) + '___' + str(self.score)
@@ -67,6 +66,7 @@ class Sentence(models.Model):
     prompt = models.CharField(max_length=300, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    for_prompt = models.CharField(max_length=1000, null=True, blank=True)
 
     def __str__(self):
         return  str(self.pk) + ": " + str(self.sentence)

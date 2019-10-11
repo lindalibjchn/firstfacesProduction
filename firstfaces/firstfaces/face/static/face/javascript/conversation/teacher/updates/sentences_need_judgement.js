@@ -9,11 +9,20 @@ function updateSentencesNeedJudgement( updatedSentencesNeedJudgement ) {
 
         for ( let i=0; i<noNewSents; i++ ) {
 
+            teacherVars.sentencesBeingRecorded.shift( i );
             teacherVars.sentencesNeedJudgement.push( updatedSentencesNeedJudgement[ lengthCurSentencesNeedJudgement + i ] );
 
         }
 
     }
+
+    if ( lengthCurSentencesNeedJudgement === 0 ) {
+
+        putNextSentenceNeedingJudgementUpForViewing();
+
+    }
+
+    showSentencesBeingRecordedInPhones();
 
 }
 

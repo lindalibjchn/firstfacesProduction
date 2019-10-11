@@ -21,6 +21,8 @@ function updateSentencesBeingRecorded( updatedSentencesBeingRecorded ) {
 
 function showSentencesBeingRecordedInPhones() {
 
+    $( '.current-attempt' ).removeClass( 'recording' );
+    console.log('sentencesBeingRecorded:', teacherVars.sentencesBeingRecorded);
     teacherVars.sentencesBeingRecorded.forEach( function( r ) {
 
         let phoneId = teacherVars.studentIdToPhone[ r.user_id ];

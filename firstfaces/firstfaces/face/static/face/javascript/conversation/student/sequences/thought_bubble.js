@@ -80,7 +80,7 @@ function showFirstWord() {
     //removeColourThoughtBubbles( tiaTimings.removeColourThoughtBubbleDuration );
     $( thoughtBubbleObject.toBeShownDiv ).hide();
     $( thoughtBubbleObject.toBeHiddenDiv ).hide();
-    $( thoughtBubbleObject.toBeShownDiv ).text( conversationVariables.last_sent.sentence[ thoughtBubbleObject.wordThinkingCount ][ 0 ] );
+    $( thoughtBubbleObject.toBeShownDiv ).text( conversationVariables.sentence_awaiting_judgement.sentence[ thoughtBubbleObject.wordThinkingCount ][ 0 ] );
     $( thoughtBubbleObject.toBeShownDiv ).fadeIn( tiaTimings.wordFadeIn );
 
 }
@@ -88,7 +88,7 @@ function showFirstWord() {
 function showFurtherWords() {
 
     //console.log('word:', conversationVariables.last_sent.sentence[ thoughtBubbleObject.wordThinkingCount ][ 0 ]);
-    $( thoughtBubbleObject.toBeShownDiv ).text( conversationVariables.last_sent.sentence[ thoughtBubbleObject.wordThinkingCount ][ 0 ] );
+    $( thoughtBubbleObject.toBeShownDiv ).text( conversationVariables.sentence_awaiting_judgement.sentence[ thoughtBubbleObject.wordThinkingCount ][ 0 ] );
 
     $( thoughtBubbleObject.toBeHiddenDiv ).fadeOut( tiaTimings.wordFadeOut, function() {
         
@@ -103,27 +103,27 @@ function mouthWordController() {
 
     mouthingObject.emphasis = false;
 
-    let POS1 = conversationVariables.last_sent.sentence[ thoughtBubbleObject.wordThinkingCount ][ 1 ][0]
+    let POS1 = conversationVariables.sentence_awaiting_judgement.sentence[ thoughtBubbleObject.wordThinkingCount ][ 1 ][0]
 
         // check if it is a grammar word (DET or VERB usually)
     if ( Object.keys( grammarObject ).includes( POS1 ) ) {
     
         if ( grammarObject[ POS1 ].show ) {
 
-            let word = conversationVariables.last_sent.sentence[ thoughtBubbleObject.wordThinkingCount ][ 0 ]
-            let phoneSeq = conversationVariables.last_sent.sentence[ thoughtBubbleObject.wordThinkingCount ][ 2 ]
+            let word = conversationVariables.sentence_awaiting_judgement.sentence[ thoughtBubbleObject.wordThinkingCount ][ 0 ]
+            let phoneSeq = conversationVariables.sentence_awaiting_judgement.sentence[ thoughtBubbleObject.wordThinkingCount ][ 2 ]
             performHandMovementWithMouthing( POS1, word, phoneSeq );
 
             
         } else {
 
-            tiaMouthPhoneSequence( conversationVariables.last_sent.sentence[ thoughtBubbleObject.wordThinkingCount ][ 2 ], tiaTimings.mouthingFramesPerPhone ) // to <speech/mouthing.js>
+            tiaMouthPhoneSequence( conversationVariables.sentence_awaiting_judgement.sentence[ thoughtBubbleObject.wordThinkingCount ][ 2 ], tiaTimings.mouthingFramesPerPhone ) // to <speech/mouthing.js>
 
         }
 
     } else {
 
-        tiaMouthPhoneSequence( conversationVariables.last_sent.sentence[ thoughtBubbleObject.wordThinkingCount ][ 2 ], tiaTimings.mouthingFramesPerPhone ); 
+        tiaMouthPhoneSequence( conversationVariables.sentence_awaiting_judgement.sentence[ thoughtBubbleObject.wordThinkingCount ][ 2 ], tiaTimings.mouthingFramesPerPhone ); 
 
     }
 
@@ -156,7 +156,7 @@ function endOfSingleWordCycle() {
         delayToShowNextWord += tiaTimings.delayAfterEmphasisedWord;
     }
 
-    if ( thoughtBubbleObject.wordThinkingCount < conversationVariables.last_sent.sentence.length - 1 ) {
+    if ( thoughtBubbleObject.wordThinkingCount < conversationVariables.sentence_awaiting_judgement.sentence.length - 1 ) {
 
         thoughtBubbleObject.wordThinkingCount += 1;
         setTimeout( showNextWord, delayToShowNextWord );
@@ -207,7 +207,7 @@ function thinkHard() {
 
 function thinkingJustWordsController() {
 
-    let mult = Math.max( conversationVariables.last_sent.sentence[ thoughtBubbleObject.wordThinkingCount ][ 0 ].length, 2 );
+    let mult = Math.max( conversationVariables.sentence_awaiting_judgement.sentence[ thoughtBubbleObject.wordThinkingCount ][ 0 ].length, 2 );
     let wordDur = mult * tiaTimings.singleCharacterDuration;
     setTimeout( endOfSingleWordCycle, wordDur );
 
