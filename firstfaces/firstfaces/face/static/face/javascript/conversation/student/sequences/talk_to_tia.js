@@ -27,7 +27,7 @@ function speakWords() {
         
     }
     
-    setTimeout( goToThinkingPos, conversationVariables.totalAudioLength );
+    setTimeout( goToThinkingPos, conversationVariables.sentence_being_recorded_audio.totalAudioLength );
         
 }
 

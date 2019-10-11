@@ -1,6 +1,7 @@
 from django.http import JsonResponse
 from face.views.conversation.student.utils.speech_to_text import convert_mp3_to_wav, get_speech_recognition
 from face.views.conversation.all.sentences import convert_django_sentence_object_to_json
+from face.views.conversation import database_updates
 from face.praat_utils import get_audio_length
 from django.utils import timezone
 import json
@@ -82,6 +83,8 @@ def tts(request):
     return JsonResponse(response_data) 
 
 def store_blob(request):
+    database_updates.database_updated_by_student = True
+    print('database updated by blob:', database_updates.database_updated_by_student)
     # code.interact(local=locals());
 
     blob = request.FILES['data']

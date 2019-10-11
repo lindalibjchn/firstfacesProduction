@@ -7,7 +7,7 @@ function checkForChange() {
 
             if ( json.change ) {
 
-                console.log('sentence_being_recorded:', json.sentence_being_recorded); 
+                console.log('sentences_being_recorded:', json.sentences_being_recorded); 
                 console.log('sentences_not_judged:', json.sentences_not_judged);
                 updateSentencesNeedJudgement( json.sentences_not_judged );
                 updateSentencesBeingRecorded( json.sentences_being_recorded );
@@ -19,12 +19,10 @@ function checkForChange() {
 
         },
         error: function() {
-            alert("check_for_change gone wrong");
+            console.log("check_for_change gone wrong");
         },
 
     });
-
-    //setTimeout( checkForChange, 1000 );
 
 }
 
