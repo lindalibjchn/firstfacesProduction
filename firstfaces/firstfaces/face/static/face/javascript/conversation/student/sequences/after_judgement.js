@@ -1,6 +1,6 @@
 function runAfterJudgement() {
 
-    recTimes.runAfterJudgement =  Date.now() / 1000;
+    //recTimes.runAfterJudgement =  Date.now() / 1000;
     
     // get duration of nod or shake. Can also be 0o
     //let nodShakeDur = 0;
@@ -44,11 +44,11 @@ function runAfterJudgement() {
         //}
         
 
-    if ( conversationVariables.last_sent.judgement === "I" ) {
+    if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === "I" ) {
 
         movementController( movementObject.abs.confused, tiaTimings.movementToConfusedDuration / 2, tiaTimings.movementToConfusedDuration );
 
-        addToPrevSents(conversationVariables.last_sent);
+        addToPrevSents(conversationVariables.conversation_dict.completed_sentences[ 0 ]);
         
         setTimeout( function() {
             
@@ -60,14 +60,14 @@ function runAfterJudgement() {
 
     } else {
 
-        //if ( conversationVariables.last_sent.nod !== null ) {
+        //if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].nod !== null ) {
 
             //nodOrShakeHead()
             //setTimeout( prePrepareForPromptSpeech, nodShakeDur );
 
         //} else {
 
-        runP( conversationVariables.last_sent.judgement );
+        runP( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement );
 
     }
     
@@ -75,7 +75,7 @@ function runAfterJudgement() {
 
 function getNodSpeedInString() {
 
-    let nodSpeed = conversationVariables.last_sent['nodSpeed']
+    let nodSpeed = conversationVariables.conversation_dict.completed_sentences[ 0 ]['nodSpeed']
     
     if ( nodSpeed <= 0.33 ) {
 
@@ -110,17 +110,17 @@ function getNodSpeedInString() {
 function nodOrShakeHead() {
     
     recTimes.nodOrShakeHead =  Date.now() / 1000;
-    if ( conversationVariables.last_sent.judgement === "D" ) {
+    if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === "D" ) {
 
         initShake( 0.5, '0.75' );
 
     } else {
 
-        let nod = conversationVariables.last_sent.nod
+        let nod = conversationVariables.conversation_dict.completed_sentences[ 0 ].nod
 
         if ( nod !== null ) {
 
-            let nodAmount = 0.4 + 0.5 * conversationVariables.last_sent['nodAmount'];
+            let nodAmount = 0.4 + 0.5 * conversationVariables.conversation_dict.completed_sentences[ 0 ]['nodAmount'];
 
             let nodSpeedString = getNodSpeedInString();
 
@@ -163,26 +163,26 @@ function runP( judg ) {
     ////$('#speechBubbleCont').fadeIn( tiaTimings.speechBubbleFadeInDuration );
 
     
-    ////if ( conversationVariables.last_sent.judgement === "P" ) {
+    ////if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === "P" ) {
             
-        ////$('#speakingWordsInside').text( conversationVariables.last_sent.prompt );
+        ////$('#speakingWordsInside').text( conversationVariables.conversation_dict.completed_sentences[ 0 ].prompt );
 
-    ////} else if ( conversationVariables.last_sent.judgement === "B" ) {
+    ////} else if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === "B" ) {
 
-        ////let text = createBetterTextForPromptBox( conversationVariables.last_sent );
+        ////let text = createBetterTextForPromptBox( conversationVariables.conversation_dict.completed_sentences[ 0 ] );
         ////$('#speakingWordsInside').text( text );
     
-    ////} else if ( conversationVariables.last_sent.judgement === "M" ) {
+    ////} else if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === "M" ) {
 
-        ////let text = createMeanByTextForPromptBox( conversationVariables.last_sent );
+        ////let text = createMeanByTextForPromptBox( conversationVariables.conversation_dict.completed_sentences[ 0 ] );
         ////$('#speakingWordsInside').text( text );
         
-    ////} else if ( conversationVariables.last_sent.judgement === "3" ) {
+    ////} else if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === "3" ) {
 
         ////let text = "There are more than 3 mistakes in your sentence. Could you simplify and try again?";
         ////$('#speakingWordsInside').text( text );
 
-    ////} else if ( conversationVariables.last_sent.judgement === "D" ) {
+    ////} else if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === "D" ) {
 
         ////let text = "I'm sorry but I don't understand what you said.";
         ////$('#speakingWordsInside').text( text );
@@ -204,7 +204,7 @@ function runP( judg ) {
         
         //tiaSpeak( conversationVariables.tiaToSay, function() {
 
-            //if ( conversationVariables.last_sent.judgement === "D" || conversationVariables.last_sent.judgement === "3" || conversationVariables.last_sent.judgement === "M" ) {
+            //if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === "D" || conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === "3" || conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === "M" ) {
 
                 //returnToLaptop( 'try again' );
 
@@ -249,7 +249,7 @@ function returnToLaptop( from ) {
 function addToPrevSents() {
 
     // create new box in prevSent
-    //appendExchange( conversationVariables.last_sent );
+    //appendExchange( conversationVariables.conversation_dict.completed_sentences[ 0 ] );
     //scrollBottom();
     loadPrevSents( scrollBottom );
     setTimeout( function() {
@@ -278,7 +278,7 @@ function showOptionBtns() {
 function tryAgain() {
 
     recTimes.clickOptionBtn = Date.now() / 1000;
-    let sent = conversationVariables.sentences[ conversationVariables.ind_of_last_sent ].sentence;
+    let sent = conversationVariables.sentences[ conversationVariables.ind_of_conversation_dict.completed_sentences[ 0 ] ].sentence;
 
     conversationVariables.tiaLookingAtStudent = false;
     returnToLaptop('try again');
@@ -287,7 +287,7 @@ function tryAgain() {
     $('#optionBtns').fadeOut( 500 )
     $('#recordBtnsCont').fadeIn( 1000 )
 
-    let sentId = conversationVariables.last_sent.sent_id
+    let sentId = conversationVariables.conversation_dict.completed_sentences[ 0 ].sent_id
     $.ajax({
         url: "/store_try_again",
         type: "GET",
@@ -305,7 +305,7 @@ function tryAgain() {
 function whatsWrong() {
 
     recTimes.clickOptionBtn = Date.now() / 1000;
-    let sentId = conversationVariables.last_sent.sent_id
+    let sentId = conversationVariables.conversation_dict.completed_sentences[ 0 ].sent_id
 
     $.ajax({
         url: "/store_whats_wrong",
@@ -343,13 +343,13 @@ function showCorrection() {
     $('#tryAgainBtn').prop( "disabled", true).fadeOut( 500 );
     $('#nextSentenceBtn').prop( "disabled", true).fadeOut( 500 );
 
-    let sentId = conversationVariables.last_sent.sent_id
+    let sentId = conversationVariables.conversation_dict.completed_sentences[ 0 ].sent_id
     $.ajax({
         url: "/store_show_correction",
         type: "GET",
         data: {'sentId': sentId},
         success: function(json) {
-            conversationVariables.last_sent.show_correction = true;
+            conversationVariables.conversation_dict.completed_sentences[ 0 ].show_correction = true;
         },
         error: function() {
             console.log("that's wrong");
@@ -394,7 +394,7 @@ function nextSentence() {
     conversationVariables.tiaLookingAtStudent = false;
     returnToLaptop();
 
-    let sentId = conversationVariables.last_sent.sent_id
+    let sentId = conversationVariables.conversation_dict.completed_sentences[ 0 ].sent_id
     $.ajax({
         url: "/store_next_sentence",
         type: "GET",
@@ -414,7 +414,7 @@ function nextSentence() {
 var reading = false;
 function waitForWrongSlices() {
 
-    let sentId = conversationVariables.last_sent.sent_id
+    let sentId = conversationVariables.conversation_dict.completed_sentences[ 0 ].sent_id
 
     $.ajax({
         url: "/wait_for_correction",
@@ -424,9 +424,9 @@ function waitForWrongSlices() {
 
             if ( json.indexes !== null ) {
 
-                conversationVariables.last_sent.indexes = JSON.parse( json.indexes );
+                conversationVariables.conversation_dict.completed_sentences[ 0 ].indexes = JSON.parse( json.indexes );
 
-                conversationVariables.last_sent.correction = JSON.parse( json.correction );
+                conversationVariables.conversation_dict.completed_sentences[ 0 ].correction = JSON.parse( json.correction );
                 
                 // no longer turning to board in mobile so comment out
                 // turnToBoardToShowErrors();
@@ -461,9 +461,9 @@ function showWrongSentence() {
 
     $('#submittedNCorrectedSentenceCont').show()
 
-    for ( w=0; w < conversationVariables.last_sent.sentence.length; w++ ) {
+    for ( w=0; w < conversationVariables.conversation_dict.completed_sentences[ 0 ].sentence.length; w++ ) {
 
-        if ( conversationVariables.last_sent.sentence[ w ] === ' ' ) {
+        if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].sentence[ w ] === ' ' ) {
 
 
             $('#submittedSentence').append(
@@ -477,7 +477,7 @@ function showWrongSentence() {
 
             $('#submittedSentence').append(
 
-                "<div class='wrong-words wrong-words-words' id='wrongWord_" + w.toString() + "'>" + conversationVariables.last_sent.sentence[ w ] + "</div>"
+                "<div class='wrong-words wrong-words-words' id='wrongWord_" + w.toString() + "'>" + conversationVariables.conversation_dict.completed_sentences[ 0 ].sentence[ w ] + "</div>"
 
             );
 
@@ -507,12 +507,12 @@ function showErrorBtns() {
 
 function highlightWrong() {
 
-    conversationVariables.last_sent.indexes.forEach( function(ind, i) {
+    conversationVariables.conversation_dict.completed_sentences[ 0 ].indexes.forEach( function(ind, i) {
 
         setTimeout( function() {
 
             // for spaces
-            if ( ind.length === 1 && conversationVariables.last_sent.sentence[ ind ] === " " ) {
+            if ( ind.length === 1 && conversationVariables.conversation_dict.completed_sentences[ 0 ].sentence[ ind ] === " " ) {
 
                 $('#wrongWord_' + ind[0].toString()).css( {
                     //'color': 'red' ,
@@ -535,7 +535,7 @@ function highlightWrong() {
                     });
 
 
-                    if ( conversationVariables.last_sent.sentence[ i ] === " " ) {
+                    if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].sentence[ i ] === " " ) {
                     
                         $('#wrongWord_' + i.toString()).css( {
                             'color': 'rgba(0,0,0,0)',
@@ -547,7 +547,7 @@ function highlightWrong() {
                            
                             });
 
-                            if ( ind === conversationVariables.last_sent.indexes.length - 1 ) {
+                            if ( ind === conversationVariables.conversation_dict.completed_sentences[ 0 ].indexes.length - 1 ) {
 
                                 showErrorBtns();
 
@@ -568,7 +568,7 @@ function highlightWrong() {
                                 'background-image': 'none',
                             });
 
-                            if ( ind === conversationVariables.last_sent.indexes.length - 1 ) {
+                            if ( ind === conversationVariables.conversation_dict.completed_sentences[ 0 ].indexes.length - 1 ) {
 
                                 showErrorBtns();
 
@@ -596,19 +596,19 @@ function showCorrectionUnderWrongSent() {
     let correctParts = [];
     let lenCorrectParts = [];
     let startSlice = 0;
-    for (let i=0; i<conversationVariables.last_sent.indexes.length + 1; i++ ) {
+    for (let i=0; i<conversationVariables.conversation_dict.completed_sentences[ 0 ].indexes.length + 1; i++ ) {
 
         var slice;
-        if ( i < conversationVariables.last_sent.indexes.length ) {
+        if ( i < conversationVariables.conversation_dict.completed_sentences[ 0 ].indexes.length ) {
 
-            slice = conversationVariables.last_sent.sentence.slice( startSlice, conversationVariables.last_sent.indexes[ i ][ 0 ])
+            slice = conversationVariables.conversation_dict.completed_sentences[ 0 ].sentence.slice( startSlice, conversationVariables.conversation_dict.completed_sentences[ 0 ].indexes[ i ][ 0 ])
             correctParts.push( slice )
 
-            startSlice = conversationVariables.last_sent.indexes[ i ][ conversationVariables.last_sent.indexes[ i ].length - 1] + 1
+            startSlice = conversationVariables.conversation_dict.completed_sentences[ 0 ].indexes[ i ][ conversationVariables.conversation_dict.completed_sentences[ 0 ].indexes[ i ].length - 1] + 1
 
         } else {
 
-            slice = conversationVariables.last_sent.sentence.slice( startSlice )
+            slice = conversationVariables.conversation_dict.completed_sentences[ 0 ].sentence.slice( startSlice )
             correctParts.push( slice )
 
         }
@@ -625,14 +625,14 @@ function showCorrectionUnderWrongSent() {
 
     let wrongParts = [];
     let lenWrongParts = [];
-    conversationVariables.last_sent.indexes.forEach( function(ind) {
+    conversationVariables.conversation_dict.completed_sentences[ 0 ].indexes.forEach( function(ind) {
 
         lenWrongPart = 0;
         wrongPart = []
         ind.forEach( function( wo ) {
 
-            wrongPart.push( conversationVariables.last_sent.sentence[ wo ] );
-            lenWrongPart += conversationVariables.last_sent.sentence[ wo ].length;
+            wrongPart.push( conversationVariables.conversation_dict.completed_sentences[ 0 ].sentence[ wo ] );
+            lenWrongPart += conversationVariables.conversation_dict.completed_sentences[ 0 ].sentence[ wo ].length;
 
         } );
 
@@ -641,7 +641,7 @@ function showCorrectionUnderWrongSent() {
 
     } );
 
-    let corrections = conversationVariables.last_sent.correction
+    let corrections = conversationVariables.conversation_dict.completed_sentences[ 0 ].correction
     let lenCorrections = [];
     corrections.forEach( function( wp ) {
 
@@ -658,7 +658,7 @@ function showCorrectionUnderWrongSent() {
 
     correct = true;
     count = 0;
-    for ( j=0; j<conversationVariables.last_sent.indexes.length * 2; j++ ) {
+    for ( j=0; j<conversationVariables.conversation_dict.completed_sentences[ 0 ].indexes.length * 2; j++ ) {
 
         if ( correct ) {
 
@@ -688,7 +688,7 @@ function showCorrectionUnderWrongSent() {
 
         } else {
 
-            conversationVariables.last_sent.correction[ count ].forEach( function( q ) {
+            conversationVariables.conversation_dict.completed_sentences[ 0 ].correction[ count ].forEach( function( q ) {
 
                 if ( q  === ' ' ) {
 
@@ -769,7 +769,7 @@ function showCorrectionUnderWrongSent() {
     }
     setTimeout( function() {
 
-        for (let i=0; i<conversationVariables.last_sent.indexes.length; i++ ) {
+        for (let i=0; i<conversationVariables.conversation_dict.completed_sentences[ 0 ].indexes.length; i++ ) {
 
             setTimeout( function() {
 
@@ -804,7 +804,7 @@ function showCorrectionUnderWrongSent() {
                         }
                     });
 
-                    if ( i === conversationVariables.last_sent.indexes.length - 1 ) {
+                    if ( i === conversationVariables.conversation_dict.completed_sentences[ 0 ].indexes.length - 1 ) {
 
                         $('#nextSentenceBtn').css('display', 'flex');
                         $('#nextSentenceBtn').prop( "disabled", false ).fadeIn( 500 );

@@ -1,7 +1,7 @@
 from django.http import JsonResponse
 from face.views.conversation.student.utils.speech_to_text import convert_mp3_to_wav, get_speech_recognition
 from face.views.conversation.all.sentences import convert_django_sentence_object_to_json
-from face.views.conversation import database_updates
+from face.views.conversation.all import database_updates
 from face.praat_utils import get_audio_length
 from django.utils import timezone
 import json

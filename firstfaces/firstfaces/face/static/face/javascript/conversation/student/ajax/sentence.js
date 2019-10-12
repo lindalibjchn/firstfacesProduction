@@ -1,4 +1,5 @@
 function sendSentToServer() {
+    
     if(conversationVariables.playStage2){
         getRemainingAudio();
         
@@ -37,7 +38,7 @@ function sendSentToServer() {
                 success: function(json) {
                     
                     console.log('sentence successfully sent to server');
-                    updateConversationVariables(json.sentence )
+                    updateConversationVariables( json.sentence )
 
                 },
                 error: function() {
@@ -62,7 +63,7 @@ function checkJudgement() {
         url: "/check_judgement",
         type: "GET",
         data: { 
-            'sessId': conversationVariables.conversation_dict.id,
+            'convId': conversationVariables.conversation_dict.id,
             'sentId': conversationVariables.sentence_awaiting_judgement.sent_id,
         },
         success: function(json) {
@@ -70,7 +71,7 @@ function checkJudgement() {
             console.log('receivedJudgement:', json.receivedJudgement)
             if ( json.receivedJudgement ) {
 
-                judgementReceived( json )
+                judgementReceived( json.sentence )
             
             } else {
 

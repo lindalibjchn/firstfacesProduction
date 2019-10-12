@@ -7,7 +7,7 @@ from django.http import JsonResponse
 from face.views.conversation.teacher.utils.sessions_sentences import get_students_conversations
 from face.views.conversation.all.sentences import convert_django_sentence_object_to_json
 from face.views.conversation.all.modify_data import jsonify_or_none
-from face.views.conversation import database_updates
+from face.views.conversation.all import database_updates
 
 def check_for_change(request):
 
