@@ -20,7 +20,7 @@ function listenToRecording( intensity ) {
 
 function returnFromListenToRecording() {
 
-    movementController( movementObject.abs.laptop_glance, 0.6, 1, function() { 
+    movementController( movementObject.abs.laptop_glance, 0.5, 1, function() { 
         
         // if no sound comes through, don't tap or show empty transcripts
         if ( conversationVariables.sentence_being_recorded_audio.alternatives[ 0 ].transcript === "" ) {
@@ -34,11 +34,12 @@ function returnFromListenToRecording() {
             
             $('#closeOverlayArea').prop( "disabled", true);
             $('#submitOverlay').prop( "disabled", true);
-            tapKeyFull();
     
         }
 
     });
+    
+    tapKeyFull();
 
 }
 

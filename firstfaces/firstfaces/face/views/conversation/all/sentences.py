@@ -56,6 +56,7 @@ def convert_django_sentence_object_to_json(sent, student_id_, conv_id):
         "nod_shake": jsonify_or_none(sent.nod_shake),
         "indexes": jsonify_or_none(sent.indexes),
         "prompt": jsonify_or_none(sent.prompt),
+        "for_prompt": jsonify_or_none(sent.for_prompt),
         "whats_wrong": sent.whats_wrong,
         "whats_wrong_timestamp": whats_wrong_time,
         "try_again": sent.try_again,

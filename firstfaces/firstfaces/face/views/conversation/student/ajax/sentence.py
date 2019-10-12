@@ -11,7 +11,7 @@ import ast
 from face.views.conversation.student.utils.store_sentence import change_sentence_to_list_n_add_data
 from face.views.conversation.all.sentences import convert_django_sentence_object_to_json
 from face.views.conversation.all.modify_data import jsonify_or_none, floatify
-from face.views.conversation import database_updates
+from face.views.conversation.all import database_updates
 
 def store_sent(request):
 
@@ -37,7 +37,8 @@ def store_sent(request):
     sent['sentence'] = sentence_data # for visemes to be added
 
     database_updates.database_updated_by_student = True
-    print('database_updated_by_student:', database_updates.database_updated_by_student)
+    # print('database_updated_by_student:', database_updates.database_updated_by_student)
+    database_updates
 
     response_data = {
 
@@ -50,36 +51,28 @@ def store_sent(request):
 def check_judgement(request):
 
     sent_id = int(request.GET['sentId'])
+    conv_id = int(request.GET['convId'])
     received_judgement = False
 
     s = Sentence.objects.get(pk=sent_id)
+    sent = {}
 
+    print('judgement:', s.judgement)
     if s.judgement != None:
 
         if s.judgement in ["M", "B", "P"]:
             
             if s.for_prompt != None:
-
+                sent = convert_django_sentence_object_to_json(s, request.user.id, conv_id)
                 received_judgement = True
 
-        else: #i C, X,  D and 3
-
+        else: # C, X,  D and 3
+            sent = convert_django_sentence_object_to_json(s, request.user.id, conv_id)
             received_judgement = True
 
-    print('received_judgement:', received_judgement)
-
     sent_meta = {
-        'sent_id': s.id,
-        'sentence': jsonify_or_none(s.sentence),
-        'judgement': s.judgement,
-        'emotion': jsonify_or_none(s.emotion),
-        'indexes': jsonify_or_none(s.indexes),
-        'prompt': s.prompt,
-        'surprise': floatify(s.surprise),
-        'nodShake': s.nod_shake,
-        'show_correction': s.show_correction,
+        'sentence': sent,
         'receivedJudgement': received_judgement,
-        'forPrompt': jsonify_or_none(s.for_prompt),
     }
 
     return JsonResponse(sent_meta)    
