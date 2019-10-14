@@ -1,20 +1,7 @@
-function resetLastSent( sId, sData ) {
+function updateConversationVariables( s ) {
 
-    conversationVariables.last_sent = {
-
-        'correction': null,
-        'emotion': "[0, 0]",
-        'indexes': null,
-        'judgement': null,
-        'nod': null,
-        'nodAmount': 0,
-        'nodSpeed': 0,
-        'prompt': null,
-        'sent_id': sId,
-        'sentence': sData,
-        'show_correction': null,
-        'surprise': 0,
-
-    }
+    conversationVariables.sentence_being_recorded = null;
+    conversationVariables.sentence_being_recorded_audio = null;
+    conversationVariables.sentence_awaiting_judgement = s
 
 }

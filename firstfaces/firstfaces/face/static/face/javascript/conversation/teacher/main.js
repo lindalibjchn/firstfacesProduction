@@ -10,7 +10,7 @@ $(window).on( 'load', function() {
     setKeydownEvents()
     setButtonEvents();
         
-    //checkForChange();
+    checkForChange();
 
     //updateSentencesNeedJudgement();
     //updatePrevSentences();
@@ -51,7 +51,6 @@ function setTeacherVars() {
     teacherVars.nodShakeSemiCircle = {};
     teacherVars.phoneToStudentId = {};
     teacherVars.studentIdToPhone = {};
-    teacherVars.sentencesNeedJudgement = [];
     resetTempEmotionStates();
     //teacherVars.mostRecentSentId = calcMostRecentSentId();
     //resetTempJudgement();

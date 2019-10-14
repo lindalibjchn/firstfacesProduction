@@ -48,7 +48,6 @@ def get_students_conversations(students_in_conversation_now_ids_):
             students_conversations["sentences_being_recorded"].append(sentence_being_recorded)
 
     students_conversations["sentences_awaiting_judgement"] = sorted(students_conversations["sentences_awaiting_judgement"], key=itemgetter("sentence_timestamp"), reverse=True)
-    
 
     return students_conversations
 
@@ -60,13 +59,11 @@ def get_student_conversations(student_id_):
     conversations = []
     for i, c in enumerate(student_conversation_objects):
 
-        if c.tutorial == False:
+        current_conv = False
+        if i == len(student_conversation_objects) - 1:
+            current_conv = True
 
-            current_conv = False
-            if i == len(student_conversation_objects) - 1:
-                current_conv = True
-
-            conversation, sentence_awaiting_judgement, sentence_being_recorded = get_student_conversation(c, student_id_, current_conv)
+        conversation, sentence_awaiting_judgement, sentence_being_recorded = get_student_conversation(c, student_id_, current_conv)
             
         conversations.append(conversation)
 

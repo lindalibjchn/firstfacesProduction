@@ -13,26 +13,23 @@ function judgementReceived( sentMeta ) {
 
 function updateConversationVariablesWithNewSentence( sentMeta ) {
 
-    let newInd = Object.keys(conversationVariables.sentences).length;
-    conversationVariables.ind_of_last_sent = newInd;
-    conversationVariables.sentences[ newInd ] = sentMeta;
-    conversationVariables.last_sent = conversationVariables.sentences[ newInd ];
-    conversationVariables.blob_no_text = false;
+    conversationVariables.conversation_dict.completed_sentences.unshift( sentMeta );
+    conversationVariables.sentence_awaiting_judgement = {}
 
 }
 
 function preparePromptForTiaSpeak() {
 
-   if ( ['P', 'M', 'B'].includes( conversationVariables.last_sent.judgement ) ) {
+   if ( ['P', 'M', 'B'].includes( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement ) ) {
 
-        synthesisObject.data.prompt = conversationVariables.last_sent.forPrompt;
+        synthesisObject.data.prompt = conversationVariables.conversation_dict.completed_sentences[ 0 ].forPrompt;
         synthesisObject.data.prompt.URLs.forEach( function( URL, ind, arr ) {
 
             arr[ ind ] = prefixURL + arr[ ind ]; 
     
         })
 
-    } else if ( conversationVariables.last_sent.judgement === 'D' ) {
+    } else if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === 'D' ) {
 
        synthesisObject.data.prompt = synthesisObject.data.iDontUnderstand;
 
@@ -46,27 +43,27 @@ function preparePromptForTiaSpeak() {
 
 function prepareExpression() {
 
-    if ( conversationVariables.last_sent.judgement === "B" || conversationVariables.last_sent.judgement === "C" || conversationVariables.last_sent.judgement === "P" || conversationVariables.last_sent.judgement === "M" ) {
+    if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === "B" || conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === "C" || conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === "P" || conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === "M" ) {
 
-        if ( conversationVariables.last_sent.judgement === "M" ) {
+        if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === "M" ) {
 
             createSingleExpression( expressionObject.rel.confused, 0.5 )
 
         } else {
 
-            changeExpression( conversationVariables.last_sent['emotion'], conversationVariables.last_sent['surprise'] );
+            changeExpression( conversationVariables.conversation_dict.completed_sentences[ 0 ]['emotion'], conversationVariables.conversation_dict.completed_sentences[ 0 ]['surprise'] );
 
         }
 
-    } else if ( conversationVariables.last_sent.judgement === "D" ) {
+    } else if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === "D" ) {
 
         createSingleExpression( expressionObject.rel.confused, 1 )
 
-    } else if ( conversationVariables.last_sent.judgement === "3" ) {
+    } else if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === "3" ) {
 
         createSingleExpression( expressionObject.rel.confused, 0.75 )
 
-    } else if ( conversationVariables.last_sent.judgement === "I" ) {
+    } else if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === "I" ) {
 
         createSingleExpression( expressionObject.rel.confused, 1 )
 

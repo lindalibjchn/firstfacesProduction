@@ -1,6 +1,6 @@
 function addPreviousSentences( conversation_, phoneId ) {
 
-    console.log( 'conversation_:', conversation_ );
+    //console.log( 'conversation_:', conversation_ );
     //console.log( 'phoneId:', phoneId );
     $( '#prevSentsInnerContainer' + phoneId ).remove()
     let prevSentsInnerContainer = document.createElement("div");

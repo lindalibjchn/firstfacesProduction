@@ -6,9 +6,20 @@ from django.conf import settings
 import time
 import json
 
-def create_tia_speak_sentences_synthesis_data(text, sess_id, sent):
+# os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/johnsHDD/PhD_backup/erle-3666ad7eec71.json"
+if settings.DEBUG:
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/johnsHDD/PhD/2018_autumn/erle-3666ad7eec71.json"
+else:
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/firstfaces/erle-3666ad7eec71.json"
+# os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/user1/Downloads/erle-3666ad7eec71.json"
+# os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/Users/john/Documents/PhD/firstfaces/erle-3666ad7eec71.json"
 
-    sentences = sent_tokenize(text)
+def create_tia_speak_sentences_synthesis_data(sent, conv_id):
+
+    print('\nin create_tia_speak_sentences_synthesis_data\n')
+    print('sent.prompt:', sent.prompt)
+    # sentences = sent_tokenize(sent.prompt)
+    # print('sentences:', sentences)
 
     for_prompt = {
         'URLs': [],
@@ -16,10 +27,10 @@ def create_tia_speak_sentences_synthesis_data(text, sess_id, sent):
         'phones': []
     }
     
-    start_time = time.time()
-    for i, s in enumerate(sentences):
+    # start_time = time.time()
+    for i, s in enumerate(sent.prompt):
 
-        for_prompt['URLs'].append(get_tia_tts(s, sess_id, i))
+        for_prompt['URLs'].append(get_tia_tts(s, conv_id, i))
         for_prompt['texts'].append(s)
         sent_data = change_sentence_to_list_n_add_data(s)
         
@@ -30,7 +41,6 @@ def create_tia_speak_sentences_synthesis_data(text, sess_id, sent):
                 single_viseme_list.append(vis)
         
         for_prompt['phones'].append(single_viseme_list)
-    # print('tts:', time.time() - start_time)
     sent.for_prompt = json.dumps(for_prompt)
     sent.save()
 
