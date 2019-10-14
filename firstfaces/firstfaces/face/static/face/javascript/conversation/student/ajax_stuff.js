@@ -104,13 +104,11 @@ function getRemainingAudio(){
     }
     fd.append('ends',audio_ends);
     fd.append("poss",new_ids);
-    fd.append("fn", conversationVariables.Aud_Fname);
-    fd.append('sessionID',conversationVariables.session_id);
+    fd.append("fn", conversationVariables.sentence_being_recorded_audio.Aud_Fname);
+    fd.append('sessionID',conversationVariables.conversation_dict.id);
     fd.append("ids",conversationVariables.correct_audio);
     fd.append("poss", new_ids);
-    fd.append("fn", conversationVariables.Aud_Fname);
-    fd.append('sessionID',conversationVariables.session_id);
-    $.ajax({                     
+    $.ajax({
         url: "/get_remaining_audio", 
         type: "POST",             
         data: fd,

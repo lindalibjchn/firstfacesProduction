@@ -9,7 +9,7 @@ import string
 import math
 import ast
 from face.views.conversation.student.utils.store_sentence import change_sentence_to_list_n_add_data
-from face.views.conversation.all.sentence import convert_django_sentence_object_to_json
+from face.views.conversation.all.sentences import convert_django_sentence_object_to_json
 from face.views.conversation.all.modify_data import jsonify_or_none, floatify
 from face.views.conversation import database_updates
 

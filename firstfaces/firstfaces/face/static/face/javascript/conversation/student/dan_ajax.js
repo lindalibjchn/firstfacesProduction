@@ -23,8 +23,8 @@ function doAllignment(){
     
     let fd = new FormData();                                                    
     fd.append('trans',conversationVariables.sentence_being_recorded_audio.alternatives[0].transcript);                 
-    fd.append('fn',conversationVariables.Aud_Fname);   
-    fd.append('sessionID',conversationVariables.session_id);
+    fd.append('fn',conversationVariables.sentence_being_recorded_audio.Aud_Fname);
+    fd.append('sessionID',conversationVariables.sentence_being_recorded.conv_id);
 
     //Makes ajax call creating allignment file and map.json files
     $.ajax({                                                                    
@@ -503,11 +503,11 @@ function sendAttemptBlob( new_blob ){
     let fd = new FormData();
     fd.append('data',new_blob);
     fd.append('error_pk',conversationVariables.errors[conversationVariables.startIDX]);
-    fd.append('sessionID',conversationVariables.session_id);
-    fd.append('audio_id',conversationVariables.currentAudID);
+    fd.append('sessionID',conversationVariables.conversation_dict.id);
+    fd.append('audio_id',conversationVariables.sentence_being_recorded_audio.currentAudID);
     fd.append('correctio_id', conversationVariables.correctionAttemptID);
     fd.append('clicks', conversationVariables.specClicks); 
-    fd.append('blob_no_text_sent_id',conversationVariables.blob_no_text_sent_id);
+    fd.append('blob_no_text_sent_id',conversationVariables.sentence_being_recorded.sent_id);
 
     $.ajax({                                                                                 
         url: "/store_attempt_blob",                                           
@@ -633,12 +633,12 @@ function sendErrorBlobToServer( new_blob ){
 
     let fd = new FormData();
     fd.append('data',new_blob);
-    fd.append('sessionID',conversationVariables.session_id);
+    fd.append('sessionID',conversationVariables.conversation_dict.id);
     fd.append('blob_no_text',conversationVariables.blob_no_txt);
-    fd.append('blob_no_text_sent_id',conversationVariables.blob_no_text_sent_id);
+    fd.append('blob_no_text_sent_id',conversationVariables.sentence_being_recorded.sent_id);
     fd.append('error_list',JSON.stringify(conversationVariables.errors));
     fd.append('start_idx',conversationVariables.startIDX);
-    fd.append('audio_id',conversationVariables.currentAudID);
+    fd.append('audio_id',conversationVariables.sentence_being_recorded_audio.currentAudID);
     fd.append('trans', $('#centeredErrorText').text().trim());
 
     $.ajax({
@@ -648,7 +648,7 @@ function sendErrorBlobToServer( new_blob ){
         processData: false,
         contentType: false,
         success: function(json){
-            returnFromListenToSentence();
+            /*returnFromListenToSentence();   John Not sure where this has gone*/
             //add index an foregin key to the errors
             conversationVariables.errors[json['error_start']] = json['error_pk'];
             //display transcript
@@ -768,12 +768,12 @@ function submitKeyboard(){
     fd.append("etrans",err_trans);
     fd.append('error_list',JSON.stringify(conversationVariables.errors));                        
     fd.append('start_idx',conversationVariables.startIDX);                                       
-    fd.append('audio_id',conversationVariables.currentAudID);
+    fd.append('audio_id',conversationVariables.sentence_being_recorded_audio.currentAudID);
     
     fd.append('gender', conversationVariables.gender);
     fd.append('pitch', synthesisObject.pitch);
     fd.append('speaking_rate', synthesisObject.speaking_rate);
-    fd.append('sessionID',conversationVariables.session_id);
+    fd.append('sessionID',conversationVariables.conversation_dict.id);
     var val = 0;
     var i;
     for(i=0;i<parseInt(conversationVariables.startIDX);i++){
