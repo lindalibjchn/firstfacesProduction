@@ -1,7 +1,7 @@
 from django.http import JsonResponse
 from face.views.conversation.student.utils.speech_to_text import convert_mp3_to_wav, get_speech_recognition
 from face.views.conversation.all.sentences import convert_django_sentence_object_to_json
-from face.praat_utils import get_audio_length
+from face.praat_utils import get_audio_length, get_text_path, get_out_path, convert_audio, get_timestamps, play_errored_text, ref_path
 from django.utils import timezone
 import json
 from face.models import Conversation, Sentence, AudioFile, AudioError, AudioErrorAttempt, AudioErrorCorrectionAttempt
@@ -12,6 +12,13 @@ import time
 import string
 import math
 import ast
+import subprocess
+from google.cloud import texttospeech
+from face.DanUtils import get_spectogram, get_sim
+from face.praat_utils import get_hyp_audio_path
+
+
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/daniel/Desktop/Tia/erle-3666ad7eec71.json"
 
 def tts(request):
 
@@ -100,7 +107,7 @@ def store_blob(request):
         s.save()
 
 
-    filename = str(conv.id) + "_" + str(s.id) + "_" + timezone.now().strftime( '%H-%M-%S' ) + ".webm" 
+    filename=str(conv.id)+"_"+str(s.id)+"_" +timezone.now().strftime('%H-%M-%S')+".webm"
     blob.name = filename
 
     #and then link the recording
@@ -115,10 +122,10 @@ def store_blob(request):
     audioFile = "media/wav/"+filename[:-4]+'wav'
     audioLength = get_audio_length(settings.BASE_DIR+"/"+audioFile)
     
-    # print('transcription_list:', transcription_list)
+    #print('transcription_list:', alternatives)
 
     ## commented out as daniel will be doing his own thing here so wont need alignments
-    # transcription_aligned_list = get_alignments(transcription_list)
+    #transcription_aligned_list = get_alignments(transcription_list)
     # print('transcription_aligned_list:', transcription_aligned_list)
 
     #and then once have the transcriptions, save them
@@ -220,12 +227,12 @@ def error_recording_used(request):
 # Function does the allignment of words
 def do_allignment(request):
     # gets transcript of audio file
-    trans= request.POST['trans']
+    trans = request.POST['trans']
     audioPath = request.POST['fn']
     sid = request.POST['sessionID']
-    
+    print("\n",trans,"\n",audioPath,"\n",get_text_path(sid))
     # writes transcirption one word to a line to a file
-    f = open(get_text_path(sid),"w+")                                               
+    f = open(get_text_path(sid), "w+")
     for word in trans.split():                                                   
         f.write(word.lower()+"\n")                                               
     f.close()                                                         
@@ -240,7 +247,7 @@ def do_allignment(request):
     command = 'python3 align.py '+settings.BASE_DIR + '/'+audioPath+' '+' '+textPath+" -o "+outPath
     wd = settings.BASE_DIR+'/face/gentle-master/'
     #sub_proc = subprocess.Popen(command,cwd=get_aeneas_path(),shell=True,stdout=subprocess.PIPE, stderr=subprocess.PIPE)   
-    sub_proc = subprocess.Popen(command.split(),cwd=wd)
+    sub_proc = subprocess.Popen(command.split(), cwd=wd)
     sub_proc.wait()                                                                          
     response_data = {                  
                                                
@@ -341,15 +348,15 @@ def error_typing_used(request):
     synthFN = settings.BASE_DIR + '/' + synthURL1
     #synthFN = generate_synth_audio(request.POST['trans'],fn)
     start = time.time()
-    ref_image = get_spectogram(synthFN,0,"ref_"+session_id+"_"+timezone.now().strftime('%H-%M-%S')+".png",0)
+    ref_image = get_spectogram(synthFN, 0, "ref_"+session_id+"_"+timezone.now().strftime('%H-%M-%S')+".png", 0)
     
     sim = get_sim(ERR_trans,request.POST['trans'])
     hin = "hyp_"+session_id+"_"+timezone.now().strftime('%H-%M-%S')+".png"
-    
-    
-    hyp_image = get_spectogram(errorPath,sim,hin,1) 
+
+    hyp_image = get_spectogram(errorPath, sim, hin, 1)
     refLen = get_audio_length(synthFN)
     hypLen = get_audio_length(errorPath)
+
     #Error in naming convention
     hyp_audio = ref_path(fn) 
     ref_audio = get_hyp_audio_path(fn)
