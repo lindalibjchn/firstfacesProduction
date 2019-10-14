@@ -15,12 +15,12 @@ from google.cloud import texttospeech
 logger = logging.getLogger(__name__)
 
 # os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/johnsHDD/PhD_backup/erle-3666ad7eec71.json"
-# if settings.DEBUG:
-    # os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/johnsHDD/PhD/2018_autumn/erle-3666ad7eec71.json"
-# else:
-    # os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/firstfaces/erle-3666ad7eec71.json"
+if settings.DEBUG:
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/johnsHDD/PhD/2018_autumn/erle-3666ad7eec71.json"
+else:
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/firstfaces/erle-3666ad7eec71.json"
 # os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/user1/Downloads/erle-3666ad7eec71.json"
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/Users/john/Documents/PhD/firstfaces/erle-3666ad7eec71.json"
+# os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/Users/john/Documents/PhD/firstfaces/erle-3666ad7eec71.json"
 
 @login_required
 def conversation_student(request, conversation_id):
@@ -49,6 +49,7 @@ def conversation_student(request, conversation_id):
                 'conversation_dict': conversation_dict,
                 'sentence_awaiting_judgement': sentence_awaiting_judgement,
                 'sentence_being_recorded': sentence_being_recorded,
+                'sentence_being_recorded_audio': {},
                 'gender': gender,
                 'first_conversation': first_conversation,
                 'inDevelopment': settings.DEBUG,

@@ -37,6 +37,8 @@ function loadStudents() {
 
     });
 
+    showSentencesBeingRecordedInPhones();
+
 }
 
 function addConversationMeta( thisUser_ ) {

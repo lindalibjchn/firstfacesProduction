@@ -22,10 +22,12 @@ def store_judgement(request):
 
     sent.judgement_timestamp = time_now
 
+    print('judgement:', sent.judgement)
     # if correct or better then need to store expression data too
     if sent_meta['judgement'] in ['B', 'P', 'X', 'M']:
 
         sent.prompt = sent_meta['prompt']
+        create_tia_speak_sentences_synthesis_data(sent, conv_id)
 
         if sent_meta['judgement'] != 'P':
 
@@ -39,13 +41,7 @@ def store_judgement(request):
 
     sent.save()
 
-    # need to add timestamp for javascript
-    judgement_timestamp = int(time.mktime((time_now).timetuple()))
-
     response_data = {
-
-        'judgement_timestamp': judgement_timestamp,
-        'conv_id': conv_id,
 
     }
 
