@@ -204,11 +204,16 @@ button:active {
 
 .selectable-word{
     opacity:0.9;
-    border:1px solid white;
+    border:1.5px solid white;
     border-radius:0.5em;
     padding:0.1em;
     cursor:pointer;
 }
+.selectable-word:hover{
+    background-color:#FFFFE0;
+    cursor:pointer;
+}
+
 .normal-word{
     opacity:1;
     padding:0.1em;
@@ -289,7 +294,7 @@ button:active {
     color: rgba(0,0,0,0);
     /*background-image: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0), green, green, rgba(0,0,0,0), rgba(0,0,0,0));*/
     font-weight: bold;
-
+pointer
 }
 
 .wrong-parts-spaces {
