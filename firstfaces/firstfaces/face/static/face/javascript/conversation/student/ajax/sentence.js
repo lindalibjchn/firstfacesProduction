@@ -7,7 +7,7 @@ function sendSentToServer() {
     }
 
     // all below for developing
-    let sent = conversationVariables.sentence_being_recorded_audio.alternatives[ 0 ].transcript;
+    let sent = getSentence();
 
     if ( sent.length >= 300 ) {
 
