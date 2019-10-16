@@ -30,8 +30,14 @@ function buttonsAfterMicClicked() {
 
     $('#recordVoiceBtn').hide();
     $('#reRecordBtn').hide();
-    $('#stopRecordVoiceBtn').show();
-            
+    if(conversationVariables.stage2 || conversationVariables.stage3){
+        console.log("Got here")
+        $('#stopRecordBtn').show()
+    }
+    else{
+        $('#stopRecordVoiceBtn').show();
+    }
+
 
 }
 
