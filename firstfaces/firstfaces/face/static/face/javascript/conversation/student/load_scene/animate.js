@@ -36,6 +36,18 @@ function animate () {
 
     }
 
+    if ( typeObject.L.bool ) {
+
+        typeArm( mainCount, 'L' );
+
+    }
+
+    if ( typeObject.R.bool ) {
+
+        typeArm( mainCount, 'R' );
+
+    }
+
     if ( nodObject.bool ) {
 
         nod( mainCount )

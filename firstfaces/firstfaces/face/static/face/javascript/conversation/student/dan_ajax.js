@@ -508,7 +508,6 @@ function openOverlay(){
 
 //Function called if user had submitted  typed correction and then attempted to record
 function sendAttemptBlob( new_blob ){
-    returnFromListenToErrorAttemptWithSpectrograph();
     let fd = new FormData();
     fd.append('data',new_blob);
     fd.append('error_pk',conversationVariables.errors[conversationVariables.startIDX]);
@@ -527,8 +526,7 @@ function sendAttemptBlob( new_blob ){
         success: function(json){
             //john
             conversationVariables.showingSpectrograms = true;
-            tapKeyFull();
-            movementController( movementObject.abs.blank, '0.5', '1' );
+            prepareToStopTyping();
           
             setTimeout( function(){
                 
@@ -660,6 +658,7 @@ function sendErrorBlobToServer( new_blob ){
             /*returnFromListenToSentence();   John Not sure where this has gone*/
             //add index an foregin key to the errors
             conversationVariables.errors[json['error_start']] = json['error_pk'];
+            prepareToStopTyping();
             //display transcript
             if(json['error_trans'] != ""){
                 moveText();
@@ -758,11 +757,7 @@ $('#hypBtn').click(function(){
 //Keyboard sumbit
 function submitKeyboard(){
 
-    // john
-    // tia looks at laptop while waiting for images to return
-    movementController( movementObject.abs.laptop, '0.5', '1' );
-
-
+    tiaLookAtLaptopAndType();
     //hide other buttons
     $('#reRecordBtn').fadeOut();
     $('#keyboardOverlay').fadeOut();
@@ -802,8 +797,7 @@ function submitKeyboard(){
             // john
             //  tia taps and looks at student
             conversationVariables.showingSpectrograms = true;
-            tapKeyFull();
-            movementController( movementObject.abs.blank, '0.5', '1' );
+            prepareToStopTyping();
 
             //$('#reRecordBtn').show();
 
@@ -906,6 +900,7 @@ function submitRecording(){
         processData: false,
         contentType: false,
         success: function(json){
+            prepareToStopTyping();
             doneError();                                  
             unmoveText();                                                 
             $('#backCorrection').prop("disabled",false);  

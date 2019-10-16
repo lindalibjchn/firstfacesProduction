@@ -23,7 +23,8 @@ function sendBlobToServer( blob_to_send ) {
             }
            
             console.log('got response from sending blob to server');
-            returnFromListenToRecording();
+            
+            prepareToStopTyping();
 
         },
         error: function() {

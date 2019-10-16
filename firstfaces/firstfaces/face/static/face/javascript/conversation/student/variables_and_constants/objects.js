@@ -135,6 +135,16 @@ eyeObject.name = 'eye'
 var armTapObject = new MoveObj();
 armTapObject.name = 'armTap'
 
+var typeObject = {
+    
+    'L': new MoveObj(),
+    'R': new MoveObj(),
+
+}
+
+typeObject.L.name = 'typeL'
+typeObject.R.name = 'typeR'
+
 var eyelidObject = new MoveObj();
 eyelidObject.coords = {
     close: 1,
