@@ -154,6 +154,8 @@ function onMediaRecorderStop() {
         var audioURL = window.URL.createObjectURL(conversationVariables.blob);
         aud.src = audioURL;
 
+        tiaLookAtLaptopAndType();
+
         if( !conversationVariables.stage2 && !conversationVariables.stage3 ) {
             
             sendBlobToServer( conversationVariables.blob );

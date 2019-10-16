@@ -61,17 +61,9 @@ function whatsWrong() {
     $('.option-btn').prop( "disabled", true);
     $('#optionBtns').fadeOut( 500 )
     
-    //whenAllMovFinished( function() {
+    movementController( movementObject.abs.laptop, '0.5', '1.5' );
 
-        movementController( movementObject.abs.laptop, '0.5', '1.5' );
-
-    //});
-
-    setTimeout( function() {
-    
-        backNReadALine();
-
-    }, 3500 );
+    tiaBusyTypingController();
 
 }
 

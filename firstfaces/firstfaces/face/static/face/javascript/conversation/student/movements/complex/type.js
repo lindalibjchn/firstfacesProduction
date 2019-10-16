@@ -13,6 +13,7 @@ function tapKeyFull() {
 
             if ( state === 0 ) {
                 
+                movementController( movementObject.abs.blank, 0.5, 1 );
                 initMove( armTapObject, [[0,0,0],[0,0.2,-0.15]], 0.1 )
                 state = 1;   
                 setTimeout( checkIfArmDone, 150 );
@@ -41,8 +42,6 @@ function tapKeyFull() {
 }
 
 function dealWithAfterTap() {
-
-    movementController( movementObject.abs.blank, '0.5', '1.5' );
 
     $('#closeOverlayArea').prop( "disabled", false);
     $('#submitOverlay').prop( "disabled", false);

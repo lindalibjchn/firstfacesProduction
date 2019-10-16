@@ -18,37 +18,30 @@ function listenToRecording( intensity ) {
 
 }
 
-function returnFromListenToRecording() {
+//function returnFromListenToRecording() {
 
-    movementController( movementObject.abs.laptop_glance, 0.5, 1, function() { 
+    //movementController( movementObject.abs.laptop_glance, 0.5, 1, function() { 
         
-        // if no sound comes through, don't tap or show empty transcripts
-        if ( conversationVariables.sentence_being_recorded_audio.alternatives[ 0 ].transcript === "" ) {
+        //// if no sound comes through, don't tap or show empty transcripts
+        //if ( conversationVariables.sentence_being_recorded_audio.alternatives[ 0 ].transcript === "" ) {
 
-            dealWithBlankTranscription();
+            //dealWithBlankTranscription();
 
-        } else {
-           // reset this as main recording is complete with a transcription
-            conversationVariables.mainRecord = false;
-            conversationVariables.returnFromMainRecording = true;
+        //} else {
+           //// reset this as main recording is complete with a transcription
+            //conversationVariables.mainRecord = false;
+            //conversationVariables.returnFromMainRecording = true;
             
-            $('#closeOverlayArea').prop( "disabled", true);
-            $('#submitOverlay').prop( "disabled", true);
+            //$('#closeOverlayArea').prop( "disabled", true);
+            //$('#submitOverlay').prop( "disabled", true);
     
-        }
+        //}
 
-    });
+    //});
     
-    tapKeyFull();
+    //tapKeyFull();
 
-}
-
-function returnFromListenToErrorAttemptWithSpectrograph() {
-
-    movementController( movementObject.abs.laptop, 0.75, 1.5 );
-
-}
-
+//}
 
 function firstFlinch() {
 
