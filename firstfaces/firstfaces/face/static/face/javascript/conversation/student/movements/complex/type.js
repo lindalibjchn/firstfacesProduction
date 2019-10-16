@@ -69,8 +69,8 @@ function dealWithAfterTap() {
             $("#reRecordBtn").fadeIn(800);
         },200);
         setTimeout(function(){
-            $("#backOverlay").fadeIn(800);
-        },400);                           
+            $("#backOverlay").fadeIn(750);
+        },250);
 
     // this one is for after listening to the learners speech - Daniel's stuff
     } else {

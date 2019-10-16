@@ -165,7 +165,7 @@ function onMediaRecorderStop() {
                 sendErrorBlobToServer( conversationVariables.blob );
             
             } else {
-                
+                console.log("Correct Stage 3 Call Made");
                 sendAttemptBlob( conversationVariables.blob );
             
             }

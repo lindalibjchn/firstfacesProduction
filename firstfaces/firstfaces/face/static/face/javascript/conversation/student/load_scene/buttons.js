@@ -52,6 +52,7 @@ function readyBtns() {
         $('#finishClassIconContainer').hide();
         $('#dataNFinish').show();
         $('#timeOverlayContainer').fadeIn();
+        $('#closeOverlayArea').prop( "disabled", false);
 
     });
 
