@@ -37,7 +37,7 @@ function readyBtns() {
 
     $('#prevSentsIconContainer').on( 'click', function() {
 
-        $('#prevSentsContainer').fadeIn();
+        $('#prevSentsContainer0').fadeIn();
         $('#prevSentsIconContainer').hide();
 
     });

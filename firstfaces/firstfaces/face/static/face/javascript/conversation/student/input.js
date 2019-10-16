@@ -9,11 +9,7 @@ function initInputReady( from ) {
     //$('#recordBtnsCont').show();
     
     // removes speech bubble after user has a few second to read it
-    if ( conversationVariables.tutorial === false ) {
-
-        $('.record-btn').prop( "disabled", false );
-    
-    }
+    $('.record-btn').prop( "disabled", false );
 
     //setLastSent();
     //$('#controllerContainer').fadeIn( 1000 );
@@ -44,6 +40,8 @@ function initInputReady( from ) {
     $('#backCorrection').hide();
     $('#submitCorrectedErrors').hide();
     
+    addPreviousSentences( conversationVariables.conversation_dict, 0 );
+
     //openOverlay();
 
     //  for development

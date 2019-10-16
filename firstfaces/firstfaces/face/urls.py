@@ -33,13 +33,13 @@ urlpatterns = [
     # audio
     path('tts', audio.tts, name='tts'),
     path('store_blob', audio.store_blob, name='store_blob'),
-    path('store_error_blob', audio.store_error_blob,name='store_error_blob'),
-    path('error_recording_used', audio.error_recording_used, name="error_recording_used"),
-    path('error_typing_used', audio.error_typing_used, name="error_typing_used"),
-    path('store_attempt_blob', audio.store_attempt_blob, name="store_attempt_blob"),
-    path('close_attempt', audio.close_attempt, name="close_attempt"),
-    path('get_remaining_audio', audio.get_remaining_audio, name="get_remaining_audio"),
-    path('do_allignment',audio.do_allignment, name="do_allignment"),
+    # path('store_error_blob', audio.store_error_blob,name='store_error_blob'),
+    # path('error_recording_used', audio.error_recording_used, name="error_recording_used"),
+    # path('error_typing_used', audio.error_typing_used, name="error_typing_used"),
+    # path('store_attempt_blob', audio.store_attempt_blob, name="store_attempt_blob"),
+    # path('close_attempt', audio.close_attempt, name="close_attempt"),
+    # path('get_remaining_audio', audio.get_remaining_audio, name="get_remaining_audio"),
+    # path('do_allignment',audio.do_allignment, name="do_allignment"),
     
     
     # TEACHER
