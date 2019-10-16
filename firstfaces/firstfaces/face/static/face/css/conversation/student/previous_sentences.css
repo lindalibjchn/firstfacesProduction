@@ -1,18 +1,22 @@
-.prev-sents-icons {
-
-    position: absolute;
-    height: 60px;
-    width: 40px;
-
-}
-
 #prevSentsIconContainer {
 
     position: absolute;
-    height: 50px;
-    width: 50px;
-    margin: 10px;
+    height: 45px;
+    width: 45px;
+    margin: 7px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     z-index: 112;
+
+}
+
+.prev-sents-icons {
+
+    /*position: absolute;*/
+    /*height: 60px;*/
+    /*width: 40px;*/
+    color: white;
 
 }
 
@@ -22,7 +26,7 @@
 
 }
 
-#prevSentsContainer {
+#prevSentsContainer0 {
 
     display: none;
     position: absolute;
@@ -35,12 +39,19 @@
 
 }
 
-#prevSents {
+.box {
 
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    overflow-y: auto;
+    font-size: 4vw;
+    margin: 3px;
+    padding: 3px;
 
 }
+/*#prevSents {*/
+
+    /*position: absolute;*/
+    /*width: 100%;*/
+    /*height: 100%;*/
+    /*overflow-y: auto;*/
+
+/*}*/
 

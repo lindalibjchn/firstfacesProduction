@@ -404,7 +404,7 @@ $('#closeOverlayArea').click(function(){
     conversationVariables.stage3 = false;
 
     // also close prevSentsContainer - J
-    $('#prevSentsContainer').fadeOut();
+    $('#prevSentsContainer0').fadeOut();
     $('#prevSentsIconContainer').fadeIn();
     $('#confirmFinish').hide();
     $('#dataNFinish').show();

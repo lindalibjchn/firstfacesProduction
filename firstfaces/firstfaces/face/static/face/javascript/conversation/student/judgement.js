@@ -22,7 +22,7 @@ function preparePromptForTiaSpeak() {
 
    if ( ['P', 'M', 'B'].includes( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement ) ) {
 
-        synthesisObject.data.prompt = conversationVariables.conversation_dict.completed_sentences[ 0 ].forPrompt;
+        synthesisObject.data.prompt = conversationVariables.conversation_dict.completed_sentences[ 0 ].for_prompt;
         synthesisObject.data.prompt.URLs.forEach( function( URL, ind, arr ) {
 
             arr[ ind ] = prefixURL + arr[ ind ]; 
