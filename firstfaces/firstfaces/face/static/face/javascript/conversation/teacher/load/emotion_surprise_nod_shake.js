@@ -1,4 +1,4 @@
-function resetEmotionSurpriseNodShakeEvents( first ) {
+    function resetEmotionSurpriseNodShakeEvents( first ) {
 
     resetSurpriseRange()
     setPositionOfClickedEmotionWheelMarker( 0, 0, false );

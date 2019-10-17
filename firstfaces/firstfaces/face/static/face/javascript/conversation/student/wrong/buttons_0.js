@@ -17,20 +17,19 @@ function showOptionBtns() {
 function tryAgain() {
 
     recTimes.clickOptionBtn = Date.now() / 1000;
-    let sent = conversationVariables.sentences[ conversationVariables.ind_of_conversation_dict.completed_sentences[ 0 ] ].sentence;
+    //let sent = conversationVariables.sentences[ conversationVariables.ind_of_conversation_dict.completed_sentences[ 0 ] ].sentence;
 
-    conversationVariables.tiaLookingAtStudent = false;
+    //conversationVariables.tiaLookingAtStudent = false;
     returnToLaptop('try again');
 
-    $('#prevSents').fadeTo( 500, 1 );
+    //$('#prevSents').fadeTo( 500, 1 );
     $('#optionBtns').fadeOut( 500 )
     $('#recordBtnsCont').fadeIn( 1000 )
 
-    let sentId = conversationVariables.conversation_dict.completed_sentences[ 0 ].sent_id
     $.ajax({
         url: "/store_try_again",
         type: "GET",
-        data: {'sentId': sentId},
+        data: {'sentId': conversationVariables.conversation_dict.completed_sentences[ 0 ].sent_id},
         success: function(json) {
         },
         error: function() {
@@ -43,13 +42,12 @@ function tryAgain() {
 
 function whatsWrong() {
 
-    recTimes.clickOptionBtn = Date.now() / 1000;
-    let sentId = conversationVariables.conversation_dict.completed_sentences[ 0 ].sent_id
+    //recTimes.clickOptionBtn = Date.now() / 1000;
 
     $.ajax({
         url: "/store_whats_wrong",
         type: "GET",
-        data: {'sentId': sentId},
+        data: {'sentId': conversationVariables.conversation_dict.completed_sentences[ 0 ].sent_id},
         success: function(json) {
         },
         error: function() {
@@ -60,16 +58,23 @@ function whatsWrong() {
     // dont want user to click more buttons
     $('.option-btn').prop( "disabled", true);
     $('#optionBtns').fadeOut( 500 )
-    
-    movementController( movementObject.abs.laptop, '0.5', '1.5' );
 
-    tiaBusyTypingController();
+    conversationVariables.tapKeyForErrors = true;
+    createSingleExpression( expressionObject.rel.confused, 0.5 )
+        
+    tiaLookAtLaptopAndType();
+
+    setTimeout( function() {
+
+        prepareToStopTyping();
+
+    }, 2000 );
 
 }
 
 function showCorrection() {
 
-    recTimes.clickShowCorrectionBtn = Date.now() / 1000;
+    //recTimes.clickShowCorrectionBtn = Date.now() / 1000;
     $('#showCorrectionBtn').prop( "disabled", true).fadeOut( 500 );
     $('#tryAgainBtn').prop( "disabled", true).fadeOut( 500 );
     $('#nextSentenceBtn').prop( "disabled", true).fadeOut( 500 );
@@ -87,25 +92,15 @@ function showCorrection() {
         },
         
     });
+        
+    conversationVariables.tapKeyForCorrection = true;
+    tiaLookAtLaptopAndType();
+
     setTimeout( function() {
-        
-        //initArmIndicate('right', 1, 'high', '0.75');
-        conversationVariables.tapKeyForCorrection = true;
-        tapKeyFull();
-    
-        setTimeout( function() {
-        
-            //showWrongSentence();
 
-            setTimeout( function() {
+        prepareToStopTyping();
 
-                initArmIndicate('right', 0, 'high', '1.5');
-        
-            }, tiaTimings.armIndicate * 1000 )
-
-        }, tiaTimings.armIndicate * 1000 )
-
-    }, tiaTimings.armIndicate * 1000 );
+    }, 2000 );
 
 }
 
@@ -116,13 +111,6 @@ function nextSentence() {
     $('.option-btn').prop( "disabled", true);
     $('#sentenceShowHolder').hide;
 
-    if ( conversationVariables.lastSentToBeSent ) {
-
-        conversationVariables.classOver = true;
-
-    }
-
-    conversationVariables.tiaLookingAtStudent = false;
     returnToLaptop();
 
     let sentId = conversationVariables.conversation_dict.completed_sentences[ 0 ].sent_id
@@ -141,4 +129,19 @@ function nextSentence() {
     $('#submittedNCorrectedSentenceCont').fadeOut( 500 )
 
 }
+
+function returnToLaptop( from ) {
+
+    //recTimes.returnToLaptop = Date.now() / 1000;
+    //console.log( 'in return to laptop');
+    movementController( movementObject.abs.blank, 0.5, 1 );
+    addPreviousSentences( conversationVariables.conversation_dict, 0 );
+    initInputReady( from )
+
+    expressionController( expressionObject.abs.neutral, tiaTimings.changeExpressionDuration );
+
+    //sendTimesToServer();
+
+}
+
 

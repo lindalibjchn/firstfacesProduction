@@ -23,7 +23,7 @@ def store_judgement(request):
     sent.judgement_timestamp = time_now
 
     # if correct or better then need to store expression data too
-    if sent_meta['judgement'] in ['B', 'P', 'X', 'M']:
+    if sent_meta['judgement'] in ['B', 'P', 'I', 'M']:
 
         sent.prompt = json.dumps(sent_meta['prompt'])
 
@@ -31,13 +31,13 @@ def store_judgement(request):
 
             sent.indexes = json.dumps(sent_meta['indexes'])
 
-        if sent_meta['judgement'] not in ['X', 'M']:
+        if sent_meta['judgement'] not in ['I', 'M']:
         
             sent.emotion = json.dumps(sent_meta['emotion'])
             sent.nod_shake = json.dumps(sent_meta['nod_shake'])
             sent.surprise = sent_meta['surprise']
 
-        if sent_meta['judgement'] != 'X':
+        if sent_meta['judgement'] != 'I':
         
             create_tia_speak_sentences_synthesis_data(sent, conv_id)
 

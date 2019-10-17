@@ -33,7 +33,7 @@ function preparePromptForTiaSpeak() {
 
        synthesisObject.data.prompt = synthesisObject.data.iDontUnderstand;
 
-    } else {
+    } else if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === 'X' ) {
 
        synthesisObject.data.prompt = synthesisObject.data.moreThanThree;
 

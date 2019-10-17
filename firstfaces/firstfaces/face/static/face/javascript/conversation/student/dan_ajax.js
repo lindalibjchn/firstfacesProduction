@@ -1096,8 +1096,21 @@ function unmoveText(){
 
 //Function flashes the border of each word in the transcription
 function causeFlash(){
-    var words = conversationVariables.sentence_being_recorded_audio.alternatives[0].transcript.split(" ").length;
+    
+    // if learner clicks 'try again' then there is no sentence in the transcripts, so need to do the following to get the text
+    var words;
+    if ( $.isEmptyObject(conversationVariables.sentence_being_recorded_audio) ) {
+    
+        words = makeStringSentFromArray(conversationVariables.conversation_dict.completed_sentences[0].sentence);
+
+    } else {
+
+        words = conversationVariables.sentence_being_recorded_audio.alternatives[0].transcript.split(" ").length;
+    
+    }
+
     flash(0,words);
+
 }
 
 //Function flashes the border of all words whos idx is between i and max

@@ -34,6 +34,8 @@ function runAfterJudgement() {
 
     if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === "I" ) {
 
+        runIncorrect();
+
     } else {
 
         //if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].nod !== null ) {
@@ -85,11 +87,8 @@ function runAfterJudgement() {
 
 function runIncorrect() {
 
-    movementController( movementObject.abs.confused, tiaTimings.movementToConfusedDuration / 2, tiaTimings.movementToConfusedDuration, function() {
-        
-        expressionController( expressionObject.abs.confused, tiaTimings.changeExpressionDuration, showOptionBtns );
-
-    })
+    movementController( movementObject.abs.confused, tiaTimings.movementToConfusedDuration / 2, tiaTimings.movementToConfusedDuration )
+    expressionController( expressionObject.abs.confused, tiaTimings.changeExpressionToConfusedDuration, showOptionBtns );
 
 }
 
@@ -136,154 +135,4 @@ function nodOrShakeHead() {
     }
 
 }
-
-//function displaySpeechBubblePrompt() {
-
-    //recTimes.displaySpeechBubblePrompt = Date.now() / 1000;
-    ////want to fade in the text a bit later
-    ////$('#speakingWords').hide()
-    ////$('#speechBubbleCont').fadeIn( tiaTimings.speechBubbleFadeInDuration );
-
-    
-    ////if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === "P" ) {
-            
-        ////$('#speakingWordsInside').text( conversationVariables.conversation_dict.completed_sentences[ 0 ].prompt );
-
-    ////} else if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === "B" ) {
-
-        ////let text = createBetterTextForPromptBox( conversationVariables.conversation_dict.completed_sentences[ 0 ] );
-        ////$('#speakingWordsInside').text( text );
-    
-    ////} else if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === "M" ) {
-
-        ////let text = createMeanByTextForPromptBox( conversationVariables.conversation_dict.completed_sentences[ 0 ] );
-        ////$('#speakingWordsInside').text( text );
-        
-    ////} else if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === "3" ) {
-
-        ////let text = "There are more than 3 mistakes in your sentence. Could you simplify and try again?";
-        ////$('#speakingWordsInside').text( text );
-
-    ////} else if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === "D" ) {
-
-        ////let text = "I'm sorry but I don't understand what you said.";
-        ////$('#speakingWordsInside').text( text );
-    
-    ////}
-
-    //setTimeout( function() {
-
-        //$('#speakingWords').fadeIn( tiaTimings.speechBubbleFadeInDuration );
-
-        //recTimes.tiaStartTalking = Date.now() / 1000;
-        ////synthesisObject.endCount = synthesisObject.synthAudio.duration * 60* 0.75;
-        
-        ////tiaSpeakCount = 0;
-        ////initTalk();
-
-        ////synthesisObject.synthAudio.play()
-        ////synthesisObject.synthAudio.onended = returnToLaptop;
-        
-        //tiaSpeak( conversationVariables.tiaToSay, function() {
-
-            //if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === "D" || conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === "3" || conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === "M" ) {
-
-                //returnToLaptop( 'try again' );
-
-            //}
-
-        //});
-
-        //conversationVariables.promptSpeaking = true;
-            
-    //}, tiaTimings.toTalkExpressionDuration * 1000 );
-
-//}
-    
-function returnToLaptop( from ) {
-
-    recTimes.returnToLaptop = Date.now() / 1000;
-    //console.log( 'in return to laptop');
-    //movementController( movementObject.abs.blank, 0.5, 1 );
-    addPreviousSentences( conversationVariables.conversation_dict, 0 );
-    initInputReady( from )
-
-    //expressionController( expressionObject.abs.neutral, tiaTimings.changeExpressionDuration * 2 );
-
-    //if ( conversationVariables.classOver && conversationVariables.endClassSequenceStarted !== true ) {
-
-        //console.log('\n\n\nend class return to laptop tia looking at student\n\n\n');
-        //endClas
-        //conversationVariables.endClassSequenceStarted = true;
-
-    //} else {
-
-        //initInputReady()
-        ////showQuestionStreak();
-        //recTimes.initInputReady = Date.now() / 1000;
-        //sendTimesToServer();
-
-    //}
-    
-}
-
-// show in prevSent
-//function addToPrevSents() {
-
-    //// create new box in prevSent
-    ////appendExchange( conversationVariables.conversation_dict.completed_sentences[ 0 ] );
-    ////scrollBottom();
-    //loadPrevSents( scrollBottom );
-    //setTimeout( function() {
-        //$('#prevSents').fadeTo( 500, 1 )
-    //}, 2200 );
-    //console.log('in addToPrevSents');
-
-//}
-
-
-//var reading = false;
-//function waitForWrongSlices() {
-
-    //let sentId = conversationVariables.conversation_dict.completed_sentences[ 0 ].sent_id
-
-    //$.ajax({
-        //url: "/wait_for_correction",
-        //type: "GET",
-        //data: {'sentId': sentId},
-        //success: function(json) {
-
-            //if ( json.indexes !== null ) {
-
-                //conversationVariables.conversation_dict.completed_sentences[ 0 ].indexes = JSON.parse( json.indexes );
-
-                //conversationVariables.conversation_dict.completed_sentences[ 0 ].correction = JSON.parse( json.correction );
-                
-                //// no longer turning to board in mobile so comment out
-                //// turnToBoardToShowErrors();
-                //// tap key instead
-                //tapKeyToShowErrors();
-
-            //} else {
-
-                //backNReadALine();
-
-            //}
-
-        //},
-        //error: function() {
-            //console.log("that's wrong");
-        //},
-        
-    //});
-
-//}
-
-function tapKeyToShowErrors() {
-
-    conversationVariables.tapKeyForErrors = true;
-    tapKeyFull();
-
-}
-
 

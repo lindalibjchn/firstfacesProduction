@@ -1,8 +1,9 @@
 function tapKeyFull() {
 
     let state = 0;
-    initMove( armTapObject, [[0,0,0],[0,0.2,-0.2]], 0.5 );
+    initMove( armTapObject, [[0,0,0],[0,0.2,-0.2]], 0.3 );
 
+    console.log('in tapKeyFull');
     function checkIfArmDone() {
 
         if ( armTapObject.bool ) {
@@ -13,8 +14,8 @@ function tapKeyFull() {
 
             if ( state === 0 ) {
                 
-                movementController( movementObject.abs.blank, 0.5, 1 );
-                initMove( armTapObject, [[0,0,0],[0,0.2,-0.15]], 0.1 )
+                movementController( movementObject.abs.blank, 0.4, 0.8 );
+                initMove( armTapObject, [[0,0,0],[0,0.2,-0.05]], 0.1 )
                 state = 1;   
                 setTimeout( checkIfArmDone, 150 );
 
@@ -26,10 +27,8 @@ function tapKeyFull() {
         
             } else {
 
+                armTapObject.currentCoords = [[0,0,0],[0,0,0]];
                 dealWithAfterTap();
-
-
-                //initMove( armTapObject, [[0,0,0],[0,0,0]], 0.8 )
 
             }
 
@@ -37,7 +36,7 @@ function tapKeyFull() {
 
     }
 
-    setTimeout( checkIfArmDone, 550 );
+    setTimeout( checkIfArmDone, 350 );
 
 }
 
@@ -51,6 +50,7 @@ function dealWithAfterTap() {
     if ( conversationVariables.tapKeyForErrors ) {
 
         conversationVariables.tapKeyForErrors = false;
+        expressionController( expressionObject.calculated, tiaTimings.changeExpressionDuration );
 
         // display errors
         showWrongSentence();

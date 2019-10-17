@@ -52,6 +52,7 @@ tiaTimings = {
 
     // EXPRESSIONS
     changeExpressionDuration: 0.75,
+    changeExpressionToConfusedDuration: 2,
     movementToConfusedDuration: 1.5,    
     toTalkExpressionDuration: 1,
     
