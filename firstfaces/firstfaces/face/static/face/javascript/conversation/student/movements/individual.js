@@ -4,7 +4,12 @@ function initMove( obj, coords, secs, direction ) {
 
     if ( obj.bool ) {
 
-        console.log(' initMove cant move: ' + obj.name + '. Still moving previous one!!\n\nCalled by' + initMove.caller.name )
+        console.log(' initMove cant move: ' + obj.name + '. Still moving previous one!!\n\nCalled by' + initMove.caller.name + '. Try again in 200ms.')
+        setTimeout( function() {
+
+            initMove( obj, coords, secs, direction )
+
+        }, 200 );
 
     } else {
 

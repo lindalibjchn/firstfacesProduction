@@ -16,10 +16,12 @@ function highlightWrong() {
 
     conversationVariables.conversation_dict.completed_sentences[ 0 ].indexes.forEach( function(ind, i) {
 
+        console.log('ind', ind)
+        console.log('i', i)
         setTimeout( function() {
 
             // for spaces
-            if ( ind.length === 1 && conversationVariables.conversation_dict.completed_sentences[ 0 ].sentence[ ind ] === " " ) {
+            if ( ind.length === 1 && conversationVariables.sentenceForHighlighting[ ind ] === " " ) {
 
                 $('#wrongWord_' + ind[0].toString()).css( {
                     //'color': 'red' ,
@@ -34,27 +36,28 @@ function highlightWrong() {
 
             } else {
 
-                ind.forEach( function(i, ind) {
+                ind.forEach( function(jnd) {
 
-                    $('#wrongWord__' + i.toString()).css( {
+                    console.log('jnd', jnd)
+                    $('#wrongWord__' + jnd.toString()).css( {
                             'background-image': 'linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0), red, red, rgba(0,0,0,0), rgba(0,0,0,0))',
                             'color': 'white',
                     });
 
 
-                    if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].sentence[ i ] === " " ) {
+                    if ( conversationVariables.sentenceForHighlighting[ jnd ] === " " ) {
                     
-                        $('#wrongWord_' + i.toString()).css( {
+                        $('#wrongWord_' + jnd.toString()).css( {
                             'color': 'rgba(0,0,0,0)',
                             'background-image': 'linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0), red, red, rgba(0,0,0,0), rgba(0,0,0,0))',
                         });
                         setTimeout( function() { 
-                            $('#wrongWord_' + i.toString()).css( {
+                            $('#wrongWord_' + jnd.toString()).css( {
                                 'background-image': 'none',
                            
                             });
 
-                            if ( ind === conversationVariables.conversation_dict.completed_sentences[ 0 ].indexes.length - 1 ) {
+                            if ( i === conversationVariables.conversation_dict.completed_sentences[ 0 ].indexes.length - 1 ) {
 
                                 showErrorBtns();
 
@@ -64,18 +67,18 @@ function highlightWrong() {
 
                     } else {
                         
-                        $('#wrongWord_' + i.toString()).css( {
+                        $('#wrongWord_' + jnd.toString()).css( {
                             'background-image': 'linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0), red, red, rgba(0,0,0,0), rgba(0,0,0,0))',
                             'color': 'white',
                             'font-weight': 'bold',
                         });
                         setTimeout( function() { 
-                            $('#wrongWord_' + i.toString()).css( {
+                            $('#wrongWord_' + jnd.toString()).css( {
                                 'color': 'red',
                                 'background-image': 'none',
                             });
 
-                            if ( ind === conversationVariables.conversation_dict.completed_sentences[ 0 ].indexes.length - 1 ) {
+                            if ( i === conversationVariables.conversation_dict.completed_sentences[ 0 ].indexes.length - 1 ) {
 
                                 showErrorBtns();
 
@@ -95,6 +98,20 @@ function highlightWrong() {
 
 }
 
+function getSentenceWithSpacesInArray( s ) {
+
+    let sent = []
+    s.forEach( function( wordArray, i ) {
+
+        sent.push( " " );
+        sent.push( wordArray[ 0 ] );
+
+    });
+    
+    return sent;
+
+}
+
 function showCorrectionUnderWrongSent() {
 
     $( '#correctedSentence' ).fadeIn()
@@ -108,28 +125,31 @@ function showCorrectionUnderWrongSent() {
         var slice;
         if ( i < conversationVariables.conversation_dict.completed_sentences[ 0 ].indexes.length ) {
 
-            slice = conversationVariables.conversation_dict.completed_sentences[ 0 ].sentence.slice( startSlice, conversationVariables.conversation_dict.completed_sentences[ 0 ].indexes[ i ][ 0 ])
-            correctParts.push( slice )
-
+            slice = conversationVariables.sentenceForHighlighting.slice( startSlice, conversationVariables.conversation_dict.completed_sentences[ 0 ].indexes[ i ][ 0 ])
+            
             startSlice = conversationVariables.conversation_dict.completed_sentences[ 0 ].indexes[ i ][ conversationVariables.conversation_dict.completed_sentences[ 0 ].indexes[ i ].length - 1] + 1
 
         } else {
 
-            slice = conversationVariables.conversation_dict.completed_sentences[ 0 ].sentence.slice( startSlice )
-            correctParts.push( slice )
+            slice = conversationVariables.sentenceForHighlighting.slice( startSlice )
 
         }
 
+        correctParts.push( slice )
+        
         let lenSlice = 0;
         slice.forEach( function( w ) {
 
             lenSlice += w.length;
 
         } );
+
         lenCorrectParts.push( lenSlice );
 
     }
 
+    console.log('correctParts:', correctParts);
+    console.log('lenCorrectParts:', lenCorrectParts);
     let wrongParts = [];
     let lenWrongParts = [];
     conversationVariables.conversation_dict.completed_sentences[ 0 ].indexes.forEach( function(ind) {
@@ -138,8 +158,8 @@ function showCorrectionUnderWrongSent() {
         wrongPart = []
         ind.forEach( function( wo ) {
 
-            wrongPart.push( conversationVariables.conversation_dict.completed_sentences[ 0 ].sentence[ wo ] );
-            lenWrongPart += conversationVariables.conversation_dict.completed_sentences[ 0 ].sentence[ wo ].length;
+            wrongPart.push( conversationVariables.sentenceForHighlighting[ wo ] );
+            lenWrongPart += conversationVariables.sentenceForHighlighting[ wo ].length;
 
         } );
 
@@ -148,10 +168,34 @@ function showCorrectionUnderWrongSent() {
 
     } );
 
-    let corrections = conversationVariables.conversation_dict.completed_sentences[ 0 ].correction
+    console.log('wrongParts:', wrongParts);
+    console.log('lenWrongParts:', lenWrongParts);
+
+    let corrections = []
+        
+    conversationVariables.conversation_dict.completed_sentences[ 0 ].prompt.forEach( function( cor ) {
+    
+        console.log('cor:', cor);
+        correction = []
+        let splitCor = cor.split(' ');
+        splitCor.forEach( function( c ) {
+
+            correction.push( c );
+            correction.push( ' ' );
+
+        });
+
+        correction.pop();
+        console.log('correction:', correction);
+
+        corrections.push( correction );
+
+    });
+
     let lenCorrections = [];
     corrections.forEach( function( wp ) {
 
+        console.log('wp:', wp);
         let lenCorrection = 0
         wp.forEach( function( wpp ) {
 
@@ -162,6 +206,9 @@ function showCorrectionUnderWrongSent() {
         lenCorrections.push( lenCorrection );
 
     } );
+
+    console.log('corrections:', corrections)
+    console.log('lenCorrections:', lenCorrections)
 
     correct = true;
     count = 0;
@@ -195,7 +242,7 @@ function showCorrectionUnderWrongSent() {
 
         } else {
 
-            conversationVariables.conversation_dict.completed_sentences[ 0 ].correction[ count ].forEach( function( q ) {
+            corrections[ count ].forEach( function( q ) {
 
                 if ( q  === ' ' ) {
 

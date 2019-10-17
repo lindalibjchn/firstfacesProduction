@@ -438,9 +438,9 @@ var expressionObject = {
                     'tounge_tip': [[0, 0.3, 0.8], [0, 0, 0]],
                 },
                 'AU2': {
-                    'eyebrow_inner': [[-0.1, -0.15, 0], [0, 0, 0]],
-                    'eyebrow_middle': [[-0.075, -0.15, 0], [0, 0, 0]],
-                    'eyebrow_outer': [[-0.05, -0.15, 0], [0, 0, 0]],
+                    'eyebrow_inner': [[-0.2, 0, 0], [0, 0, 0]],
+                    'eyebrow_middle': [[-0.075, -0.25, 0], [0, 0, 0]],
+                    'eyebrow_outer': [[-0.05, -0.25, 0], [0, 0, 0]],
                     'nose_side': [[0, 0.15, 0.1], [0, 0, 0]],
                     'cheek': [[0.1, 0.25, 0], [0, 0, 0]],
                 },
@@ -456,7 +456,7 @@ var expressionObject = {
                     'lip_lower_inner': [[0, 0.05, 0], [-0.2, 0, 0]],
                 },
             },
-            'eyelids': -0.2,
+            'eyelids': -0.15,
 
         },
 

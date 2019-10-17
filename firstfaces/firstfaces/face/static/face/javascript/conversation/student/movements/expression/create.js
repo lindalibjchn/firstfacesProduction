@@ -7,7 +7,7 @@ function changeExpression( emotionCoords, surprise ) {
         emotionCoords = [ 0.05, 0.05 ];
 
     };
-    console.log('emotionCoordsInChangeexpression:', emotionCoords);
+    //console.log('emotionCoordsInChangeexpression:', emotionCoords);
 
     synthesisObject.pitch = 0;
     synthesisObject.speaking_rate = 0.7;

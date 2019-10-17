@@ -19,7 +19,8 @@ function initInputReady( from ) {
         $( '#textInputContainer' ).fadeIn();
         $( '#sentenceShowHolder').fadeIn();
         $('.play-btn').hide();
-        reset_text(conversationVariables.preSent)
+        let sentString = makeStringSentFromArray(conversationVariables.conversation_dict.completed_sentences[0].sentence);
+        reset_text( sentString );
 
     } else {
 
@@ -63,6 +64,19 @@ function initInputReady( from ) {
 
 }
 
+function makeStringSentFromArray( s ) {
+
+    let sentString = "";
+    console.log('s:', s)
+    s.forEach( function( wordArray ) {
+
+        sentString += wordArray[ 0 ] + " ";
+
+    });
+
+    return sentString.trim();
+
+}
 
 //function setLastSent() {
 
