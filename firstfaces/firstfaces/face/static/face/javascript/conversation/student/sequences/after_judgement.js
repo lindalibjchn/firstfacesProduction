@@ -96,7 +96,7 @@ function runPrompt( judg ) {
 
     addPreviousSentences( conversationVariables.conversation_dict, 0 );
 
-    recTimes.prePrepareForPromptSpeech =  Date.now() / 1000;
+    //recTimes.prePrepareForPromptSpeech =  Date.now() / 1000;
     // return to talking pos
     console.log('in prePrepareForPromptSpeech');
     
@@ -108,7 +108,11 @@ function runPrompt( judg ) {
 
         } else {
 
-            tiaSpeak( 'prompt', cont=false );
+            setTimeout( function() {
+
+                tiaSpeakAfterReturningFromThinking();
+
+            }, tiaTimings.delayAfterReturningfromThinkingBeforeSpeak );
 
         }
 
@@ -126,13 +130,19 @@ function nodOrShakeHead() {
     let Y = conversationVariables.conversation_dict.completed_sentences[ 0 ].nod_shake[ 1 ];
     if ( X > 0 ) {
 
-        initNod( -Y, 1 - X, function() { tiaSpeak( 'prompt', cont=false ) });
+        initNod( -Y, 1 - X, tiaSpeakAfterReturningFromThinking );
 
     } else {
 
-        initShake( -Y, 1 + X, function() { tiaSpeak( 'prompt', cont=false ) } );
+        initShake( -Y, 1 + X, tiaSpeakAfterReturningFromThinking );
 
     }
 
 }
 
+function tiaSpeakAfterReturningFromThinking() {
+
+    tiaSpeak( 'prompt', cont=false );
+    synthesisObject.speakDirectlyAfterComingBackFromThinking = true;
+
+}

@@ -11,20 +11,23 @@ function tiaSpeak( tiaSays, cont=true, speakCb=function(){} ) {
     synthesisObject.now = synthesisObject.data[ tiaSays ];
     synthesisObject.callback = speakCb;
 
-    getIntoSpeakingPosition();
+    headXRandomTiltObject.startCount = mainCount;
+    headYRandomTiltObject.startCount = mainCount;
+    synthesisObject.talking = true; 
+    //getIntoSpeakingPosition();
+    tiaSpeakIndividualSentences();
 
 }
 
-function getIntoSpeakingPosition() {
+//function getIntoSpeakingPosition() {
 
-    // move from whatever expression into the half of it
-    expressionController( expressionObject.half, tiaTimings.getIntoSpeakingPositionDuration, tiaSpeakIndividualSentences );
+    //// move from whatever expression into the half of it
+    //expressionController( expressionObject.half, tiaTimings.getIntoSpeakingPositionDuration, tiaSpeakIndividualSentences );
 
-}
+//}
 
 function tiaSpeakIndividualSentences() {
 
-    synthesisObject.talking = true; 
     synthesisObject.audio.src = synthesisObject.now.URLs[ synthesisObject.sentenceNo ];
     synthesisObject.now.phoneCount = 1;
     
@@ -53,12 +56,15 @@ function holdOnUntilNewAudioDurationIsAvailable() {
 
 function animateFirstPhoneSlowly() {
 
-    initSingleBreath( 1, breatheObject.speakingBreathMult, tiaTimings.durationOfFirstBreath );
-    setTimeout( function() {
+    let initPhoneDuration = tiaTimings.durationOfFirstSpeakingPhones
+    if ( synthesisObject.speakDirectlyAfterComingBackFromThinking ) {
 
-        expressionController( expressionObject.abs[ synthesisObject.now.phones[ synthesisObject.sentenceNo ][ 0 ] ], tiaTimings.durationOfFirstSpeakingPhones, slightlyDelayAudioPlay )
+        initPhoneDuration = tiaTimings.durationOfFirstSpeakingPhones * 2;
 
-    }, tiaTimings.durationOfFirstBreath * 1000 ) 
+    }
+
+    initSingleBreath( 1, breatheObject.speakingBreathMult, initPhoneDuration );
+    expressionController( expressionObject.abs[ synthesisObject.now.phones[ synthesisObject.sentenceNo ][ 0 ] ], initPhoneDuration, slightlyDelayAudioPlay )
 
 }
 
@@ -71,19 +77,15 @@ function slightlyDelayAudioPlay() {
     }
 
     setTimeout( function() {
-
-        setTimeout( function() {
-            
-            synthesisObject.audio.play();
-
-            initSingleBreath( -1, breatheObject.speakingBreathMult, synthesisObject.audio.duration );
-
-        }, tiaTimings.delayAudioPlay );
-
-        animatePhonesInOrder();
         
-    }, tiaTimings.delaySpeakingAfterBreathingIn );
+        synthesisObject.audio.play();
 
+        initSingleBreath( -1, breatheObject.speakingBreathMult, synthesisObject.audio.duration );
+
+    }, tiaTimings.delayAudioPlay );
+
+    animatePhonesInOrder();
+        
 }
 
 function animatePhonesInOrder() {

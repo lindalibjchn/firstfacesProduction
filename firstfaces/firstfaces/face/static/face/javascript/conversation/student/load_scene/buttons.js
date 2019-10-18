@@ -39,6 +39,7 @@ function readyBtns() {
 
         $('#prevSentsContainer0').fadeIn();
         $('#prevSentsIconContainer').hide();
+        updateScroll( document.getElementById('prevSentsInnerContainer0') );
 
     });
 
@@ -48,8 +49,9 @@ function readyBtns() {
     $('#finishClassIconContainer').on( 'click', function() {
 
         showTime();
-        $('#prevSentsIconContainer').hide();
-        $('#finishClassIconContainer').hide();
+        $('#prevSentsIconContainer').fadeOut();
+        $('#finishClassIcon').fadeOut();
+        $('#timeElapsedCont').fadeIn();
         $('#dataNFinish').show();
         $('#timeOverlayContainer').fadeIn();
         $('#closeOverlayArea').prop( "disabled", false);

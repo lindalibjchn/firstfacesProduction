@@ -221,7 +221,7 @@ var breatheObject = {
     'direction': -1,
     'normalBreatheStopCount': null, 
     'normalBreatheStopDirection': null, 
-    'speakingBreathMult': 1.25,
+    'speakingBreathMult': 1.5,
     'singleBreath': {
         'startCount': null,
         'endCount': null,
@@ -236,6 +236,7 @@ var spineRandomTiltObject = {
     'direction': Math.random() < 0.5 ? -1 : 1,
     // call the sway to and fro
     'to': true,
+    'name': 'spineTilt',
 }
 
 var neckRandomTiltObject = {
@@ -246,6 +247,29 @@ var neckRandomTiltObject = {
     'direction': Math.random() < 0.5 ? -1 : 1,
     // call the sway to and fro
     'to': true,
+    'name': 'neckTilt',
+}
+
+var headXRandomTiltObject = {
+    'startCount': 0,
+    'sin': sineArrays[ 120 ],
+    'sinLength': 120,
+    'mult': 1, 
+    'direction': Math.random() < 0.5 ? -1 : 1,
+    // call the sway to and fro
+    'to': true,
+    'name': 'headXTilt',
+}
+
+var headYRandomTiltObject = {
+    'startCount': 0,
+    'sin': sineArrays[ 90 ],
+    'sinLength': 90,
+    'mult': 1,
+    'direction': Math.random() < 0.5 ? -1 : 1,
+    // call the sway to and fro
+    'to': true,
+    'name': 'headYTilt',
 }
 
 //var purseLipsObject = {

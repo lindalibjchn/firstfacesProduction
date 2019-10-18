@@ -114,6 +114,34 @@ function animate () {
 
     }
 
+    if ( synthesisObject.talking ) {
+
+        let randomTiltHeadXRemaining = mainCount - headXRandomTiltObject.startCount;
+
+        if ( randomTiltHeadXRemaining === headXRandomTiltObject.sinLength ) {
+            
+            newTilt( headXRandomTiltObject );
+
+        } else {
+            
+            randomTiltHeadX( randomTiltHeadXRemaining )
+
+        }
+        
+        let randomTiltHeadYRemaining = mainCount - headYRandomTiltObject.startCount;
+
+        if ( randomTiltHeadYRemaining === headYRandomTiltObject.sinLength ) {
+            
+            newTilt( headYRandomTiltObject );
+
+        } else {
+            
+            randomTiltHeadY( randomTiltHeadYRemaining )
+
+        }
+    
+    }
+
     mainCount += 1;
 
     requestAnimationFrame( animate );
