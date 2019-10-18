@@ -1,5 +1,10 @@
-1
+set
+alarm
+to
+print
 and
-2
-and
-3
+temperature
+up
+on
+to
+bluetooth

@@ -380,47 +380,58 @@ $('#backCorrection').click(function(){
 
 //Clsoes the moadal
 $('#closeOverlayArea').click(function(){
-   if(conversationVariables.stage2 || conversationVariables.stage3){
-    if(conversationVariables.correctionDone){
-        undoCorrect();
-    }
-    if(conversationVariables.thirdAttemptError || conversationVariables.noTransError){               
-        removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
-        conversationVariables.thirdAttemptError = false;  
-        conversationVariables.noTransError = false;
-    }  
-    $('#backCorrection').show();
-    $('#recordVoiceBtn').show();
-    $('#correctionOverlay').hide();
-    $('#sentenceHolderParent').show();
-    $('#overlayTextBox').empty();
+
+    closePrevSents();
+    closeTimeOverlayCont();
+    
+    if(conversationVariables.stage2 || conversationVariables.stage3) {
+    
+        if(conversationVariables.correctionDone){
+            undoCorrect();
+        }
+        
+        if(conversationVariables.thirdAttemptError || conversationVariables.noTransError){               
+            removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
+            conversationVariables.thirdAttemptError = false;  
+            conversationVariables.noTransError = false;
+        }  
+        
+        $('#backCorrection').show();
+        $('#recordVoiceBtn').show();
+        $('#correctionOverlay').hide();
+        $('#sentenceHolderParent').show();
+        $('#overlayTextBox').empty();
+       
+        if(conversationVariables.stage3){
+            closeStage3();
+        }
+
+        conversationVariables.stage2 = false;
+        conversationVariables.stage3 = false;
+
+        $('#backCorrection').prop( "disabled", false );
+        unmoveText();   
    
-    if(conversationVariables.stage3){
-        closeStage3();
     }
+});
 
-    conversationVariables.stage2 = false;
-    conversationVariables.stage3 = false;
+function closePrevSents() {
 
-    // also close prevSentsContainer - J
     $('#prevSentsContainer0').fadeOut();
     $('#prevSentsIconContainer').fadeIn();
 
-    //Close Time Overlay Container
-    closeTimeOverlayCont();
-
-    $('#backCorrection').prop( "disabled", false );
-    unmoveText();   
-   }
-});
-
+}
 
 function closeTimeOverlayCont(){
-     $('#prevSentsIconContainer').show();
-     $('#finishClassIconContainer').show();
-     $('#dataNFinish').hide();
-     $('#confirmFinish').hide();
-     $('#timeOverlayContainer').fadeOut();
+     $('#prevSentsIconContainer').fadeIn();
+     $('#finishClassIcon').fadeIn();
+     $('#timeElapsedCont').fadeOut();
+     $('#timeOverlayContainer').fadeOut( function(){
+      
+         $('#dataNFinish').hide();
+         $('#confirmFinish').hide();
+
+     });
 }
 
 
