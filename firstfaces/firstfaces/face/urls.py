@@ -2,18 +2,19 @@ from django.urls import path
 from django.urls import reverse_lazy
 from django.contrib.auth.views import LogoutView
 from face import views_temp
-from face.views.conversation.student import main as student_conversation_main
+from face.views.conversation.student import main as conversation_student_main
 from face.views.conversation.student.ajax import audio
 from face.views.conversation.student.ajax import conversation
 from face.views.conversation.student.ajax import sentence as student_sentence
-from face.views.conversation.teacher import main as teacher_conversation_main
+from face.views.conversation.teacher import main as conversation_teacher_main
 from face.views.conversation.teacher.ajax import sentence as teacher_sentence
 from face.views.conversation.teacher.ajax import updates
+from face.views.waiting import main as waiting_main
 
 urlpatterns = [
     # CONVERSATION
     # MAIN
-    path('conversation_student/<int:conversation_id>', student_conversation_main.conversation_student, name="conversation_student"),
+    path('conversation_student/<int:conversation_id>', conversation_student_main.conversation_student, name="conversation_student"),
     # AJAX
     # conversation
     path('store_emotion', conversation.store_emotion, name='store_emotion'),
@@ -44,7 +45,7 @@ urlpatterns = [
     
     # TEACHER
     # MAIN
-    path('conversation_teacher', teacher_conversation_main.conversation_teacher, name="conversation_teacher"),
+    path('conversation_teacher', conversation_teacher_main.conversation_teacher, name="conversation_teacher"),
     # AJAX
     # store
     path('store_judgement', teacher_sentence.store_judgement, name='store_judgement'),
@@ -56,6 +57,9 @@ urlpatterns = [
     path('update_session_object', updates.update_session_object, name='update_session_object'),
     path('update_info', updates.update_info, name='update_info'),
 
+    #WAITING
+    path('waiting', waiting_main.waiting, name="waiting"),
+    path('book_conversation', waiting_main.book_conversation, name="book_conversation"),
 
     path('', views_temp.out_or_in, name="out_or_in"),
     # path('store_test_score', views_temp.store_test_score, name='store_test_score'),
@@ -66,9 +70,7 @@ urlpatterns = [
     path('sign_up', views_temp.sign_up, name='sign_up'),
     path('sign_up_user', views_temp.sign_up_user, name='sign_up_user'),
     # path('check_prompt_indexes', views_temp.check_prompt_indexes, name='check_prompt_indexes'),
-    path('waiting', views_temp.waiting, name="waiting"),
     path('group_data', views_temp.group_data, name="group_data"),
-    path('book_session', views_temp.book_session, name="book_session"),
     path('entrance', views_temp.entrance, name='entrance'),
     path('login', views_temp.my_login, name='login'),
     path('logout', LogoutView.as_view(next_page=reverse_lazy('entrance')), name='logout'),

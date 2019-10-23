@@ -1,0 +1,10 @@
+{% load static %}
+
+<script>var waitingVariables = {{ waiting_variables|safe }}</script>
+<script>console.log('hi')</script>
+
+<!-- my own scripts -->
+<script src="{% static 'face/javascript/waiting/main.js' %}"></script>
+<script src="{% static 'face/javascript/waiting/timetable.js' %}"></script>
+
+
