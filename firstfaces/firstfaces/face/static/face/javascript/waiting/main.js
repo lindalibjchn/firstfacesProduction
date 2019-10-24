@@ -4,7 +4,11 @@ $(window).on( 'load', function() {
 
 });
 
+function enterConversation() {
 
+    window.location.href = "/conversation_student/" + waitingVariables.conversation_id.toString()
+
+}
 
 
 

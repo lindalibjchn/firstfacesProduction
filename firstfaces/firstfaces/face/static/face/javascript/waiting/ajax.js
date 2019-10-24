@@ -1,5 +1,12 @@
 function bookConversation( enterTutorial ) {
 
+    $(this).css({
+
+        'background-color': 'white',
+        'color': '#102858',
+
+    }).unbind('click');
+    
     console.log('in bookConversation');
     //if ( scheduleDict.in_class_now === false ) {
 
@@ -7,14 +14,13 @@ function bookConversation( enterTutorial ) {
             url: "/book_conversation",
             type: "POST",
             data: {
-                'tutorial': enterTutorial,
+                //'tutorial': enterTutorial,
             },
             success: function(json) {
-                if ( json.sessionCreated ) {
+                if ( json.conversationCreated ) {
                     
-                    scheduleDict.session_id = json.session_id;
-                    initDoorOpen('3');
-                    initCameraMove('class', '3');
+                    waitingVariables.conversation_id = json.conversation_id;
+                    enterConversation();
 
                 } else {
 
@@ -28,10 +34,10 @@ function bookConversation( enterTutorial ) {
             },
         });
 
-    } else {
+    //} else {
 
 
 
-    }
+    //}
 
 }

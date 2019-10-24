@@ -1,147 +1,74 @@
 ///MAIN ENTER FUNCTION WHICH CALLS ALL OTHERS
 
-function initMainEnter() {
+function initTiaEnterGreeting() {
 
-    mainEnterObject.bool = true;
+    conversationVariables.entranceSequence = true;
+    
+    setTimeout( function() {
+        
+        conversationVariables.tiaTyping = false;
+        
+        setTimeout( function() {
+        
+            tiaLookUp();
+
+        }, 750 );
+
+    }, 750 );
 
 }
 
-function mainEnter() {
+function tiaLookUp() {
 
-    if ( mainCount === 10 ) {
+    createSingleExpression( expressionObject.rel.happy, 0.75 );
+    movementController( movementObject.abs.blank, 0.5, 1.2 );
+    
+    setTimeout( function() {
         
-        movementController( movementObject.abs.laptop, 0.1, 0.1 );
- 
-    } else if ( mainCount === 60 ) {
+        expressionController( expressionObject.calculated, 0.8, tiaSpeakGreetings );
 
-        movementController( movementObject.abs.blank, 0.5, 1 );
+    }, 1000 )
 
-    } else if ( mainCount === 110 ) {
+}
 
-        createSingleExpression( expressionObject.rel.happy, 0.75 );
-        expressionController( expressionObject.calculated, tiaTimings.changeExpression );
+function tiaSpeakGreetings() {
 
-    //} else if ( mainCount === 430 ) {
+    setTimeout( function() {
 
-        //movementController( movementObject.abs.lookChair, '0.5', '1');
-        //initArmIndicate('left', 1, 'low', '1');
+        if ( conversationVariables.first_conversation ) {
 
-    //} else if ( mainCount === 180 ) {
-
-        //initMovement( movementObject.abs.standingStudent, '0.5', '1');
-
-        let studentName = conversationVariables.username;
-        
-        //let greeting = ""
-        greetingSrc0 = "greetings/" + studentName + ".wav";
-        greetingText0 = "Hello " + studentName;
-            
-        if ( conversationVariables.tutorial ) {
-
-            //// if in tutorial, need this to be true so that responses from the recording and speech synthesis react in the correct way
-            //conversationVariables.tutorialStep = 0;
-
-            //// if user has completed tutorial before, don't need to introduce name
-            //if ( conversationVariables.tutorial_complete ) {
-
-                //greeting = " Hello " + studentName + ". Welcome to the ERLE tutorial. It will take 5 to 10 minutes to complete. I will speak, and then buttons will appear for you to click.";
-        
-            //} else {
-
-                //greeting = " Hello " + studentName + ", my name is Tia. Welcome to the ERLE tutorial. It will take 5 to 10 minutes to complete. I will speak, and then buttons will appear for you to click.";
-        
-            //}
-
-        } else if ( conversationVariables.first_full_class ) {
-
-            //greeting = " Hello " + studentName + ", welcome to your first full class at ERLE! How are you feeling today?";
-            //console.log( 'prefixURL:', prefixURL )
-
-            greetingSrc1 = "welcome_to_your_first_full_class_at_erle.wav";
-            greetingText1 = "Welcome to your first full class at ERLE";
-
-        //} else if ( conversationVariables['prev_topic'] !== null ) {
+            tiaSpeak( 'greatToSee', cont=false, askAboutEmotion );
         
         } else {
-
-            //greeting = " Hello " + studentName + ", nice to see you again! Last time we met you were feeling " + conversationVariables.prev_emotion + ". How are you feeling today?";
-            greetingSrc1 = "its_great_to_see_you_again.wav"
-            greetingText1 = "It's great to see you again"
-        
+            
+            tiaSpeak( 'welcomeToFirst', cont=false, askAboutEmotion );
+            
         }
-            
-        greetingSrc2 = "how_are_you_feeling_today.wav";
-        greetingText2 = "How are you feeling today?";
 
-        //initArmIndicate('left', 0, 'low', '1');
-        //in entrance so need to not return to laptop after talking when not learning
-        //talkObject.learning = false;
+    }, 500 )
 
-        //synthesisObject.pitch = 0;
-        //synthesisObject.speaking_rate = 0.85;
-        //synthesisObject.text = greeting;
-        //synthesisObject.speaker = "tia";
-        //speechBubbleObject.sentence = greeting;
-        //sendTTS( greeting, true );
+}
 
-    //} else if ( mainCount === 590 ) {
+function askAboutEmotion() {
 
-        //initEnterCameraMove('chair', '3');
-        //movementController( movementObject.abs.blank, '3', '3');
+    tiaSpeak( 'howAreYou', cont=false, showInitEmotionQuestions );
 
-    } else if ( mainCount === 210 ) {
-
-        expressionController( expressionObject.half, tiaTimings.changeExpressionDuration );
-
-    } else if ( mainCount === 280 ) {
-
-        //tiaSpeak( synthesisObject.text, needSendTTS=false, speakOpening );
-        //conversationVariables.promptSpeaking = true;
-        synthesisObject.synthAudio.src = prefixURL + tiaMediaLoc + greetingSrc0;
+}
         
-        tiaSpeak( greetingText0, function() {
-            
-            synthesisObject.synthAudio.src = prefixURL + tiaMediaLoc + greetingSrc1;
-            
-            tiaSpeak( greetingText1, function () {
-                   
-                synthesisObject.synthAudio.src = prefixURL + tiaMediaLoc + greetingSrc2;
-
-                tiaSpeak( greetingText2, speakOpening );
-
-            } );
-
-        } );
-
-    }
-
-}
-
-function speakOpening() {
-
-    if ( conversationVariables.tutorial ) {
-
-        runTutorial();
-
-    } else {
-
-        showInitEmotionQuestions();
-
-    }
-
-}
 
 function showInitEmotionQuestions() {
 
+    console.log('in showInitEmotionQuestions');
     $('#emotionQuestionsCont').fadeIn( tiaTimings.speechBubbleFadeInDuration );
 
     // allow emotions to be clickable
-    $('.init-emot').on( 'click', storeEmotion );
+    $('.emojis').on( 'click', storeEmotion );
 
 }
 
 function goToAskTopic( emotion ) {
 
+    console.log(' go ask topic ' );
     // remove speech bubble to ask which topic
     removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
     var calculatedExpressions;
@@ -219,39 +146,6 @@ function goToAskTopic( emotion ) {
     //sendTTS( synthesisObject.text, true );
 
     
-
-}
-
-function storeEmotion() {
-
-    let emotion = $(this).attr('id');
-
-    $.ajax({
-        url: "/store_emotion",
-        type: "POST",
-        data: {
-            'emotionID': emotion,
-            'sessionID': conversationVariables[ 'session_id' ],
-        },
-        success: function(json) {
-
-            //add emotion to first topic button
-            //document.getElementById("myEmotion").innerHTML = "Why I'm " + emotion;
-
-            $('.init-emot').unbind();
-            $('#emotionQuestionsCont').fadeOut( 500 );
-
-            //setTimeout( function() {
-                    
-            goToAskTopic( emotion )
-                    
-            //}, 600 );
-
-        },
-        error: function() {
-            alert("unsuccessful POST to store_emotion");
-        },
-    });
 
 }
 
@@ -426,37 +320,6 @@ function dealWithEmptyTopic() {
 
 //}
 
-
-function storeTopic( topicChoice ) {
-
-    $.ajax({
-        url: "/store_topic",
-        type: "POST",
-        data: {
-            'topic': topicChoice,
-            'sessionID': conversationVariables[ 'session_id' ],
-        },
-        success: function(json) {
-
-            $('#topicChoicesCont').fadeOut( 500 );
-            removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
-
-            //initNod( 0.4, '0.5' )
-            
-            let startTalkSent = " Ok, please begin when you are ready.";
-            speechBubbleObject.sentence = startTalkSent;
-            synthesisObject.text = speechBubbleObject.sentence
-            sendTTS( startTalkSent, true );
-
-            setTimeout( beginTalking, 1000 );
-            
-        },
-        error: function() {
-            alert("unsuccessful POST to store_topic");
-        },
-    });
-
-}
 
 function beginTalking() {
 

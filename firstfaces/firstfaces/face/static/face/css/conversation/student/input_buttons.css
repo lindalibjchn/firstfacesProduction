@@ -12,6 +12,27 @@
 
 }
 
+.entry-emotion-btn-col {
+
+    width: 20%;
+
+}
+
+.emotion-labels {
+
+    height: 12vw;
+    width: 12vw;
+    -webkit-filter: brightness(65%);
+    filter: brightness(65%);
+
+}
+
+.emojis {
+
+    z-index: 300;
+
+}
+
 .init-emot {
 
     color: white !important;
@@ -90,6 +111,7 @@
 
 #emotionQuestionsCont {
 
+    /*background-color: #1fb030;*/
     display: none;
     height: 100%;
     width: 100%;

@@ -29,7 +29,7 @@ ALLOWED_HOSTS = ['erle.ucd.ie', '127.0.0.1']
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'ucd.erle@gmail.com'
-EMAIL_HOST_PASSWORD = 'UCDErledonghwa1'
+EMAIL_HOST_PASSWORD = 'UCDErledonghwa111'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 

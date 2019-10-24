@@ -100,15 +100,20 @@ function animatePhonesInOrder() {
         
         //if last sentence then just show mic, but if more sentences to come then show 'next' button
         if ( synthesisObject.sentenceNo === synthesisObject.now.texts.length - 1 ) {
-
+    
             synthesisObject.talking = false;
-             //console.log( 'in endPhoneCount' );
-            expressionController( expressionObject.quarter, tiaTimings.durationOfReturnToExpressionAfterVeryLastSpeakingPhone, function() {
+            expressionController( expressionObject.half, tiaTimings.durationOfReturnToExpressionAfterVeryLastSpeakingPhone );
+            movementController( movementObject.abs.blank, 1, 1, function() {
+            initSacc([[0,0,0],[0,0,0]], 1)
 
                 synthesisObject.callback();
-                buttonsMicrophoneOnly();
-            
-            }) 
+                if ( !conversationVariables.entranceSequence ) {
+
+                    buttonsMicrophoneOnly();
+
+                }
+                
+            });
 
         } else {
 

@@ -57,11 +57,11 @@ import ast
 
 def store_emotion(request):
 
-    emotion = request.POST['emotionID']
-    session_id = request.POST['sessionID']
-    sess = Conversation.objects.get(pk=session_id)
-    sess.learner_emotion = emotion
-    sess.save()
+    emotion = request.POST['emotion']
+    conversation_id = request.POST['conversationId']
+    conv = Conversation.objects.get(pk=conversation_id)
+    conv.emotion = emotion
+    conv.save()
 
     response_data = {
 

@@ -59,7 +59,7 @@
 .days-text {
 
     font-size: 3vw;
-    background-color: #969696;
+    /*background-color: #969696;*/
     color: white;
     font-weight: bold;
     border-bottom: 1px solid white;
@@ -98,7 +98,7 @@
 .times {
 
     position: relative;
-    top: -9%;
+    top: -10%;
     left: -7px;
     font-size: 3vw;
     color: #969696;
@@ -140,16 +140,13 @@
     font-size: 4vw;
     color: white;
     border-radius: 5px;
-    height: 120% !important;
-    top: -10% !important;
-    border: 3px solid lime;
-    opacity: 0.9 !important;
+    border: 2px solid #5d729c;
+    opacity: 1 !important;
 
 }
 
 .button-for-entering-conversation:hover {
 
-    transform: scale(1.1);
     cursor: pointer;
 
 }
