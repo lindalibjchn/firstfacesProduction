@@ -2,7 +2,7 @@ function calcTimePassed() {
 
     let timeNow = new Date();
     let timePassed = timeNow - conversationVariables.conversation_dict.start_time;
-    let timePassedMinutes = Math.ceil( -60 + timePassed / 60000  );	
+    let timePassedMinutes = Math.ceil( timePassed / 60000 );	
     console.log('time passed minutes:', timePassedMinutes);
 
     //// this classTimeMinutes is defined in variables

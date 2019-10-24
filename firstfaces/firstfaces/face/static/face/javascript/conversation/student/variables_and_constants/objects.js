@@ -68,9 +68,9 @@ var speechBubbleObject = {
 // movement stuff
 
 // controls all movements on first entry to class
-//var mainEnterObject = {
-    //bool: false
-//}
+var mainEnterObject = {
+    bool: false
+}
 
 //var cameraObject = {
     //'currentState': 'tia',
