@@ -215,9 +215,10 @@ var breatheObject = {
     'scaleMultX': 1.5 / secsOneBreath,
     'scaleMultY': 2.75 / secsOneBreath,
     'scaleMultZ': 12 / secsOneBreath,
+    'scaleMultShoulder': 35 / secsOneBreath,
     // from experimenting the y position of shoulder is 13 times greater than scale of upperspine
-    'yPosMult': 45 / secsOneBreath,
-    'yPosHeadMult': 12 / secsOneBreath,
+    //'yPosMult': 45 / secsOneBreath,
+    //'yPosHeadMult': 12 / secsOneBreath,
     'direction': -1,
     'normalBreatheStopCount': null, 
     'normalBreatheStopDirection': null, 
@@ -254,7 +255,7 @@ var headXRandomTiltObject = {
     'startCount': 0,
     'sin': sineArrays[ 120 ],
     'sinLength': 120,
-    'mult': 1, 
+    'mult': 0.75, 
     'direction': Math.random() < 0.5 ? -1 : 1,
     // call the sway to and fro
     'to': true,
@@ -265,7 +266,7 @@ var headYRandomTiltObject = {
     'startCount': 0,
     'sin': sineArrays[ 90 ],
     'sinLength': 90,
-    'mult': 1,
+    'mult': 0.75,
     'direction': Math.random() < 0.5 ? -1 : 1,
     // call the sway to and fro
     'to': true,
