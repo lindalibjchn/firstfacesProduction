@@ -38,6 +38,34 @@ var movementObject = {
             'sacc': [[0,0,0],[0,0,0]],
         },
 
+        'armBegin': {
+            'name': 'armBegin',
+            'symmetry': 'B',
+            'AUs': {
+                'AU1': {
+                    'head': [[0, 0, 0], [0, 0, 0]],
+                    'neck': [[0, 0, 0], [0, 0, 0]],
+                },
+                'AU1b': {
+                    'spineLower': [[0, 0, 0], [0, 0, 0]],
+                    'spineUpper': [[0, 0, 0], [0, 0, 0]],
+                    'spineUpperInner': [[0, 0, 0], [0, 0, 0]],
+                },
+                'AU2': {
+                    'shoulder': [[0, 0, 0], [0, 0, 0]],
+                },
+                'AU2b': {
+                    'upperArm.L': [[0, 0, 0], [0.2, -0.25, 0]],
+                    'upperArm.R': [[0, 0, 0], [-0.6, 0.25, 0]],
+                    'lowerArm.L': [[0, 0, 0], [0, 0, 0]],
+                    'lowerArm.R': [[0, 0, 0], [0, 0, 1.2]],
+                    'hand.L': [[0, 0, 0], [0, 0, 0]],
+                    'hand.R': [[0, 0, 0], [0, 0, 0.8]],
+                },
+            },
+            'sacc': [[0,0,0],[0,0,0]],
+        },
+
         'laptop': {
             'name': 'laptop',
             'symmetry': 'B',

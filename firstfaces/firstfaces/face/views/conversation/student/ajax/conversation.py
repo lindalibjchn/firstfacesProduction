@@ -72,10 +72,10 @@ def store_emotion(request):
 def store_topic(request):
 
     topic = request.POST['topic']
-    session_id = request.POST['sessionID']
-    sess = Conversation.objects.get(pk=session_id)
-    sess.topic = topic
-    sess.save()
+    conversation_id = request.POST['conversationId']
+    conv = Conversation.objects.get(pk=conversation_id)
+    conv.topic = topic
+    conv.save()
 
     response_data = {
 
