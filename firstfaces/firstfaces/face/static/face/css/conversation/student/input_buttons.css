@@ -145,6 +145,13 @@
     height: 100%;
     width: 100%;
     display: none;
+    z-index: 110;
+
+}
+
+#submitOwnTopicBtn {
+
+    z-index: 300;
 
 }
 

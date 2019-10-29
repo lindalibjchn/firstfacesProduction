@@ -3,6 +3,7 @@
 function initTiaEnterGreeting() {
 
     conversationVariables.entranceSequence = true;
+    resetTextBoxNInputButtons();
     
     setTimeout( function() {
         
@@ -15,6 +16,21 @@ function initTiaEnterGreeting() {
         }, 750 );
 
     }, 750 );
+
+}
+
+function resetTextBoxNInputButtons() {
+
+    $( '#sentenceShowHolder').hide();
+    $('.play-btn').prop( "disabled", true).hide();
+    $('#correctTranscript').hide();
+    //hide back button
+    $('#backErrorSelection').hide();
+    // hide forward button
+    $('#forwardErrorSelection').hide();
+    
+    $('#backCorrection').hide();
+    $('#submitCorrectedErrors').hide();
 
 }
 
@@ -178,9 +194,11 @@ function showPreChoiceTextInput() {
 
 function showChoiceTextInput() {
 
-    $('#textInputBoxInnerCont').show();
+    $('#sentenceShowHolder').hide();
+    $('#textInputBoxCont').show();
     $('#textInputBox').show();
-    $('#textInputContainer').fadeIn( tiaTimings.speechBubbleFadeInDuration );
+    //$('#textInputContainer').fadeIn( tiaTimings.speechBubbleFadeInDuration );
+    $('#textInputContainer').show();
     $('#textInput').focus();
 
     $('#submitTopicBtnCont').fadeIn( tiaTimings.speechBubbleFadeInDuration );
@@ -214,7 +232,11 @@ function afterStoreTopic() {
 
     removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
 
-    initNod( 0.4, 0.3, beginTalking );
+    setTimeout( function() {
+
+        initNod( 0.4, 0.3, beginTalking );
+
+    }, tiaTimings.speechBubbleFadeOutDuration );
 
 }
 
@@ -224,7 +246,7 @@ function beginTalking() {
 
     setTimeout( function() {
     
-        movementController( movementObject.abs.beginArm, 1, 1 );
+        movementController( movementObject.abs.armBegin, 1, 1 );
     
     }, 1000 );
 
@@ -232,21 +254,15 @@ function beginTalking() {
 
 function finalSpeak() {
 
-    //removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
-
     setTimeout( function() {
 
-        expressionController( expressionObject.abs.neutral, 0.75 );
+        expressionController( expressionObject.abs.neutral, 1 );
         talkObject.learning = true;
-        movementController( movementObject.abs.beginArm, 1, 1 );
+        //movementController( movementObject.abs.arm, 1, 1 );
         setTimeout(initInputReady, 1000)
 
     }, tiaTimings.speechBubbleFadeOutDuration );
 
 }
-
-
-
-
 
 

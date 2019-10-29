@@ -10,6 +10,7 @@ from face.views.conversation.teacher import main as conversation_teacher_main
 from face.views.conversation.teacher.ajax import sentence as teacher_sentence
 from face.views.conversation.teacher.ajax import updates
 from face.views.waiting import main as waiting_main
+from face.views.entrance import main as entrance_main
 
 urlpatterns = [
     # CONVERSATION
@@ -61,17 +62,19 @@ urlpatterns = [
     path('waiting', waiting_main.waiting, name="waiting"),
     path('book_conversation', waiting_main.book_conversation, name="book_conversation"),
 
+    #ENTRANCE
+    path('entrance', entrance_main.entrance, name='entrance'),
+    path('sign_up', views_temp.sign_up, name='sign_up'),
+    path('sign_up_user', views_temp.sign_up_user, name='sign_up_user'),
+    path('login', views_temp.my_login, name='login'),
+    path('logout', LogoutView.as_view(next_page=reverse_lazy('entrance')), name='logout'),
+    
     path('', views_temp.out_or_in, name="out_or_in"),
     # path('store_test_score', views_temp.store_test_score, name='store_test_score'),
     # path('store_test_begin', views_temp.store_test_begin, name='store_test_begin'),
     # path('store_sound_mic', views_temp.store_sound_mic, name='store_sound_mic'),
     # path('add_transcription_choice_view', views_temp.add_transcription_choice_view, name='add_transcription_choice_view'),
     # path('add_listen_synth_data', views_temp.add_listen_synth_data, name='add_listen_synth_data'),
-    path('sign_up', views_temp.sign_up, name='sign_up'),
-    path('sign_up_user', views_temp.sign_up_user, name='sign_up_user'),
     # path('check_prompt_indexes', views_temp.check_prompt_indexes, name='check_prompt_indexes'),
     path('group_data', views_temp.group_data, name="group_data"),
-    path('entrance', views_temp.entrance, name='entrance'),
-    path('login', views_temp.my_login, name='login'),
-    path('logout', LogoutView.as_view(next_page=reverse_lazy('entrance')), name='logout'),
     ]

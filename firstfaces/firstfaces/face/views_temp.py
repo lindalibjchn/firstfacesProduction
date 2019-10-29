@@ -39,23 +39,6 @@ def out_or_in(request):
 
         return redirect('entrance')
 
-def entrance(request):
-
-    if request.user.is_authenticated:
-
-        return redirect('waiting')
-
-    form = UserForm()
-    sign_up_form = SignUpForm()
-    sign_up_user_form = SignUpUserForm()
-    context = {
-        'form': form,
-        'signUpForm': sign_up_form,
-        'signUpUserForm': sign_up_user_form,
-    }
-
-    return render(request, 'face/entrance.html', context)
-
 def my_login(request):
 
     username = request.POST['username']
