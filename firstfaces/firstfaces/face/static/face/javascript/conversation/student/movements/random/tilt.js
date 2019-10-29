@@ -29,7 +29,7 @@ function newTilt( boneObject ) {
 
         } else {
 
-            newSinAmount = SINEARRAYFORHEADTILTSECONDS[ Math.floor( Math.random() *  SINEARRAYFORHEADTILTSECONDS.length ) ];
+            newSinAmount = SINEARRAYFORHEADTILTSECONDS[ Math.floor( Math.random() * SINEARRAYFORHEADTILTSECONDS.length ) ];
             boneObject.sin = sineArrays[ newSinAmount ];
             boneObject.sinLength = boneObject.sin.length;
             
@@ -58,7 +58,8 @@ function randomTiltNeck( remaining ) {
 function randomTiltHeadX( remaining ) {
 
     let Xmult = headXRandomTiltObject.direction * headXRandomTiltObject.mult * headXRandomTiltObject.sin[ remaining ];
-    tiaObject.faceBones.head.rotation.x = Xmult
+    tiaObject.faceBones.head.rotation.x = Xmult;
+    eyeObject.currentCoords[ 1 ][ 0 ] = -Xmult;
     tiaObject.eyeBones.eyeL.rotation.x = -Xmult + EYEL_ROT.x;
     tiaObject.eyeBones.eyeR.rotation.x = -Xmult + EYER_ROT.x;
 
@@ -68,6 +69,7 @@ function randomTiltHeadY( remaining ) {
 
     let Ymult =  2 * headYRandomTiltObject.direction * headYRandomTiltObject.mult * headYRandomTiltObject.sin[ remaining ];
     tiaObject.faceBones.head.rotation.y = Ymult;
+    eyeObject.currentCoords[ 1 ][ 1 ] = -Ymult;
     tiaObject.eyeBones.eyeL.rotation.y = -Ymult + EYEL_ROT.y;
     tiaObject.eyeBones.eyeR.rotation.y = -Ymult + EYER_ROT.y;
 

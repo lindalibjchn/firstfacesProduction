@@ -104,8 +104,8 @@ function animatePhonesInOrder() {
             synthesisObject.talking = false;
             expressionController( expressionObject.half, tiaTimings.durationOfReturnToExpressionAfterVeryLastSpeakingPhone );
             movementController( movementObject.abs.blank, 1, 1, function() {
-            initSacc([[0,0,0],[0,0,0]], 1)
-            eyeObject.movementCoords = [[0,0,0],[0,0,0]];
+            //resetEyes( 1 );
+            //eyeObject.movementCoords = [[0,0,0],[0,0,0]];
 
                 synthesisObject.callback();
                 if ( !conversationVariables.entranceSequence ) {
