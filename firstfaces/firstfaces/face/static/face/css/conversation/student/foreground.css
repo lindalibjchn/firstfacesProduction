@@ -40,25 +40,3 @@
 
 }
 
-#foregroundImage {
-
-    position: relative;
-    width: 100%;
-
-}
-
-#foregroundImageNoHarp {
-
-    display: none;
-    position: relative;
-    width: 100%;
-
-}
-
-#foregroundImageGif {
-
-    display: none;
-    position: absolute;
-    width: 100%;
-
-}

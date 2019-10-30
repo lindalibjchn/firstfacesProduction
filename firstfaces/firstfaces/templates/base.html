@@ -54,7 +54,7 @@
 
             {% else %}
 
-                <div class="w3-bar w3-blue w3" style="position: fixed; z-index: 100;">
+                <div id="navbar" class="w3-bar" style="position: fixed; z-index: 100; color: white">
 
                     {% if waiting %}
 
@@ -89,8 +89,8 @@
 
                         {% else %}
 
-                            <button class="w3-bar-item w3-button w3-hover-blue w3-ripple" id="signUpBtn">Sign Up</button>
-                            <button class="w3-bar-item w3-button w3-hover-blue w3-ripple" id="logInDropdown">Log In</button>
+                            <button class="w3-bar-item w3-button w3-round-xxlarge" id="signUpBtn" style="border: 1px solid white; margin: 3px;">Sign Up</button>
+                            <button class="w3-bar-item w3-button w3-round-xxlarge" id="logInDropdown" style="border: 1px solid white; margin: 3px;">Log In</button>
 
                         {% endif %}
 

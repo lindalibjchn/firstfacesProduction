@@ -1,23 +1,12 @@
 
 $(window).on( 'load', function() {
 
-    //if ( !!window.chrome !== true ) {
+    runUCDGif();
 
-        //alert( "Erle currently works on Google Chrome only. You will not be able to sign up or log in on this browser. Apologies for the inconvenience.");
-
-    //}
-
-    // begins the loading of objects
-    init();
-    
-    //if ( !!window.chrome ) {
-        
     // login dropdown
     $("#logInDropdown").on( "click", showLogInDropdown )
     $("#signUpBtn").on( "click", showSignUpForm )
     
-    //}
-
     // log in
     $( "#loginForm" ).on( "submit", function( event ) {
      
@@ -77,6 +66,39 @@ $(window).on( 'load', function() {
     });
    
 });
+
+function runUCDGif() {
+
+    $("#foregroundImage").hide();
+    $("#foregroundImageNoHarp").show();
+    $("#foregroundImageGif").show();
+
+    setTimeout( function() {
+    
+        $( '#infoSentenceContainer' ).css( 'visibility', 'visible' );
+        displayTextNVideos();
+
+    }, 2000 )
+
+}
+
+function displayTextNVideos() {
+
+    $( '#text0' ).fadeIn( 1500, function() {
+        
+        $( '#text1' ).fadeIn( 1500, function() {
+       
+            $('#text2' ).fadeIn( 1500, function() {
+                
+                $( '.info-card' ).fadeIn( 1500 );
+
+            });
+
+        });
+        
+    }); 
+
+}
 
 function showLogInDropdown() {
 
