@@ -1,6 +1,9 @@
 function initInputReady( from ) {
     conversationVariables.stage2 = false;
     conversationVariables.stage3 = false;
+    // tia's eyelids werren't closing properly this below is a failsafe to reset them.
+    movementController( movementObject.abs.blank, 1, 1 );
+    
     //$('#textInputContainer').show();
     //hideTextStuff();
     //hideVolumeBar();
@@ -50,17 +53,6 @@ function initInputReady( from ) {
     //showOptionBtns();
     //$('#whatsWrongBtn').hide()
     //$('#showCorrectionBtn').css('display', 'flex')
-
-    //if ( conversationVariables.tutorial === false ) {
-
-     //$('#textInput').bind('input propertychange', function() {
-
-            //$('#playRobot').show();
-            //$('#talkBtn').prop( "disabled", false );
-
-        //});
-
-    //}
 
 }
 

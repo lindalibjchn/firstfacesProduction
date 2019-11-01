@@ -1,11 +1,40 @@
-.signin-container {
+#closeSignInContainer {
 
-    margin-top: 50px;
-    width: 300px;
     position: absolute;
     top: 0;
-    right: 0;
+    height: 100vh;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    /*z-index: 100;*/
     display: none;
+
+}
+
+#signInContainer {
+
+    position: absolute;
+    top: 0;
+    height: 100vh;
+    width: 100%;
+    display: none;
+    z-index: 101;
+
+}
+
+#signInCard {
+
+    z-index: 102;
+    width: 100%;
+
+}
+
+#signInInnerContainer {
+
+    height: 100%;
+    width 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
 }
 

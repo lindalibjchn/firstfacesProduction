@@ -15,11 +15,13 @@ function readyAudio() {
 
 function startAudioStream() {
 
+    //console.log( 'in start audio stream' )
     navigator.mediaDevices.getUserMedia( AUDIO_N_VIDEO_SETTINGS ).then( function( stream ) {
  
         conversationVariables.stream = stream; // make it globally accessible to simplify all else
         conversationVariables.audio = true; // ??
         mediaRecorder = new MediaRecorder( conversationVariables.stream );
+        //console.log('mediaRecorder:', mediaRecorder)
         chunks = []; // ??
 
         mediaRecorder.ondataavailable = function( e ) {
@@ -37,7 +39,7 @@ function startAudioStream() {
         console.log('The following getUserMedia error occured: ' + err);
         conversationVariables.audio = false;
         console.log( 'audio not working' );
-        alert("If you want to speak to Tia, you must allow Chrome to use your microphone. Click the lock, or small 'i' next to the web address and then change the settings to allow the microphone.");
+        alert("If you want to speak to Tia, you must allow your microphone to be used. Click the lock, or small 'i' next to the web address and then change the settings to allow the microphone.");
     });
 
 }
@@ -115,7 +117,13 @@ function checkIfClickedStop() {
 
         onStopClick();
 
-        alert('You have 15 seconds to say each sentence. If it is a very long sentence, try breaking it up into smaller sentences.')
+        //alert('You have 15 seconds to say each sentence. If it is a very long sentence, try breaking it up into smaller sentences.')
+           
+        //movementController( movementObject.abs.blank, 1, 1, function() {
+
+            //buttonsMicrophoneOnly();
+
+        //})
 
     }
 
@@ -141,9 +149,16 @@ function onStopClick() {
 }
 
 function onMediaRecorderStop() {
+ 
+    if ( conversationVariables.over15secs ) {
+
+        conversationVariables.over15secs = false;
+        alert( 'you have 15 seconds to say each sentence' );
+
+    }
 
     // i first interference then dont need to do any of this stuff
-    if ( !conversationVariables.interference && !conversationVariables.over15secs ) {
+    if ( !conversationVariables.interference ) {
 
         hideVolumeBar();
 

@@ -5,7 +5,8 @@ $(window).on( 'load', function() {
 
     // login dropdown
     $("#logInDropdown").on( "click", showLogInDropdown )
-    $("#signUpBtn").on( "click", showSignUpForm )
+    $("#closeSignInContainer").on( "click", hideLogInDropdown )
+    //$("#signUpBtn").on( "click", showSignUpForm )
     
     // log in
     $( "#loginForm" ).on( "submit", function( event ) {
@@ -17,53 +18,53 @@ $(window).on( 'load', function() {
     });
 
     // sign up User
-    $( "#infoBtn" ).on( "click", function() { 
-        console.log("in info button");
+    //$( "#infoBtn" ).on( "click", function() { 
+        //console.log("in info button");
 
-        if ( $('input[name="infoAgreement"]').is(':checked') ) {
+        //if ( $('input[name="infoAgreement"]').is(':checked') ) {
 
-            console.log('i infoAgreement');
-            $('#info').fadeOut( 500, function(){ $('#consent').fadeIn( 500 ) } );
+            //console.log('i infoAgreement');
+            //$('#info').fadeOut( 500, function(){ $('#consent').fadeIn( 500 ) } );
 
-        } else {
+        //} else {
 
-            alert( "please click the box to state you have read the information sheet and watched the 'How To' video" );
+            //alert( "please click the box to state you have read the information sheet and watched the 'How To' video" );
 
-        }
+        //}
 
-    });
+    //});
 
-    $( "#consentBtn" ).on( "click", function() { 
-        console.log("in consent button");
+    //$( "#consentBtn" ).on( "click", function() { 
+        //console.log("in consent button");
 
-        if ( $('.consentChecks:checked').length === $('.consentChecks').length ) {
+        //if ( $('.consentChecks:checked').length === $('.consentChecks').length ) {
 
-            $('#consent').fadeOut( 500, function(){ $('#learnerID').fadeIn( 500 ) } );
+            //$('#consent').fadeOut( 500, function(){ $('#learnerID').fadeIn( 500 ) } );
 
-        } else {
+        //} else {
 
-            alert( "please check all the boxes to indicate your consent" );
+            //alert( "please check all the boxes to indicate your consent" );
 
-        }
+        //}
 
-    });
+    //});
 
     // sign up User
-    $( "#signUpUserForm" ).on( "submit", function( event ) {
+    //$( "#signUpUserForm" ).on( "submit", function( event ) {
      
-        event.preventDefault();
-        console.log("in prevent default for signUpUserForm submission");
-        signUpUser();
+        //event.preventDefault();
+        //console.log("in prevent default for signUpUserForm submission");
+        //signUpUser();
         
-    });
+    //});
    
-    $( "#signUpForm" ).on( "submit", function( event ) {
+    //$( "#signUpForm" ).on( "submit", function( event ) {
      
-        event.preventDefault();
-        console.log("in prevent default for signUpForm submission");
-        registerProfile();
+        //event.preventDefault();
+        //console.log("in prevent default for signUpForm submission");
+        //registerProfile();
         
-    });
+    //});
    
 });
 
@@ -102,17 +103,16 @@ function displayTextNVideos() {
 
 function showLogInDropdown() {
 
-    let x = document.getElementById( "signInCont" );
+    $('#closeSignInContainer').fadeIn();
+    $('#signInContainer').fadeIn();
 
-    if ( x.className.indexOf( "w3-show" ) == -1 ) {
+}
 
-        x.className += " w3-show";
+function hideLogInDropdown() {
 
-    } else {
-
-        x.className = x.className.replace( " w3-show", "" );
-
-    }
+    console.log('hide login dropdown');
+    $('#closeSignInContainer').fadeOut();
+    $('#signInContainer').fadeOut();
 
 }
 
@@ -130,8 +130,7 @@ function logIn() {
         success: function(json) {
             if ( json.loggedIn ) {
                 
-                $("#signInCont").removeClass( "w3-show" );
-                enterSchool();
+                window.location.href = "/waiting"
 
             } else {
 
@@ -147,85 +146,85 @@ function logIn() {
     });
 }
 
-function registerProfile() {
+//function registerProfile() {
 
-    console.log('in register');
-    let search = $("#signUpForm").serialize();
-    let formData = JSON.parse('{"' + search.replace(/&/g, '","').replace(/=/g,'":"') + '"}', function(key, value) { return key===""?value:decodeURIComponent(value) })
-    console.log('formData:', formData);
+    //console.log('in register');
+    //let search = $("#signUpForm").serialize();
+    //let formData = JSON.parse('{"' + search.replace(/&/g, '","').replace(/=/g,'":"') + '"}', function(key, value) { return key===""?value:decodeURIComponent(value) })
+    //console.log('formData:', formData);
 
-    $.ajax({
-        url: "/sign_up",
-        type: "GET",
-        data: formData,
-        success: function(json) {
+    //$.ajax({
+        //url: "/sign_up",
+        //type: "GET",
+        //data: formData,
+        //success: function(json) {
 
-            $('#signUpBackground').fadeOut( 500, enterSchool );
+            //$('#signUpBackground').fadeOut( 500, enterSchool );
 
-        },
-        error: function() {
-            console.log("that's shite");
-        },
-    });
+        //},
+        //error: function() {
+            //console.log("that's shite");
+        //},
+    //});
 
-}
+//}
 
-function signUpUser() {
+//function signUpUser() {
 
-    let search = $("#signUpUserForm").serialize();
-    let formData = JSON.parse('{"' + search.replace(/&/g, '","').replace(/=/g,'":"') + '"}', function(key, value) { return key===""?value:decodeURIComponent(value) })
-    console.log('formData:', formData);
+    //let search = $("#signUpUserForm").serialize();
+    //let formData = JSON.parse('{"' + search.replace(/&/g, '","').replace(/=/g,'":"') + '"}', function(key, value) { return key===""?value:decodeURIComponent(value) })
+    //console.log('formData:', formData);
 
-    $.ajax({
-        url: "/sign_up_user",
-        type: "POST",
-        data: formData,
-        success: function(json) {
-            if ( json.usernameUnique ) {
+    //$.ajax({
+        //url: "/sign_up_user",
+        //type: "POST",
+        //data: formData,
+        //success: function(json) {
+            //if ( json.usernameUnique ) {
                 
-                console.log('unique');
+                //console.log('unique');
                 
-                if ( json.passwordOK ) {
+                //if ( json.passwordOK ) {
 
-                    console.log('password is ok');
+                    //console.log('password is ok');
 
-                    username = formData.username
-                    // go to profile entry
+                    //username = formData.username
+                    //// go to profile entry
 
-                    $('#learnerID').fadeOut( 500, function(){ $('#profile').fadeIn( 500 )});
+                    //$('#learnerID').fadeOut( 500, function(){ $('#profile').fadeIn( 500 )});
 
-                } else {
+                //} else {
 
-                    alert('Password must be at least 8 characters, not too simple, and not similar to your username.')
+                    //alert('Password must be at least 8 characters, not too simple, and not similar to your username.')
 
-                }
+                //}
 
-            } else {
+            //} else {
 
-                // give error message
-                alert('that username is taken. Please choose another.')
+                //// give error message
+                //alert('that username is taken. Please choose another.')
 
-            }
+            //}
 
-        },
-        error: function() {
-            console.log("that's shite");
-        },
-    });
-}
+        //},
+        //error: function() {
+            //console.log("that's shite");
+        //},
+    //});
+//}
 
-function showSignUpForm() {
+//function showSignUpForm() {
 
-    console.log('in showSignUpForm');
-    $('#signUpBackground').fadeIn( 500 );
+    //console.log('in showSignUpForm');
+    //$('#signUpBackground').fadeIn( 500 );
 
-}
+//}
 
-function removeSignUp() {
+//function removeSignUp() {
 
-   $('#signUpBackground').fadeOut( 500 ); 
+   //$('#signUpBackground').fadeOut( 500 ); 
 
-}
+//}
 
 
 

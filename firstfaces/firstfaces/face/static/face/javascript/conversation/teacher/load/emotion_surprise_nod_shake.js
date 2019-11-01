@@ -138,10 +138,10 @@ function getNodShakeCoords( e ) {
     let X = Math.round( 10 * Xraw / teacherVars.nodShakeSemiCircle.radius ) / 10;
     let Y = Math.round ( (( Math.round( 10 * ( Yraw / teacherVars.nodShakeSemiCircle.radius ) ) / 10 ) - 1) * 10 ) / 10;
     
-    teacherVars.tempEmotionStates.nodShake = [X, Y];
+    teacherVars.tempEmotionStates.nod_shake = [X, Y];
     if ( teacherVars.sentencesNeedJudgement[0] !== undefined ) {
 
-        teacherVars.sentencesNeedJudgement[0].nodShake = [X, Y];
+        teacherVars.sentencesNeedJudgement[0].nod_shake = [X, Y];
     
     }
         

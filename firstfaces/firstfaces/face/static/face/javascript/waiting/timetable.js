@@ -71,7 +71,8 @@ function getBarColourAndOpenNow( timeNow_, tup_ ) {
 
     if ( timeNow_ < tup_[ 0 ] ) {
 
-            colour = '#1fb030';
+            //colour = '#1fb030';
+            colour = '#188ac7';
 
     } else if ( timeNow_ > tup_[ 1 ] ) {
 
@@ -81,7 +82,9 @@ function getBarColourAndOpenNow( timeNow_, tup_ ) {
 
         if ( !waitingVariables.class_finished_today ) {
         
-            colour = '#102858';
+            //colour = '#102858';
+            //colour = '#188ac7';
+            colour = '#fffff';
             open = true;
 
         } else {
@@ -101,18 +104,27 @@ function colourDaysInUCDCOlours( d ) {
     for ( let i=1; i<6; i++ ) {
 
         let colour = '#188ac7';
+        let textColour = '#ffffff';
+        let border = 'none';
 
         if ( i === d ) {
 
-            colour = '#102858';
+            //colour = '#102858';
+            //colour = '#188ac7';
+            colour = '#ffffff';
+            textColour = '#188ac7';
+            border = "1px solid #188ac7";
 
         } else if ( i > d ) {
 
-            colour = '#1fb030';
+            colour = '#188ac7';
+            //colour = '#1fb030';
 
         }
 
         $('#dayText' + i).css('background-color', colour);
+        $('#dayText' + i).css('color', textColour);
+        $('#dayText' + i).css('border', border);
 
     }
 

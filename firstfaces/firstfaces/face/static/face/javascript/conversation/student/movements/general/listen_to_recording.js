@@ -52,22 +52,20 @@ function firstFlinch() {
         
         setTimeout( function() {
 
-                //hideVolumeBar();//always hide it even if not shown, same as if statement
-                expressionController( expressionObject.abs.blank, 1 ) 
-                movementController( movementObject.abs.blank, 0.5, 1.5, moveCb=function(){tiaSpeak( "veryLoud", cont=true, speakCb=function(){
-                 
-                        conversationVariables.interference = false;  
-                        canvasContext.fillStyle = "#33ff00";
-                   
-                    })
-                
-                });
+            hideVolumeBar();//always hide it even if not shown, same as if statement
+            expressionController( expressionObject.abs.blank, 1 ) 
+            movementController( movementObject.abs.blank, 0.5, 1.5, moveCb=function(){tiaSpeak( "veryLoud", cont=true, speakCb=function(){
+             
+                    conversationVariables.interference = false;  
+                    canvasContext.fillStyle = "#33ff00";
+               
+                })
+            
+            });
 
-            }, tiaTimings.delayAfterFlinch );
+        }, tiaTimings.delayAfterFlinch );
 
-        }
-
-    )
+    })
 
 }
 
