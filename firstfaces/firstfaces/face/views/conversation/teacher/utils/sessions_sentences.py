@@ -66,6 +66,7 @@ def get_student_conversations(student_id_):
         conversation, sentence_awaiting_judgement, sentence_being_recorded = get_student_conversation(c, student_id_, current_conv)
             
         conversations.append(conversation)
+    conversations = sorted(conversations, key=itemgetter("id"), reverse=True)
 
     return conversations, sentence_awaiting_judgement, sentence_being_recorded
 

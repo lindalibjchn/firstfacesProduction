@@ -5,6 +5,64 @@
 
 }
 
+#grammarContainer {
+
+    position: relative;
+    height: 100%;
+    width: 100%;
+
+}
+
+#grammarGraphsRow {
+
+    position: absolute;
+    bottom:  0;
+    height: 90%;
+    width: 100%;
+    border: 1px dashed red;
+
+}
+
+#mainErrorsChartContainer {
+
+    position: relative;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+#mainErrorsChart {
+
+    position: relative;
+    height: 100%;
+    width: 100%;
+	border: 2px solid black;
+
+}
+
+#articleErrorsChartContainer {
+
+    position: relative;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+#articleErrorsChart {
+
+    position: relative;
+    height: 100%;
+    width: 100%;
+	border: 2px solid red;
+
+}
+
 .end-btn-cont {
 
     width: 100%;
@@ -69,7 +127,7 @@
 
 #timeOverlayContainer {
 
-    display: none;
+    /*display: none;*/
     position: absolute;
     width: 100%;
     height: 50%;

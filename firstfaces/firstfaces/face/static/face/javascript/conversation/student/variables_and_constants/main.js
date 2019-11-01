@@ -40,6 +40,7 @@ const AUDIO_N_VIDEO_SETTINGS = {
             "googHighpassFilter": "false",
         },    
     },
+    //audio: true, // need this for firefox to work
     video: false
 }
 

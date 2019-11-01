@@ -17,6 +17,7 @@ $(window).on( 'load', function() {
     
     putNextSentenceNeedingJudgementUpForViewing();    
     resetPhoneColoursNeedJudgement();
+    disablePromptBox();
 
 });
 
@@ -64,7 +65,7 @@ function resetTempEmotionStates() {
     
         surprise: 0,
         emotion: [0.1, 0.1],
-        nodShake: [0, 0]
+        nod_shake: [0, 0]
 
     };
 
@@ -98,7 +99,7 @@ function resetTempJudgement() {
         judgement: null,
         emotion: null,
         surprise: null,
-        nodShake: null,
+        nod_shake: null,
         indexes: [],
     }
 
@@ -173,4 +174,17 @@ function setButtonEvents() {
     $('.student-info-container').click( focusAddInfo );
 
 }
+
+function disablePromptBox() {
+
+    $( '#promptText' ).attr( 'disabled', true );
+
+}
+
+function enablePromptBox() {
+
+    $( '#promptText' ).attr( 'disabled', false );
+
+}
+
 

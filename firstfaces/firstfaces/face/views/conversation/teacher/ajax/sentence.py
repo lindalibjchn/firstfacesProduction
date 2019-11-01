@@ -32,8 +32,14 @@ def store_judgement(request):
             sent.indexes = json.dumps(sent_meta['indexes'])
 
         if sent_meta['judgement'] not in ['I', 'M']:
-        
-            sent.emotion = json.dumps(sent_meta['emotion'])
+
+            emotion = sent_meta['emotion']
+            print('emotion:', emotion)
+            if emotion != None:
+                sent.emotion = json.dumps(emotion)
+            else:
+                sent.emotion = json.dumps([0, 0])
+            
             sent.nod_shake = json.dumps(sent_meta['nod_shake'])
             sent.surprise = sent_meta['surprise']
 

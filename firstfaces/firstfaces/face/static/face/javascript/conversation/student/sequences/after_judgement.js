@@ -36,54 +36,17 @@ function runAfterJudgement() {
 
         runIncorrect();
 
+    //} else if ( [ "D", "3" ].includes( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement ) ) {
+
+        //runBadSentences( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement );
+
     } else {
-
-        //if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].nod !== null ) {
-
-            //nodOrShakeHead()
-            //setTimeout( prePrepareForPromptSpeech, nodShakeDur );
-
-        //} else {
 
         runPrompt( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement );
 
     }
     
 }
-
-//function getNodSpeedInString() {
-
-    //let nodSpeed = conversationVariables.conversation_dict.completed_sentences[ 0 ]['nodSpeed']
-    
-    //if ( nodSpeed <= 0.33 ) {
-
-        //return '0.75'
-
-    //} else if ( nodSpeed > 0.33 && nodSpeed <= 0.66 ) {
-
-        //return '0.5'
-
-    //} else {
-
-        //return '0.25'
-
-    //}
-
-//}
-
-//function returnFromThinking() {
-
-    //expressionController( calculatedExpression, tiaTimings.changeExpressionDuration );
-
-    //setTimeout( function() {
-
-        //movementController( movementObject.abs.blank, tiaTimings.returnFromThinkingDuration / 2, tiaTimings.returnFromThinkingDuration );
-
-        //setTimeout( runAfterJudgement, tiaTimings.returnFromThinkingDuration * 750 ); // want nod to happen before movement back ends
-    
-    //}, tiaTimings.changeExpressionDuration );
-
-//} 
 
 function runIncorrect() {
 
@@ -92,13 +55,19 @@ function runIncorrect() {
 
 }
 
+//function runBadSentences() {
+
+    //addPreviousSentences( conversationVariables.conversation_dict, 0 );
+    //expressionController( expressionObject.calculated, tiaTimings.returnFromThinkingDuration / 2 );
+
+//}
+
 function runPrompt( judg ) {
 
     addPreviousSentences( conversationVariables.conversation_dict, 0 );
 
     //recTimes.prePrepareForPromptSpeech =  Date.now() / 1000;
     // return to talking pos
-    console.log('in prePrepareForPromptSpeech');
     
     movementController( movementObject.abs.blank, tiaTimings.returnFromThinkingDuration / 2, tiaTimings.returnFromThinkingDuration, function() {
        
@@ -142,7 +111,20 @@ function nodOrShakeHead() {
 
 function tiaSpeakAfterReturningFromThinking() {
 
-    tiaSpeak( 'prompt', cont=false );
+    if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === "D" ) {
+
+        tiaSpeak( 'iDontUnderstand', cont=true );
+
+    } else if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === "3" ) {
+
+        tiaSpeak( 'moreThanThree', cont=true );
+
+    } else {
+
+        tiaSpeak( 'prompt', cont=false );
+        
+    }
+        
     synthesisObject.speakDirectlyAfterComingBackFromThinking = true;
 
 }

@@ -74,6 +74,10 @@ function slightlyDelayAudioPlay() {
 
         showSpeechBubble( synthesisObject.now.texts[ 0 ], tiaTimings.speechBubbleFadeInDuration )
     
+    } else {
+
+        showSpeechText( synthesisObject.now.texts[ synthesisObject.sentenceNo ], tiaTimings.speechTextFadeInDuration )
+
     }
 
     setTimeout( function() {
@@ -104,8 +108,6 @@ function animatePhonesInOrder() {
             synthesisObject.talking = false;
             expressionController( expressionObject.half, tiaTimings.durationOfReturnToExpressionAfterVeryLastSpeakingPhone );
             movementController( movementObject.abs.blank, 1, 1, function() {
-            //resetEyes( 1 );
-            //eyeObject.movementCoords = [[0,0,0],[0,0,0]];
 
                 synthesisObject.callback();
                 if ( !conversationVariables.entranceSequence ) {
@@ -118,19 +120,19 @@ function animatePhonesInOrder() {
 
         } else {
 
-            expressionController( expressionObject.abs.talkBase, tiaTimings.durationOfLastSpeakingPhones, function() {
+            if ( synthesisObject.continuous ) {
 
-                if ( synthesisObject.continuous ) {
+                setTimeout( listenToNextSentence, tiaTimings.speechTextFadeOutDuration );
 
-                    listenToNextSentence();
+            } else {
 
-                } else {
+                expressionController( expressionObject.quarter, tiaTimings.durationOfLastSpeakingPhones, function() {
 
                     buttonsListenNextSentence();
                
-                }    
+                });    
 
-            })
+            }
 
         }
 
@@ -144,7 +146,7 @@ function listenToNextSentence() {
     synthesisObject.sentenceNo += 1;
     removeSpeechText( tiaTimings.speechTextFadeOutDuration, function() {
         
-        showSpeechText( synthesisObject.now.texts[ synthesisObject.sentenceNo ], tiaTimings.speechTextFadeInDuration, tiaSpeakIndividualSentences )
+        tiaSpeakIndividualSentences();
 
     })
 

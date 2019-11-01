@@ -196,6 +196,7 @@ function showChoiceTextInput() {
 
     $('#sentenceShowHolder').hide();
     $('#textInputBoxCont').show();
+    $('#textInputBoxInnerCont').show();
     $('#textInputBox').show();
     //$('#textInputContainer').fadeIn( tiaTimings.speechBubbleFadeInDuration );
     $('#textInputContainer').show();

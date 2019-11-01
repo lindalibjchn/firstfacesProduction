@@ -71,6 +71,7 @@ function highlightClick( id ) {
 
 function highlightAndFocusOnPromptBox() {
 
+    enablePromptBox();
     $( '#promptText' ).focus();
     $( '#promptBoxInnerContainer' ).css( 'opacity', '1' );
 
@@ -79,6 +80,7 @@ function highlightAndFocusOnPromptBox() {
 function unHighlightAndFocusOnPromptBox() {
 
     $( '#promptText' ).blur();
+    disablePromptBox();
     $( '#promptBoxInnerContainer' ).css( 'opacity', '0.7' );
 
 }
@@ -86,6 +88,7 @@ function unHighlightAndFocusOnPromptBox() {
 function storePromptThenSend() {
 
     let promptText = $( '#promptText' ).val();
+    disablePromptBox();
     if ( promptText !== '' ) {
 
         teacherVars.sentencesNeedJudgement[ 0 ].prompt = promptText.split( '\n' );
