@@ -11,6 +11,9 @@ class Conversation(models.Model):
     end_time = models.DateTimeField(null=True, blank=True)
     emotion = models.SmallIntegerField(null=True, blank=True)
     topic = models.CharField(max_length=100, null=True, blank=True)
+    final_emotion = models.SmallIntegerField(null=True, blank=True)
+    rating = models.SmallIntegerField(null=True, blank=True)
+    comment = models.CharField(max_length=200, null=True, blank=True)
                          
     def __str__(self):
         return  str(self.pk) + "___" + self.learner.username + '___' + str(self.start_time.strftime("%a %d %b %H:%M")) + '___' + str(self.topic)
