@@ -19,6 +19,10 @@
 <!--<script>var speechBubble2 = "{% static 'face/JSON/speechBubble2.json' %}"</script>-->
 <script>var conversationVariables = {{ conversation_variables|safe }}</script>
 
+<!-- UTILS -->
+<script src="{% static 'face/javascript/utils/overall_data.js' %}"></script>
+<script src="{% static 'face/javascript/utils/grammar.js' %}"></script>
+
 <!-- VARIABLES AND CONSTANTS -->
 <script src="{% static 'face/javascript/variables_and_constants.js' %}"></script>
 <script src="{% static 'face/javascript/conversation/student/variables_and_constants/main.js' %}"></script>
@@ -85,8 +89,8 @@
 <script src="{% static 'face/javascript/conversation/student/ajax_stuff.js' %}"></script>
 
 <!-- TIME OVERLAY -->
-<script src="{% static 'face/javascript/conversation/student/time_container/grammar.js' %}"></script>
 <script src="{% static 'face/javascript/conversation/student/time_container/pronunciation.js' %}"></script>
+<script src="{% static 'face/javascript/conversation/student/time_container/finish_conversation.js' %}"></script>
 
 <!-- WRONG -->
 <script src="{% static 'face/javascript/conversation/student/wrong/buttons_0.js' %}"></script>

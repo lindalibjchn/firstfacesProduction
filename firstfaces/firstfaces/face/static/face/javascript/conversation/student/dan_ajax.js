@@ -417,7 +417,7 @@ $('#closeOverlayArea').click(function(){
 
 function closePrevSents() {
 
-    $('#prevSentsContainer0').fadeOut();
+    $('#prevSentsContainer').fadeOut();
     $('#prevSentsIconContainer').fadeIn();
 
 }

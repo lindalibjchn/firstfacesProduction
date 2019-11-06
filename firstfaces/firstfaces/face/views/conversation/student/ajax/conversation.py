@@ -121,24 +121,23 @@ def delete_session(request):
 
 def store_conversation_over(request):
 
-    session_id = int(request.GET['sessId'])
+    conv_id = int(request.POST['convId'])
+    ratings = json.loads(request.POST['ratings'])
 
-    # print('in store_conversation_over')
 
-    # scores = get_scores( session_id )
-    # score = math.floor(min(100, sum(scores)))
+    print('in store_conversation_over:', ratings)
 
-    delete_sentences_from_temp_db(session_id)
-
+    # code.interact(local=locals());
     time_now = timezone.now();
-    sess = Conversation.objects.get(pk=session_id)
-    sess.end_time = time_now
-    # sess.score = score
-    sess.save()
-
+    conv = Conversation.objects.get(pk=conv_id)
+    conv.end_time = time_now
+    conv.final_emotion = ratings['emotion']
+    conv.rating = ratings['stars']
+    conv.comment = ratings['comment']
+    # conv.score = score
+    conv.save()
+    
     response_data = {
-
-        # 'score': score,
 
     }
 

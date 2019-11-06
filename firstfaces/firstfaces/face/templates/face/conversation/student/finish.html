@@ -20,69 +20,22 @@
 
     <div id="dataNFinish">
 
-        <div id="classDataCont">
+        <div id="overallDataContainer">
         
-            <div class="w3-row class-data-row">
+            <div id="totalSentences"><span id="totalSentencesNumber"></span> sentences</div>
 
-                <div id="pronunciationContainer">
+            <div id="overallDataInnerContainer">
+            
+                <div id="overallDataChartContainer">
                 
-                    <div>Pronunciation</div>
-
-                    <div id="pronunciationGraphsRow" class="w3-row">
-
-                        <div class="w3-row w3-third">
-
-						</div>
-                        
-                        <div class="w3-row w3-two-thirds"></div>
-
-                    </div>
+                    <canvas id="overallDataChart"></canvas>
 
                 </div>
-                    
-            </div>
-        
-            <div class="w3-row class-data-row">
-
-                <div id="grammarContainer">
-                
-                    <div>Grammar</div>
-
-                    <div id="grammarGraphsRow" class="w3-row">
-
-                        <div class="w3-col s1">&nbsp</div>
-
-                        <div class="w3-col s4">
-
-							<div id="mainErrorsChartContainer">
-							
-								<canvas id="mainErrorsChart"></canvas>
-
-							</div>		
-
-						</div>
-                        
-                        <div class="w3-col s2">&nbsp</div>
-
-                        <div class="w3-col s4">
-
-							<div id="articleErrorsChartContainer">
-							
-								<canvas id="articleErrorsChart"></canvas>
-
-							</div>		
-
-                        </div>
-
-                        <div class="w3-col s1">&nbsp</div>
-
-                    </div>
-
-                </div>
-                    
 
             </div>
-        
+
+            <div id="percentSentencesCorrect"><span id="percentSentencesCorrectNo">55</span>%</div>
+
         </div>
 
         <div id="finishClassCont">
@@ -93,23 +46,170 @@
 
     </div>
 
-    <div id="confirmFinish">
+    <div id="confirmFinishContainer">
 
-        <div id="confirmFinishDisplay">
+        <div id="confirmFinishInnerContainer">
 
-            <div>Do you want to end this conversation?</div>
+            <div class="final-qs-container" id="ratingContainer">
 
-            <div class="end-btn-cont">
+                <div class="final-qs-inner-container" id="ratingInnerContainer">
 
-                <button id="finishClassBtn" class="w3-button finish-class-btns w3-large w3-green">yes</button>
+                    <div class="final-qs-question" id="ratingQuestionText">How was your conversation with Mia today?</div>
+
+					<div id="starContainer">
+
+						<div class="rate">
+
+							<input type="radio" class="rateStar" id="star5" name="rateName" value="5" />
+							<label for="star5" title="text">5 stars</label>
+							<input type="radio" class="rateStar" id="star4" name="rateName" value="4" />
+							<label for="star4" title="text">4 stars</label>
+							<input type="radio" class="rateStar" id="star3" name="rateName" value="3" />
+							<label for="star3" title="text">3 stars</label>
+							<input type="radio" class="rateStar" id="star2" name="rateName" value="2" />
+							<label for="star2" title="text">2 stars</label>
+							<input type="radio" class="rateStar" id="star1" name="rateName" value="1" />
+							<label for="star1" title="text">1 star</label>
+
+						</div>
+
+					</div>
+
+                </div>
 
             </div>
 
-            <div class="end-btn-cont">
+            <div class="final-qs-container" id="feelNowContainer">
 
-                <button id="cancelFinishClassBtn" class="w3-button finish-class-btns w3-large w3-red">no</button>
+                <div class="final-qs-inner-container" id="feelNowInnerContainer">
+
+                    <div class="final-qs-question" id="feelNowQuestionText">How do you feel now?</div>
+
+                    <div class="w3-row" id="finalEmotionQuestionsCont">
+
+                        <div class="w3-col l3 w3-hide-medium w3-hide-small">&nbsp</div>
+                        
+                        <div class="w3-col l6 m12 s12">
+
+                            <div class="w3-row">
+
+                                <div class="w3-col entry-emotion-btn-col">
+
+                                    <div class="input-btns">
+                                    
+                                        <div id="emoji0f" class="emojis">
+                                            
+                                            <img src="{% static 'face/images/fear_emoji.png' %}" class="emotion-labels">
+                                        
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="w3-col entry-emotion-btn-col">
+
+                                    <div class="input-btns">
+                                    
+                                        <div id="emoji1f" class="emojis">
+
+                                            <img src="{% static 'face/images/sad_emoji.png' %}" class="emotion-labels">
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="w3-col entry-emotion-btn-col">
+
+                                    <div class="input-btns">
+                                    
+                                        <div id="emoji2f" class="emojis">
+
+                                            <img src="{% static 'face/images/neutral_emoji.png' %}" class="emotion-labels">
+                                        
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="w3-col entry-emotion-btn-col">
+
+                                    <div class="input-btns">
+                                    
+                                        <div id="emoji3f" class="emojis">
+                                        
+                                            <img src="{% static 'face/images/content_emoji.png' %}" class="emotion-labels">
+                                        
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="w3-col entry-emotion-btn-col">
+
+                                    <div class="input-btns">
+                                    
+                                        <div id="emoji4f" class="emojis">
+                                        
+                                            <img src="{% static 'face/images/happy_emoji.png' %}" class="emotion-labels">
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="w3-col l3 w3-hide-medium w3-hide-small">&nbsp</div>
+
+                    </div>
+
+                </div>
 
             </div>
+
+            <div class="final-qs-container" id="commentsContainer">
+
+                <div class="final-qs-inner-container" id="commentsInnerContainer">
+
+                    <div class="final-qs-question" id="commentsQuestionText">Your comments:</div>
+
+					<div id="commentBoxContainer" class="w3-row">
+
+						<div id="commentBox" class="w3-col l8 m12 s12">
+
+							<textarea id="commentBoxInput" maxlength="199"></textarea>
+
+						</div>
+
+					</div>
+
+                </div>
+                        
+                <div id="finishClassBtnContainer">
+
+                    <div id="finishClassBtnInnerContainer">
+
+                        <button id="finishClassBtn" class="w3-button finish-class-btns w3-large w3-green">finish</button>
+                    
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!--<div class="end-btn-cont">-->
+
+                <!--<button id="cancelFinishClassBtn" class="w3-button finish-class-btns w3-large w3-red">no</button>-->
+
+            <!--</div>-->
 
         </div>
 
