@@ -47,7 +47,7 @@ function holdOnUntilNewAudioDurationIsAvailable() {
 
     } else {
 
-        setTimeout( holdOnUntilNewAudioDurationIsAvailable, 100 );
+        setTimeout( holdOnUntilNewAudioDurationIsAvailable, 50 );
 
     }
 
@@ -63,8 +63,8 @@ function animateFirstPhoneSlowly() {
 
     }
 
-    initSingleBreath( 1, breatheObject.speakingBreathMult, initPhoneDuration );
-    expressionController( expressionObject.abs[ synthesisObject.now.phones[ synthesisObject.sentenceNo ][ 0 ] ], initPhoneDuration, slightlyDelayAudioPlay )
+    initSingleBreath( 1, breatheObject.speakingBreathMult, tiaTimings.durationOfFirstSpeakingPhones );
+    expressionController( expressionObject.abs[ synthesisObject.now.phones[ synthesisObject.sentenceNo ][ 0 ] ], tiaTimings.durationOfFirstSpeakingPhones, slightlyDelayAudioPlay )
 
 }
 

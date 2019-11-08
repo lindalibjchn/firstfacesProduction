@@ -1,6 +1,6 @@
-function addPreviousSentences( conversation_, phoneId ) {
+function addPreviousSentences( conversation_, phoneId, bottom=true ) {
 
-    //console.log( 'conversation_:', conversation_ );
+    console.log( 'conversation_:', conversation_ );
     //console.log( 'phoneId:', phoneId );
     $( '#prevSentsInnerContainer' + phoneId ).remove()
     let prevSentsInnerContainer = document.createElement("div");
@@ -17,7 +17,11 @@ function addPreviousSentences( conversation_, phoneId ) {
 
     });
 
-    updateScroll( prevSentsInnerContainer )
+    if ( bottom ) {
+
+        updateScroll( prevSentsInnerContainer )
+
+    }
 
 }
 
