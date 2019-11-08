@@ -212,17 +212,17 @@ var blinkObject = {
 var breatheObject = {
     'bool': true,
     'sin': sineArrays[ secsOneBreath ],
-    'scaleMultX': 1.5 / secsOneBreath,
-    'scaleMultY': 2.75 / secsOneBreath,
-    'scaleMultZ': 12 / secsOneBreath,
-    'scaleMultShoulder': 25 / secsOneBreath,
+    'scaleMultX': 1.25 / secsOneBreath,
+    'scaleMultY': 2 / secsOneBreath,
+    'scaleMultZ': 8 / secsOneBreath,
+    'scaleMultShoulder': 18 / secsOneBreath,
     // from experimenting the y position of shoulder is 13 times greater than scale of upperspine
     //'yPosMult': 45 / secsOneBreath,
     //'yPosHeadMult': 12 / secsOneBreath,
     'direction': -1,
     'normalBreatheStopCount': null, 
     'normalBreatheStopDirection': null, 
-    'speakingBreathMult': 1.2,
+    'speakingBreathMult': 1.05,
     'singleBreath': {
         'startCount': null,
         'endCount': null,

@@ -26,6 +26,7 @@ from django.core.mail import send_mail
 import re
 import ast
 from face.views.waiting.utils.availables import get_availables_for_schedule, create_list_of_javascript_available_times_from_django_objects, check_if_currently_in_class_or_class_finished
+from face.views.waiting.utils.conversation import get_prev_conversations
 from face.views.conversation.all.modify_data import jsonify_or_none, floatify
 
 group_leader_dict = {
@@ -49,39 +50,13 @@ def waiting(request):
         date_now = timezone.localtime(timezone.now()).date()
 
         groups = request.user.groups.values_list('name', flat=True)
-        print('groups: ', groups)
         available_objects = get_availables_for_schedule(groups)
-        print('available_objects: ', available_objects)
 
         availables = create_list_of_javascript_available_times_from_django_objects(available_objects)
-        print('availables:', availables)
 
         currently_in_class, class_finished_today = check_if_currently_in_class_or_class_finished(request.user)
-        print('currently_in_class:', currently_in_class)
-        print('class_finished_today:', class_finished_today)
 
-        # class_finished_today = check_if class
-
-        # in utils.py, for schedule on board
-        # schedule_dict, schedule_now = make_schedule_dict( availables )
-        # print('schedule_dict: ', schedule_dict)
-        # print('schedule_now: ', schedule_now)
-    
-        # # no of current live sessions
-        # no_live_sessions = get_number_of_current_live_sessions()
-
-        # # in "Monday 18:00" format
-        # next_conversation, next_conversation_after_today = get_upcoming_conversation( availables )
-        # schedule_dict[ 'upcomingClass' ] = next_conversation
-        # schedule_dict[ 'upcomingClassAfterToday' ] = next_conversation_after_today
-        # # check if in conversation or during conversation
-        # sessions = Conversation.objects.filter( learner=request.user ).filter( tutorial=False )
-        # # returns boolean
-        # schedule_dict[ 'conversation_already_done_today' ] = json.dumps( get_conversation_already_done_today( sessions ) )
-        # schedule_dict[ 'in_conversation_now' ], schedule_dict[ 'session_id' ] = get_in_conversation_now( sessions )
-
-        # # get dictionary of all previous sessions
-        # sessions_dict = get_prev_sessions( request.user )
+        conversations = get_prev_conversations( request.user )
 
         # check if user has completed tutorial
         user_profile = Profile.objects.get(learner=request.user)
@@ -91,7 +66,7 @@ def waiting(request):
 
             # 'schedule_dict': json.dumps(schedule_dict),
             # 'schedule_now': json.dumps(schedule_now),
-            # 'sessions_dict': json.dumps(sessions_dict),
+            'conversations': conversations,
             'availables': availables,
             'tutorial_complete': tutorial_complete,
             'currently_in_class': currently_in_class,
@@ -100,7 +75,7 @@ def waiting(request):
 
         }
 
-        print('waiting_variables:', json.dumps(waiting_variables))
+        # print('waiting_variables:', json.dumps(waiting_variables))
         context = {
 
             'waiting_variables': json.dumps(waiting_variables),

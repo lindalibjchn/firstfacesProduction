@@ -44,7 +44,7 @@ tiaTimings = {
     speechBubbleFadeOutDuration: 200,
     speechTextFadeOutDuration: 200,
     //getIntoSpeakingPositionDuration: 0.5,
-    durationOfFirstSpeakingPhones: 0.5,
+    durationOfFirstSpeakingPhones: 0.25,
     delaySpeakingAfterBreathingIn: 0,
     delayAudioPlay: 100,
     durationOfLastSpeakingPhones: 0.5,

@@ -2,8 +2,11 @@ function addData( gramPronSent, error ) {
 
     if ( gramPronSent === 'grammar' ) {
 
-        calculateErrorsForChart( conversationVariables.conversation_dict.completed_sentences, error );
-        //addDetailedErrorsChart( error );    
+        let articleErrors = calculateArticleErrors( conversationVariables.conversation_dict.completed_sentences );
+        let correctArticlesPercent = articleErrors[ 0 ];
+        let articleErrorsDetailed = articleErrors[ 1 ];
+        drawChart( [ correctArticlesPercent, 100 - correctArticlesPercent ], 'allErrorsChart' );
+        addDetailedErrorsChart( 'article', articleErrorsDetailed );    
         showHideDivs( gramPronSent, error );
 
     } if ( gramPronSent === 'pronunciation' ) {
@@ -18,24 +21,24 @@ function addData( gramPronSent, error ) {
     
 }
 
-function calculateErrorsForChart( sentencesArray, typeOfError ) {
-
+function calculateArticleErrors( sentencesArray ) {
     
-    if ( typeOfError === 'article' ) {
+    let articleErrors = getTotalArticleErrors( sentencesArray );
+    let totalArticlesUsed = articleErrors[ 0 ];
+    let articleErrorsObject = articleErrors[ 1 ];
 
-        let articleErrors = getTotalArticleErrors( sentencesArray );
-        let totalArticlesUsed = articleErrors[ 0 ];
-        let articleErrorsObject = articleErrors[ 1 ];
+    let correctArticlesPercent = 0;
+    if ( totalArticlesUsed > 0 ) {
 
         correctArticlesPercent = getTotalArticleErrorsPercent( totalArticlesUsed, articleErrorsObject );
-        drawChart( [ correctArticlesPercent, 100 - correctArticlesPercent ], 'allErrorsChart' );
-        $('#correctPercentage').text( correctArticlesPercent );
-
-        inputDataForChart = putErrorObjectIntoListForChart( articleErrorsObject );
-        //console.log('inputDataForChart:', inputDataForChart)
-        addDetailedErrorsChart( typeOfError, inputDataForChart ) 
-
+    
     }
+        
+    $('#correctPercentage').text( correctArticlesPercent );
+
+    inputDataForChart = putErrorObjectIntoListForChart( articleErrorsObject );
+    //console.log('inputDataForChart:', inputDataForChart)
+    return [ correctArticlesPercent, inputDataForChart ]
 
 }
  
@@ -92,6 +95,7 @@ function getTotalArticleErrors( sentencesArray ) {
 
 function getNumberOfArticlesInSentence( sentenceArray ) {
 
+    console.log('sentenceArray:', typeof(sentenceArray));
     let noOfArticles = 0;
     sentenceArray.forEach( function( sentenceTuple ) {
 

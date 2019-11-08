@@ -24,14 +24,14 @@ function addDoughnutChart( sentencesArray ) {
 				data: overallData,
 				backgroundColor: [
 					'rgba(17, 219, 13, 1)',
-					'rgba(222, 135, 4, 1)',
+					//'rgba(222, 135, 4, 1)',
 					'rgba(217, 4, 4, 1)',
 					'rgba(41, 0, 0, 1)',
 				],
                 borderWidth: 1,
                 //borderAlign: 'inner',
 			}],
-			labels: [ 'correct', 'meaning?', 'incorrect', "don't know" ],
+			labels: [ '✔', '✘', "❓" ],
 		},
 		options: {
 			responsive: true,
@@ -51,12 +51,11 @@ function addDoughnutChart( sentencesArray ) {
 
 function getOverallData( sentencesArray ) {
 
-    let judgements = calculateCorrectIncorrectMeaningWrongSentences( sentencesArray )
+    let judgements = calculateCorrectIncorrectDunnoSentences( sentencesArray )
 
     dataArray = [];
 
     dataArray.push( judgements[ 'P' ] );
-    dataArray.push( judgements[ 'M' ] );
     dataArray.push( judgements[ 'I' ] );
     dataArray.push( judgements[ 'D' ] );
 
@@ -64,20 +63,19 @@ function getOverallData( sentencesArray ) {
 
 }
 
-function calculateCorrectIncorrectMeaningWrongSentences( sentencesArray ) {
+function calculateCorrectIncorrectDunnoSentences( sentencesArray ) {
 
     let judgements = {
 
         'P': 0,
         'I': 0,
-        'M': 0,
         'D': 0,
 
     }
 
     sentencesArray.forEach( function( sentenceObject ) {
 
-        if ( sentenceObject.judgement === "3" ) {
+        if ( sentenceObject.judgement === "3" || sentenceObject.judgement === "M" ) {
 
             judgements[ 'D' ] += 1;
 
@@ -100,7 +98,7 @@ function calculateCorrectIncorrectMeaningWrongSentences( sentencesArray ) {
 
 function addPercentageCorrectInCentreOfDoughnut( sentencesArray ) {
 
-    judgements = calculateCorrectIncorrectMeaningWrongSentences( sentencesArray );
+    judgements = calculateCorrectIncorrectDunnoSentences( sentencesArray );
     percentCorrect = parseInt( 100 * judgements[ 'P' ] / sentencesArray.length );
     $('#percentSentencesCorrectNo').text( percentCorrect );
 

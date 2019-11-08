@@ -10,93 +10,82 @@ import json
 from django.forms.models import model_to_dict
 from google.cloud import texttospeech
 import os
+from face.views.conversation.all.sentences import convert_django_sentence_object_to_json, get_student_conversation
 
-def get_class_already_done_today( sessions ):
+# def get_class_already_done_today( sessions ):
 
-    for s in sessions:
+    # for s in sessions:
 
-        if s.start_time.date() == timezone.now().date():
+        # if s.start_time.date() == timezone.now().date():
 
-            if s.end_time != None:
+            # if s.end_time != None:
 
-                return True
+                # return True
 
-    return False
+    # return False
 
-def get_in_class_now( sessions ):
+# def get_in_class_now( sessions ):
 
-    if len( sessions ) == 0:
+    # if len( sessions ) == 0:
 
-        return False, 0
+        # return False, 0
 
-    else:
+    # else:
 
-        # get the most recent session
-        s = sessions.order_by('-start_time')[ 0 ]
+        # # get the most recent session
+        # s = sessions.order_by('-start_time')[ 0 ]
         
-        print('s:', s)
+        # print('s:', s)
 
-        # if no end time then session is currently running
-        if s.end_time == None and s.start_time > timezone.now() - datetime.timedelta(hours=1):
+        # # if no end time then session is currently running
+        # if s.end_time == None and s.start_time > timezone.now() - datetime.timedelta(hours=1):
 
-            return True, s.id
+            # return True, s.id
 
-        else:
+        # else:
 
-            return False, 0
+            # return False, 0
 
-def get_number_of_current_live_sessions():
+# def get_number_of_current_live_sessions():
 
-    print('time now:', timezone.now())
-    # get all sessions currently underway
-    sessions_no_end_time = Conversation.objects.filter(end_time=None)
-    remove_those_not_ended_by_user = sessions_no_end_time.filter(start_time__gte=timezone.now()-datetime.timedelta(hours=2))
-    remove_tutorials = remove_those_not_ended_by_user.filter(tutorial=False)
-    return remove_tutorials.count()
+    # print('time now:', timezone.now())
+    # # get all sessions currently underway
+    # sessions_no_end_time = Conversation.objects.filter(end_time=None)
+    # remove_those_not_ended_by_user = sessions_no_end_time.filter(start_time__gte=timezone.now()-datetime.timedelta(hours=2))
+    # remove_tutorials = remove_those_not_ended_by_user.filter(tutorial=False)
+    # return remove_tutorials.count()
 
-def get_prev_sessions( user ):
+def get_prev_conversations( user ):
 
-    all_sessions = Conversation.objects.filter(learner=user)
+    all_conversations = Conversation.objects.filter(learner=user).order_by('-pk')
 
-    sessions_dict = {}
+    # conversations_dict = {}
+    conversations_list = []
 
-    for sess in all_sessions:
+    for conv in all_conversations:
 
-        if not sess.tutorial and sess.score != None:
+        student_conv = get_student_conversation(conv, user.id, False)[ 0 ]
+        conversations_list.append( student_conv )
 
-            sents = Sentence.objects.filter(session=sess).order_by('pk')
-            sentences = []
+        # sents = Sentence.objects.filter(conversation=conv).order_by('-pk')
+        # sentences = []
 
-            for s in sents:
+        # for s in sents:
 
-                a_s = s.audiofile_set.all().order_by('pk')
-                a_s_ids = [[a.id, [a.transcription0, a.transcription1, a.transcription2], a.audio.name, json.loads(a.clicks)] for a in a_s]
+            # sentences.append( convert_django_sentence_object_to_json( s, user.id, conv.id ))
 
-                sentences.append({
-                    'sent_id': s.id,
-                    'sess_id': sess.id,
-                    'sentence': s.sentence, 
-                    'judgement': s.judgement, 
-                    'correction': s.correction, 
-                    'indexes': s.indexes,
-                    'try_again': s.try_again, 
-                    'prompt': s.prompt,
-                    'audio_files': a_s_ids
-                })
+        # topic = conv.topic
+        # if topic == 'emotion':
+            # topic = 'feeling ' + conv.emotion
+        
+        # conversations_dict[ conv.id ] = {
 
-            topic = sess.topic
-            if topic == 'emotion':
-                topic = 'feeling ' + sess.learner_emotion
-            
-            sessions_dict[ sess.id ] = {
+            # 'start_time': int(time.mktime((conv.start_time).timetuple())),
+            # 'topic': topic,
+            # 'emotion': conv.emotion,
+            # 'completed_sentences': sentences
 
-                'score': sess.score,
-                'start_time': int(time.mktime((sess.start_time).timetuple())),
-                'topic': topic,
-                'emotion': sess.learner_emotion,
-                'sentences': sentences
-
-            }
+        # }
                 
-    return sessions_dict 
+    return conversations_list 
 
