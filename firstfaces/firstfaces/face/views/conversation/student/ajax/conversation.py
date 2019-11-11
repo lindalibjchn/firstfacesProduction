@@ -71,11 +71,11 @@ from wordcloud import WordCloud
 
 def store_emotion(request):
 
-    emotion = request.POST['emotionID']
-    session_id = request.POST['sessionID']
-    sess = Conversation.objects.get(pk=session_id)
-    sess.learner_emotion = emotion
-    sess.save()
+    emotion = request.POST['emotion']
+    conversation_id = request.POST['conversationId']
+    conv = Conversation.objects.get(pk=conversation_id)
+    conv.emotion = emotion
+    conv.save()
 
     response_data = {
 
@@ -86,10 +86,10 @@ def store_emotion(request):
 def store_topic(request):
 
     topic = request.POST['topic']
-    session_id = request.POST['sessionID']
-    sess = Conversation.objects.get(pk=session_id)
-    sess.topic = topic
-    sess.save()
+    conversation_id = request.POST['conversationId']
+    conv = Conversation.objects.get(pk=conversation_id)
+    conv.topic = topic
+    conv.save()
 
     response_data = {
 
@@ -136,24 +136,32 @@ def delete_session(request):
 
 def store_conversation_over(request):
 
-    session_id = int(request.GET['sessId'])
+    conv_id = int(request.POST['convId'])
+    ratings = json.loads(request.POST['ratings'])
 
-    # print('in store_conversation_over')
 
-    # scores = get_scores( session_id )
-    # score = math.floor(min(100, sum(scores)))
+    print('in store_conversation_over:', ratings)
 
-    delete_sentences_from_temp_db(session_id)
-
+<<<<<<< HEAD
     time_now = timezone.now()
     sess = Conversation.objects.get(pk=session_id)
     sess.end_time = time_now
     # sess.score = score
     sess.save()
 
+=======
+    # code.interact(local=locals());
+    time_now = timezone.now();
+    conv = Conversation.objects.get(pk=conv_id)
+    conv.end_time = time_now
+    conv.final_emotion = ratings['emotion']
+    conv.rating = ratings['stars']
+    conv.comment = ratings['comment']
+    # conv.score = score
+    conv.save()
+    
+>>>>>>> 5ef1aaa2481d82a99deb346b1f1e8337405a22aa
     response_data = {
-
-        # 'score': score,
 
     }
 

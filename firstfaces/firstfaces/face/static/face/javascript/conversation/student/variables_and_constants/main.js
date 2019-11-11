@@ -40,6 +40,7 @@ const AUDIO_N_VIDEO_SETTINGS = {
             "googHighpassFilter": "false",
         },    
     },
+    //audio: true, // need this for firefox to work
     video: false
 }
 
@@ -111,6 +112,7 @@ const secsOneBreath = 150;
 //const SINETYPEARRAYSECONDS = [ 30, 45, 60 ];
 const SINEARRAYFORBREATHESECONDS = [ 180, 210, 240, 270, 300 ]
 const SINEARRAYFORTILTSECONDS = [ 120, 150, 180, 210, 240, 270, 300 ]
+const SINEARRAYFORHEADTILTSECONDS = [ 90, 120, 150 ]
 
 
 

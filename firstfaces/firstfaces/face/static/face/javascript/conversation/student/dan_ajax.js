@@ -382,47 +382,58 @@ $('#backCorrection').click(function(){
 
 //Clsoes the moadal
 $('#closeOverlayArea').click(function(){
-   if(conversationVariables.stage2 || conversationVariables.stage3){
-    if(conversationVariables.correctionDone){
-        undoCorrect();
-    }
-    if(conversationVariables.thirdAttemptError || conversationVariables.noTransError){               
-        removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
-        conversationVariables.thirdAttemptError = false;  
-        conversationVariables.noTransError = false;
-    }  
-    $('#backCorrection').show();
-    $('#recordVoiceBtn').show();
-    $('#correctionOverlay').hide();
-    $('#sentenceHolderParent').show();
-    $('#overlayTextBox').empty();
+
+    closePrevSents();
+    closeTimeOverlayCont();
+    
+    if(conversationVariables.stage2 || conversationVariables.stage3) {
+    
+        if(conversationVariables.correctionDone){
+            undoCorrect();
+        }
+        
+        if(conversationVariables.thirdAttemptError || conversationVariables.noTransError){               
+            removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
+            conversationVariables.thirdAttemptError = false;  
+            conversationVariables.noTransError = false;
+        }  
+        
+        $('#backCorrection').show();
+        $('#recordVoiceBtn').show();
+        $('#correctionOverlay').hide();
+        $('#sentenceHolderParent').show();
+        $('#overlayTextBox').empty();
+       
+        if(conversationVariables.stage3){
+            closeStage3();
+        }
+
+        conversationVariables.stage2 = false;
+        conversationVariables.stage3 = false;
+
+        $('#backCorrection').prop( "disabled", false );
+        unmoveText();   
    
-    if(conversationVariables.stage3){
-        closeStage3();
     }
+});
 
-    conversationVariables.stage2 = false;
-    conversationVariables.stage3 = false;
+function closePrevSents() {
 
-    // also close prevSentsContainer - J
     $('#prevSentsContainer').fadeOut();
     $('#prevSentsIconContainer').fadeIn();
 
-    //Close Time Overlay Container
-    closeTimeOverlayCont();
-
-    $('#backCorrection').prop( "disabled", false );
-    unmoveText();   
-   }
-});
-
+}
 
 function closeTimeOverlayCont(){
-     $('#prevSentsIconContainer').show();
-     $('#finishClassIconContainer').show();
-     $('#dataNFinish').hide();
-     $('#confirmFinish').hide();
-     $('#timeOverlayContainer').fadeOut();
+     $('#prevSentsIconContainer').fadeIn();
+     $('#finishClassIcon').fadeIn();
+     $('#timeElapsedCont').fadeOut();
+     $('#timeOverlayContainer').fadeOut( function(){
+      
+         $('#dataNFinish').hide();
+         $('#confirmFinish').hide();
+
+     });
 }
 
 
@@ -510,7 +521,6 @@ function openOverlay(){
 
 //Function called if user had submitted  typed correction and then attempted to record
 function sendAttemptBlob( new_blob ){
-    returnFromListenToErrorAttemptWithSpectrograph();
     let fd = new FormData();
     fd.append('data',new_blob);
     fd.append('error_pk',conversationVariables.errors[conversationVariables.startIDX]);
@@ -529,8 +539,7 @@ function sendAttemptBlob( new_blob ){
         success: function(json){
             //john
             conversationVariables.showingSpectrograms = true;
-            tapKeyFull();
-            movementController( movementObject.abs.blank, '0.5', '1' );
+            prepareToStopTyping();
           
             setTimeout( function(){
                 $('#reRecordBtn').show();
@@ -708,6 +717,7 @@ function sendErrorBlobToServer( new_blob ){
             /*returnFromListenToSentence();   John Not sure where this has gone*/
             //add index an foregin key to the errors
             conversationVariables.errors[json['error_start']] = json['error_pk'];
+            prepareToStopTyping();
             //display transcript
             if(json['error_trans'] != ""){
                 moveText();
@@ -810,11 +820,7 @@ $('#transHolder').click(function(){
 //Keyboard sumbit
 function submitKeyboard(){
 
-    // john
-    // tia looks at laptop while waiting for images to return
-    movementController( movementObject.abs.laptop, '0.5', '1' );
-
-
+    tiaLookAtLaptopAndType();
     //hide other buttons
     $('#reRecordBtn').fadeOut();
     $('#keyboardOverlay').fadeOut();
@@ -854,8 +860,7 @@ function submitKeyboard(){
             // john
             //  tia taps and looks at student
             conversationVariables.showingSpectrograms = true;
-            tapKeyFull();
-            movementController( movementObject.abs.blank, '0.5', '1' );
+            prepareToStopTyping();
 
             //$('#reRecordBtn').show();
 
@@ -961,6 +966,7 @@ function submitRecording(){
         processData: false,
         contentType: false,
         success: function(json){
+            prepareToStopTyping();
             doneError();                                  
             unmoveText();                                                 
             $('#backCorrection').prop("disabled",false);  
@@ -1156,8 +1162,21 @@ function unmoveText(){
 
 //Function flashes the border of each word in the transcription
 function causeFlash(){
-    var words = conversationVariables.sentence_being_recorded_audio.alternatives[0].transcript.split(" ").length;
+    
+    // if learner clicks 'try again' then there is no sentence in the transcripts, so need to do the following to get the text
+    var words;
+    if ( $.isEmptyObject(conversationVariables.sentence_being_recorded_audio) ) {
+    
+        words = makeStringSentFromArray(conversationVariables.conversation_dict.completed_sentences[0].sentence);
+
+    } else {
+
+        words = conversationVariables.sentence_being_recorded_audio.alternatives[0].transcript.split(" ").length;
+    
+    }
+
     flash(0,words);
+
 }
 
 //Function flashes the border of all words whos idx is between i and max

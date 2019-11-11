@@ -9,6 +9,7 @@ import string
 import math
 import ast
 from face.views.conversation.student.utils.store_sentence import change_sentence_to_list_n_add_data
+from face.views.conversation.student.utils.check_for_judgement import for_prompt_arrived
 from face.views.conversation.all.sentences import convert_django_sentence_object_to_json
 from face.views.conversation.all.modify_data import jsonify_or_none, floatify
 from face.views.conversation.all import database_updates
@@ -53,22 +54,29 @@ def check_judgement(request):
     sent_id = int(request.GET['sentId'])
     conv_id = int(request.GET['convId'])
     received_judgement = False
+    received_judgement_n_for_prompt = False
 
     s = Sentence.objects.get(pk=sent_id)
     sent = {}
 
-    print('judgement:', s.judgement)
     if s.judgement != None:
+                
+        received_judgement = True
 
         if s.judgement in ["M", "B", "P"]:
             
-            if s.for_prompt != None:
+            check_for_prompt_count = 0
+            while not for_prompt_arrived(s):
+                sleep(2)
+                check_for_prompt_count += 1
+                if check_for_prompt_count == 5:
+                    break
+
+            if check_for_prompt_count != 5:
                 sent = convert_django_sentence_object_to_json(s, request.user.id, conv_id)
-                received_judgement = True
 
         else: # C, X,  D and 3
             sent = convert_django_sentence_object_to_json(s, request.user.id, conv_id)
-            received_judgement = True
 
     sent_meta = {
         'sentence': sent,

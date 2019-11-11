@@ -1,46 +1,276 @@
-.prev-sents-icons {
-
-    position: absolute;
-    height: 60px;
-    width: 40px;
-
-}
-
 #prevSentsIconContainer {
 
     position: absolute;
-    height: 50px;
-    width: 50px;
-    margin: 10px;
+    right: 0;
+    height: 45px;
+    width: 45px;
+    margin: 7px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     z-index: 112;
 
 }
 
-#iconDark {
+.prev-sents-icons {
 
-    display: none;
+    /*position: absolute;*/
+    /*height: 60px;*/
+    /*width: 40px;*/
+    color: white;
 
 }
 
 #prevSentsContainer {
 
+    position: absolute;
+    background-color: white;
+    bottom: 0;
+    width: 100%;
+    height: 63%;
+    z-index: 200;
+    display: none;
+    /*border: 2px solid red;*/
+    /*display: flex;*/
+    /*justify-content: center;*/
+    /*align-items: center;*/
+
+}
+
+#prevSentsInnerContainer {
+
+    width: 100%;
+    height: 100%;
+    /*border: 2px solid red;*/
+    /*display: flex;*/
+    /*justify-content: center;*/
+    /*align-items: center;*/
+
+}
+
+#clickableTitlesContainer {
+
+    position: relative;
+    width: 100%;
+    height: 10%;
+    /*border: 1px dashed red;*/
+
+}
+
+.titles {
+
+    /*position: absolute;*/
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.active-title {
+
+    background-color: rgba(255,255,255,1);
+    font-weight: bold;
+
+}
+
+.background-title {
+
+    background-color: rgba(0,0,0,0.2);
+    font-weight: normal;
+    color: white;
+
+}
+
+/*#pronunciationTitleContainer {*/
+
+    /*right: 0;*/
+
+/*}*/
+
+/*#grammarTitleContainer {*/
+
+    /*left: 0;*/
+
+/*}*/
+
+#sentencesGrammarPronunciationContainer {
+
+    position: relative;
+    height: 90%;
+    width: 100%;
+    /*border: 2px solid black;*/
+
+}
+
+#prevSentsContainer0 {
+
     display: none;
     position: absolute;
-    width: 100%;
-    height: 50%;
+    width: 95%;
+    height: 95%;
     left: 0;
+    right: 0;
     bottom: 0;
-    background-color: rgba( 0, 0, 0, 1 );
+    top: 0;
+    margin: auto;
+    background-color: rgba( 0, 0, 0, 0.1 );
     z-index: 110;
 
 }
 
-#prevSents {
+.box {
+
+    font-size: 4vw;
+    margin: 5px;
+    padding: 3px;
+
+}
+
+#grammarContainer {
+
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    /*display: none;*/
+    /*border: 2px dashed red;*/
+
+}
+
+#grammarInnerContainer {
+
+    position: absolute;
+    height: 90%;
+    width: 100%;
+
+}
+
+#allErrorsChartContainer {
+
+    position: absolute;
+    width: 15%;
+    height: 15%;
+    top: 5%;
+    left: 2%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /*border: 1px solid black;*/
+
+}
+
+#allErrorsChartInnerContainer {
 
     position: absolute;
     width: 100%;
-    height: 100%;
-    overflow-y: auto;
+    padding-top: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+	/*border: 1px solid black;*/
 
 }
+
+#allErrorsChart {
+
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 100%;
+	/*border: 1px solid green;*/
+
+}
+
+#correctSentencePercentage {
+
+    position: absolute;
+    color: #45ff30;
+    font-weight: bold;
+    font-size: 6vw;
+
+}
+
+#detailedErrorsChartContainer {
+
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+	/*border: 1px solid black;*/
+
+}
+
+#detailedErrorsChartInnerContainer {
+
+    position: absolute;
+    width: 70%;
+    height: 70%;
+    /*top: 0;*/
+    /*display: flex;*/
+    /*justify-content: center;*/
+    /*align-items: center;*/
+	/*border: 1px dashed black;*/
+
+}
+
+#detailedErrorsChartInner2Container {
+
+    position: absolute;
+    width: 100%;
+    padding-top: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+	/*border: 1px solid black;*/
+
+}
+
+#detailedErrorsChart {
+
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 100%;
+	/*border: 1px solid green;*/
+
+}
+
+.tabs-container {
+
+    position: absolute;
+    height: 10%;
+    width: 100%;
+    bottom: 0;
+    display: none;
+
+}
+
+/*#grammarTabsContainer {*/
+
+    /*position: absolute;*/
+    /*height: 100%;*/
+    /*width: 100%;*/
+
+}
+
+#pronunciationContainer {
+
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    display: none;
+
+}
+
+#pronunciationInnerContainer {
+
+    position: absolute;
+    height: 90%;
+    width: 100%;
+
+}
+
+
 

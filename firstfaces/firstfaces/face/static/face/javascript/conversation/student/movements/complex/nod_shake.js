@@ -1,14 +1,15 @@
-function initNod( depth, secs ) {
+function initNod( depth, secs, nodCb=function(){} ) {
 
     // EX: initNod(0.1, '0.5')
 
     if ( nodObject.bool ) {
 
-        //console.log('can move while still moving man!!')
+        console.log('can move nod while still moving previous nod!!')
 
     } else {
     
         nodObject.bool = true;
+        nodObject.callback = nodCb;
         
         if ( nodObject.iter === 0 ) {
          
@@ -50,12 +51,12 @@ function nod( main ) {
         if ( nodObject.iter < 3 ) {
 
             nodObject.iter += 1;
-            initNod( nodObject.depth, nodObject.secs );
+            initNod( nodObject.depth, nodObject.secs, nodObject.callback );
 
         } else {
 
             nodObject.iter = 0;
-            movementController( movementObject.abs.blank, nodObject.secs, nodObject.secs );
+            movementController( movementObject.abs.blank, nodObject.secs, nodObject.secs, nodObject.callback );
 
         }
 
@@ -64,15 +65,16 @@ function nod( main ) {
 }
 
 
-function initShake( depth, secs ) {
+function initShake( depth, secs, shakeCb=function(){}  ) {
 
     if ( shakeObject.bool ) {
 
-        //console.log('can move while still moving man!!')
+        console.log('can shake while still shaking!')
 
     } else {
     
         shakeObject.bool = true;
+        shakeObject.callback = shakeCb;
         
         if ( shakeObject.iter === 0 ) {
          
@@ -112,12 +114,12 @@ function shake( main ) {
         if ( shakeObject.iter < 3 ) {
 
             shakeObject.iter += 1;
-            initShake( shakeObject.depth, shakeObject.secs );
+            initShake( shakeObject.depth, shakeObject.secs, shakeCb=shakeObject.callback );
 
         } else {
 
             shakeObject.iter = 0;
-            movementController( movementObject.abs.blank, shakeObject.secs, shakeObject.secs );
+            movementController( movementObject.abs.blank, shakeObject.secs, shakeObject.secs, shakeObject.callback );
 
         }
 

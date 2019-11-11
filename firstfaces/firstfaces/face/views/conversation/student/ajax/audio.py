@@ -133,7 +133,7 @@ def store_blob(request):
     # print('transcription_aligned_list:', transcription_aligned_list)
 
     #and then once have the transcriptions, save them
-    a.alternatives = alternatives
+    a.alternatives = json.dumps( alternatives )
     a.save()
 
     response_data = {

@@ -25,11 +25,11 @@ SECRET_KEY = 'mn2lz%0@o4=8l8p@z&5)j@-8bjwtesmzcwz$z((81obe&b7skl'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['erle.ucd.ie', '127.0.0.1']
+ALLOWED_HOSTS = ['erle.ucd.ie', '127.0.0.1', 'localhost']
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'ucd.erle@gmail.com'
-EMAIL_HOST_PASSWORD = 'UCDErledonghwa1'
+EMAIL_HOST_PASSWORD = 'UCDErledonghwa111'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 

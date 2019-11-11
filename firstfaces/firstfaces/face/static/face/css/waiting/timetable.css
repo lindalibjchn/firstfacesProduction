@@ -1,0 +1,157 @@
+#timetableContainer {
+
+    position: relative;
+    height: 30%;
+    width: 100%;
+    /*border: 1px solid red;*/
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+}
+
+#timetableInnerContainer {
+
+    position: absolute;
+    bottom: 5%;
+    height: 75%;
+    width: 95%;
+    /*border: 2px dashed green;*/
+
+}
+
+#timetableMainCont {
+
+    position: relative;
+    height: 100%;
+    width: 100%;
+    /*border: 2px solid black;*/
+
+}
+
+#timetableRowsCont {
+
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 90%;
+    /*border: 2px solid red;*/
+
+}
+
+#daysRows {
+
+    position: absolute;
+    height: 100%;
+    width: 10%;
+    left: 0;
+
+}
+
+.days {
+
+    position: relative;
+    height: 20%;
+    width: 100%;
+
+}
+
+.days-text {
+
+    font-size: 3vw;
+    /*background-color: #969696;*/
+    color: white;
+    font-weight: bold;
+    border-bottom: 1px solid white;
+    height: 100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+}
+
+#timesRows {
+
+    position: absolute;
+    height: 100%;
+    width: 90%;
+    right: 0;
+    /*border: 2px solid blue;*/
+
+}
+
+.timetable-row {
+
+    position: relative;
+    height: 20%;
+    width: 100%;
+    border-bottom: 1px solid #e0e0e0;
+
+}
+
+.timetable-row-top {
+
+    border-top: 1px solid #e0e0e0;
+
+}
+
+.times {
+
+    position: relative;
+    top: -10%;
+    left: -7px;
+    font-size: 3vw;
+    color: #969696;
+
+}
+
+#timetableTimesCont {
+
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 90%;
+    height: 90%;
+    /*border: 1px dashed black;*/
+
+}
+
+.timetable-time-col {
+
+    width: 12.5%;
+    height: 100%;
+    border-left: 1px solid #e0e0e0;
+
+}
+
+.timetable-time-col-right {
+
+    border-right: 1px solid #e0e0e0;
+
+}
+
+.button-for-entering-conversation {
+
+    z-index: 200;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight: bold;
+    font-size: 4vw;
+    color: #188ac7;
+    border-radius: 15px;
+    border: 1px solid #188ac7;
+    opacity: 1 !important;
+
+}
+
+.button-for-entering-conversation:hover {
+
+    cursor: pointer;
+
+}
+
+
+
+
+

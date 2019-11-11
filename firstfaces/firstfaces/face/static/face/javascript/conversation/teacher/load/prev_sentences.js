@@ -1,4 +1,4 @@
-function addPreviousSentences( conversation_, phoneId ) {
+function addPreviousSentences( conversation_, phoneId, bottom=true ) {
 
     //console.log( 'conversation_:', conversation_ );
     //console.log( 'phoneId:', phoneId );
@@ -17,7 +17,11 @@ function addPreviousSentences( conversation_, phoneId ) {
 
     });
 
-    updateScroll( prevSentsInnerContainer )
+    if ( bottom ) {
+
+        updateScroll( prevSentsInnerContainer )
+
+    }
 
 }
 
@@ -127,7 +131,7 @@ function createPromptBox( exchange_ ) {
 
 function createPromptTextForEachJudgement( exchange_ ) {
 
-    let text;
+    let text = "";
     if ( exchange_.judgement === "P" ) {
 
         text = exchange_.prompt.join( '<br>' );
@@ -142,7 +146,11 @@ function createPromptTextForEachJudgement( exchange_ ) {
 
     } else if ( exchange_.judgement === "I" ) {
 
-        text = exchange_.prompt.join('<br>');
+        if ( exchange_.prompt !== null ) {
+
+            text = exchange_.prompt.join('<br>');
+
+        }
 
     } else if ( exchange_.judgement === "3" ) {
 

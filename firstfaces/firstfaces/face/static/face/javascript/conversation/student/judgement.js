@@ -22,7 +22,7 @@ function preparePromptForTiaSpeak() {
 
    if ( ['P', 'M', 'B'].includes( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement ) ) {
 
-        synthesisObject.data.prompt = conversationVariables.conversation_dict.completed_sentences[ 0 ].forPrompt;
+        synthesisObject.data.prompt = conversationVariables.conversation_dict.completed_sentences[ 0 ].for_prompt;
         synthesisObject.data.prompt.URLs.forEach( function( URL, ind, arr ) {
 
             arr[ ind ] = prefixURL + arr[ ind ]; 
@@ -33,7 +33,7 @@ function preparePromptForTiaSpeak() {
 
        synthesisObject.data.prompt = synthesisObject.data.iDontUnderstand;
 
-    } else {
+    } else if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === 'X' ) {
 
        synthesisObject.data.prompt = synthesisObject.data.moreThanThree;
 
