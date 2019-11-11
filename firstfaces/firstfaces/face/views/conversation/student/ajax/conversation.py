@@ -13,7 +13,7 @@ import librosa
 import itertools
 import numpy as np
 
-from face.praat_utils import get_audio_length
+from face.views.conversation.all.praat_utils import get_audio_length
 nlp = spacy.load("en_core_web_sm")
 import code
 import string
