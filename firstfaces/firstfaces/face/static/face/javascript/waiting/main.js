@@ -2,9 +2,8 @@ $(window).on( 'load', function() {
 
     addAvailablesToTimetable( waitingVariables.availables )
     addAllScores( waitingVariables.conversations )
-    showConversationSentences( waitingVariables.conversations.length - 1 );
-    $('.sentence-box').click( showPronunciationDataContainer );
-    $('#pronunciationDataContainer').click( hidePronunciationDataContainer );
+    showConversationSentences( 0 );
+    $('#pronunciationClearOverlayArea').click( hidePronunciationDataContainer );
 
 });
 
@@ -14,6 +13,23 @@ function enterConversation() {
 
 }
 
+var prefixURL;
+function definePrefixURL() {
+
+    if ( waitingVariables.in_development ) {
+
+        prefixURL = "http://127.0.0.1:8000/"
+
+    } else {
+
+        prefixURL = "https://erle.ucd.ie/"
+
+    }
+
+}
+definePrefixURL();
+
+const mediaLocation = "media/";
 
 
 

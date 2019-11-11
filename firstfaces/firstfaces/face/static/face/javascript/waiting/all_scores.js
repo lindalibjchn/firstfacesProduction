@@ -18,15 +18,15 @@ function calculateCorrectSentencesNWrongArticlesPercentForEachConversation( allC
         //if ( totalSentences !== 0 ) {
 
             let startTimeDateStringForChart = convertStartTimeIntToDayMonthStringForChart( c.start_time );
-            allConversationsStartTimes.push( startTimeDateStringForChart );
+            allConversationsStartTimes.unshift( startTimeDateStringForChart );
         
             let correctIncorrectDunno = calculateCorrectIncorrectDunnoSentences( c.completed_sentences );
             
             let correctPercentage = parseInt( 100 * correctIncorrectDunno['P'] / totalSentences );
-            allConversationsCorrectPercentage.push( correctPercentage );
+            allConversationsCorrectPercentage.unshift( correctPercentage );
 
             let wrongArticlesPercentage = parseInt( 100 - calculateArticleErrors( c.completed_sentences )[ 0 ] );
-            allConversationsWrongArticlesPercentage.push( wrongArticlesPercentage );
+            allConversationsWrongArticlesPercentage.unshift( wrongArticlesPercentage );
 
         //}
 
@@ -50,6 +50,7 @@ function convertStartTimeIntToDayMonthStringForChart( t ) {
 
 function drawLineChartAllScores( allData ) {
 
+    //console.log( 'allData:', allData )
 	// ok, so have to individually add sizes and colours of points in a list so I can individually control them later. there must be anther way but I can't find one now and hitRadius returns to normal size. FIID!!
 	let noOfConv = allData[0].length;
 	let correctBorderRadii = [];
@@ -87,9 +88,10 @@ function drawLineChartAllScores( allData ) {
 				backgroundColor: 'rgba(219, 17, 13, 1)',
 				borderColor: 'rgba(219, 17, 13, 0.7)',
                 fill: false,
-                borderWidth: 1,
-                pointRadius: 3,
+                borderWidth: 2,
+                pointRadius: 4,
                 borderDash: [5, 5],
+                pointStyle: 'triangle',
 			}],
             //pointHitRadius: 9,
             //hoverRadius: 9,
@@ -115,6 +117,10 @@ function drawLineChartAllScores( allData ) {
                         fontColor: '#102858',
                         fontStyle: 'bold',
                     },
+                    //scaleLabel: {
+                        //display: true,
+                        //labelString:'%'
+                    //}
                 }],
                 xAxes: [{
                     ticks: {
@@ -130,10 +136,10 @@ function drawLineChartAllScores( allData ) {
 
                 el = myLineChart.getElementAtEvent( evt );
                 if ( el.length !== 0 ) {
-                    console.log('el:', el );
+                    //console.log('el:', el );
                     let elementIndex = el[ 0 ]._index
 
-                    console.log('this.data.datasets[0]:', this.data.datasets[0]);
+                    //console.log('this.data.datasets[0]:', this.data.datasets[0]);
                     lenPoints = this.data.datasets[0].pointRadius.length;
 
                     for(i=0; i<lenPoints; i++) {
@@ -145,7 +151,7 @@ function drawLineChartAllScores( allData ) {
                     this.data.datasets[0].pointRadius[elementIndex] = 12;
                     this.update();
 
-                    showConversationSentences( elementIndex );
+                    showConversationSentences( lenPoints - elementIndex - 1 );
 
                 };
 
