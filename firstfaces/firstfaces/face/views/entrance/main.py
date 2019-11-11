@@ -25,8 +25,6 @@ import math
 from django.core.mail import send_mail
 import re
 import ast
-# from .praat_utils import *
-# from .DanUtils import *
 
 
 def entrance(request):
