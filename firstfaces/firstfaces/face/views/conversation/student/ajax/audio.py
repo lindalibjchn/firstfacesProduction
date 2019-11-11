@@ -1,7 +1,7 @@
 from django.http import JsonResponse
 from face.views.conversation.student.utils.speech_to_text import convert_mp3_to_wav, get_speech_recognition
 from face.views.conversation.all.sentences import convert_django_sentence_object_to_json
-from face.praat_utils import get_audio_length, get_text_path, get_out_path, convert_audio, get_timestamps, play_errored_text, ref_path
+from face.views.conversation.all.praat_utils import get_audio_length, get_text_path, get_out_path, convert_audio, get_timestamps, play_errored_text, ref_path, get_hyp_audio_path
 from face.views.conversation.all import database_updates
 
 from django.utils import timezone
@@ -16,8 +16,7 @@ import math
 import ast
 import subprocess
 from google.cloud import texttospeech
-from face.DanUtils import get_spectogram, get_sim
-from face.praat_utils import get_hyp_audio_path
+from face.views.conversation.all.dan_utils import get_spectogram, get_sim
 
 
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/daniel/Desktop/Tia/erle-3666ad7eec71.json"
