@@ -142,14 +142,7 @@ def store_conversation_over(request):
 
     print('in store_conversation_over:', ratings)
 
-<<<<<<< HEAD
-    time_now = timezone.now()
-    sess = Conversation.objects.get(pk=session_id)
-    sess.end_time = time_now
-    # sess.score = score
-    sess.save()
 
-=======
     # code.interact(local=locals());
     time_now = timezone.now();
     conv = Conversation.objects.get(pk=conv_id)
@@ -159,8 +152,7 @@ def store_conversation_over(request):
     conv.comment = ratings['comment']
     # conv.score = score
     conv.save()
-    
->>>>>>> 5ef1aaa2481d82a99deb346b1f1e8337405a22aa
+
     response_data = {
 
     }
