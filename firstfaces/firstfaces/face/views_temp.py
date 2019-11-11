@@ -39,23 +39,6 @@ def out_or_in(request):
 
         return redirect('entrance')
 
-def entrance(request):
-
-    if request.user.is_authenticated:
-
-        return redirect('waiting')
-
-    form = UserForm()
-    sign_up_form = SignUpForm()
-    sign_up_user_form = SignUpUserForm()
-    context = {
-        'form': form,
-        'signUpForm': sign_up_form,
-        'signUpUserForm': sign_up_user_form,
-    }
-
-    return render(request, 'face/entrance.html', context)
-
 def my_login(request):
 
     username = request.POST['username']
@@ -138,12 +121,6 @@ def sign_up_user(request):
 
     return JsonResponse(response_data)    
 
-group_leader_dict = {
-
-    "Beate": "FengChia",
-    "john": "all",
-
-}
 def group_data(request):
     groups_sessions = {}
     try:
@@ -175,107 +152,6 @@ def group_data(request):
     except:
 
         return redirect('entrance')
-
-
-@login_required
-def waiting(request):
-    
-    # if it is a group leader then they will be redirected to the group_data page
-    try:    
-        group_leader_dict[ request.user.username ]
-        return redirect('group_data')
-    
-    except:
-    
-        time_now = timezone.localtime(timezone.now()).strftime("%H:%M")
-        date_now = timezone.localtime(timezone.now()).date()
-
-        groups = request.user.groups.values_list('name', flat=True)
-        print('groups: ', groups)
-        availables = get_availables_for_schedule(groups)
-
-        # in utils.py, for schedule on board
-        schedule_dict, schedule_now = make_schedule_dict( availables )
-    
-        # no of current live sessions
-        no_live_sessions = get_number_of_current_live_sessions()
-
-        # in "Monday 18:00" format
-        next_conversation, next_conversation_after_today = get_upcoming_conversation( availables )
-        schedule_dict[ 'upcomingClass' ] = next_conversation
-        schedule_dict[ 'upcomingClassAfterToday' ] = next_conversation_after_today
-        # check if in conversation or during conversation
-        sessions = Conversation.objects.filter( learner=request.user ).filter( tutorial=False )
-        # returns boolean
-        schedule_dict[ 'conversation_already_done_today' ] = json.dumps( get_conversation_already_done_today( sessions ) )
-        schedule_dict[ 'in_conversation_now' ], schedule_dict[ 'session_id' ] = get_in_conversation_now( sessions )
-
-        # get dictionary of all previous sessions
-        sessions_dict = get_prev_sessions( request.user )
-
-        # get scores of previous tests
-        # prev_test_scores = get_test_scores( request.user )
-
-        # check if user has completed tutorial
-        user_profile = Profile.objects.get(learner=request.user)
-        tutorial_complete = user_profile.tutorial_complete
-
-        # news_article = True
-        # try:
-            # todays_news_article = NewsArticle.objects.get(date=date_now)
-            # headline = todays_news_article.title
-            # article_link = todays_news_article.link
-        # except:
-            # headline = "no article today"
-            # article_link = "#"
-            # news_article = False
-
-        # print('prev_test_scores:', prev_test_scores)
-
-        context = {
-
-            'schedule_dict': json.dumps(schedule_dict),
-            'schedule_now': json.dumps(schedule_now),
-            'sessions_dict': json.dumps(sessions_dict),
-            'tutorial_complete': json.dumps(tutorial_complete),
-            'waiting': True,
-            'timeNow': time_now,
-            # 'headline': headline,
-            # 'article_link': article_link,
-            'no_live_sessions': no_live_sessions,
-            # 'news_article': news_article,
-            # 'prev_test_scores': json.dumps(prev_test_scores)
-
-        }
-
-        return render(request, 'face/waiting.html', context)
-
-
-def book_session(request):
-
-    user = request.user
-    time_now = timezone.now()
-    tutorial = json.loads(request.POST['tutorial'])
-    
-    if user is not None:
-        
-        session = Conversation(learner=user, start_time=time_now, tutorial=tutorial) 
-        session.save()
-
-        send_mail('Class booked by: ' + request.user.username, 'starts soon', 'ucd.erle@gmail.com', ['john.sloan.1@ucdconnect.ie'])
-
-        response_data = {
-            'sessionCreated': True,
-            'session_id': session.id,
-        }
-
-    else:
-
-        response_data = {
-            'sessionCreated': False,
-        }
-
-    return JsonResponse(response_data)    
 
 def my_login(request):
 

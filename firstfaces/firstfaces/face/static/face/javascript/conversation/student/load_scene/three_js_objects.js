@@ -24,6 +24,8 @@ function dealWithResizing() {
 function addCamera() {
 
     camera = new THREE.PerspectiveCamera( 55, WIDTH / HEIGHT, 0.1, 1000 );
+    camera.position.set( CAMERA_SIT_POS.x, CAMERA_SIT_POS.y, CAMERA_SIT_POS.z  );
+    camera.rotation.set( CAMERA_SIT_ROT.x, CAMERA_SIT_ROT.y, CAMERA_SIT_ROT.z,);
     scene.add( camera );
 
 }
@@ -205,7 +207,7 @@ function init() {
     addCamera();
 
     //// CAMERA CONTROLS
-    controls = new THREE.OrbitControls( camera, renderer.domElement );
+    //controls = new THREE.OrbitControls( camera, renderer.domElement );
 
     // LIGHTS
     addLights();

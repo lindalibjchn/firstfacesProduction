@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 look
 at
 the
@@ -5,3 +6,15 @@ man
 and
 the
 goat
+=======
+set
+alarm
+to
+print
+and
+temperature
+up
+on
+to
+bluetooth
+>>>>>>> 5ef1aaa2481d82a99deb346b1f1e8337405a22aa

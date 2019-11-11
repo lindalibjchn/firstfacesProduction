@@ -11,19 +11,24 @@ function tiaSpeak( tiaSays, cont=true, speakCb=function(){} ) {
     synthesisObject.now = synthesisObject.data[ tiaSays ];
     synthesisObject.callback = speakCb;
 
-    getIntoSpeakingPosition();
+    headXRandomTiltObject.startCount = mainCount;
+    headYRandomTiltObject.startCount = mainCount;
+    synthesisObject.talking = true; 
+    //getIntoSpeakingPosition();
+    tiaSpeakIndividualSentences();
 
 }
 
-function getIntoSpeakingPosition() {
+//function getIntoSpeakingPosition() {
 
-    // move from whatever expression into the half of it
-    expressionController( expressionObject.half, tiaTimings.getIntoSpeakingPositionDuration, tiaSpeakIndividualSentences );
+    //// move from whatever expression into the half of it
+    //expressionController( expressionObject.half, tiaTimings.getIntoSpeakingPositionDuration, tiaSpeakIndividualSentences );
 
-}
+//}
 
 function tiaSpeakIndividualSentences() {
 
+<<<<<<< HEAD
     synthesisObject.talking = true;
     if(conversationVariables.stage3){
         var new_duration = synthesisObject.now.duration / ((parseInt(document.getElementById("myRange").value)+20)/100);
@@ -45,6 +50,12 @@ function tiaSpeakIndividualSentences() {
         synthesisObject.now.phoneCount = 1;
         holdOnUntilNewAudioDurationIsAvailable()
     }
+=======
+    synthesisObject.audio.src = synthesisObject.now.URLs[ synthesisObject.sentenceNo ];
+    synthesisObject.now.phoneCount = 1;
+    
+    holdOnUntilNewAudioDurationIsAvailable()
+>>>>>>> 5ef1aaa2481d82a99deb346b1f1e8337405a22aa
 
 }
 
@@ -60,7 +71,7 @@ function holdOnUntilNewAudioDurationIsAvailable() {
 
     } else {
 
-        setTimeout( holdOnUntilNewAudioDurationIsAvailable, 100 );
+        setTimeout( holdOnUntilNewAudioDurationIsAvailable, 50 );
 
     }
 
@@ -69,11 +80,21 @@ function holdOnUntilNewAudioDurationIsAvailable() {
 
 function animateFirstPhoneSlowly() {
 
+<<<<<<< HEAD
     initSingleBreath( 1, breatheObject.speakingBreathMult, tiaTimings.durationOfFirstBreath );
     setTimeout( function() {
         expressionController( expressionObject.abs[ synthesisObject.now.phones[ synthesisObject.sentenceNo ][ 0 ] ], tiaTimings.durationOfFirstSpeakingPhones, slightlyDelayAudioPlay )
+=======
+    let initPhoneDuration = tiaTimings.durationOfFirstSpeakingPhones
+    if ( synthesisObject.speakDirectlyAfterComingBackFromThinking ) {
 
-    }, tiaTimings.durationOfFirstBreath * 1000 ) 
+        initPhoneDuration = tiaTimings.durationOfFirstSpeakingPhones * 2;
+>>>>>>> 5ef1aaa2481d82a99deb346b1f1e8337405a22aa
+
+    }
+
+    initSingleBreath( 1, breatheObject.speakingBreathMult, tiaTimings.durationOfFirstSpeakingPhones );
+    expressionController( expressionObject.abs[ synthesisObject.now.phones[ synthesisObject.sentenceNo ][ 0 ] ], tiaTimings.durationOfFirstSpeakingPhones, slightlyDelayAudioPlay )
 
 }
 
@@ -83,10 +104,17 @@ function slightlyDelayAudioPlay() {
 
         showSpeechBubble( synthesisObject.now.texts[ 0 ], tiaTimings.speechBubbleFadeInDuration )
     
+    } else {
+
+        showSpeechText( synthesisObject.now.texts[ synthesisObject.sentenceNo ], tiaTimings.speechTextFadeInDuration )
+
     }
 
     setTimeout( function() {
+        
+        synthesisObject.audio.play();
 
+<<<<<<< HEAD
         setTimeout( function() {
 
             if(conversationVariables.stage3){
@@ -99,13 +127,14 @@ function slightlyDelayAudioPlay() {
                 console.log(synthesisObject.now.newDuration)
                 initSingleBreath( -1, breatheObject.speakingBreathMult, synthesisObject.audio.duration );
              }
+=======
+        initSingleBreath( -1, breatheObject.speakingBreathMult, synthesisObject.audio.duration );
+>>>>>>> 5ef1aaa2481d82a99deb346b1f1e8337405a22aa
 
-        }, tiaTimings.delayAudioPlay );
+    }, tiaTimings.delayAudioPlay );
 
-        animatePhonesInOrder();
+    animatePhonesInOrder();
         
-    }, tiaTimings.delaySpeakingAfterBreathingIn );
-
 }
 
 function animatePhonesInOrder() {
@@ -120,31 +149,35 @@ function animatePhonesInOrder() {
         
         //if last sentence then just show mic, but if more sentences to come then show 'next' button
         if ( synthesisObject.sentenceNo === synthesisObject.now.texts.length - 1 ) {
-
+    
             synthesisObject.talking = false;
-             //console.log( 'in endPhoneCount' );
-            expressionController( expressionObject.quarter, tiaTimings.durationOfReturnToExpressionAfterVeryLastSpeakingPhone, function() {
+            expressionController( expressionObject.half, tiaTimings.durationOfReturnToExpressionAfterVeryLastSpeakingPhone );
+            movementController( movementObject.abs.blank, 1, 1, function() {
 
                 synthesisObject.callback();
-                buttonsMicrophoneOnly();
-            
-            }) 
+                if ( !conversationVariables.entranceSequence ) {
+
+                    buttonsMicrophoneOnly();
+
+                }
+                
+            });
 
         } else {
 
-            expressionController( expressionObject.abs.talkBase, tiaTimings.durationOfLastSpeakingPhones, function() {
+            if ( synthesisObject.continuous ) {
 
-                if ( synthesisObject.continuous ) {
+                setTimeout( listenToNextSentence, tiaTimings.speechTextFadeOutDuration );
 
-                    listenToNextSentence();
+            } else {
 
-                } else {
+                expressionController( expressionObject.quarter, tiaTimings.durationOfLastSpeakingPhones, function() {
 
                     buttonsListenNextSentence();
                
-                }    
+                });    
 
-            })
+            }
 
         }
 
@@ -158,7 +191,7 @@ function listenToNextSentence() {
     synthesisObject.sentenceNo += 1;
     removeSpeechText( tiaTimings.speechTextFadeOutDuration, function() {
         
-        showSpeechText( synthesisObject.now.texts[ synthesisObject.sentenceNo ], tiaTimings.speechTextFadeInDuration, tiaSpeakIndividualSentences )
+        tiaSpeakIndividualSentences();
 
     })
 

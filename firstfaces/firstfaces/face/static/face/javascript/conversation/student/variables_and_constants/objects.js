@@ -68,9 +68,9 @@ var speechBubbleObject = {
 // movement stuff
 
 // controls all movements on first entry to class
-//var mainEnterObject = {
-    //bool: false
-//}
+var mainEnterObject = {
+    bool: false
+}
 
 //var cameraObject = {
     //'currentState': 'tia',
@@ -134,6 +134,16 @@ eyeObject.name = 'eye'
 
 var armTapObject = new MoveObj();
 armTapObject.name = 'armTap'
+
+var typeObject = {
+    
+    'L': new MoveObj(),
+    'R': new MoveObj(),
+
+}
+
+typeObject.L.name = 'typeL'
+typeObject.R.name = 'typeR'
 
 var eyelidObject = new MoveObj();
 eyelidObject.coords = {
@@ -202,16 +212,17 @@ var blinkObject = {
 var breatheObject = {
     'bool': true,
     'sin': sineArrays[ secsOneBreath ],
-    'scaleMultX': 1.5 / secsOneBreath,
-    'scaleMultY': 2.75 / secsOneBreath,
-    'scaleMultZ': 12 / secsOneBreath,
+    'scaleMultX': 1.25 / secsOneBreath,
+    'scaleMultY': 2 / secsOneBreath,
+    'scaleMultZ': 8 / secsOneBreath,
+    'scaleMultShoulder': 18 / secsOneBreath,
     // from experimenting the y position of shoulder is 13 times greater than scale of upperspine
-    'yPosMult': 45 / secsOneBreath,
-    'yPosHeadMult': 12 / secsOneBreath,
+    //'yPosMult': 45 / secsOneBreath,
+    //'yPosHeadMult': 12 / secsOneBreath,
     'direction': -1,
     'normalBreatheStopCount': null, 
     'normalBreatheStopDirection': null, 
-    'speakingBreathMult': 1.25,
+    'speakingBreathMult': 1.05,
     'singleBreath': {
         'startCount': null,
         'endCount': null,
@@ -226,6 +237,7 @@ var spineRandomTiltObject = {
     'direction': Math.random() < 0.5 ? -1 : 1,
     // call the sway to and fro
     'to': true,
+    'name': 'spineTilt',
 }
 
 var neckRandomTiltObject = {
@@ -236,6 +248,29 @@ var neckRandomTiltObject = {
     'direction': Math.random() < 0.5 ? -1 : 1,
     // call the sway to and fro
     'to': true,
+    'name': 'neckTilt',
+}
+
+var headXRandomTiltObject = {
+    'startCount': 0,
+    'sin': sineArrays[ 120 ],
+    'sinLength': 120,
+    'mult': 0.75, 
+    'direction': Math.random() < 0.5 ? -1 : 1,
+    // call the sway to and fro
+    'to': true,
+    'name': 'headXTilt',
+}
+
+var headYRandomTiltObject = {
+    'startCount': 0,
+    'sin': sineArrays[ 90 ],
+    'sinLength': 90,
+    'mult': 0.75,
+    'direction': Math.random() < 0.5 ? -1 : 1,
+    // call the sway to and fro
+    'to': true,
+    'name': 'headYTilt',
 }
 
 //var purseLipsObject = {

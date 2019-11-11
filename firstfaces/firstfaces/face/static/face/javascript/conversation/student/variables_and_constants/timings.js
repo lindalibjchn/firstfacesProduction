@@ -39,20 +39,21 @@ tiaTimings = {
     
     // SPEECH BUBBLE
     speechBubbleFadeInDuration: 500,
-    speechTextFadeInDuration: 500,
+    delayAfterReturningfromThinkingBeforeSpeak: 250,
+    speechTextFadeInDuration: 400,
     speechBubbleFadeOutDuration: 200,
     speechTextFadeOutDuration: 200,
-    getIntoSpeakingPositionDuration: 0.5,
-    durationOfFirstBreath: 1,
-    durationOfFirstSpeakingPhones: 0.5,
-    delaySpeakingAfterBreathingIn: 100,
+    //getIntoSpeakingPositionDuration: 0.5,
+    durationOfFirstSpeakingPhones: 0.25,
+    delaySpeakingAfterBreathingIn: 0,
     delayAudioPlay: 100,
-    durationOfLastSpeakingPhones: 0.4,
+    durationOfLastSpeakingPhones: 0.5,
     durationOfReturnToExpressionAfterVeryLastSpeakingPhone: 1,
 
     // EXPRESSIONS
     changeExpressionDuration: 0.75,
-    movementToConfusedDuration: 1,    
+    changeExpressionToConfusedDuration: 2,
+    movementToConfusedDuration: 1.5,    
     toTalkExpressionDuration: 1,
     
     // TALK

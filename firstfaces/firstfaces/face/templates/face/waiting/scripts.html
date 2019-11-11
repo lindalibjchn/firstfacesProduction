@@ -1,0 +1,18 @@
+{% load static %}
+
+<script>var waitingVariables = {{ waiting_variables|safe }}</script>
+
+<!-- my own scripts -->
+<script src="{% static 'face/javascript/waiting/main.js' %}"></script>
+<script src="{% static 'face/javascript/waiting/timetable.js' %}"></script>
+<script src="{% static 'face/javascript/waiting/ajax.js' %}"></script>
+<script src="{% static 'face/javascript/waiting/all_scores.js' %}"></script>
+<script src="{% static 'face/javascript/waiting/individual_class.js' %}"></script>
+
+<!--calculate articles from utils-->
+<script src="{% static 'face/javascript/utils/grammar.js' %}"></script>
+<script src="{% static 'face/javascript/utils/overall_data.js' %}"></script>
+
+<!--from teacher side-->
+<script src="{% static 'face/javascript/conversation/teacher/load/prev_sentences.js' %}"></script>
+

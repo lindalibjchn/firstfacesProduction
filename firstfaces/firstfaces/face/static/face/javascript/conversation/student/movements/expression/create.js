@@ -7,7 +7,7 @@ function changeExpression( emotionCoords, surprise ) {
         emotionCoords = [ 0.05, 0.05 ];
 
     };
-    console.log('emotionCoordsInChangeexpression:', emotionCoords);
+    //console.log('emotionCoordsInChangeexpression:', emotionCoords);
 
     synthesisObject.pitch = 0;
     synthesisObject.speaking_rate = 0.7;
@@ -199,8 +199,8 @@ function createCalculatedExpression( twoExpressions, ratio, mult, surp ){
                     for ( var k=0; k < 3; k++ ) {
 
                         let movementAmount = expression01ThisBone[ j ][ k ] * expression01Amount + expression02ThisBone[ j ][ k ] * expression02Amount + surpriseExpressionThisBone[ j ][ k ] * surp;
-                        let halfAmount = 0.5 * expression01ThisBone[ j ][ k ] * expression01Amount + 0.5 * expression02ThisBone[ j ][ k ] * expression02Amount + 0.5 * surpriseExpressionThisBone[ j ][ k ] * surp// * 0.05; // small surprise to open mouth a wee bit
-                        let quartAmount = 0.25 * expression01ThisBone[ j ][ k ] * expression01Amount + 0.25 * expression02ThisBone[ j ][ k ] * expression02Amount + 0.25 * surpriseExpressionThisBone[ j ][ k ] * surp// * 0.05; // small surprise to open mouth a wee bit
+                        let halfAmount = 0.5 * expression01ThisBone[ j ][ k ] * expression01Amount + 0.5 * expression02ThisBone[ j ][ k ] * expression02Amount + 0 * surpriseExpressionThisBone[ j ][ k ] * surp// * 0.25; // smaller surprise to open mouth a wee bit
+                        let quartAmount = 0.25 * expression01ThisBone[ j ][ k ] * expression01Amount + 0.25 * expression02ThisBone[ j ][ k ] * expression02Amount + 0 * surpriseExpressionThisBone[ j ][ k ] * surp// * 0.1; // smaller surprise to open mouth a wee bit
 
                         calcExp.AUs[ AU ][ bone ][ j ][ k ] = movementAmount;
                         halfCalcExp.AUs[ AU ][ bone ][ j ][ k ] = halfAmount;

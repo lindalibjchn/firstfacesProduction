@@ -2,11 +2,129 @@
 
 <div id="prevSentsIconContainer">
 
-     <img class="prev-sents-icons" id="iconWhite" src="{% static 'face/images/prevSentsIcon.png' %}">
-     <img class="prev-sents-icons" id="iconDark" src="{% static 'face/images/prevSentsIconDark.png' %}">
+    <i class="fa fa-bars fa-2x prev-sents-icons"></i>
 
 </div> 
  
-<div id="prevSentsContainer0">
+<div id="prevSentsContainer">
+
+    <div id="prevSentsInnerContainer">
+    
+        <div id="clickableTitlesContainer" class="w3-row">
+
+            <div id="sentencesTitleContainer" class="titles w3-col s4 background-title">
+
+                <div id="sentencesTitle">sentences</div>
+
+            </div>
+
+            <div id="grammarTitleContainer" class="titles w3-col s4 background-title">
+
+                <div id="grammarTitle">grammar</div>
+
+            </div>
+
+            <div id="pronunciationTitleContainer" class="titles w3-col s4 background-title">
+                
+                <div id="pronunciationTitle"><!--pronunciation--></div>
+
+            </div>
+
+        </div>
+
+        <div id="sentencesGrammarPronunciationContainer">
+
+            <div id="prevSentsContainer0" class="main-data-container"></div>
+
+            <div id="grammarContainer" class="main-data-container">
+            
+                <div id="grammarInnerContainer">
+
+                    <div id="allErrorsChartContainer">
+
+                        <div id="correctPercentage"></div>
+
+                        <div id="allErrorsChartInnerContainer">
+                
+                            <canvas id="allErrorsChart"></canvas>
+                            
+                        </div>
+
+                    </div>		
+                
+                    <div id="detailedErrorsChartContainer">
+
+                        <div id="detailedErrorsChartInnerContainer">
+
+                            <div id="detailedErrorsChartInner2Container">
+                            
+                                <canvas id="detailedErrorsChart"></canvas>
+
+                            </div>		
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div id="grammarTabsContainer" class="tabs-container">
+
+                    <div id="articlesTabContainer" class="titles w3-col s4 background-title">
+
+                        <div id="articlesTab">articles</div>
+
+                    </div>
+
+                    <div id="verbsTabContainer" class="titles w3-col s4 background-title">
+
+                        <div id="verbsTab"><!--verbs--></div>
+
+                    </div>
+
+                    <div id="prepositionsTabContainer" class="titles w3-col s4 background-title">
+                        
+                        <div id="prepositionsTab"><!--prepositions--></div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div id="pronunciationContainer" class="main-data-container">
+            
+                <div id="pronunciationInnerContainer">
+
+                </div>
+
+                <div id="pronunciationTabsContainer" class="tabs-container">
+
+                    <div id="phrasesTabContainer" class="titles w3-col s4 background-title">
+
+                        <div id="phrasesTab"><!--phrases--></div>
+
+                    </div>
+
+                    <div id="wordsTabContainer" class="titles w3-col s4 background-title">
+
+                        <div id="wordsTab"><!--words--></div>
+
+                    </div>
+
+                    <div id="phonemesTabContainer" class="titles w3-col s4 background-title">
+                        
+                        <div id="phonemesTab"><!--phonemes--></div>
+
+                    </div>
+
+                </div>
+
+            </div>
+                    
+        </div>
+
+    </div>
 
 </div>
+

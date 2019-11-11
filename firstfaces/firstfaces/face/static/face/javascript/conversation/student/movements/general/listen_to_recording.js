@@ -18,37 +18,30 @@ function listenToRecording( intensity ) {
 
 }
 
-function returnFromListenToRecording() {
+//function returnFromListenToRecording() {
 
-    movementController( movementObject.abs.laptop_glance, 0.5, 1, function() { 
+    //movementController( movementObject.abs.laptop_glance, 0.5, 1, function() { 
         
-        // if no sound comes through, don't tap or show empty transcripts
-        if ( conversationVariables.sentence_being_recorded_audio.alternatives[ 0 ].transcript === "" ) {
+        //// if no sound comes through, don't tap or show empty transcripts
+        //if ( conversationVariables.sentence_being_recorded_audio.alternatives[ 0 ].transcript === "" ) {
 
-            dealWithBlankTranscription();
+            //dealWithBlankTranscription();
 
-        } else {
-           // reset this as main recording is complete with a transcription
-            conversationVariables.mainRecord = false;
-            conversationVariables.returnFromMainRecording = true;
+        //} else {
+           //// reset this as main recording is complete with a transcription
+            //conversationVariables.mainRecord = false;
+            //conversationVariables.returnFromMainRecording = true;
             
-            $('#closeOverlayArea').prop( "disabled", true);
-            $('#submitOverlay').prop( "disabled", true);
+            //$('#closeOverlayArea').prop( "disabled", true);
+            //$('#submitOverlay').prop( "disabled", true);
     
-        }
+        //}
 
-    });
+    //});
     
-    tapKeyFull();
+    //tapKeyFull();
 
-}
-
-function returnFromListenToErrorAttemptWithSpectrograph() {
-
-    movementController( movementObject.abs.laptop, 0.75, 1.5 );
-
-}
-
+//}
 
 function firstFlinch() {
 
@@ -59,22 +52,20 @@ function firstFlinch() {
         
         setTimeout( function() {
 
-                //hideVolumeBar();//always hide it even if not shown, same as if statement
-                expressionController( expressionObject.abs.blank, 1 ) 
-                movementController( movementObject.abs.blank, 0.5, 1.5, moveCb=function(){tiaSpeak( "veryLoud", cont=true, speakCb=function(){
-                 
-                        conversationVariables.interference = false;  
-                        canvasContext.fillStyle = "#33ff00";
-                   
-                    })
-                
-                });
+            hideVolumeBar();//always hide it even if not shown, same as if statement
+            expressionController( expressionObject.abs.blank, 1 ) 
+            movementController( movementObject.abs.blank, 0.5, 1.5, moveCb=function(){tiaSpeak( "veryLoud", cont=true, speakCb=function(){
+             
+                    conversationVariables.interference = false;  
+                    canvasContext.fillStyle = "#33ff00";
+               
+                })
+            
+            });
 
-            }, tiaTimings.delayAfterFlinch );
+        }, tiaTimings.delayAfterFlinch );
 
-        }
-
-    )
+    })
 
 }
 

@@ -50,9 +50,12 @@ function breathe( bCount, mult ) {
     tiaObject.bodyBones.spineUpper.scale.y += genMult * breatheObject.scaleMultY;
     tiaObject.bodyBones.spineUpper.scale.z += genMult * breatheObject.scaleMultZ; 
     let shoulderMult = genMult * breatheObject.yPosMult;
-    tiaObject.faceBones['shoulder.L'].position.y += shoulderMult;
-    tiaObject.faceBones['shoulder.R'].position.y += shoulderMult;
-    tiaObject.faceBones.head.position.y += genMult * breatheObject.yPosHeadMult;
+    //tiaObject.faceBones['shoulder.L'].scale.x += genMult * breatheObject.scaleMultX;
+    //tiaObject.faceBones['shoulder.R'].scale.x += genMult * breatheObject.scaleMultX;
+    tiaObject.faceBones['shoulder.L'].scale.y += genMult * breatheObject.scaleMultShoulder;
+    tiaObject.faceBones['shoulder.R'].scale.y += genMult * breatheObject.scaleMultShoulder;
+    //tiaObject.faceBones['shoulder.L'].scale.z += genMult * breatheObject.scaleMultZ;
+    //tiaObject.faceBones['shoulder.R'].scale.z += genMult * breatheObject.scaleMultZ;
 
 }
 

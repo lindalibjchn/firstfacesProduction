@@ -8,7 +8,29 @@
 
     font-size: 1.9em !important;
     font-weight: bold !important;
-    z-index: 11;
+    z-index: 100;
+
+}
+
+.entry-emotion-btn-col {
+
+    width: 20%;
+
+}
+
+.emotion-labels {
+
+    height: 12vw;
+    width: 12vw;
+
+}
+
+.emojis {
+
+    z-index: 300;
+    background-color: #1fb030;
+    border-radius: 50%;
+    border: 3px solid white;
 
 }
 
@@ -37,6 +59,7 @@
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
+    z-index: 110;
 
 
 }
@@ -44,6 +67,18 @@
 .choice-btn:hover {
 
     transform: scale(1.01);
+
+}
+
+#myChoice {
+
+    background-color: #102858;
+
+}
+
+#myEmotion {
+
+    background-color: #1fb030;
 
 }
 
@@ -90,6 +125,7 @@
 
 #emotionQuestionsCont {
 
+    /*background-color: #1fb030;*/
     display: none;
     height: 100%;
     width: 100%;
@@ -109,6 +145,13 @@
     height: 100%;
     width: 100%;
     display: none;
+    z-index: 110;
+
+}
+
+#submitOwnTopicBtn {
+
+    z-index: 300;
 
 }
 

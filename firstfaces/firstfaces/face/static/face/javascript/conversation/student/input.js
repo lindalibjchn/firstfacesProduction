@@ -1,6 +1,9 @@
 function initInputReady( from ) {
     conversationVariables.stage2 = false;
     conversationVariables.stage3 = false;
+    // tia's eyelids werren't closing properly this below is a failsafe to reset them.
+    movementController( movementObject.abs.blank, 1, 1 );
+    
     //$('#textInputContainer').show();
     //hideTextStuff();
     //hideVolumeBar();
@@ -9,11 +12,7 @@ function initInputReady( from ) {
     //$('#recordBtnsCont').show();
     
     // removes speech bubble after user has a few second to read it
-    if ( conversationVariables.tutorial === false ) {
-
-        $('.record-btn').prop( "disabled", false );
-    
-    }
+    $('.record-btn').prop( "disabled", false );
 
     //setLastSent();
     //$('#controllerContainer').fadeIn( 1000 );
@@ -23,7 +22,8 @@ function initInputReady( from ) {
         $( '#textInputContainer' ).fadeIn();
         $( '#sentenceShowHolder').fadeIn();
         $('.play-btn').hide();
-        reset_text(conversationVariables.preSent)
+        let sentString = makeStringSentFromArray(conversationVariables.conversation_dict.completed_sentences[0].sentence);
+        reset_text( sentString );
 
     } else {
 
@@ -44,6 +44,8 @@ function initInputReady( from ) {
     $('#backCorrection').hide();
     $('#submitCorrectedErrors').hide();
     
+    addPreviousSentences( conversationVariables.conversation_dict, 0 );
+
     //openOverlay();
 
     //  for development
@@ -52,19 +54,21 @@ function initInputReady( from ) {
     //$('#whatsWrongBtn').hide()
     //$('#showCorrectionBtn').css('display', 'flex')
 
-    //if ( conversationVariables.tutorial === false ) {
-
-     //$('#textInput').bind('input propertychange', function() {
-
-            //$('#playRobot').show();
-            //$('#talkBtn').prop( "disabled", false );
-
-        //});
-
-    //}
-
 }
 
+function makeStringSentFromArray( s ) {
+
+    let sentString = "";
+    console.log('s:', s)
+    s.forEach( function( wordArray ) {
+
+        sentString += wordArray[ 0 ] + " ";
+
+    });
+
+    return sentString.trim();
+
+}
 
 //function setLastSent() {
 

@@ -36,6 +36,18 @@ function animate () {
 
     }
 
+    if ( typeObject.L.bool ) {
+
+        typeArm( mainCount, 'L' );
+
+    }
+
+    if ( typeObject.R.bool ) {
+
+        typeArm( mainCount, 'R' );
+
+    }
+
     if ( nodObject.bool ) {
 
         nod( mainCount )
@@ -100,6 +112,34 @@ function animate () {
         
         randomTiltNeck( randomTiltNeckRemaining )
 
+    }
+
+    if ( synthesisObject.talking ) {
+
+        let randomTiltHeadXRemaining = mainCount - headXRandomTiltObject.startCount;
+
+        if ( randomTiltHeadXRemaining === headXRandomTiltObject.sinLength ) {
+            
+            newTilt( headXRandomTiltObject );
+
+        } else {
+            
+            randomTiltHeadX( randomTiltHeadXRemaining )
+
+        }
+        
+        let randomTiltHeadYRemaining = mainCount - headYRandomTiltObject.startCount;
+
+        if ( randomTiltHeadYRemaining === headYRandomTiltObject.sinLength ) {
+            
+            newTilt( headYRandomTiltObject );
+
+        } else {
+            
+            randomTiltHeadY( randomTiltHeadYRemaining )
+
+        }
+    
     }
 
     mainCount += 1;

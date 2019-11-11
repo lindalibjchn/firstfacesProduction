@@ -73,7 +73,11 @@
     height: 15%;
     position: absolute; 
     bottom: 0;
-    display: none;
+    /*display: none;*/
+    /*border: 2px solid blue;*/
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
 }
 
@@ -81,19 +85,31 @@
 
     width: 100%;
     height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: none;
 
 }
 
+/*#textInputBoxInnerCont {*/
+
+    /*width: 100%;*/
+    /*height: 100%;*/
+    /*display: flex;*/
+    /*align-items: center;*/
+    /*justify-content: center;*/
+
+/*}*/
+
 #textInputBox {
-    display:none;
+    /*display:none;*/
     height: 100%;
-    width: 89%;
+    width: 100%;
     position: relative; 
     padding: 1%;
-    background-color: black;
+    margin-left: 10%;
+    margin-right: 10%;
+    background-color: white;
+    opacity: 0.8;
+    border: 2px solid gray;
 
 }
 
@@ -102,7 +118,7 @@
     width: 100%;
     height: 100%;
     background: rgba( 0, 0, 0, 0 );
-    color: #33ff00;
+    color: black;
     font-family: Courier;
     outline-style: none;
     box-shadow: none;
