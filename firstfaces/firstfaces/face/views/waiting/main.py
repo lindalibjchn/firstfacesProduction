@@ -40,11 +40,11 @@ group_leader_dict = {
 def waiting(request):
     
     # if it is a group leader then they will be redirected to the group_data page
-    try:    
-        group_leader_dict[ request.user.username ]
-        return redirect('group_data')
+    #try:
+        #group_leader_dict[ request.user.username ]
+        #return redirect('group_data')
     
-    except:
+    #except:
     
         time_now = timezone.localtime(timezone.now()).strftime("%H:%M")
         date_now = timezone.localtime(timezone.now()).date()
