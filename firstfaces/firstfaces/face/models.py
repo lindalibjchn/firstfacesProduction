@@ -40,6 +40,7 @@ JUDGEMENT_CHOICES = (
     ('3', 'more_than_three')
 )
 
+
 class Sentence(models.Model):
     learner = models.ForeignKey(User, on_delete=models.CASCADE)
     conversation = models.ForeignKey(Conversation, on_delete=models.CASCADE)
@@ -71,6 +72,7 @@ class Sentence(models.Model):
     def __str__(self):
         return  str(self.pk) + ": " + str(self.sentence)
 
+
 # may need multiple audio files per sentence as student attempts and re-attempts
 class AudioFile(models.Model):
     sentence = models.ForeignKey(Sentence, on_delete=models.CASCADE)
@@ -80,6 +82,7 @@ class AudioFile(models.Model):
     audio = models.FileField(upload_to="")
     created_at = models.DateTimeField(auto_now_add=True)
 
+
 class AudioError(models.Model):
     audio = models.ForeignKey(AudioFile, on_delete=models.CASCADE)
     start_index = models.SmallIntegerField()
@@ -87,12 +90,14 @@ class AudioError(models.Model):
     typed = models.NullBooleanField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
+
 class AudioErrorAttempt(models.Model):
     error = models.ForeignKey(AudioError, on_delete=models.CASCADE)
     audio = models.FileField(upload_to="")
     created_at = models.DateTimeField(auto_now_add=True)
     transcript = models.CharField(max_length=500, blank=True, null=True)
     correct = models.NullBooleanField(null=True)
+
 
 class AudioErrorCorrectionAttempt(models.Model):
     error = models.ForeignKey(AudioError, on_delete=models.CASCADE)

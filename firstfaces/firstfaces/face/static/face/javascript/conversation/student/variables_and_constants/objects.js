@@ -309,7 +309,8 @@ var mouthingObject = {
 var synthesisObject = {
     //finalTextInBox : "blank",
     //text: "",
-    audio: null, // dom element added in <load_scene/main.js>
+    audio: null,
+    audioS3: null,// dom element added in <load_scene/main.js>
     sentenceNo: 0, //if multiple sentences it will start at first, iterates in <tiaSpeech.js>
     talking: false,
     pitch: 0,
@@ -478,7 +479,7 @@ var synthesisObject = {
             texts: [ "Try to say...", "'the valuable supply'" ],
             phones: [
                 ['t','r','e',  't','e',  's','e'],
-                ['thEmp','eEmp',  'fEmp','eEmp','lEmp','uEmp','bEmp','lEmp',  'sEmp','eEmp','bEmp','lEmp','eEmp','iEmp']
+                ['th','e',  'f','e', 'l','u','b','l',  'sEmp','eEmp','bEmp','lEmp','eEmp','iEmp']
             ],
 
         },

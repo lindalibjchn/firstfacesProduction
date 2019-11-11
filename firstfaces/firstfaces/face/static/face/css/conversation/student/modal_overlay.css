@@ -54,3 +54,376 @@
    
 }
 
+
+
+#refBtnCont{
+    width:95%;
+    height:30%;
+
+    position:relative;
+    border: 2px solid black;
+}
+
+#refBtnContLeft{
+    width:33%;
+    height:100%;
+    position:absolute;
+    left:0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+
+
+#sliderHolderCont{
+    position:absolute;
+    bottom:0;
+    left:0;
+    width:100%;
+    height:25%;
+    /*background-color:red;*/
+    display:flex;
+    align-items:center;
+    justify-content: center;
+}
+
+.leftSide{
+    width:33%;
+    height:100%;
+    position:absolute;
+    left:0;
+    top:0;
+}
+.rightSide{
+    width:33%;
+    height:100%;
+    position:absolute;
+    right:0;
+    top:0;
+}
+.centerSide{
+    width:34%;
+    height:100%;
+    position:absolute;
+    left:33%;
+    top:0;
+}
+.wholeSide{
+    width:100%;
+    height:100%;
+    position:absolute;
+    left:0;
+    top:0;
+}
+.noSide{
+    display:none;
+}
+.topHalf{
+    height:66%;
+    width:100%;
+    position:absolute;
+    top:0;
+    left:0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+.bottomHalf{
+    height:34%;
+    width:100%;
+    position:absolute;
+    bottom:0;
+    left:0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+
+#praatInnerCont{
+    height:100%;
+    width:100%;
+    position:relative;
+}
+ #tophalfSpec{
+     height:50%;
+     width:100%;
+     position:absolute;
+     top:0;
+     left:0;
+     background-color:transparent;
+ }
+ #bottomhalfSpec{
+     height:50%;
+     width:100%;
+     position:absolute;
+     bottom:0;
+     left:0;
+     background-color:transparent;
+ }
+
+ #fixedWord{
+    height: 66%;
+ }
+
+/* Spectrospin*/
+
+.tile-word{
+                        /** margin:50px; **/
+                        width:200px;
+                        height:100px;
+                        border-radius:3px;
+                        border: 3px solid black;
+                        position:relative;
+                }
+
+.tile-word-fixed{
+            /** margin:50px; **/
+                        width:200px;
+                        height:100px;
+                        border-radius:3px;
+                        border: 3px solid black;
+                        position:relative;
+                }
+                .tile-top-row{
+                    position:absolute;
+                    top:0;
+                    width:100%;
+                    height:30%;
+                }
+                .tile-bottom-row{
+                    position:absolute;
+                    bottom:0;
+                    width:100%;
+                    height:30%;
+                }
+                .tile-right-box{
+                    position:absolute;
+                    right:0;
+                    height:100%;
+                    width:15%;
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+                    text-align:right;
+
+                }
+
+                .tile-corner-font{
+                    font-family:Arial;
+                    font-size:5px;
+                    font-weight:500;
+                    color:#905823;
+                }
+
+                .tile-left-box{
+                    position:absolute;
+                    left:0;
+                    height:100%;
+                    width:30px;
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+                }
+                .tile-center-row{
+                    position:absolute;
+                    top:30%;
+                    height:40%;
+                    width:100%;
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+
+                }
+                .tile-main-word{
+                    color:white;
+                    font-size:15px;
+                    font-family:Arial;
+                }
+
+
+                .A2{
+                    /**background-image: linear-gradient(#e6bf99 0%,#dca570 40%, #e6bf99);
+                    background:-webkit-linear-gradient(#dca570 40%, #e6bf99);**/
+                    background-color:#e1b284;
+                }
+
+
+                .A1f{
+                    color:#905823;
+                }
+                .wide{
+                    width:22%;
+                }
+               .A1{
+                   /**background-image: linear-gradient(#D7985C 0%,#CD7E33 40%, #D7985C);
+                   background:-webkit-linear-gradient(#CD7E33 40%, #D7985C );  **/
+                   background-color:#D7985C;
+               }
+               .A2f{
+                    color:#cd7e33;
+               }
+
+               .B1{
+                    background-color:#8f8f8f ;
+               }
+               .B1f{
+                    color:#696969;
+               }
+               .B2{
+                   background-color:#C2C2C2;
+               }
+               .B2f{
+                    color:#9c9c9c;
+               }
+
+               .C1{
+                    background-color:#FFBF00;
+               }
+                .C1f{
+                    color:#A67C00;
+                }
+
+               .info{
+                    color:white;
+                    font-size:5px;
+               }
+               .right{
+                    position:absolute;
+                    right:5px;
+                    bottom:3px
+               }
+               .cont{
+                    height:15px;
+                    width:100%;
+                    position:relative;
+               }
+               .tile-spec{
+                    width:100%;
+                    max-width:99%;
+                    height:100%;
+                    z-index:1;
+               }
+
+               .spec-cont{
+                    position:absolute;
+                    top:0;
+                    left:0;
+                    width:100%;
+                    height:100%;
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+                    z-index:1;
+               }
+               .word-cont{
+                    position:absolute;
+                    top:0;
+                    left:0;
+                    width:100%;
+                    height:100%;
+                    background-color:transparent;
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+                    z-index:2;
+               }
+
+               .C2{
+                background-color:#ffd24d;
+               }
+               .C2f{
+                    color:#e6ac00;
+               }
+
+                #SpectroSpinHolder{
+                    height:66%;
+                }
+                #SpectroSpinCont{
+                    height:100%;
+                    width:100%;
+                    position:relative;
+                }
+
+                .main-tile{
+                    height:20%;
+                    width:80%;
+                    position:absolute;
+                    top:40%;
+                    left:10%;
+                    z-index:10;
+                }
+                .main-tile-fixed{
+                    height:20%;
+                    width:80%;
+                    position:absolute;
+                    top:40%;
+                    left:10%;
+                    z-index:10;
+                }
+
+
+                .second-tile-top{
+                    height:16%;
+                    width:64%;
+                    position:absolute;
+                    top:28%;
+                    left:18%;
+                    z-index:9;
+                    opacity:0.7;
+                }
+
+                .third-tile-top{
+                    height:12.8%;
+                    width:51.2%;
+                    position:absolute;
+                    top:18.4%;
+                    left:24.4%;
+                    z-index:8;
+                    opacity:0.4;
+                }
+                .third-tile-top-hidden{
+                    height:12.8%;
+                    width:51.2%;
+                    position:absolute;
+                    top:18.4%;
+                    left:24.4%;
+                    z-index:8;
+                    opacity:0;
+                }
+
+                .second-tile-bottom{
+                    height:16%;
+                    width:64%;
+                    position:absolute;
+                    top:56%;
+                    left:18%;
+                    z-index:9;
+                    opacity:0.7;
+                }
+                .third-tile-bottom{
+                    height:12.8%;
+                    width:51.2%;
+                    position:absolute;
+                    top:68.8%;
+                    left:24.4%;
+                    z-index:8;
+                    opacity:0.4;
+                }
+               .third-tile-bottom-hidden{
+                    height:12.8%;
+                    width:51.2%;
+                    position:absolute;
+                    top:68.8%;
+                    left:24.4%;
+                    z-index:8;
+                    opacity:0;
+                }
+                .hidden_tile{
+                    display:none;
+                }
+#modalEarImg{
+    max-height:100%;
+    min-heigth:100%;
+}

@@ -18,10 +18,14 @@ urlpatterns = [
     # conversation
     path('store_emotion', conversation.store_emotion, name='store_emotion'),
     path('store_topic', conversation.store_topic, name='store_topic'),
+    path('get_pronunciation_errors',conversation.get_pronunciation_errors,name="get_pronunciation_errors"),
     # path('store_tutorial_end', conversation.store_tutorial_end, name='store_tutorial_end'),
     # path('timings', conversation.timings, name='timings'),
     path('delete_session', conversation.delete_session, name='delete_session'),
     path('store_conversation_over', conversation.store_conversation_over, name='store_conversation_over'),
+    path('tag_sentence', conversation.tag_sentence, name='tag_sentence'),
+    path('get_context', conversation.get_context, name="get_context"),
+    path('get_spliced_audio', conversation.get_spliced_audio, name="get_spliced_audio"),
     # sentence
     path('store_sent', student_sentence.store_sent, name='store_sent'),
     path('check_judgement', student_sentence.check_judgement, name='check_judgement'),
@@ -40,7 +44,7 @@ urlpatterns = [
     path('close_attempt', audio.close_attempt, name="close_attempt"),
     path('get_remaining_audio', audio.get_remaining_audio, name="get_remaining_audio"),
     path('do_allignment',audio.do_allignment, name="do_allignment"),
-    
+
     
     # TEACHER
     # MAIN

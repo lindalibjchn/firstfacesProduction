@@ -51,6 +51,7 @@ function readyBtns() {
         $('#prevSentsIconContainer').hide();
         $('#finishClassIconContainer').hide();
         $('#dataNFinish').show();
+        getPronunciationErrors();
         $('#timeOverlayContainer').fadeIn();
         $('#closeOverlayArea').prop( "disabled", false);
 

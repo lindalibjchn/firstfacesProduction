@@ -35,55 +35,119 @@
         <div id="praatCont">
             
             <div id="praatContHolder">
-                
-                <div id ="btnCont">   
-                    
-                    <center>
-                        
-                    <div id="refBtn" class="img-btn">
-                        
-                        <img id="refImg" src="" class="spec-img">
-                        
-                        <div id= "refTextLayer" class="text-layer" onclick="">
-                            
-                            <span id="refText" class="big-text">TEST</span>
-                        
-                        </div>
-                        
-                        <div id="refInvisible" class="invisible-layer"></div>
-                    
-                    </div>
-                    
-                    <div id="hypBtn" class="img-btn">
-                        
+                <div id="praatInnerCont">
+                    <div id ="btnCont" class="leftSide">
+
                         <center>
-                            
-                            <img src="" id="hypImg" class="spec-img"></center>
-                    
-                        <div id="hypTextLayer" class="text-layer big-text" onclick="">
-                            
-                            <span id="hypText"> TEST</span>    
-                        
+                            <div class="topHalf">
+                                <!--<div id="refBtn" class="img-btn">
+                                    <img id="refImg" src="" class="spec-img">
+                                    <div id= "refTextLayer" class="text-layer" onclick="">
+                                        <span id="refText" class="big-text">TEST</span>
+                                    </div>
+                                    <div id="refInvisible" class="invisible-layer"></div>
+                                </div>-->
+
+                                <div id ="refBtn"  class="ref-word C1 main-bottom">
+                                    <div id="refInvisible" class="invisible-layer"></div>
+                                    <div class="tile-top-row">
+                                        <div class="tile-right-box tile-corner-font wide reff">
+                                            <div class="cont"><span class="right">C1</span></div>
+                                        </div>
+                                        <div class="tile-left-box tile-corner-font info">&#9432;</div>
+                                    </div>
+                                    <div class="tile-center-row-ref">
+                                        <div class="img-holder">
+                                            <img id="refImg" src=""/>
+                                        </div>
+                                        <div id="refTextLayer">
+                                            <span id='refText' class="tile-main-word">4</span>
+                                        </div>
+                                    </div>
+                                    <div class="tile-bottom-row">
+                                        <div class="tile-right-box wide tile-corner-font reff">
+                                            <div class="cont"><span class="right">NOUN</span>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="bottomHalf">
+                                 <!--<div id="hypBtn" class="img-btn">
+                                     <img src="" id="hypImg" class="spec-img">
+                                     <div id="hypTextLayer" class="text-layer big-text" onclick="">
+                                         <span id="hypText"> TEST</span>
+                                     </div>
+                                     <div id="hypInvisible" class="invisible-layer"></div>
+                                 </div>-->
+
+                                <div id ="hypBtn">
+                                    <div id="hypInvisible" class="invisible-layer"></div>
+                                    <div class="tile-top-row">
+                                        <div class="tile-right-box tile-corner-font wide reff">
+                                            <div class="cont"><span class="right">C1</span></div>
+                                        </div>
+                                        <div class="tile-left-box tile-corner-font info">&#9432;</div>
+                                    </div>
+                                    <div class="tile-center-row-ref">
+                                        <div class="img-holder">
+                                            <img id="hypImg" src=""/>
+                                        </div>
+                                        <div id="hypTextLayer">
+                                            <span id="hypText">4</span>
+                                        </div>
+                                    </div>
+                                    <div class="tile-bottom-row">
+                                        <div class="tile-right-box wide tile-corner-font reff">
+                                            <div class="cont"><span class="right">NOUN</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
+
+                            </div>
+                        </center>
+
+                    </div>
+
+                    <div id="SpectroSpinHolder" class="rightSide">
+                        <div id="SpectroSpinCont">
+                            <div id="tophalfSpec"></div>
+                            <div id="bottomhalfSpec"></div>
+
+                            <div id="tile_1" class="tile-word B2 third-tile-top "><div class="tile-top-row"><div class="tile-right-box tile-corner-font wide B2f"><div class="cont"><span class="right">B2</span></div></div><div class="tile-left-box tile-corner-font info">&#9432;</div></div><div class="tile-center-row"><span class="tile-main-word">1</span></div><div class="tile-bottom-row"><div class="tile-right-box wide tile-corner-font B2f"><div class="cont"><span class="right">NOUN</span></div></div></div></div>
+                            <div id="tile_2" class="tile-word C1 second-tile-top droppable ui-widget-content"><div class="tile-top-row"><div class="tile-right-box tile-corner-font wide C1f"><div class="cont"><span class="right">C1</span></div></div><div class="tile-left-box tile-corner-font info">&#9432;</div></div><div class="tile-center-row"><span class="tile-main-word">2</span></div><div class="tile-bottom-row"><div class="tile-right-box wide tile-corner-font C1f"><div class="cont"><span class="right">NOUN</span></div></div></div></div>
+                            <div id="tile_3" class="tile-word B1 main-tile"><div class="tile-top-row"><div class="tile-right-box tile-corner-font wide B1f"><div class="cont"><span class="right">B1</span></div></div><div class="tile-left-box tile-corner-font info">&#9432;</div></div><div class="tile-center-row"><span class="tile-main-word">3</span></div><div class="tile-bottom-row"><div class="tile-right-box wide tile-corner-font B1f"><div class="cont"><span class="right">NOUN</span></div></div></div></div>
+                            <div id ="tile_4"  class="tile-word C1 second-tile-bottom"><div class="tile-top-row"><div class="tile-right-box tile-corner-font wide C1f"><div class="cont"><span class="right">C1</span></div></div><div class="tile-left-box tile-corner-font info">&#9432;</div></div><div class="tile-center-row"><span class="tile-main-word">4</span></div><div class="tile-bottom-row"><div class="tile-right-box wide tile-corner-font C1f"><div class="cont"><span class="right">NOUN</span></div></div></div></div>
+                            <div id="tile_5" class="tile-word B1 third-tile-bottom"><div class="tile-top-row"><div class="tile-right-box tile-corner-font wide B1f"><div class="cont"><span class="right">B1</span></div></div><div class="tile-left-box tile-corner-font info">&#9432;</div></div><div class="tile-center-row"><span class="tile-main-word">5</span></div><div class="tile-bottom-row"><div class="tile-right-box wide tile-corner-font B1f"><div class="cont"><span class="right">NOUN</span></div></div></div></div>
+                            <div id="tile_6" class="tile-word A2 hidden_tile"><div class="tile-top-row"><div class="tile-right-box tile-corner-font wide A2f"><div class="cont"><span class="right">A2</span></div></div><div class="tile-left-box tile-corner-font info">&#9432;</div></div><div class="tile-center-row"><span class="tile-main-word">6</span></div><div class="tile-bottom-row"><div class="tile-right-box wide tile-corner-font A2f"><div class="cont"><span class="right">NOUN</span></div></div></div></div>
                         </div>
-                    
-                        <div id="hypInvisible" class="invisible-layer"></div>
-                    
                     </div>
-                    
-                    <div id="sliderHolder">
-                        
-                        <input type="range" min="0" max="80" value="80" id="myRange" class="slider">
-                        
-                        <span id="sliderVal">100%</span>
-                    
+                    <div id="transHolder"></div>
+                    <div id="fixedWord" class="centerSide">
+                        <div id="fixedWordTile" class="tile-word-fixed A2 main-tile-fixed"><div class="tile-top-row"><div class="tile-right-box tile-corner-font wide A2f"><div class="cont"><span class="right">A2</span></div></div><div class="tile-left-box tile-corner-font info">&#9432;</div></div><div class="tile-center-row"><span class="tile-main-word">6</span></div><div class="tile-bottom-row"><div class="tile-right-box wide tile-corner-font A2f"><div class="cont"><span class="right">NOUN</span></div></div></div></div>
                     </div>
-                
-                    </center>
+                    <audio id="fixedAudio" src=""></audio>
+
+                    <div id="tileAudios"></div>
 
                 </div>
-            
             </div>        
-        
+            <div id="sliderHolderCont">
+                <div id="leftSliderHolder"><div id="playTrigramBtn"><img id="modalEarImg"  src="http://127.0.0.1:8000/media/images/ear.png"/></div></div>
+                <div id="centerSliderHolder"><input type="range" min="0" max="80" value="80" id="myRange" class="slider"></div>
+                <div id="rightSliderHolder"><span id="sliderVal">100%</span></div>
+                <audio id="completeTrigramAudio" src="" ></audio>
+                <audio id="danSynthAudio" src="" ></audio>
+                        <!--<div id="sliderHolder">
+                            <div id="playTrigramBtn"></div>
+                            <input type="range" min="0" max="80" value="80" id="myRange" class="slider">
+
+                            <span id="sliderVal">100%</span>
+
+                        </div>-->
+            </div>
         </div>
 
         <div id="overlayErrorBox">

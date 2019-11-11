@@ -48,6 +48,7 @@ function doAllignment(){
 // Button clicked after users have selected errored words
 $('#forwardErrorSelection').click(function(){
     //Hides non essential buttons
+    tag_sentence();
     $('#recordVoiceBtn').fadeOut();
     $('#listenVoiceBtn').fadeOut();
     $('#backCorrection').fadeOut();
@@ -332,6 +333,7 @@ function doneError(){
     conversationVariables.uncorrectedErrors = conversationVariables.uncorrectedErrors.filter(e => e !== "upper_"+idx);                                                                             
     //Check if all errors are corrected
     if($('.uncorrected-error').length == 0){
+        $('#recordBtnsCont').show();
         $("#talkBtn").show();
         $('#recordVoiceBtn').show();
         $('#backCorrection').show();
@@ -531,71 +533,95 @@ function sendAttemptBlob( new_blob ){
             movementController( movementObject.abs.blank, '0.5', '1' );
           
             setTimeout( function(){
-                
                 $('#reRecordBtn').show();
                 $('#backOverlay').show();
                 $("#reRecordBtn").prop( "disabled", false );
                 $('#backOverlay').prop("disabled",false);
+                var cent_found = false;
                 if(json.trans.trim() != ""){
-                document.getElementById("hypImg").src = "http://127.0.0.1:8000/"+json.image_url;
-                $("#hypText").text(json.trans);
-               
-                err_trans = $('#refText').text().trim();
-                trans = json.trans;
-                if(err_trans.trim().length <= 18 && trans.trim().length <= 18){ 
-                    $("#hypText").removeClass().addClass('big-text');           
-                    $("#refText").removeClass().addClass('big-text');           
-                }                                                               
-                else{                                                           
-                    if(err_trans.trim().length > 25 || trans.lenght > 25){      
-                        $("#hypText").removeClass().addClass('small-text');     
-                        $("#refText").removeClass().addClass('small-text');     
-                    }                                                           
-                    else{                                                       
-                        $("#hypText").removeClass().addClass('medium-text');    
-                        $("#refText").removeClass().addClass('medium-text');    
-                    }                                                           
-                }                                                               
+                    $('#hypBtn').show();
+                    trans = json.trans;
+                    err_trans = $('#refText').text().trim();
+                    if(!conversationVariables.Trigram) {
+                        document.getElementById("hypImg").src = "http://127.0.0.1:8000/"+json.image_url;
+                        $("#hypText").text(json.trans);
+
+                        if(json.correct){
+                            $('exitOverlay').hide();
+                            correct_attempt();
+                            setTimeout(function(){
+                                $("#hypBtn").css("background-colocent_foundr","green");
+                                $("#hypInvisible").css("background-color","green");
+                            },500);
+                        }
+                        else{
+                            var sim = parseFloat(json.sim);
+                            incorrect_attempt();
+                            setTimeout(function(){
+                                if(sim <= 0.15){
+                                    $('#hypBtn').css("bckgroundColor","#ffaa00");
+                                    $('#hypInvisible').css("background-color","#ffaa00");
+                                }else{
+                                    $('#hypBtn').css({ "background-color" : "red" });
+                                    $('#hypBtn').css('backgroundColor', "red");
+                                    $("#hypInvisible").css("background-color","#ffcccb");
+                                }
+                            },900);
+                        }
+
+                        //change speed of play
 
 
 
-                document.getElementById('hypAudio').src = "http://127.0.0.1:8000/"+json.audio_url;
-                
-                if(json.correct){
-                    $('exitOverlay').hide();
-                    correct_attempt();
-                    setTimeout(function(){
-                        $("#hypBtn").css("background-color","green");      
-                        $("#hypInvisible").css("background-color","green");
-                    },500);
-                    
-                }
-                else{
-                    var sim = parseFloat(json.sim);
-                    incorrect_attempt();
-                    setTimeout(function(){
-                        if(sim <= 0.15){              
-                            $('#hypBtn').css("bckgroundColor","#ffaa00");      
-                            $('#hypInvisible').css("background-color","#ffaa00");
-                        }else{
-                            $('#hypBtn').css({ "background-color" : "red" });
-                            $('#hypBtn').css('backgroundColor', "red"); 
-                            $("#hypInvisible").css("background-color","#ffcccb");
-                        }                                                         
-                    },900);
-                }
-                conversationVariables.hypLenOriginal = json.hypLen;
-                conversationVariables.hypLen = json.hypLen/conversationVariables.playspeed;
-                //change speed of play
-                document.getElementById('hypAudio').playbackRate = conversationVariables.playspeed;
-                conversationVariables.attemptCount +=1;
-                if(conversationVariables.attemptCount == 3 && !json.correct){
-                    //Tia says you can give up
-                    disableBtns();
-                    conversationVariables.thirdAttemptError = true;
-                    tiaSpeak("If you are struggling you can try again another time", cont=true,function(){console.log("Worked")});
-                    $('#exitOverlay').show();
-                }
+
+
+
+                    }
+                    else{
+
+                        $('#hypBtn').hide();
+                        t_words = trans.trim().split(" ");
+                        $('#transHolder').empty();
+                        for(i=0;i<t_words.length;i++){
+                            if(t_words[i].toLowerCase().trim() == err_trans.toLowerCase().trim() &&  !cent_found){
+                                $('#transHolder').append('<span class="trans_correct" id="trans_'+i+'">'+t_words[i]+"</span>");
+                                cent_found = true;
+                            }
+                            else{
+                                $('#transHolder').append('<span class="trans_normal" id="trans_'+i+'">'+t_words[i]+"</span>");
+                            }
+                        }
+                        if(cent_found){
+                            $("#refBtn").effect("highlight",{color: '#7CF00'},2500);
+                            $('#reRecordBtn').hide();
+                            $('#sliderHolder').css('visibility','visible');
+                            $('#submitOverlay').show();
+                            $("#submitOverlay").off("click");
+                            if(t_words.length == 1){
+                                $("#submitOverlay").click(submitCorrect);
+                            }
+                            else{
+                                $("#submitOverlay").click(function(){
+                                    $('#exitOverlay').click();
+                                });
+                            }
+                            $('#backCorrection').prop("disabled",false);
+                            $('#backOverlay').prop("disabled",false);
+                        }
+                    }
+
+                    document.getElementById('hypAudio').src = "http://127.0.0.1:8000/"+json.audio_url;
+                    conversationVariables.hypLenOriginal = json.hypLen;
+                    conversationVariables.hypLen = json.hypLen/conversationVariables.playspeed;
+                    document.getElementById('hypAudio').playbackRate = conversationVariables.playspeed;
+                    conversationVariables.attemptCount +=1;
+                    if(conversationVariables.attemptCount == 3 && (!json.correct && !cent_found)){
+                        //Tia says you can give up
+                        disableBtns();
+                        conversationVariables.thirdAttemptError = true;
+                        //tiaSpeak("If you are struggling you can try again another time", cont=true,function(){console.log("Worked")});
+                        ('#exitOverlay').show();
+                    }
             }
             else{
                 dealWithBlankTranscription();   
@@ -615,11 +641,11 @@ function sendAttemptBlob( new_blob ){
 //Function is called if user preses back or closes overlay after typing and not submittitng correction
 function closeStage3(){
     let fd = new FormData();
-    fd.append('sessionID',conversationVariables.session_id);
-    fd.append('blob_no_text_sent_id',conversationVariables.blob_no_text_sent_id);
+    fd.append('sessionID',conversationVariables.conversation_dict.id);
+    fd.append('blob_no_text_sent_id',conversationVariables.sentence_being_recorded.sent_id);
     fd.append('start_idx',conversationVariables.startIDX);
     fd.append('error_pk',conversationVariables.errors[conversationVariables.startIDX]);
-    fd.append('audio_id',conversationVariables.currentAudID);
+    fd.append('audio_id',conversationVariables.sentence_being_recorded_audio.currentAudID);
     fd.append('correctio_id', conversationVariables.correctionAttemptID);
     fd.append('clicks', conversationVariables.specClicks);
     $.ajax({                                                                                 
@@ -637,7 +663,29 @@ function closeStage3(){
     });
 }
 
-//Function is calle dif user tries to rerecord audio 
+//Function for returning pronunciation feedback
+function getPronunciationErrors(){
+    let fd = new FormData()
+    fd.append('session_id',conversationVariables.conversation_dict.id);
+
+    $.ajax({
+        url: "/get_pronunciation_errors",
+        type:"POST",
+        data:fd,
+        processData:false,
+        contentType:false,
+          success: function(json){
+            var wordcloud = "http://127.0.0.1:8000/"+json['wordcloud']
+            document.getElementById('pronunImg').src = wordcloud
+        },
+        error: function() {
+            console.log("That's wrong");
+        },
+
+    });
+}
+
+//Function is called if user tries to rerecord audio
 function sendErrorBlobToServer( new_blob ){
 
     let fd = new FormData();
@@ -715,18 +763,19 @@ $('#refBtn').click(function(){
     conversationVariables.specClicks.push(JSON.stringify({"synth":Date.now() / 1000}));
     //disable other buttons during playing
     //hide text
-    $('#refText').hide();
+    //$('#refText').hide();
     //animation
-   document.getElementById("refAudio").play();
-   $("#refInvisible").css("margin-left","-10px");
-   $('#refInvisible').css({"border-left":"10px solid black"});
-   $('#refInvisible').animate({width:"0"},conversationVariables.refLen);
-   setTimeout(function(){
-        $("#refInvisible").css("border-left","none");
-        $('#refText').fadeIn(800);
-        $('#refInvisible').css("width","100%");
-        enableBtns();
-   },(conversationVariables.refLen+100));
+   //document.getElementById("refAudio").play();
+   tiaSpeak('Ref_Word', cont=true);
+   //$("#refInvisible").css("margin-left","-10px");
+   //$('#refInvisible').css({"border-left":"10px solid black"});
+   //$('#refInvisible').animate({width:"0"},conversationVariables.refLen);
+   //setTimeout(function(){
+     //   $("#refInvisible").css("border-left","none");
+       // $('#refText').fadeIn(800);
+       // $('#refInvisible').css("width","100%");
+        //enableBtns();
+   //},(conversationVariables.refLen+100));
 });
 
 $('#hypBtn').click(function(){
@@ -753,6 +802,9 @@ $('#hypBtn').click(function(){
    },(conversationVariables.hypLen+100));  
 });
 
+$('#transHolder').click(function(){
+    document.getElementById("hypAudio").play();
+});
 
 
 //Keyboard sumbit
@@ -827,7 +879,7 @@ function submitKeyboard(){
             $("#hypText").text(err_trans);
             $("#refText").text(trans);
             
-            if(err_trans.trim().length <= 18 && trans.trim().length <= 18){
+            /**if(err_trans.trim().length <= 18 && trans.trim().length <= 18){
                 $("#hypText").removeClass().addClass('big-text');
                 $("#refText").removeClass().addClass('big-text'); 
             }
@@ -840,7 +892,9 @@ function submitKeyboard(){
                     $("#hypText").removeClass().addClass('medium-text');
                     $("#refText").removeClass().addClass('medium-text');
                 }
-            }
+            }**/
+             $("#hypText").removeClass().addClass('small-text');
+             $("#refText").removeClass().addClass('small-text');
 
             $("#overlayErrorBox").hide();                                                    
             $("#overlayTextBox").hide();
@@ -882,6 +936,7 @@ function submitKeyboard(){
             var finAudio = document.getElementById("audio_"+conversationVariables.startIDX);             
             finAudio.src = hyp_audio_url;                                     
             $('#audio_'+conversationVariables.startIDX).attr('duration',json.hyp_length);
+            get_word_context();
 
         },
         error: function() {
