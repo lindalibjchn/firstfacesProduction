@@ -234,7 +234,7 @@ def do_allignment(request):
     trans = request.POST['trans']
     audioPath = request.POST['fn']
     sid = request.POST['sessionID']
-    print("\n",trans,"\n",audioPath,"\n",get_text_path(sid))
+    print("\n", trans, "\n", audioPath, "\n", get_text_path(sid))
     # writes transcirption one word to a line to a file
     f = open(get_text_path(sid), "w+")
     for word in trans.split():                                                   
@@ -397,29 +397,34 @@ def store_attempt_blob(request):
     blob = request.FILES['data']
     sess = Conversation.objects.get( pk=request.POST['sessionID'] )
     ae_pk = request.POST['error_pk']
-    ae = AudioError.objects.get( pk=ae_pk )
+    ae = AudioError.objects.get(pk=ae_pk)
 
     blob_no_text_sent_id = int(request.POST['blob_no_text_sent_id'])
-    s = Sentence.objects.get( pk=blob_no_text_sent_id )
+    s = Sentence.objects.get(pk=blob_no_text_sent_id)
     
     # Gets existing audio correction attempt instance
-    aeca = AudioErrorCorrectionAttempt.objects.get(pk = request.POST['correctio_id'])
+    aeca = AudioErrorCorrectionAttempt.objects.get(pk=request.POST['correctio_id'])
     # Populates the ACA 
-    filename = str(sess.id) + "_attempt_" + str(s.id) + "_" + timezone.now().strftime( '%H-%M-%S' ) +".webm"
+    filename = str(sess.id) + "_attempt_" + str(s.id) + "_" + timezone.now().strftime('%H-%M-%S') + ".webm"
     blob.name = filename 
-    aeca.audio = blob;
+    aeca.audio = blob
     clicks = request.POST['clicks']
     aeca.clicks = clicks
-    aeca.save();
-    #Obtains transcript for audio file
+    aeca.save()
+    # Obtains transcript for audio file
     trans = get_speech_recognition(filename)[0]["transcript"]
     # removes punctuation 
     trans = trans.translate(translator)
     temp = ae.intention.translate(translator)
     aeca.transcript = trans
     aeca.save()
+
+    # Above stores attempt
+
+
+
     # Works out phonetic similarity between typed correction and recorded transcription
-    sim = get_sim(temp,trans)
+    sim = get_sim(temp, trans)
     
     # Works out if transcriptions are considered same
     correct = False

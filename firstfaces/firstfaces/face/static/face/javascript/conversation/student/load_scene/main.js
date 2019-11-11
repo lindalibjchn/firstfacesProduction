@@ -23,7 +23,7 @@ function enterOrReEnter() {
 
     //load this early and change .src later
     synthesisObject.audio = document.getElementById( 'synthClip' );
-
+    synthesisObject.audioS3 = document.getElementById( 'danSynthAudio' );
     synthesisObject.audio.ondurationchange = function() {
 
         synthesisObject.now.noOfPhones = synthesisObject.now.phones[ synthesisObject.sentenceNo ].length;
@@ -38,6 +38,7 @@ function enterOrReEnter() {
         breatheObject.singleBreath.outCount = synthesisObject.audio.duration
 
     }
+
 
 
     //// DEVELOPMENT

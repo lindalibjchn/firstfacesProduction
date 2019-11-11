@@ -10,6 +10,7 @@ import math
 import json
 from django.forms.models import model_to_dict
 from google.cloud import texttospeech
+from wordcloud import WordCloud, STOPWORDS
 import os
 
 # os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/johnsHDD/PhD_backup/erle-3666ad7eec71.json"
