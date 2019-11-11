@@ -91,7 +91,7 @@ function calculateCorrectIncorrectDunnoSentences( sentencesArray ) {
 
     } );
 
-    console.log(' judgements:', judgements );
+    //console.log(' judgements:', judgements );
     return judgements
 
 }

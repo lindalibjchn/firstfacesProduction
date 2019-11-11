@@ -95,7 +95,7 @@ function getTotalArticleErrors( sentencesArray ) {
 
 function getNumberOfArticlesInSentence( sentenceArray ) {
 
-    console.log('sentenceArray:', typeof(sentenceArray));
+    //console.log('sentenceArray:', typeof(sentenceArray));
     let noOfArticles = 0;
     sentenceArray.forEach( function( sentenceTuple ) {
 
@@ -204,7 +204,7 @@ function putErrorObjectIntoListForChart( articleErrorsObject ) {
 
 function drawChart( inputData, divId ) {
 
-    console.log(' inputData:', inputData )
+    //console.log(' inputData:', inputData )
 	let ctx = document.getElementById( divId ).getContext('2d');
 	let myDoughnutChart = new Chart(ctx, {
 		type: 'doughnut',
@@ -237,7 +237,7 @@ function drawChart( inputData, divId ) {
 
 function addDetailedErrorsChart( typeOfError, inputData ) {
 
-    console.log('inputData:', inputData);
+    //console.log('inputData:', inputData);
     var myData;
     var myLabels;
     if ( typeOfError === 'article' ) {

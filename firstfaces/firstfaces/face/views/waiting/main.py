@@ -71,6 +71,7 @@ def waiting(request):
             'tutorial_complete': tutorial_complete,
             'currently_in_class': currently_in_class,
             'class_finished_today': class_finished_today,
+            'in_development': settings.DEBUG,
             # 'no_live_sessions': no_live_sessions,
 
         }
