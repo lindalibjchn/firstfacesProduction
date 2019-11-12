@@ -76,19 +76,22 @@ def convert_django_time_to_javascript(t):
 
 def check_if_currently_in_class_or_class_finished(u):
 
-    most_recent_conversation = Conversation.objects.filter(learner=u).latest('start_time')
+    conversations = Conversation.objects.filter(learner=u)
     todays_date = timezone.localtime().date()
 
     currently_in_class = False
     class_finished_today = False
 
-    if most_recent_conversation.end_time == None:
+    if len(conversations) != 0:
 
-        currently_in_class = True
+        most_recent_conversation = conversations.latest('start_time')
+        if most_recent_conversation.end_time == None:
 
-    elif todays_date == most_recent_conversation.end_time.date():
-    
-        class_finished_today = True
+            currently_in_class = True
+
+        elif todays_date == most_recent_conversation.end_time.date():
+        
+            class_finished_today = True
 
     return [currently_in_class, class_finished_today]
 

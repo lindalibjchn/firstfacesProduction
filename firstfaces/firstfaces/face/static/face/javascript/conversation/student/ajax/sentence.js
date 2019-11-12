@@ -65,6 +65,7 @@ function checkJudgement() {
         data: { 
             'convId': conversationVariables.conversation_dict.id,
             'sentId': conversationVariables.sentence_awaiting_judgement.sent_id,
+            'loop': thoughtBubbleObject.loop
         },
         success: function(json) {
             
@@ -90,4 +91,27 @@ function checkJudgement() {
     });
 
 }
+
+function storeNoOfThoughtBubbleLoops() {
+
+    $.ajax({
+        url: "/store_thought_bubble_loops",
+        type: "POST",
+        data: { 
+            'loops': thoughtBubbleObject.loop,
+        },
+        success: function(json) {
+            
+            console.log( 'thoughtBubbleLoops stored successsfully' )
+        },
+        error: function() {
+            
+            console.log( 'in storeNoOfThoughtBubbleLoops error' );
+        
+        },
+
+    });
+
+}
+
 

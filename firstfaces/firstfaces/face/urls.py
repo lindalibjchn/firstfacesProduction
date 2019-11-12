@@ -1,7 +1,7 @@
 from django.urls import path
 from django.urls import reverse_lazy
 from django.contrib.auth.views import LogoutView
-from face import views_temp
+from face.views import views_temp
 from face.views.conversation.student import main as conversation_student_main
 from face.views.conversation.student.ajax import audio
 from face.views.conversation.student.ajax import conversation
@@ -59,7 +59,7 @@ urlpatterns = [
     # check db
     path('check_for_change', updates.check_for_change, name='check_for_change'),
     # update
-    path('update_session_object', updates.update_session_object, name='update_session_object'),
+    path('update_conversation_objects', updates.update_conversation_objects, name='update_conversation_objects'),
     path('update_info', updates.update_info, name='update_info'),
 
     #WAITING
@@ -80,5 +80,5 @@ urlpatterns = [
     # path('add_transcription_choice_view', views_temp.add_transcription_choice_view, name='add_transcription_choice_view'),
     # path('add_listen_synth_data', views_temp.add_listen_synth_data, name='add_listen_synth_data'),
     # path('check_prompt_indexes', views_temp.check_prompt_indexes, name='check_prompt_indexes'),
-    path('group_data', views_temp.group_data, name="group_data"),
+    # path('group_data', views_temp.group_data, name="group_data"),
     ]

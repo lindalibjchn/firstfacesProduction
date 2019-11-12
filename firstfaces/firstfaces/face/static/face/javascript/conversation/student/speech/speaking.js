@@ -28,7 +28,6 @@ function tiaSpeak( tiaSays, cont=true, speakCb=function(){} ) {
 
 function tiaSpeakIndividualSentences() {
 
-<<<<<<< HEAD
     synthesisObject.talking = true;
     if(conversationVariables.stage3){
         var new_duration = synthesisObject.now.duration / ((parseInt(document.getElementById("myRange").value)+20)/100);
@@ -42,20 +41,14 @@ function tiaSpeakIndividualSentences() {
         synthesisObject.now.noOfLeftoverFrames = synthesisObject.now.noOfFrames - synthesisObject.now.noOfFramesPerPhone * synthesisObject.now.noOfPhones;
         synthesisObject.gotNewDuration = true;
         breatheObject.singleBreath.outCount = new_duration
-        synthesisObject.now.phoneCount = 1;
         animateFirstPhoneSlowly();
     }
     else{
         synthesisObject.audio.src = synthesisObject.now.URLs[ synthesisObject.sentenceNo ];
-        synthesisObject.now.phoneCount = 1;
         holdOnUntilNewAudioDurationIsAvailable()
     }
-=======
-    synthesisObject.audio.src = synthesisObject.now.URLs[ synthesisObject.sentenceNo ];
+
     synthesisObject.now.phoneCount = 1;
-    
-    holdOnUntilNewAudioDurationIsAvailable()
->>>>>>> 5ef1aaa2481d82a99deb346b1f1e8337405a22aa
 
 }
 
@@ -80,20 +73,13 @@ function holdOnUntilNewAudioDurationIsAvailable() {
 
 function animateFirstPhoneSlowly() {
 
-<<<<<<< HEAD
-    initSingleBreath( 1, breatheObject.speakingBreathMult, tiaTimings.durationOfFirstBreath );
-    setTimeout( function() {
-        expressionController( expressionObject.abs[ synthesisObject.now.phones[ synthesisObject.sentenceNo ][ 0 ] ], tiaTimings.durationOfFirstSpeakingPhones, slightlyDelayAudioPlay )
-=======
-    let initPhoneDuration = tiaTimings.durationOfFirstSpeakingPhones
-    if ( synthesisObject.speakDirectlyAfterComingBackFromThinking ) {
-
-        initPhoneDuration = tiaTimings.durationOfFirstSpeakingPhones * 2;
->>>>>>> 5ef1aaa2481d82a99deb346b1f1e8337405a22aa
-
+    // no breathing on short words or 3 words
+    if ( !conversationVariables.stage3 ) {
+    
+        initSingleBreath( 1, breatheObject.speakingBreathMult, tiaTimings.durationOfFirstSpeakingPhones );
+    
     }
-
-    initSingleBreath( 1, breatheObject.speakingBreathMult, tiaTimings.durationOfFirstSpeakingPhones );
+       
     expressionController( expressionObject.abs[ synthesisObject.now.phones[ synthesisObject.sentenceNo ][ 0 ] ], tiaTimings.durationOfFirstSpeakingPhones, slightlyDelayAudioPlay )
 
 }
@@ -111,25 +97,17 @@ function slightlyDelayAudioPlay() {
     }
 
     setTimeout( function() {
-        
-        synthesisObject.audio.play();
-
-<<<<<<< HEAD
-        setTimeout( function() {
 
             if(conversationVariables.stage3){
                 synthesisObject.audioS3.play();
                 console.log(synthesisObject.now.newDuration);
-                initSingleBreath( -1, breatheObject.speakingBreathMult, synthesisObject.now.newDuration );
+                //initSingleBreath( -1, breatheObject.speakingBreathMult, synthesisObject.now.newDuration );
             }
             else{
                 synthesisObject.audio.play();
                 console.log(synthesisObject.now.newDuration)
                 initSingleBreath( -1, breatheObject.speakingBreathMult, synthesisObject.audio.duration );
              }
-=======
-        initSingleBreath( -1, breatheObject.speakingBreathMult, synthesisObject.audio.duration );
->>>>>>> 5ef1aaa2481d82a99deb346b1f1e8337405a22aa
 
     }, tiaTimings.delayAudioPlay );
 

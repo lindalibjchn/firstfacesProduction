@@ -21,6 +21,23 @@ $(window).on( 'load', function() {
 
 });
 
+var mediaLocation = 'media/'
+var prefixURL;
+function definePrefixURL() {
+
+    if ( inDevelopment ) {
+
+        prefixURL = "http://127.0.0.1:8000/"
+
+    } else {
+
+        prefixURL = "https://erle.ucd.ie/"
+
+    }
+
+}
+
+definePrefixURL();
 $( window ).on( 'resize',  function() {
     
     getLocationOfEmotionWheel();

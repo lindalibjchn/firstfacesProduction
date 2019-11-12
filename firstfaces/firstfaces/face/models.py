@@ -51,6 +51,7 @@ class Sentence(models.Model):
 
     judgement = models.CharField(max_length=1, choices=JUDGEMENT_CHOICES, null=True, blank=True)
     judgement_timestamp = models.DateTimeField(null=True, blank=True)
+    loop = models.SmallIntegerField(null=True, blank=True)
     emotion = models.CharField(max_length=12, null=True, blank=True)
     # True is nod. False is shake and null is nothing
     nod_shake = models.CharField(max_length=30, null=True, blank=True)

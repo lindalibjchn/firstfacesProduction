@@ -64,7 +64,7 @@ function get_word_context(){
                 hiddenBottom = json.hidden_tiles;
                 $('#fixedWord').empty().append(json.fixed_tile);
 
-                var fixedAudioURL = "http://127.0.0.1:8000/" + json.fixed_audio;
+                var fixedAudioURL = prefixURL + json.fixed_audio;
                 var fixedAudio = document.getElementById("fixedAudio");
                 fixedAudio.src = fixedAudioURL;
 
@@ -85,9 +85,9 @@ function get_word_context(){
                 var count = 0;
                 for(i=0;i<tiles.length;i++){
                     if(tiles[i] != ''){
-                        $('#tileAudios').append('<audio id="'+tiles[i]+'_audio" src="http://127.0.0.1:8000/'+json.tile_audio[count]+'" />' )
+                        $('#tileAudios').append('<audio id="'+tiles[i]+'_audio" src="' + prefixURL + json.tile_audio[count]+'" />' )
                          synthesisObject.data[tiles[i]] = {
-                             'URLs':['http://127.0.0.1:8000/'+json.tile_audio[count]],
+                             'URLs':[prefixURL +json.tile_audio[count]],
                              'texts':[$('#'+tiles[i]).find('span.tile-main-word').text()],
                              'phones':[json.tile_vis[count]],
                              'duration':json.tile_durations[count]
@@ -97,9 +97,9 @@ function get_word_context(){
                 }
                 if(hiddenBottom.length > 0){
                     for(i=0;i<hiddenBottom.length;i++){
-                        $('#tileAudios').append('<audio id="'+hiddenBottom[i]+'_audio" src="http://127.0.0.1:8000/'+json.tile_audio[i+tile.length]+'" />' )
+                        $('#tileAudios').append('<audio id="'+hiddenBottom[i]+'_audio" src="' + prefixURL +json.tile_audio[i+tile.length]+'" />' )
                         synthesisObject.data[hiddenBottom[i]] = {
-                             'URLs':['http://127.0.0.1:8000/'+json.tile_audio[i+tile.length]],
+                             'URLs':[prefixURL +json.tile_audio[i+tile.length]],
                              'texts':[$('#'+hiddenBottom[i]).find('span.tile-main-word').text()],
                              'phones':[json.tile_vis[i+tile.length]],
                              'duration':json.tile_durations[i+tile.length]
@@ -237,7 +237,7 @@ function splice_audio(){
             processData: false,
             contentType: false,
             success: function(json) {
-                var path = 'http://127.0.0.1:8000/'+json.path;
+                var path = prefixURL+json.path;
                 synthesisObject.data['Spliced_Audio'] = {
                              'URLs':[path],
                              'texts':[json.words],

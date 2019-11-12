@@ -418,12 +418,22 @@
     height: 18%;
     /*border: 1x dashed red;*/
     border-bottom: 1px white solid;
+    overflow-y: scroll;
+
+}
+
+.audio-attempt {
+
+    position: relative;
+    display: inline-block;
+    padding: 4%;
+    /*border: 1px solid black;*/
 
 }
 
 .recording {
 
-    background-color: red;
+    background-color: rgba(255, 0, 0, 0.5);
 
 }
 

@@ -1,7 +1,8 @@
 function storeEmotion() {
 
+    console.log(' in store emotion' );
     // last emotion click is handled by the endConversation function
-    if ( conversationVariables.ratings !== undefined ) {
+    if ( conversationVariables.ratings === undefined ) {
 
         let emotion = $(this).attr('id').substring( 5 );
         $(this).css( {

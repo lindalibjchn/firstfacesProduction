@@ -174,13 +174,13 @@ function startNextSentenceThoughtLoop( errorInGettingResponse=false ) {
     thoughtBubbleObject.wordThinkingCount = 0;
     thoughtBubbleObject.loop += 1;
 
-    if ( thoughtBubbleObject.loop  === 4 ) {
+    if ( thoughtBubbleObject.loop === 5 ) {
 
         tiaTellsStudentNoFeedback();
 
     } else if ( thoughtBubbleObject.loop % 2 === 0 ) {
     
-        returnFromThinkingHard();
+        setTimeout( returnFromThinkingHard, tiaTimings.delayUntilGoingToThinkingHard );
 
     } else {
 
