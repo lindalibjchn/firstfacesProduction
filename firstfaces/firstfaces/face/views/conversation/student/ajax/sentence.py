@@ -53,6 +53,7 @@ def check_judgement(request):
 
     sent_id = int(request.GET['sentId'])
     conv_id = int(request.GET['convId'])
+    loop = int(request.GET['loop'])
     received_judgement = False
     received_judgement_n_for_prompt = False
 
@@ -74,9 +75,14 @@ def check_judgement(request):
 
             if check_for_prompt_count != 5:
                 sent = convert_django_sentence_object_to_json(s, request.user.id, conv_id)
+                s.loop = loop
+                s.save()
 
         else: # C, X,  D and 3
             sent = convert_django_sentence_object_to_json(s, request.user.id, conv_id)
+            s.loop = loop
+            s.save()
+
 
     sent_meta = {
         'sentence': sent,

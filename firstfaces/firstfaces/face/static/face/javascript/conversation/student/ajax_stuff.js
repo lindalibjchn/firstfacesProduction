@@ -116,9 +116,8 @@ function getRemainingAudio(){
         contentType: false,
         success: function(json) {
             var i;
-            var base = "http://127.0.0.1:8000/";
             for(i=0;i<conversationVariables.correct_audio.length;i++){
-                document.getElementById("audio_"+conversationVariables.correct_audio[i]).src = base+json['paths'][i];
+                document.getElementById("audio_"+conversationVariables.correct_audio[i]).src = prefixURL+json['paths'][i];
                 $("#audio_"+conversationVariables.correct_audio[i]).attr('duration',json['lens'][i]);
             }
             getAudioLength();

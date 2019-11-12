@@ -7,8 +7,8 @@ function checkForChange() {
 
             if ( json.change ) {
 
-                console.log('sentences_being_recorded:', json.sentences_being_recorded); 
-                console.log('sentences_not_judged:', json.sentences_not_judged);
+                //console.log('sentences_being_recorded:', json.sentences_being_recorded); 
+                //console.log('sentences_not_judged:', json.sentences_not_judged);
                 updateSentencesNeedJudgement( json.sentences_not_judged );
                 updateSentencesBeingRecorded( json.sentences_being_recorded );
 
@@ -26,42 +26,30 @@ function checkForChange() {
 
 }
 
-function updateSessionsDictFromServer( correction=false ) {
+function updateConversationsDictFromServer() {
 
     //if comes from send correction to server then correction=true and update sentence for correction too.
-    
+    let conversationIds = Object.keys( teacherVars.conversations );
+    //console.log('conversationIds:', conversationIds);
+
     $.ajax({
-        url: "/update_session_object",
-        type: "POST",
-        data: {}, 
+        url: "/update_conversation_objects",
+        type: "GET",
+        traditional: true,
+        data: {
+            'conversationIds': JSON.stringify(conversationIds),
+        }, 
         success: function(json) {
 
-            prevSentencesNeedJudgementLength = sentencesNeedJudgement.length;
+            console.log('same_students:', json.same_students)
+            if ( !json.same_students ) {
 
-            sessions = JSON.parse(json.sessions);
+                console.log('new_students:', json.new_students)
+                console.log('finished_students:', json.finished_students)
 
-            if ( Object.keys( sessions ).length !== noSessions ) {
-
-                aud1.play();
-                //noConversations = Object.keys( sessions ).length;
-
+                loadStudents(); 
             }
-
-            updateSentencesNeedJudgement();
-            updateWrongSentences();
-            updatePrevSentences();
-
-            if ( correction ) {
-
-                updateSentenceForCorrection();
-
-            }
-
-            if ( prevSentencesNeedJudgementLength === 0 && sentencesNeedJudgement.length > 0 ) {
-
-                loadNextSentenceNeedingJudgement();
-
-            }
+            //aud1.play();
 
         },
         error: function() {

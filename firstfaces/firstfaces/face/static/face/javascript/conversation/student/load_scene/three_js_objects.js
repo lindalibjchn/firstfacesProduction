@@ -201,7 +201,7 @@ function init() {
 
     // RENDERER
     renderScene();
-    dealWithResizing();
+    //dealWithResizing();
 
     // CAMERA
     addCamera();

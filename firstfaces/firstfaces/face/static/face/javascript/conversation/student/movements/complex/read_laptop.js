@@ -28,7 +28,24 @@ function prepareToStopTyping() {
 function stopTyping() {
     
     conversationVariables.tiaTyping = false;
-    tapKeyFull();
+
+    if ( conversationVariables.sentence_being_recorded_audio.alternatives[ 0 ].transcript === "" ) {
+
+        setTimeout( function() {
+
+            movementController(movementObject.abs.blank, 1, 1, function() {
+                
+                dealWithBlankTranscription();
+                
+            } );
+
+        }, 500 );
+
+    } else {
+
+        tapKeyFull();
+
+    }
 
 }
 

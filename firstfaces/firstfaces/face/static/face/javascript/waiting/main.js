@@ -2,7 +2,11 @@ $(window).on( 'load', function() {
 
     addAvailablesToTimetable( waitingVariables.availables )
     addAllScores( waitingVariables.conversations )
-    showConversationSentences( 0 );
+    if ( waitingVariables.conversations.length !== 0 ) {
+        
+        showConversationSentences( 0 );
+    
+    }
     $('#pronunciationClearOverlayArea').click( hidePronunciationDataContainer );
 
 });

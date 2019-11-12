@@ -53,11 +53,11 @@ function tiaSpeakGreetings() {
 
         if ( conversationVariables.first_conversation ) {
 
-            tiaSpeak( 'greatToSee', cont=false, askAboutEmotion );
+            tiaSpeak( 'welcomeToFirst', cont=false, askAboutEmotion );
         
         } else {
             
-            tiaSpeak( 'welcomeToFirst', cont=false, askAboutEmotion );
+            tiaSpeak( 'greatToSee', cont=false, askAboutEmotion );
             
         }
 
@@ -195,11 +195,9 @@ function showPreChoiceTextInput() {
 function showChoiceTextInput() {
 
     $('#sentenceShowHolder').hide();
-    $('#textInputBoxCont').show();
-    $('#textInputBoxInnerCont').show();
-    $('#textInputBox').show();
-    //$('#textInputContainer').fadeIn( tiaTimings.speechBubbleFadeInDuration );
     $('#textInputContainer').show();
+    $('#textInputBoxContCont').show();
+    //$('#textInputContainer').fadeIn( tiaTimings.speechBubbleFadeInDuration );
     $('#textInput').focus();
 
     $('#submitTopicBtnCont').fadeIn( tiaTimings.speechBubbleFadeInDuration );

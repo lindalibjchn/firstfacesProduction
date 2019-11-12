@@ -552,7 +552,7 @@ function sendAttemptBlob( new_blob ){
                     trans = json.trans;
                     err_trans = $('#refText').text().trim();
                     if(!conversationVariables.Trigram) {
-                        document.getElementById("hypImg").src = "http://127.0.0.1:8000/"+json.image_url;
+                        document.getElementById("hypImg").src = prefixURL+json.image_url;
                         $("#hypText").text(json.trans);
 
                         if(json.correct){
@@ -619,7 +619,7 @@ function sendAttemptBlob( new_blob ){
                         }
                     }
 
-                    document.getElementById('hypAudio').src = "http://127.0.0.1:8000/"+json.audio_url;
+                    document.getElementById('hypAudio').src = prefixURL+json.audio_url;
                     conversationVariables.hypLenOriginal = json.hypLen;
                     conversationVariables.hypLen = json.hypLen/conversationVariables.playspeed;
                     document.getElementById('hypAudio').playbackRate = conversationVariables.playspeed;
@@ -684,7 +684,7 @@ function getPronunciationErrors(){
         processData:false,
         contentType:false,
           success: function(json){
-            var wordcloud = "http://127.0.0.1:8000/"+json['wordcloud']
+            var wordcloud = prefixURL+json['wordcloud']
             document.getElementById('pronunImg').src = wordcloud
         },
         error: function() {
@@ -732,7 +732,7 @@ function sendErrorBlobToServer( new_blob ){
                         $("#reRecordBtn").prop( "disabled", false );
                         $("#keyboardOverlay").fadeIn();
 
-                        document.getElementById('audio_'+json['error_start']).src = "http://127.0.0.1:8000/"+json.audio_url;
+                        document.getElementById('audio_'+json['error_start']).src = prefixURL+json.audio_url;
                         $('#audio_'+json['error_start']).attr('duration',json.audio_len);
                     },800);
                 },500);
@@ -864,20 +864,20 @@ function submitKeyboard(){
 
             //$('#reRecordBtn').show();
 
-            var refAudioURL = "http://127.0.0.1:8000/" + json.ref_audio_url;
+            var refAudioURL = prefixURL + json.ref_audio_url;
             var refAudio = document.getElementById("refAudio");
             refAudio.src = refAudioURL;
             //refAudio.play();
 
-            var hyp_audio_url = "http://127.0.0.1:8000/" + json.hyp_audio_url;
+            var hyp_audio_url = prefixURL + json.hyp_audio_url;
             var hypAudio = document.getElementById("hypAudio");
             hypAudio.src = hyp_audio_url;
             
-            var ref_image_url ="http://127.0.0.1:8000/"+json.ref_image_url; 
+            var ref_image_url =prefixURL+json.ref_image_url; 
             var refImage = document.getElementById("refImg");
             refImg.src = ref_image_url;
 
-            var hyp_image_url = "http://127.0.0.1:8000/" + json.hyp_image_url;
+            var hyp_image_url = prefixURL + json.hyp_image_url;
             var hypImage = document.getElementById("hypImg");
             hypImg.src = hyp_image_url;
             

@@ -1,0 +1,3 @@
+#!/home/john/johnsHDD/PhD/2018_autumn/firstfacesProduction/firstfaces/vvenv/bin/python
+from numba.pycc import main
+main()

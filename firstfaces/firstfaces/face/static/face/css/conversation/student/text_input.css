@@ -67,37 +67,27 @@
     word-wrap:break-word;
 }
 
-#textInputBoxCont {
+#textInputBoxContCont {
 
     width: 100%;
     height: 15%;
     position: absolute; 
     bottom: 0;
-    /*display: none;*/
+    display: none;
+
+}
+
+#textInputBoxCont {
+
+    width: 100%;
+    height: 100%;
+    position: absolute; 
     /*border: 2px solid blue;*/
     display: flex;
     align-items: center;
     justify-content: center;
 
 }
-
-#textInputBoxInnerCont {
-
-    width: 100%;
-    height: 100%;
-    display: none;
-
-}
-
-/*#textInputBoxInnerCont {*/
-
-    /*width: 100%;*/
-    /*height: 100%;*/
-    /*display: flex;*/
-    /*align-items: center;*/
-    /*justify-content: center;*/
-
-/*}*/
 
 #textInputBox {
     /*display:none;*/
