@@ -51,10 +51,10 @@ $( window ).on( 'resize',  function() {
 function setAudio() {
 
     teacherVars.aud = document.getElementById('bells')
-    teacherVars.aud.src = teacherVars.prefixURL + "media/to-the-point.mp3";
+    teacherVars.aud.src = teacherVars.prefixURL + "media/chimes-glassy.mp3";
 
     teacherVars.aud1 = document.getElementById('thud')
-    teacherVars.aud1.src = teacherVars.prefixURL + "media/chimes-glassy.mp3";
+    teacherVars.aud1.src = teacherVars.prefixURL + "media/to-the-point.mp3";
     
 }
 

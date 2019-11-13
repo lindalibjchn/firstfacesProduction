@@ -95,7 +95,7 @@ def get_text(sentence, judgement, prompt, indexes):
             unsure_word_list = []
             for j in reduced_indexes[i]:
                 unsure_word_list.append(sentence[j][0])
-            unsure_strings += "'" + ''.join(unsure_word_list) + "'"
+            unsure_strings += "'" + ' '.join(unsure_word_list) + "'"
 
         tia_to_say = ["I'm not sure what you mean by" + unsure_strings + ", could you try again?"]
 
