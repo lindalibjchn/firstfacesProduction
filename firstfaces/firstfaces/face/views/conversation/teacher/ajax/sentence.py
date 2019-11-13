@@ -25,7 +25,9 @@ def store_judgement(request):
     # if correct or better then need to store expression data too
     if sent_meta['judgement'] in ['B', 'P', 'I', 'M']:
 
-        sent.prompt = json.dumps(sent_meta['prompt'])
+        prompt = json.dumps(sent_meta['prompt'])
+        if prompt != 'null':
+            sent.prompt = prompt
 
         if sent_meta['judgement'] != 'P':
 

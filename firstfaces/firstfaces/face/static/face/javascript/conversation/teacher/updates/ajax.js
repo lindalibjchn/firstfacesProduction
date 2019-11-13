@@ -11,7 +11,7 @@ function checkForChange() {
                 console.log('sentences_not_judged:', json.sentences_not_judged);
                 updateSentencesNeedJudgement( json.sentences_not_judged );
                 updateSentencesBeingRecorded( json.sentences_being_recorded );
-                teacherVars.aud.play();
+                teacherVars.aud1.play();
 
             }
 
@@ -39,7 +39,7 @@ function updateConversationsDictFromServer() {
         type: "GET",
         traditional: true,
         data: {
-            'conversationIds': JSON.stringify(conversationIds),
+            'conversationIds': JSON.stringify( conversationIds ),
         }, 
         success: function(json) {
 
@@ -51,7 +51,7 @@ function updateConversationsDictFromServer() {
                 $('#studentContainerCol').empty();
                 insertPhones();
                 loadStudents(); 
-                teacherVars.aud1.play();
+                teacherVars.aud.play();
             }
 
         },

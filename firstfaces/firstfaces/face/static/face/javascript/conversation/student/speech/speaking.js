@@ -135,7 +135,18 @@ function animatePhonesInOrder() {
                 synthesisObject.callback();
                 if ( !conversationVariables.entranceSequence ) {
 
-                    buttonsMicrophoneOnly();
+                    setTimeout( function() {
+                    
+                        removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration * 3 );
+                        buttonsMicrophoneOnly();
+                        $('#prevSentsIconContainer').css('font-size', '17px');
+                        setTimeout( function() {
+
+                            $('#prevSentsIconContainer').css('font-size', '15px');
+
+                        }, tiaTimings.speechBubbleFadeOutDuration * 3 )
+
+                    }, 2000 );
 
                 }
                 
