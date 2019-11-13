@@ -1,3 +1,6 @@
+
+
+
 function get_word_context(){
 
     if ($('#upper_'+conversationVariables.startIDX).text().trim().split(" ").length == 1){
@@ -14,6 +17,14 @@ function get_word_context(){
 
         pos = conversationVariables.POS_Tags[idx];
         word = $('#bottomCent').text().trim().split(" ")[0];
+        if($('#bottomCent').text().trim().split(" ").length > 1){
+                console.log("Context error.")
+                $('#btnCont').removeClass().addClass('wholeSide');
+                $('#SpectroSpinHolder').removeClass().addClass('noSide');
+                $('#fixedWord').removeClass().addClass('noSide');
+                conversationVariables.Trigram = false;
+                return
+        }
 
         let fd = new FormData();
         fd.append("word",word);
@@ -32,6 +43,12 @@ function get_word_context(){
                 $('#btnCont').removeClass().addClass('wholeSide');
                 $('#SpectroSpinHolder').removeClass().addClass('noSide');
                 $('#fixedWord').removeClass().addClass('noSide');
+                synthesisObject.data.Ref_Word = {
+                    'URLs':[$('#refAudio').attr('src')],
+                    'phones':[json.c_vis],
+                    'texts': [ord],
+                    'duration':conversationVariables.refLenOriginal
+                }
                 conversationVariables.Trigram = false;
             }
             else{
