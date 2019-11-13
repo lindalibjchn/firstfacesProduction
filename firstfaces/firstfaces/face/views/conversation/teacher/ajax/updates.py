@@ -55,34 +55,37 @@ def update_conversation_objects(request):
 
     # code.interact(local=locals());
     string_user_ids_in_teacher_view = json.loads( request.GET['conversationIds'] )
-    user_ids_in_teacher_view = set([int(i) for i in string_user_ids_in_teacher_view])
+    user_ids_in_teacher_view_set = set([int(i) for i in string_user_ids_in_teacher_view])
     # print( 'user_ids_in_teacher_view:', user_ids_in_teacher_view )
     
     user_ids_in_conversation_in_database = []
     for c in Conversation.objects.filter(end_time=None):
         user_ids_in_conversation_in_database.append( c.learner.id )
 
-    user_ids_in_conversation_in_database = set(user_ids_in_conversation_in_database)
+    user_ids_in_conversation_in_database_set = set(user_ids_in_conversation_in_database)
 
-    # print( 'user_ids_in_conversation_in_database:', user_ids_in_conversation_in_database )
-    # print( 'same:', user_ids_in_conversation_in_database == user_ids_in_teacher_view )
+    # print( 'user_ids_in_conversation_in_database_set:', user_ids_in_conversation_in_database_set )
+    # print( 'same:', user_ids_in_conversation_in_database_set == user_ids_in_teacher_view_set )
 
-    same_students = user_ids_in_conversation_in_database == user_ids_in_teacher_view
+    same_students = user_ids_in_conversation_in_database_set == user_ids_in_teacher_view_set
 
-    new_students = []
-    finished_students = []
+    updated_student_conversations = []
+    # new_students = []
+    # finished_students = []
     if not same_students:
 
-        new_students = list(user_ids_in_conversation_in_database - user_ids_in_teacher_view)
-        finished_students = list(user_ids_in_teacher_view - user_ids_in_conversation_in_database)
+        # new_students = list(user_ids_in_conversation_in_database - user_ids_in_teacher_view)
+        # finished_students = list(user_ids_in_teacher_view - user_ids_in_conversation_in_database)
+        updated_student_conversations = get_students_conversations( user_ids_in_conversation_in_database )[ 'all_conversations' ]
 
     response_data = {
 
         'same_students': same_students,
-        'new_students': new_students,
-        'finished_students': finished_students
+        'updated_student_conversations': updated_student_conversations,
+        # 'new_students': new_students,
+        # 'finished_students': finished_students
 
-    };
+    }
 
     return JsonResponse(response_data)    
 
