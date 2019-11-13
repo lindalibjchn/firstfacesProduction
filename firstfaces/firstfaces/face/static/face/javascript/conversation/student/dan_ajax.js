@@ -821,6 +821,7 @@ $('#transHolder').click(function(){
 function submitKeyboard(){
 
     tiaLookAtLaptopAndType();
+
     //hide other buttons
     $('#reRecordBtn').fadeOut();
     $('#keyboardOverlay').fadeOut();
@@ -838,8 +839,11 @@ function submitKeyboard(){
     fd.append('error_list',JSON.stringify(conversationVariables.errors));                        
     fd.append('start_idx',conversationVariables.startIDX);                                       
     fd.append('audio_id',conversationVariables.sentence_being_recorded_audio.currentAudID);
-    
-    fd.append('gender', conversationVariables.gender);
+    if(!conversationVariables.goToStage3){
+                fd.append('gender', conversationVariables.gender);
+    }else{
+        fd.append('gender', 'F');
+    }
     fd.append('pitch', synthesisObject.pitch);
     fd.append('speaking_rate', synthesisObject.speaking_rate);
     fd.append('sessionID',conversationVariables.conversation_dict.id);
@@ -856,6 +860,7 @@ function submitKeyboard(){
         processData: false,
         contentType: false,
         success: function(json){
+
 
             // john
             //  tia taps and looks at student
@@ -942,7 +947,9 @@ function submitKeyboard(){
             finAudio.src = hyp_audio_url;                                     
             $('#audio_'+conversationVariables.startIDX).attr('duration',json.hyp_length);
             get_word_context();
-
+            if(!conversationVariables.goToStage3){
+                $('#exitOverlay').click();
+            }
         },
         error: function() {
             console.log("that's wrong"); 
