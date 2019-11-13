@@ -38,7 +38,7 @@ function sendSentToServer() {
                 success: function(json) {
                     
                     console.log('sentence successfully sent to server');
-                    updateConversationVariables( json.sentence )
+                    conversationVariables.sentence_awaiting_judgement = json.sentence
 
                 },
                 error: function() {

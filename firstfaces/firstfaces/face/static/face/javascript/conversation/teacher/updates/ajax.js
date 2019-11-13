@@ -21,7 +21,6 @@ function checkForChange() {
         },
         error: function() {
             console.log("check_for_change gone wrong");
-            checkForChange();
         },
 
     });

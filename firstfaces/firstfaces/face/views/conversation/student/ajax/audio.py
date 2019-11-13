@@ -18,8 +18,12 @@ import subprocess
 from google.cloud import texttospeech
 from face.views.conversation.all.dan_utils import get_spectogram, get_sim
 
-
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/daniel/Desktop/Tia/erle-3666ad7eec71.json"
+if settings.DEVELOPMENT_ENV == 'john':
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/johnsHDD/PhD/2018_autumn/erle-3666ad7eec71.json"
+elif settings.DEVELOPMENT_ENV == 'dan':
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/daniel/Desktop/Tia/erle-3666ad7eec71.json"
+else:
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/firstfaces/erle-3666ad7eec71.json"
 
 def tts(request):
 

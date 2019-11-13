@@ -7,14 +7,12 @@ from django.conf import settings
 import time
 import json
 
-# os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/johnsHDD/PhD_backup/erle-3666ad7eec71.json"
-if settings.DEBUG:
-    #os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/johnsHDD/PhD/2018_autumn/erle-3666ad7eec71.json"
+if settings.DEVELOPMENT_ENV == 'john':
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/johnsHDD/PhD/2018_autumn/erle-3666ad7eec71.json"
+elif settings.DEVELOPMENT_ENV == 'dan':
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/daniel/Desktop/Tia/erle-3666ad7eec71.json"
 else:
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/firstfaces/erle-3666ad7eec71.json"
-# os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/user1/Downloads/erle-3666ad7eec71.json"
-# os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/Users/john/Documents/PhD/firstfaces/erle-3666ad7eec71.json"
 
 def create_tia_speak_sentences_synthesis_data(sent, conv_id):
 
@@ -106,7 +104,7 @@ def get_text(sentence, judgement, prompt, indexes):
     elif judgement == "B":
 
         reduced_indexes = reduce_indexes(indexes)
-        better_bit = "".join([sentence[k][0] for k in reduced_indexes[0]])
+        better_bit = " ".join([sentence[k][0] for k in reduced_indexes[0]])
 
         tia_to_say = ["It would be more natural to say '" + prompt[ 0 ] + "', instead of '" + better_bit + "'"]
 

@@ -34,6 +34,8 @@ function speakWords() {
 
 function goToThinkingPos() {
 
+    resetSentenceBeingRecorded();
+
     recTimes.finishSpeak = Date.now() / 1000;
 
     expressionController( expressionObject.abs.talkBase, tiaTimings.toThinkDuration );
@@ -45,3 +47,9 @@ function goToThinkingPos() {
 
 }
 
+function resetSentenceBeingRecorded() {
+
+    conversationVariables.sentence_being_recorded = null;
+    conversationVariables.sentence_being_recorded_audio = null;
+
+}

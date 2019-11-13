@@ -3,20 +3,9 @@ function initInputReady( from ) {
     conversationVariables.stage3 = false;
     // tia's eyelids werren't closing properly this below is a failsafe to reset them.
     movementController( movementObject.abs.blank, 1, 1 );
+    hideOverlayStuff();   
+    buttonsMicrophoneOnly();
     
-    //$('#textInputContainer').show();
-    //hideTextStuff();
-    //hideVolumeBar();
-    //$('#textInput').val( boxVal );
-    //$('#textInput').focus();
-    //$('#recordBtnsCont').show();
-    
-    // removes speech bubble after user has a few second to read it
-    $('.record-btn').prop( "disabled", false );
-
-    //setLastSent();
-    //$('#controllerContainer').fadeIn( 1000 );
-
     if ( from === 'try again' ) {
 
         $( '#textInputContainer' ).fadeIn();
@@ -32,8 +21,14 @@ function initInputReady( from ) {
     
     }
 
+    addPreviousSentences( conversationVariables.conversation_dict, 0 );
+
+}
+
+function hideOverlayStuff() {
+
     //playback buttons disabled until recording done
-    $('#recordBtnsCont').fadeIn(1000)
+    //$('#recordBtnsCont').fadeIn(1000)
     //hide correctTranscript
     $('#correctTranscript').hide();
     //hide back button
@@ -43,19 +38,9 @@ function initInputReady( from ) {
     
     $('#backCorrection').hide();
     $('#submitCorrectedErrors').hide();
-    
-    addPreviousSentences( conversationVariables.conversation_dict, 0 );
-
-    //openOverlay();
-
-    //  for development
-    //$('#talkBtn').prop( "disabled", false).show();
-    //showOptionBtns();
-    //$('#whatsWrongBtn').hide()
-    //$('#showCorrectionBtn').css('display', 'flex')
 
 }
-
+ 
 function makeStringSentFromArray( s ) {
 
     let sentString = "";
@@ -70,19 +55,6 @@ function makeStringSentFromArray( s ) {
 
 }
 
-//function setLastSent() {
-
-   //if ( Object.keys(conversationVariables.sentences).length > 0 ) {
-    
-        //conversationVariables.last_sent = conversationVariables.sentences[Object.keys(conversationVariables.sentences).length - 1];
-
-    //} else {
-
-        //conversationVariables.last_sent = null;
-
-    //}
-
-//}
 
 
 
