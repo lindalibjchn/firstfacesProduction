@@ -94,6 +94,7 @@ function setSynthesisAudioOnChangeEvent() {
 
     //load this early and change .src later
     synthesisObject.audio = document.getElementById( 'synthClip' );
+    synthesisObject.audioS3 = document.getElementById( 'danSynthAudio' );
 
     synthesisObject.audio.ondurationchange = function() {
 
