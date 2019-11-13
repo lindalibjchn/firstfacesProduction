@@ -1,6 +1,5 @@
-the
-cat
-jumped
-onto
-the
-roof
+this
+is
+a
+new
+sentence

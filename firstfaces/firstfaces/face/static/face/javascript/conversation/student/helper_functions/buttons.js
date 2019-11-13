@@ -14,6 +14,8 @@ function buttonsHideAllContainers() {
 function buttonsMicrophoneOnly() {
 
     buttonsHideAllContainers();
+    $('.record-btn').prop( "disabled", false );
+    $('.record-btn').hide();
     $('#recordBtnsCont').show();
     $('#recordVoiceBtn').show();
 
@@ -28,16 +30,23 @@ function buttonsListenNextSentence() {
 
 function buttonsAfterMicClicked() {
 
-    $('#recordVoiceBtn').hide();
-    $('#reRecordBtn').hide();
+    $('.record-btn').hide();
     if(conversationVariables.stage2 || conversationVariables.stage3){
-        console.log("Got here")
         $('#stopRecordBtn').show()
     }
     else{
         $('#stopRecordVoiceBtn').show();
+
     }
 
+}
+
+function buttonsAfterTiaListensToLearnersSentenceAndTaps() {
+
+    $('.record-btn').hide();
+    $('#recordVoiceBtn').show();
+    $('#talkBtn').show();
+    $('#listenVoiceBtn').show();
 
 }
 

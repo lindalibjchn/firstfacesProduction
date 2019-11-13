@@ -207,6 +207,7 @@ class Profile(models.Model):
     sound = models.NullBooleanField()
     microphone = models.NullBooleanField()
     tutorial_complete = models.BooleanField(default=False)
+    spectrospin = models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.learner)

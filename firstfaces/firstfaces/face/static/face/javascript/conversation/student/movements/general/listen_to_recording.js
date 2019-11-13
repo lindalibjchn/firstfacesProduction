@@ -2,15 +2,15 @@ function listenToRecording( intensity ) {
 
     if ( intensity === 0 ) {
 
-        movementController( movementObject.abs.listenToSpeechNormal, 0.75, 0.75 )
+        movementController( movementObject.abs.listenToSpeechNormal, 0.5, 0.75 )
 
     } else if ( intensity === 1 ) {
 
-        movementController( movementObject.abs.listenToSpeechNormal, 1, 1 )
+        movementController( movementObject.abs.listenToSpeechNormal, 0.75, 1 )
 
     } else {
 
-        movementController( movementObject.abs.listenToSpeechIntent, 1, 1 )
+        movementController( movementObject.abs.listenToSpeechIntent, 0.75, 1 )
 
     }
 

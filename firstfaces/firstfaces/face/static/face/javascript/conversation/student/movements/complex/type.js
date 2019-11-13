@@ -14,7 +14,6 @@ function tapKeyFull() {
 
             if ( state === 0 ) {
                 
-                movementController( movementObject.abs.blank, 0.4, 0.8 );
                 initMove( armTapObject, [[0,0,0],[0,0.2,-0.05]], 0.1 )
                 state = 1;   
                 setTimeout( checkIfArmDone, 150 );
@@ -24,6 +23,7 @@ function tapKeyFull() {
                 initMove( armTapObject, [[0,0,0],[0,0.2,-0.2]], 0.1 )
                 state = 2;
                 setTimeout( checkIfArmDone, 150 );
+                movementController( movementObject.abs.blank, 0.35, 0.7 );
         
             } else {
 
@@ -76,9 +76,11 @@ function dealWithAfterTap() {
 
         if(!conversationVariables.stage2 && !conversationVariables.stage3){
 
-            $('.play-btn').prop( "disabled", false);
-            $('#talkBtn').prop( "disabled", false);
-            $('#recordVoiceBtn').show();
+            //$('.play-btn').prop( "disabled", false);
+            //$('#talkBtn').prop( "disabled", false);
+            //$('#recordVoiceBtn').show();
+
+            buttonsAfterTiaListensToLearnersSentenceAndTaps();
 
             if (($(".selectable-word").length > 0)||($(".selected-word").length >0)){
                 //reset text
