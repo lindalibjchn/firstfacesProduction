@@ -9,9 +9,11 @@ from face.views.conversation.student.utils.context_utils import *
 from django.conf import settings
 from scipy.io import wavfile
 import librosa
-
-import itertools
+from g2p_en import G2p
 import numpy as np
+import itertools
+
+
 
 from face.views.conversation.all.praat_utils import get_audio_length
 nlp = spacy.load("en_core_web_sm")
@@ -225,7 +227,7 @@ def tag_sentence(request):
 
 
 
-
+#def get_vis_now(words):
 
 
 def get_context(request):
@@ -234,6 +236,7 @@ def get_context(request):
 
     c_vis = get_word_visemes(word)
     print(c_vis)
+
     try:
         words, levels, idx, poss, viss = get_tris(word, pos)
         c_vis = [ v+'Emp' for v in get_word_visemes(word)]
@@ -333,6 +336,7 @@ def get_context(request):
     except:
         response_data = {
             'success': 0,
+            'c_vis': c_vis
         }
 
     return JsonResponse(response_data)
