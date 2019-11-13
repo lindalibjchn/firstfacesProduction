@@ -1,5 +1,8 @@
 const CLASS_TIME_MINUTES = 3000;
 
+//screen.orientation.lock(); 
+//screen.lockOrientation("portrait-primary")
+
 var prefixURL;
 function definePrefixURL() {
 

@@ -10,6 +10,7 @@ function tiaLookAtLaptopAndType() {
     })
 
 }
+
 function prepareToStopTyping() {
 
     if ( conversationVariables.tiaTyping ) {
@@ -29,21 +30,29 @@ function stopTyping() {
     
     conversationVariables.tiaTyping = false;
 
-    if ( conversationVariables.sentence_being_recorded_audio.alternatives[ 0 ].transcript === "" ) {
-
-        setTimeout( function() {
-
-            movementController(movementObject.abs.blank, 1, 1, function() {
-                
-                dealWithBlankTranscription();
-                
-            } );
-
-        }, 500 );
-
-    } else {
+    if ( conversationVariables.sentence_being_recorded_audio === null ) {
 
         tapKeyFull();
+
+    } else { 
+        
+        if ( conversationVariables.sentence_being_recorded_audio.alternatives[ 0 ].transcript === "" ) {
+
+            setTimeout( function() {
+
+                movementController(movementObject.abs.blank, 1, 1, function() {
+                    
+                    dealWithBlankTranscription();
+                    
+                } );
+
+            }, 500 );
+
+        } else {
+
+            tapKeyFull();
+
+        }
 
     }
 

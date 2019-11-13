@@ -11,6 +11,7 @@ $(window).on( 'load', function() {
     setButtonEvents();
         
     checkForChange();
+    updateConversationsDictFromServer();
 
     //updateSentencesNeedJudgement();
     //updatePrevSentences();

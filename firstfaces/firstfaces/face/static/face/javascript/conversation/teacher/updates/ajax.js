@@ -7,19 +7,21 @@ function checkForChange() {
 
             if ( json.change ) {
 
-                //console.log('sentences_being_recorded:', json.sentences_being_recorded); 
-                //console.log('sentences_not_judged:', json.sentences_not_judged);
+                console.log('sentences_being_recorded:', json.sentences_being_recorded); 
+                console.log('sentences_not_judged:', json.sentences_not_judged);
                 updateSentencesNeedJudgement( json.sentences_not_judged );
                 updateSentencesBeingRecorded( json.sentences_being_recorded );
+                teacherVars.aud.play();
 
             }
 
-            checkForChange()
+            checkForChange();
             console.log('checking again');
 
         },
         error: function() {
             console.log("check_for_change gone wrong");
+            checkForChange();
         },
 
     });
@@ -44,12 +46,13 @@ function updateConversationsDictFromServer() {
             console.log('same_students:', json.same_students)
             if ( !json.same_students ) {
 
-                console.log('new_students:', json.new_students)
-                console.log('finished_students:', json.finished_students)
+                teacherVars.conversations = json.updated_student_conversations
 
+                $('#studentContainerCol').empty();
+                insertPhones();
                 loadStudents(); 
+                teacherVars.aud1.play();
             }
-            //aud1.play();
 
         },
         error: function() {
@@ -57,5 +60,7 @@ function updateConversationsDictFromServer() {
         },
 
     });
+
+    setTimeout( updateConversationsDictFromServer, 10000 );
 
 }
