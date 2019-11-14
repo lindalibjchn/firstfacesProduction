@@ -16,8 +16,8 @@ function highlightWrong() {
 
     conversationVariables.conversation_dict.completed_sentences[ 0 ].indexes.forEach( function(ind, i) {
 
-        console.log('ind', ind)
-        console.log('i', i)
+        //console.log('ind', ind)
+        //console.log('i', i)
         setTimeout( function() {
 
             // for spaces
@@ -32,7 +32,7 @@ function highlightWrong() {
                     $('#wrongWord_' + ind[0].toString()).css( {
                         'background-image': 'linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0), red, rgba(0,0,0,0), rgba(0,0,0,0))',
                     });
-                }, 1500);
+                }, 1000);
 
             } else {
 
@@ -63,7 +63,7 @@ function highlightWrong() {
 
                             }
 
-                        }, 1500);
+                        }, 1000);
 
                     } else {
                         
@@ -84,7 +84,7 @@ function highlightWrong() {
 
                             }
 
-                        }, 1500);
+                        }, 1000);
 
                     }
 
@@ -92,7 +92,7 @@ function highlightWrong() {
 
             }
 
-        }, i * 2250 );
+        }, i * 1500 );
 
     } );
 
@@ -114,7 +114,7 @@ function getSentenceWithSpacesInArray( s ) {
 
 function showCorrectionUnderWrongSent() {
 
-    $( '#correctedSentence' ).fadeIn()
+    $( '#correctedSentence' ).fadeIn();
 
     //get correct parts
     let correctParts = [];
@@ -321,7 +321,7 @@ function showCorrectionUnderWrongSent() {
         }
 
     }
-    setTimeout( function() {
+    //setTimeout( function() {
 
         for (let i=0; i<conversationVariables.conversation_dict.completed_sentences[ 0 ].indexes.length; i++ ) {
 
@@ -360,18 +360,22 @@ function showCorrectionUnderWrongSent() {
 
                     if ( i === conversationVariables.conversation_dict.completed_sentences[ 0 ].indexes.length - 1 ) {
 
-                        $('#nextSentenceBtn').css('display', 'flex');
-                        $('#nextSentenceBtn').prop( "disabled", false ).fadeIn( 500 );
+                        setTimeout( function() {
+
+                            $('#nextSentenceBtn').css('display', 'flex');
+                            $('#nextSentenceBtn').prop( "disabled", false ).fadeIn( 500 );
+
+                        }, 1000 );
 
                     }
 
-                }, 1500 )
+                }, 1000 )
 
-            }, i*2250 );
+            }, i*1500 );
 
         }
 
-    }, 1000 );
+    //}, 1000 );
 
 };
 

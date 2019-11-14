@@ -18,16 +18,17 @@ function tapKeyFull() {
                 state = 1;   
                 setTimeout( checkIfArmDone, 150 );
 
+                // show this a bit early so tap coincides with errors
             } else if ( state === 1 ) {
 
                 initMove( armTapObject, [[0,0,0],[0,0.2,-0.2]], 0.1 )
                 state = 2;
                 setTimeout( checkIfArmDone, 150 );
-                movementController( movementObject.abs.blank, 0.35, 0.7 );
         
             } else {
 
                 armTapObject.currentCoords = [[0,0,0],[0,0,0]];
+                movementController( movementObject.abs.blank, 0.5, 1.0 );
                 dealWithAfterTap();
 
             }

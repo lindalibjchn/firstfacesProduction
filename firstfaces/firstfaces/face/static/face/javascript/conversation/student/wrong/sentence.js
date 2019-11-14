@@ -1,11 +1,10 @@
 function showWrongSentence() {
 
     console.log('in showWrongSentence');
-    $('#textInputContainer').fadeIn();
-
-    $('#submittedNCorrectedSentenceCont').show()
     conversationVariables.sentenceForHighlighting = getSentenceWithSpacesInArray( conversationVariables.conversation_dict.completed_sentences[ 0 ].sentence )
 
+    $('#submittedSentence').empty();
+    $( '#correctedSentence' ).empty();
     for ( w=0; w < conversationVariables.sentenceForHighlighting.length; w++ ) {
 
         if ( conversationVariables.sentenceForHighlighting[ w ] === ' ' ) {
@@ -31,7 +30,7 @@ function showWrongSentence() {
     };
 
 
-    setTimeout(highlightWrong, 1500);
+    highlightWrong();
         
 }
 
