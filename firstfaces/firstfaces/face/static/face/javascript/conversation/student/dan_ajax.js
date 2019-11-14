@@ -862,7 +862,7 @@ function submitKeyboard(){
         processData: false,
         contentType: false,
         success: function(json){
-            if json.ts_error{
+            if ( json.ts_error ) {
                 conversationVariables.FAFailed = true;
             }
 

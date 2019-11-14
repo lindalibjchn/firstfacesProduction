@@ -6,7 +6,7 @@ function showOptionBtns() {
 
     // incase not reset from previous time
     $('#showCorrectionBtn').hide();
-    $('#whatsWrongBtnBtn').css('display', 'flex')
+    $('#whatsWrongBtn').css('display', 'flex')
     $('#tryAgainBtn').show();
     $('#nextSentenceBtn').show();
 
@@ -65,6 +65,9 @@ function whatsWrong() {
     tiaLookAtLaptopAndType();
 
     setTimeout( function() {
+
+        $('#textInputContainer').fadeIn();
+        $('#submittedNCorrectedSentenceCont').show()
 
         prepareToStopTyping();
 
