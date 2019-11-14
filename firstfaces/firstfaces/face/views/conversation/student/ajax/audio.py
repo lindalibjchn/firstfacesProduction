@@ -252,7 +252,7 @@ def do_allignment(request):
     #cwd = os.getcwd()                                                            
     #command = 'python3 -m aeneas.tools.execute_task '+ settings.BASE_DIR + '/' + audioPath+" "+textPath+" "+extra_str+" "+outPath+" >/dev/null 2>&1"   
     command = 'python3 align.py '+settings.BASE_DIR + '/'+audioPath+' '+' '+textPath+" -o "+outPath
-    wd = settings.BASE_DIR+'/face/gentle-master/'
+    wd = settings.BASE_DIR+'/gentle/'
     #sub_proc = subprocess.Popen(command,cwd=get_aeneas_path(),shell=True,stdout=subprocess.PIPE, stderr=subprocess.PIPE)   
     sub_proc = subprocess.Popen(command.split(), cwd=wd)
     sub_proc.wait()                                                                          
