@@ -18,23 +18,30 @@ function speakWords() {
     
     if(conversationVariables.usePlayAud){
         
-        play_audio()      
+        // temporary fix
+        if ( !conversationVariables.FAFailed ) {
+        
+            play_audio();
+
+        }
         conversationVariables.usePlayAud = false;
     
     } else {
         
-        aud.play();
+        if ( !conversationVariables.FAFailed ) {
         
+            aud.play();
+        
+        }
+
     }
-    
+    conversationVariables.FAFailed = false;
     setTimeout( goToThinkingPos, conversationVariables.sentence_being_recorded_audio.totalAudioLength );
         
 }
 
 
 function goToThinkingPos() {
-
-    resetSentenceBeingRecorded();
 
     recTimes.finishSpeak = Date.now() / 1000;
 
