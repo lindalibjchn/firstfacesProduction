@@ -102,7 +102,7 @@ word_df = get_word_dataframe()
 
 
 def get_word_visemes(word):
-    temp = word_df[word_df.Word == word]
+    temp = word_df[word_df.Word == word.strip().lower()]
     if len(temp) == 0:
         return []
     else:

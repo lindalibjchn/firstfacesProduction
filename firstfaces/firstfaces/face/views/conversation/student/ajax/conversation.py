@@ -260,6 +260,8 @@ def get_context(request):
     try:
         words, levels, idx, poss, viss = get_tris(word, pos)
         c_vis = [ v+'Emp' for v in get_word_visemes(word)]
+        if length(c_vis) == 0:
+            c_vis = [v + 'Emp' for v in Visemes(word)]
         if idx == 1:
             fixed_word = list(words.keys())[0]
             fixed_word_level = list(levels.keys())[0]
