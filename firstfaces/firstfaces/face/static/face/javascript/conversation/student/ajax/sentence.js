@@ -18,7 +18,7 @@ function sendSentToServer() {
         // set this to false until judgement comes in where it will be changed to true
         conversationVariables.awaitingJudgement = true;
 
-        if ( sent.length > 2 ) {
+        if ( sent.length > 2 || sent.length < 30 ) {
             
             // fade out text box
             $('#textInputContainer').fadeOut( 500 );
@@ -49,7 +49,7 @@ function sendSentToServer() {
 
         } else {
 
-            alert('this is not a sentence');
+            alert('this sentence is too short or too long. Try again');
 
         }
 

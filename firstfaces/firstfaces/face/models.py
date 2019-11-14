@@ -46,7 +46,7 @@ JUDGEMENT_CHOICES = (
 class Sentence(models.Model):
     learner = models.ForeignKey(User, on_delete=models.CASCADE)
     conversation = models.ForeignKey(Conversation, on_delete=models.CASCADE)
-    sentence = models.CharField(max_length=300, null=True, blank=True)
+    sentence = models.CharField(max_length=1500, null=True, blank=True)
     sentence_timestamp = models.DateTimeField(null=True, blank=True)
 
     judgement = models.CharField(max_length=1, choices=JUDGEMENT_CHOICES, null=True, blank=True)
