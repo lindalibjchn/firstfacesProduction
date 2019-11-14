@@ -1,5 +1,7 @@
 function runAfterJudgement() {
 
+    resetSentenceBeingRecorded();
+
     //recTimes.runAfterJudgement =  Date.now() / 1000;
     
     //if ( conversationVariables.last_sent.judgement === "C" ) {
