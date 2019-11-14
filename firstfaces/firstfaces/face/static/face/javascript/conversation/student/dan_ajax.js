@@ -611,6 +611,7 @@ function sendAttemptBlob( new_blob ){
                             }
                             else{
                                 $("#submitOverlay").click(function(){
+
                                     $('#exitOverlay').click();
                                 });
                             }
@@ -948,6 +949,7 @@ function submitKeyboard(){
             $('#audio_'+conversationVariables.startIDX).attr('duration',json.hyp_length);
             get_word_context();
             if(!conversationVariables.goToStage3){
+                closeStage3();
                 $('#exitOverlay').click();
             }
         },

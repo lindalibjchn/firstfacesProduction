@@ -227,15 +227,35 @@ def tag_sentence(request):
 
 
 
-#def get_vis_now(words):
+def get_vis_now(words):
+    c_vis = []
+    if isinstance(words, list):
+        for word in words:
+            c_vis += [v+'Emp' for v in Visemes(word)]
+
+        response_data = {
+            'success':0,
+            'c_vis': c_vis,
+            'joined_word': " ".join(words).strip()
+        }
+    else:
+
+        c_vis = [v + 'Emp' for v in Visemes(words)]
+
+        response_data = {
+            'success': 0,
+            'c_vis': c_vis,
+            'joined_word': words.strip()
+        }
+    return JsonResponse(response_data)
 
 
 def get_context(request):
     word = request.POST['word']
     pos = request.POST['pos']
+    if len(word.split(",")) != 1:
+        return get_vis_now(word.split(","))
 
-    c_vis = get_word_visemes(word)
-    print(c_vis)
 
     try:
         words, levels, idx, poss, viss = get_tris(word, pos)
@@ -334,10 +354,7 @@ def get_context(request):
         }
 
     except:
-        response_data = {
-            'success': 0,
-            'c_vis': c_vis
-        }
+        return get_vis_now(word)
 
     return JsonResponse(response_data)
 

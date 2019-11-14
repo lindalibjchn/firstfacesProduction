@@ -2,8 +2,6 @@
 
 
 function get_word_context(){
-
-    if ($('#upper_'+conversationVariables.startIDX).text().trim().split(" ").length == 1){
         idx = 0;
         for(i=0;i<parseInt(conversationVariables.startIDX);i++){
             if($('#upper_'+i).hasClass('normal-word') || $('#upper_'+idx).hasClass('uncorrected-error')){
@@ -16,15 +14,8 @@ function get_word_context(){
 
 
         pos = conversationVariables.POS_Tags[idx];
-        word = $('#bottomCent').text().trim().split(" ")[0];
-        if($('#bottomCent').text().trim().split(" ").length > 1){
-                console.log("Context error.")
-                $('#btnCont').removeClass().addClass('wholeSide');
-                $('#SpectroSpinHolder').removeClass().addClass('noSide');
-                $('#fixedWord').removeClass().addClass('noSide');
-                conversationVariables.Trigram = false;
-                return
-        }
+        word = $('#bottomCent').text().trim().split(" ");
+
 
         let fd = new FormData();
         fd.append("word",word);
@@ -43,10 +34,11 @@ function get_word_context(){
                 $('#btnCont').removeClass().addClass('wholeSide');
                 $('#SpectroSpinHolder').removeClass().addClass('noSide');
                 $('#fixedWord').removeClass().addClass('noSide');
+
                 synthesisObject.data.Ref_Word = {
                     'URLs':[$('#refAudio').attr('src')],
                     'phones':[json.c_vis],
-                    'texts': [ord],
+                    'texts': [json.joined_word],
                     'duration':conversationVariables.refLenOriginal
                 }
                 conversationVariables.Trigram = false;
@@ -136,15 +128,6 @@ function get_word_context(){
         },
 
     });
-
-
-    }
-    else{
-        console.log("Too many words to get context")
-        $('#btnCont').removeClass().addClass('wholeSide');
-        $('#SpectroSpinHolder').removeClass().addClass('noSide');
-        $('#fixedWord').removeClass().addClass('noSide');
-    }
 
 }
 

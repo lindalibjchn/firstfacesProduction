@@ -1,7 +1,84 @@
 import ast
 import pandas as pd
 from django.conf import settings
+from g2p_en import G2p
 
+g2p = G2p()
+def get_phonemes(g2p_, word):
+    phos = g2p_(word)
+    return remove_numbers_vowel_phonemes(phos)
+
+def convertor(p_l):
+    vl = []
+    for p in p_l:
+        if p in p2v_dict.keys():
+            vl.append(p2v_dict[p])
+    return vl
+
+def convert_phonemes_to_visemes(p_l_):
+
+    viseme_list = []
+    for p in p_l_:
+        viseme_list.append([p2v_dict[i] for i in p if i in p2v_dict_keys])
+
+    return viseme_list
+
+p2v_dict = {
+    'AA': 'e',
+    'AE': 'e',
+    'AH': 'e',
+    'AO': 'e',
+    'AW': 'e',
+    'AY': 'e',
+    'B': 'b',
+    'CH': 's',
+    'D': 't',
+    'DH': 'th',
+    'EH': 'e',
+    'ER': 'r',
+    'EY': 'e',
+    'F': 'f',
+    'G': 'k',
+    'HH': 'e',
+    'IH': 'e',
+    'IY': 'i',
+    'JH': 's',
+    'K': 'k',
+    'L': 'l',
+    'M': 'b',
+    'N': 't',
+    'NG': 'k',
+    'OW': 'e',
+    'OY': 'e',
+    'P': 'b',
+    'R': 'r',
+    'S': 's',
+    'SH': 's',
+    'T': 't',
+    'TH': 'th',
+    'UH': 'e',
+    'UW': 'u',
+    'V': 'f',
+    'W': 'w',
+    'Y': 'e',
+    'Z': 's',
+    'ZH': 's'
+}
+
+p2v_dict_keys = p2v_dict.keys()
+
+def Visemes(word):
+    return convertor(get_phonemes(g2p, word))
+
+def remove_numbers_vowel_phonemes(inp):
+    phos = []
+    for pho in inp:
+        try:
+            val = int(pho[-1])
+            phos.append(pho[:-1])
+        except:
+            phos.append(pho)
+    return phos
 
 
 def load_tris():
