@@ -319,11 +319,16 @@ def error_typing_used(request):
     ERR_trans = request.POST['etrans']
     idx = int(request.POST['first_word_id'])
     endid = idx + (len(ERR_trans.strip().split(" "))-1) 
-    
-    ts = get_timestamps(idx,endid, session_id)
-    fn = request.POST['sessionID']+"_"+timezone.now().strftime( '%H-%M-%S' )+"_error.wav"
-    errorPath = play_errored_text(audioPath,ts,fn)
-    
+    try:
+        ts = get_timestamps(idx,endid, session_id)
+        ts_error = False
+
+        fn = request.POST['sessionID']+"_"+timezone.now().strftime( '%H-%M-%S' )+"_error.wav"
+        errorPath = play_errored_text(audioPath,ts,fn)
+    except:
+        ts_error = True
+        fn = ""
+        errorPath = ""
     #Synth Audio
     gender = request.POST['gender']
     if gender == 'F':
@@ -355,8 +360,10 @@ def error_typing_used(request):
     synthFN = settings.BASE_DIR + '/' + synthURL1
     #synthFN = generate_synth_audio(request.POST['trans'],fn)
     start = time.time()
-    ref_image = get_spectogram(synthFN, 0, "ref_"+session_id+"_"+timezone.now().strftime('%H-%M-%S')+".png", 0)
-    
+    if not ts_error:
+        ref_image = get_spectogram(synthFN, 0, "ref_"+session_id+"_"+timezone.now().strftime('%H-%M-%S')+".png", 0)
+    else:
+        ref_image = ""
     sim = get_sim(ERR_trans,request.POST['trans'])
     hin = "hyp_"+session_id+"_"+timezone.now().strftime('%H-%M-%S')+".png"
 
@@ -387,6 +394,7 @@ def error_typing_used(request):
             "aeca_id":aeca.id,
             "ae_id":ae.id,
             "sim":sim,
+            "ts_error":ts_error
     }
     return JsonResponse(response_data)
 

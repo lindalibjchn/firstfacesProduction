@@ -650,6 +650,7 @@ function sendAttemptBlob( new_blob ){
 
 //Function is called if user preses back or closes overlay after typing and not submittitng correction
 function closeStage3(){
+    conversationVariables.stage3 = false;
     let fd = new FormData();
     fd.append('sessionID',conversationVariables.conversation_dict.id);
     fd.append('blob_no_text_sent_id',conversationVariables.sentence_being_recorded.sent_id);
@@ -861,6 +862,9 @@ function submitKeyboard(){
         processData: false,
         contentType: false,
         success: function(json){
+            if json.ts_error{
+                conversationVariables.FAFailed = true;
+            }
 
 
             // john
