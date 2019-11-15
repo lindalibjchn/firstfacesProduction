@@ -237,6 +237,8 @@ function drawChart( inputData, divId ) {
 
 function addDetailedErrorsChart( typeOfError, inputData ) {
 
+    let maxErrors = Math.max( ...inputData );
+    let maxChartValue = Math.max( 3, maxErrors );
     //console.log('inputData:', inputData);
     var myData;
     var myLabels;
@@ -284,6 +286,7 @@ function addDetailedErrorsChart( typeOfError, inputData ) {
                     beginAtZero: true,
                     stepSize: 1,
                     min: -0.15,
+                    max: maxChartValue,
                 },
                 pointLabels: {
                     fontSize: 14,

@@ -38,7 +38,6 @@ function startAudioStream() {
     .catch(function(err) {
         console.log('The following getUserMedia error occured: ' + err);
         conversationVariables.audio = false;
-        console.log( 'audio not working' );
         alert("If you want to speak to Tia, you must allow your microphone to be used. Click the lock, or small 'i' next to the web address and then change the settings to allow the microphone.");
     });
 
