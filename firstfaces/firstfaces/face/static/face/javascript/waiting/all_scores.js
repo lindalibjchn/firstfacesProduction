@@ -116,6 +116,7 @@ function drawLineChartAllScores( allData ) {
                         beginAtZero: true,
                         fontColor: '#102858',
                         fontStyle: 'bold',
+                        max: 100,
                     },
                     //scaleLabel: {
                         //display: true,

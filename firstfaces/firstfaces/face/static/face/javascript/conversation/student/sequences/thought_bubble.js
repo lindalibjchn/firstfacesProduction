@@ -20,6 +20,7 @@ function addThoughtBubbles( no, imgId, delay, lastDelay, cb ) {
 
     } else {
 
+        $('#thinkingWordsCont').show();
         $( imgId + '3').fadeIn( lastDelay, cb );
 
     }
@@ -249,9 +250,9 @@ function moveThoughtBubblesToToFollowThinkingHead( toThink ) {
     thinkingHardMillisecs = thinkingHard * 800;
     setTimeout( function() {
             
-        $('#thoughtBubbleWhite0').animate({left: dir + '=22px', top: dir + '=22px'}, thinkingHardMillisecs );
-        $('#thoughtBubbleWhite1').animate({left: dir + '=12px', top: dir + '=12px'}, thinkingHardMillisecs );
-        $('#thoughtBubbleWhite2').animate({left: dir + '=5px', top: dir + '=5px'}, thinkingHardMillisecs );
+        $('#thoughtBubbleWhite0').animate({left: dir + '=18px', top: dir + '=18px'}, thinkingHardMillisecs );
+        $('#thoughtBubbleWhite1').animate({left: dir + '=9px', top: dir + '=9px'}, thinkingHardMillisecs );
+        $('#thoughtBubbleWhite2').animate({left: dir + '=2px', top: dir + '=2px'}, thinkingHardMillisecs );
 
     }, 200 )
 
@@ -263,9 +264,9 @@ function moveThoughtBubblesToToFollowNoddingHead( up, dur ) {
     let noddingMillisecs = dur * 800;
     setTimeout( function() {
             
-        $('#thoughtBubbleWhite0').animate({ top: dir + '=9px'}, noddingMillisecs );
-        $('#thoughtBubbleWhite1').animate({ top: dir + '=5px'}, noddingMillisecs );
-        $('#thoughtBubbleWhite2').animate({ top: dir + '=2px'}, noddingMillisecs );
+        $('#thoughtBubbleWhite0').animate({ top: dir + '=6px'}, noddingMillisecs );
+        $('#thoughtBubbleWhite1').animate({ top: dir + '=3px'}, noddingMillisecs );
+        $('#thoughtBubbleWhite2').animate({ top: dir + '=1px'}, noddingMillisecs );
 
     }, 100 )
 
@@ -279,9 +280,17 @@ function removeThoughtBubbles( dur, removeTBCb=function(){} ) {
 
     setTimeout( function() {
 
+        resetPositionOfAllThoughtBubbles();
         removeTBCb();
 
     }, dur )
+
+}
+
+function resetPositionOfAllThoughtBubbles() {
+
+    $( '.thought-bubbles' ).css( 'left', '0' );
+    $( '.thought-bubbles' ).css( 'top', '0' );
 
 }
 
