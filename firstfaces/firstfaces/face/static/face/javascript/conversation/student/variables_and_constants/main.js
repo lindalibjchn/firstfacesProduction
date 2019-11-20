@@ -35,15 +35,15 @@ var aud;
 var streamy
 
 const AUDIO_N_VIDEO_SETTINGS = {
-    audio: {
-        "mandatory": {
-            "googEchoCancellation": "false",
-            "googAutoGainControl": "false",
-            "googNoiseSuppression": "false",
-            "googHighpassFilter": "false",
-        },    
-    },
-    //audio: true, // need this for firefox to work
+    //audio: {
+        //"mandatory": {
+            //"googEchoCancellation": "false",
+            //"googAutoGainControl": "false",
+            //"googNoiseSuppression": "false",
+            //"googHighpassFilter": "false",
+        //},    
+    //},
+    audio: true, // need this for firefox to work
     video: false
 }
 
