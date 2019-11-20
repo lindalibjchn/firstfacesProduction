@@ -1,0 +1,170 @@
+{
+  "transcript": "the\ncat\nran\naway\nfrom\nthe\nballoon\n",
+  "words": [
+    {
+      "alignedWord": "the",
+      "case": "success",
+      "end": 1.25,
+      "endOffset": 3,
+      "phones": [
+        {
+          "duration": 0.09,
+          "phone": "dh_B"
+        },
+        {
+          "duration": 0.2,
+          "phone": "ah_E"
+        }
+      ],
+      "start": 0.96,
+      "startOffset": 0,
+      "word": "the"
+    },
+    {
+      "alignedWord": "cat",
+      "case": "success",
+      "end": 1.97,
+      "endOffset": 7,
+      "phones": [
+        {
+          "duration": 0.21,
+          "phone": "k_B"
+        },
+        {
+          "duration": 0.11,
+          "phone": "ae_I"
+        },
+        {
+          "duration": 0.23,
+          "phone": "t_E"
+        }
+      ],
+      "start": 1.42,
+      "startOffset": 4,
+      "word": "cat"
+    },
+    {
+      "alignedWord": "ran",
+      "case": "success",
+      "end": 2.32,
+      "endOffset": 11,
+      "phones": [
+        {
+          "duration": 0.16,
+          "phone": "r_B"
+        },
+        {
+          "duration": 0.09,
+          "phone": "ae_I"
+        },
+        {
+          "duration": 0.06,
+          "phone": "n_E"
+        }
+      ],
+      "start": 2.01,
+      "startOffset": 8,
+      "word": "ran"
+    },
+    {
+      "alignedWord": "away",
+      "case": "success",
+      "end": 2.6799999999999997,
+      "endOffset": 16,
+      "phones": [
+        {
+          "duration": 0.09,
+          "phone": "ah_B"
+        },
+        {
+          "duration": 0.11,
+          "phone": "w_I"
+        },
+        {
+          "duration": 0.16,
+          "phone": "ey_E"
+        }
+      ],
+      "start": 2.32,
+      "startOffset": 12,
+      "word": "away"
+    },
+    {
+      "alignedWord": "from",
+      "case": "success",
+      "end": 2.92,
+      "endOffset": 21,
+      "phones": [
+        {
+          "duration": 0.08,
+          "phone": "f_B"
+        },
+        {
+          "duration": 0.04,
+          "phone": "r_I"
+        },
+        {
+          "duration": 0.04,
+          "phone": "ah_I"
+        },
+        {
+          "duration": 0.08,
+          "phone": "m_E"
+        }
+      ],
+      "start": 2.68,
+      "startOffset": 17,
+      "word": "from"
+    },
+    {
+      "alignedWord": "the",
+      "case": "success",
+      "end": 3.01,
+      "endOffset": 25,
+      "phones": [
+        {
+          "duration": 0.04,
+          "phone": "dh_B"
+        },
+        {
+          "duration": 0.05,
+          "phone": "ah_E"
+        }
+      ],
+      "start": 2.92,
+      "startOffset": 22,
+      "word": "the"
+    },
+    {
+      "alignedWord": "balloon",
+      "case": "success",
+      "end": 3.57,
+      "endOffset": 33,
+      "phones": [
+        {
+          "duration": 0.06,
+          "phone": "b_B"
+        },
+        {
+          "duration": 0.09,
+          "phone": "ah_I"
+        },
+        {
+          "duration": 0.1,
+          "phone": "l_I"
+        },
+        {
+          "duration": 0.13,
+          "phone": "uw_I"
+        },
+        {
+          "duration": 0.18,
+          "phone": "n_E"
+        }
+      ],
+      "start": 3.01,
+      "startOffset": 26,
+      "word": "balloon"
+    }
+  ]
+}

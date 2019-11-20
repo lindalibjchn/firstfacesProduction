@@ -21,7 +21,8 @@ function sendBlobToServer( blob_to_send ) {
                 alternatives: json.alternatives,
                 currentAudID: json.audio_pk 
             }
-           
+            
+            aud.src = prefixURL + json.audio_file,
             console.log('got response from sending blob to server');
             
             prepareToStopTyping();
