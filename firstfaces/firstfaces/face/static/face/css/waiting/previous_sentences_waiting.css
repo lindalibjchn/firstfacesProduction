@@ -1,0 +1,25 @@
+#prevSentsWaitingContainer {
+
+    position: relative;
+    height: 47%;
+    width: 100%;
+    /*border: 1px solid black;*/
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+}
+
+.sentence-box {
+
+    border: 2px solid black;
+
+}
+
+#detailedErrorsChartInnerContainer {
+
+    width: 60%;
+    height: 60%;
+    top: 5%;
+
+}

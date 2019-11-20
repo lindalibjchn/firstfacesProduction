@@ -6,7 +6,7 @@ function readyBtns() {
 
     setUpFinishClassBtns();
 
-    setUpPreviousSentsBtns()
+    setUpPreviousSentsBtns(conversationVariables.conversation_dict.completed_sentences)
 
     //// PREVIOUS SENTENCES
 
@@ -111,76 +111,6 @@ function setUpFinishClassBtns() {
     });
 
 }
-
-function setUpPreviousSentsBtns() {
-
-    $('#prevSentsIconContainer').on( 'click', function() {
-
-        closeTimeOverlayCont();
-        //$('#prevSentsContainer0').fadeIn();
-        $('#prevSentsContainer').fadeIn();
-        $('#prevSentsIconContainer').hide();
-        //updateScroll( document.getElementById('prevSentsInnerContainer0') );
-        addData( 'grammar', 'article');
-
-    });
-
-    $('#sentencesTitleContainer').on( 'click', function() {
-
-        addData( 'sentences' );
-
-    } );
-
-    $('#grammarTitleContainer').on( 'click', function() {
-
-        addData( 'grammar', 'article');
-
-    } );
-
-    //$('#pronunciationTitleContainer').on( 'click', function() {
-
-        //addData( 'pronunciation', 'phrase');
-
-    //} );
-
-    $('#articlesTabContainer').on( 'click', function() {
-
-        addData( 'grammar', 'article');
-
-    } );
-
-    //$('#verbsTabContainer').on( 'click', function() {
-
-        //addData( 'grammar', 'verb');
-
-    //} );
-
-    //$('#prepositionsTabContainer').on( 'click', function() {
-
-        //addData( 'grammar', 'preposition');
-
-    //} );
-
-    //$('#phrasesTabContainer').on( 'click', function() {
-
-        //addData( 'pronunciation', 'phrase');
-
-    //} );
-
-    //$('#wordsTabContainer').on( 'click', function() {
-
-        //addData( 'pronunciation', 'word');
-
-    //} );
-
-    //$('#phonemesTabContainer').on( 'click', function() {
-
-        //addData( 'pronunciation', 'phoneme');
-
-    //} );
-
-}
-
 
 
 
