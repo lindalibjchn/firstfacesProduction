@@ -8,6 +8,7 @@ function readyAudio() {
     } else {
 
         console.log('getUserMedia not supported on your browser!');
+        alert('getUserMedia not supported on your browser!');
     
     }
 
@@ -15,13 +16,18 @@ function readyAudio() {
 
 function startAudioStream() {
 
-    //console.log( 'in start audio stream' )
+    console.log( 'in start audio stream' )
+    console.log( 'AUDIO_N_VIDEO_SETTINGS:', AUDIO_N_VIDEO_SETTINGS )
+    alert('in getUserMedia')
+
     navigator.mediaDevices.getUserMedia( AUDIO_N_VIDEO_SETTINGS ).then( function( stream ) {
  
+        //alert('in getUserMedia')
         conversationVariables.stream = stream; // make it globally accessible to simplify all else
         conversationVariables.audio = true; // ??
         mediaRecorder = new MediaRecorder( conversationVariables.stream );
-        //console.log('mediaRecorder:', mediaRecorder)
+        alert('mediaRecorder created successfully')
+        console.log('mediaRecorder:', mediaRecorder)
         chunks = []; // ??
 
         mediaRecorder.ondataavailable = function( e ) {
@@ -36,9 +42,8 @@ function startAudioStream() {
 
     // Error callback
     .catch(function(err) {
-        console.log('The following getUserMedia error occured: ' + err);
         conversationVariables.audio = false;
-        alert("If you want to speak to Tia, you must allow your microphone to be used. Click the lock, or small 'i' next to the web address and then change the settings to allow the microphone.");
+        alert('The following getUserMedia error was caught: ' + err);
     });
 
 }

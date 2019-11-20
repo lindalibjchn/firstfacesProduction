@@ -74,8 +74,8 @@ function drawLineChartAllScores( allData ) {
 			datasets: [{
                 label: 'correct sentences',
 				data: allData[ 1 ],
-				backgroundColor: 'rgba(17, 219, 13, 1)',
-				borderColor: 'rgba(0, 100, 0, 1)',
+				backgroundColor: 'rgba(17, 219, 13, 0.7)',
+				borderColor: 'rgba(0, 100, 0, 0.5)',
                 borderWidth: 2,
                 fill: false,
                 pointRadius: correctBorderRadii,
@@ -85,8 +85,8 @@ function drawLineChartAllScores( allData ) {
             {
                 label: 'article errors',
 				data: allData[ 2 ],
-				backgroundColor: 'rgba(219, 17, 13, 1)',
-				borderColor: 'rgba(219, 17, 13, 0.7)',
+				backgroundColor: 'rgba(219, 17, 13, 0.7)',
+				borderColor: 'rgba(219, 17, 13, 0.5)',
                 fill: false,
                 borderWidth: 2,
                 pointRadius: 4,
