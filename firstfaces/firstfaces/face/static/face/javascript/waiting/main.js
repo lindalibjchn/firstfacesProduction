@@ -5,6 +5,8 @@ $(window).on( 'load', function() {
     if ( waitingVariables.conversations.length !== 0 ) {
         
         showConversationSentences( 0 );
+        //setUpPreviousSentsBtns( waitingVariables.conversations[0].completed_sentences )
+        //addData( 'sentences', waitingVariables.conversations[0].completed_sentences )
     
     }
     $('#pronunciationClearOverlayArea').click( hidePronunciationDataContainer );

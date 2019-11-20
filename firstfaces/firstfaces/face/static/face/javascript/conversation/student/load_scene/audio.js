@@ -22,7 +22,7 @@ function startAudioStream() {
 
     navigator.mediaDevices.getUserMedia( AUDIO_N_VIDEO_SETTINGS ).then( function( stream ) {
  
-        //alert('in getUserMedia')
+        alert('in getUserMedia')
         conversationVariables.stream = stream; // make it globally accessible to simplify all else
         conversationVariables.audio = true; // ??
         mediaRecorder = new MediaRecorder( conversationVariables.stream );
@@ -167,6 +167,7 @@ function onMediaRecorderStop() {
         hideVolumeBar();
 
         //$('#talkBtn').prop( "disabled", true )
+        //conversationVariables.blob = new Blob(chunks, { type : 'audio/webm; codecs: opus' });
         conversationVariables.blob = new Blob(chunks, { type : 'audio/webm; codecs: opus' });
 
         // create audiourl for easy replay

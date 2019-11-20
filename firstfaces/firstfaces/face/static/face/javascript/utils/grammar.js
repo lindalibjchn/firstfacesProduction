@@ -1,8 +1,8 @@
-function addData( gramPronSent, error ) {
+function addData( gramPronSent, error, sentences ) {
 
     if ( gramPronSent === 'grammar' ) {
 
-        let articleErrors = calculateArticleErrors( conversationVariables.conversation_dict.completed_sentences );
+        let articleErrors = calculateArticleErrors( sentences );
         let correctArticlesPercent = articleErrors[ 0 ];
         let articleErrorsDetailed = articleErrors[ 1 ];
         drawChart( [ correctArticlesPercent, 100 - correctArticlesPercent ], 'allErrorsChart' );
@@ -15,7 +15,7 @@ function addData( gramPronSent, error ) {
 
     } else if ( gramPronSent === 'sentences' ) {
 
-        showHideDivs( gramPronSent );
+        showHideDivs( gramPronSent, error );
 
     }
     

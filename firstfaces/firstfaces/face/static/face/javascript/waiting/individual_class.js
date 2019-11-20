@@ -4,6 +4,8 @@ function showConversationSentences( indexOfConversation ) {
     $( '#prevSentsContainer0' ).show();
     addPreviousSentences( waitingVariables.conversations[ indexOfConversation ], 0, bottom=false );
     $('.sentence-box').click( showPronunciationDataContainer );
+    setUpPreviousSentsBtns( waitingVariables.conversations[ indexOfConversation ].completed_sentences )
+    addData( 'sentences', 'article',  waitingVariables.conversations[ indexOfConversation ].completed_sentences )
 
 }
 
@@ -32,7 +34,6 @@ function getIndividualSentencePronunciationData( sentId ) {
     let thisConversationSentences = waitingVariables.conversations[ waitingVariables.indexOfCurrentVisibleConversation ].completed_sentences;
 
     let sentence = thisConversationSentences.find( ({ sent_id }) => sent_id === parseInt( sentId ) );
-    console.log('sentence:', sentence);
 
     showIndividualSentencePronunciationData( sentence );
 
@@ -43,7 +44,13 @@ function showIndividualSentencePronunciationData( sentence ) {
     $('#pronunciationIndividualSentenceInnerContainer').empty();
     sentence.audiofile_data.forEach( function( a, index ) {
 
-        addTranscriptBox( a[ 1 ][ 0 ].transcript, index, a[ 2 ] ); 
+        let transcript = a[ 1 ][ 0 ].transcript;
+
+        if ( transcript !== "" ) {
+
+            addTranscriptBox( transcript, index, a[ 2 ] ); 
+
+        }
 
     } );
 
