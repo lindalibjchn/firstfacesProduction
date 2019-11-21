@@ -1,5 +1,6 @@
 function initAddThoughtBubbles() {
 
+    $('.thinking-words').empty();
     thoughtBubbleObject.loop = 0;
     addThoughtBubbles( 0, '#thoughtBubbleWhite', tiaTimings.thoughtBubbleAddDelay, tiaTimings.lastThoughtBubbleAddDelay, function() {
 

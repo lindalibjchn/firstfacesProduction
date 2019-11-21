@@ -2,6 +2,7 @@ function initMicVolumeBar() {
 
     // CALLED EACH TIME THE MIC BUTTON IS PRESSED
 
+    audioContext.close();// got a bug that I had too mnay contexts open
     audioContext = new AudioContext();
     
     // Create an AudioNode from the stream.

@@ -1,8 +1,9 @@
 #prevSentsWaitingContainer {
 
-    position: relative;
-    height: 47%;
+    position: absolute;
+    height: 48%;
     width: 100%;
+    bottom: 0;
     /*border: 1px solid black;*/
     display:flex;
     align-items:center;

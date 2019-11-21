@@ -129,7 +129,14 @@ function nextSentence() {
         
     });
 
-    $('#submittedNCorrectedSentenceCont').fadeOut( 500 )
+    $('#submittedNCorrectedSentenceCont').fadeOut( 500, clearSubmittedNCorrectedSentences )
+
+}
+
+function clearSubmittedNCorrectedSentences() {
+
+    $('#submittedSentence').empty();
+    $( '#correctedSentence' ).empty();
 
 }
 

@@ -62,7 +62,7 @@ function setUpFinishClassBtns() {
         $('#finishClassIcon').fadeOut();
         $('#timeElapsedCont').fadeIn();
         $('#dataNFinish').show();
-        getPronunciationErrors();
+        //getPronunciationErrors();
         $('#timeOverlayContainer').fadeIn();
         $('#closeOverlayArea').prop( "disabled", false );
 

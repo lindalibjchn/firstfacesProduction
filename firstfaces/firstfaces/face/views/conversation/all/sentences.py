@@ -43,7 +43,7 @@ def convert_django_sentence_object_to_json(sent, student_id_, conv_id):
     try_again_time = int_time_or_none(sent.try_again_timestamp)
     next_sentence_time = int_time_or_none(sent.next_sentence_timestamp)
     audiofile_set = sent.audiofile_set.all().order_by('pk')
-    print('audiofile_set:', audiofile_set)
+    # print('audiofile_set:', audiofile_set)
     audiofile_data = [[a.id, jsonify_or_none(a.alternatives), a.audio.name] for a in audiofile_set]
 
     sent_meta = {
