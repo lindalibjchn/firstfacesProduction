@@ -252,16 +252,16 @@ def get_vis_now(words):
 
 def get_context(request):
     word = request.POST['word']
+    word = word.lower()
     pos = request.POST['pos']
     if len(word.split(",")) != 1:
         return get_vis_now(word.split(","))
-
-
     try:
         words, levels, idx, poss, viss = get_tris(word, pos)
         c_vis = [ v+'Emp' for v in get_word_visemes(word)]
-        if length(c_vis) == 0:
+        if len(c_vis) == 0:
             c_vis = [v + 'Emp' for v in Visemes(word)]
+        print("IDX")
         if idx == 1:
             fixed_word = list(words.keys())[0]
             fixed_word_level = list(levels.keys())[0]
@@ -312,6 +312,7 @@ def get_context(request):
 
         else:
             fixed_word = list(words.keys())[0]
+            print("HERE")
             fixed_word_level = list(levels.keys())[0]
             fixed_word_vis = ast.literal_eval(list(viss.keys())[0])
             tile_words = list(words[fixed_word])

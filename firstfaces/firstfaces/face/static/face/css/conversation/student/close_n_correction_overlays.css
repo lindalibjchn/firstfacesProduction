@@ -374,14 +374,7 @@
     width:100%;
 }
 
-#refBtn{
-    width:80%;
-    height:20%;
-    border-radius:3px;
-    border: 3px solid black;
-    position:relative;
-    background-color:#92F492;
-}
+
                 .reff{
                     color:white;
                 }
@@ -535,5 +528,133 @@
     font-family: Arial;
     opacity:.7;
     padding:5px;
+}
+
+
+/** Adaption **/
+.centered{
+    width:100%;
+    left:0;
+    border-radius:0;
+    border:3px solid black;
+}
+
+.left-sided{
+    width:90%;
+    left:10%;
+    border-radius:  5px 0 0 5px;
+    border-top: 3px solid black;
+    border-bottom:3px solid black;
+    border-left: 3px solid black;
+    border-right:0;
+}
+.right-sided{
+    width:90%;
+    right:10%;
+    border-radius: 0 5px 5px 0;
+    border-top: 3px solid black;
+    border-bottom:3px solid black;
+    border-left: 0;
+    border-right:3px solid black;
+}
+
+#refBtn{
+    height:30%;
+    top:40%;
+    position:absolute;
+    background-color:#92F492;
+    margin:0;
+}
+
+ .main-tile-fixed{
+    height:30%;
+    position:absolute;
+    top:40%;
+    z-index:10;
+ }
+
+.main-tile{
+    height:30%;
+    position:absolute;
+    top:40%;
+    z-index:10;
+}
+
+ .second-tile-top{
+    height:24%;
+    width:64%;
+    position:absolute;
+    top:28%;
+    left:18%;
+    z-index:9;
+    opacity:0.7;
+ }
+
+                .third-tile-top{
+                    height:19.2%;
+                    width:51.2%;
+                    position:absolute;
+                    top:18.4%;
+                    left:24.4%;
+                    z-index:8;
+                    opacity:0.4;
+                }
+                .third-tile-top-hidden{
+                    height:19.2%;
+                    width:51.2%;
+                    position:absolute;
+                    top:18.4%;
+                    left:24.4%;
+                    z-index:8;
+                    opacity:0;
+                }
+
+                .second-tile-bottom{
+                    height:24%;
+                    width:64%;
+                    position:absolute;
+                    top:56%;
+                    left:18%;
+                    z-index:9;
+                    opacity:0.7;
+                }
+                .third-tile-bottom{
+                    height:19.2%;
+                    width:51.2%;
+                    position:absolute;
+                    top:68.8%;
+                    left:24.4%;
+                    z-index:8;
+                    opacity:0.4;
+                }
+               .third-tile-bottom-hidden{
+                    height:19.2%;
+                    width:51.2%;
+                    position:absolute;
+                    top:68.8%;
+                    left:24.4%;
+                    z-index:8;
+                    opacity:0;
+                }
+
+
+
+#closeTallType{
+    /*display: flex;*/
+    align-items: center;
+    position: absolute;
+    height: 50px;
+    width: 50px;
+    top: 0;
+    left: 0;
+    margin: 10px;
+    justify-content: center;
+    display:none;
+}
+
+#closeTallTypeText{
+    font-size: 40px;
+    color: black;
+    position: absolute;
 }
 

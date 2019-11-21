@@ -237,7 +237,6 @@ def do_allignment(request):
     trans = request.POST['trans']
     audioPath = request.POST['fn']
     sid = request.POST['sessionID']
-    print("\n", trans, "\n", audioPath, "\n", get_text_path(sid))
     # writes transcirption one word to a line to a file
     f = open(get_text_path(sid), "w+")
     for word in trans.split():                                                   
@@ -247,10 +246,8 @@ def do_allignment(request):
     
     # Below lines do the forced allignment, commented lines are those used for Aeneas 
     # extra_str = '"task_language=eng|os_task_file_format=json|is_text_type=plain"'
-    outPath = get_out_path(sid)                                                     
-    #aeneasPath = get_aeneas_path()                                               
-    #cwd = os.getcwd()                                                            
-    #command = 'python3 -m aeneas.tools.execute_task '+ settings.BASE_DIR + '/' + audioPath+" "+textPath+" "+extra_str+" "+outPath+" >/dev/null 2>&1"   
+    outPath = get_out_path(sid)
+    print("\n\n",outPath)
     command = 'python3 align.py '+settings.BASE_DIR + '/'+audioPath+' '+' '+textPath+" -o "+outPath
     wd = settings.BASE_DIR+'/gentle/'
     #sub_proc = subprocess.Popen(command,cwd=get_aeneas_path(),shell=True,stdout=subprocess.PIPE, stderr=subprocess.PIPE)   
@@ -312,9 +309,11 @@ def error_typing_used(request):
         ae = AudioError(audio=af, start_index=startID)
 
     filename = af.audio.name
+
     trans = ast.literal_eval(af.alternatives)[0]["transcript"]
     #convert audio to wav
     audioPath = convert_audio(filename)
+    print("\n\n",audioPath,"\n\n")
     #Get audio
     ERR_trans = request.POST['etrans']
     idx = int(request.POST['first_word_id'])
@@ -343,7 +342,7 @@ def error_typing_used(request):
     client = texttospeech.TextToSpeechClient()
     input_text = texttospeech.types.SynthesisInput(text=request.POST['trans'])
     voice = texttospeech.types.VoiceSelectionParams(language_code='en-GB',name=speaking_voice)
-    audio_config = texttospeech.types.AudioConfig(audio_encoding=texttospeech.enums.AudioEncoding.LINEAR16,pitch = pitch_designated,speaking_rate = speaking_rate_designated)
+    audio_config = texttospeech.types.AudioConfig(audio_encoding=texttospeech.enums.AudioEncoding.LINEAR16,pitch = pitch_designated,speaking_rate= speaking_rate_designated)
     try:
         response = client.synthesize_speech(input_text, voice, audio_config)
         synthURL1 = 'media/synths/session' + session_id + '_'+ 'error' + timezone.now().strftime('%H-%M-%S') + '.mp3'
@@ -360,21 +359,21 @@ def error_typing_used(request):
     synthFN = settings.BASE_DIR + '/' + synthURL1
     #synthFN = generate_synth_audio(request.POST['trans'],fn)
     start = time.time()
-    if not ts_error:
-        ref_image = get_spectogram(synthFN, 0, "ref_"+session_id+"_"+timezone.now().strftime('%H-%M-%S')+".png", 0)
-    else:
-        ref_image = ""
+    ref_image = get_spectogram(synthFN, 0, "ref_"+session_id+"_"+timezone.now().strftime('%H-%M-%S')+".png", 0)
     sim = get_sim(ERR_trans,request.POST['trans'])
     hin = "hyp_"+session_id+"_"+timezone.now().strftime('%H-%M-%S')+".png"
 
-    hyp_image = get_spectogram(errorPath, sim, hin, 1)
+    if not ts_error:
+        hyp_image = get_spectogram(errorPath, sim, hin, 1)
+        hypLen = get_audio_length(errorPath)
+        hyp_audio = ref_path(fn)
+    else:
+        hyp_image = ""
+        hypLen = 0
+        hyp_audio = ""
     refLen = get_audio_length(synthFN)
-    hypLen = get_audio_length(errorPath)
 
-    #Error in naming convention
-    hyp_audio = ref_path(fn) 
-    ref_audio = get_hyp_audio_path(fn)
-    
+
     #create empty Audio Error Correction Attempt
     ae.typed= True
     ae.intention = request.POST['trans']
@@ -385,16 +384,16 @@ def error_typing_used(request):
 
     response_data = {
             #"ref_audio_url":ref_audio,
-            "ref_audio_url":synthURL1,
-            "ref_image_url":ref_image,
-            "hyp_audio_url":hyp_audio,
-            "hyp_image_url":hyp_image,
-            "hyp_length":hypLen,
-            "ref_length":refLen,
-            "aeca_id":aeca.id,
-            "ae_id":ae.id,
-            "sim":sim,
-            "ts_error":ts_error
+            "ref_audio_url": synthURL1,
+            "ref_image_url": ref_image,
+            "hyp_audio_url": hyp_audio,
+            "hyp_image_url": hyp_image,
+            "hyp_length": hypLen,
+            "ref_length": refLen,
+            "aeca_id": aeca.id,
+            "ae_id": ae.id,
+            "sim": sim,
+            "ts_error": ts_error
     }
     return JsonResponse(response_data)
 

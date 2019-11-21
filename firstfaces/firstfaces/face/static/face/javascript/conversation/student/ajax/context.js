@@ -47,16 +47,21 @@ function get_word_context(){
                 conversationVariables.Trigram = true;
                 if(json.id == 0){
                    $('#btnCont').removeClass().addClass('leftSide');
+                   $('#refBtn').removeClass("centered").removeClass('right-sided').addClass('left-sided');
                    $('#SpectroSpinHolder').removeClass().addClass('rightSide');
                    $('#fixedWord').removeClass().addClass('centerSide');
+
                 }
                 else if(json.id == 1){
                    $('#btnCont').removeClass().addClass('centerSide');
+                   $('#refBtn').removeClass("left-sided").removeClass('right-sided').addClass('centered');
                    $('#SpectroSpinHolder').removeClass().addClass('leftSide');
                    $('#fixedWord').removeClass().addClass('rightSide');
                 }
                 else{
+
                      $('#btnCont').removeClass().addClass('rightSide');
+                     $('#refBtn').removeClass("centered").removeClass('left-sided').addClass('right-sided');
                      $('#SpectroSpinHolder').removeClass().addClass('leftSide');
                      $('#fixedWord').removeClass().addClass('centerSide');
                 }
@@ -115,6 +120,7 @@ function get_word_context(){
                          }
                     }
                 }
+                fix_locations(json.id);
                 setUpSpectrospin();
             }
 
@@ -130,6 +136,69 @@ function get_word_context(){
     });
 
 }
+
+/*.centered{
+    width:100%;
+    left:0;
+    border-radius:0;
+    border:3px solid black;
+}
+
+.left-sided{
+    width:90%;
+    left:10%;
+    border-radius:  5px 0 0 5px;
+    border-top: 3px solid black;
+    border-bottom:3px solid black;
+    border-left: 3px solid black;
+    border-right:0;
+}
+.right-sided{
+    width:90%;
+    right:10%;
+    border-radius: 0 5px 5px 0;
+    border-top: 3px solid black;
+    border-bottom:3px solid black;
+    border-left: 0;
+    border-right:3px solid black;
+}*/
+
+
+
+function fix_locations(value){
+    conversationVariables.IDX_Val = value
+    console.log("CALLED FIX LOCATIONS");
+    if(value == 0){
+        $('.main-tile').css({'width':'90%','left':'0','border-radius':'0 5px 5px 0','border-top':'3px solid black','border-bottom':'3px solid black','border-right':'3px solid black','border-left':'0'})
+        $('.second-tile-top').css({"width":"72%","left":"9%","top":"23.2%", 'border':"3px solid black", 'border-radius': '0 5px 5px 0'});
+        $('.second-tile-bottom').css({"width":"72%","left":"9%","top":"62.8%",'border':"3px solid black", 'border-radius': '0 5px 5px 0'});
+        $('.third-tile-top').css({"width":"57.6%","left":"16.2%","top":"9.76%", 'border':"3px solid black", 'border-radius': '0 5px 5px 0'});
+        $('.third-tile-top-hidden').css({"width":"57.6%","left":"16.2%","top":"9.76%", 'border':"3px solid black", 'border-radius': '0 5px 5px 0'});
+        $('.third-tile-bottom').css({"width":"57.6%","left":"16.2%","top":"82.96%", 'border':"3px solid black", 'border-radius': '0 5px 5px 0'});
+        $('.third-tile-bottom-hidden').css({"width":"57.6%","left":"16.2%","top":"82.96%", 'border':"3px solid black", 'border-radius': '0 5px 5px 0'});//Center hyp??
+        $('#fixedWordTile').removeClass("left-sided").removeClass('right-sided').addClass('centered');
+    }else if(value == 1){
+        $('.main-tile').css({'width':'90%','left':'10%','border-radius':'5px 0 0 5px','border-top':'3px solid black','border-bottom':'3px solid black','border-right':'0','border-left':'3px solid black'})
+        $('#fixedWordTile').removeClass("left-sided").removeClass('centered').addClass('right-sided');
+        $('.second-tile-top').css({"width":"72%", "left":"19%", "top":"23.2%", 'border':"3px solid black", 'border-radius': '5px 0 0 5px'});
+        $('.second-tile-bottom').css({"width":"72%", "left":"19%", "top":"62.8%", 'border':"3px solid black", 'border-radius': '5px 0 0 5px'});
+        $('.third-tile-top').css({"width":"57.6%", "left":"26.2%", "top":"9.76%", 'border':"3px solid black", 'border-radius': '5px 0 0 5px'});
+        $('.third-tile-top-hidden').css({"width":"57.6%", "left":"26.2%", "top":"9.76%", 'border':"3px solid black", 'border-radius': '5px 0 0 5px'});
+        $('.third-tile-bottom').css({"width":"57.6%", "left":"26.2%", "top":"82.96%", 'border':"3px solid black", 'border-radius': '5px 0 0 5px'});
+        $('.third-tile-bottom-hidden').css({"width":"57.6%", "left":"26.2%", "top":"82.96%", 'border':"3px solid black", 'border-radius': '5px 0 0 5px'});
+    }else{
+        $('.main-tile').css({'width':'90%','left':'10%','border-radius':'5px 0 0 5px','border-top':'3px solid black','border-bottom':'3px solid black','border-right':'0','border-left':'3px solid black'})
+        $('#fixedWordTile').removeClass("left-sided").removeClass('right-sided').addClass('centered');
+        $('.second-tile-top').css({"width":"72%", "left":"19%", "top":"23.2%", 'border':"3px solid black", 'border-radius': '5px 0 0 5px'});
+        $('.second-tile-bottom').css({"width":"72%", "left":"19%", "top":"62.8%", 'border':"3px solid black", 'border-radius': '5px 0 0 5px'});
+        $('.third-tile-top').css({"width":"57.6%", "left":"26.2%", "top":"9.76%", 'border':"3px solid black", 'border-radius': '5px 0 0 5px'});
+        $('.third-tile-top-hidden').css({"width":"57.6%", "left":"26.2%", "top":"9.76%", 'border':"3px solid black", 'border-radius': '5px 0 0 5px'});
+        $('.third-tile-bottom').css({"width":"57.6%", "left":"26.2%", "top":"82.96%", 'border':"3px solid black", 'border-radius': '5px 0 0 5px'});
+        $('.third-tile-bottom-hidden').css({"width":"57.6%", "left":"26.2%", "top":"82.96%", 'border':"3px solid black", 'border-radius': '5px 0 0 5px'});
+    }
+
+}
+
 
 
 function tag_sentence(){
@@ -255,3 +324,28 @@ $('#playTrigramBtn').click(function(){
     splice_audio();
 });
 
+
+function increase_type_size_stage2(){
+    $('#correctionOverlay').css({'background-color':'rgba(255,255,255,0.8)', 'z-index':4}).animate({height:'100%'},300);
+    $('#sentenceShowHolder').css('background-color','rgba(255,255,255,0)')
+    $('#overlayBtnBox').css('height','10%');
+    $('#finishClassIconContainer').hide()
+    $('#prevSentsIconContainer').hide()
+    $('#closeTallType').css("display","flex");
+    conversationVariables.size_increased = true;
+}
+
+$('#closeTallTypeText').click(decrease_type_size_stage2);
+
+function decrease_type_size_stage2(){
+    $('#correctionOverlay').css({'background-color':'rgba(255,255,255,0)', 'z-index':2}).animate({height:'50%'},300);
+    $('#sentenceShowHolder').css('background-color','rgba(255,255,255,0.8)')
+    $('#overlayBtnBox').css('height','20%');
+    $('#finishClassIconContainer').show()
+    $('#prevSentsIconContainer').show()
+    $('#closeTallType').css("display","none");
+    unmoveText();
+    $("#bottomCent").attr("contenteditable",false);
+    $('#keyboardOverlay').show();
+    $('#bottomCent').hide();
+}

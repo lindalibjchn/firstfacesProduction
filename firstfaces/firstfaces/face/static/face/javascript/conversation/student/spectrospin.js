@@ -15,16 +15,16 @@ function getTops(){
                 tops.push($('#'+tiles[i]).position().top);
             }else{
                 if(i == 0){
-                    tops.push($('#SpectroSpinHolder').height()*.184)
+                    tops.push($('#SpectroSpinHolder').height()*.0976)
                 }
                 if(i == 1){
-                    tops.push($('#SpectroSpinHolder').height()*.28)
+                    tops.push($('#SpectroSpinHolder').height()*.232)
                 }
                 if(i == 3){
-                    tops.push($('#SpectroSpinHolder').height()*.56)
+                    tops.push($('#SpectroSpinHolder').height()*.628)
                 }
                 if(i == 4){
-                    tops.push($('#SpectroSpinHolder').height()*.688)
+                    tops.push($('#SpectroSpinHolder').height()*.8296)
                 }
             }
         }
@@ -120,12 +120,15 @@ var hiddenBottom = []
             animate_down(1);
             animate_down(2);
             animate_down(3);
+            setTimeout(function(){fix_locations(conversationVariables.IDX_Val)},300);
 
             if(tiles[4] != ''){
                 $("#"+tiles[4]).removeClass("third-tile-bottom").addClass("hidden_tile");
                 hiddenBottom.push(tiles[4])
             }
-            setTimeout(function(){tiles = [next,tiles[0],tiles[1],tiles[2],tiles[3]]},700);
+            setTimeout(function(){
+                tiles = [next,tiles[0],tiles[1],tiles[2],tiles[3]];
+            },700);
             setTimeout(enable_everything,750);
 
       }
@@ -139,7 +142,11 @@ var hiddenBottom = []
                     $("#"+tiles[4]).removeClass("third-tile-bottom").addClass("hidden_tile");
                     hiddenBottom.push(tiles[4])
                 }
-                setTimeout(function(){tiles = ['',tiles[0],tiles[1],tiles[2],tiles[3]]},700);
+                setTimeout(function(){fix_locations(conversationVariables.IDX_Val)},300);
+                setTimeout(function(){
+                    tiles = ['',tiles[0],tiles[1],tiles[2],tiles[3]];
+
+                 },700);
                 setTimeout(enable_everything,750);
             }
             else{
@@ -147,6 +154,7 @@ var hiddenBottom = []
                     animate_down(1);
                     animate_down(2);
                     animate_down(3);
+                    setTimeout(function(){fix_locations(conversationVariables.IDX_Val)},300);
                     if(tiles[4] != ''){
                         $("#"+tiles[4]).removeClass("third-tile-bottom").addClass("hidden_tile");
                         hiddenBottom.push(tiles[4])
@@ -174,10 +182,12 @@ var hiddenBottom = []
             animate_up(2);
             animate_up(3);
             animate_up(4);
+
             if(tiles[0] != ''){
                 $("#"+tiles[0]).removeClass("third-tile-top").addClass("hidden_tile");
                 hiddenTop.push(tiles[0])
             }
+            setTimeout(function(){fix_locations(conversationVariables.IDX_Val)},300);
             setTimeout(function(){tiles = [tiles[1],tiles[2],tiles[3], tiles[4], next ]},700);
             setTimeout(enable_everything,750);
       }
@@ -191,6 +201,7 @@ var hiddenBottom = []
                     $("#"+tiles[0]).removeClass("third-tile-top").addClass("hidden_tile");
                     hiddenTop.push(tiles[0])
                 }
+                setTimeout(function(){fix_locations(conversationVariables.IDX_Val)},300);
                 setTimeout(function(){tiles = [tiles[1],tiles[2],tiles[3], tiles[4], '' ]},700);
                 setTimeout(enable_everything,750);
             }
@@ -203,6 +214,7 @@ var hiddenBottom = []
                         $("#"+tiles[0]).removeClass("third-tile-top").addClass("hidden_tile");
                         hiddenTop.push(tiles[0])
                     }
+                    setTimeout(function(){fix_locations(conversationVariables.IDX_Val)},300);
                     setTimeout(function(){tiles = [tiles[1],tiles[2],tiles[3], "", '' ]},700);
                     setTimeout(enable_everything,750);
                 }

@@ -382,7 +382,7 @@ $('#backCorrection').click(function(){
 
 //Clsoes the moadal
 $('#closeOverlayArea').click(function(){
-
+    decrease_type_size_stage2();
     closePrevSents();
     closeTimeOverlayCont();
     
@@ -440,7 +440,8 @@ function closeTimeOverlayCont(){
 //Allows users to type what they meant to say
 $('#keyboardOverlay').click(function(){
     moveText();
-
+    conversationVariables.movedText = true;
+    increase_type_size_stage2();
     if(conversationVariables.noTransError){   
         removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );            
         conversationVariables.noTransError = false;                                  
@@ -455,7 +456,11 @@ $('#keyboardOverlay').click(function(){
     //make text area editable
     $('#spectrogramBtn').hide();
     $("#spectrogramBtn").off("click"); 
-    $("#spectrogramBtn").click(submitKeyboard);
+    $("#spectrogramBtn").click(function(){
+        submitKeyboard();
+        decrease_type_size_stage2();
+        $('#keyboardOverlay').hide();
+     });;
     setTimeout(function(){
         $("#bottomCent").focus();
     },900);
@@ -708,7 +713,8 @@ function sendErrorBlobToServer( new_blob ){
     fd.append('start_idx',conversationVariables.startIDX);
     fd.append('audio_id',conversationVariables.sentence_being_recorded_audio.currentAudID);
     fd.append('trans', $('#centeredErrorText').text().trim());
-
+    $('#bottomCent').hide();
+    decrease_type_size_stage2();
     $.ajax({
         url: "/store_error_blob",
         type: "POST",
@@ -790,13 +796,16 @@ $('#refBtn').click(function(){
    //},(conversationVariables.refLen+100));
 });
 
-$('#hypBtn').click(function(){
+$('#transHolder').click(function(){
+    document.getElementById("hypAudio").play();
+});
+
+function hypBtnClick(){
     if(conversationVariables.thirdAttemptError || conversationVariables.noTransError){
         removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
         conversationVariables.thirdAttemptError = false;
         conversationVariables.noTransError = false;
     }
-
     disableBtns();
     //store click
     conversationVariables.specClicks.push(JSON.stringify({"user":Date.now() / 1000}));
@@ -805,18 +814,15 @@ $('#hypBtn').click(function(){
     document.getElementById("hypAudio").play();
     $("#hypInvisible").css("margin-left","-10px");
     $('#hypInvisible').css({"border-left":"10px solid black"});
-    $('#hypInvisible').animate({width:"0"},conversationVariables.hypLen);             
-    setTimeout(function(){   
-        $("#hypInvisible").css("border-left","none");                                       
-        $('#hypText').fadeIn(800);                                                     
+    $('#hypInvisible').animate({width:"0"},conversationVariables.hypLen);
+    setTimeout(function(){
+        $("#hypInvisible").css("border-left","none");
+        $('#hypText').fadeIn(800);
         $('#hypInvisible').css({"width":"100%"});
         enableBtns();
-   },(conversationVariables.hypLen+100));  
-});
+   },(conversationVariables.hypLen+100));
+}
 
-$('#transHolder').click(function(){
-    document.getElementById("hypAudio").play();
-});
 
 
 //Keyboard sumbit
@@ -887,27 +893,24 @@ function submitKeyboard(){
             var refImage = document.getElementById("refImg");
             refImg.src = ref_image_url;
 
-            var hyp_image_url = prefixURL + json.hyp_image_url;
-            var hypImage = document.getElementById("hypImg");
-            hypImg.src = hyp_image_url;
+            if(!json.ts_error){
+                var hyp_image_url = prefixURL + json.hyp_image_url;
+                var hypImage = document.getElementById("hypImg");
+                hypImg.src = hyp_image_url;
+                $('#hypBtn').click(function(){hypBtnClick()});
+                $('#transHolder').click(function(){
+                    document.getElementById("hypAudio").play();
+                });
+            }
+            else{
+                 $('#hypBtn').prop("onclick", null).off("click");
+                 $('#transHolder').prop("onclick", null).off("click");
+            }
             
             $("#hypText").text(err_trans);
             $("#refText").text(trans);
             
-            /**if(err_trans.trim().length <= 18 && trans.trim().length <= 18){
-                $("#hypText").removeClass().addClass('big-text');
-                $("#refText").removeClass().addClass('big-text'); 
-            }
-            else{
-                if(err_trans.trim().length > 25 || trans.lenght > 25){
-                    $("#hypText").removeClass().addClass('small-text');
-                    $("#refText").removeClass().addClass('small-text');
-                }
-                else{
-                    $("#hypText").removeClass().addClass('medium-text');
-                    $("#refText").removeClass().addClass('medium-text');
-                }
-            }**/
+
              $("#hypText").removeClass().addClass('small-text');
              $("#refText").removeClass().addClass('small-text');
 
@@ -927,27 +930,20 @@ function submitKeyboard(){
                 $('#hypBtn').css("background-color","red");                 
                 $('#hypInvisible').css("background-color","#ffcccb");           
             }
-
-        
             conversationVariables.specClicks = [];
             conversationVariables.stage3 = true;
             conversationVariables.stage2 = false;
             conversationVariables.correctionAttemptID = json.aeca_id;
-
             //add error id to errors
             conversationVariables.errors[conversationVariables.startIDX] = json.ae_id;
-
             //save lenghts of both audio files
             conversationVariables.refLen = json.ref_length/conversationVariables.playspeed;
             conversationVariables.hypLen = json.hyp_length/conversationVariables.playspeed;
             //change speed of play
             document.getElementById('hypAudio').playbackRate = conversationVariables.playspeed;
             document.getElementById('refAudio').playbackRate = conversationVariables.playspeed;
-
             conversationVariables.hypLenOriginal = json.hyp_length;
             conversationVariables.refLenOriginal = json.ref_length;
-
-            
             var finAudio = document.getElementById("audio_"+conversationVariables.startIDX);             
             finAudio.src = hyp_audio_url;                                     
             $('#audio_'+conversationVariables.startIDX).attr('duration',json.hyp_length);
