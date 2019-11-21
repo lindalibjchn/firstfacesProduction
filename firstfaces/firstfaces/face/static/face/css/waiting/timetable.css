@@ -13,7 +13,7 @@
 #timetableInnerContainer {
 
     position: absolute;
-    bottom: 5%;
+    bottom: 0;
     height: 75%;
     width: 95%;
     /*border: 2px dashed green;*/
@@ -98,7 +98,7 @@
 .times {
 
     position: relative;
-    top: -10%;
+    top: -14%;
     left: -7px;
     font-size: 3vw;
     color: #969696;

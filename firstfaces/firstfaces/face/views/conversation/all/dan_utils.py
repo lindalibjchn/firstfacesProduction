@@ -94,7 +94,7 @@ def score(l1, l2):
      
     if sim_score == 0:
         
-        print('sim_score = 0')
+        # print('sim_score = 0')
         sim_score = 0.079
     
     return sim_score
@@ -348,7 +348,7 @@ def is_phonetically_same(t1,t2):
 
 # Unnused but cuts empty sapce at start and end of the audio file
 def cut_wav(wav_path):
-    print('\n\nin cut_wav\n\n')
+    # print('\n\nin cut_wav\n\n')
     start_pad = 0
     end_pad = 0
 

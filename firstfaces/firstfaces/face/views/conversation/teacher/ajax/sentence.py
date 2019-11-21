@@ -11,7 +11,7 @@ def store_judgement(request):
     time_now = timezone.now();
 
     sent_meta = json.loads( request.POST['sentMeta'] )
-    print('sent_meta:', sent_meta)
+    # print('sent_meta:', sent_meta)
     # code.interact(local=locals());
 
     conv_id = sent_meta['conv_id']
@@ -36,7 +36,7 @@ def store_judgement(request):
         if sent_meta['judgement'] not in ['I', 'M']:
 
             emotion = sent_meta['emotion']
-            print('emotion:', emotion)
+            # print('emotion:', emotion)
             if emotion != None:
                 sent.emotion = json.dumps(emotion)
             else:

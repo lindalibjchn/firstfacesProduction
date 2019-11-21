@@ -12,7 +12,15 @@ var grammarObject = {
                 'movement': 'thinkSentenceArmArticleA',
                 'handMov1Dur': 0.7,
             },
+           'A': {
+                'movement': 'thinkSentenceArmArticleA',
+                'handMov1Dur': 0.7,
+            },
            'the': {
+                'movement': 'thinkSentenceArmArticleThe',
+                'handMov1Dur': 0.7,
+            },
+           'The': {
                 'movement': 'thinkSentenceArmArticleThe',
                 'handMov1Dur': 0.7,
             },

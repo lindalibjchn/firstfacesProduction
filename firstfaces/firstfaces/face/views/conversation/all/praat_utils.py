@@ -24,7 +24,7 @@ def get_rel_praat_paths():
 
 #No longer used but geneates spectograms
 def get_praat_image(wav_path,code,att):
-    print('wav path:', wav_path)
+    # print('wav path:', wav_path)
     samplingFrequency, signalData = wavfile.read(wav_path)
     temp = []
     for i in range(len(signalData)):
@@ -73,7 +73,7 @@ def get_text_path(sid):
 #Returns path to map file
 def get_out_path(sid):
     path = os.path.join(settings.BASE_DIR, 'face', 'text_files','map_'+str(sid)+'.json')
-    print('path:', path)
+    # print('path:', path)
     return path
 
 # UNUSED but returns path to where Aeneas force alligner 
@@ -93,7 +93,7 @@ def load_json(sid):
 # Fucntion gets the begining and ending timestamps for a word or series of words
 def get_timestamps(startIDX,endIDX,sid):
     data = load_json(sid)
-    print("\n\n",startIDX," ",endIDX,"\n\n\n")
+    # print("\n\n",startIDX," ",endIDX,"\n\n\n")
     start = float(data['words'][startIDX]['start'])
     end = float(data['words'][endIDX]['end'])
     return start*1000,end*1000

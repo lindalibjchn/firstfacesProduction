@@ -28,7 +28,7 @@ def create_hello_wav( u_name ):
 
         # don't need to keep all synths for class. Remember to delete this when session ends.
         synthURL = 'media/prePreparedTiaPhrases/greetings/' + u_name + '.wav'
-        print('rsynthURL:', synthURL)
+        # print('rsynthURL:', synthURL)
         with open( os.path.join(settings.BASE_DIR, synthURL ), 'wb') as out:
             out.write(response.audio_content)
     except:

@@ -142,7 +142,7 @@ def store_conversation_over(request):
     ratings = json.loads(request.POST['ratings'])
 
 
-    print('in store_conversation_over:', ratings)
+    # print('in store_conversation_over:', ratings)
 
 
     # code.interact(local=locals());
@@ -171,7 +171,7 @@ def get_pronunciation_errors(request):
     sents = Sentence.objects.filter(conversation=conv)
     for sent in sents:
         auds = AudioFile.objects.filter(sentence=sent)
-        print(sent)
+        # print(sent)
         for aud in auds:
             audErrors = AudioError.objects.filter(audio=aud)
             for audErr in audErrors:
@@ -210,7 +210,7 @@ def tag_sentence(request):
     pos = []
     for token in doc:
         pos.append(token.pos_)
-    print(pos)
+    # print(pos)
     out = []
     count = 0
     for i in range(len(pos)):
@@ -334,7 +334,7 @@ def get_context(request):
             tiles = append_tile_list(mx)
             num_tiles = mx
             hidden_bottom = hidden_tiles(mx)
-        print('\n\n', tile_audio_durations, '\n\n')
+        # print('\n\n', tile_audio_durations, '\n\n')
 
         response_data = {
             'success': 1,
@@ -366,7 +366,7 @@ def get_spliced_audio(request):
     # code.interact(local=locals());
     words = request.POST['words'].split(',')
     vis = request.POST['viss'].split(',')
-    print("\n\n",vis,"\n\n",request.POST['viss'],"\n\n")
+    # print("\n\n",vis,"\n\n",request.POST['viss'],"\n\n")
     urls = request.POST['urls'].split(',')
     for i in range(len(urls)):
         urls[i] = settings.BASE_DIR+'/media'+urls[i].split('media')[1]
@@ -392,5 +392,5 @@ def get_spliced_audio(request):
         'words': " ".join(words).strip(),
         'viss': vis,
     }
-    print("there")
+    # print("there")
     return JsonResponse(response_data)
