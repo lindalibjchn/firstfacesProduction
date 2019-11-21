@@ -1,6 +1,9 @@
+<<<<<<< HEAD
 one
 and
 two
+=======
+>>>>>>> a832eff86ef7b09184ea1a34d2c99b1b798585c8
 look
 at
 the

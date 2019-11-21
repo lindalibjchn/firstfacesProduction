@@ -246,8 +246,10 @@ def do_allignment(request):
     
     # Below lines do the forced allignment, commented lines are those used for Aeneas 
     # extra_str = '"task_language=eng|os_task_file_format=json|is_text_type=plain"'
+
     outPath = get_out_path(sid)
     print("\n\n",outPath)
+
     command = 'python3 align.py '+settings.BASE_DIR + '/'+audioPath+' '+' '+textPath+" -o "+outPath
     wd = settings.BASE_DIR+'/gentle/'
     #sub_proc = subprocess.Popen(command,cwd=get_aeneas_path(),shell=True,stdout=subprocess.PIPE, stderr=subprocess.PIPE)   
@@ -309,11 +311,9 @@ def error_typing_used(request):
         ae = AudioError(audio=af, start_index=startID)
 
     filename = af.audio.name
-
     trans = ast.literal_eval(af.alternatives)[0]["transcript"]
     #convert audio to wav
     audioPath = convert_audio(filename)
-    print("\n\n",audioPath,"\n\n")
     #Get audio
     ERR_trans = request.POST['etrans']
     idx = int(request.POST['first_word_id'])

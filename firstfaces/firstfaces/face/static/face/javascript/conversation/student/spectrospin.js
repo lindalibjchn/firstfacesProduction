@@ -122,6 +122,7 @@ var hiddenBottom = []
             animate_down(3);
             setTimeout(function(){fix_locations(conversationVariables.IDX_Val)},300);
 
+
             if(tiles[4] != ''){
                 $("#"+tiles[4]).removeClass("third-tile-bottom").addClass("hidden_tile");
                 hiddenBottom.push(tiles[4])
@@ -129,6 +130,7 @@ var hiddenBottom = []
             setTimeout(function(){
                 tiles = [next,tiles[0],tiles[1],tiles[2],tiles[3]];
             },700);
+            setTimeout(function(){tiles = [next,tiles[0],tiles[1],tiles[2],tiles[3]]},700);
             setTimeout(enable_everything,750);
 
       }
@@ -187,6 +189,7 @@ var hiddenBottom = []
                 $("#"+tiles[0]).removeClass("third-tile-top").addClass("hidden_tile");
                 hiddenTop.push(tiles[0])
             }
+
             setTimeout(function(){fix_locations(conversationVariables.IDX_Val)},300);
             setTimeout(function(){tiles = [tiles[1],tiles[2],tiles[3], tiles[4], next ]},700);
             setTimeout(enable_everything,750);

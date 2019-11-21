@@ -55,11 +55,10 @@ function get_word_context(){
                 else if(json.id == 1){
                    $('#btnCont').removeClass().addClass('centerSide');
                    $('#refBtn').removeClass("left-sided").removeClass('right-sided').addClass('centered');
-                   $('#SpectroSpinHolder').removeClass().addClass('leftSide');
-                   $('#fixedWord').removeClass().addClass('rightSide');
+                   $('#SpectroSpinHolder').removeClass().addClass('rightSide');
+                   $('#fixedWord').removeClass().addClass('centerSide');
                 }
                 else{
-
                      $('#btnCont').removeClass().addClass('rightSide');
                      $('#refBtn').removeClass("centered").removeClass('left-sided').addClass('right-sided');
                      $('#SpectroSpinHolder').removeClass().addClass('leftSide');
@@ -137,31 +136,7 @@ function get_word_context(){
 
 }
 
-/*.centered{
-    width:100%;
-    left:0;
-    border-radius:0;
-    border:3px solid black;
-}
 
-.left-sided{
-    width:90%;
-    left:10%;
-    border-radius:  5px 0 0 5px;
-    border-top: 3px solid black;
-    border-bottom:3px solid black;
-    border-left: 3px solid black;
-    border-right:0;
-}
-.right-sided{
-    width:90%;
-    right:10%;
-    border-radius: 0 5px 5px 0;
-    border-top: 3px solid black;
-    border-bottom:3px solid black;
-    border-left: 0;
-    border-right:3px solid black;
-}*/
 
 
 
@@ -324,7 +299,6 @@ $('#playTrigramBtn').click(function(){
     splice_audio();
 });
 
-
 function increase_type_size_stage2(){
     $('#correctionOverlay').css({'background-color':'rgba(255,255,255,0.8)', 'z-index':4}).animate({height:'100%'},300);
     $('#sentenceShowHolder').css('background-color','rgba(255,255,255,0)')
@@ -349,3 +323,4 @@ function decrease_type_size_stage2(){
     $('#keyboardOverlay').show();
     $('#bottomCent').hide();
 }
+

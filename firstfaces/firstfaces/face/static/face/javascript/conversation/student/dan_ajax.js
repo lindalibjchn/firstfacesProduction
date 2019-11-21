@@ -440,6 +440,7 @@ function closeTimeOverlayCont(){
 //Allows users to type what they meant to say
 $('#keyboardOverlay').click(function(){
     moveText();
+
     conversationVariables.movedText = true;
     increase_type_size_stage2();
     if(conversationVariables.noTransError){   
@@ -455,7 +456,7 @@ $('#keyboardOverlay').click(function(){
     $("#bottomCent").attr("contenteditable","true")
     //make text area editable
     $('#spectrogramBtn').hide();
-    $("#spectrogramBtn").off("click"); 
+    $("#spectrogramBtn").off("click");
     $("#spectrogramBtn").click(function(){
         submitKeyboard();
         decrease_type_size_stage2();
@@ -909,7 +910,6 @@ function submitKeyboard(){
             
             $("#hypText").text(err_trans);
             $("#refText").text(trans);
-            
 
              $("#hypText").removeClass().addClass('small-text');
              $("#refText").removeClass().addClass('small-text');
@@ -930,18 +930,21 @@ function submitKeyboard(){
                 $('#hypBtn').css("background-color","red");                 
                 $('#hypInvisible').css("background-color","#ffcccb");           
             }
+
             conversationVariables.specClicks = [];
             conversationVariables.stage3 = true;
             conversationVariables.stage2 = false;
             conversationVariables.correctionAttemptID = json.aeca_id;
             //add error id to errors
             conversationVariables.errors[conversationVariables.startIDX] = json.ae_id;
+
             //save lenghts of both audio files
             conversationVariables.refLen = json.ref_length/conversationVariables.playspeed;
             conversationVariables.hypLen = json.hyp_length/conversationVariables.playspeed;
             //change speed of play
             document.getElementById('hypAudio').playbackRate = conversationVariables.playspeed;
             document.getElementById('refAudio').playbackRate = conversationVariables.playspeed;
+
             conversationVariables.hypLenOriginal = json.hyp_length;
             conversationVariables.refLenOriginal = json.ref_length;
             var finAudio = document.getElementById("audio_"+conversationVariables.startIDX);             
