@@ -1,10 +1,10 @@
 {
-  "transcript": "the\ncat\nran\naway\nfrom\nthe\nballoon\n",
+  "transcript": "the\ncat\nsat\non\nthe\nmat\n",
   "words": [
     {
       "alignedWord": "the",
       "case": "success",
-      "end": 1.25,
+      "end": 1.02,
       "endOffset": 3,
       "phones": [
         {
@@ -12,118 +12,87 @@
           "phone": "dh_B"
         },
         {
-          "duration": 0.2,
+          "duration": 0.14,
           "phone": "ah_E"
         }
       ],
-      "start": 0.96,
+      "start": 0.79,
       "startOffset": 0,
       "word": "the"
     },
     {
       "alignedWord": "cat",
       "case": "success",
-      "end": 1.97,
+      "end": 1.37,
       "endOffset": 7,
       "phones": [
         {
-          "duration": 0.21,
+          "duration": 0.13,
           "phone": "k_B"
         },
         {
-          "duration": 0.11,
+          "duration": 0.08,
           "phone": "ae_I"
         },
         {
-          "duration": 0.23,
+          "duration": 0.07,
           "phone": "t_E"
         }
       ],
-      "start": 1.42,
+      "start": 1.09,
       "startOffset": 4,
       "word": "cat"
     },
     {
-      "alignedWord": "ran",
+      "alignedWord": "sat",
       "case": "success",
-      "end": 2.32,
+      "end": 1.73,
       "endOffset": 11,
       "phones": [
         {
-          "duration": 0.16,
-          "phone": "r_B"
+          "duration": 0.14,
+          "phone": "s_B"
         },
         {
           "duration": 0.09,
           "phone": "ae_I"
         },
         {
-          "duration": 0.06,
-          "phone": "n_E"
+          "duration": 0.09,
+          "phone": "t_E"
         }
       ],
-      "start": 2.01,
+      "start": 1.41,
       "startOffset": 8,
-      "word": "ran"
+      "word": "sat"
     },
     {
-      "alignedWord": "away",
+      "alignedWord": "on",
       "case": "success",
-      "end": 2.6799999999999997,
-      "endOffset": 16,
+      "end": 2.02,
+      "endOffset": 14,
       "phones": [
         {
-          "duration": 0.09,
-          "phone": "ah_B"
+          "duration": 0.14,
+          "phone": "ao_B"
         },
         {
           "duration": 0.11,
-          "phone": "w_I"
-        },
-        {
-          "duration": 0.16,
-          "phone": "ey_E"
+          "phone": "n_E"
         }
       ],
-      "start": 2.32,
+      "start": 1.77,
       "startOffset": 12,
-      "word": "away"
-    },
-    {
-      "alignedWord": "from",
-      "case": "success",
-      "end": 2.92,
-      "endOffset": 21,
-      "phones": [
-        {
-          "duration": 0.08,
-          "phone": "f_B"
-        },
-        {
-          "duration": 0.04,
-          "phone": "r_I"
-        },
-        {
-          "duration": 0.04,
-          "phone": "ah_I"
-        },
-        {
-          "duration": 0.08,
-          "phone": "m_E"
-        }
-      ],
-      "start": 2.68,
-      "startOffset": 17,
-      "word": "from"
+      "word": "on"
     },
     {
       "alignedWord": "the",
       "case": "success",
-      "end": 3.01,
-      "endOffset": 25,
+      "end": 2.17,
+      "endOffset": 18,
       "phones": [
         {
-          "duration": 0.04,
+          "duration": 0.07,
           "phone": "dh_B"
         },
         {
@@ -131,40 +100,32 @@
           "phone": "ah_E"
         }
       ],
-      "start": 2.92,
-      "startOffset": 22,
+      "start": 2.05,
+      "startOffset": 15,
       "word": "the"
     },
     {
-      "alignedWord": "balloon",
+      "alignedWord": "mat",
       "case": "success",
-      "end": 3.57,
-      "endOffset": 33,
+      "end": 2.1999999999999997,
+      "endOffset": 22,
       "phones": [
         {
-          "duration": 0.06,
-          "phone": "b_B"
+          "duration": 0.01,
+          "phone": "m_B"
         },
         {
-          "duration": 0.09,
-          "phone": "ah_I"
+          "duration": 0.01,
+          "phone": "ae_I"
         },
         {
-          "duration": 0.1,
-          "phone": "l_I"
-        },
-        {
-          "duration": 0.13,
-          "phone": "uw_I"
-        },
-        {
-          "duration": 0.18,
-          "phone": "n_E"
+          "duration": 0.01,
+          "phone": "t_E"
         }
       ],
-      "start": 3.01,
-      "startOffset": 26,
-      "word": "balloon"
+      "start": 2.17,
+      "startOffset": 19,
+      "word": "mat"
     }
   ]
 }

@@ -3,8 +3,6 @@ function showWrongSentence() {
     console.log('in showWrongSentence');
     conversationVariables.sentenceForHighlighting = getSentenceWithSpacesInArray( conversationVariables.conversation_dict.completed_sentences[ 0 ].sentence )
 
-    $('#submittedSentence').empty();
-    $( '#correctedSentence' ).empty();
     for ( w=0; w < conversationVariables.sentenceForHighlighting.length; w++ ) {
 
         if ( conversationVariables.sentenceForHighlighting[ w ] === ' ' ) {

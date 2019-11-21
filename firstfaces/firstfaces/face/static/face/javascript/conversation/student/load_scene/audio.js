@@ -16,18 +16,18 @@ function readyAudio() {
 
 function startAudioStream() {
 
-    console.log( 'in start audio stream' )
-    console.log( 'AUDIO_N_VIDEO_SETTINGS:', AUDIO_N_VIDEO_SETTINGS )
-    alert('in getUserMedia')
+    //console.log( 'in start audio stream' )
+    //console.log( 'AUDIO_N_VIDEO_SETTINGS:', AUDIO_N_VIDEO_SETTINGS )
+    //alert('in getUserMedia')
 
     navigator.mediaDevices.getUserMedia( AUDIO_N_VIDEO_SETTINGS ).then( function( stream ) {
  
-        alert('in getUserMedia')
+        //alert('in getUserMedia')
         conversationVariables.stream = stream; // make it globally accessible to simplify all else
         conversationVariables.audio = true; // ??
         mediaRecorder = new MediaRecorder( conversationVariables.stream );
-        alert('mediaRecorder created successfully')
-        console.log('mediaRecorder:', mediaRecorder)
+        //alert('mediaRecorder created successfully')
+        //console.log('mediaRecorder:', mediaRecorder)
         chunks = []; // ??
 
         mediaRecorder.ondataavailable = function( e ) {
@@ -53,7 +53,7 @@ function onRecord() {
     resetOnRecordVariables();
     dealWithInputBtns();
     mediaRecorder.start();
-    initMicVolumeBar(); // <volume-meter.js>
+    //initMicVolumeBar(); // <volume-meter.js>
     tiaLeanToListenToRecording();
     recorder15sTimeout = setTimeout( checkIfClickedStop, 15000 );
 
@@ -171,8 +171,8 @@ function onMediaRecorderStop() {
         conversationVariables.blob = new Blob(chunks, { type : 'audio/webm; codecs: opus' });
 
         // create audiourl for easy replay
-        var audioURL = window.URL.createObjectURL(conversationVariables.blob);
-        aud.src = audioURL;
+        //var audioURL = window.URL.createObjectURL(conversationVariables.blob);
+        //aud.src = audioURL;
 
         tiaLookAtLaptopAndType();
 

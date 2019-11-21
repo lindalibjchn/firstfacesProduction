@@ -27,7 +27,7 @@ else:
 
 def tts(request):
 
-    print('\n\nintts\n\n')
+    # print('\n\nintts\n\n')
 
     text = request.GET['sentence']
     tia_speaker = json.loads(request.GET['tiaSpeaker'])
@@ -95,13 +95,13 @@ def tts(request):
 
 def store_blob(request):
     database_updates.database_updated_by_student = True
-    print('database updated by blob:', database_updates.database_updated_by_student)
+    # print('database updated by blob:', database_updates.database_updated_by_student)
     # code.interact(local=locals());
 
     blob = request.FILES['data']
     conv = Conversation.objects.get( pk=request.POST['conversation_id'] )
     sent_id = json.loads(request.POST['sentence_being_recorded_id'])
-    print('sent_id:', sent_id)
+    # print('sent_id:', sent_id)
 
     # if very first attempt or new sent then need to create empty sentence
     if sent_id != None:
@@ -237,7 +237,7 @@ def do_allignment(request):
     trans = request.POST['trans']
     audioPath = request.POST['fn']
     sid = request.POST['sessionID']
-    print("\n", trans, "\n", audioPath, "\n", get_text_path(sid))
+    # print("\n", trans, "\n", audioPath, "\n", get_text_path(sid))
     # writes transcirption one word to a line to a file
     f = open(get_text_path(sid), "w+")
     for word in trans.split():                                                   
@@ -289,7 +289,7 @@ def get_remaining_audio(request):
         # Saves the audio filename and audio length to lists 
         lens.append(get_audio_length(settings.BASE_DIR+'/'+hyp_audio))
         paths.append(hyp_audio)
-    print("\n\n",paths)
+    # print("\n\n",paths)
     response_data = {                  
         "paths":paths,
         "lens":lens,

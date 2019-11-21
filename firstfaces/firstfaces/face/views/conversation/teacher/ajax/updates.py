@@ -12,15 +12,14 @@ import code
 
 def check_for_change(request):
 
-    # print('checking for change:', database_updates.teacher_checking_for_change)
     check_for_change_count = 0
     while not database_updates.database_updated_by_student:
         if check_for_change_count < 10:
-            # print('database_updated_by_student:', database_updates.database_updated_by_student, check_for_change_count)
+            print('database_updated_by_student:', database_updates.database_updated_by_student, check_for_change_count)
             check_for_change_count += 1
             time.sleep(1)
         else:
-            # print('returning from else')
+            print('returning from else')
             return JsonResponse({'change': False})
     
     # print('database_updated_by_student after while:', database_updates.database_updated_by_student)
@@ -39,8 +38,8 @@ def check_for_change(request):
     for s_n in sentences_not_judged_objects:
         sentences_not_judged.append( convert_django_sentence_object_to_json(s_n, s_n.learner.id, s_n.conversation.id))
 
-    print('sentences_being_recorded:', sentences_being_recorded)
-    print('sentences_not_judged:', sentences_not_judged)
+    # print('sentences_being_recorded:', sentences_being_recorded)
+    # print('sentences_not_judged:', sentences_not_judged)
     response_data = {
 
         'change': True,
