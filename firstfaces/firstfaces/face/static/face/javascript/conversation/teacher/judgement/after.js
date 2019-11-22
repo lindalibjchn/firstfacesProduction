@@ -23,7 +23,7 @@ function removeJudgedSentence() {
 
     $('#sentenceForJudgement').empty() 
     $('#sentenceForJudgement').css( 'opacity', '0.7' ); 
-    $( '#promptText' ).val('');
+    $( '.prompt-text' ).val('');
 
 }
 

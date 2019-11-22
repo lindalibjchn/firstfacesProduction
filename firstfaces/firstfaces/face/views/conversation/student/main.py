@@ -5,7 +5,7 @@ from face.views.conversation.student.utils.text_to_speech import create_hello_wa
 from face.views.conversation.teacher.utils.sessions_sentences import get_student_conversation 
 from django.utils import timezone
 import json
-from face.models import Conversation, Sentence, AudioFile, Profile, AudioError, AudioErrorAttempt, AudioErrorCorrectionAttempt
+from face.models import Conversation, Sentence, AudioFile, Profile, AudioError, AudioErrorAttempt, AudioErrorCorrectionAttempt, StockPhrases
 from django.conf import settings
 from face.utils import * #for now
 import time
@@ -34,8 +34,17 @@ def conversation_student(request, conversation_id):
             prof = Profile.objects.get(learner=request.user)
             gender = prof.gender
 
+            stock_phrases = {}
+            for s_p in StockPhrases.objects.all():
+                stock_phrases[s_p.name] = {
+                        'texts': jsonify_or_none(s_p.texts),
+                        'URLs': jsonify_or_none(s_p.urls),
+                        'visemes': jsonify_or_none(s_p.visemes),
+                }
+
             conversation_variables = {
 
+                'stock_phrases': stock_phrases,
                 'username': request.user.username,
                 'first_enter': first_enter,
                 'conversation_dict': conversation_dict,

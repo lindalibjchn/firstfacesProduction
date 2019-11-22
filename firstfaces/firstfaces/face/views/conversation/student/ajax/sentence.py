@@ -68,9 +68,9 @@ def check_judgement(request):
             
             check_for_prompt_count = 0
             while not for_prompt_arrived(s):
-                time.sleep(2)
+                time.sleep(1)
                 check_for_prompt_count += 1
-                if check_for_prompt_count == 5:
+                if check_for_prompt_count == 10:
                     break
 
             if check_for_prompt_count != 5:

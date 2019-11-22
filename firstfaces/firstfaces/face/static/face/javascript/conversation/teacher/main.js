@@ -173,10 +173,16 @@ function setKeydownEvents() {
             wipeAllCorrections();
         } else if (e.keyCode == 69 && e.ctrlKey) {
             console.log('Ctrl-E pressed');
+            e.preventDefault();
             clearJudgement();
         } else if (e.keyCode == 77 && e.ctrlKey) {
             console.log('Ctrl-M pressed');
+            e.preventDefault();
             sendNewInfoToServer();
+        } else if(e.keyCode) {
+            console.log('Enter pressed');
+            e.preventDefault();
+            storeSinglePromptBoxAndMoveToNextBox();
         } else if(e.keyCode == 13 && e.ctrlKey) {
             console.log('Ctrl-Enter pressed');
             e.preventDefault();
@@ -195,13 +201,13 @@ function setButtonEvents() {
 
 function disablePromptBox() {
 
-    $( '#promptText' ).attr( 'disabled', true );
+    $( '.prompt-text' ).attr( 'disabled', true );
 
 }
 
 function enablePromptBox() {
 
-    $( '#promptText' ).attr( 'disabled', false );
+    $( '.prompt-text' ).attr( 'disabled', false );
 
 }
 

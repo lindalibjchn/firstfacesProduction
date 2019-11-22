@@ -75,7 +75,6 @@ class Sentence(models.Model):
     def __str__(self):
         return  str(self.pk) + ": " + str(self.sentence)
 
-
 # may need multiple audio files per sentence as student attempts and re-attempts
 class AudioFile(models.Model):
     sentence = models.ForeignKey(Sentence, on_delete=models.CASCADE)
@@ -111,6 +110,45 @@ class AudioErrorCorrectionAttempt(models.Model):
 
     def __str__(self):
         return  str(self.error)
+
+class StockPhrases(models.Model):
+    name = models.CharField(max_length=50, blank=True, null=True)
+    texts = models.CharField(max_length=500, blank=True, null=True)
+    urls = models.CharField(max_length=500, blank=True, null=True)
+    visemes = models.CharField(max_length=500, blank=True, null=True)
+
+    def __str__(self):
+        return  str(self.texts)
+
+class Prompt0(models.Model):
+    sentence = models.OneToOneField(Sentence, on_delete=models.CASCADE, primary_key=True, default=None)
+    name = models.CharField(max_length=50, blank=True, null=True)
+    text = models.CharField(max_length=500, blank=True, null=True)
+    url = models.CharField(max_length=100, blank=True, null=True)
+    visemes = models.CharField(max_length=250, blank=True, null=True)
+
+    def __str__(self):
+        return  str(self.text)
+
+class Prompt1(models.Model):
+    sentence = models.OneToOneField(Sentence, on_delete=models.CASCADE, primary_key=True, default=None)
+    name = models.CharField(max_length=50, blank=True, null=True)
+    text = models.CharField(max_length=500, blank=True, null=True)
+    url = models.CharField(max_length=100, blank=True, null=True)
+    visemes = models.CharField(max_length=250, blank=True, null=True)
+
+    def __str__(self):
+        return  str(self.text)
+
+class Prompt2(models.Model):
+    sentence = models.OneToOneField(Sentence, on_delete=models.CASCADE, primary_key=True, default=None)
+    name = models.CharField(max_length=50, blank=True, null=True)
+    text = models.CharField(max_length=500, blank=True, null=True)
+    url = models.CharField(max_length=100, blank=True, null=True)
+    visemes = models.CharField(max_length=250, blank=True, null=True)
+
+    def __str__(self):
+        return  str(self.text)
 
 # class PermAudioFile(models.Model):
     # sentence = models.ForeignKey(Sentence, on_delete=models.CASCADE)

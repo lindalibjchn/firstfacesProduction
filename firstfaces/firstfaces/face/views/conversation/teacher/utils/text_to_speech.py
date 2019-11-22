@@ -14,33 +14,23 @@ elif settings.DEVELOPMENT_ENV == 'dan':
 else:
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/firstfaces/erle-3666ad7eec71.json"
 
-def create_tia_speak_sentences_synthesis_data(sent, conv_id):
+def create_tia_speak_sentence_URL_and_visemes(sent, conv_id):
 
-    for_prompt = {
-        'URLs': [],
-        'texts': [],
-        'phones': []
-    }
+    # list_of_text_to_speak = get_text(jsonify_or_none(sent.sentence), sent.judgement, jsonify_or_none(sent.prompt), jsonify_or_none(sent.indexes))
+    # for i, s in enumerate(list_of_text_to_speak):
 
-    list_of_text_to_speak = get_text(jsonify_or_none(sent.sentence), sent.judgement, jsonify_or_none(sent.prompt), jsonify_or_none(sent.indexes))
-    for i, s in enumerate(list_of_text_to_speak):
+    URL = get_tia_tts(sent.sentence, conv_id, sent.id)
+    sent_data = change_sentence_to_list_n_add_data(sent.sentence)
+    
+    # concatenate separate viseme lists
+    visemes = []
+    for s_d in sent_data:
+        for vis in s_d[2]:
+            single_viseme_list.append(vis)
+    
+    return [URL, visemes]
 
-        for_prompt['URLs'].append(get_tia_tts(s, conv_id, i))
-        for_prompt['texts'].append(s)
-        sent_data = change_sentence_to_list_n_add_data(s)
-        
-        # concatenate separate viseme lists
-        single_viseme_list = []
-        for s_d in sent_data:
-            for vis in s_d[2]:
-                single_viseme_list.append(vis)
-        
-        for_prompt['phones'].append(single_viseme_list)
-    sent.for_prompt = json.dumps(for_prompt)
-    sent.save()
-
-
-def get_tia_tts(text, sess_id, sent_no):
+def get_tia_tts(text, conv_id, sent_id):
 
     speaking_voice = 'en-GB-Wavenet-C'
 
@@ -66,7 +56,7 @@ def get_tia_tts(text, sess_id, sent_no):
         response = client.synthesize_speech(input_text, voice, audio_config)
 
         # don't need to keep all synths for class. Remember to delete this when session ends.
-        synthURL = 'media/synths/sess_' + str(sess_id) + '_' + str(sent_no) + '.wav' # + '_' + str(int(time.mktime((timezone.now()).timetuple())))
+        synthURL = 'media/synths/conv_' + str(conv_id) + '_' + str(sent_id) + '.wav' # + '_' + str(int(time.mktime((timezone.now()).timetuple())))
         fullURL = os.path.join(settings.BASE_DIR, synthURL)
         with open( fullURL, 'wb') as out:
             out.write(response.audio_content)

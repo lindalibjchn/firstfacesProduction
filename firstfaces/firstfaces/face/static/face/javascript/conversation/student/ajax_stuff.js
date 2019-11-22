@@ -1,66 +1,15 @@
 // text is string and tiaSpeaker is true if it is tia speaking, false if student
-function sendTTS( text, tiaSpeaker ) {
-
-    synthesisObject.ttsServerFault = false;
-    //console.log('text:', text);
-
-    // checks if speech has arrived from server
-    synthesisObject.gotNewSpeech = false;
-
-    synthesisObject.text = text;
+function sendTTS( text ) {
 
     $.ajax({
         url: "/tts",
         type: "GET",
         data: {
-            'gender': conversationVariables.gender,
             'sentence': text,
-            'tiaSpeaker': tiaSpeaker,
-            'pitch': synthesisObject.pitch,
-            'speaking_rate': synthesisObject.speaking_rate,
-            'sessionID': conversationVariables.session_id,
-            //'caller': caller,
-            'blob_no_text': conversationVariables.blob_no_text,
-            'blob_no_text_sent_id': conversationVariables.blob_no_text_sent_id,
         },
         success: function(json) {
 
-            if ( json.synthURL === 'fault' ) {
-
-                synthesisObject.gotNewSpeech = true;
-                synthesisObject.ttsServerFault = true;
-
-            } else {
-
-                var synthAudioURL = prefixURL + json.synthURL;
-                synthesisObject.synthAudio = document.getElementById( 'synthClip' );
-                synthesisObject.synthAudio.src = synthAudioURL;
-
-                // now this is true, other functions waiting on it can continue
-                synthesisObject.gotNewSpeech = true;
-                
-                //if ( tiaSpeaker ) {
-
-                //} else {
-
-                    //// listen is when the user click the listen button so want the audio to play asap
-                    ////if ( caller === "listen" ) {
-
-                        ////setTimeout( function() {
-
-                            ////synthesisObject.synthAudio.play();
-
-                        ////}, 500 );
-
-                    ////} else {
-                    
-                        //console.log('talk speech synth made');
-
-                    ////}
-
-                //}
-
-            }
+            console.log('got tts successfully:', json.synthURL);
 
         },
         error: function() {

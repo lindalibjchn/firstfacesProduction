@@ -69,10 +69,10 @@ function highlightClick( id ) {
 
 }
 
-function highlightAndFocusOnPromptBox() {
+function highlightAndFocusOnPromptBox( boxNumber ) {
 
     enablePromptBox();
-    $( '#promptText' ).focus();
+    $( '#promptText' + boxNumber ).focus();
     $( '#promptBoxInnerContainer' ).css( 'opacity', '1' );
 
 }
@@ -82,6 +82,14 @@ function unHighlightAndFocusOnPromptBox() {
     $( '#promptText' ).blur();
     disablePromptBox();
     $( '#promptBoxInnerContainer' ).css( 'opacity', '0.7' );
+
+}
+
+
+function storeSinglePromptBoxAndMoveToNextBox() {
+
+    let idOfCurrentTextBoxInFocus = $('textarea:focus').attr('id');
+    let promptText = $( '#promptText' + idOfCurrentTextBoxInFocus ).val();
 
 }
 

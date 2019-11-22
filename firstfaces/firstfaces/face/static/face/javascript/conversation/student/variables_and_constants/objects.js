@@ -361,6 +361,7 @@ var synthesisObject = {
     continuous: true,
     firstClip: false,
     now: {}, 
+    stockPhrases: {},
     data: {
 
         'prompt': {
@@ -376,155 +377,183 @@ var synthesisObject = {
             URLs: [ prefixURL + tiaMediaLoc + "begin_when_you_are_ready.wav" ],
             texts: [ "begin when you are ready" ],
             phones: [
-                [ 'b','e','k','e','t',  'w','e','t',  'e','u',  'e',  'r','e','t','i']
+                [ "b","e","k","e","t",  "w","e","t",  "e","u",  "e",  "r","e","t","i"]
             ],
 
         },
 
-        'goodbyeSeeYou': {
+        "goodbyeSeeYou": {
 
             URLs: [ prefixURL + tiaMediaLoc + "goodbye_see_you_next_time.wav" ],
             texts: [ "goodbye see you next time" ],
             phones: [
-                ['k','e','t','b','e',  's','i',  'e','u',  't','e','k','s','t',  't','e','b']
+                ["k","e","t","b","e",  "s","i",  "e","u",  "t","e","k","s","t",  "t","e","b"]
             ],
 
         },
 
-        'howAreYou': {
+        "howAreYou": {
 
             URLs: [ prefixURL + tiaMediaLoc + "how_are_you_feeling_today.wav" ],
             texts: [ "how are you feeling today?" ],
             phones: [
-                ['e','w',  'e','r',  'e','u',  'f','i','l','e','k',  't','e','t','e']
+                ["e","w",  "e","r",  "e","u",  "f","i","l","e","k",  "t","e","t","e"]
             ],
 
         },
 
-        'iCouldntHear': {
+        "iCouldntHear": {
 
             URLs: [ prefixURL + tiaMediaLoc + "i_couldnt_hear_anything_00.wav", prefixURL + tiaMediaLoc + "i_couldnt_hear_anything_01.wav" ],
             texts: [ "I couldn't hear anything", "can you try again?" ],
             phones: [
-                ['e',  'k','e','t','t','t',  'e','i','r',  'e','t','i','th','e','k'],
-                ['k','e','t',  'e','u',  't','r','e',  'e','k','e','t']
+                ["e",  "k","e","t","t","t",  "e","i","r",  "e","t","i","th","e","k"],
+                ["k","e","t",  "e","u",  "t","r","e",  "e","k","e","t"]
             ],
 
         },
 
-        'iDontUnderstand': {
+        "iDontUnderstand": {
 
             URLs: [ prefixURL + tiaMediaLoc + "i_dont_understand_what_you_mean_00.wav", prefixURL + tiaMediaLoc + "i_dont_understand_what_you_mean_01.wav" ],
             texts: [ "I don't understand what you mean", "try to say that sentence in a different way" ],
             phones: [
-                ['e',  't','e','t','t',  'e','t','t','e','r','s','t','e','t','t',  'w','e','t',  'e','u',  'b','i','t'],
-                ['t','r','e',  't','u',  's','e',  'th','e','t',  's','e','t','t','e','t','s',  'e','t',  'e',  't','e','f','e','r','e','t','t',  'w','e']
+                ["e",  "t","e","t","t",  "e","t","t","e","r","s","t","e","t","t",  "w","e","t",  "e","u",  "b","i","t"],
+                ["t","r","e",  "t","u",  "s","e",  "th","e","t",  "s","e","t","t","e","t","s",  "e","t",  "e",  "t","e","f","e","r","e","t","t",  "w","e"]
             ],
 
         },
 
-        'sorryToHear': {
+        "sorryToHear": {
 
             URLs: [ prefixURL + tiaMediaLoc + "im_sorry_to_hear_that.wav" ],
             texts: [ "I'm sorry to hear that" ],
             phones: [
-                ['e','b',  's','e','r','i',  't','e',  'e','r',  'th','e','t']
+                ["e","b",  "s","e","r","i",  "t","e",  "e","r",  "th","e","t"]
             ],
 
         },
 
-        'greatToSee': {
+        "greatToSee": {
 
             URLs: [ prefixURL + tiaMediaLoc + "its_great_to_see_you_again.wav" ],
             texts: [ "It's great to see you again" ],
             phones: [
-                ['e','t','s',  'k','r','e','t',  't','u',  's','i',  'e','u',  'e','k','e','t']
+                ["e","t","s",  "k","r","e","t",  "t","u",  "s","i",  "e","u",  "e","k","e","t"]
             ],
 
         },
 
-        'moreThanThree': {
+        "moreThanThree": {
 
             URLs: [ prefixURL + tiaMediaLoc + "more_than_three_errors_00.wav", prefixURL + tiaMediaLoc + "more_than_three_errors_01.wav" ],
             texts: [ "There are more than 3 errors in your sentence", "Simplify and then try again" ],
             phones: [
-                ['th','e','r', 'e','r',  'b','e','r',  'th','e','t',  'th','r','i',  'e','r','e','r','s',  'e','t',  'e','u','r',  's','e','t','t','e','t','s'],
-                ['s','e','b','b','l','e','f','e',  'e','t','t',  't','r','e',  'e','k','e','t']
+                ["th","e","r", "e","r",  "b","e","r",  "th","e","t",  "th","r","i",  "e","r","e","r","s",  "e","t",  "e","u","r",  "s","e","t","t","e","t","s"],
+                ["s","e","b","b","l","e","f","e",  "e","t","t",  "t","r","e",  "e","k","e","t"]
             ],
 
         },
 
-        'veryLoud': {
+        "veryLoud": {
 
             URLs: [ prefixURL + tiaMediaLoc + "that_was_very_loud_00.wav", prefixURL + tiaMediaLoc + "that_was_very_loud_01.wav" ],
             texts: [ "that was very loud", "be careful with the microphone volume" ],
             phones: [
-                ['th','e','t',  'w','e','s',  'f','e','r','i',  'l','e','t'],
-                ['b','i',  'k','e','r','f','e','l',  'w','e','th',  'th','e',  'b','e','k','l','e','f','e','t',  'f','e','l','u','b']
+                ["th","e","t",  "w","e","s",  "f","e","r","i",  "l","e","t"],
+                ["b","i",  "k","e","r","f","e","l",  "w","e","th",  "th","e",  "b","e","k","l","e","f","e","t",  "f","e","l","u","b"]
             ],
 
         },
 
-        'thatsGreat': {
+        "thatsGreat": {
 
             URLs: [ prefixURL + tiaMediaLoc + "thats_great.wav" ],
             texts: [ "that's great" ],
             phones: [
-                ['th','e','t','s',  'k','r','e','t']
+                ["th","e","t","s",  "k","r","e","t"]
             ],
 
         },
 
-        'welcomeToFirst': {
+        "welcomeToFirst": {
 
             URLs: [ prefixURL + tiaMediaLoc + "welcome_to_your_first_full_class_at_erle.wav" ],
             texts: [ "Welcome to your first full class at ERLE" ],
             phones: [
-                ['u','e','l','k','e','b',  't','u',  'e','u','r',  'f','e','r','s','t',  'f','e','l',  'k','l','e','s',  'e','t',  'e','r','l']
+                ["u","e","l","k","e","b",  "t","u",  "e","u","r",  "f","e","r","s","t",  "f","e","l",  "k","l","e","s",  "e","t",  "e","r","l"]
             ],
 
         },
 
-        'talkAbout': {
+        "talkAbout": {
 
             URLs: [ prefixURL + tiaMediaLoc + "what_would_you_like_to_talk_about_today.wav" ],
             texts: [ "What would you like to talk about today?" ],
             phones: [
-                ['w','e','t',  'w','e','t',  'e','u',  'l','e','k',  't','u',  't','e','k',  'e','b','e','t',  't','u','t','e']
+                ["w","e","t",  "w","e","t",  "e","u",  "l","e","k",  "t","u",  "t","e","k",  "e","b","e","t",  "t","u","t","e"]
             ],
 
         },
 
-        'mustTypeChoice': {
+        "mustTypeChoice": {
 
             URLs: [ prefixURL + tiaMediaLoc + "you_must_type_your_choice_of_topic_in_the_box_below.wav" ],
             texts: [ "you must type your choice of topic in the box below" ],
             phones: [
-                ['e','u',  'b','e','s','t',  't','e','b',  'e','u','r',  't','e','t',  'e','f',  't','e','b','e','k',  'e','t',  'th','e',  'b','e', 'k','s',  'b','e','l','w']
+                ["e","u",  "b","e","s","t",  "t","e","b",  "e","u","r",  "t","e","t",  "e","f",  "t","e","b","e","k",  "e","t",  "th","e",  "b","e", "k","s",  "b","e","l","w"]
             ],
 
         },
 
-        'notSureAbout': {
+        "notSureAbout": {
 
             URLs: [ prefixURL + tiaMediaLoc + "im_not_sure_about_that_sentence_00.wav", prefixURL + tiaMediaLoc + "im_not_sure_about_that_sentence_01.wav" ],
             texts: [ "I'm not sure about that sentence", "continue with your topic and I will check it again later" ],
             phones: [
-                ['e','b',   't','e','t',  's','e','r',  'e','b','e','t',  'th','e','t',  's','e','t','t','e','t','s' ],
-                ['k','e','t','t','e','t','u',  'w','e','th',  'u','r',  't','e','b','e','k',  'e','t','t',  'e',  'w','e','l',  's','e','k',  'e','t',  'e','k','e','t',  'l','e','t','r' ]
+                ["e","b",   "t","e","t",  "s","e","r",  "e","b","e","t",  "th","e","t",  "s","e","t","t","e","t","s" ],
+                ["k","e","t","t","e","t","u",  "w","e","th",  "u","r",  "t","e","b","e","k",  "e","t","t",  "e",  "w","e","l",  "s","e","k",  "e","t",  "e","k","e","t",  "l","e","t","r" ]
             ],
 
         },
 
-        'tryToSay': {
+        "tryToSay": {
 
             URLs: [ prefixURL + tiaMediaLoc + "try_to_say_00.wav", prefixURL + tiaMediaLoc + "try_to_say_01.wav" ],
             texts: [ "Try to say...", "'the valuable supply'" ],
             phones: [
-                ['t','r','e',  't','e',  's','e'],
-                ['th','e',  'f','e', 'l','u','b','l',  'sEmp','eEmp','bEmp','lEmp','eEmp','iEmp']
+                ["t","r","e",  "t","e",  "s","e"],
+                ["th","e",  "f","e", "l","u","b","l",  "sEmp","eEmp","bEmp","lEmp","eEmp","iEmp"]
             ],
 
+        },
+
+        "prompt0ImHappyTo": {
+
+            URLs: [ prefixURL + tiaMediaLoc + "initialPrompts/im_happy_to_hear_that.wav" ],
+            texts: [ "I'm happy to hear that" ],
+            phones: [
+                ["e", "e", "b", "e", "e", "b", "i", "t", "u", "e", "i", "r", "th", "e", "t"]
+            ],
+
+        },
+
+        "prompt0thatSoundsBad": {
+
+            URLs: [ prefixURL + tiaMediaLoc + "initialPrompts/that_sounds_bad.wav" ],
+            texts: [ "That sounds bad" ],
+            phones: [
+                ["th", "e", "t", "s", "e", "t", "t", "s", "b", "e", "t"]
+            ],
+        },
+
+        "prompt0iUnderstandWhat": {
+
+            URLs: [ prefixURL + tiaMediaLoc + "initialPrompts/i_understand_what_you_mean.wav" ],
+            texts: [ "I understand what you mean" ],
+            phones: [
+                ["e", "e", "t", "t", "r", "s", "t", "e", "t", "t", "w", "e", "t", "e", "u", "b", "i", "t"]
+            ],
         },
 
 

@@ -25,7 +25,15 @@ function removeSelectable() {
 
 var appendCorrectionSection = function( copy ) {
     
-    highlightAndFocusOnPromptBox();
+    if ( teacherVars.sentencesNeedJudgement[ 0 ].indexes === null ) {
+
+        teacherVars.sentencesNeedJudgement[ 0 ].indexes = [];
+    
+    }
+
+    let numberOfCorrectionsAlreadyInIndexes = teacherVars.sentencesNeedJudgement[ 0 ].indexes.length
+
+    highlightAndFocusOnPromptBox( numberOfCorrectionsAlreadyInIndexes );
 
     let idArray = []
 
@@ -35,12 +43,6 @@ var appendCorrectionSection = function( copy ) {
 
     idArray = removeAccidentallySelectedSpacesAtBeginningAndEndOfSelection( idArray );
     
-    if ( teacherVars.sentencesNeedJudgement[ 0 ].indexes === null ) {
-
-        teacherVars.sentencesNeedJudgement[ 0 ].indexes = [];
-    
-    }
-
     teacherVars.sentencesNeedJudgement[ 0 ].indexes.push( idArray );
 
     let sent = makeSentForPromptBox( idArray );

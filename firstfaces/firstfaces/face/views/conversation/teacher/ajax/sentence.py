@@ -1,5 +1,5 @@
 from face.models import Sentence
-from face.views.conversation.teacher.utils.text_to_speech import create_tia_speak_sentences_synthesis_data
+from face.views.conversation.teacher.utils.text_to_speech import create_tia_speak_sentence_URL_and_visemes
 from django.utils import timezone
 import time
 import json
@@ -47,7 +47,7 @@ def store_judgement(request):
 
         if sent_meta['judgement'] != 'I':
         
-            create_tia_speak_sentences_synthesis_data(sent, conv_id)
+            create_tia_speak_sentences_synthesis_data(sent_id, conv_id, )
 
     else:
 

@@ -27,35 +27,12 @@ else:
 
 def tts(request):
 
-    # print('\n\nintts\n\n')
-
     text = request.GET['sentence']
-    tia_speaker = json.loads(request.GET['tiaSpeaker'])
-    session_id = request.GET['sessionID']
-    pitch_designated = float(request.GET['pitch'])
-    speaking_rate_designated = float(request.GET['speaking_rate'])
-    # caller = request.GET['caller']
-    blob_no_text = json.loads(request.GET['blob_no_text'])
-    blob_no_text_sent_id = request.GET['blob_no_text_sent_id']
-    try:
-        gender = request.GET['gender']
-    except:
-        gender = 'F'
+    pitch_designated = 0
+    speaking_rate_designated = 0.7
+    gender = 'F'
 
-    if tia_speaker:
-
-        speaking_voice = 'en-GB-Wavenet-C'
-    
-    else:
-
-        if gender == 'M':
-
-            speaking_voice = 'en-GB-Wavenet-B'
-    
-        else:
-
-            speaking_voice = 'en-GB-Wavenet-A'
-
+    speaking_voice = 'en-GB-Wavenet-C'
     client = texttospeech.TextToSpeechClient()
     input_text = texttospeech.types.SynthesisInput(text=text)
 
@@ -63,21 +40,19 @@ def tts(request):
     voice = texttospeech.types.VoiceSelectionParams(
         language_code='en-GB',
         name=speaking_voice
-        # ssml_gender=texttospeech.enums.SsmlVoiceGender.MALE
         )
 
     audio_config = texttospeech.types.AudioConfig(
         audio_encoding=texttospeech.enums.AudioEncoding.MP3,
         pitch = pitch_designated,
         speaking_rate = speaking_rate_designated,
-        # volume_gain_db = 6,
         )
 
     try:
         response = client.synthesize_speech(input_text, voice, audio_config)
 
         # don't need to keep all synths for conversation. Remember to delete this when session ends.
-        synthURL = 'media/synths/session' + session_id + '.wav' # + '_' + str(int(time.mktime((timezone.now()).timetuple()))) + '.wav'
+        synthURL = 'media/synths/testers.wav' # + '_' + str(int(time.mktime((timezone.now()).timetuple()))) + '.wav'
         with open( os.path.join(settings.BASE_DIR, synthURL ), 'wb') as out:
             out.write(response.audio_content)
     except:
