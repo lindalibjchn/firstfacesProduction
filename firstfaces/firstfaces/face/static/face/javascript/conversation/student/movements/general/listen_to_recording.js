@@ -104,3 +104,35 @@ function dealWithBlankTranscription() {
 
 }
 
+function nodHeadAndSaySameAfterIdenticalTranscription() {
+
+    initNod( 0.3, 0.35 );
+     
+    setTimeout( function() {
+
+        expressionController(expressionObject.abs.talkBase, 0.2, function() {
+
+            expressionController(expressionObject.abs.s, 0.1, function() {
+                
+                expressionController(expressionObject.abs.e, 0.1, function() {
+
+                    expressionController(expressionObject.abs.b, 0.1, function() {
+
+                        expressionController(expressionObject.abs.blank, 0.5, function() {
+
+                        })
+
+                    })
+
+                });
+                
+            })
+            
+        });
+
+    }, 300 );
+
+}
+
+
+

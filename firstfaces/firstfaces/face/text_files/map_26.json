@@ -1,131 +1,203 @@
 {
-  "transcript": "the\ncat\nsat\non\nthe\nmat\n",
+  "transcript": "this\nsentence\nwill\nbe\nsuccessful\ndefinitely\n",
   "words": [
     {
-      "alignedWord": "the",
+      "alignedWord": "this",
       "case": "success",
-      "end": 1.02,
-      "endOffset": 3,
+      "end": 0.69,
+      "endOffset": 4,
       "phones": [
         {
-          "duration": 0.09,
+          "duration": 0.06,
           "phone": "dh_B"
-        },
-        {
-          "duration": 0.14,
-          "phone": "ah_E"
-        }
-      ],
-      "start": 0.79,
-      "startOffset": 0,
-      "word": "the"
-    },
-    {
-      "alignedWord": "cat",
-      "case": "success",
-      "end": 1.37,
-      "endOffset": 7,
-      "phones": [
-        {
-          "duration": 0.13,
-          "phone": "k_B"
         },
         {
           "duration": 0.08,
-          "phone": "ae_I"
+          "phone": "ih_I"
         },
         {
-          "duration": 0.07,
-          "phone": "t_E"
+          "duration": 0.21,
+          "phone": "s_E"
         }
       ],
-      "start": 1.09,
-      "startOffset": 4,
-      "word": "cat"
+      "start": 0.34,
+      "startOffset": 0,
+      "word": "this"
     },
     {
-      "alignedWord": "sat",
+      "alignedWord": "sentence",
       "case": "success",
-      "end": 1.73,
-      "endOffset": 11,
+      "end": 1.37,
+      "endOffset": 13,
       "phones": [
         {
-          "duration": 0.14,
+          "duration": 0.16,
           "phone": "s_B"
         },
         {
-          "duration": 0.09,
-          "phone": "ae_I"
+          "duration": 0.08,
+          "phone": "eh_I"
         },
         {
-          "duration": 0.09,
-          "phone": "t_E"
-        }
-      ],
-      "start": 1.41,
-      "startOffset": 8,
-      "word": "sat"
-    },
-    {
-      "alignedWord": "on",
-      "case": "success",
-      "end": 2.02,
-      "endOffset": 14,
-      "phones": [
+          "duration": 0.07,
+          "phone": "n_I"
+        },
         {
-          "duration": 0.14,
-          "phone": "ao_B"
+          "duration": 0.04,
+          "phone": "t_I"
+        },
+        {
+          "duration": 0.08,
+          "phone": "ah_I"
         },
         {
           "duration": 0.11,
-          "phone": "n_E"
+          "phone": "n_I"
+        },
+        {
+          "duration": 0.12,
+          "phone": "s_E"
         }
       ],
-      "start": 1.77,
-      "startOffset": 12,
-      "word": "on"
+      "start": 0.71,
+      "startOffset": 5,
+      "word": "sentence"
     },
     {
-      "alignedWord": "the",
+      "alignedWord": "will",
       "case": "success",
-      "end": 2.17,
+      "end": 1.67,
       "endOffset": 18,
       "phones": [
         {
+          "duration": 0.12,
+          "phone": "w_B"
+        },
+        {
           "duration": 0.07,
-          "phone": "dh_B"
+          "phone": "ih_I"
+        },
+        {
+          "duration": 0.1,
+          "phone": "l_E"
+        }
+      ],
+      "start": 1.38,
+      "startOffset": 14,
+      "word": "will"
+    },
+    {
+      "alignedWord": "be",
+      "case": "success",
+      "end": 2.01,
+      "endOffset": 21,
+      "phones": [
+        {
+          "duration": 0.1,
+          "phone": "b_B"
+        },
+        {
+          "duration": 0.22,
+          "phone": "iy_E"
+        }
+      ],
+      "start": 1.69,
+      "startOffset": 19,
+      "word": "be"
+    },
+    {
+      "alignedWord": "successful",
+      "case": "success",
+      "end": 2.84,
+      "endOffset": 32,
+      "phones": [
+        {
+          "duration": 0.07,
+          "phone": "s_B"
+        },
+        {
+          "duration": 0.07,
+          "phone": "ah_I"
+        },
+        {
+          "duration": 0.08,
+          "phone": "k_I"
+        },
+        {
+          "duration": 0.1,
+          "phone": "s_I"
+        },
+        {
+          "duration": 0.13,
+          "phone": "eh_I"
+        },
+        {
+          "duration": 0.09,
+          "phone": "s_I"
+        },
+        {
+          "duration": 0.07,
+          "phone": "f_I"
         },
         {
           "duration": 0.05,
-          "phone": "ah_E"
+          "phone": "ah_I"
+        },
+        {
+          "duration": 0.16,
+          "phone": "l_E"
         }
       ],
-      "start": 2.05,
-      "startOffset": 15,
-      "word": "the"
+      "start": 2.02,
+      "startOffset": 22,
+      "word": "successful"
     },
     {
-      "alignedWord": "mat",
+      "alignedWord": "definitely",
       "case": "success",
-      "end": 2.1999999999999997,
-      "endOffset": 22,
+      "end": 3.77,
+      "endOffset": 43,
       "phones": [
         {
-          "duration": 0.01,
-          "phone": "m_B"
+          "duration": 0.1,
+          "phone": "d_B"
         },
         {
-          "duration": 0.01,
-          "phone": "ae_I"
+          "duration": 0.1,
+          "phone": "eh_I"
         },
         {
-          "duration": 0.01,
-          "phone": "t_E"
+          "duration": 0.07,
+          "phone": "f_I"
+        },
+        {
+          "duration": 0.04,
+          "phone": "ah_I"
+        },
+        {
+          "duration": 0.03,
+          "phone": "n_I"
+        },
+        {
+          "duration": 0.08,
+          "phone": "ah_I"
+        },
+        {
+          "duration": 0.05,
+          "phone": "t_I"
+        },
+        {
+          "duration": 0.08,
+          "phone": "l_I"
+        },
+        {
+          "duration": 0.22,
+          "phone": "iy_E"
         }
       ],
-      "start": 2.17,
-      "startOffset": 19,
-      "word": "mat"
+      "start": 3.0,
+      "startOffset": 33,
+      "word": "definitely"
     }
   ]
 }
