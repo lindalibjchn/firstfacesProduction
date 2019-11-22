@@ -77,9 +77,7 @@ function dealWithAfterTap() {
 
         if(!conversationVariables.stage2 && !conversationVariables.stage3){
 
-            //$('.play-btn').prop( "disabled", false);
-            //$('#talkBtn').prop( "disabled", false);
-            //$('#recordVoiceBtn').show();
+
 
             buttonsAfterTiaListensToLearnersSentenceAndTaps();
 
@@ -99,6 +97,16 @@ function dealWithAfterTap() {
             }
             
             if ( $('#upperSentenceHolder').children().length > 0 ) {
+               var last_trans = "";
+               for(i=0;i<$('#upperSentenceHolder').children().length;i++){
+                    last_trans += $('#upper_'+i).text().trim()+" ";
+               }
+               last_trans = last_trans.trim().toLowerCase();
+               if(last_trans == conversationVariables.sentence_being_recorded_audio.alternatives[0].transcript.toLowerCase().trim()){
+                    setTimeout(function(){
+                        nodHeadAndSaySameAfterIdenticalTranscription();
+                    },1000);
+               }
                $('#upperSentenceHolder').empty();
                $('#lowerSentenceHolder').empty();
             }
@@ -144,6 +152,9 @@ function populateDivsNewTrans(trans){
 
 function addWords(word,count) {
    var idx = "'upper_"+count+"'";
+   if (word != "I" && count >= 1){
+        word = word.toLowerCase();
+   }
    $('#upperSentenceHolder').append("<span id="+idx+"' class='normal-word' >"+word+"</span>");
    $('#upperSentenceHolder').append(" "); 
    idx = "'lower_"+count+"'";

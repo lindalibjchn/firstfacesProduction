@@ -113,11 +113,10 @@ def store_blob(request):
         s = Sentence(learner=request.user, conversation=conv)
         s.save()
 
-
-    filename=str(conv.id)+"_"+str(s.id)+"_" +timezone.now().strftime('%H-%M-%S')+".webm"
+    filename = str(conv.id)+"_"+str(s.id)+"_" +timezone.now().strftime('%H-%M-%S')+".webm"
     blob.name = filename
 
-    #and then link the recording
+    # and then link the recording
     a = AudioFile(
             sentence=s, 
             audio=blob, 
@@ -126,17 +125,20 @@ def store_blob(request):
     a.save()
     # need to save the file before can acces url to use ffmpeg (in utils.py)
     alternatives = get_speech_recognition(filename)
-    audioFile = "media/wav/"+filename[:-4]+'wav'
-    audioLength = get_audio_length(settings.BASE_DIR+"/"+audioFile)
-    
-    #print('transcription_list:', alternatives)
+    if alternatives[0]['transcript'] != "":
+        audioFile = "media/wav/"+filename[:-4]+'wav'
+        audioLength = get_audio_length(settings.BASE_DIR+"/"+audioFile)
+    else:
+        audioFile = ""
+        audioLength = 0
+    # print('transcription_list:', alternatives)
 
-    ## commented out as daniel will be doing his own thing here so wont need alignments
-    #transcription_aligned_list = get_alignments(transcription_list)
+    # commented out as daniel will be doing his own thing here so wont need alignments
+    # transcription_aligned_list = get_alignments(transcription_list)
     # print('transcription_aligned_list:', transcription_aligned_list)
 
     #and then once have the transcriptions, save them
-    a.alternatives = json.dumps( alternatives )
+    a.alternatives = json.dumps(alternatives)
     a.save()
 
     response_data = {

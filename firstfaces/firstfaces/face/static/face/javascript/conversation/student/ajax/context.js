@@ -32,6 +32,7 @@ function get_word_context(){
             if(json.success == 0){
                 console.log("Context error.")
                 $('#btnCont').removeClass().addClass('wholeSide');
+                $('#refBtn').removeClass().addClass("wholeSpec").addClass("ref-word");
                 $('#SpectroSpinHolder').removeClass().addClass('noSide');
                 $('#fixedWord').removeClass().addClass('noSide');
 
@@ -128,6 +129,7 @@ function get_word_context(){
             console.log("Context error.");
             conversationVariables.Trigram = false;
             $('#btnCont').removeClass().addClass('wholeSide');
+            $('#refBtn').removeClass().addClass("wholeSpec").addClass("ref-word");
             $('#SpectroSpinHolder').removeClass().addClass('noSide');
             $('#fixedWord').removeClass().addClass('noSide');
         },
@@ -202,7 +204,7 @@ function splice_audio(){
     viss = []
 
     if($('#btnCont').hasClass('wholeSide')){
-        tiaSpeaks('Ref_word');
+        tiaSpeak('Ref_Word', cont=true);
     }else{
         if($('#btnCont').hasClass('leftSide')){
             viss.push(synthesisObject.data.Ref_Word.phones);

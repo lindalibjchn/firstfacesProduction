@@ -15,7 +15,7 @@ def convert_mp3_to_wav( input_url ):
     return output_rel
 
 
-def get_speech_recognition( aud_file ):
+def get_speech_recognition(aud_file):
 
     # loads in the speech recognition package 
     r = sr.Recognizer()
@@ -23,8 +23,12 @@ def get_speech_recognition( aud_file ):
     # convert from .webm to wav for Google's speech-to-text using a Python ffmpeg package
     input_aud_loc = os.path.join(settings.BASE_DIR, 'media', aud_file)
     output_aud_loc = os.path.join(settings.BASE_DIR, 'media', 'wav', aud_file[:-4] + 'wav')
-    ffmpeg.input(input_aud_loc).output(output_aud_loc).run()
 
+    try:
+        ffmpeg.input(input_aud_loc).output(output_aud_loc).run()
+    except:
+        print("FFMPEG Error")
+        return {0: {'transcript': "", 'confidence': 1}}
     with sr.AudioFile(output_aud_loc) as source:
         audio_source = r.record(source)
 
@@ -39,8 +43,11 @@ def get_speech_recognition( aud_file ):
 
     try: 
         output = recog_output['alternative'];
+        print(output)
     except:
-        output = {0: {'transcript': "", 'confidence':1}};
+        output = {0: {'transcript': "", 'confidence': 1}}
+    if output[0]['transcript'].strip() == '':
+        return {0: {'transcript': "", 'confidence': 1}}
     return output
 
 

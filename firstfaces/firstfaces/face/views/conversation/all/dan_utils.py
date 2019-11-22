@@ -219,15 +219,6 @@ def remove_numbers_vowel_phonemes(inp):
     return phos
 
 
-# Function gets phones for given string
-def get_phonemes(word):
-    g2p = G2p()
-    phos = g2p(word)
-    return remove_numbers_vowel_phonemes(phos)
-
-def get_phonemes_num(word):
-    g2p = G2p()
-    return g2p(word)
 
 
 #t1 = correct
