@@ -70,6 +70,7 @@ function setTeacherVars() {
     teacherVars.nodShakeSemiCircle = {};
     teacherVars.phoneToStudentId = {};
     teacherVars.studentIdToPhone = {};
+    teacherVars.prompt0s = prompt0List;
     resetTempEmotionStates();
     //teacherVars.mostRecentSentId = calcMostRecentSentId();
     //resetTempJudgement();

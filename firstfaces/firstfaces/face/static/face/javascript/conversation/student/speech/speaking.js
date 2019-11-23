@@ -35,7 +35,7 @@ function tiaSpeakIndividualSentences() {
         synthesisObject.audioS3.src = synthesisObject.now.URLs[ synthesisObject.sentenceNo ];
         synthesisObject.audioS3.playbackRate = conversationVariables.playspeed;
         synthesisObject.now.newDuration = new_duration;
-        synthesisObject.now.noOfPhones = synthesisObject.now.phones[ synthesisObject.sentenceNo ].length;
+        synthesisObject.now.noOfPhones = synthesisObject.now.visemes[ synthesisObject.sentenceNo ].length;
         synthesisObject.now.noOfFrames = Math.floor( (new_duration/1000) * 60 )
         synthesisObject.now.noOfFramesPerPhone = Math.floor( synthesisObject.now.noOfFrames / ( synthesisObject.now.noOfPhones - 1 ) );
         synthesisObject.now.noOfLeftoverFrames = synthesisObject.now.noOfFrames - synthesisObject.now.noOfFramesPerPhone * synthesisObject.now.noOfPhones;
@@ -80,7 +80,7 @@ function animateFirstPhoneSlowly() {
     
     }
        
-    expressionController( expressionObject.abs[ synthesisObject.now.phones[ synthesisObject.sentenceNo ][ 0 ] ], tiaTimings.durationOfFirstSpeakingPhones, slightlyDelayAudioPlay )
+    expressionController( expressionObject.abs[ synthesisObject.now.visemes[ synthesisObject.sentenceNo ][ 0 ] ], tiaTimings.durationOfFirstSpeakingPhones, slightlyDelayAudioPlay )
 
 }
 
@@ -119,7 +119,7 @@ function animatePhonesInOrder() {
 
     if ( synthesisObject.now.phoneCount < synthesisObject.now.noOfPhones ) {
 
-        pronunciationController( expressionObject.abs[ synthesisObject.now.phones[ synthesisObject.sentenceNo ][ synthesisObject.now.phoneCount ] ], animatePhonesInOrder )
+        pronunciationController( expressionObject.abs[ synthesisObject.now.visemes[ synthesisObject.sentenceNo ][ synthesisObject.now.phoneCount ] ], animatePhonesInOrder )
         synthesisObject.now.phoneCount += 1;
 
     // check for last phone to also be run slowly
@@ -201,7 +201,7 @@ function initPronunciation() {
 
     // incase of really long phones bugginf out 
     //synthesisObject.now.noOfFramesPerPhone = Math.min( synthesisObject.now.noOfFramesPerPhone, 60 );
-    if ( [ 'i', 'e', 'u' ].includes( synthesisObject.now.phones[ synthesisObject.sentenceNo ][ synthesisObject.now.phoneCount ][ 0 ] ) ) {
+    if ( [ 'i', 'e', 'u' ].includes( synthesisObject.now.visemes[ synthesisObject.sentenceNo ][ synthesisObject.now.phoneCount ][ 0 ] ) ) {
 
         // -1 cause the frames run over
         expressionObject.sinLength = synthesisObject.now.noOfFramesPerPhone - 2;

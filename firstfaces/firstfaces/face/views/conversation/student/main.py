@@ -36,11 +36,13 @@ def conversation_student(request, conversation_id):
 
             stock_phrases = {}
             for s_p in StockPhrases.objects.all():
+                print('stock_phrase:', s_p)
                 stock_phrases[s_p.name] = {
-                        'texts': jsonify_or_none(s_p.texts),
-                        'URLs': jsonify_or_none(s_p.urls),
-                        'visemes': jsonify_or_none(s_p.visemes),
+                    'texts': jsonify_or_none(s_p.texts),
+                    'URLs': ['stockPhrases/' + URL for URL in jsonify_or_none(s_p.urls)],
+                    'visemes': jsonify_or_none(s_p.visemes),
                 }
+                
 
             conversation_variables = {
 

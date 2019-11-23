@@ -47,7 +47,7 @@ def store_judgement(request):
 
         if sent_meta['judgement'] != 'I':
         
-            create_tia_speak_sentences_synthesis_data(sent_id, conv_id, )
+            create_tia_speak_sentences_synthesis_data( sent.sentence, 'synths/', str(conv_id) )
 
     else:
 

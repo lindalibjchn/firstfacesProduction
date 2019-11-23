@@ -3,6 +3,8 @@ $(window).on( 'load', function() {
     //$("#foregroundContainer").hide()
     // LOADS OBJECTS <three_js_objects.js>
     // AFTER LOADING 'enterOrReEnter()' WILL BE CALLED BELOW
+    readyTiaSynthSentences();
+
     init();
 
     readyBtns();
@@ -98,7 +100,7 @@ function setSynthesisAudioOnChangeEvent() {
 
     synthesisObject.audio.ondurationchange = function() {
 
-        synthesisObject.now.noOfPhones = synthesisObject.now.phones[ synthesisObject.sentenceNo ].length;
+        synthesisObject.now.noOfPhones = synthesisObject.now.visemes[ synthesisObject.sentenceNo ].length;
 
         synthesisObject.now.noOfFrames = Math.floor( synthesisObject.audio.duration * 60 )
         synthesisObject.now.noOfFramesPerPhone = Math.floor( synthesisObject.now.noOfFrames / ( synthesisObject.now.noOfPhones - 1 ) );

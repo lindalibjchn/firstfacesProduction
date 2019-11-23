@@ -32,8 +32,34 @@ class Available(models.Model):
     def __str__(self):
         return timezone.localtime(self.start_availability).strftime("%a %d %H:%M") + " -- " + timezone.localtime(self.end_availability).strftime("%H:%M")
 
+class Prompt0(models.Model):
+    name = models.CharField(max_length=50, blank=True, null=True)
+    text = models.CharField(max_length=500, blank=True, null=True)
+    url = models.CharField(max_length=100, blank=True, null=True)
+    visemes = models.CharField(max_length=250, blank=True, null=True)
+
+    def __str__(self):
+        return  str(self.text)
+
+class Prompt1(models.Model):
+    name = models.CharField(max_length=50, blank=True, null=True)
+    text = models.CharField(max_length=500, blank=True, null=True)
+    url = models.CharField(max_length=100, blank=True, null=True)
+    visemes = models.CharField(max_length=250, blank=True, null=True)
+
+    def __str__(self):
+        return  str(self.text)
+
+class Prompt2(models.Model):
+    name = models.CharField(max_length=50, blank=True, null=True)
+    text = models.CharField(max_length=500, blank=True, null=True)
+    url = models.CharField(max_length=100, blank=True, null=True)
+    visemes = models.CharField(max_length=250, blank=True, null=True)
+
+    def __str__(self):
+        return  str(self.text)
+
 JUDGEMENT_CHOICES = (
-    ('C', 'correct'),
     ('B', 'better'),
     ('P', 'prompt'),
     ('M', 'mean_by'),
@@ -67,7 +93,10 @@ class Sentence(models.Model):
     next_sentence = models.NullBooleanField(null=True, blank=True)
     next_sentence_timestamp = models.DateTimeField(null=True, blank=True)
     #if native wants to say something in speech bubble
-    prompt = models.CharField(max_length=300, null=True, blank=True)
+    correction = models.CharField(max_length=300, null=True, blank=True)
+    prompt0 = models.ForeignKey(Prompt0, on_delete=models.CASCADE, null=True, blank=True)
+    prompt1 = models.ForeignKey(Prompt1, on_delete=models.CASCADE, null=True, blank=True)
+    prompt2 = models.ForeignKey(Prompt2, on_delete=models.CASCADE, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     for_prompt = models.CharField(max_length=1000, null=True, blank=True)
@@ -119,36 +148,6 @@ class StockPhrases(models.Model):
 
     def __str__(self):
         return  str(self.texts)
-
-class Prompt0(models.Model):
-    sentence = models.OneToOneField(Sentence, on_delete=models.CASCADE, primary_key=True, default=None)
-    name = models.CharField(max_length=50, blank=True, null=True)
-    text = models.CharField(max_length=500, blank=True, null=True)
-    url = models.CharField(max_length=100, blank=True, null=True)
-    visemes = models.CharField(max_length=250, blank=True, null=True)
-
-    def __str__(self):
-        return  str(self.text)
-
-class Prompt1(models.Model):
-    sentence = models.OneToOneField(Sentence, on_delete=models.CASCADE, primary_key=True, default=None)
-    name = models.CharField(max_length=50, blank=True, null=True)
-    text = models.CharField(max_length=500, blank=True, null=True)
-    url = models.CharField(max_length=100, blank=True, null=True)
-    visemes = models.CharField(max_length=250, blank=True, null=True)
-
-    def __str__(self):
-        return  str(self.text)
-
-class Prompt2(models.Model):
-    sentence = models.OneToOneField(Sentence, on_delete=models.CASCADE, primary_key=True, default=None)
-    name = models.CharField(max_length=50, blank=True, null=True)
-    text = models.CharField(max_length=500, blank=True, null=True)
-    url = models.CharField(max_length=100, blank=True, null=True)
-    visemes = models.CharField(max_length=250, blank=True, null=True)
-
-    def __str__(self):
-        return  str(self.text)
 
 # class PermAudioFile(models.Model):
     # sentence = models.ForeignKey(Sentence, on_delete=models.CASCADE)
