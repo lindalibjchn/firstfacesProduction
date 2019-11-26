@@ -134,7 +134,7 @@ function createPromptTextForEachJudgement( exchange_ ) {
     let text = "";
     if ( exchange_.judgement === "P" ) {
 
-        text = exchange_.prompt.join( '<br>' );
+        text = createPromptTextforPromptBox( exchange_ );
 
     } else if ( exchange_.judgement === "B" ) {
 
@@ -146,9 +146,9 @@ function createPromptTextForEachJudgement( exchange_ ) {
 
     } else if ( exchange_.judgement === "I" ) {
 
-        if ( exchange_.prompt !== null ) {
+        if ( exchange_.correction !== null ) {
 
-            text = exchange_.prompt.join('<br>');
+            text = exchange_.correction.join('<br>');
 
         }
 
@@ -161,6 +161,20 @@ function createPromptTextForEachJudgement( exchange_ ) {
         text = "I don't understand";
 
     }
+
+    return text
+
+}
+
+function createPromptTextforPromptBox( exchange_ ) {
+
+    text = "";
+
+    Object.keys( exchange_.prompts ).forEach( function( p ) {
+
+        text += exchange_.prompts[ p ] + '</br>';
+
+    } );
 
     return text
 
@@ -207,9 +221,9 @@ function createMeanByTextForPromptBox( exchange_ ) {
 
     meanByText += "."
     
-    if ( exchange_.prompt !== null ) {
+    if ( exchange_.correction !== null ) {
 
-        meanByText += '<br>' + exchange_.prompt.join( '</br>' )
+        meanByText += '<br>' + exchange_.correction.join( '</br>' )
 
     }
 
@@ -250,15 +264,15 @@ function createBetterTextForPromptBox( exchange_ ) {
 
         }
 
-        betterText += "'" + exchange_.prompt[ iS ] + "', instead of, '" +  imperfectSlices[ iS ] + "'";
+        betterText += "'" + exchange_.correction[ iS ] + "', instead of, '" +  imperfectSlices[ iS ] + "'";
 
     }
 
     betterText += "."
     
-    if ( exchange_.prompt.length > exchange_.indexes.length ) {
+    if ( exchange_.correction.length > exchange_.indexes.length ) {
 
-        betterText += '<br>' + exchange_.prompt.slice( exchange_.indexes.length, exchange_.prompt.length ).join( '.</br>' );
+        betterText += '<br>' + exchange_.correction.slice( exchange_.indexes.length, exchange_.correction.length ).join( '.</br>' );
 
     }
 

@@ -19,6 +19,7 @@ $(window).on( 'load', function() {
     putNextSentenceNeedingJudgementUpForViewing();    
     resetPhoneColoursNeedJudgement();
     disablePromptBox();
+    loadPreMadePrompt0s();
 
 });
 
@@ -180,14 +181,14 @@ function setKeydownEvents() {
             console.log('Ctrl-M pressed');
             e.preventDefault();
             sendNewInfoToServer();
-        } else if(e.keyCode) {
-            console.log('Enter pressed');
+        } else if(e.keyCode == 13 && e.shiftKey ) {
+            console.log('Shift-Enter pressed');
             e.preventDefault();
             storeSinglePromptBoxAndMoveToNextBox();
         } else if(e.keyCode == 13 && e.ctrlKey) {
             console.log('Ctrl-Enter pressed');
             e.preventDefault();
-            storePromptThenSend();
+            storeIndexesCorrections();
         }
     });
 

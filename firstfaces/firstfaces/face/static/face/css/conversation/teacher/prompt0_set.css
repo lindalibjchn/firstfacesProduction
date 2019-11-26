@@ -1,0 +1,37 @@
+#prompt0SetContainer {
+
+    display: none;
+    position: absolute;
+    top: 0px;
+    height: 75%;
+    z-index: 1000;
+    width: 100%;
+
+}
+
+#prompt0SetInnerContainer {
+
+    background-color: rgba(255,255,255,0.75);
+    width: 90%;
+    height: 95%;
+    margin: 1%;
+    border-radius: 10px;
+    overflow-y: scroll;
+
+}
+
+.prompt-0-btn {
+
+    margin: 2px;
+    background-color: blue;
+    color: white;
+
+}
+
+.prompt-0-btn:hover {
+
+    cursor: pointer;
+    background-color: white;
+    color: blue;
+
+}

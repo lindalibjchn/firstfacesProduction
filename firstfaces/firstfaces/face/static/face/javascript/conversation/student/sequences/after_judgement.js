@@ -115,11 +115,11 @@ function tiaSpeakAfterReturningFromThinking() {
 
     if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === "D" ) {
 
-        tiaSpeak( 'iDontUnderstand', cont=true );
+        tiaSpeak( "I_don't_understand_what_you_mean", cont=true );
 
     } else if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === "3" ) {
 
-        tiaSpeak( 'moreThanThree', cont=true );
+        tiaSpeak( 'there_are_more_than_three_errors_in_your_sentence', cont=true );
 
     } else {
 

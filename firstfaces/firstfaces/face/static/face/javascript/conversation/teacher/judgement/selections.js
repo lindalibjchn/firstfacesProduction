@@ -47,7 +47,7 @@ var appendCorrectionSection = function( copy ) {
 
     let sent = makeSentForPromptBox( idArray );
     
-    putSelectionInPromptBox( sent, copy )
+    putSelectionInPromptBox( sent, copy, numberOfCorrectionsAlreadyInIndexes )
 
 } 
 
@@ -108,17 +108,17 @@ function makeSentForPromptBox( idArray_ ) {
 
 }
 
-function putSelectionInPromptBox( sent_, copy ) {
+function putSelectionInPromptBox( sent_, copy, correctionNumber ) {
     
-    let curWrongText = $( '#promptText' ).val()
+    let curWrongText = $( '#promptText' + correctionNumber ).val()
     
-    $( '#promptText' ).focus()
+    $( '#promptText' + correctionNumber ).focus()
 
     if ( curWrongText === '' ) {
 
         if ( copy ) {
 
-            $( '#promptText' ).val( sent_ );
+            $( '#promptText' + correctionNumber ).val( sent_ );
 
         }
 
@@ -126,11 +126,11 @@ function putSelectionInPromptBox( sent_, copy ) {
 
         if ( copy ) {
 
-            $( '#promptText' ).val( curWrongText + '\n' + sent_ );
+            $( '#promptText' + correctionNumber ).val( curWrongText + '\n' + sent_ );
 
         } else {
 
-            $( '#promptText' ).val( curWrongText + '\n' );
+            $( '#promptText' + correctionNumber ).val( curWrongText + '\n' );
 
         }
 

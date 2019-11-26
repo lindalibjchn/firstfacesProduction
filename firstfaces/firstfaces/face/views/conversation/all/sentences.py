@@ -21,9 +21,10 @@ def get_student_conversation(c, student_id_, current_conv):
     for sent in sent_objects:
 
         sent_meta = convert_django_sentence_object_to_json(sent, student_id_, c.pk)
-        if sent.judgement != None :
+        if sent.judgement in ['D', '3'] or sent.judgement == 'I' and sent.correction != None or sent.judgement == 'M' and sent.indexes != None or sent.judgement== 'P' and sent.awaiting_next_prompt == False:
+            
             conversation["completed_sentences"].append(sent_meta)
-        
+
         elif current_conv:
             
             if sent.sentence != None:
@@ -45,6 +46,15 @@ def convert_django_sentence_object_to_json(sent, student_id_, conv_id):
     audiofile_set = sent.audiofile_set.all().order_by('pk')
     # print('audiofile_set:', audiofile_set)
     audiofile_data = [[a.id, jsonify_or_none(a.alternatives), a.audio.name] for a in audiofile_set]
+    prompts = {
+        0: None,
+        1: None,
+        2: None,
+    }
+    for p in sent.prompts.all():
+        print('p:', p)
+        prompts[p.level] = p.name.replace('_', ' ')
+    print('prompts:', prompts)
 
     sent_meta = {
         "user_id": student_id_,
@@ -58,9 +68,10 @@ def convert_django_sentence_object_to_json(sent, student_id_, conv_id):
         "emotion": jsonify_or_none(sent.emotion),
         "surprise": floatify(sent.surprise),
         "nod_shake": jsonify_or_none(sent.nod_shake),
+        "correction": jsonify_or_none(sent.correction),
         "indexes": jsonify_or_none(sent.indexes),
-        "prompt": jsonify_or_none(sent.prompt),
-        "for_prompt": jsonify_or_none(sent.for_prompt),
+        "prompts": prompts,
+        # "for_prompt": jsonify_or_none(sent.for_prompt),
         "whats_wrong": sent.whats_wrong,
         "whats_wrong_timestamp": whats_wrong_time,
         "try_again": sent.try_again,

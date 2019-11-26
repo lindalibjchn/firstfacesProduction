@@ -54,7 +54,7 @@ function firstFlinch() {
 
             hideVolumeBar();//always hide it even if not shown, same as if statement
             expressionController( expressionObject.abs.blank, 1 ) 
-            movementController( movementObject.abs.blank, 0.5, 1.5, moveCb=function(){tiaSpeak( "veryLoud", cont=true, speakCb=function(){
+            movementController( movementObject.abs.blank, 0.5, 1.5, moveCb=function(){tiaSpeak( "that_was_very_loud", cont=true, speakCb=function(){
              
                     conversationVariables.interference = false;  
                     canvasContext.fillStyle = "#33ff00";
@@ -92,7 +92,7 @@ function dealWithBlankTranscription() {
 
     $('#recordBtnsCont').hide();
 
-    tiaSpeak( "iCouldntHear", cont=true, speakCb=function() {
+    tiaSpeak( "I_couldn't_hear_anything", cont=true, speakCb=function() {
      
         $('#recordVoiceBtn').show();
         conversationVariables.mainRecord = false;

@@ -54,6 +54,8 @@ urlpatterns = [
     # AJAX
     # store
     path('store_judgement', teacher_sentence.store_judgement, name='store_judgement'),
+    path('store_indexes_corrections', teacher_sentence.store_indexes_corrections, name='store_indexes_corrections'),
+    path('store_single_prompt', teacher_sentence.store_single_prompt, name='store_single_prompt'),
     # path('store_prompt', teacher_sentence.store_prompt, name='store_prompt'),
     # path('store_correction', teacher_sentence.store_correction, name='store_correction'),
     # check db

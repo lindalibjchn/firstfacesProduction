@@ -6,7 +6,7 @@ import os
 from django.conf import settings
 import time
 import json
-from face.models import StockPhrases, Prompt0, Prompt1, Prompt2
+from face.models import StockPhrases, Prompt
 
 if settings.DEVELOPMENT_ENV == 'john':
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/johnsHDD/PhD/2018_autumn/erle-3666ad7eec71.json"
@@ -23,8 +23,8 @@ def create_stock_instance( texts ):
     s = StockPhrases(name=name, texts=texts)
     urls = []
     visemes = []
-    for t in texts:
-        url, visemes = create_tia_speak_sentence_URL_and_visemes(t, 'prePreparedTiaPhrases/stockPhrases/', name)
+    for i, t in enumerate(texts):
+        url, visemes = create_tia_speak_sentence_URL_and_visemes(t, 'prePreparedTiaPhrases/stockPhrases/', name + '_0' + str(i))
         urls.append(url)
         visemes.append(visemes)
     s.urls = urls
@@ -33,17 +33,12 @@ def create_stock_instance( texts ):
     return s
 
 
-def create_prompt_instance( text, sentence, prompt_number ):
+def create_prompt_instance( text, prompt_number ):
 
     name = text.replace(' ', '_')
-    if prompt_number == 0:
-        p = Prompt0(name=name, sentence=sentence, text=text)
-    if prompt_number == 1:
-        p = Prompt1(name=name)
-    if prompt_number == 2:
-        p = Prompt2(name=name)
+    p = Prompt(name=name, level=prompt_number)
     
-    url, visemes = create_tia_speak_sentence_URL_and_visemes(text, 'prePreparedTiaPhrases/prompt0/', name)
+    url, visemes = create_tia_speak_sentence_URL_and_visemes(text, 'prePreparedTiaPhrases/prompt' + str(prompt_number) + '/', name)
     p.url = url
     p.visemes = visemes
     p.save()
@@ -54,8 +49,6 @@ def create_tia_speak_sentence_URL_and_visemes(text, directory, filename):
 
     # list_of_text_to_speak = get_text(jsonify_or_none(sent.sentence), sent.judgement, jsonify_or_none(sent.prompt), jsonify_or_none(sent.indexes))
     # for i, s in enumerate(list_of_text_to_speak):
-
-    directory = 'synths/'
 
     URL = create_tia_tts_url( text, directory, filename )
     sent_data = change_sentence_to_list_n_add_data( text )

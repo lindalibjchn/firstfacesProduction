@@ -53,11 +53,11 @@ function tiaSpeakGreetings() {
 
         if ( conversationVariables.first_conversation ) {
 
-            tiaSpeak( 'welcomeToFirst', cont=false, askAboutEmotion );
+            tiaSpeak( 'welcome_to_your_first_class_at_ERLE', cont=false, askAboutEmotion );
         
         } else {
             
-            tiaSpeak( 'greatToSee', cont=false, askAboutEmotion );
+            tiaSpeak( "it's_great_to_see_you_again", cont=false, askAboutEmotion );
             
         }
 
@@ -67,7 +67,7 @@ function tiaSpeakGreetings() {
 
 function askAboutEmotion() {
 
-    tiaSpeak( 'howAreYou', cont=false, showInitEmotionQuestions );
+    tiaSpeak( 'how_are_you_feeling_today', cont=false, showInitEmotionQuestions );
 
 }
         
@@ -146,7 +146,7 @@ function goToAskTopic( emotion ) {
 
 function talkAbout() {
 
-    tiaSpeak( "talkAbout", cont=false, showTopicChoices );
+    tiaSpeak( "what_would_you_like_to_talk_about_today?", cont=false, showTopicChoices );
 
 }
 
@@ -186,7 +186,7 @@ function showPreChoiceTextInput() {
 
     $('#topicChoicesCont').fadeOut( tiaTimings.speechBubbleFadeOutDuration, function() {
         
-        tiaSpeak( "mustTypeChoice", cont=false, showChoiceTextInput );
+        tiaSpeak( "you_must_type_your_choice_in_the_box_below", cont=false, showChoiceTextInput );
     
     } );
 
@@ -241,7 +241,7 @@ function afterStoreTopic() {
 
 function beginTalking() {
         
-    tiaSpeak( "beginWhenYou", cont=false, finalSpeak );
+    tiaSpeak( "begin_when_you_are_ready", cont=false, finalSpeak );
 
     setTimeout( function() {
     
