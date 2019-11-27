@@ -34,8 +34,8 @@ class Available(models.Model):
 
 class Prompt(models.Model):
     level = models.SmallIntegerField(null=True, blank=True)
-    name = models.CharField(max_length=500, unique=True)
-    url = models.CharField(max_length=500, unique=True)
+    name = models.CharField(max_length=500)
+    url = models.CharField(max_length=500)
     visemes = models.CharField(max_length=250, blank=True, null=True)
 
     def __str__(self):
@@ -75,7 +75,7 @@ class Sentence(models.Model):
     next_sentence_timestamp = models.DateTimeField(null=True, blank=True)
     #if native wants to say something in speech bubble
     correction = models.CharField(max_length=300, null=True, blank=True)
-    prompts = models.ManyToManyField(Prompt)
+    prompts = models.ManyToManyField(Prompt, blank=True)
     awaiting_next_prompt = models.NullBooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

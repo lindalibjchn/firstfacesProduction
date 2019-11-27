@@ -25,46 +25,54 @@ function addPrompt0() {
 
 }
 
-function storeSinglePromptBoxAndMoveToNextBox() {
+function storeSinglePromptBox( awaiting ) {
 
     let idOfCurrentTextBoxInFocus = $('textarea:focus').attr('id');
     let promptNumber = parseInt( idOfCurrentTextBoxInFocus[ idOfCurrentTextBoxInFocus.length - 1 ] )
     let idOfNextPromptNumber = promptNumber + 1;
     let promptText = $( '#promptText' + promptNumber ).val();
+    teacherVars.sentencesNeedJudgement[ 0 ].awaiting_next_prompt = awaiting,
     $( '#promptText' + promptNumber ).attr('disabled', 'disabled');
     
     if ( promptNumber === 0 ) {
 
         if ( promptText !== "" ) {
 
-            teacherVars.sentencesNeedJudgement[0].prompts[ promptNumber ] = promptText
+            addPromptToSentenceData( promptNumber, promptText )
             $('#prompt0SetContainer').hide();
-            storeJudgement()
+            storeSinglePrompt( promptNumber, promptText );
             $( '#promptText' + idOfNextPromptNumber ).focus();
 
         }
 
     } else if ( promptNumber === 1 ) {
 
-        teacherVars.sentencesNeedJudgement[0].prompts[ promptNumber ] = promptText
         $( '#promptText' + idOfNextPromptNumber ).focus();
 
         if ( promptText !== "" ) {
 
-            storeSinglePrompt( promptNumber, promptText, true );
+            storeSinglePrompt( promptNumber, promptText );
 
         }
 
     } else {
 
-        teacherVars.sentencesNeedJudgement[0].prompts[ promptNumber ] = promptText
 
         if ( promptText !== "" ) {
 
-            storeSinglePrompt( promptNumber, promptText, true );
+            teacherVars.sentencesNeedJudgement[ 0 ].awaiting_next_prompt = false,
+            storeSinglePrompt( promptNumber, promptText );
 
         }
 
+    }
+
+}
+
+function addPromptToSentenceData( promptNumber_, promptText_ ) {
+
+    teacherVars.sentencesNeedJudgement[0].prompts[ promptNumber_ ] = {
+        'text': promptText_,
     }
 
 }

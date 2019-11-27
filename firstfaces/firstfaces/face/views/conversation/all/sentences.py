@@ -52,9 +52,9 @@ def convert_django_sentence_object_to_json(sent, student_id_, conv_id):
         2: None,
     }
     for p in sent.prompts.all():
-        print('p:', p)
+        # print('p:', p)
         prompts[p.level] = p.name.replace('_', ' ')
-    print('prompts:', prompts)
+    # print('prompts:', prompts)
 
     sent_meta = {
         "user_id": student_id_,
@@ -70,7 +70,8 @@ def convert_django_sentence_object_to_json(sent, student_id_, conv_id):
         "nod_shake": jsonify_or_none(sent.nod_shake),
         "correction": jsonify_or_none(sent.correction),
         "indexes": jsonify_or_none(sent.indexes),
-        "prompts": prompts,
+        "prompts": convert_django_prompt_to_json( sent.prompts.all() ),
+        "awaiting_next_prompt": sent.awaiting_next_prompt,
         # "for_prompt": jsonify_or_none(sent.for_prompt),
         "whats_wrong": sent.whats_wrong,
         "whats_wrong_timestamp": whats_wrong_time,
@@ -82,3 +83,32 @@ def convert_django_sentence_object_to_json(sent, student_id_, conv_id):
 
     return sent_meta
                 
+def convert_django_prompt_to_json(prompt_object):
+
+    prompt_json = {}
+
+    for p in prompt_object:
+
+        prompt_json[ p.level ] = {
+
+            'name': p.name,
+            'text': p.name.replace('_', ' '),
+            'URL': p.url,
+            'visemes': jsonify_or_none(p.visemes),
+
+        }
+
+    return prompt_json
+
+
+
+
+
+
+
+
+
+
+
+
+

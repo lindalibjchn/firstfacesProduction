@@ -25,6 +25,31 @@ function buttonsListenNextSentence() {
 
     buttonsHideAllContainers();
     $('#listenNextSentenceBtnCont').show();
+    $('#finishListenNextSentenceBtn').hide();
+    $('#waitNextSentenceBtn').hide();
+    $('#listenNextSentenceBtn').show();
+    $('#listenNextSentenceBtn').attr('disabled', false);
+    
+}
+
+function buttonsListenNextSentenceWaiting() {
+
+    buttonsHideAllContainers();
+    $('#listenNextSentenceBtnCont').show();
+    $('#listenNextSentenceBtn').hide();
+    $('#finishListenNextSentenceBtn').hide();
+    $('#waitNextSentenceBtn').show();
+    $('#waitNextSentenceBtn').attr('disabled', true);
+    
+}
+
+function buttonsFinishListenNextSentence() {
+
+    buttonsHideAllContainers();
+    $('#listenNextSentenceBtnCont').show();
+    $('#listenNextSentenceBtn').hide();
+    $('#waitNextSentenceBtn').hide();
+    $('#finishListenNextSentenceBtn').show();
     
 }
 

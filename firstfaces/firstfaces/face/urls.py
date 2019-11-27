@@ -31,7 +31,9 @@ urlpatterns = [
     # sentence
     path('store_sent', student_sentence.store_sent, name='store_sent'),
     path('check_judgement', student_sentence.check_judgement, name='check_judgement'),
-    path('wait_for_correction', student_sentence.wait_for_correction, name='wait_for_correction'),
+    path('check_for_corrections', student_sentence.check_for_corrections, name='check_for_corrections'),
+    path('get_next_prompt', student_sentence.get_next_prompt, name='get_next_prompt'),
+    # path('wait_for_correction', student_sentence.wait_for_correction, name='wait_for_correction'),
     path('store_whats_wrong', student_sentence.store_whats_wrong, name='store_whats_wrong'),
     path('store_try_again', student_sentence.store_try_again, name='store_try_again'),
     path('store_next_sentence', student_sentence.store_next_sentence, name='store_next_sentence'),

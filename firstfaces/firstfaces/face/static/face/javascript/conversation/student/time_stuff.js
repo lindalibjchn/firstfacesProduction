@@ -161,65 +161,65 @@ function endClass() {
 
 }
 
-function goodbyeTalk() {
+//function goodbyeTalk() {
 
-    // return to talking pos
-    expressionController( calculatedTalkExpression, 1 );
+    //// return to talking pos
+    //expressionController( calculatedTalkExpression, 1 );
 
-    setTimeout( function() { 
+    //setTimeout( function() { 
         
-        tiaSpeak( speechBubbleObject.sentence, needSendTTS=false, function() {
+        //tiaSpeak( speechBubbleObject.sentence, needSendTTS=false, function() {
         
-            conversationVariables.promptSpeaking = true;
+            //conversationVariables.promptSpeaking = true;
 
-            setTimeout( function() {
+            //setTimeout( function() {
                 
-                location.reload( true );
+                //location.reload( true );
                 
-            }, 4000 )
+            //}, 4000 )
 
-        });
+        //});
         
-    }, 1250);
+    //}, 1250);
 
-}
+//}
 
-function goodbyeSpeak() {
+//function goodbyeSpeak() {
 
-    if ( synthesisObject.gotNewSpeech ) {
+    //if ( synthesisObject.gotNewSpeech ) {
         
-        synthesisObject.synthAudio.play();
-        //synthesisObject.gotNewSpeech = false
-        initTalk();
+        //synthesisObject.synthAudio.play();
+        ////synthesisObject.gotNewSpeech = false
+        //initTalk();
 
-    } else {
+    //} else {
 
-        setTimeout( goodbyeSpeak, 1000 );
+        //setTimeout( goodbyeSpeak, 1000 );
 
-    }
+    //}
 
-}
+//}
 
-function endTutorial() {
+//function endTutorial() {
 
-    $.ajax({
-        url: "/store_tutorial_end",
-        type: "POST",
-        data: {
-            'tutorialStep': conversationVariables.tutorialStep,
-            'sessionID': conversationVariables[ 'session_id' ],
-        },
-        success: function(json) {
+    //$.ajax({
+        //url: "/store_tutorial_end",
+        //type: "POST",
+        //data: {
+            //'tutorialStep': conversationVariables.tutorialStep,
+            //'sessionID': conversationVariables[ 'session_id' ],
+        //},
+        //success: function(json) {
 
-            location.reload( true );
+            //location.reload( true );
 
-        },
-        error: function() {
-            alert("failed tutorial end");
-        },
-    });
+        //},
+        //error: function() {
+            //alert("failed tutorial end");
+        //},
+    //});
 
-}
+//}
 
 /////////QUESTION STREAK
 

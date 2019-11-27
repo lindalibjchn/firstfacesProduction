@@ -20,24 +20,44 @@ function updateConversationVariablesWithNewSentence( sentMeta ) {
 
 function preparePromptForTiaSpeak() {
 
-   if ( ['P', 'M', 'B'].includes( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement ) ) {
+   if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === "P" ) {
 
-        synthesisObject.data.prompt = conversationVariables.conversation_dict.completed_sentences[ 0 ].for_prompt;
-        synthesisObject.data.prompt.URLs.forEach( function( URL, ind, arr ) {
+        createPromptFromServerPrompts();
+        setTimeout( getNextPrompt, 5000 );
 
-            arr[ ind ] = prefixURL + arr[ ind ]; 
-    
-        })
+    } else if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === 'M' ) {
+
+       synthesisObject.data.prompt = synthesisObject.data[ "I'm_not_sure_what_you_mean_by" ];
 
     } else if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === 'D' ) {
 
-       synthesisObject.data.prompt = synthesisObject.data.iDontUnderstand;
+       synthesisObject.data.prompt = synthesisObject.data[ "I_don't_understand_what_you_said" ];
 
-    } else if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === 'X' ) {
+    } else if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === '3' ) {
 
-       synthesisObject.data.prompt = synthesisObject.data.moreThanThree;
+       synthesisObject.data.prompt = synthesisObject.data[ "There_are_more_than_three_errors_in_your_sentence" ];
 
     }
+
+}
+
+function createPromptFromServerPrompts() {
+
+    synthesisObject.data.prompt = {
+
+        'URLs': [],
+        'texts': [],
+        'visemes': [],
+    
+    }
+
+    Object.keys( conversationVariables.conversation_dict.completed_sentences[ 0 ].prompts ).forEach( function( p ) {
+
+        synthesisObject.data.prompt.URLs.push( conversationVariables.conversation_dict.completed_sentences[ 0 ].prompts[ p ].URL );
+        synthesisObject.data.prompt.texts.push( conversationVariables.conversation_dict.completed_sentences[ 0 ].prompts[ p ].text );
+        synthesisObject.data.prompt.visemes.push( conversationVariables.conversation_dict.completed_sentences[ 0 ].prompts[ p ].visemes );
+
+    })
 
 }
 

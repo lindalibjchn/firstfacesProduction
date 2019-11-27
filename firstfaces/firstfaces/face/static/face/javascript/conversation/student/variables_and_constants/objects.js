@@ -362,7 +362,13 @@ var synthesisObject = {
     firstClip: false,
     now: {}, 
     stockPhrases: {},
-    data: {},
+    data: {
+        'prompt': {
+            'URLs': [],
+            'texts': [],
+            'visemes': [],
+        }
+    },
 }
 
 var volumeObject = {

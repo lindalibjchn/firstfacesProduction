@@ -64,16 +64,19 @@ function whatsWrong() {
         
     tiaLookAtLaptopAndType();
 
-    setTimeout( function() {
-
-        $('#textInputContainer').fadeIn();
-        $('#submittedNCorrectedSentenceCont').show()
-
-        prepareToStopTyping();
-
-    }, 2000 );
+    checkForCorrections();
 
 }
+
+function showWrong() {
+
+    $('#textInputContainer').fadeIn();
+    $('#submittedNCorrectedSentenceCont').show()
+
+    prepareToStopTyping();
+
+}
+
 
 function showCorrection() {
 

@@ -2,45 +2,9 @@ function runAfterJudgement() {
 
     resetSentenceBeingRecorded();
 
-    //recTimes.runAfterJudgement =  Date.now() / 1000;
-    
-    //if ( conversationVariables.last_sent.judgement === "C" ) {
-
-        //if ( conversationVariables.last_sent.nod !== null ) {
-                
-            //nodOrShakeHead()
-            //setTimeout( function(){
-            
-                //expressionController( expressionObject.half, tiaTimings.toTalkExpressionDuration );
-                
-                //setTimeout( returnToLaptop, tiaTimings.toTalkExpressionDuration );
-            
-            //}, nodShakeDur );
-
-        //} else {
-
-            //setTimeout( function() {
-
-                //setTimeout( function(){
-                
-                    //expressionController( expressionObject.half, tiaTimings.toTalkExpressionDuration );
-                    
-                    //setTimeout( returnToLaptop, tiaTimings.toTalkExpressionDuration );
-                
-                //}, nodShakeDur );
-
-            //}, tiaTimings.delayBeforeReturnToLaptop );
-
-        //}
-        
-
     if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === "I" ) {
 
         runIncorrect();
-
-    //} else if ( [ "D", "3" ].includes( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement ) ) {
-
-        //runBadSentences( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement );
 
     } else {
 
@@ -115,15 +79,21 @@ function tiaSpeakAfterReturningFromThinking() {
 
     if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === "D" ) {
 
-        tiaSpeak( "I_don't_understand_what_you_mean", cont=true );
+        tiaSpeak( "I_don't_understand_what_you_said", cont=true );
 
     } else if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === "3" ) {
 
-        tiaSpeak( 'there_are_more_than_three_errors_in_your_sentence', cont=true );
+        tiaSpeak( "There_are_more_than_three_errors_in_your_sentence", cont=true );
 
-    } else {
+    } else if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === "P" ) {
 
-        tiaSpeak( 'prompt', cont=false );
+        conversationVariables.promptSpeaking = true;
+        tiaSpeak( "prompt", cont=false );
+        
+    } else if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === "M" ) {
+
+        conversationVariables.promptSpeaking = true;
+        tiaSpeak( "I'm_not_sure_what_you_mean_by...", cont=false );
         
     }
         

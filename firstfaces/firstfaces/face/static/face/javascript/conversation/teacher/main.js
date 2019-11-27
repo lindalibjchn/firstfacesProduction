@@ -184,11 +184,11 @@ function setKeydownEvents() {
         } else if(e.keyCode == 13 && e.shiftKey ) {
             console.log('Shift-Enter pressed');
             e.preventDefault();
-            storeSinglePromptBoxAndMoveToNextBox();
+            storeSinglePromptBox( true );
         } else if(e.keyCode == 13 && e.ctrlKey) {
             console.log('Ctrl-Enter pressed');
             e.preventDefault();
-            storeIndexesCorrections();
+            storeFinal();
         }
     });
 

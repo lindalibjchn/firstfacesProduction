@@ -131,6 +131,7 @@ function createPromptBox( exchange_ ) {
 
 function createPromptTextForEachJudgement( exchange_ ) {
 
+    //console.log('exchange_:', exchange_)
     let text = "";
     if ( exchange_.judgement === "P" ) {
 
@@ -172,7 +173,7 @@ function createPromptTextforPromptBox( exchange_ ) {
 
     Object.keys( exchange_.prompts ).forEach( function( p ) {
 
-        text += exchange_.prompts[ p ] + '</br>';
+        text += exchange_.prompts[ p ].text + '</br>';
 
     } );
 

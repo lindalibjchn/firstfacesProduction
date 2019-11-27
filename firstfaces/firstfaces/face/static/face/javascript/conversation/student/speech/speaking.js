@@ -14,17 +14,9 @@ function tiaSpeak( tiaSays, cont=true, speakCb=function(){} ) {
     headXRandomTiltObject.startCount = mainCount;
     headYRandomTiltObject.startCount = mainCount;
     synthesisObject.talking = true; 
-    //getIntoSpeakingPosition();
     tiaSpeakIndividualSentences();
 
 }
-
-//function getIntoSpeakingPosition() {
-
-    //// move from whatever expression into the half of it
-    //expressionController( expressionObject.half, tiaTimings.getIntoSpeakingPositionDuration, tiaSpeakIndividualSentences );
-
-//}
 
 function tiaSpeakIndividualSentences() {
 
@@ -44,8 +36,8 @@ function tiaSpeakIndividualSentences() {
         animateFirstPhoneSlowly();
     }
     else{
-        synthesisObject.audio.src = synthesisObject.now.URLs[ synthesisObject.sentenceNo ];
-        holdOnUntilNewAudioDurationIsAvailable()
+        synthesisObject.audio.src = prefixURL + synthesisObject.now.URLs[ synthesisObject.sentenceNo ];
+        holdOnUntilNewAudioDurationIsAvailable();
     }
 
     synthesisObject.now.phoneCount = 1;
@@ -128,29 +120,17 @@ function animatePhonesInOrder() {
         //if last sentence then just show mic, but if more sentences to come then show 'next' button
         if ( synthesisObject.sentenceNo === synthesisObject.now.texts.length - 1 ) {
     
-            synthesisObject.talking = false;
-            expressionController( expressionObject.half, tiaTimings.durationOfReturnToExpressionAfterVeryLastSpeakingPhone );
-            movementController( movementObject.abs.blank, 1, 1, function() {
+            if ( conversationVariables.promptSpeaking && conversationVariables.conversation_dict.completed_sentences[ 0 ].awaiting_next_prompt ) {
 
-                synthesisObject.callback();
-                if ( !conversationVariables.entranceSequence ) {
+                buttonsListenNextSentenceWaiting();
+                synthesisObject.currentPromptCount = synthesisObject.now.texts.length;
+                setTimeout( checkForNewPrompt, 2000 );
 
-                    setTimeout( function() {
-                    
-                        removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration * 3 );
-                        buttonsMicrophoneOnly();
-                        $('#prevSentsIconContainer').css('font-size', '17px');
-                        setTimeout( function() {
+            } else {
 
-                            $('#prevSentsIconContainer').css('font-size', '15px');
-
-                        }, tiaTimings.speechBubbleFadeOutDuration * 3 )
-
-                    }, 2000 );
-
-                }
-                
-            });
+                endTiaTalking();
+            
+            }
 
         } else {
 
@@ -169,6 +149,50 @@ function animatePhonesInOrder() {
             }
 
         }
+
+    }
+
+}
+
+function endTiaTalking() {
+
+    synthesisObject.talking = false;
+    conversationVariables.promptSpeaking = false;
+    expressionController( expressionObject.half, tiaTimings.durationOfReturnToExpressionAfterVeryLastSpeakingPhone );
+    movementController( movementObject.abs.blank, 1, 1, function() {
+
+        synthesisObject.callback();
+
+        if ( !conversationVariables.entranceSequence ) {
+
+            setTimeout( function() {
+            
+                removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration * 3 );
+                buttonsMicrophoneOnly();
+                $('#prevSentsIconContainer').css('font-size', '17px');
+                setTimeout( function() {
+
+                    $('#prevSentsIconContainer').css('font-size', '15px');
+
+                }, tiaTimings.speechBubbleFadeOutDuration * 3 )
+
+            }, 2000 );
+
+        }
+        
+    });
+
+}
+
+function checkForNewPrompt() {
+    
+    if ( synthesisObject.currentPromptCount < synthesisObject.now.texts.length ) {
+
+        buttonsListenNextSentence();
+
+    } else {
+
+        setTimeout( checkForNewPrompt, 2000 );
 
     }
 

@@ -9,8 +9,7 @@ import string
 import math
 import ast
 from face.views.conversation.student.utils.store_sentence import change_sentence_to_list_n_add_data
-from face.views.conversation.student.utils.check_for_judgement import for_prompt_arrived
-from face.views.conversation.all.sentences import convert_django_sentence_object_to_json
+from face.views.conversation.all.sentences import convert_django_sentence_object_to_json, convert_django_prompt_to_json
 from face.views.conversation.all.modify_data import jsonify_or_none, floatify
 from face.views.conversation.all import database_updates
 
@@ -55,57 +54,95 @@ def check_judgement(request):
     conv_id = int(request.GET['convId'])
     loop = int(request.GET['loop'])
     received_judgement = False
-    received_judgement_n_for_prompt = False
+    # received_judgement_n_for_prompt = False
 
     s = Sentence.objects.get(pk=sent_id)
     sent = {}
 
     if s.judgement != None:
                 
-        received_judgement = True
+        if s.judgement == "P":
 
-        if s.judgement in ["M", "B", "P"]:
-            
-            check_for_prompt_count = 0
-            while not for_prompt_arrived(s):
-                time.sleep(1)
-                check_for_prompt_count += 1
-                if check_for_prompt_count == 10:
-                    break
-
-            if check_for_prompt_count != 5:
+            if s.prompts.exists():
+                received_judgement = True
                 sent = convert_django_sentence_object_to_json(s, request.user.id, conv_id)
                 s.loop = loop
                 s.save()
 
-        else: # C, X,  D and 3
+        else:
+            received_judgement = True
             sent = convert_django_sentence_object_to_json(s, request.user.id, conv_id)
             s.loop = loop
             s.save()
 
 
     sent_meta = {
-        'sentence': sent,
         'receivedJudgement': received_judgement,
+        'sentence': sent,
     }
 
     return JsonResponse(sent_meta)    
 
-def wait_for_correction(request):
+def check_for_corrections(request):
+
+    sent_id = int(request.GET['sentId'])
+    # received_judgement_n_for_prompt = False
+
+    s = Sentence.objects.get(pk=sent_id)
+    received_corrections = False
+    count = 0
+    while True:
+        if count == 5:
+            break
+        elif s.indexes == None:
+            count += 1
+            time.sleep(1)
+        else:
+            received_corrections = True
+            break
+
+    sent_meta = {
+        'received_corrections': received_corrections,
+        'indexes': jsonify_or_none(s.indexes),
+        'correction': jsonify_or_none(s.correction),
+    }
+
+    return JsonResponse(sent_meta)    
+
+# def wait_for_correction(request):
+
+    # sent_id = int(request.GET['sentId'])
+
+    # sent_new = Sentence.objects.get(pk=sent_id)
+        
+    # sent_new.indexes = sent_new.indexes
+    # response_data = {
+
+        # 'correction': sent_new.correction,
+        # 'indexes': sent_new.indexes,
+
+    # }
+
+    # return JsonResponse(response_data)    
+
+def get_next_prompt(request):
 
     sent_id = int(request.GET['sentId'])
 
-    sent_new = Sentence.objects.get(pk=sent_id)
-        
-    sent_new.indexes = sent_new.indexes
+    sent = Sentence.objects.get(pk=sent_id)
+
+    prompts = convert_django_prompt_to_json( sent.prompts.all() )
+
     response_data = {
 
-        'correction': sent_new.correction,
-        'indexes': sent_new.indexes,
+        'awaiting_more': sent.awaiting_next_prompt,
+        'prompts': prompts,
 
     }
 
     return JsonResponse(response_data)    
+
+    
 
 def store_whats_wrong(request):
 

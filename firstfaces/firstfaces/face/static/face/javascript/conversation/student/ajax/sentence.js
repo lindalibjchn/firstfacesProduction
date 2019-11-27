@@ -9,8 +9,9 @@ function sendSentToServer() {
     // all below for developing
     let sent = getSentence();
 
+    //console.log('sent:', sent);
+    //console.log('sent length:', sent.length);
     if ( sent.length >= 300 ) {
-
         alert( 'This sentence is too long. Please simplify and try again.')
 
     } else {
@@ -18,7 +19,7 @@ function sendSentToServer() {
         // set this to false until judgement comes in where it will be changed to true
         conversationVariables.awaitingJudgement = true;
 
-        if ( sent.length > 2 || sent.length < 30 ) {
+        if ( sent.length > 2 || sent.length < 300 ) {
             
             // fade out text box
             $('#textInputContainer').fadeOut( 500 );
@@ -42,7 +43,7 @@ function sendSentToServer() {
 
                 },
                 error: function() {
-                    alert("sentence failed to send to server");
+                    alert("sentence failed to send to server. Please refresh");
                 },
 
             });
@@ -85,6 +86,78 @@ function checkJudgement() {
             
             console.log('in error');
             startNextSentenceThoughtLoop( errorInGettingResponse=true );
+        
+        },
+
+    });
+
+}
+
+function getNextPrompt() {
+
+    $.ajax({
+        url: "/get_next_prompt",
+        type: "GET",
+        data: { 
+            'sentId': conversationVariables.conversation_dict.completed_sentences[ 0 ].sent_id,
+
+        },
+        success: function(json) {
+            
+            conversationVariables.conversation_dict.completed_sentences[ 0 ].prompts = json.prompts;
+            conversationVariables.conversation_dict.completed_sentences[ 0 ].awaiting_next_prompt = json.awaiting_more;
+            
+            createPromptFromServerPrompts();
+            synthesisObject.now = synthesisObject.data.prompt;
+
+            if ( json.awaiting_more ) {
+
+                console.log('getting next prompt')
+                setTimeout( getNextPrompt, 2000 );
+
+            }
+
+        },
+        error: function() {
+            
+            console.log('in error');
+        
+        },
+
+    });
+
+
+}
+
+function checkForCorrections() {
+
+    console.log('in check for corrections')
+    $.ajax({
+        url: "/check_for_corrections",
+        type: "GET",
+        data: { 
+            'sentId': conversationVariables.conversation_dict.completed_sentences[ 0 ].sent_id,
+        },
+        success: function(json) {
+            
+            if ( json.received_corrections ) {
+                
+                console.log('receivedCorrections:')
+                conversationVariables.conversation_dict.completed_sentences[ 0 ].indexes = json.indexes
+                conversationVariables.conversation_dict.completed_sentences[ 0 ].correction = json.correction
+                showWrong();
+
+            } else {
+
+                checkForCorrections();
+                console.log('checkForCorrections() again')
+
+            }
+
+        },
+        error: function() {
+            
+            console.log('in error');
         
         },
 

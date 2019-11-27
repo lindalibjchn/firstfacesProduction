@@ -20,15 +20,15 @@ def create_stock_instance( texts ):
     # texts = [ 'this is a...', 'second here is..', ...]
 
     name = texts[0].replace(' ', '_')
-    s = StockPhrases(name=name, texts=texts)
+    s = StockPhrases(name=name, texts=json.dumps(texts))
     urls = []
     visemes = []
     for i, t in enumerate(texts):
-        url, visemes = create_tia_speak_sentence_URL_and_visemes(t, 'prePreparedTiaPhrases/stockPhrases/', name + '_0' + str(i))
+        url, viseme_list = create_tia_speak_sentence_URL_and_visemes(t, 'prePreparedTiaPhrases/stockPhrases/', name + '_0' + str(i))
         urls.append(url)
-        visemes.append(visemes)
-    s.urls = urls
-    s.visemes = visemes
+        visemes.append(viseme_list)
+    s.urls = json.dumps(urls)
+    s.visemes = json.dumps(visemes)
     s.save()
     return s
 
@@ -40,7 +40,7 @@ def create_prompt_instance( text, prompt_number ):
     
     url, visemes = create_tia_speak_sentence_URL_and_visemes(text, 'prePreparedTiaPhrases/prompt' + str(prompt_number) + '/', name)
     p.url = url
-    p.visemes = visemes
+    p.visemes = json.dumps(visemes)
     p.save()
     
     return p

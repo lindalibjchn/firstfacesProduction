@@ -5,15 +5,22 @@ function readyTiaSynthSentences() {
         let newURLs = [];
         conversationVariables.stock_phrases[ d ].URLs.forEach( function( URL ) {
 
-            newURLs.push( prefixURL + tiaMediaLoc + URL );
+            newURLs.push( URL );
 
         } )
 
         conversationVariables.stock_phrases[ d ].URLs = newURLs;
-
+        synthesisObject.data[ d ] = conversationVariables.stock_phrases[ d ];
 
     } );
 
-    synthesisObject.data = conversationVariables.stock_phrases;
+    Object.keys( conversationVariables.prompts ).forEach( function( d ) {
+
+        let newURL = conversationVariables.prompts[ d ].URL;
+
+        conversationVariables.prompts[ d ].URL = newURL;
+        synthesisObject.data[ d ] = conversationVariables.prompts[ d ];
+
+    } );
 
 }

@@ -24,17 +24,15 @@ function storeJudgement() {
 
 }
 
-function storeSinglePrompt( promptNumber, promptText, awaitingMore ) {
+function storeSinglePrompt( promptNumber, promptText ) {
 
     $.ajax({
         url: "/store_single_prompt",
         type: "POST",
         data: {
-            'sentenceID': teacherVars.sentencesNeedJudgement[ 0 ].sent_id,
             'promptNumber': promptNumber,
             'promptText': promptText,
-            'awaitingMore': awaitingMore,
-            'sentMeta': sentMeta,
+            'sentMeta': JSON.stringify( teacherVars.sentencesNeedJudgement[ 0 ] ), 
         }, 
         success: function(json) {
            
@@ -50,40 +48,43 @@ function storeSinglePrompt( promptNumber, promptText, awaitingMore ) {
     console.log('promptNumber:', promptNumber)
     if ( promptNumber === 2 ) {
 
-        resetJudgement();
         $(document).off( 'keydown' );
+        resetJudgement();
     
     }
 
 }
 
 
-function storeIndexesCorrections() {
+function storeFinal() {
     
-    disablePromptBox();
+    if ( teacherVars.sentencesNeedJudgement[ 0 ].judgement === "P" ) {
 
-    corrections = getCorrections();
+        storeSinglePromptBox( false );
+
+    } else {
     
-    $.ajax({
-        url: "/store_indexes_corrections",
-        type: "POST",
-        data: { 
-            'sentenceID': teacherVars.sentencesNeedJudgement[ 0 ].sent_id,
-            'indexes': JSON.stringify(teacherVars.sentencesNeedJudgement[ 0 ].indexes),
-            'corrections': JSON.stringify(corrections),
-        }, 
-        success: function(json) {
-           
-            console.log('judgement successfully sent to server')
+        corrections = getCorrections();
 
-        },
-        error: function() {
-            console.log("that's wrong");
-        },
+        $.ajax({
+            url: "/store_indexes_corrections",
+            type: "POST",
+            data: { 
+                'sentenceID': teacherVars.sentencesNeedJudgement[ 0 ].sent_id,
+                'conversationID': teacherVars.sentencesNeedJudgement[ 0 ].conv_id,
+                'indexes': JSON.stringify(teacherVars.sentencesNeedJudgement[ 0 ].indexes),
+                'corrections': JSON.stringify(corrections),
+            }, 
+            success: function(json) {
+               
+                console.log('judgement successfully sent to server')
 
-    });
+            },
+            error: function() {
+                console.log("that's wrong");
+            },
 
-    if ( [ 'D', '3' ].includes(teacherVars.sentencesNeedJudgement[ 0 ].judgement) ) {
+        });
 
         $(document).off( 'keydown' );
         resetJudgement();
@@ -112,6 +113,7 @@ function getCorrections() {
 
     }
 
+    teacherVars.sentencesNeedJudgement[ 0 ].correction = corrections;
     return corrections
 
 }

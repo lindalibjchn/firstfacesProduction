@@ -173,7 +173,7 @@ function showCorrectionUnderWrongSent() {
 
     let corrections = []
         
-    conversationVariables.conversation_dict.completed_sentences[ 0 ].prompt.forEach( function( cor ) {
+    conversationVariables.conversation_dict.completed_sentences[ 0 ].correction.forEach( function( cor ) {
     
         console.log('cor:', cor);
         correction = []
