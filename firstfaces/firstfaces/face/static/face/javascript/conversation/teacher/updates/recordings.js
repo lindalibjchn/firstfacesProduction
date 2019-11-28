@@ -1,7 +1,10 @@
 function updateSentencesBeingRecorded( updatedSentencesBeingRecorded ) {
 
-    teacherVars.sentencesBeingRecorded = updatedSentencesBeingRecorded;
-    
+    for ( let i=0; i<updatedSentencesBeingRecorded.length; i++ ) {
+
+        teacherVars.sentencesBeingRecorded.push( updatedSentencesBeingRecorded[ i ] );
+
+    }
 
     //let lengthCurSentencesBeingRecorded = teacherVars.sentencesBeingRecorded.length;
     //let lengthUpdatedSentencesBeingRecorded = updatedSentencesBeingRecorded.length;
@@ -17,7 +20,7 @@ function updateSentencesBeingRecorded( updatedSentencesBeingRecorded ) {
 
         //}
 
-        showSentencesBeingRecordedInPhones();
+    showSentencesBeingRecordedInPhones();
 
     //}
 
@@ -25,6 +28,7 @@ function updateSentencesBeingRecorded( updatedSentencesBeingRecorded ) {
 
 function showSentencesBeingRecordedInPhones() {
 
+    $( '.current-attempt' ).empty();
     $( '.current-attempt' ).removeClass( 'recording' );
     //console.log('sentencesBeingRecorded:', teacherVars.sentencesBeingRecorded);
     teacherVars.sentencesBeingRecorded.forEach( function( r ) {

@@ -2,7 +2,7 @@ from django.http import JsonResponse
 from face.utils import *
 from django.utils import timezone
 import json
-from face.models import Conversation, Sentence
+from face.models import Conversation, Sentence, Update
 import code
 import time
 import string
@@ -11,7 +11,8 @@ import ast
 from face.views.conversation.student.utils.store_sentence import change_sentence_to_list_n_add_data
 from face.views.conversation.all.sentences import convert_django_sentence_object_to_json, convert_django_prompt_to_json
 from face.views.conversation.all.modify_data import jsonify_or_none, floatify
-from face.views.conversation.all import database_updates
+from django.conf import settings
+import datetime
 
 def store_sent(request):
 
@@ -23,8 +24,9 @@ def store_sent(request):
     sentence_list = json.dumps([s[:2] for s in sentence_data]) # removes visemes cause don't need to store these in db
 
     # get session
-    sent_id = request.POST['sent_id']
-    conv = Conversation.objects.get(pk=int(request.POST['conversation_id']))
+    sent_id = int(request.POST['sent_id'])
+    conv_id = int(request.POST['conversation_id'])
+    conv = Conversation.objects.get(pk=conv_id)
 
     s = Sentence.objects.get( pk=sent_id )
     s.sentence = sentence_list
@@ -36,10 +38,14 @@ def store_sent(request):
     # code.interact(local=locals());
     sent['sentence'] = sentence_data # for visemes to be added
 
-    database_updates.database_updated_by_student = True
-    # print('database_updated_by_student:', database_updates.database_updated_by_student)
-    database_updates
-
+    update = Update.objects.latest('pk')
+    update.updated_sent = True
+    if update.sentence_ids == None:
+        update.sentence_ids = json.dumps([s.id])
+    else:
+        update.sentence_ids = json.dumps(json.loads(update.sentence_ids).append(si.d))
+    update.save()
+    
     response_data = {
 
         'sentence': sent,

@@ -116,6 +116,14 @@
     left:0;
     top:0;
 }
+.wholeSpec{
+    width: 90%;
+    left: 5%;
+    border-radius: 0;
+    border: 3px solid black;
+    border-radius: 3px;
+}
+
 .noSide{
     display:none;
 }

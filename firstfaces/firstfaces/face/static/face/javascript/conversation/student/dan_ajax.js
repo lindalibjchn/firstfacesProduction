@@ -18,6 +18,10 @@ function set_selectable(trans){
    },duration);
 }
 
+//Empties the transcription box
+//$('#recordVoiceBtn').click(function(){$('#upperSentenceHolder').empty(); $('#lowerSentenceHolder').empty();});
+
+
 // Calls the forced allignment of audio
 function doAllignment(){
     
@@ -69,7 +73,13 @@ $('#forwardErrorSelection').click(function(){
         if(selected.includes(i)){
             var curStr = '';
             while(selected.includes(i)){
-                curStr = curStr + words[i] + " ";
+                if (words[i] != "I" && i >= 1){
+                    temp = words[i].toLowerCase();
+                  }
+                 else{
+                    temp = words[i];
+                 }
+                curStr = curStr + temp + " ";
                 i = i+1;
             }
             if(curStr.trim().length > 60){
@@ -80,8 +90,14 @@ $('#forwardErrorSelection').click(function(){
             classes.push("uncorrected-error");
         }else{
             var curStr = '';                     
-            while(!selected.includes(i) && i < words.length){         
-                curStr = curStr + words[i] + " ";
+            while(!selected.includes(i) && i < words.length){
+                if (words[i] != "I" && i >= 1){
+                    temp = words[i].toLowerCase();
+                }
+                else{
+                    temp = words[i];
+                }
+                curStr = curStr + temp + " ";
                 i = i+1;                         
             }                                    
             newTran.push(curStr);             
@@ -312,7 +328,7 @@ function doneError(){
     $("#upper_"+idx).text(err);
     $("#upper_"+idx).attr("class","lower-error");
     $("#upper_"+idx).attr("onclick","");
-    $("#lower_"+idx).text(cor);
+    $("#lower_"+idx).text(cor.toLowerCase());
     $("#lower_"+idx).attr("class","corrected-error");
     if(err.length > cor.length){
         //add new span at start
@@ -558,6 +574,8 @@ function sendAttemptBlob( new_blob ){
                     trans = json.trans;
                     err_trans = $('#refText').text().trim();
                     if(!conversationVariables.Trigram) {
+
+
                         document.getElementById("hypImg").src = prefixURL+json.image_url;
                         $("#hypText").text(json.trans);
 
@@ -565,7 +583,7 @@ function sendAttemptBlob( new_blob ){
                             $('exitOverlay').hide();
                             correct_attempt();
                             setTimeout(function(){
-                                $("#hypBtn").css("background-colocent_foundr","green");
+                                $("#hypBtn").css("background-color","green");
                                 $("#hypInvisible").css("background-color","green");
                             },500);
                         }
@@ -593,7 +611,7 @@ function sendAttemptBlob( new_blob ){
 
                     }
                     else{
-
+                        $('#transHolder').click(function(){document.getElementById("hypAudio").play();});
                         $('#hypBtn').hide();
                         t_words = trans.trim().split(" ");
                         $('#transHolder').empty();
@@ -786,6 +804,15 @@ $('#refBtn').click(function(){
     //animation
    //document.getElementById("refAudio").play();
    tiaSpeak('Ref_Word', cont=true);
+
+   //Fix Buttons
+   $('#reRecordBtn').fadeIn();
+   $('#backOverlay').fadeIn();
+   if ($('#exitOverlay').is(":visible")){
+
+   }
+
+
    //$("#refInvisible").css("margin-left","-10px");
    //$('#refInvisible').css({"border-left":"10px solid black"});
    //$('#refInvisible').animate({width:"0"},conversationVariables.refLen);

@@ -3,13 +3,27 @@ import json
 from g2p_en import G2p
 from django.utils import timezone
 import time
+# import datetime
+# import logging
+# logger = logging.getLogger(__name__)
+g2p = G2p()
 
 def change_sentence_to_list_n_add_data(s_):
 
+    # t0 = datetime.datetime.now()
     text = word_tokenize(s_) # {"I", "have,..
+    # t1 = datetime.datetime.now()
     pos_tags = pos_tag_sentence(text) # ["PR", "VBP",..
+    # t2 = datetime.datetime.now()
     phonemes = get_phonemes_for_sentence(text) # [["AA", "TH",..
+    # t3 = datetime.datetime.now()
     visemes = convert_phonemes_to_visemes(phonemes) # [['e', 'th',..
+    # t4 = datetime.datetime.now()
+        
+    # logger.error('\nword_tokenize:' + str(t1 - t0) + '\n')
+    # logger.error('\npos_tags:' + str(t2 - t1) + '\n')
+    # logger.error('\nphonemes:' + str(t3 - t2) + '\n')
+    # logger.error('\nvisemes:' + str(t4 - t3) + '\n')
 
     return [list(a) for a in zip(text, pos_tags, visemes)]
 
@@ -21,7 +35,6 @@ def pos_tag_sentence(t_):
 
 def get_phonemes_for_sentence(t_):
 
-    g2p = G2p()
     phoneme_list = []
     for i in t_:
         # for p in get_phonemes(g2p, i):

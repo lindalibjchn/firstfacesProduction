@@ -2,12 +2,11 @@ from django.http import JsonResponse
 from face.views.conversation.student.utils.speech_to_text import convert_mp3_to_wav, get_speech_recognition
 from face.views.conversation.all.sentences import convert_django_sentence_object_to_json
 from face.views.conversation.all.praat_utils import get_audio_length, get_text_path, get_out_path, convert_audio, get_timestamps, play_errored_text, ref_path, get_hyp_audio_path
-from face.views.conversation.all import database_updates
+from django.conf import settings
 
 from django.utils import timezone
 import json
-from face.models import Conversation, Sentence, AudioFile, AudioError, AudioErrorAttempt, AudioErrorCorrectionAttempt
-from django.conf import settings
+from face.models import Conversation, Sentence, AudioFile, AudioError, AudioErrorAttempt, AudioErrorCorrectionAttempt, Update
 import code
 import os
 import time
@@ -17,6 +16,9 @@ import ast
 import subprocess
 from google.cloud import texttospeech
 from face.views.conversation.all.dan_utils import get_spectogram, get_sim
+import logging
+import datetime
+logger = logging.getLogger(__name__)
 
 if settings.DEVELOPMENT_ENV == 'john':
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/johnsHDD/PhD/2018_autumn/erle-3666ad7eec71.json"
@@ -69,8 +71,7 @@ def tts(request):
     return JsonResponse(response_data) 
 
 def store_blob(request):
-    database_updates.database_updated_by_student = True
-    # print('database updated by blob:', database_updates.database_updated_by_student)
+    # print('database updated by blob:', updates.updated_by_student)
     # code.interact(local=locals());
 
     blob = request.FILES['data']
@@ -88,30 +89,45 @@ def store_blob(request):
         s = Sentence(learner=request.user, conversation=conv)
         s.save()
 
-
-    filename=str(conv.id)+"_"+str(s.id)+"_" +timezone.now().strftime('%H-%M-%S')+".webm"
+    filename = str(conv.id)+"_"+str(s.id)+"_" +timezone.now().strftime('%H-%M-%S')+".webm"
     blob.name = filename
 
-    #and then link the recording
+    # and then link the recording
     a = AudioFile(
             sentence=s, 
             audio=blob, 
             # interference=interference,
             )
     a.save()
+    # settings.TIME00 = datetime.datetime.now()
+
+    update = Update.objects.latest('pk')
+    update.updated_aud = True
+    if update.audio_ids == None:
+        update.audio_ids = json.dumps([s.id])
+    else:
+        update.audio_ids = json.dumps(json.loads(update.audio_ids).append(si.d))
+    update.save()
+
+    settings.AUDIO_UPDATED_BY_STUDENT = True
     # need to save the file before can acces url to use ffmpeg (in utils.py)
     alternatives = get_speech_recognition(filename)
-    audioFile = "media/wav/"+filename[:-4]+'wav'
-    audioLength = get_audio_length(settings.BASE_DIR+"/"+audioFile)
-    
-    #print('transcription_list:', alternatives)
+    if alternatives[0]['transcript'] != "":
+        audioFile = "media/wav/"+filename[:-4]+'wav'
+        audioLength = get_audio_length(settings.BASE_DIR+"/"+audioFile)
+    else:
+        audioFile = ""
+        audioLength = 0
 
-    ## commented out as daniel will be doing his own thing here so wont need alignments
-    #transcription_aligned_list = get_alignments(transcription_list)
+    # need to save the file before can acces url to use ffmpeg (in utils.py)
+    # print('transcription_list:', alternatives)
+
+    # commented out as daniel will be doing his own thing here so wont need alignments
+    # transcription_aligned_list = get_alignments(transcription_list)
     # print('transcription_aligned_list:', transcription_aligned_list)
 
     #and then once have the transcriptions, save them
-    a.alternatives = json.dumps( alternatives )
+    a.alternatives = json.dumps(alternatives)
     a.save()
 
     response_data = {

@@ -91,7 +91,8 @@ function subsequentFlinches() {
 function dealWithBlankTranscription() {
 
     $('#recordBtnsCont').hide();
-
+    $('#upperSentenceHolder').empty();
+    $('#lowerSentenceHolder').empty();
     tiaSpeak( "I_couldn't_hear_anything", cont=true, speakCb=function() {
      
         $('#recordVoiceBtn').show();

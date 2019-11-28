@@ -229,6 +229,15 @@ class Profile(models.Model):
     def __str__(self):
         return str(self.learner)
 
+class Update(models.Model):
+    updated_aud = models.BooleanField(default=False)
+    updated_sent = models.BooleanField(default=False)
+    audio_ids = models.CharField(max_length=30, null=True, blank=True)
+    sentence_ids = models.CharField(max_length=30, null=True, blank=True)
+
+    def __str__(self):
+        return str(self.pk)
+
 # class NewsArticle(models.Model):
     # title = models.CharField(max_length=100, null=False, blank=False)
     # link = models.URLField(null=False, blank=False)

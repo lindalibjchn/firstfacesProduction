@@ -12,7 +12,7 @@ def store_judgement(request):
     time_now = timezone.now();
 
     sent_meta = json.loads( request.POST['sentMeta'] )
-    print('sent_meta:', sent_meta)
+    # print('sent_meta:', sent_meta)
     # code.interact(local=locals());
 
     conv_id = int(sent_meta['conv_id'])

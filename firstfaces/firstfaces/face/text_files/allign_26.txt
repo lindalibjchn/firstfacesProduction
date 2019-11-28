@@ -1,6 +1,6 @@
-this
-sentence
-will
-be
-successful
-definitely
+the
+cat
+sat
+on
+the
+mat

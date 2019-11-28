@@ -50,7 +50,7 @@ const AUDIO_N_VIDEO_SETTINGS = {
 //// for drawing the volume bar
 const WIDTH_VOL = 400;
 const HEIGHT_VOL = 100;
-var audioContext = new AudioContext();
+//var audioContext = new AudioContext();
 var meter = null;
 var canvasContext = null;
 var rafID = null;
