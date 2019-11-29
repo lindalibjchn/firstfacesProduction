@@ -1,5 +1,6 @@
 function sendSentToServer() {
     
+    aud.play()
     if(conversationVariables.playStage2){
         getRemainingAudio();
         

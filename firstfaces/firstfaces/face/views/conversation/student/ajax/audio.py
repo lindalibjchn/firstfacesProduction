@@ -103,10 +103,10 @@ def store_blob(request):
 
     update = Update.objects.latest('pk')
     update.updated_aud = True
-    if update.audio_ids == None:
+    if update.audio_ids == None or update.audio_ids == "null":
         update.audio_ids = json.dumps([s.id])
     else:
-        update.audio_ids = json.dumps(json.loads(update.audio_ids).append(si.d))
+        update.audio_ids = json.dumps(json.loads(update.audio_ids).append(s.id))
     update.save()
 
     settings.AUDIO_UPDATED_BY_STUDENT = True

@@ -15,6 +15,7 @@ function tiaSpeak( tiaSays, cont=true, speakCb=function(){} ) {
     headYRandomTiltObject.startCount = mainCount;
     synthesisObject.talking = true; 
     tiaSpeakIndividualSentences();
+    synthesisObject.audio.play();
 
 }
 
@@ -96,7 +97,7 @@ function slightlyDelayAudioPlay() {
                 //initSingleBreath( -1, breatheObject.speakingBreathMult, synthesisObject.now.newDuration );
             }
             else{
-                synthesisObject.audio.play();
+                //synthesisObject.audio.play();
                 console.log(synthesisObject.now.newDuration)
                 initSingleBreath( -1, breatheObject.speakingBreathMult, synthesisObject.audio.duration );
              }

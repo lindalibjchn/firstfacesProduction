@@ -100,16 +100,21 @@ function setSynthesisAudioOnChangeEvent() {
 
     synthesisObject.audio.ondurationchange = function() {
 
+        console.log('DELAY_BEFORE_MIA_SPEAKS:', DELAY_BEFORE_MIA_SPEAKS)
+        console.log('synthesisObject.audio.duration:', synthesisObject.audio.duration)
+        let dur = synthesisObject.audio.duration - DELAY_BEFORE_MIA_SPEAKS
+        console.log('dur:', dur)
+        console.log('synthesisObject.audio.duration:', synthesisObject.audio.duration)
         synthesisObject.now.noOfPhones = synthesisObject.now.visemes[ synthesisObject.sentenceNo ].length;
 
-        synthesisObject.now.noOfFrames = Math.floor( synthesisObject.audio.duration * 60 )
+        synthesisObject.now.noOfFrames = Math.floor( dur * 60 )
         synthesisObject.now.noOfFramesPerPhone = Math.floor( synthesisObject.now.noOfFrames / ( synthesisObject.now.noOfPhones - 1 ) );
 
         synthesisObject.now.noOfLeftoverFrames = synthesisObject.now.noOfFrames - synthesisObject.now.noOfFramesPerPhone * synthesisObject.now.noOfPhones;
 
         synthesisObject.gotNewDuration = true;
 
-        breatheObject.singleBreath.outCount = synthesisObject.audio.duration
+        breatheObject.singleBreath.outCount = dur;
 
     }
 

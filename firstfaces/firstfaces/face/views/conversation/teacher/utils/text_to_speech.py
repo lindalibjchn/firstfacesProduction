@@ -15,7 +15,7 @@ elif settings.DEVELOPMENT_ENV == 'dan':
 else:
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/firstfaces/erle-3666ad7eec71.json"
 
-def create_stock_instance( texts ):
+def create_stock_instance( texts, initial_delay ):
 
     # texts = [ 'this is a...', 'second here is..', ...]
 
@@ -24,7 +24,7 @@ def create_stock_instance( texts ):
     urls = []
     visemes = []
     for i, t in enumerate(texts):
-        url, viseme_list = create_tia_speak_sentence_URL_and_visemes(t, 'prePreparedTiaPhrases/stockPhrases/', name + '_0' + str(i))
+        url, viseme_list = create_tia_speak_sentence_URL_and_visemes(t, 'prePreparedTiaPhrases/stockPhrases/', name + '_0' + str(i), initial_delay)
         urls.append(url)
         visemes.append(viseme_list)
     s.urls = json.dumps(urls)
@@ -33,24 +33,24 @@ def create_stock_instance( texts ):
     return s
 
 
-def create_prompt_instance( text, prompt_number ):
+def create_prompt_instance( text, prompt_number, initial_delay ):
 
     name = text.replace(' ', '_')
     p = Prompt(name=name, level=prompt_number)
     
-    url, visemes = create_tia_speak_sentence_URL_and_visemes(text, 'prePreparedTiaPhrases/prompt' + str(prompt_number) + '/', name)
+    url, visemes = create_tia_speak_sentence_URL_and_visemes(text, 'prePreparedTiaPhrases/prompt' + str(prompt_number) + '/', name, initial_delay)
     p.url = url
     p.visemes = json.dumps(visemes)
     p.save()
     
     return p
 
-def create_tia_speak_sentence_URL_and_visemes(text, directory, filename):
+def create_tia_speak_sentence_URL_and_visemes(text, directory, filename, initial_delay):
 
     # list_of_text_to_speak = get_text(jsonify_or_none(sent.sentence), sent.judgement, jsonify_or_none(sent.prompt), jsonify_or_none(sent.indexes))
     # for i, s in enumerate(list_of_text_to_speak):
 
-    URL = create_tia_tts_url( text, directory, filename )
+    URL = create_tia_tts_url( text, directory, filename, initial_delay )
     sent_data = change_sentence_to_list_n_add_data( text )
     
     # concatenate separate viseme lists
@@ -61,19 +61,21 @@ def create_tia_speak_sentence_URL_and_visemes(text, directory, filename):
     
     return [URL, visemes]
 
-def create_tia_tts_url(text, directory, filename):
+def create_tia_tts_url(text, directory, filename, initial_delay):
 
-    speaking_voice = 'en-GB-Wavenet-C'
+    speaking_voice = 'en-US-Wavenet-C'
 
+    # ssml_text = '<speak><break time="' + str(initial_delay) + 'ms"/>' + text + '</speak>'
+    ssml_text = '<speak> it is absolutely <emphasis level=\"strong\"> fantastic </emphasis> that we can use long <break time=\"3s\"/> pauses like these </speak>'
     client = texttospeech.TextToSpeechClient()
-    input_text = texttospeech.types.SynthesisInput(text=text)
+    input_text = texttospeech.types.SynthesisInput(ssml=ssml_text)
 
     # Note: the voice can also be specified by name.
     # Names of voices can be retrieved with client.list_voices().
     voice = texttospeech.types.VoiceSelectionParams(
-        language_code='en-GB',
-        name=speaking_voice
-        # ssml_gender=texttospeech.enums.SsmlVoiceGender.MALE
+        language_code='en-US',
+        name=speaking_voice,
+        ssml_gender=texttospeech.enums.SsmlVoiceGender.FEMALE
         )
 
     audio_config = texttospeech.types.AudioConfig(
