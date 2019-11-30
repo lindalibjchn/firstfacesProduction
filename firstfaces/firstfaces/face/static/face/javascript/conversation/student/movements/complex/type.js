@@ -43,6 +43,7 @@ function tapKeyFull() {
 
 function dealWithAfterTap() {
 
+    startAudioStream();
     $('#closeOverlayArea').prop( "disabled", false);
     $('#submitOverlay').prop( "disabled", false);
     //show play buttons below

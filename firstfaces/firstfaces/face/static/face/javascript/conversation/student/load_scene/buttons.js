@@ -46,7 +46,7 @@ function setUpAudioBtns() {
 
     $('#talkBtn').on( 'click', sendSentToServer );
     
-    $('#listenNextSentenceBtn').on( 'click', listenToNextSentence )
+    $('#listenNextSentenceBtn').on( 'click', tiaSpeakButtonEvent )
 
 }
 

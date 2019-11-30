@@ -65,8 +65,8 @@ def create_tia_tts_url(text, directory, filename, initial_delay):
 
     speaking_voice = 'en-US-Wavenet-C'
 
-    # ssml_text = '<speak><break time="' + str(initial_delay) + 'ms"/>' + text + '</speak>'
-    ssml_text = '<speak> it is absolutely <emphasis level=\"strong\"> fantastic </emphasis> that we can use long <break time=\"3s\"/> pauses like these </speak>'
+    ssml_text = '<speak><break time="' + str(initial_delay) + 'ms"/>' + text + '</speak>'
+    # ssml_text = '<speak> it is absolutely <emphasis level=\"strong\"> fantastic </emphasis> that we can use long <break time=\"3s\"/> pauses like these </speak>'
     client = texttospeech.TextToSpeechClient()
     input_text = texttospeech.types.SynthesisInput(ssml=ssml_text)
 
@@ -75,13 +75,13 @@ def create_tia_tts_url(text, directory, filename, initial_delay):
     voice = texttospeech.types.VoiceSelectionParams(
         language_code='en-US',
         name=speaking_voice,
-        ssml_gender=texttospeech.enums.SsmlVoiceGender.FEMALE
+        # ssml_gender=texttospeech.enums.SsmlVoiceGender.FEMALE
         )
 
     audio_config = texttospeech.types.AudioConfig(
         audio_encoding=texttospeech.enums.AudioEncoding.MP3,
-        pitch = 1,
-        speaking_rate = 0.7,
+        pitch = 0,
+        speaking_rate = 0.8,
         )
 
     fullURL = ''

@@ -112,12 +112,12 @@ $('#forwardErrorSelection').click(function(){
         $('#upperSentenceHolder').empty();
         $('#lowerSentenceHolder').empty();
         
-        tiaSpeak("That is too many words, please choose again",true,function(){
-            reset_text(conversationVariables.sentence_being_recorded_audio.alternatives['0'].transcript);
-            $('#talkBtn').show();
-            $('#recordVoiceBtn').show();
-            $('#listenVoiceBtn').show();
-        });
+        //tiaSpeak("That is too many words, please choose again",true,function(){
+        reset_text(conversationVariables.sentence_being_recorded_audio.alternatives['0'].transcript);
+        $('#talkBtn').show();
+        $('#recordVoiceBtn').show();
+        $('#listenVoiceBtn').show();
+        //});
     }else{
         //empty upper and lower divs
         $('#upperSentenceHolder').empty(); 
@@ -803,7 +803,7 @@ $('#refBtn').click(function(){
     //$('#refText').hide();
     //animation
    //document.getElementById("refAudio").play();
-   tiaSpeak('Ref_Word', cont=true);
+   tiaPrepareToSpeak('Ref_Word');
 
    //Fix Buttons
    $('#reRecordBtn').fadeIn();

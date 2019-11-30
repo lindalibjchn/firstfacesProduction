@@ -204,7 +204,7 @@ function splice_audio(){
     viss = []
 
     if($('#btnCont').hasClass('wholeSide')){
-        tiaSpeak('Ref_Word', cont=true);
+        tiaPrepareToSpeak('Ref_Word');
     }else{
         if($('#btnCont').hasClass('leftSide')){
             viss.push(synthesisObject.data.Ref_Word.phones);
@@ -290,7 +290,7 @@ function splice_audio(){
                              'phones':[json.viss],
                              'duration':json.duration,
                          }
-                 tiaSpeak('Spliced_Audio');
+                 tiaPrepareToSpeak('Spliced_Audio');
             },
             error: function() {console.log("Error slicing audio")},
         });

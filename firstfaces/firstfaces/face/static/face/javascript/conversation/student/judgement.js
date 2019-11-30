@@ -58,6 +58,14 @@ function createPromptFromServerPrompts() {
         synthesisObject.data.prompt.visemes.push( conversationVariables.conversation_dict.completed_sentences[ 0 ].prompts[ p ].visemes );
 
     })
+    
+    if ( synthesisObject.now !== undefined ) {
+
+        synthesisObject.now.URLs = synthesisObject.data.prompt.URLs;
+        synthesisObject.now.texts = synthesisObject.data.prompt.texts; 
+        synthesisObject.now.visemes = synthesisObject.data.prompt.visemes;
+
+    }
 
 }
 

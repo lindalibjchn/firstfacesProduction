@@ -67,7 +67,7 @@ def store_single_prompt(request):
         if prompt0.exists():
             prompt = prompt0[0]
         else:
-            prompt = create_prompt_instance(prompt_text, 0 )
+            prompt = create_prompt_instance(prompt_text, 0, 850 )
         sent.prompts.add(prompt)
         
     else:
@@ -77,7 +77,7 @@ def store_single_prompt(request):
             prompt = promptN[0]
             print('already existits')
         else:     
-            prompt = create_prompt_instance( prompt_text, prompt_number )
+            prompt = create_prompt_instance( prompt_text, prompt_number, 850 )
             print('created new:', prompt_number)
 
         sent.prompts.add(prompt)

@@ -109,7 +109,7 @@ function getNextPrompt() {
             conversationVariables.conversation_dict.completed_sentences[ 0 ].awaiting_next_prompt = json.awaiting_more;
             
             createPromptFromServerPrompts();
-            synthesisObject.now = synthesisObject.data.prompt;
+            //synthesisObject. = synthesisObject.data.prompt;
 
             if ( json.awaiting_more ) {
 

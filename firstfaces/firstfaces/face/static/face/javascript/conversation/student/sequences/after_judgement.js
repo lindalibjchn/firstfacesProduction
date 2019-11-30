@@ -79,21 +79,21 @@ function tiaSpeakAfterReturningFromThinking() {
 
     if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === "D" ) {
 
-        tiaSpeak( "I_don't_understand_what_you_said", cont=true );
+        tiaPrepareToSpeak( "I_don't_understand_what_you_said" );
 
     } else if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === "3" ) {
 
-        tiaSpeak( "There_are_more_than_three_errors_in_your_sentence", cont=true );
+        tiaPrepareToSpeak( "There_are_more_than_three_errors_in_your_sentence" );
 
     } else if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === "P" ) {
 
         conversationVariables.promptSpeaking = true;
-        tiaSpeak( "prompt", cont=false );
+        tiaPrepareToSpeak( "prompt" );
         
     } else if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === "M" ) {
 
         conversationVariables.promptSpeaking = true;
-        tiaSpeak( "I'm_not_sure_what_you_mean_by...", cont=false );
+        tiaPrepareToSpeak( "I'm_not_sure_what_you_mean_by..." );
         
     }
         

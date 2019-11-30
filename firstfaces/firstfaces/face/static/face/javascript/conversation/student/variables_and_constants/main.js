@@ -47,7 +47,7 @@ const AUDIO_N_VIDEO_SETTINGS = {
     video: false
 }
 
-const DELAY_BEFORE_MIA_SPEAKS = 0.9;
+const DELAY_BEFORE_MIA_SPEAKS = 0.85;
 
 //// for drawing the volume bar
 const WIDTH_VOL = 400;
