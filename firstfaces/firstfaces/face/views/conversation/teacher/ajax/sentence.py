@@ -88,7 +88,7 @@ def store_single_prompt(request):
 
     }
 
-    return JsonResponse(response_data)    
+    return JsonResponse(response_data) 
 
 def store_indexes_corrections(request):
 
@@ -104,7 +104,9 @@ def store_indexes_corrections(request):
         print('sentence:', sent.sentence)
         print('indexes:', sent.indexes)
         unsure_strings = get_mean_by_text(json.loads(sent.sentence), json.loads(sent.indexes))
-        create_tia_speak_sentence_URL_and_visemes( unsure_strings, 'synths/', conv_id + "_mean_by" )
+        print('unsure_strings:', unsure_strings)
+        prompt = create_prompt_instance( unsure_strings[1:], 3, 850 )
+        sent.prompts.add(prompt)
 
     elif sent.judgement == 'I':
 

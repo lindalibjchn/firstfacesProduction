@@ -150,27 +150,35 @@ function determineIfArticleErrorAndAddToArticleErrorsObject( sentenceObject ) {
 
                 if ( sentenceObject.sentence[ withoutSpacesIndex ][ 0 ] === "the" ) {
 
-                    if ( sentenceObject.prompt[ i ] === "a" ) {
+                    Object.keys( sentenceObject.prompts ).forEach( function( p ) {
 
-                        articleErrors['the-a'] += 1;
+                        if ( sentenceObject.prompts[ p ][ i ] === "a" ) {
 
-                    } else if ( sentenceObject.prompt[ i ]  === "x" ) {
+                            articleErrors['the-a'] += 1;
 
-                        articleErrors['the-x'] += 1;
+                        } else if ( sentenceObject.prompts[ p ][ i ]  === "x" ) {
 
-                    }
+                            articleErrors['the-x'] += 1;
+
+                        }
+
+                    })
 
                 } else if ( sentenceObject.sentence[ withoutSpacesIndex ][ 0 ] === "a" ) {
 
-                    if ( sentenceObject.prompt[ i ] === "the") {
+                    Object.keys( sentenceObject.prompts ).forEach( function( p ) {
 
-                        articleErrors['a-the'] += 1;
+                        if ( sentenceObject.prompts[ p ][ i ] === "the") {
 
-                    } else if ( sentenceObject.prompt[ i ] === "x" ) {
+                            articleErrors['a-the'] += 1;
 
-                        articleErrors['a-x'] += 1;
+                        } else if ( sentenceObject.prompts[ p ][ i ] === "x" ) {
 
-                    }
+                            articleErrors['a-x'] += 1;
+
+                        }
+
+                    })
 
                 }
 

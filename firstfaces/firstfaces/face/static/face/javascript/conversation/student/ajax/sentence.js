@@ -1,6 +1,5 @@
 function sendSentToServer() {
     
-    aud.play()
     if(conversationVariables.playStage2){
         getRemainingAudio();
         
@@ -12,48 +11,62 @@ function sendSentToServer() {
 
     //console.log('sent:', sent);
     //console.log('sent length:', sent.length);
-    if ( sent.length >= 300 ) {
-        alert( 'This sentence is too long. Please simplify and try again.')
+    if ( sent.length > 2 || sent.length < 300 ) {
+            
+        if(conversationVariables.usePlayAud){
+            
+            // temporary fix
+            if ( !conversationVariables.FAFailed ) {
+            
+                play_audio();
 
-    } else {
+            }
+            conversationVariables.usePlayAud = false;
+        
+        } else {
+            
+            if ( !conversationVariables.FAFailed ) {
+            
+                aud.play();
+            
+            }
 
+        }
+        setTimeout( goToThinkingPos, conversationVariables.sentence_being_recorded_audio.totalAudioLength );
+        conversationVariables.FAFailed = false;
+        talkToTia(); 
         // set this to false until judgement comes in where it will be changed to true
         conversationVariables.awaitingJudgement = true;
 
-        if ( sent.length > 2 || sent.length < 300 ) {
-            
-            // fade out text box
-            $('#textInputContainer').fadeOut( 500 );
+        // fade out text box
+        $('#textInputContainer').fadeOut( 500 );
 
-            talkToTia(); 
-            recTimes = {};
-            recTimes.clickTalkBtn = Date.now() / 1000;
+        recTimes = {};
+        recTimes.clickTalkBtn = Date.now() / 1000;
 
-            $.ajax({
-                url: "/store_sent",
-                type: "POST",
-                data: { 
-                    'sent': sent,
-                    'sent_id': conversationVariables.sentence_being_recorded.sent_id,
-                    'conversation_id': conversationVariables.sentence_being_recorded.conv_id
-                },
-                success: function(json) {
-                    
-                    console.log('sentence successfully sent to server');
-                    conversationVariables.sentence_awaiting_judgement = json.sentence
+        $.ajax({
+            url: "/store_sent",
+            type: "POST",
+            data: { 
+                'sent': sent,
+                'sent_id': conversationVariables.sentence_being_recorded.sent_id,
+                'conversation_id': conversationVariables.sentence_being_recorded.conv_id
+            },
+            success: function(json) {
+                
+                console.log('sentence successfully sent to server');
+                conversationVariables.sentence_awaiting_judgement = json.sentence
 
-                },
-                error: function() {
-                    alert("sentence failed to send to server. Please refresh");
-                },
+            },
+            error: function() {
+                alert("sentence failed to send to server. Please refresh");
+            },
 
-            });
+        });
 
-        } else {
+    } else {
 
-            alert('this sentence is too short or too long. Try again');
-
-        }
+        alert( 'This sentence is too long. Please simplify and try again.')
 
     }
 

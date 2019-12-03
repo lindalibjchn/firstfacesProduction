@@ -8,38 +8,9 @@ function talkToTia() {
 function tiaLeanToListen() {
 
     expressionController( expressionObject.abs.listening, 0.3) 
-    movementController( movementObject.abs.listenToSpeechNormal, tiaTimings.leanToListenToSpeechDuration, tiaTimings.leanToListenToSpeechDuration, speakWords );
+    movementController( movementObject.abs.listenToSpeechNormal, tiaTimings.leanToListenToSpeechDuration, tiaTimings.leanToListenToSpeechDuration );
 
 }
-
-function speakWords() {
-
-    recTimes.startSpeak = Date.now() / 1000;
-    
-    if(conversationVariables.usePlayAud){
-        
-        // temporary fix
-        if ( !conversationVariables.FAFailed ) {
-        
-            play_audio();
-
-        }
-        conversationVariables.usePlayAud = false;
-    
-    } else {
-        
-        if ( !conversationVariables.FAFailed ) {
-        
-            aud.play();
-        
-        }
-
-    }
-    conversationVariables.FAFailed = false;
-    setTimeout( goToThinkingPos, conversationVariables.sentence_being_recorded_audio.totalAudioLength );
-        
-}
-
 
 function goToThinkingPos() {
 

@@ -21,6 +21,7 @@ function initInputReady( from ) {
     
     }
 
+    console.log( 'in initInputReady' );
     addPreviousSentences( conversationVariables.conversation_dict, 0 );
 
 }

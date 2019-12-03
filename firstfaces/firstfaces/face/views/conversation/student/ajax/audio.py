@@ -3,6 +3,7 @@ from face.views.conversation.student.utils.speech_to_text import convert_mp3_to_
 from face.views.conversation.all.sentences import convert_django_sentence_object_to_json
 from face.views.conversation.all.praat_utils import get_audio_length, get_text_path, get_out_path, convert_audio, get_timestamps, play_errored_text, ref_path, get_hyp_audio_path
 from django.conf import settings
+from face.views.conversation.all.modify_data import jsonify_or_none
 
 from django.utils import timezone
 import json
@@ -103,10 +104,11 @@ def store_blob(request):
 
     update = Update.objects.latest('pk')
     update.updated_aud = True
-    if update.audio_ids == None or update.audio_ids == "null":
+    updated_audio_ids = jsonify_or_none(update.audio_ids)
+    if updated_audio_ids == None:
         update.audio_ids = json.dumps([s.id])
     else:
-        update.audio_ids = json.dumps(json.loads(update.audio_ids).append(s.id))
+        update.audio_ids = json.dumps((updated_audio_ids).append(s.id))
     update.save()
 
     settings.AUDIO_UPDATED_BY_STUDENT = True

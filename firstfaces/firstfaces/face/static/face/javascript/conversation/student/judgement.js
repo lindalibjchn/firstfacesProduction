@@ -23,11 +23,16 @@ function preparePromptForTiaSpeak() {
    if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === "P" ) {
 
         createPromptFromServerPrompts();
-        setTimeout( getNextPrompt, 5000 );
+
+        if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].awaiting_next_prompt ) {
+
+            setTimeout( getNextPrompt, 5000 );
+
+        }
 
     } else if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === 'M' ) {
 
-       synthesisObject.data.prompt = synthesisObject.data[ "I'm_not_sure_what_you_mean_by" ];
+        synthesisObject.data.prompt = synthesisObject.data[ "I'm_not_sure_what_you_mean_by..." ];
 
     } else if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === 'D' ) {
 

@@ -40,10 +40,11 @@ def store_sent(request):
 
     update = Update.objects.latest('pk')
     update.updated_sent = True
+    updated_sentence_ids = jsonify_or_none(update.sentence_ids)
     if update.sentence_ids == None:
         update.sentence_ids = json.dumps([s.id])
     else:
-        update.sentence_ids = json.dumps(json.loads(update.sentence_ids).append(si.d))
+        update.sentence_ids = json.dumps(updated_sentence_ids.append(si.d))
     update.save()
     
     response_data = {
@@ -75,12 +76,19 @@ def check_judgement(request):
                 s.loop = loop
                 s.save()
 
+        if s.judgement == "M":
+
+            if jsonify_or_none(s.indexes) != None:
+                received_judgement = True
+                sent = convert_django_sentence_object_to_json(s, request.user.id, conv_id)
+                s.loop = loop
+                s.save()
+
         else:
             received_judgement = True
             sent = convert_django_sentence_object_to_json(s, request.user.id, conv_id)
             s.loop = loop
             s.save()
-
 
     sent_meta = {
         'receivedJudgement': received_judgement,

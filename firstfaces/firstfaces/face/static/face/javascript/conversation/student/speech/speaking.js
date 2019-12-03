@@ -114,16 +114,37 @@ function animatePhonesInOrder() {
     
             if ( conversationVariables.promptSpeaking && conversationVariables.conversation_dict.completed_sentences[ 0 ].awaiting_next_prompt ) {
 
-                buttonsListenNextSentenceWaiting();
+                expressionController( expressionObject.quarter, tiaTimings.durationOfLastSpeakingPhones, function() {
+                    
+                    buttonsListenNextSentenceWaiting();
+
+                } );
+
                 synthesisObject.currentPromptCount = synthesisObject.now.texts.length;
                 checkForNewPrompt();
+
+            } else if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === "M" ) { 
+            
+                if ( synthesisObject.sentenceNo === 0 ) {
+
+                    expressionController( expressionObject.quarter, tiaTimings.durationOfLastSpeakingPhones, function() {
+                        
+                        buttonsListenNextSentenceWaiting();
+
+                    } );
+            
+                } else {
+
+                    endTiaTalking();
+
+                }
 
             } else {
 
                 endTiaTalking();
-            
-            }
 
+            }
+            
         } else {
 
             expressionController( expressionObject.quarter, tiaTimings.durationOfLastSpeakingPhones, function() {
@@ -160,7 +181,7 @@ function endTiaTalking() {
             setTimeout( function() {
             
                 removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration * 3 );
-                buttonsMicrophoneOnly();
+                initInputReady();
                 $('#prevSentsIconContainer').css('font-size', '17px');
                 setTimeout( function() {
 

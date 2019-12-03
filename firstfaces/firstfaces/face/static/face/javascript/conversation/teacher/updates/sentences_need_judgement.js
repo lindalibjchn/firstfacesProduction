@@ -4,7 +4,7 @@ function updateSentencesNeedJudgement( updatedSentencesNeedJudgement ) {
     
     for ( let i=0; i<updatedSentencesNeedJudgement.length; i++ ) {
 
-        teacherVars.sentencesNeedJudgement.push( updatedSentencesNeedJudgement[ lengthCurSentencesNeedJudgement + i ] );
+        teacherVars.sentencesNeedJudgement.push( updatedSentencesNeedJudgement[ i ] );
 
         teacherVars.sentencesBeingRecorded = teacherVars.sentencesBeingRecorded.filter( function ( s ) {
 

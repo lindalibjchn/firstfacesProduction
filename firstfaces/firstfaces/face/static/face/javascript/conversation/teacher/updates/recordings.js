@@ -28,6 +28,7 @@ function updateSentencesBeingRecorded( updatedSentencesBeingRecorded ) {
 
 function showSentencesBeingRecordedInPhones() {
 
+    $('.audio-attempt').off( 'click' );
     $( '.current-attempt' ).empty();
     $( '.current-attempt' ).removeClass( 'recording' );
     //console.log('sentencesBeingRecorded:', teacherVars.sentencesBeingRecorded);

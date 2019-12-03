@@ -1,6 +1,5 @@
 from face.models import Sentence, Profile, Conversation, Update
 from django.utils import timezone
-import datetime
 import json
 import time
 from django.http import JsonResponse
@@ -8,16 +7,8 @@ from face.views.conversation.teacher.utils.sessions_sentences import get_student
 from face.views.conversation.all.sentences import convert_django_sentence_object_to_json
 from face.views.conversation.all.modify_data import jsonify_or_none
 import code
-import datetime
 import logging
 logger = logging.getLogger(__name__)
-
-# time02=0
-# time03=0
-# time04=0
-# time05=0
-# time06=0
-# time07=0
 
 def check_for_change(request):
 
@@ -46,29 +37,23 @@ def check_for_change(request):
     if update.updated_sent:
 
         print('\nsentence updated\n')
-        for sent_id in json.loads(update.sentence_ids):
+        for sent_id in jsonify_or_none(update.sentence_ids):
             
             sent = Sentence.objects.get(pk=sent_id)
             sentences_not_judged.append(convert_django_sentence_object_to_json(sent, sent.learner.id, sent.conversation.id))
-        update.sentence_ids = None
-        update.updated_sent = False
-        # settings.TIME01 = datetime.datetime.now()
-        # logger.error('\ntime to register SENTENCE change after boolean changed:' + str(settings.TIME01 - settings.TIME00) + '\n')
-        # print('\ntime to register SENTENCE change after boolean changed:' + str(settings.TIME01 - settings.TIME00) + '\n')
 
     if update.updated_aud:
 
         print('\naudio updated\n')
-        for sent_aud_id in json.loads(update.audio_ids):
+        for sent_aud_id in jsonify_or_none(update.audio_ids):
             
             sent_aud = Sentence.objects.get(pk=sent_aud_id)
             sentences_being_recorded.append(convert_django_sentence_object_to_json(sent_aud, sent_aud.learner.id, sent_aud.conversation.id))
-        update.audio_ids = None
-        update.updated_aud = False
-        # settings.TIME01 = datetime.datetime.now()
-        # logger.error('\ntime to register AUDIO change after boolean changed:' + str(settings.TIME01 - settings.TIME00) + '\n')
-        # print('\ntime to register AUDIO change after boolean changed:' + str(settings.TIME01 - settings.TIME00) + '\n')
 
+    update.sentence_ids = None
+    update.updated_sent = False
+    update.audio_ids = None
+    update.updated_aud = False
     update.save()
     # print('\nnew sentence/audio:' + str(t1 - t0) + '\n')
 

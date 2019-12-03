@@ -148,7 +148,7 @@ function returnToLaptop( from ) {
     //recTimes.returnToLaptop = Date.now() / 1000;
     //console.log( 'in return to laptop');
     movementController( movementObject.abs.blank, 0.5, 1 );
-    addPreviousSentences( conversationVariables.conversation_dict, 0 );
+    //addPreviousSentences( conversationVariables.conversation_dict, 0 );
     initInputReady( from )
 
     expressionController( expressionObject.abs.neutral, tiaTimings.changeExpressionDuration );

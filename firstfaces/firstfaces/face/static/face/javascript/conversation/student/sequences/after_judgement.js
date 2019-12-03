@@ -30,7 +30,6 @@ function runIncorrect() {
 
 function runPrompt( judg ) {
 
-    addPreviousSentences( conversationVariables.conversation_dict, 0 );
 
     //recTimes.prePrepareForPromptSpeech =  Date.now() / 1000;
     // return to talking pos
@@ -93,6 +92,9 @@ function tiaSpeakAfterReturningFromThinking() {
     } else if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === "M" ) {
 
         conversationVariables.promptSpeaking = true;
+        synthesisObject.data["I'm_not_sure_what_you_mean_by..."].texts[1] = conversationVariables.conversation_dict.completed_sentences[0].prompts[ 3 ].text
+        synthesisObject.data["I'm_not_sure_what_you_mean_by..."].URLs[1] = conversationVariables.conversation_dict.completed_sentences[0].prompts[ 3 ].URL
+        synthesisObject.data["I'm_not_sure_what_you_mean_by..."].visemes[1] = conversationVariables.conversation_dict.completed_sentences[0].prompts[ 3 ].visemes
         tiaPrepareToSpeak( "I'm_not_sure_what_you_mean_by..." );
         
     }

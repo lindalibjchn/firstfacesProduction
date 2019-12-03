@@ -67,6 +67,12 @@ function storeSinglePromptBox( awaiting ) {
 
     }
 
+    if ( !awaiting ) {
+
+        resetJudgement();
+
+    }
+
 }
 
 function addPromptToSentenceData( promptNumber_, promptText_ ) {

@@ -1,16 +1,12 @@
 function addPreviousSentences( conversation_, phoneId, bottom=true ) {
 
-    //console.log( 'conversation_:', conversation_ );
-    //console.log( 'phoneId:', phoneId );
     $( '#prevSentsInnerContainer' + phoneId ).remove()
     let prevSentsInnerContainer = document.createElement("div");
     prevSentsInnerContainer.className = "prev-sents-inner-container";
     prevSentsInnerContainer.id = "prevSentsInnerContainer" + phoneId;
-    //console.log( 'conversation_:', conversation_ );
     conversation_.completed_sentences.forEach( function( exchange ) {
 
         let exchangeHTML = createExchangeHTML( exchange );
-        //console.log('exchangeHTML:', exchangeHTML);
         prevSentsInnerContainer.prepend( exchangeHTML );
         $( '#prevSentsContainer' + phoneId ).append( prevSentsInnerContainer );
         makeWrongSentsHighlighted( exchange );
@@ -136,10 +132,6 @@ function createPromptTextForEachJudgement( exchange_ ) {
     if ( exchange_.judgement === "P" ) {
 
         text = createPromptTextforPromptBox( exchange_ );
-
-    } else if ( exchange_.judgement === "B" ) {
-
-        text = createBetterTextForPromptBox( exchange_ );
 
     } else if ( exchange_.judgement === "M" ) {
 
