@@ -21,7 +21,7 @@ function initInputReady( from ) {
     
     }
 
-    console.log( 'in initInputReady' );
+  //console.log( 'in initInputReady' );
     addPreviousSentences( conversationVariables.conversation_dict, 0 );
 
 }
@@ -45,7 +45,7 @@ function hideOverlayStuff() {
 function makeStringSentFromArray( s ) {
 
     let sentString = "";
-    console.log('s:', s)
+  //console.log('s:', s)
     s.forEach( function( wordArray ) {
 
         sentString += wordArray[ 0 ] + " ";

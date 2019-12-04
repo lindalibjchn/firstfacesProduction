@@ -54,7 +54,7 @@ function firstFlinch() {
 
             hideVolumeBar();//always hide it even if not shown, same as if statement
             expressionController( expressionObject.abs.blank, 1 ) 
-            movementController( movementObject.abs.blank, 0.5, 1.5, moveCb=function(){tiaPrepareToSpeak( "that_was_very_loud", speakCb=function(){
+            movementController( movementObject.abs.blank, 0.5, 1.5, moveCb=function(){tiaPrepareToSpeak( "That_was_very_loud", speakCb=function(){
              
                     conversationVariables.interference = false;  
                     canvasContext.fillStyle = "#33ff00";
@@ -70,7 +70,7 @@ function firstFlinch() {
 }
 
 function subsequentFlinches() {
-    console.log('in subsequentFlinches');
+  //console.log('in subsequentFlinches');
 
     expressionController( expressionObject.abs.halfFlinch, tiaTimings.flinchDuration / 4, expressCb=function(){
        

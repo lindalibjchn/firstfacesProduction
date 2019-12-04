@@ -4,7 +4,7 @@ function initNod( depth, secs, nodCb=function(){} ) {
 
     if ( nodObject.bool ) {
 
-        console.log('can move nod while still moving previous nod!!')
+      //console.log('can move nod while still moving previous nod!!')
 
     } else {
     
@@ -69,7 +69,7 @@ function initShake( depth, secs, shakeCb=function(){}  ) {
 
     if ( shakeObject.bool ) {
 
-        console.log('can shake while still shaking!')
+      //console.log('can shake while still shaking!')
 
     } else {
     

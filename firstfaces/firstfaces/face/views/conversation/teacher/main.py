@@ -3,9 +3,12 @@ from face.views.conversation.teacher.utils.sessions_sentences import get_student
 from django.conf import settings
 import json
 from face.models import Prompt
+import logging
+logger = logging.getLogger(__name__)
 
 def conversation_teacher(request):
 
+    logger.error('in conversation_teacher')
     students_in_conversation_now_ids = get_students_in_conversation_now_ids()
     conversations = get_students_conversations(students_in_conversation_now_ids)
 

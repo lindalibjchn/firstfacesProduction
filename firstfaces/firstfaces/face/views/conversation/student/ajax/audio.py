@@ -111,7 +111,6 @@ def store_blob(request):
         update.audio_ids = json.dumps((updated_audio_ids).append(s.id))
     update.save()
 
-    settings.AUDIO_UPDATED_BY_STUDENT = True
     # need to save the file before can acces url to use ffmpeg (in utils.py)
     alternatives = get_speech_recognition(filename)
     if alternatives[0]['transcript'] != "":

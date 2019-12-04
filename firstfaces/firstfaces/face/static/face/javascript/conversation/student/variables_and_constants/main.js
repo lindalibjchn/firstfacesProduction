@@ -50,9 +50,17 @@ const AUDIO_N_VIDEO_SETTINGS = {
 const DELAY_BEFORE_MIA_SPEAKS = 0.85;
 
 //// for drawing the volume bar
-const WIDTH_VOL = 400;
+const WIDTH_VOL = 200;
 const HEIGHT_VOL = 100;
-//var audioContext = new AudioContext();
+
+var appleDevice = navigator.userAgent.match(/iPad/i) || navigator.userAgent.match(/iPhone/i)
+var audioContext;
+if ( !appleDevice ) {
+
+    audioContext = new AudioContext();
+
+}
+
 var meter = null;
 var canvasContext = null;
 var rafID = null;

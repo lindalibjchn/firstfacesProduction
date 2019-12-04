@@ -66,6 +66,13 @@ function highlightClick( id ) {
 
 }
 
+function resetOpacitiesOfJudgementButtons() {
+
+    $('.judgement-btns').css("opacity",  "0.7");
+    $('.correct-btn').css("opacity",  "0.3");
+
+}
+
 function highlightAndFocusOnPromptBox( boxNumber ) {
 
     enablePromptBox();

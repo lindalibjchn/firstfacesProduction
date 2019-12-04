@@ -6,11 +6,11 @@ function storeJudgement() {
         data: { sentMeta: JSON.stringify( teacherVars.sentencesNeedJudgement[ 0 ] ) }, 
         success: function(json) {
            
-            console.log('judgement successfully sent to server')
+          //console.log('judgement successfully sent to server')
 
         },
         error: function() {
-            console.log("that's wrong");
+          //console.log("that's wrong");
         },
 
     });
@@ -20,12 +20,17 @@ function storeJudgement() {
         $(document).off( 'keydown' );
         resetJudgement();
 
+    } else {
+
+        setKeydownEvents();
+
     }
 
 }
 
 function storeSinglePrompt( promptNumber, promptText ) {
 
+    addPromptToSentenceData( promptNumber, promptText )
     $.ajax({
         url: "/store_single_prompt",
         type: "POST",
@@ -36,21 +41,19 @@ function storeSinglePrompt( promptNumber, promptText ) {
         }, 
         success: function(json) {
            
-            console.log('single prompt successfully sent to server')
+          //console.log('single prompt successfully sent to server')
 
         },
         error: function() {
-            console.log("that's wrong");
+          //console.log("that's wrong");
         },
 
     });
 
-    console.log('promptNumber:', promptNumber)
     if ( promptNumber === 2 ) {
 
-        $(document).off( 'keydown' );
         resetJudgement();
-    
+
     }
 
 }
@@ -77,16 +80,15 @@ function storeFinal() {
             }, 
             success: function(json) {
                
-                console.log('judgement successfully sent to server')
+              //console.log('judgement successfully sent to server')
 
             },
             error: function() {
-                console.log("that's wrong");
+              //console.log("that's wrong");
             },
 
         });
 
-        $(document).off( 'keydown' );
         resetJudgement();
 
     }

@@ -38,10 +38,10 @@ function doAllignment(){
         processData: false,                                                     
         contentType: false,                                                     
         success: function(json){  
-            console.log("Allignment Worked")
+          //console.log("Allignment Worked")
         },
         error: function() {             
-            console.log("that's wrong");
+          //console.log("that's wrong");
         },
     });    
 
@@ -667,7 +667,7 @@ function sendAttemptBlob( new_blob ){
 
         },
         error: function() {                                                                  
-            console.log("that's wrong");                                                     
+          //console.log("that's wrong");                                                     
         },                                                                                   
    });
 }
@@ -690,10 +690,10 @@ function closeStage3(){
         processData: false,                                                                  
         contentType: false,
         success: function(){ 
-            console.log("success");
+          //console.log("success");
         },
         error: function() {                                                                  
-            console.log("that's wrong");                                                     
+          //console.log("that's wrong");                                                     
         },                                                                                   
     });
 }
@@ -714,7 +714,7 @@ function getPronunciationErrors(){
             document.getElementById('pronunImg').src = wordcloud
         },
         error: function() {
-            console.log("That's wrong");
+          //console.log("That's wrong");
         },
 
     });
@@ -780,7 +780,7 @@ function sendErrorBlobToServer( new_blob ){
            conversationVariables.lastAttemptID = json['attempt_pk'];  
         },
         error: function() {
-            console.log("that's wrong");
+          //console.log("that's wrong");
         },
     });
 }
@@ -984,7 +984,7 @@ function submitKeyboard(){
             }
         },
         error: function() {
-            console.log("that's wrong"); 
+          //console.log("that's wrong"); 
         },
     });
 }
@@ -1013,7 +1013,7 @@ function submitRecording(){
 
         },
         error: function() {
-            console.log("that's wrong");
+          //console.log("that's wrong");
         },
     });
 }

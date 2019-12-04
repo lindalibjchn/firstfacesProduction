@@ -38,7 +38,6 @@ function storeSinglePromptBox( awaiting ) {
 
         if ( promptText !== "" ) {
 
-            addPromptToSentenceData( promptNumber, promptText )
             $('#prompt0SetContainer').hide();
             storeSinglePrompt( promptNumber, promptText );
             $( '#promptText' + idOfNextPromptNumber ).focus();

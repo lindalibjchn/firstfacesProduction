@@ -155,38 +155,39 @@ function setEmotionSurpriseNodShakeEvents() {
 
 function setKeydownEvents() {
 
+    $(document).off( 'keydown' );
     // press ` to add wrong areas
     $(document).keydown(function(e) {
         if(e.keyCode == 65 && e.ctrlKey) {
-            console.log('Ctrl-A pressed');
+          //console.log('Ctrl-A pressed');
             e.preventDefault();
             appendCorrectionSection(true);
         } else if (e.keyCode == 83 && e.ctrlKey) {
-            console.log('Ctrl-S pressed');
+          //console.log('Ctrl-S pressed');
             e.preventDefault();
             appendCorrectionSection(false);
         } else if (e.keyCode == 81 && e.ctrlKey) {
-            console.log('Ctrl-Q pressed');
+          //console.log('Ctrl-Q pressed');
             e.preventDefault();
             clearCorrection();
         } else if (e.keyCode == 87 && e.ctrlKey) {
-            console.log('Ctrl-W pressed');
+          //console.log('Ctrl-W pressed');
             e.preventDefault();
             wipeAllCorrections();
         } else if (e.keyCode == 69 && e.ctrlKey) {
-            console.log('Ctrl-E pressed');
+          //console.log('Ctrl-E pressed');
             e.preventDefault();
             clearJudgement();
         } else if (e.keyCode == 77 && e.ctrlKey) {
-            console.log('Ctrl-M pressed');
+          //console.log('Ctrl-M pressed');
             e.preventDefault();
             sendNewInfoToServer();
         } else if(e.keyCode == 13 && e.shiftKey ) {
-            console.log('Shift-Enter pressed');
+          //console.log('Shift-Enter pressed');
             e.preventDefault();
             storeSinglePromptBox( true );
         } else if(e.keyCode == 13 && e.ctrlKey) {
-            console.log('Ctrl-Enter pressed');
+          //console.log('Ctrl-Enter pressed');
             e.preventDefault();
             storeFinal();
         }

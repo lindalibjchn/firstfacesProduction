@@ -100,11 +100,11 @@ function setSynthesisAudioOnChangeEvent() {
 
     synthesisObject.audio.ondurationchange = function() {
 
-        console.log('DELAY_BEFORE_MIA_SPEAKS:', DELAY_BEFORE_MIA_SPEAKS)
-        console.log('synthesisObject.audio.duration:', synthesisObject.audio.duration)
+      //console.log('DELAY_BEFORE_MIA_SPEAKS:', DELAY_BEFORE_MIA_SPEAKS)
+      //console.log('synthesisObject.audio.duration:', synthesisObject.audio.duration)
         let dur = synthesisObject.audio.duration - DELAY_BEFORE_MIA_SPEAKS
-        console.log('dur:', dur)
-        console.log('synthesisObject.audio.duration:', synthesisObject.audio.duration)
+      //console.log('dur:', dur)
+      //console.log('synthesisObject.audio.duration:', synthesisObject.audio.duration)
         synthesisObject.now.noOfPhones = synthesisObject.now.visemes[ synthesisObject.sentenceNo ].length;
 
         synthesisObject.now.noOfFrames = Math.floor( dur * 60 )

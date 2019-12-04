@@ -3,7 +3,7 @@ function calcTimePassed() {
     let timeNow = new Date();
     let timePassed = timeNow - conversationVariables.conversation_dict.start_time;
     let timePassedMinutes = Math.ceil( timePassed / 60000 );	
-    console.log('time passed minutes:', timePassedMinutes);
+  //console.log('time passed minutes:', timePassedMinutes);
 
     //// this classTimeMinutes is defined in variables
     //let timeRemainingMinutes = CLASS_TIME_MINUTES - timePassedMinutes;
@@ -77,7 +77,7 @@ function endClassNoSentences() {
 
         },
         error: function() {
-            console.log("that's wrong");
+          //console.log("that's wrong");
         },
         
     });
@@ -137,7 +137,7 @@ function endClass() {
         
         },
         error: function() {
-            console.log("that's wrong");
+          //console.log("that's wrong");
         },
         
     });

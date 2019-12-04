@@ -6,6 +6,8 @@ import time
 import json
 from django.http import JsonResponse
 import code
+import logging
+logger = logging.getLogger(__name__)
 
 def store_judgement(request):
 
@@ -96,15 +98,15 @@ def store_indexes_corrections(request):
     conv_id = request.POST['conversationID']
     sent = Sentence.objects.get(pk=sent_id)
     sent.indexes = request.POST['indexes']
-    # print(request.POST)
-    # print(sent.judgement)
     
+    logger.error('\nindexes:', str(sent.indexes))
+    logger.error('judgement:', str(sent.judgement))
+    print('\nindexes:', sent.indexes)
+    print('judgement:', sent.judgement)
     if sent.judgement == 'M':
 
-        print('sentence:', sent.sentence)
-        print('indexes:', sent.indexes)
         unsure_strings = get_mean_by_text(json.loads(sent.sentence), json.loads(sent.indexes))
-        print('unsure_strings:', unsure_strings)
+        logger.error('unsure_strings:', str(unsure_strings))
         prompt = create_prompt_instance( unsure_strings[1:], 3, 850 )
         sent.prompts.add(prompt)
 

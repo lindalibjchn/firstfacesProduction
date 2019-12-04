@@ -33,7 +33,7 @@ function tryAgain() {
         success: function(json) {
         },
         error: function() {
-            console.log("that's wrong");
+          //console.log("that's wrong");
         },
         
     });
@@ -51,7 +51,7 @@ function whatsWrong() {
         success: function(json) {
         },
         error: function() {
-            console.log("that's wrong");
+          //console.log("that's wrong");
         },
         
     });
@@ -94,7 +94,7 @@ function showCorrection() {
             conversationVariables.conversation_dict.completed_sentences[ 0 ].show_correction = true;
         },
         error: function() {
-            console.log("that's wrong");
+          //console.log("that's wrong");
         },
         
     });
@@ -127,7 +127,7 @@ function nextSentence() {
         success: function(json) {
         },
         error: function() {
-            console.log("that's wrong");
+          //console.log("that's wrong");
         },
         
     });

@@ -1,6 +1,6 @@
 function showWrongSentence() {
 
-    console.log('in showWrongSentence');
+  //console.log('in showWrongSentence');
     conversationVariables.sentenceForHighlighting = getSentenceWithSpacesInArray( conversationVariables.conversation_dict.completed_sentences[ 0 ].sentence )
 
     for ( w=0; w < conversationVariables.sentenceForHighlighting.length; w++ ) {

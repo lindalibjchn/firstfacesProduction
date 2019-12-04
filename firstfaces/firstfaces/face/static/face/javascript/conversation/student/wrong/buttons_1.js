@@ -38,7 +38,7 @@ function highlightWrong() {
 
                 ind.forEach( function(jnd) {
 
-                    console.log('jnd', jnd)
+                  //console.log('jnd', jnd)
                     $('#wrongWord__' + jnd.toString()).css( {
                             'background-image': 'linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0), red, red, rgba(0,0,0,0), rgba(0,0,0,0))',
                             'color': 'white',
@@ -148,8 +148,8 @@ function showCorrectionUnderWrongSent() {
 
     }
 
-    console.log('correctParts:', correctParts);
-    console.log('lenCorrectParts:', lenCorrectParts);
+  //console.log('correctParts:', correctParts);
+  //console.log('lenCorrectParts:', lenCorrectParts);
     let wrongParts = [];
     let lenWrongParts = [];
     conversationVariables.conversation_dict.completed_sentences[ 0 ].indexes.forEach( function(ind) {
@@ -168,14 +168,14 @@ function showCorrectionUnderWrongSent() {
 
     } );
 
-    console.log('wrongParts:', wrongParts);
-    console.log('lenWrongParts:', lenWrongParts);
+  //console.log('wrongParts:', wrongParts);
+  //console.log('lenWrongParts:', lenWrongParts);
 
     let corrections = []
         
     conversationVariables.conversation_dict.completed_sentences[ 0 ].correction.forEach( function( cor ) {
     
-        console.log('cor:', cor);
+      //console.log('cor:', cor);
         correction = []
         let splitCor = cor.split(' ');
         splitCor.forEach( function( c ) {
@@ -186,7 +186,7 @@ function showCorrectionUnderWrongSent() {
         });
 
         correction.pop();
-        console.log('correction:', correction);
+      //console.log('correction:', correction);
 
         corrections.push( correction );
 
@@ -195,7 +195,7 @@ function showCorrectionUnderWrongSent() {
     let lenCorrections = [];
     corrections.forEach( function( wp ) {
 
-        console.log('wp:', wp);
+      //console.log('wp:', wp);
         let lenCorrection = 0
         wp.forEach( function( wpp ) {
 
@@ -207,8 +207,8 @@ function showCorrectionUnderWrongSent() {
 
     } );
 
-    console.log('corrections:', corrections)
-    console.log('lenCorrections:', lenCorrections)
+  //console.log('corrections:', corrections)
+  //console.log('lenCorrections:', lenCorrections)
 
     correct = true;
     count = 0;

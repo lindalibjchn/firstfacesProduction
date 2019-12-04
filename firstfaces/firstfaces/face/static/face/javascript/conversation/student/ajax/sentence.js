@@ -54,7 +54,7 @@ function sendSentToServer() {
             },
             success: function(json) {
                 
-                console.log('sentence successfully sent to server');
+              //console.log('sentence successfully sent to server');
                 conversationVariables.sentence_awaiting_judgement = json.sentence
 
             },
@@ -84,7 +84,7 @@ function checkJudgement() {
         },
         success: function(json) {
             
-            console.log('receivedJudgement:', json.receivedJudgement)
+          //console.log('receivedJudgement:', json.receivedJudgement)
             if ( json.receivedJudgement ) {
 
                 judgementReceived( json.sentence )
@@ -98,7 +98,7 @@ function checkJudgement() {
         },
         error: function() {
             
-            console.log('in error');
+          //console.log('in error');
             startNextSentenceThoughtLoop( errorInGettingResponse=true );
         
         },
@@ -126,7 +126,7 @@ function getNextPrompt() {
 
             if ( json.awaiting_more ) {
 
-                console.log('getting next prompt')
+              //console.log('getting next prompt')
                 setTimeout( getNextPrompt, 2000 );
 
             }
@@ -134,7 +134,7 @@ function getNextPrompt() {
         },
         error: function() {
             
-            console.log('in error');
+          //console.log('in error');
         
         },
 
@@ -145,7 +145,7 @@ function getNextPrompt() {
 
 function checkForCorrections() {
 
-    console.log('in check for corrections')
+  //console.log('in check for corrections')
     $.ajax({
         url: "/check_for_corrections",
         type: "GET",
@@ -156,7 +156,7 @@ function checkForCorrections() {
             
             if ( json.received_corrections ) {
                 
-                console.log('receivedCorrections:')
+              //console.log('receivedCorrections:')
                 conversationVariables.conversation_dict.completed_sentences[ 0 ].indexes = json.indexes
                 conversationVariables.conversation_dict.completed_sentences[ 0 ].correction = json.correction
                 showWrong();
@@ -164,14 +164,14 @@ function checkForCorrections() {
             } else {
 
                 checkForCorrections();
-                console.log('checkForCorrections() again')
+              //console.log('checkForCorrections() again')
 
             }
 
         },
         error: function() {
             
-            console.log('in error');
+          //console.log('in error');
         
         },
 
@@ -189,11 +189,11 @@ function storeNoOfThoughtBubbleLoops() {
         },
         success: function(json) {
             
-            console.log( 'thoughtBubbleLoops stored successsfully' )
+          //console.log( 'thoughtBubbleLoops stored successsfully' )
         },
         error: function() {
             
-            console.log( 'in storeNoOfThoughtBubbleLoops error' );
+          //console.log( 'in storeNoOfThoughtBubbleLoops error' );
         
         },
 

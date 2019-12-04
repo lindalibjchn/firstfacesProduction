@@ -4,10 +4,10 @@ function readyAudio() {
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
         
         startAudioStream();
-            
+
     } else {
 
-        console.log('getUserMedia not supported on your browser!');
+      //console.log('getUserMedia not supported on your browser!');
         alert('getUserMedia not supported on your browser!');
     
     }
@@ -53,7 +53,12 @@ function onRecord() {
     resetOnRecordVariables();
     dealWithInputBtns();
     mediaRecorder.start();
-    //initMicVolumeBar(); // <volume-meter.js>
+    if ( !appleDevice ) {
+
+        initMicVolumeBar(); // <volume-meter.js>
+
+    }
+
     tiaLeanToListenToRecording();
     recorder15sTimeout = setTimeout( checkIfClickedStop, 15000 );
 
@@ -187,7 +192,7 @@ function onMediaRecorderStop() {
                 sendErrorBlobToServer( conversationVariables.blob );
             
             } else {
-                console.log("Correct Stage 3 Call Made");
+              //console.log("Correct Stage 3 Call Made");
                 sendAttemptBlob( conversationVariables.blob );
             
             }

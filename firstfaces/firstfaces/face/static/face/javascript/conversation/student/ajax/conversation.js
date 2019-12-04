@@ -1,6 +1,6 @@
 function storeEmotion() {
 
-    console.log(' in store emotion' );
+  //console.log(' in store emotion' );
     // last emotion click is handled by the endConversation function
     if ( conversationVariables.ratings === undefined ) {
 

@@ -74,7 +74,7 @@ function askAboutEmotion() {
 
 function showInitEmotionQuestions() {
 
-    console.log('in showInitEmotionQuestions');
+  //console.log('in showInitEmotionQuestions');
     $('#emotionQuestionsCont').fadeIn( tiaTimings.speechBubbleFadeInDuration );
 
     // allow emotions to be clickable
@@ -84,7 +84,7 @@ function showInitEmotionQuestions() {
 
 function goToAskTopic( emotion ) {
 
-    console.log(' go ask topic ' );
+  //console.log(' go ask topic ' );
     // remove speech bubble to ask which topic
     removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
     var calculatedExpressions;

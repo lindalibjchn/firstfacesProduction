@@ -9,11 +9,11 @@ function sendTTS( text ) {
         },
         success: function(json) {
 
-            console.log('got tts successfully:', json.synthURL);
+          //console.log('got tts successfully:', json.synthURL);
 
         },
         error: function() {
-            console.log("that's wrong");
+          //console.log("that's wrong");
         },
 
     });
@@ -272,7 +272,7 @@ function getRemainingAudio(){
 
 function sendSoundMicToServer( device, TF ) {
 
-    console.log('in sendSoundMicToServer:', device + " " + TF.toString());
+  //console.log('in sendSoundMicToServer:', device + " " + TF.toString());
     $.ajax({
         url: "/store_sound_mic",
         type: "GET",
@@ -282,7 +282,7 @@ function sendSoundMicToServer( device, TF ) {
         },
         success: function(json) {
             
-            console.log('added device status');
+          //console.log('added device status');
 
         },
         error: function() {
@@ -306,7 +306,7 @@ function sendTimesToServer() {
         },
         success: function(json) {
             
-            console.log('added timings');
+          //console.log('added timings');
 
         },
         error: function() {

@@ -33,13 +33,13 @@ function prepareHeadBobAndTalkingBoolOnFirstSentence() {
 
 function tiaSpeakIndividualSentences() {
     
-    console.log( 'now in tiaSpeakIndividualSentences:', synthesisObject.now );
+  //console.log( 'now in tiaSpeakIndividualSentences:', synthesisObject.now );
 
     synthesisObject.now.phoneCount = 1;
 
     if(conversationVariables.stage3){
         var new_duration = synthesisObject.now.duration / ((parseInt(document.getElementById("myRange").value)+20)/100);
-        console.log(new_duration);
+      //console.log(new_duration);
         synthesisObject.audioS3.src = synthesisObject.now.URLs[ synthesisObject.sentenceNo ];
         synthesisObject.audioS3.playbackRate = conversationVariables.playspeed;
         synthesisObject.now.newDuration = new_duration;
@@ -68,7 +68,7 @@ function animateFirstPhoneSlowly() {
        
     expressionController( expressionObject.abs[ synthesisObject.now.visemes[ synthesisObject.sentenceNo ][ 0 ] ], tiaTimings.durationOfFirstSpeakingPhones, slightlyDelayAudioPlay )
 
-    console.log( 'now in animateFirstPhoneSlowly:', synthesisObject.now );
+  //console.log( 'now in animateFirstPhoneSlowly:', synthesisObject.now );
 }
 
 function slightlyDelayAudioPlay() {
@@ -100,7 +100,7 @@ function slightlyDelayAudioPlay() {
 
 function animatePhonesInOrder() {
 
-    console.log( 'in animatePhonesInOrder:', synthesisObject.now );
+  //console.log( 'in animatePhonesInOrder:', synthesisObject.now );
     if ( synthesisObject.now.phoneCount < synthesisObject.now.noOfPhones ) {
 
         pronunciationController( expressionObject.abs[ synthesisObject.now.visemes[ synthesisObject.sentenceNo ][ synthesisObject.now.phoneCount ] ], animatePhonesInOrder )
@@ -109,49 +109,69 @@ function animatePhonesInOrder() {
     // check for last phone to also be run slowly
     } else if ( synthesisObject.now.phoneCount === synthesisObject.now.noOfPhones ) { 
         
-        //if last sentence then just show mic, but if more sentences to come then show 'next' button
-        if ( synthesisObject.sentenceNo === synthesisObject.data.prompt.texts.length - 1 ) {
+        if ( !conversationVariables.promptSpeaking ) {
+        
+            if ( synthesisObject.sentenceNo === synthesisObject.now.texts.length - 1 ) {
     
-            if ( conversationVariables.promptSpeaking && conversationVariables.conversation_dict.completed_sentences[ 0 ].awaiting_next_prompt ) {
+                endTiaTalking();
+
+            } else {
 
                 expressionController( expressionObject.quarter, tiaTimings.durationOfLastSpeakingPhones, function() {
-                    
-                    buttonsListenNextSentenceWaiting();
 
-                } );
+                    setTimeout( updateSentenceNumberAndAudioSrc, 750 );
+               
+                });    
 
-                synthesisObject.currentPromptCount = synthesisObject.now.texts.length;
-                checkForNewPrompt();
+            }
 
-            } else if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === "M" ) { 
-            
-                if ( synthesisObject.sentenceNo === 0 ) {
+        } else {
+
+            //if last sentence then just show mic, but if more sentences to come then show 'next' button
+            if ( synthesisObject.sentenceNo === synthesisObject.data.prompt.texts.length - 1 ) {
+        
+                if ( conversationVariables.promptSpeaking && conversationVariables.conversation_dict.completed_sentences[ 0 ].awaiting_next_prompt ) {
 
                     expressionController( expressionObject.quarter, tiaTimings.durationOfLastSpeakingPhones, function() {
                         
                         buttonsListenNextSentenceWaiting();
 
                     } );
-            
+
+                    synthesisObject.currentPromptCount = synthesisObject.now.texts.length;
+                    checkForNewPrompt();
+
+                } else if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === "M" ) { 
+                
+                    if ( synthesisObject.sentenceNo === 0 ) {
+
+                        expressionController( expressionObject.quarter, tiaTimings.durationOfLastSpeakingPhones, function() {
+                            
+                            buttonsListenNextSentenceWaiting();
+
+                        } );
+                
+                    } else {
+
+                        endTiaTalking();
+
+                    }
+
                 } else {
 
                     endTiaTalking();
 
                 }
-
+            
             } else {
 
-                endTiaTalking();
+                expressionController( expressionObject.quarter, tiaTimings.durationOfLastSpeakingPhones, function() {
+
+                    setTimeout( updateSentenceNumberAndAudioSrc, 750 );
+               
+                });    
 
             }
-            
-        } else {
-
-            expressionController( expressionObject.quarter, tiaTimings.durationOfLastSpeakingPhones, function() {
-
-                setTimeout( updateSentenceNumberAndAudioSrc, 1000 );
-           
-            });    
 
         }
 
@@ -189,7 +209,7 @@ function endTiaTalking() {
 
                 }, tiaTimings.speechBubbleFadeOutDuration * 3 )
 
-            }, 2000 );
+            }, 1000 );
 
         }
         

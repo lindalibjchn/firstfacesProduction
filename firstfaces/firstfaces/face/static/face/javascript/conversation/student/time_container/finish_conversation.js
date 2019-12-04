@@ -7,7 +7,7 @@ function storeFinalEmotion() {
     
     } );
     $('.emojis').unbind();
-    console.log('conversationVariables.ratings.emotion:', conversationVariables.ratings.emotion );
+  //console.log('conversationVariables.ratings.emotion:', conversationVariables.ratings.emotion );
 
     $( '#feelNowContainer' ).fadeOut( function() {
 

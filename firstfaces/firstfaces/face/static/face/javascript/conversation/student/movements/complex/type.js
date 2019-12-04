@@ -3,7 +3,7 @@ function tapKeyFull() {
     let state = 0;
     initMove( armTapObject, [[0,0,0],[0,0.2,-0.2]], 0.3 );
 
-    console.log('in tapKeyFull');
+  //console.log('in tapKeyFull');
     function checkIfArmDone() {
 
         if ( armTapObject.bool ) {
@@ -28,7 +28,7 @@ function tapKeyFull() {
             } else {
 
                 armTapObject.currentCoords = [[0,0,0],[0,0,0]];
-                movementController( movementObject.abs.blank, 0.5, 1.0 );
+                movementController( movementObject.abs.blank, 0.5, 1.0, startAudioStream );
                 dealWithAfterTap();
 
             }
@@ -43,7 +43,6 @@ function tapKeyFull() {
 
 function dealWithAfterTap() {
 
-    startAudioStream();
     $('#closeOverlayArea').prop( "disabled", false);
     $('#submitOverlay').prop( "disabled", false);
     //show play buttons below

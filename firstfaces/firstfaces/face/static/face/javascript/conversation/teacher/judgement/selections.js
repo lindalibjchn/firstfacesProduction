@@ -12,7 +12,7 @@ function removeSelectable() {
 
     if ( $( '#sentenceForJudgement' ).hasClass( 'ui-selectable' ) ) {
 
-        console.log('destroy selectable');
+      //console.log('destroy selectable');
         $("#sentenceForJudgement").selectable( 'destroy' );
         $( '#sentenceForJudgement' ).css( {
             'opacity': '0.7',
@@ -32,12 +32,14 @@ var appendCorrectionSection = function( copy ) {
     }
 
     let numberOfCorrectionsAlreadyInIndexes = teacherVars.sentencesNeedJudgement[ 0 ].indexes.length
+    console.log('numberOfCorrectionsAlreadyInIndexes:', numberOfCorrectionsAlreadyInIndexes);
 
     highlightAndFocusOnPromptBox( numberOfCorrectionsAlreadyInIndexes );
 
     let idArray = []
 
     $('#sentenceForJudgement > .ui-selected').each( function() {
+        console.log('each selection');
         idArray.push(parseInt(this.id.substring(8)));
     })
 
@@ -94,8 +96,8 @@ function makeSentForPromptBox( idArray_ ) {
 
         } else { // for words
 
-            console.log('i:', i);
-            console.log(teacherVars.sentencesNeedJudgement[ 0 ].sentence[ ( i - 1 ) / 2 ][ 0 ]);
+          //console.log('i:', i);
+          //console.log(teacherVars.sentencesNeedJudgement[ 0 ].sentence[ ( i - 1 ) / 2 ][ 0 ]);
             sent_ += teacherVars.sentencesNeedJudgement[ 0 ].sentence[ ( i - 1 ) / 2 ][ 0 ];
 
             $( '#indWord_' + i.toString() ).css( 'color', 'yellow');

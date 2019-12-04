@@ -73,7 +73,7 @@ function setEventHandlerForPlayAudioButtons() {
 function playTranscription() {
 
     let ind = this.id.substring(18);
-    console.log('index:', ind );
+  //console.log('index:', ind );
     let attemptAud = document.getElementById( 'audioTag' + ind );
 
     attemptAud.play();

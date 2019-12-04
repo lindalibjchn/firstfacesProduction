@@ -403,7 +403,7 @@ function greeting06() {
     setTimeout( function() {
 
         let textOnLaptop = $.trim($('#textInput').val().toLowerCase());
-        console.log('text on laptop');
+      //console.log('text on laptop');
 
         if ( textOnLaptop === "nice to meet you" || textOnLaptop === "nice to meet you." ) {
 
@@ -668,7 +668,7 @@ function greeting15() {
     setTimeout( function() {
 
         let textOnLaptop = $.trim($('#textInput').val().toLowerCase());
-        console.log('text on laptop');
+      //console.log('text on laptop');
 
         if ( textOnLaptop === "she sells seashells by the seashore" || textOnLaptop === "she sells seashells by the seashore." ) {
             
