@@ -7,6 +7,7 @@ from django.conf import settings
 import time
 import json
 from face.models import StockPhrases, Prompt
+# import ffmpeg
 
 if settings.DEVELOPMENT_ENV == 'john':
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/johnsHDD/PhD/2018_autumn/erle-3666ad7eec71.json"
@@ -93,6 +94,11 @@ def create_tia_tts_url(text, directory, filename, initial_delay):
         fullURL = os.path.join(settings.BASE_DIR, synthURL)
         with open( fullURL, 'wb') as out:
             out.write(response.audio_content)
+        
+        # inp_0 = ffmpeg.input(os.path.join(settings.BASE_DIR, 'media/breatheIn.wav' ))
+        # inp_1 = ffmpeg.input(fullURL)
+        # ffmpeg.concat(inp_0, inp_1).output(os.path.join(settings.BASE_DIR, 'media/breatheTest.wav')).run()
+    
     except:
         synthURL = 'fault'
 

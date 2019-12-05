@@ -9,7 +9,7 @@ function normalBreathing() {
 
     }
 
-    breathe( breatheCount, 1 )
+    breathe( breatheCount, 1.5 )
 
 }
 
@@ -61,6 +61,13 @@ function breathe( bCount, mult ) {
 
 function initSingleBreath( direction, amount, duration ) {
 
+    if ( direction === 1 ) {
+
+        breatheObject.normalBreatheStopCount = mainCount % secsOneBreath;
+        breatheObject.normalBreatheStopDirection = breatheObject.direction;
+
+    }
+
     breatheObject.bool = false;
     breatheObject.direction = direction;
     breatheObject.singleBreath.startCount = mainCount;
@@ -69,11 +76,4 @@ function initSingleBreath( direction, amount, duration ) {
     assignSinArrayForSpeed( breatheObject.singleBreathCount, breatheObject, sineArrays ); 
     breatheObject.singleBreath.endCount = mainCount + breatheObject.sinLength;
     
-    if ( direction === 1 ) {
-
-        breatheObject.normalBreatheStopCount = mainCount % secsOneBreath;
-        breatheObject.normalBreatheStopDirection = breatheObject.direction;
-
-    }
-
 }
