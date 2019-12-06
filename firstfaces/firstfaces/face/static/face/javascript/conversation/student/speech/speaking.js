@@ -2,7 +2,7 @@ function tiaPrepareToSpeak( tiaSays, speakCb=function(){} ) {
 
     synthesisObject.sentenceNo = 0;
     synthesisObject.now = synthesisObject.data[ tiaSays ];
-    synthesisObject.audio.src = prefixURL + synthesisObject.now.URLs[ synthesisObject.sentenceNo ];
+    synthesisObject.audio.src = /* prefixURL + */ synthesisObject.now.URLs[ synthesisObject.sentenceNo ];
     synthesisObject.callback = speakCb;
     buttonsListenNextSentence();
 
@@ -182,7 +182,7 @@ function animatePhonesInOrder() {
 function updateSentenceNumberAndAudioSrc() {
 
     synthesisObject.sentenceNo += 1;
-    synthesisObject.audio.src = prefixURL + synthesisObject.now.URLs[ synthesisObject.sentenceNo ];
+    synthesisObject.audio.src = /* prefixURL + */ synthesisObject.now.URLs[ synthesisObject.sentenceNo ];
     buttonsListenNextSentence();
 
 }

@@ -7,6 +7,7 @@ from django.conf import settings
 import time
 import json
 from face.models import StockPhrases, Prompt
+from suds.client import Client
 # import ffmpeg
 
 if settings.DEVELOPMENT_ENV == 'john':
@@ -64,44 +65,50 @@ def create_tia_speak_sentence_URL_and_visemes(text, directory, filename, initial
 
 def create_tia_tts_url(text, directory, filename, initial_delay):
 
-    speaking_voice = 'en-US-Wavenet-C'
+    ssml_text = '<s><spurt audio="g0001_007">breath in</spurt><spurt audio="g0001_007">breath in</spurt><spurt audio="g0001_007">breath in</spurt><spurt audio="g0001_007">breath in</spurt><spurt audio="g0001_007">breath in</spurt><spurt audio="g0001_007">breath in</spurt></s>'
 
-    ssml_text = '<speak><break time="' + str(initial_delay) + 'ms"/>' + text + '</speak>'
+    accountID = '5dea1f13b1519'
+    password = 'wg3BbQ53cP'
+    soapclient = Client("https://cerevoice.com/soap/soap_1_1.php?WSDL")
+    request = soapclient.service.speakExtended(accountID, password, 'Caitlin-CereWave', ssml_text, 'wav', 22050, False, True)
+    print('request:', request)
+
+    # speaking_voice = 'en-US-Wavenet-C'
     # ssml_text = '<speak> it is absolutely <emphasis level=\"strong\"> fantastic </emphasis> that we can use long <break time=\"3s\"/> pauses like these </speak>'
-    client = texttospeech.TextToSpeechClient()
-    input_text = texttospeech.types.SynthesisInput(ssml=ssml_text)
+    # client = texttospeech.TextToSpeechClient()
+    # input_text = texttospeech.types.SynthesisInput(ssml=ssml_text)
 
-    # Note: the voice can also be specified by name.
-    # Names of voices can be retrieved with client.list_voices().
-    voice = texttospeech.types.VoiceSelectionParams(
-        language_code='en-US',
-        name=speaking_voice,
-        # ssml_gender=texttospeech.enums.SsmlVoiceGender.FEMALE
-        )
+    # # Note: the voice can also be specified by name.
+    # # Names of voices can be retrieved with client.list_voices().
+    # voice = texttospeech.types.VoiceSelectionParams(
+        # language_code='en-US',
+        # name=speaking_voice,
+        # # ssml_gender=texttospeech.enums.SsmlVoiceGender.FEMALE
+        # )
 
-    audio_config = texttospeech.types.AudioConfig(
-        audio_encoding=texttospeech.enums.AudioEncoding.MP3,
-        pitch = 0,
-        speaking_rate = 0.8,
-        )
+    # audio_config = texttospeech.types.AudioConfig(
+        # audio_encoding=texttospeech.enums.AudioEncoding.MP3,
+        # pitch = 0,
+        # speaking_rate = 0.8,
+        # )
 
-    fullURL = ''
-    try:
-        response = client.synthesize_speech(input_text, voice, audio_config)
+    # fullURL = ''
+    # try:
+        # response = client.synthesize_speech(input_text, voice, audio_config)
 
-        # don't need to keep all synths for class. Remember to delete this when session ends.
-        synthURL = 'media/' + directory + filename + '.wav' # + '_' + str(int(time.mktime((timezone.now()).timetuple())))
-        fullURL = os.path.join(settings.BASE_DIR, synthURL)
-        with open( fullURL, 'wb') as out:
-            out.write(response.audio_content)
+        # # don't need to keep all synths for class. Remember to delete this when session ends.
+        # synthURL = 'media/' + directory + filename + '.wav' # + '_' + str(int(time.mktime((timezone.now()).timetuple())))
+        # fullURL = os.path.join(settings.BASE_DIR, synthURL)
+        # with open( fullURL, 'wb') as out:
+            # out.write(response.audio_content)
         
-        # inp_0 = ffmpeg.input(os.path.join(settings.BASE_DIR, 'media/breatheIn.wav' ))
-        # inp_1 = ffmpeg.input(fullURL)
-        # ffmpeg.concat(inp_0, inp_1).output(os.path.join(settings.BASE_DIR, 'media/breatheTest.wav')).run()
+        # # inp_0 = ffmpeg.input(os.path.join(settings.BASE_DIR, 'media/breatheIn.wav' ))
+        # # inp_1 = ffmpeg.input(fullURL)
+        # # ffmpeg.concat(inp_0, inp_1).output(os.path.join(settings.BASE_DIR, 'media/breatheTest.wav')).run()
     
-    except:
-        synthURL = 'fault'
+    # except:
+        # synthURL = 'fault'
 
-    return synthURL
+    return request.fileUrl
 
 
