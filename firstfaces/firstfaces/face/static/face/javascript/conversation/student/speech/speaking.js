@@ -1,9 +1,10 @@
-function tiaPrepareToSpeak( tiaSays, speakCb=function(){} ) {
+function tiaPrepareToSpeak( tiaSays, playbackRate=0.9, speakCb=function(){} ) {
 
     synthesisObject.sentenceNo = 0;
     synthesisObject.now = synthesisObject.data[ tiaSays ];
     synthesisObject.audio.src = /* prefixURL + */ synthesisObject.now.URLs[ synthesisObject.sentenceNo ];
     synthesisObject.callback = speakCb;
+    synthesisObject.audio.playbackRate = playbackRate;
     buttonsListenNextSentence();
 
 }
@@ -20,7 +21,6 @@ function tiaSpeakButtonEvent() {
     $('#listenNextSentenceBtnCont').hide();
     tiaSpeakIndividualSentences();
 
-    synthesisObject.audio.playbackRate = 0.75;
     synthesisObject.audio.play();
 
 }
@@ -38,6 +38,7 @@ function tiaSpeakIndividualSentences() {
   //console.log( 'now in tiaSpeakIndividualSentences:', synthesisObject.now );
 
     synthesisObject.now.phoneCount = 0;
+    synthesisObject.now.visemeOverrun = 0;
 
     if(conversationVariables.stage3){
         var new_duration = synthesisObject.now.duration / ((parseInt(document.getElementById("myRange").value)+20)/100);
@@ -238,6 +239,7 @@ function checkForNewPrompt() {
 
 function pronunciationController( expressionTo, phoneEndTime, cb ) {
 
+    let weightedPhoneEndTime = phoneEndTime / synthesisObject.audio.playbackRate;
     //console.log('in pronunciation controller')
     //console.log( 'phoneEndTime:', phoneEndTime );
     //console.log( 'phonneCount:', synthesisObject.now.phoneCount );
@@ -250,17 +252,35 @@ function pronunciationController( expressionTo, phoneEndTime, cb ) {
     let phoneLength;
     if ( synthesisObject.now.phoneCount === 0 ) {
     
-        phoneLength = phoneEndTime
+        phoneLength = weightedPhoneEndTime
     
     } else {
 
-        phoneLength = phoneEndTime - synthesisObject.previousPhoneEndTime;
+        phoneLength = weightedPhoneEndTime - synthesisObject.previousWeightedPhoneEndTime;
 
     }
     
     //console.log( 'phoneLength:', phoneLength );
-    synthesisObject.previousPhoneEndTime = phoneEndTime
-    expressionObject.sinLength =  Math.round( phoneLength * 0.06 );
+    synthesisObject.previousWeightedPhoneEndTime = weightedPhoneEndTime;
+    
+    let frames = Math.round( phoneLength * 6 ) / 100;
+    //console.log( 'frames:', frames );
+    let framesPlusOverrun = Math.round( phoneLength * 6 - 100 * synthesisObject.now.visemeOverrun ) / 100;
+    //console.log( 'framesPlusOverrun:', framesPlusOverrun );
+    let decimals = Math.round( 100 * ( framesPlusOverrun % 1 ) ) / 100;
+    //console.log( 'decimals:', decimals );
+    let overrun = 0;
+    if ( decimals < 0.5 ) {
+        overrun = decimals;
+    } else {
+        overrun = - Math.round( 100 * ( Math.abs( 1 - decimals ) ) ) / 100;
+    }
+    //console.log( 'overrun:', overrun );
+    synthesisObject.now.visemeOverrun = overrun;
+
+    let roundedFrames = Math.round( framesPlusOverrun );
+    //console.log( 'roundedFames:', roundedFrames );
+    expressionObject.sinLength = roundedFrames; 
     //console.log( 'sinLength:', expressionObject.sinLength );
     expressionObject.sin = sineArrays[ expressionObject.sinLength ];
     expressionObject.startCount = mainCount;

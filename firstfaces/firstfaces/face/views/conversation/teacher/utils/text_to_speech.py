@@ -134,7 +134,7 @@ def parse_xml(xml):
                 if s[0] == 'name':
                     name = s[1][1:-1]
                 if s[0] in ['start','end']:
-                    temp[s[0]] = round(1.25 * float(s[1][1:-1])*1000)
+                    temp[s[0]] = round(float(s[1][1:-1])*1000)
                 else:
                     temp[s[0]] = s[1][1:-1]
             if s[0] == 'sapi_viseme':

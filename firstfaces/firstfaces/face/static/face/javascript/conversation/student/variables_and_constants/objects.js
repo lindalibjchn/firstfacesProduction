@@ -357,8 +357,8 @@ var synthesisObject = {
     sentenceNo: 0, //if multiple sentences it will start at first, iterates in <tiaSpeech.js>
     talking: false,
     pitch: 0,
-    speaking_rate: 0.70,
-    continuous: true,
+    //speaking_rate: 0.70,
+    //continuous: true,
     firstClip: false,
     now: {}, 
     stockPhrases: {},
