@@ -527,6 +527,16 @@ var synthesisObject = {
 
         },
 
+        'test': {
+
+            URLs: [ prefixURL + tiaMediaLoc + "humpdy.wav" ],
+            texts: [ "Humpty Dumpty sat on a wall, Humpty Dumpty had a great fall, All the king's horses and all the king's men, Couldn't put Humpty together again." ],
+            phones: [
+                ['e', 'e', 'b', 'b', 't', 'i', 't', 'e', 'b', 'b', 't', 'i', 's', 'e', 't', 'e', 't', 'e', 'w', 'e', 'l', 'e', 'e', 'b', 'b', 't', 'i', 't', 'e', 'b', 'b', 't', 'i', 'e', 'e', 't', 'e', 'k', 'r', 'e', 't', 'f', 'e', 'l', 'e', 'l', 'th', 'e', 'k', 'e', 'k', 'e', 's', 'e', 'e', 'r', 's', 'e', 's', 'e', 't', 't', 'e', 'l', 'th', 'e', 'k', 'e', 'k', 'e', 's', 'b', 'e', 't', 'k', 'e', 't', 'e', 't', 't', 'e', 'b', 'e', 't', 'e', 'e', 'b', 'b', 't', 'i', 't', 'e', 'k', 'e', 'th', 'r', 'e', 'k', 'e', 't']
+            ],
+
+        },
+
 
     }
 

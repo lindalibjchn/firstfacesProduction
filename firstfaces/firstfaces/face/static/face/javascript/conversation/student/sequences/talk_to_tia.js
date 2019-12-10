@@ -57,6 +57,8 @@ function goToThinkingPos() {
 function resetSentenceBeingRecorded() {
 
     conversationVariables.sentence_being_recorded = null;
+    conversationVariables.previous_sent_Aud_Fname  = $.extend(true, {}, conversationVariables.sentence_being_recorded_audio.Aud_Fname);
+    conversationVariables.previous_sent_totalAudioLength  = $.extend(true, {}, conversationVariables.sentence_being_recorded_audio.totalAudioLength);
     conversationVariables.sentence_being_recorded_audio = null;
 
 }
