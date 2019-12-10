@@ -176,6 +176,95 @@ function fix_locations(value){
 
 }
 
+function fix_location_1(fidx, cidx){
+    console.log("CALLED FIX LOCATIONS");
+    if(cidx == 0 && fidx == 1){
+        $('#fixedWord').removeClass().addClass("centerSide");
+        $('#fixedWordTile').removeClass("left-sided").removeClass('right-sided').addClass('centered');
+        $('#btnCont').removeClass().addClass("leftSide");
+        $('#refBtn').removeClass("centered").removeClass('right-sided').addClass('left-sided');
+        $('#SpectroSpinHolder').removeClass().addClass("rightSide");
+        $('.main-tile').css({'width':'90%','left':'0','border-radius':'0 5px 5px 0','border-top':'3px solid black','border-bottom':'3px solid black','border-right':'3px solid black','border-left':'0'})
+        $('.second-tile-top').css({"width":"72%","left":"9%","top":"23.2%", 'border':"3px solid black", 'border-radius': '0 5px 5px 0'});
+        $('.second-tile-bottom').css({"width":"72%","left":"9%","top":"62.8%",'border':"3px solid black", 'border-radius': '0 5px 5px 0'});
+        $('.third-tile-top').css({"width":"57.6%","left":"16.2%","top":"9.76%", 'border':"3px solid black", 'border-radius': '0 5px 5px 0'});
+        $('.third-tile-top-hidden').css({"width":"57.6%","left":"16.2%","top":"9.76%", 'border':"3px solid black", 'border-radius': '0 5px 5px 0'});
+        $('.third-tile-bottom').css({"width":"57.6%","left":"16.2%","top":"82.96%", 'border':"3px solid black", 'border-radius': '0 5px 5px 0'});
+        $('.third-tile-bottom-hidden').css({"width":"57.6%","left":"16.2%","top":"82.96%", 'border':"3px solid black", 'border-radius': '0 5px 5px 0'});
+
+    }else if(cidx == 0 && fidx == 2){
+        $('#fixedWord').removeClass().addClass("rightSide");
+        $('#fixedWordTile').removeClass("centered").removeClass('left-sided').addClass('right-sided');
+        $('#btnCont').removeClass().addClass("leftSide");
+        $('#refBtn').removeClass("centered").removeClass('right-sided').addClass('left-sided');
+        $('#SpectroSpinHolder').removeClass().addClass("centerSide");
+        $('.main-tile').css({'width':'100%','left':'0%','border-top':'3px solid black','border-bottom':'3px solid black','border-right':'3px solid black','border-left':'3px solid black','border-radius':'0'});
+        $('.second-tile-top').css({"width":"80%", "left":"10%", "top":"23.2%", 'border':"3px solid black", 'border-radius': '0'});
+        $('.second-tile-bottom').css({"width":"80%", "left":"10%", "top":"62.8%", 'border':"3px solid black", 'border-radius': '0'});
+        $('.third-tile-top').css({"width":"64%", "left":"18%", "top":"9.76%", 'border':"3px solid black", 'border-radius': '0'});
+        $('.third-tile-top-hidden').css({"width":"64%", "left":"18%", "top":"9.76%", 'border':"3px solid black", 'border-radius': '0'});
+        $('.third-tile-bottom').css({"width":"64%", "left":"18%", "top":"82.96%", 'border':"3px solid black", 'border-radius': '0'});
+        $('.third-tile-bottom-hidden').css({"width":"64%", "left":"18%", "top":"82.96%", 'border':"3px solid black", 'border-radius': '0'});
+
+    } else if(cidx == 1 && fidx == 0){
+        $('#fixedWord').removeClass().addClass("leftSide");
+        $('#fixedWordTile').removeClass("centered").removeClass('right-sided').addClass('left-sided');
+        $('#btnCont').removeClass().addClass("centerSide");
+        $('#refBtn').removeClass("left-sided").removeClass('right-sided').addClass('centered');
+        $('#SpectroSpinHolder').removeClass().addClass("rightSide");
+        $('.main-tile').css({'width':'90%','left':'0','border-radius':'0 5px 5px 0','border-top':'3px solid black','border-bottom':'3px solid black','border-right':'3px solid black','border-left':'0'})
+        $('.second-tile-top').css({"width":"72%","left":"9%","top":"23.2%", 'border':"3px solid black", 'border-radius': '0 5px 5px 0'});
+        $('.second-tile-bottom').css({"width":"72%","left":"9%","top":"62.8%",'border':"3px solid black", 'border-radius': '0 5px 5px 0'});
+        $('.third-tile-top').css({"width":"57.6%","left":"16.2%","top":"9.76%", 'border':"3px solid black", 'border-radius': '0 5px 5px 0'});
+        $('.third-tile-top-hidden').css({"width":"57.6%","left":"16.2%","top":"9.76%", 'border':"3px solid black", 'border-radius': '0 5px 5px 0'});
+        $('.third-tile-bottom').css({"width":"57.6%","left":"16.2%","top":"82.96%", 'border':"3px solid black", 'border-radius': '0 5px 5px 0'});
+        $('.third-tile-bottom-hidden').css({"width":"57.6%","left":"16.2%","top":"82.96%", 'border':"3px solid black", 'border-radius': '0 5px 5px 0'});
+
+    }else if(cidx == 1 && fidx == 2){
+        $('#fixedWord').removeClass().addClass("rightSide");
+        $('#fixedWordTile').removeClass("centered").removeClass('left-sided').addClass('right-sided');
+        $('#btnCont').removeClass().addClass("centerSide");
+        $('#refBtn').removeClass("left-sided").removeClass('right-sided').addClass('centered');
+        $('#SpectroSpinHolder').removeClass().addClass("leftSide");
+        $('.main-tile').css({'width':'90%','left':'10%','border-radius':'5px 0 0 5px','border-top':'3px solid black','border-bottom':'3px solid black','border-right':'0','border-left':'3px solid black'})
+        $('.second-tile-top').css({"width":"72%", "left":"19%", "top":"23.2%", 'border':"3px solid black", 'border-radius': '5px 0 0 5px'});
+        $('.second-tile-bottom').css({"width":"72%", "left":"19%", "top":"62.8%", 'border':"3px solid black", 'border-radius': '5px 0 0 5px'});
+        $('.third-tile-top').css({"width":"57.6%", "left":"26.2%", "top":"9.76%", 'border':"3px solid black", 'border-radius': '5px 0 0 5px'});
+        $('.third-tile-top-hidden').css({"width":"57.6%", "left":"26.2%", "top":"9.76%", 'border':"3px solid black", 'border-radius': '5px 0 0 5px'});
+        $('.third-tile-bottom').css({"width":"57.6%", "left":"26.2%", "top":"82.96%", 'border':"3px solid black", 'border-radius': '5px 0 0 5px'});
+        $('.third-tile-bottom-hidden').css({"width":"57.6%", "left":"26.2%", "top":"82.96%", 'border':"3px solid black", 'border-radius': '5px 0 0 5px'});
+
+
+    }else if(cidx == 2 && fidx == 0){
+        $('#fixedWord').removeClass().addClass("leftSide");
+        $('#fixedWordTile').removeClass("centered").removeClass('right-sided').addClass('left-sided');
+        $('#btnCont').removeClass().addClass("rightSide");
+        $('#refBtn').removeClass("left-sided").removeClass('centered').addClass('right-sided');
+        $('#SpectroSpinHolder').removeClass().addClass("centerSide");
+        $('.main-tile').css({'width':'100%','left':'0%','border-top':'3px solid black','border-bottom':'3px solid black','border-right':'3px solid black','border-left':'3px solid black','border-radius':'0'});
+        $('.second-tile-top').css({"width":"80%", "left":"10%", "top":"23.2%", 'border':"3px solid black", 'border-radius': '0'});
+        $('.second-tile-bottom').css({"width":"80%", "left":"10%", "top":"62.8%", 'border':"3px solid black", 'border-radius': '0'});
+        $('.third-tile-top').css({"width":"64%", "left":"18%", "top":"9.76%", 'border':"3px solid black", 'border-radius': '0'});
+        $('.third-tile-top-hidden').css({"width":"64%", "left":"18%", "top":"9.76%", 'border':"3px solid black", 'border-radius': '0'});
+        $('.third-tile-bottom').css({"width":"64%", "left":"18%", "top":"82.96%", 'border':"3px solid black", 'border-radius': '0'});
+        $('.third-tile-bottom-hidden').css({"width":"64%", "left":"18%", "top":"82.96%", 'border':"3px solid black", 'border-radius': '0'});
+
+    }else if(cidx == 2 && fidx == 1){
+        $('#fixedWord').removeClass().addClass("centerSide");
+        $('#fixedWordTile').removeClass("left-sided").removeClass('right-sided').addClass('centered');
+        $('#btnCont').removeClass().addClass("rightSide");
+        $('#refBtn').removeClass("left-sided").removeClass('centered').addClass('right-sided');
+        $('#SpectroSpinHolder').removeClass().addClass("leftSide");
+        $('.main-tile').css({'width':'90%','left':'10%','border-radius':'5px 0 0 5px','border-top':'3px solid black','border-bottom':'3px solid black','border-right':'0','border-left':'3px solid black'})
+        $('.second-tile-top').css({"width":"72%", "left":"19%", "top":"23.2%", 'border':"3px solid black", 'border-radius': '5px 0 0 5px'});
+        $('.second-tile-bottom').css({"width":"72%", "left":"19%", "top":"62.8%", 'border':"3px solid black", 'border-radius': '5px 0 0 5px'});
+        $('.third-tile-top').css({"width":"57.6%", "left":"26.2%", "top":"9.76%", 'border':"3px solid black", 'border-radius': '5px 0 0 5px'});
+        $('.third-tile-top-hidden').css({"width":"57.6%", "left":"26.2%", "top":"9.76%", 'border':"3px solid black", 'border-radius': '5px 0 0 5px'});
+        $('.third-tile-bottom').css({"width":"57.6%", "left":"26.2%", "top":"82.96%", 'border':"3px solid black", 'border-radius': '5px 0 0 5px'});
+        $('.third-tile-bottom-hidden').css({"width":"57.6%", "left":"26.2%", "top":"82.96%", 'border':"3px solid black", 'border-radius': '5px 0 0 5px'});
+    }
+}
+
 
 
 function tag_sentence(){
@@ -302,6 +391,7 @@ $('#playTrigramBtn').click(function(){
 });
 
 function increase_type_size_stage2(){
+    $('#reRecordBtn').hide();
     $('#correctionOverlay').css({'background-color':'rgba(255,255,255,0.8)', 'z-index':4}).animate({height:'100%'},300);
     $('#sentenceShowHolder').css('background-color','rgba(255,255,255,0)')
     $('#overlayBtnBox').css('height','10%');
@@ -314,15 +404,20 @@ function increase_type_size_stage2(){
 $('#closeTallTypeText').click(decrease_type_size_stage2);
 
 function decrease_type_size_stage2(){
+    $('#reRecordBtn').show();
     $('#correctionOverlay').css({'background-color':'rgba(255,255,255,0)', 'z-index':2}).animate({height:'50%'},300);
     $('#sentenceShowHolder').css('background-color','rgba(255,255,255,0.8)')
     $('#overlayBtnBox').css('height','20%');
     $('#finishClassIconContainer').show()
     $('#prevSentsIconContainer').show()
     $('#closeTallType').css("display","none");
-    unmoveText();
+    if($('#bottomCent').text().trim().length == 0){
+        conversationVariables.movedText = true;
+        unmoveText();
+        $('#bottomCent').hide();
+    }
     $("#bottomCent").attr("contenteditable",false);
     $('#keyboardOverlay').show();
-    $('#bottomCent').hide();
+
 }
 

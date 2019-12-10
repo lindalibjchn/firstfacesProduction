@@ -7,15 +7,16 @@ function initInputReady( from ) {
     buttonsMicrophoneOnly();
     
     if ( from === 'try again' ) {
-
+        conversationVariables.trying_again = true;
         $( '#textInputContainer' ).fadeIn();
         $( '#sentenceShowHolder').fadeIn();
         $('.play-btn').hide();
         let sentString = makeStringSentFromArray(conversationVariables.conversation_dict.completed_sentences[0].sentence);
+
         reset_text( sentString );
 
     } else {
-
+        conversationVariables.trying_again = false;
         $( '#sentenceShowHolder').hide();
         $('.play-btn').prop( "disabled", true).hide();
     

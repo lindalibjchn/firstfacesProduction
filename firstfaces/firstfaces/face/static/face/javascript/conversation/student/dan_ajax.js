@@ -25,9 +25,14 @@ function set_selectable(trans){
 // Calls the forced allignment of audio
 function doAllignment(){
     
-    let fd = new FormData();                                                    
-    fd.append('trans',conversationVariables.sentence_being_recorded_audio.alternatives[0].transcript);                 
-    fd.append('fn',conversationVariables.sentence_being_recorded_audio.Aud_Fname);
+    let fd = new FormData();
+    if(!conversationVariables.trying_again){
+        fd.append('trans',conversationVariables.sentence_being_recorded_audio.alternatives[0].transcript);
+        fd.append('fn',conversationVariables.sentence_being_recorded_audio.Aud_Fname);
+    }else{
+        fd.append('trans',conversationVariables.conversation_dict.completed_sentences[0].sentence);
+        fd.append('fn',conversationVariables.previous_sent_Aud_Fname);
+    }
     fd.append('sessionID',conversationVariables.sentence_being_recorded.conv_id);
 
     //Makes ajax call creating allignment file and map.json files
@@ -57,13 +62,22 @@ $('#forwardErrorSelection').click(function(){
     $('#listenVoiceBtn').fadeOut();
     $('#backCorrection').fadeOut();
     //Sets the length of the original audio in case user goes back
-    conversationVariables.totalAudioLength = conversationVariables.sentence_being_recorded_audio.totalAudioLength ;
+    if(!conversationVariables.trying_again){
+        conversationVariables.totalAudioLength = conversationVariables.sentence_being_recorded_audio.totalAudioLength;
+        var words = conversationVariables.sentence_being_recorded_audio.alternatives[0].transcript.split(" ");
+    }
+    else{
+        conversationVariables.totalAudioLength = conversationVariables.previous_sent_totalAudioLength;
+        var words = conversationVariables.conversation_dict.completed_sentences[0].sentence.split(" ");
+    }
     //Allignment is done
     doAllignment();
     conversationVariables.usePlayAud = true;
     //Words are looped through and sequential blocks of errored and correct words are place into their own span tags
     conversationVariables.playStage2 = true;
-    var words = conversationVariables.sentence_being_recorded_audio.alternatives[0].transcript.split(" ");
+
+
+
     var i = 0;
     conversationVariables.uncorrectedErrors = [];
     var classes = [];
@@ -1141,7 +1155,12 @@ function enableBtns(){
 
 //Gets the current setnece including corrections made to any errors
 function getSentence(){
-    var words = conversationVariables.sentence_being_recorded_audio.alternatives[0].transcript.split(" ");
+    if(!conversationVariables.trying_again){
+        var words = conversationVariables.sentence_being_recorded_audio.alternatives[0].transcript.split(" ");
+    }
+    else{
+        var words = conversationVariables.conversation_dict.completed_sentences[0].sentence.split(" ");
+    }
     var curr = 0;
     var i = 0;
     var out= "";
