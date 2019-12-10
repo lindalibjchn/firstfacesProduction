@@ -41,7 +41,7 @@ function storeSinglePrompt( promptNumber, promptText ) {
         }, 
         success: function(json) {
            
-          //console.log('single prompt successfully sent to server')
+          console.log('prompt_saved:', json.prompt_saved)
 
         },
         error: function() {

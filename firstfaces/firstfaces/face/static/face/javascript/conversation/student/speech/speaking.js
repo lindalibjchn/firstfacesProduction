@@ -3,9 +3,8 @@ function tiaPrepareToSpeak( tiaSays, speakCb=function(){},  playbackRate=0.9) {
     synthesisObject.sentenceNo = 0;
     synthesisObject.now = synthesisObject.data[ tiaSays ];
     synthesisObject.audio.src = /* prefixURL + */ synthesisObject.now.URLs[ synthesisObject.sentenceNo ];
-    synthesisObject.callback = speakCb;
-    console.log('playbackRate:', playbackRate)
     synthesisObject.audio.playbackRate = playbackRate;
+    synthesisObject.callback = speakCb;
     buttonsListenNextSentence();
 
 }
@@ -19,9 +18,7 @@ function tiaSpeakButtonEvent() {
 
     }
 
-    $('#listenNextSentenceBtnCont').hide();
     tiaSpeakIndividualSentences();
-
     synthesisObject.audio.play();
 
 }
@@ -52,32 +49,27 @@ function tiaSpeakIndividualSentences() {
         synthesisObject.now.noOfFramesPerPhone = Math.floor( synthesisObject.now.noOfFrames / ( synthesisObject.now.noOfPhones - 1 ) );
         synthesisObject.now.noOfLeftoverFrames = synthesisObject.now.noOfFrames - synthesisObject.now.noOfFramesPerPhone * synthesisObject.now.noOfPhones;
         synthesisObject.gotNewDuration = true;
-        breatheObject.singleBreath.outCount = new_duration
+        //breatheObject.singleBreath.outCount = new_duration
         animateFirstPhoneSlowly();
+        synthesisObject.audioS3.play();
     }
     else{
-        animateFirstPhoneSlowly();
-    }
-
-}
-
-function animateFirstPhoneSlowly() {
-    animatePhonesInOrder();
-    // no breathing on short words or 3 words
-    if ( !conversationVariables.stage3 ) {
-    
         initSingleBreath( 1, breatheObject.speakingBreathMult, tiaTimings.durationOfFirstSpeakingPhones );
-    
+        setTimeout( function () {
+         
+            initSingleBreath( -1, breatheObject.speakingBreathMult, synthesisObject.audio.duration );   
+            
+        }, 1000 )
+        console.log('sentenceNo first:', synthesisObject.sentenceNo);
+        showSpeechBubbleNText();
+        animatePhonesInOrder();
     }
-       
-    setTimeout( showSpeechTextAndBreatheOut, tiaTimings.durationOfFirstSpeakingPhones * 2000 )
-    //expressionController( expressionObject.abs[ synthesisObject.now.visemes[ synthesisObject.sentenceNo ][ 0 ] ], tiaTimings.durationOfFirstSpeakingPhones, slightlyDelayAudioPlay )
 
-  //console.log( 'now in animateFirstPhoneSlowly:', synthesisObject.now );
 }
 
-function showSpeechTextAndBreatheOut() {
+function showSpeechBubbleNText() {
 
+    console.log('sentenceNo:', synthesisObject.sentenceNo);
     if ( synthesisObject.sentenceNo === 0 ) { // only fade in bubble firt time
 
         showSpeechBubble( synthesisObject.now.texts[ 0 ], tiaTimings.speechBubbleFadeInDuration )
@@ -88,19 +80,6 @@ function showSpeechTextAndBreatheOut() {
 
     }
 
-    if(conversationVariables.stage3){
-        synthesisObject.audioS3.play();
-        //console.log(synthesisObject.now.newDuration);
-        //initSingleBreath( -1, breatheObject.speakingBreathMult, synthesisObject.now.newDuration );
-    }
-    else{
-        //synthesisObject.audio.play();
-        //console.log(synthesisObject.now.newDuration)
-        initSingleBreath( -1, breatheObject.speakingBreathMult, synthesisObject.audio.duration );
-     }
-
-    //animatePhonesInOrder();
-        
 }
 
 function animatePhonesInOrder() {
@@ -133,7 +112,7 @@ function animatePhonesInOrder() {
         } else {
 
             //if last sentence then just show mic, but if more sentences to come then show 'next' button
-            if ( synthesisObject.sentenceNo === synthesisObject.data.prompt.texts.length - 1 ) {
+            if ( synthesisObject.sentenceNo === synthesisObject.now.texts.length - 1 ) {
         
                 if ( conversationVariables.promptSpeaking && conversationVariables.conversation_dict.completed_sentences[ 0 ].awaiting_next_prompt ) {
 

@@ -1,79 +1,163 @@
 {
-  "transcript": "1\nand\n2\nand\n3\n",
+  "transcript": "a\nvery\ncareful\nnow\non\nseriously\n",
   "words": [
     {
-      "alignedWord": "<unk>",
+      "alignedWord": "a",
       "case": "success",
-      "end": 1.85,
+      "end": 0.98,
       "endOffset": 1,
       "phones": [
         {
-          "duration": 0.35,
-          "phone": "oov_S"
+          "duration": 0.01,
+          "phone": "ah_S"
         }
       ],
-      "start": 1.5,
+      "start": 0.97,
       "startOffset": 0,
-      "word": "1"
+      "word": "a"
     },
     {
-      "alignedWord": "and",
+      "alignedWord": "very",
       "case": "success",
-      "end": 2.25,
-      "endOffset": 5,
+      "end": 1.25,
+      "endOffset": 6,
       "phones": [
         {
-          "duration": 0.16,
-          "phone": "ah_B"
+          "duration": 0.04,
+          "phone": "v_B"
         },
         {
           "duration": 0.06,
-          "phone": "n_I"
+          "phone": "eh_I"
         },
         {
-          "duration": 0.07,
-          "phone": "d_E"
+          "duration": 0.09,
+          "phone": "r_I"
+        },
+        {
+          "duration": 0.08,
+          "phone": "iy_E"
         }
       ],
-      "start": 1.96,
+      "start": 0.98,
       "startOffset": 2,
-      "word": "and"
+      "word": "very"
     },
     {
-      "alignedWord": "<unk>",
+      "alignedWord": "careful",
       "case": "success",
-      "end": 2.6199999999999997,
-      "endOffset": 7,
+      "end": 1.68,
+      "endOffset": 14,
       "phones": [
         {
-          "duration": 0.34,
-          "phone": "oov_S"
+          "duration": 0.09,
+          "phone": "k_B"
+        },
+        {
+          "duration": 0.11,
+          "phone": "eh_I"
+        },
+        {
+          "duration": 0.1,
+          "phone": "r_I"
+        },
+        {
+          "duration": 0.06,
+          "phone": "f_I"
+        },
+        {
+          "duration": 0.01,
+          "phone": "ah_I"
+        },
+        {
+          "duration": 0.06,
+          "phone": "l_E"
         }
       ],
-      "start": 2.28,
-      "startOffset": 6,
-      "word": "2"
+      "start": 1.25,
+      "startOffset": 7,
+      "word": "careful"
     },
     {
-      "case": "not-found-in-audio",
-      "endOffset": 11,
-      "startOffset": 8,
-      "word": "and"
-    },
-    {
-      "alignedWord": "<unk>",
+      "alignedWord": "now",
       "case": "success",
-      "end": 2.8200000000000003,
-      "endOffset": 13,
+      "end": 2.07,
+      "endOffset": 18,
       "phones": [
         {
-          "duration": 0.12,
-          "phone": "oov_S"
+          "duration": 0.15,
+          "phone": "n_B"
+        },
+        {
+          "duration": 0.16,
+          "phone": "aw_E"
         }
       ],
-      "start": 2.7,
-      "startOffset": 12,
-      "word": "3"
+      "start": 1.76,
+      "startOffset": 15,
+      "word": "now"
+    },
+    {
+      "alignedWord": "on",
+      "case": "success",
+      "end": 2.3,
+      "endOffset": 21,
+      "phones": [
+        {
+          "duration": 0.14,
+          "phone": "aa_B"
+        },
+        {
+          "duration": 0.09,
+          "phone": "n_E"
+        }
+      ],
+      "start": 2.07,
+      "startOffset": 19,
+      "word": "on"
+    },
+    {
+      "alignedWord": "seriously",
+      "case": "success",
+      "end": 2.57,
+      "endOffset": 31,
+      "phones": [
+        {
+          "duration": 0.07,
+          "phone": "s_B"
+        },
+        {
+          "duration": 0.1,
+          "phone": "ih_I"
+        },
+        {
+          "duration": 0.05,
+          "phone": "r_I"
+        },
+        {
+          "duration": 0.01,
+          "phone": "iy_I"
+        },
+        {
+          "duration": 0.01,
+          "phone": "ah_I"
+        },
+        {
+          "duration": 0.01,
+          "phone": "s_I"
+        },
+        {
+          "duration": 0.01,
+          "phone": "l_I"
+        },
+        {
+          "duration": 0.01,
+          "phone": "iy_E"
+        }
+      ],
+      "start": 2.3,
+      "startOffset": 22,
+      "word": "seriously"
     }
   ]
 }

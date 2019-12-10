@@ -51,42 +51,50 @@ def store_single_prompt(request):
     prompt_name = prompt_text.replace(' ', '_')
     sent.awaiting_next_prompt = sent_meta['awaiting_next_prompt']
 
-    if prompt_number == 0:
+    prompt_levels_already_entered = [p.level for p in sent.prompts.all()]
 
-        time_now = timezone.now()
-        sent.judgement = "P"
-        sent.judgement_timestamp = time_now
-        emotion = sent_meta['emotion']
-        if emotion != None:
-            sent.emotion = json.dumps(emotion)
+    prompt_saved = False
+    if prompt_number not in prompt_levels_already_entered:
+
+        if prompt_number == 0:
+
+            time_now = timezone.now()
+            sent.judgement = "P"
+            sent.judgement_timestamp = time_now
+            emotion = sent_meta['emotion']
+            if emotion != None:
+                sent.emotion = json.dumps(emotion)
+            else:
+                sent.emotion = json.dumps([0, 0])
+            
+            sent.nod_shake = json.dumps(sent_meta['nod_shake'])
+            sent.surprise = sent_meta['surprise']
+
+            prompt0 = Prompt.objects.filter(level=0, name=prompt_name)
+            if prompt0.exists():
+                prompt = prompt0[0]
+            else:
+                prompt = create_prompt_instance(prompt_text, 0, initial_delay=500 )
+            sent.prompts.add(prompt)
+            
         else:
-            sent.emotion = json.dumps([0, 0])
-        
-        sent.nod_shake = json.dumps(sent_meta['nod_shake'])
-        sent.surprise = sent_meta['surprise']
 
-        prompt0 = Prompt.objects.filter(level=0, name=prompt_name)
-        if prompt0.exists():
-            prompt = prompt0[0]
-        else:
-            prompt = create_prompt_instance(prompt_text, 0, 850 )
-        sent.prompts.add(prompt)
-        
-    else:
+            promptN = Prompt.objects.filter(level=prompt_number, name=prompt_name)
+            if promptN.exists():
+                prompt = promptN[0]
+                print('already exists')
+            else:     
+                prompt = create_prompt_instance( prompt_text, prompt_number, initial_delay=500 )
+                print('created new:', prompt_number)
 
-        promptN = Prompt.objects.filter(level=prompt_number, name=prompt_name)
-        if promptN.exists():
-            prompt = promptN[0]
-            print('already existits')
-        else:     
-            prompt = create_prompt_instance( prompt_text, prompt_number, 850 )
-            print('created new:', prompt_number)
+            sent.prompts.add(prompt)
 
-        sent.prompts.add(prompt)
-
-    sent.save()
+        sent.save()
+        prompt_saved = True
 
     response_data = {
+
+        'prompt_saved': prompt_saved,
 
     }
 

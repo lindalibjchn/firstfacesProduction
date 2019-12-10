@@ -86,6 +86,14 @@ function tiaSpeakAfterReturningFromThinking() {
 
     } else if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === "P" ) {
 
+        createPromptFromServerPrompts();
+
+        if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].awaiting_next_prompt ) {
+
+            setTimeout( getNextPrompt, 5000 );
+
+        }
+
         conversationVariables.promptSpeaking = true;
         tiaPrepareToSpeak( "prompt" );
         

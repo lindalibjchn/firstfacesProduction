@@ -1,7 +1,7 @@
 function setUpPreviousSentsBtns( sentences ) {
 
     $('.titles').unbind();
-    console.log('in setUpPreviousSentsBtns')
+    //console.log('in setUpPreviousSentsBtns')
     $('#prevSentsIconContainer').on( 'click', function() {
 
         closeTimeOverlayCont();
@@ -9,7 +9,7 @@ function setUpPreviousSentsBtns( sentences ) {
         $('#prevSentsContainer').fadeIn();
         $('#prevSentsIconContainer').hide();
         //updateScroll( document.getElementById('prevSentsInnerContainer0') );
-        addData( 'grammar', 'article', sentences );
+        addData( 'sentences', sentences );
 
     });
 

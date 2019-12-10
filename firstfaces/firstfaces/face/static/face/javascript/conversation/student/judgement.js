@@ -5,7 +5,6 @@ function judgementReceived( sentMeta ) {
     conversationVariables.awaitingJudgement = false;
 
     updateConversationVariablesWithNewSentence( sentMeta );
-    preparePromptForTiaSpeak();
     prepareExpression();
     removeThoughtBubbles( tiaTimings.removeThoughtBubbleDuration, runAfterJudgement );
 
@@ -15,34 +14,6 @@ function updateConversationVariablesWithNewSentence( sentMeta ) {
 
     conversationVariables.conversation_dict.completed_sentences.unshift( sentMeta );
     conversationVariables.sentence_awaiting_judgement = {}
-
-}
-
-function preparePromptForTiaSpeak() {
-
-   if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === "P" ) {
-
-        createPromptFromServerPrompts();
-
-        if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].awaiting_next_prompt ) {
-
-            setTimeout( getNextPrompt, 5000 );
-
-        }
-
-    } else if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === 'M' ) {
-
-        synthesisObject.data.prompt = synthesisObject.data[ "I'm_not_sure_what_you_mean_by..." ];
-
-    } else if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === 'D' ) {
-
-       synthesisObject.data.prompt = synthesisObject.data[ "I_don't_understand_what_you_said" ];
-
-    } else if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === '3' ) {
-
-       synthesisObject.data.prompt = synthesisObject.data[ "There_are_more_than_three_errors_in_your_sentence" ];
-
-    }
 
 }
 
