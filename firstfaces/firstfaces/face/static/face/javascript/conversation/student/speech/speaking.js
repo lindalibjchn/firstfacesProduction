@@ -19,6 +19,8 @@ function tiaSpeakButtonEvent() {
 
     $('#listenNextSentenceBtnCont').hide();
     tiaSpeakIndividualSentences();
+
+    synthesisObject.audio.playbackRate = 0.75;
     synthesisObject.audio.play();
 
 }
@@ -35,7 +37,7 @@ function tiaSpeakIndividualSentences() {
     
   //console.log( 'now in tiaSpeakIndividualSentences:', synthesisObject.now );
 
-    synthesisObject.now.phoneCount = 1;
+    synthesisObject.now.phoneCount = 0;
 
     if(conversationVariables.stage3){
         var new_duration = synthesisObject.now.duration / ((parseInt(document.getElementById("myRange").value)+20)/100);
@@ -58,7 +60,7 @@ function tiaSpeakIndividualSentences() {
 }
 
 function animateFirstPhoneSlowly() {
-
+    animatePhonesInOrder();
     // no breathing on short words or 3 words
     if ( !conversationVariables.stage3 ) {
     
@@ -66,12 +68,13 @@ function animateFirstPhoneSlowly() {
     
     }
        
-    expressionController( expressionObject.abs[ synthesisObject.now.visemes[ synthesisObject.sentenceNo ][ 0 ] ], tiaTimings.durationOfFirstSpeakingPhones, slightlyDelayAudioPlay )
+    setTimeout( showSpeechTextAndBreatheOut, tiaTimings.durationOfFirstSpeakingPhones * 2000 )
+    //expressionController( expressionObject.abs[ synthesisObject.now.visemes[ synthesisObject.sentenceNo ][ 0 ] ], tiaTimings.durationOfFirstSpeakingPhones, slightlyDelayAudioPlay )
 
   //console.log( 'now in animateFirstPhoneSlowly:', synthesisObject.now );
 }
 
-function slightlyDelayAudioPlay() {
+function showSpeechTextAndBreatheOut() {
 
     if ( synthesisObject.sentenceNo === 0 ) { // only fade in bubble firt time
 
@@ -94,16 +97,16 @@ function slightlyDelayAudioPlay() {
         initSingleBreath( -1, breatheObject.speakingBreathMult, synthesisObject.audio.duration );
      }
 
-    animatePhonesInOrder();
+    //animatePhonesInOrder();
         
 }
 
 function animatePhonesInOrder() {
 
-  //console.log( 'in animatePhonesInOrder:', synthesisObject.now );
+    //console.log( 'in animatePhonesInOrder:', synthesisObject.now );
     if ( synthesisObject.now.phoneCount < synthesisObject.now.noOfPhones ) {
 
-        pronunciationController( expressionObject.abs[ synthesisObject.now.visemes[ synthesisObject.sentenceNo ][ synthesisObject.now.phoneCount ] ], animatePhonesInOrder )
+        pronunciationController( expressionObject.abs[ synthesisObject.now.visemes[ synthesisObject.sentenceNo ][ synthesisObject.now.phoneCount ][ 'Viseme' ] ], synthesisObject.now.visemes[ synthesisObject.sentenceNo ][ synthesisObject.now.phoneCount ][ 'end' ], animatePhonesInOrder )
         synthesisObject.now.phoneCount += 1;
 
     // check for last phone to also be run slowly
@@ -233,37 +236,41 @@ function checkForNewPrompt() {
 }
 
 
-function pronunciationController( expressionTo, cb ) {
+function pronunciationController( expressionTo, phoneEndTime, cb ) {
 
+    //console.log('in pronunciation controller')
+    //console.log( 'phoneEndTime:', phoneEndTime );
+    //console.log( 'phonneCount:', synthesisObject.now.phoneCount );
     expressionObject.bool = false;//if other expression delayed, just stop it before calculating absolute position
     expressionObject.now = getAbsoluteCoordsOfExpressionNow();
     expressionObject.movement = createRelativeExpression( expressionTo );
     expressionObject.callback = cb;
-    initPronunciation();
+    //initPronunciation();
+    
+    let phoneLength;
+    if ( synthesisObject.now.phoneCount === 0 ) {
+    
+        phoneLength = phoneEndTime
+    
+    } else {
+
+        phoneLength = phoneEndTime - synthesisObject.previousPhoneEndTime;
+
+    }
+    
+    //console.log( 'phoneLength:', phoneLength );
+    synthesisObject.previousPhoneEndTime = phoneEndTime
+    expressionObject.sinLength =  Math.round( phoneLength * 0.06 );
+    //console.log( 'sinLength:', expressionObject.sinLength );
+    expressionObject.sin = sineArrays[ expressionObject.sinLength ];
+    expressionObject.startCount = mainCount;
+    expressionObject.bool = true;
 
 }
 
 //// general all-purpose method for all expressions
 function initPronunciation() {
 
-    // incase of really long phones bugginf out 
-    //synthesisObject.now.noOfFramesPerPhone = Math.min( synthesisObject.now.noOfFramesPerPhone, 60 );
-    if ( [ 'i', 'e', 'u' ].includes( synthesisObject.now.visemes[ synthesisObject.sentenceNo ][ synthesisObject.now.phoneCount ][ 0 ] ) ) {
-
-        // -1 cause the frames run over
-        expressionObject.sinLength = synthesisObject.now.noOfFramesPerPhone - 2;
-        expressionObject.sin = sineArrays[ expressionObject.sinLength ];
-    
-    } else {
-
-        // same her, but these can be tweeked to make vowels/consonants shorter/longer
-        expressionObject.sinLength = synthesisObject.now.noOfFramesPerPhone - 1;
-        expressionObject.sin = sineArrays[ expressionObject.sinLength ];
-
-    }
-    //console.log(synthesisObject.now.noOfFramesPerPhone)
-    expressionObject.startCount = mainCount;
-    expressionObject.bool = true;
 
 }
 

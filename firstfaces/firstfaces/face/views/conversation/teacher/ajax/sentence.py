@@ -1,5 +1,5 @@
 from face.models import Sentence, Prompt
-from face.views.conversation.teacher.utils.text_to_speech import create_tia_speak_sentence_URL_and_visemes, create_prompt_instance
+from face.views.conversation.teacher.utils.text_to_speech import create_prompt_instance
 from face.views.conversation.teacher.utils.get_text_for_prompts import get_mean_by_text
 from django.utils import timezone
 import time

@@ -44,7 +44,7 @@ def store_sent(request):
     if update.sentence_ids == None:
         update.sentence_ids = json.dumps([s.id])
     else:
-        update.sentence_ids = json.dumps(updated_sentence_ids.append(si.d))
+        update.sentence_ids = json.dumps(updated_sentence_ids.append(s.id))
     update.save()
     
     response_data = {
