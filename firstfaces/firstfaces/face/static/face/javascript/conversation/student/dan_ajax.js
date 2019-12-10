@@ -58,9 +58,11 @@ function doAllignment(){
 $('#forwardErrorSelection').click(function(){
     //Hides non essential buttons
     tag_sentence();
-    $('#recordVoiceBtn').fadeOut();
-    $('#listenVoiceBtn').fadeOut();
-    $('#backCorrection').fadeOut();
+    remove_blur_record();
+    $('#forwardArrow').removeClass('flash');
+    $('#recordVoiceBtn').fadeOut(100);
+    $('#listenVoiceBtn').fadeOut(100);
+    $('#backCorrection').fadeOut(100);
     //Sets the length of the original audio in case user goes back
     if(!conversationVariables.trying_again){
         conversationVariables.totalAudioLength = conversationVariables.sentence_being_recorded_audio.totalAudioLength;
@@ -281,6 +283,8 @@ function selectErrWord(idx){
     if(curr == 'selectable-word' ){
         document.getElementById(idx).className = 'selected-word';
         var num = parseInt(idx.split("_")[1]);
+        blur_record();
+        $('#forwardArrow').addClass('flash');
         selected.push(num);
         selected.sort();
         if(selected.length == 1){
@@ -300,6 +304,8 @@ function selectErrWord(idx){
         selected = temp;
         if(selected.length == 0){
             $('#talkBtn').show();
+            remove_blur_record();
+            $('#forwardArrow').removeClass('flash');
             $('#forwardErrorSelection').hide();
         }
         selected.sort();
@@ -360,12 +366,16 @@ function doneError(){
     $('#correctionOverlay').hide();
     $('#sentenceHolderParent').show();
     $('#bottomCent').empty();
-    conversationVariables.uncorrectedErrors = conversationVariables.uncorrectedErrors.filter(e => e !== "upper_"+idx);                                                                             
+    conversationVariables.uncorrectedErrors = conversationVariables.uncorrectedErrors.filter(e => e !== "upper_"+idx);
+
+    $('.lower-error').attr("onclick","reCorrectError(this.id.split('_')[1])");
+    $('.corrected-error').attr("onclick","reCorrectError(this.id.split('_')[1])");
+
     //Check if all errors are corrected
     if($('.uncorrected-error').length == 0){
         $('#recordBtnsCont').show();
         $("#talkBtn").show();
-        $('#recordVoiceBtn').show();
+        //$('#recordVoiceBtn').show();
         $('#backCorrection').show();
     }
     else{
@@ -379,6 +389,7 @@ function doneError(){
 
 //Resets the text back to allowing users pick errored words in transcription
 $('#backCorrection').click(function(){
+    $('#recordVoiceBtn').fadeIn();
     conversationVariables.playStage2 = false;
     conversationVariables.totalAudioLength = conversationVariables.sentence_being_recorded_audio.totalAudioLength
     var words = conversationVariables.sentence_being_recorded_audio.alternatives[0].transcript.split(" ");
@@ -429,7 +440,7 @@ $('#closeOverlayArea').click(function(){
         }  
         
         $('#backCorrection').show();
-        $('#recordVoiceBtn').show();
+        //$('#recordVoiceBtn').show();
         $('#correctionOverlay').hide();
         $('#sentenceHolderParent').show();
         $('#overlayTextBox').empty();
@@ -765,7 +776,9 @@ function sendErrorBlobToServer( new_blob ){
                 setTimeout(function(){
                     $('#bottomCent').text(json['error_trans']);
                     $("#bottomCent").attr("contenteditable",false);
-
+                    if(conversationVariables.movedText){
+                        $('#bottomCent').show();
+                    }
 
                     setTimeout(function(){
                         $("#submitOverlay").fadeIn();
@@ -775,7 +788,7 @@ function sendErrorBlobToServer( new_blob ){
 
                         document.getElementById('audio_'+json['error_start']).src = prefixURL+json.audio_url;
                         $('#audio_'+json['error_start']).attr('duration',json.audio_len);
-                    },800);
+                    },2000);
                 },500);
                 $('#overlayTextBox').text(json['error_trans']);
                 //show mic
@@ -1022,7 +1035,7 @@ function submitRecording(){
             prepareToStopTyping();
             doneError();                                  
             unmoveText();                                                 
-            $('#backCorrection').prop("disabled",false);  
+            $('#backCorrection').prop("disabled",false);
             $('#talkBtn').prop("disabled",false);         
 
         },
@@ -1197,6 +1210,9 @@ slider.oninput = function() {
 
 //Moved the centered error text to the top of the modal to facilitate typing 
 function moveText(){
+    if(conversationVariables.movedText){
+        return
+    }
     conversationVariables.movedText = true;
     var to = $('#topCentText').offset().top;
     var from  = $('#moveText').offset().top;
@@ -1211,6 +1227,7 @@ function moveText(){
 
 //If the text has been moved up it is now moved back to its original position
 function unmoveText(){
+    console.log("Unmove - "+conversationVariables.movedText);
     if(conversationVariables.movedText){
         $('#moveText').animate({top:'+='+conversationVariables.textDiff+"px"},1);
         conversationVariables.movedText = false;
@@ -1279,7 +1296,7 @@ function animate_open_overlay(err_id){
         //Once the verlay is opened the buttons underneath appear again
         setTimeout(function(){
             $('#backCorrection').show();
-            $('#recordVoiceBtn').show();
+            //$('#recordVoiceBtn').show();
         },2000);
 
     }, 750 );

@@ -256,16 +256,11 @@ def get_context(request):
     pos = request.POST['pos']
     if len(word.split(",")) != 1:
         return get_vis_now(word.split(","))
-    #try:
-        #words, levels, idx, poss, viss = get_tris(word, pos)
 
-    words = {"a": ["new", "red", "dull", "magic", "plaid"]}
-    poss = ['DET', 'ADJ', "NOUN"]
-    levels = {"A1": ["A1", "A2", "B1", "B2", "C2"]}
-    viss = {"['e']": [['t', 'u'], ['r', 'e', 't'], ['t', 'e', 'b'], ['t', 'e', 'l'], ['b', 'e', 's', 'e', 'k'],['b','l', 'e', 't']]}
-    idx=1
-    print("\n\nHERE\n\n")
+
+
     try:
+        words, levels, idx, poss, viss = get_tris(word, pos)
         c_vis = [ v+'Emp' for v in get_word_visemes(word)]
         if len(c_vis) == 0:
             c_vis = [v + 'Emp' for v in Visemes(word)]
