@@ -112,11 +112,16 @@ def store_blob(request):
     update.save()
 
     # need to save the file before can acces url to use ffmpeg (in utils.py)
+    audioLength = 0
+    audioFile = ""
     alternatives = get_speech_recognition(filename)
     if alternatives[0]['transcript'] != "":
         audioFile = "media/wav/"+filename[:-4]+'wav'
         audioLength = get_audio_length(settings.BASE_DIR+"/"+audioFile)
+        a.alternatives = json.dumps(alternatives)
+        a.save()
     else:
+        a.delete()
         audioFile = ""
         audioLength = 0
 
@@ -127,9 +132,7 @@ def store_blob(request):
     # transcription_aligned_list = get_alignments(transcription_list)
     # print('transcription_aligned_list:', transcription_aligned_list)
 
-    #and then once have the transcriptions, save them
-    a.alternatives = json.dumps(alternatives)
-    a.save()
+    # and then once have the transcriptions, save them
 
     response_data = {
 

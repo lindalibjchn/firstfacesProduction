@@ -1,9 +1,10 @@
-function tiaPrepareToSpeak( tiaSays, playbackRate=0.9, speakCb=function(){} ) {
+function tiaPrepareToSpeak( tiaSays, speakCb=function(){},  playbackRate=0.9) {
 
     synthesisObject.sentenceNo = 0;
     synthesisObject.now = synthesisObject.data[ tiaSays ];
     synthesisObject.audio.src = /* prefixURL + */ synthesisObject.now.URLs[ synthesisObject.sentenceNo ];
     synthesisObject.callback = speakCb;
+    console.log('playbackRate:', playbackRate)
     synthesisObject.audio.playbackRate = playbackRate;
     buttonsListenNextSentence();
 

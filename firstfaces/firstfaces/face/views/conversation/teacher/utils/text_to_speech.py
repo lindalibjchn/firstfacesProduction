@@ -68,7 +68,7 @@ def create_prompt_instance( text, prompt_number, initial_delay=0, breathing=Fals
 def create_tia_tts_url(text, directory, filename, initial_delay, breathing, speaking_rate, pitch, volume ):
 
     breath = "";
-    print('breathing:', breathing)
+    # print('breathing:', breathing)
     if breathing:
         print('add breath')
         breath = "<spurt audio='g0001_007'>breath in</spurt>"
@@ -80,8 +80,8 @@ def create_tia_tts_url(text, directory, filename, initial_delay, breathing, spea
     soapclient = Client("https://cerevoice.com/soap/soap_1_1.php?WSDL")
     request = soapclient.service.speakExtended(accountID, password, 'Caitlin-CereWave', ssml_text, 'wav', 22050, False, True)
     viseme_data = get_viseme_data(request.metadataUrl)
-    print('viseme_data:', viseme_data)
-    print('request:', request)
+    # print('viseme_data:', viseme_data)
+    # print('request:', request)
 
     return request.fileUrl, viseme_data
 
