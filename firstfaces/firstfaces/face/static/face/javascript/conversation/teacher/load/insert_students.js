@@ -5,7 +5,7 @@ function loadStudents() {
     
     Object.keys(teacherVars.conversations).forEach( function( c ) {
 
-        console.log('c:', c);
+      //console.log('c:', c);
         let thisUser = teacherVars.conversations[ c ];
         thisUser.phoneId = phoneCount;
         teacherVars.phoneToStudentId[ phoneCount ] = parseInt( c );

@@ -110,13 +110,21 @@ function mouthWordController() {
         // check if it is a grammar word (DET or VERB usually)
     if ( Object.keys( grammarObject ).includes( POS1 ) ) {
     
-        if ( grammarObject[ POS1 ].show ) {
-
-            let word = conversationVariables.sentence_awaiting_judgement.sentence[ thoughtBubbleObject.wordThinkingCount ][ 0 ]
-            let phoneSeq = conversationVariables.sentence_awaiting_judgement.sentence[ thoughtBubbleObject.wordThinkingCount ][ 2 ]
-            performHandMovementWithMouthing( POS1, word, phoneSeq );
-
+        let word = conversationVariables.sentence_awaiting_judgement.sentence[ thoughtBubbleObject.wordThinkingCount ][ 0 ]
+        if (['a', 'A', 'the', 'The'].includes( word ) ) {
             
+            if ( grammarObject[ POS1 ].show ) {
+
+                let phoneSeq = conversationVariables.sentence_awaiting_judgement.sentence[ thoughtBubbleObject.wordThinkingCount ][ 2 ]
+
+                performHandMovementWithMouthing( POS1, word, phoneSeq );
+
+            } else {
+
+                tiaMouthPhoneSequence( conversationVariables.sentence_awaiting_judgement.sentence[ thoughtBubbleObject.wordThinkingCount ][ 2 ], tiaTimings.mouthingFramesPerPhone ) // to <speech/mouthing.js>
+
+            }
+
         } else {
 
             tiaMouthPhoneSequence( conversationVariables.sentence_awaiting_judgement.sentence[ thoughtBubbleObject.wordThinkingCount ][ 2 ], tiaTimings.mouthingFramesPerPhone ) // to <speech/mouthing.js>
@@ -236,7 +244,7 @@ function tiaTellsStudentNoFeedback() {
 
         movementController( movementObject.abs.blank, tiaTimings.fromThinkingHardDuration / 2, tiaTimings.fromThinkingHardDuration, function() {
 
-            tiaSpeak( 'notSureAbout', cont=true, speakCb=function(){} );
+            tiaPrepareToSpeak( "I'm_not_sure_about_that_sentence", speakCb=function(){} );
 
         });
 

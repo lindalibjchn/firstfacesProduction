@@ -33,7 +33,7 @@ function tryAgain() {
         success: function(json) {
         },
         error: function() {
-            console.log("that's wrong");
+          //console.log("that's wrong");
         },
         
     });
@@ -51,7 +51,7 @@ function whatsWrong() {
         success: function(json) {
         },
         error: function() {
-            console.log("that's wrong");
+          //console.log("that's wrong");
         },
         
     });
@@ -64,16 +64,19 @@ function whatsWrong() {
         
     tiaLookAtLaptopAndType();
 
-    setTimeout( function() {
-
-        $('#textInputContainer').fadeIn();
-        $('#submittedNCorrectedSentenceCont').show()
-
-        prepareToStopTyping();
-
-    }, 2000 );
+    checkForCorrections();
 
 }
+
+function showWrong() {
+
+    $('#textInputContainer').fadeIn();
+    $('#submittedNCorrectedSentenceCont').show()
+
+    prepareToStopTyping();
+
+}
+
 
 function showCorrection() {
 
@@ -91,7 +94,7 @@ function showCorrection() {
             conversationVariables.conversation_dict.completed_sentences[ 0 ].show_correction = true;
         },
         error: function() {
-            console.log("that's wrong");
+          //console.log("that's wrong");
         },
         
     });
@@ -124,7 +127,7 @@ function nextSentence() {
         success: function(json) {
         },
         error: function() {
-            console.log("that's wrong");
+          //console.log("that's wrong");
         },
         
     });
@@ -145,7 +148,7 @@ function returnToLaptop( from ) {
     //recTimes.returnToLaptop = Date.now() / 1000;
     //console.log( 'in return to laptop');
     movementController( movementObject.abs.blank, 0.5, 1 );
-    addPreviousSentences( conversationVariables.conversation_dict, 0 );
+    //addPreviousSentences( conversationVariables.conversation_dict, 0 );
     initInputReady( from )
 
     expressionController( expressionObject.abs.neutral, tiaTimings.changeExpressionDuration );

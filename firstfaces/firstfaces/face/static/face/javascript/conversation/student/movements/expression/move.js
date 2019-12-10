@@ -11,7 +11,7 @@ function expressionController( expressionTo, duration, expressCb=function(){} ) 
         setTimeout( function() {
 
             expressionController( expressionTo, duration, expressCb=expressCb );
-            console.log( 'tried to express while blinking so retry in 200ms' );
+          //console.log( 'tried to express while blinking so retry in 200ms' );
 
         }, 200 );
 

@@ -2,45 +2,9 @@ function runAfterJudgement() {
 
     resetSentenceBeingRecorded();
 
-    //recTimes.runAfterJudgement =  Date.now() / 1000;
-    
-    //if ( conversationVariables.last_sent.judgement === "C" ) {
-
-        //if ( conversationVariables.last_sent.nod !== null ) {
-                
-            //nodOrShakeHead()
-            //setTimeout( function(){
-            
-                //expressionController( expressionObject.half, tiaTimings.toTalkExpressionDuration );
-                
-                //setTimeout( returnToLaptop, tiaTimings.toTalkExpressionDuration );
-            
-            //}, nodShakeDur );
-
-        //} else {
-
-            //setTimeout( function() {
-
-                //setTimeout( function(){
-                
-                    //expressionController( expressionObject.half, tiaTimings.toTalkExpressionDuration );
-                    
-                    //setTimeout( returnToLaptop, tiaTimings.toTalkExpressionDuration );
-                
-                //}, nodShakeDur );
-
-            //}, tiaTimings.delayBeforeReturnToLaptop );
-
-        //}
-        
-
     if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === "I" ) {
 
         runIncorrect();
-
-    //} else if ( [ "D", "3" ].includes( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement ) ) {
-
-        //runBadSentences( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement );
 
     } else {
 
@@ -66,7 +30,6 @@ function runIncorrect() {
 
 function runPrompt( judg ) {
 
-    addPreviousSentences( conversationVariables.conversation_dict, 0 );
 
     //recTimes.prePrepareForPromptSpeech =  Date.now() / 1000;
     // return to talking pos
@@ -115,15 +78,24 @@ function tiaSpeakAfterReturningFromThinking() {
 
     if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === "D" ) {
 
-        tiaSpeak( 'iDontUnderstand', cont=true );
+        tiaPrepareToSpeak( "I_don't_understand_what_you_said" );
 
     } else if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === "3" ) {
 
-        tiaSpeak( 'moreThanThree', cont=true );
+        tiaPrepareToSpeak( "There_are_more_than_three_errors_in_your_sentence" );
 
-    } else {
+    } else if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === "P" ) {
 
-        tiaSpeak( 'prompt', cont=false );
+        conversationVariables.promptSpeaking = true;
+        tiaPrepareToSpeak( "prompt" );
+        
+    } else if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === "M" ) {
+
+        conversationVariables.promptSpeaking = true;
+        synthesisObject.data["I'm_not_sure_what_you_mean_by..."].texts[1] = conversationVariables.conversation_dict.completed_sentences[0].prompts[ 3 ].text
+        synthesisObject.data["I'm_not_sure_what_you_mean_by..."].URLs[1] = conversationVariables.conversation_dict.completed_sentences[0].prompts[ 3 ].URL
+        synthesisObject.data["I'm_not_sure_what_you_mean_by..."].visemes[1] = conversationVariables.conversation_dict.completed_sentences[0].prompts[ 3 ].visemes
+        tiaPrepareToSpeak( "I'm_not_sure_what_you_mean_by..." );
         
     }
         

@@ -29,7 +29,7 @@ function getTops(){
             }
         }
         fixedWordTile
-        console.log(tops);
+      //console.log(tops);
         tops_found= true;
     }
 
@@ -165,7 +165,7 @@ var hiddenBottom = []
                     setTimeout(enable_everything,750);
                 }
                 else{
-                    console.log("No more above.");
+                  //console.log("No more above.");
                     enable_everything();
                 }
             }
@@ -222,7 +222,7 @@ var hiddenBottom = []
                     setTimeout(enable_everything,750);
                 }
                 else{
-                    console.log("No more below.")
+                  //console.log("No more below.")
                     enable_everything();
                 }
             }
@@ -234,10 +234,10 @@ var hiddenBottom = []
 
 function animate_up(idx){
     if(idx == 0){
-        console.log("To do");
+      //console.log("To do");
     }
     else if(tiles[idx] == ''){
-        console.log("Not_tile - "+idx);
+      //console.log("Not_tile - "+idx);
     }
     else{
             var above = idx - 1;
@@ -251,12 +251,12 @@ function animate_up(idx){
 }
 
 function animate_down(idx){
-    console.log("In here - "+idx);
+  //console.log("In here - "+idx);
     if(idx == 4){
-        console.log("To do");
+      //console.log("To do");
     }
      else if(tiles[idx] == ''){
-        console.log("Not_tile - "+idx);
+      //console.log("Not_tile - "+idx);
     }
     else{
             var below = idx + 1;

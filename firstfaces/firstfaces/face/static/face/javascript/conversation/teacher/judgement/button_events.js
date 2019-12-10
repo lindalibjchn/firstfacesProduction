@@ -5,27 +5,24 @@ function prepareJudgement( e ) {
 
     if ( btnId === "promptBtn" ) {
 
+        $('#prompt0SetContainer').show();
         teacherVars.sentencesNeedJudgement[ 0 ].judgement = "P";
-        highlightAndFocusOnPromptBox();
+        highlightAndFocusOnPromptBox( 0 );
         removeSelectable();
-
-    } else if ( btnId === "betterBtn" ) {
-
-        teacherVars.sentencesNeedJudgement[ 0 ].judgement = "B";
-        unHighlightAndFocusOnPromptBox();
-        setSelectable();
 
     } else if ( btnId === "wrongBtn" ) {
 
         teacherVars.sentencesNeedJudgement[ 0 ].judgement = "I";
         unHighlightAndFocusOnPromptBox();
         setSelectable();
+        storeJudgement();
 
     } else if ( btnId === "meanByBtn" ) {
 
         teacherVars.sentencesNeedJudgement[ 0 ].judgement = "M";
         unHighlightAndFocusOnPromptBox();
         setSelectable();
+        storeJudgement();
 
     } else if ( btnId === "moreThanThree" ) {
 
@@ -69,10 +66,17 @@ function highlightClick( id ) {
 
 }
 
-function highlightAndFocusOnPromptBox() {
+function resetOpacitiesOfJudgementButtons() {
+
+    $('.judgement-btns').css("opacity",  "0.7");
+    $('.correct-btn').css("opacity",  "0.3");
+
+}
+
+function highlightAndFocusOnPromptBox( boxNumber ) {
 
     enablePromptBox();
-    $( '#promptText' ).focus();
+    $( '#promptText' + boxNumber ).focus();
     $( '#promptBoxInnerContainer' ).css( 'opacity', '1' );
 
 }
@@ -85,19 +89,6 @@ function unHighlightAndFocusOnPromptBox() {
 
 }
 
-function storePromptThenSend() {
-
-    let promptText = $( '#promptText' ).val();
-    disablePromptBox();
-    if ( promptText !== '' ) {
-
-        teacherVars.sentencesNeedJudgement[ 0 ].prompt = promptText.split( '\n' );
-
-    }
-
-    storeJudgement();
-
-}
 
 function wipeAllCorrections() {
 

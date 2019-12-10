@@ -12,7 +12,7 @@ function removeSelectable() {
 
     if ( $( '#sentenceForJudgement' ).hasClass( 'ui-selectable' ) ) {
 
-        console.log('destroy selectable');
+      //console.log('destroy selectable');
         $("#sentenceForJudgement").selectable( 'destroy' );
         $( '#sentenceForJudgement' ).css( {
             'opacity': '0.7',
@@ -25,27 +25,31 @@ function removeSelectable() {
 
 var appendCorrectionSection = function( copy ) {
     
-    highlightAndFocusOnPromptBox();
-
-    let idArray = []
-
-    $('#sentenceForJudgement > .ui-selected').each( function() {
-        idArray.push(parseInt(this.id.substring(8)));
-    })
-
-    idArray = removeAccidentallySelectedSpacesAtBeginningAndEndOfSelection( idArray );
-    
     if ( teacherVars.sentencesNeedJudgement[ 0 ].indexes === null ) {
 
         teacherVars.sentencesNeedJudgement[ 0 ].indexes = [];
     
     }
 
+    let numberOfCorrectionsAlreadyInIndexes = teacherVars.sentencesNeedJudgement[ 0 ].indexes.length
+    console.log('numberOfCorrectionsAlreadyInIndexes:', numberOfCorrectionsAlreadyInIndexes);
+
+    highlightAndFocusOnPromptBox( numberOfCorrectionsAlreadyInIndexes );
+
+    let idArray = []
+
+    $('#sentenceForJudgement > .ui-selected').each( function() {
+        console.log('each selection');
+        idArray.push(parseInt(this.id.substring(8)));
+    })
+
+    idArray = removeAccidentallySelectedSpacesAtBeginningAndEndOfSelection( idArray );
+    
     teacherVars.sentencesNeedJudgement[ 0 ].indexes.push( idArray );
 
     let sent = makeSentForPromptBox( idArray );
     
-    putSelectionInPromptBox( sent, copy )
+    putSelectionInPromptBox( sent, copy, numberOfCorrectionsAlreadyInIndexes )
 
 } 
 
@@ -92,8 +96,8 @@ function makeSentForPromptBox( idArray_ ) {
 
         } else { // for words
 
-            console.log('i:', i);
-            console.log(teacherVars.sentencesNeedJudgement[ 0 ].sentence[ ( i - 1 ) / 2 ][ 0 ]);
+          //console.log('i:', i);
+          //console.log(teacherVars.sentencesNeedJudgement[ 0 ].sentence[ ( i - 1 ) / 2 ][ 0 ]);
             sent_ += teacherVars.sentencesNeedJudgement[ 0 ].sentence[ ( i - 1 ) / 2 ][ 0 ];
 
             $( '#indWord_' + i.toString() ).css( 'color', 'yellow');
@@ -106,17 +110,17 @@ function makeSentForPromptBox( idArray_ ) {
 
 }
 
-function putSelectionInPromptBox( sent_, copy ) {
+function putSelectionInPromptBox( sent_, copy, correctionNumber ) {
     
-    let curWrongText = $( '#promptText' ).val()
+    let curWrongText = $( '#promptText' + correctionNumber ).val()
     
-    $( '#promptText' ).focus()
+    $( '#promptText' + correctionNumber ).focus()
 
     if ( curWrongText === '' ) {
 
         if ( copy ) {
 
-            $( '#promptText' ).val( sent_ );
+            $( '#promptText' + correctionNumber ).val( sent_ );
 
         }
 
@@ -124,11 +128,11 @@ function putSelectionInPromptBox( sent_, copy ) {
 
         if ( copy ) {
 
-            $( '#promptText' ).val( curWrongText + '\n' + sent_ );
+            $( '#promptText' + correctionNumber ).val( curWrongText + '\n' + sent_ );
 
         } else {
 
-            $( '#promptText' ).val( curWrongText + '\n' );
+            $( '#promptText' + correctionNumber ).val( curWrongText + '\n' );
 
         }
 

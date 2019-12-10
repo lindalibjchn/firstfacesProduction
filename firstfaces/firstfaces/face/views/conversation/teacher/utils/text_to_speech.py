@@ -6,6 +6,10 @@ import os
 from django.conf import settings
 import time
 import json
+from face.models import StockPhrases, Prompt
+from suds.client import Client
+import urllib
+# import ffmpeg
 
 if settings.DEVELOPMENT_ENV == 'john':
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/johnsHDD/PhD/2018_autumn/erle-3666ad7eec71.json"
@@ -14,110 +18,136 @@ elif settings.DEVELOPMENT_ENV == 'dan':
 else:
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/firstfaces/erle-3666ad7eec71.json"
 
-def create_tia_speak_sentences_synthesis_data(sent, conv_id):
+def create_stock_instance( texts, initial_delay=0, breathing=False, speaking_rate=100, pitch='+0', volume='+0'):
 
-    for_prompt = {
-        'URLs': [],
-        'texts': [],
-        'phones': []
-    }
+    # texts = [ 'this is a...', 'second here is..', ...]
 
-    list_of_text_to_speak = get_text(jsonify_or_none(sent.sentence), sent.judgement, jsonify_or_none(sent.prompt), jsonify_or_none(sent.indexes))
-    for i, s in enumerate(list_of_text_to_speak):
-
-        for_prompt['URLs'].append(get_tia_tts(s, conv_id, i))
-        for_prompt['texts'].append(s)
-        sent_data = change_sentence_to_list_n_add_data(s)
-        
-        # concatenate separate viseme lists
-        single_viseme_list = []
-        for s_d in sent_data:
-            for vis in s_d[2]:
-                single_viseme_list.append(vis)
-        
-        for_prompt['phones'].append(single_viseme_list)
-    sent.for_prompt = json.dumps(for_prompt)
-    sent.save()
+    name = texts[0].replace(' ', '_')
+    s = StockPhrases(name=name, texts=json.dumps(texts))
+    urls = []
+    visemes = []
+    for i, t in enumerate(texts):
+        url, viseme_list = create_tia_tts_url(t, 'prePreparedTiaPhrases/stockPhrases/', name + '_0' + str(i), initial_delay, breathing, speaking_rate, pitch, volume)
+        urls.append(url)
+        visemes.append(viseme_list)
+    s.urls = json.dumps(urls)
+    s.visemes = json.dumps(visemes)
+    s.save()
+    return s
 
 
-def get_tia_tts(text, sess_id, sent_no):
+def create_prompt_instance( text, prompt_number, initial_delay=0, breathing=False, speaking_rate=100, pitch='+0', volume='+0' ):
 
-    speaking_voice = 'en-GB-Wavenet-C'
+    name = text.replace(' ', '_')
+    p = Prompt(name=name, level=prompt_number)
+    
+    url, visemes = create_tia_tts_url(text, 'prePreparedTiaPhrases/prompt' + str(prompt_number) + '/', name, initial_delay, breathing, speaking_rate, pitch, volume)
+    p.url = url
 
-    client = texttospeech.TextToSpeechClient()
-    input_text = texttospeech.types.SynthesisInput(text=text)
+    p.visemes = json.dumps(visemes)
+    p.save()
+    
+    return p
 
-    # Note: the voice can also be specified by name.
-    # Names of voices can be retrieved with client.list_voices().
-    voice = texttospeech.types.VoiceSelectionParams(
-        language_code='en-GB',
-        name=speaking_voice
-        # ssml_gender=texttospeech.enums.SsmlVoiceGender.MALE
-        )
+# def create_tia_speak_sentence_URL_and_visemes(text, directory, filename, initial_delay, speaking_rate, pitch, volume):
 
-    audio_config = texttospeech.types.AudioConfig(
-        audio_encoding=texttospeech.enums.AudioEncoding.MP3,
-        pitch = 1,
-        speaking_rate = 0.7,
-        )
+    # # list_of_text_to_speak = get_text(jsonify_or_none(sent.sentence), sent.judgement, jsonify_or_none(sent.prompt), jsonify_or_none(sent.indexes))
+    # # for i, s in enumerate(list_of_text_to_speak):
 
-    fullURL = ''
-    try:
-        response = client.synthesize_speech(input_text, voice, audio_config)
+    # URL = create_tia_tts_url( text, directory, filename, initial_delay, speaking_rate, pitch, volume)
+    # # sent_data = change_sentence_to_list_n_add_data( text )
+    
+    # # concatenate separate viseme lists
+    # visemes = []
+    # for s_d in sent_data:
+        # for vis in s_d[2]:
+            # visemes.append(vis)
+    
+    # return [URL, visemes]
 
-        # don't need to keep all synths for class. Remember to delete this when session ends.
-        synthURL = 'media/synths/sess_' + str(sess_id) + '_' + str(sent_no) + '.wav' # + '_' + str(int(time.mktime((timezone.now()).timetuple())))
-        fullURL = os.path.join(settings.BASE_DIR, synthURL)
-        with open( fullURL, 'wb') as out:
-            out.write(response.audio_content)
-    except:
-        synthURL = 'fault'
+def create_tia_tts_url(text, directory, filename, initial_delay, breathing, speaking_rate, pitch, volume ):
 
-    return synthURL
+    breath = "";
+    print('breathing:', breathing)
+    if breathing:
+        print('add breath')
+        breath = "<spurt audio='g0001_007'>breath in</spurt>"
 
+    ssml_text = "<s><break time='" + str(initial_delay) + "ms'/>" + breath + "<prosody rate='" + str(speaking_rate) + "%' pitch='" + pitch + "%' volume='" + volume + "db' >" + text + "</prosody></s>"
 
-def get_text(sentence, judgement, prompt, indexes):
+    accountID = '5dea1f13b1519'
+    password = 'wg3BbQ53cP'
+    soapclient = Client("https://cerevoice.com/soap/soap_1_1.php?WSDL")
+    request = soapclient.service.speakExtended(accountID, password, 'Caitlin-CereWave', ssml_text, 'wav', 22050, False, True)
+    viseme_data = get_viseme_data(request.metadataUrl)
+    print('viseme_data:', viseme_data)
+    print('request:', request)
 
-    if judgement == "P":
+    return request.fileUrl, viseme_data
 
-        tia_to_say = prompt
+dic = {
+    '0': "SIL",
+    '1': 'e',
+    '2': 'e',
+    '3': 'e',
+    '4': 'e',
+    '5': 'r',
+    '6': 'e',
+    '7': 'u',
+    '8': 'e',
+    '9': 'e',
+    '10': 'e',
+    '11': 'e',
+    '12': 'e',
+    '13': 'r',
+    '14': 'l',
+    '15': 's',
+    '16': 's',
+    '17': 'th',
+    '18': 'f',
+    '19': 't',
+    '20': 'k',
+    '21': 'b',
+    "w":"w"
+}
 
-    elif judgement == "M":
+def get_viseme_data(metadataUrl):
+    xml = get_xml_from_url(metadataUrl)
+    parsed_xml = parse_xml(xml)
+    return parsed_xml
 
-        unsure_strings = " "
-        reduced_indexes = reduce_indexes(indexes)
+def get_xml_from_url(metadataUrl):
+    data = []
+    with urllib.request.urlopen(metadataUrl) as response:
+        data = [line.decode('utf-8') for line in response]
+    return data
 
-        for i in range(len(reduced_indexes)):
-            if i != 0:
-                unsure_strings += " or "
-            unsure_word_list = []
-            for j in reduced_indexes[i]:
-                unsure_word_list.append(sentence[j][0])
-            unsure_strings += "'" + ' '.join(unsure_word_list) + "'"
+def parse_xml(xml):
+    rel = [l for l in xml if "<phone" in l]
+    out = []
+    for r in rel:
+        temp = {}
+        for w in r[6:-3].split():
+            s = w.split("=")
+            name = ""
+            if s[0] not in ['disney_viseme', 'sapi_viseme']:
+                if s[0] == 'name':
+                    name = s[1][1:-1]
+                if s[0] in ['start','end']:
+                    temp[s[0]] = round(1.25 * float(s[1][1:-1])*1000)
+                else:
+                    temp[s[0]] = s[1][1:-1]
+            if s[0] == 'sapi_viseme':
+                if name == 'w':
+                    code = 'w'
+                else:
+                    code = s[1][1:-1]
+                try:
+                    temp['Viseme'] = dic[code]
+                except:
+                    temp['Viseme'] = dic['0']
+        if temp['Viseme'] != "SIL":
+            out.append(temp)
+    return out
 
-        tia_to_say = ["I'm not sure what you mean by" + unsure_strings + ", could you try again?"]
-
-        # if there are additional prompts
-        if prompt is not None:
-            tia_to_say += prompt
-
-    elif judgement == "B":
-
-        reduced_indexes = reduce_indexes(indexes)
-        better_bit = " ".join([sentence[k][0] for k in reduced_indexes[0]])
-
-        tia_to_say = ["It would be more natural to say '" + prompt[ 0 ] + "', instead of '" + better_bit + "'"]
-
-        # if there are additional prompts
-        if len(prompt) > len(reduced_indexes):
-            remaining_prompts = prompt[len(reduced_indexes):]
-            tia_to_say += remaining_prompts
-
-    return tia_to_say
-
-def reduce_indexes(ind):
-    reduced_inds = []
-    for i in ind:
-        reduced_inds.append([int((j-1)/2) for j in i if j%2!=0])
-    return reduced_inds
 

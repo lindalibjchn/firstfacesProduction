@@ -7,13 +7,14 @@ function resetJudgement() {
     setKeydownEvents();
     resetPhoneColoursNeedJudgement();
     resetTempEmotionStates();
+    unHighlightAndFocusOnPromptBox();
 
 }
 
 function clearJudgement() {
 
     //wipeAllCorrections();
-    resetButtonOpacities();
+    resetOpacitiesOfJudgementButtons();
     resetEmotionSurpriseNodShakeEvents();
     removeSelectable();
 
@@ -23,13 +24,15 @@ function removeJudgedSentence() {
 
     $('#sentenceForJudgement').empty() 
     $('#sentenceForJudgement').css( 'opacity', '0.7' ); 
-    $( '#promptText' ).val('');
+    $( '.prompt-text' ).val('');
 
 }
 
 function addJudgedSentenceToPrevSentences() {
 
+    console.log( 'in addJudgedSentenceToPrevSentences' );
     let judgedSentence = teacherVars.sentencesNeedJudgement.shift();
+    console.log( 'judgedSentence:', judgedSentence );
     teacherVars.conversations[ judgedSentence.user_id ].conversations[ 0 ].completed_sentences.unshift( judgedSentence )
 
     let phoneId = teacherVars.studentIdToPhone[ judgedSentence.user_id ];
@@ -81,14 +84,6 @@ function putNextSentenceNeedingJudgementUpForViewing() {
         $( '#judgementBtnsCover' ).css( 'z-index', '3' );
 
     }
-
-}
-
-function resetButtonOpacities() {
-
-    $( '.dunno-btn' ).css( 'opacity', '0.7' );
-    $( '.wrong-btn' ).css( 'opacity', '0.7' );
-    $( '.correct-btn' ).css( 'opacity', '0.3' );
 
 }
 

@@ -32,9 +32,16 @@ class Available(models.Model):
     def __str__(self):
         return timezone.localtime(self.start_availability).strftime("%a %d %H:%M") + " -- " + timezone.localtime(self.end_availability).strftime("%H:%M")
 
+class Prompt(models.Model):
+    level = models.SmallIntegerField(null=True, blank=True)
+    name = models.CharField(max_length=500)
+    url = models.CharField(max_length=500)
+    visemes = models.CharField(max_length=20000, blank=True, null=True)
+
+    def __str__(self):
+        return  str(self.name)
+
 JUDGEMENT_CHOICES = (
-    ('C', 'correct'),
-    ('B', 'better'),
     ('P', 'prompt'),
     ('M', 'mean_by'),
     ('I', 'incorrect'),
@@ -67,14 +74,15 @@ class Sentence(models.Model):
     next_sentence = models.NullBooleanField(null=True, blank=True)
     next_sentence_timestamp = models.DateTimeField(null=True, blank=True)
     #if native wants to say something in speech bubble
-    prompt = models.CharField(max_length=300, null=True, blank=True)
+    correction = models.CharField(max_length=300, null=True, blank=True)
+    prompts = models.ManyToManyField(Prompt, blank=True)
+    awaiting_next_prompt = models.NullBooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     for_prompt = models.CharField(max_length=1000, null=True, blank=True)
 
     def __str__(self):
         return  str(self.pk) + ": " + str(self.sentence)
-
 
 # may need multiple audio files per sentence as student attempts and re-attempts
 class AudioFile(models.Model):
@@ -111,6 +119,15 @@ class AudioErrorCorrectionAttempt(models.Model):
 
     def __str__(self):
         return  str(self.error)
+
+class StockPhrases(models.Model):
+    name = models.CharField(max_length=1000, blank=True, null=True)
+    texts = models.CharField(max_length=1000, blank=True, null=True)
+    urls = models.CharField(max_length=1000, blank=True, null=True)
+    visemes = models.CharField(max_length=20000, blank=True, null=True)
+
+    def __str__(self):
+        return  str(self.texts)
 
 # class PermAudioFile(models.Model):
     # sentence = models.ForeignKey(Sentence, on_delete=models.CASCADE)
@@ -211,6 +228,15 @@ class Profile(models.Model):
 
     def __str__(self):
         return str(self.learner)
+
+class Update(models.Model):
+    updated_aud = models.BooleanField(default=False)
+    updated_sent = models.BooleanField(default=False)
+    audio_ids = models.CharField(max_length=30, null=True, blank=True)
+    sentence_ids = models.CharField(max_length=30, null=True, blank=True)
+
+    def __str__(self):
+        return str(self.pk)
 
 # class NewsArticle(models.Model):
     # title = models.CharField(max_length=100, null=False, blank=False)

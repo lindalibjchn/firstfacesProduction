@@ -39,7 +39,7 @@ function blinkController() {
             // first time print out to let know that blink was cancelled
             if ( untilNextBlink === 0 ) {
 
-                console.log('eyelids moving when blinking called, so no blink initiated');
+              //console.log('eyelids moving when blinking called, so no blink initiated');
 
             }
 
@@ -48,7 +48,7 @@ function blinkController() {
             // if first was cancelled, then when this is called, print out to let know that blink has happened
             if ( untilNextBlink < 0 ) {
 
-                console.log('late blink initiated');
+              //console.log('late blink initiated');
 
             }
 

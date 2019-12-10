@@ -1,7 +1,10 @@
 function updateSentencesBeingRecorded( updatedSentencesBeingRecorded ) {
 
-    teacherVars.sentencesBeingRecorded = updatedSentencesBeingRecorded;
-    
+    for ( let i=0; i<updatedSentencesBeingRecorded.length; i++ ) {
+
+        teacherVars.sentencesBeingRecorded.push( updatedSentencesBeingRecorded[ i ] );
+
+    }
 
     //let lengthCurSentencesBeingRecorded = teacherVars.sentencesBeingRecorded.length;
     //let lengthUpdatedSentencesBeingRecorded = updatedSentencesBeingRecorded.length;
@@ -17,7 +20,7 @@ function updateSentencesBeingRecorded( updatedSentencesBeingRecorded ) {
 
         //}
 
-        showSentencesBeingRecordedInPhones();
+    showSentencesBeingRecordedInPhones();
 
     //}
 
@@ -25,6 +28,8 @@ function updateSentencesBeingRecorded( updatedSentencesBeingRecorded ) {
 
 function showSentencesBeingRecordedInPhones() {
 
+    $('.audio-attempt').off( 'click' );
+    $( '.current-attempt' ).empty();
     $( '.current-attempt' ).removeClass( 'recording' );
     //console.log('sentencesBeingRecorded:', teacherVars.sentencesBeingRecorded);
     teacherVars.sentencesBeingRecorded.forEach( function( r ) {
@@ -68,7 +73,7 @@ function setEventHandlerForPlayAudioButtons() {
 function playTranscription() {
 
     let ind = this.id.substring(18);
-    console.log('index:', ind );
+  //console.log('index:', ind );
     let attemptAud = document.getElementById( 'audioTag' + ind );
 
     attemptAud.play();

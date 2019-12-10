@@ -30,7 +30,7 @@ function get_word_context(){
 
 
             if(json.success == 0){
-                console.log("Context error.")
+              //console.log("Context error.")
                 $('#btnCont').removeClass().addClass('wholeSide');
                 $('#refBtn').removeClass().addClass("wholeSpec").addClass("ref-word");
                 $('#SpectroSpinHolder').removeClass().addClass('noSide');
@@ -126,7 +126,7 @@ function get_word_context(){
 
         },
         error: function() {
-            console.log("Context error.");
+          //console.log("Context error.");
             conversationVariables.Trigram = false;
             $('#btnCont').removeClass().addClass('wholeSide');
             $('#refBtn').removeClass().addClass("wholeSpec").addClass("ref-word");
@@ -144,7 +144,7 @@ function get_word_context(){
 
 function fix_locations(value){
     conversationVariables.IDX_Val = value
-    console.log("CALLED FIX LOCATIONS");
+  //console.log("CALLED FIX LOCATIONS");
     if(value == 0){
         $('.main-tile').css({'width':'90%','left':'0','border-radius':'0 5px 5px 0','border-top':'3px solid black','border-bottom':'3px solid black','border-right':'3px solid black','border-left':'0'})
         $('.second-tile-top').css({"width":"72%","left":"9%","top":"23.2%", 'border':"3px solid black", 'border-radius': '0 5px 5px 0'});
@@ -278,10 +278,10 @@ function tag_sentence(){
         contentType: false,
         success: function(json) {
             conversationVariables.POS_Tags = json.POS;
-            console.log('POS tagging complete');
+          //console.log('POS tagging complete');
         },
         error: function() {
-            console.log("POS tagging error.");
+          //console.log("POS tagging error.");
         },
 
     });
@@ -293,7 +293,7 @@ function splice_audio(){
     viss = []
 
     if($('#btnCont').hasClass('wholeSide')){
-        tiaSpeak('Ref_Word', cont=true);
+        tiaPrepareToSpeak('Ref_Word');
     }else{
         if($('#btnCont').hasClass('leftSide')){
             viss.push(synthesisObject.data.Ref_Word.phones);
@@ -379,7 +379,7 @@ function splice_audio(){
                              'phones':[json.viss],
                              'duration':json.duration,
                          }
-                 tiaSpeak('Spliced_Audio');
+                 tiaPrepareToSpeak('Spliced_Audio');
             },
             error: function() {console.log("Error slicing audio")},
         });

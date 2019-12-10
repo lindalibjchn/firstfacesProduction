@@ -2,12 +2,12 @@ from django.http import JsonResponse
 from face.views.conversation.student.utils.speech_to_text import convert_mp3_to_wav, get_speech_recognition
 from face.views.conversation.all.sentences import convert_django_sentence_object_to_json
 from face.views.conversation.all.praat_utils import get_audio_length, get_text_path, get_out_path, convert_audio, get_timestamps, play_errored_text, ref_path, get_hyp_audio_path
-from face.views.conversation.all import database_updates
+from django.conf import settings
+from face.views.conversation.all.modify_data import jsonify_or_none
 
 from django.utils import timezone
 import json
-from face.models import Conversation, Sentence, AudioFile, AudioError, AudioErrorAttempt, AudioErrorCorrectionAttempt
-from django.conf import settings
+from face.models import Conversation, Sentence, AudioFile, AudioError, AudioErrorAttempt, AudioErrorCorrectionAttempt, Update
 import code
 import os
 import time
@@ -17,6 +17,9 @@ import ast
 import subprocess
 from google.cloud import texttospeech
 from face.views.conversation.all.dan_utils import get_spectogram, get_sim
+import logging
+import datetime
+logger = logging.getLogger(__name__)
 
 if settings.DEVELOPMENT_ENV == 'john':
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/johnsHDD/PhD/2018_autumn/erle-3666ad7eec71.json"
@@ -27,35 +30,12 @@ else:
 
 def tts(request):
 
-    # print('\n\nintts\n\n')
-
     text = request.GET['sentence']
-    tia_speaker = json.loads(request.GET['tiaSpeaker'])
-    session_id = request.GET['sessionID']
-    pitch_designated = float(request.GET['pitch'])
-    speaking_rate_designated = float(request.GET['speaking_rate'])
-    # caller = request.GET['caller']
-    blob_no_text = json.loads(request.GET['blob_no_text'])
-    blob_no_text_sent_id = request.GET['blob_no_text_sent_id']
-    try:
-        gender = request.GET['gender']
-    except:
-        gender = 'F'
+    pitch_designated = 0
+    speaking_rate_designated = 0.7
+    gender = 'F'
 
-    if tia_speaker:
-
-        speaking_voice = 'en-GB-Wavenet-C'
-    
-    else:
-
-        if gender == 'M':
-
-            speaking_voice = 'en-GB-Wavenet-B'
-    
-        else:
-
-            speaking_voice = 'en-GB-Wavenet-A'
-
+    speaking_voice = 'en-GB-Wavenet-C'
     client = texttospeech.TextToSpeechClient()
     input_text = texttospeech.types.SynthesisInput(text=text)
 
@@ -63,21 +43,19 @@ def tts(request):
     voice = texttospeech.types.VoiceSelectionParams(
         language_code='en-GB',
         name=speaking_voice
-        # ssml_gender=texttospeech.enums.SsmlVoiceGender.MALE
         )
 
     audio_config = texttospeech.types.AudioConfig(
         audio_encoding=texttospeech.enums.AudioEncoding.MP3,
         pitch = pitch_designated,
         speaking_rate = speaking_rate_designated,
-        # volume_gain_db = 6,
         )
 
     try:
         response = client.synthesize_speech(input_text, voice, audio_config)
 
         # don't need to keep all synths for conversation. Remember to delete this when session ends.
-        synthURL = 'media/synths/session' + session_id + '.wav' # + '_' + str(int(time.mktime((timezone.now()).timetuple()))) + '.wav'
+        synthURL = 'media/synths/testers.wav' # + '_' + str(int(time.mktime((timezone.now()).timetuple()))) + '.wav'
         with open( os.path.join(settings.BASE_DIR, synthURL ), 'wb') as out:
             out.write(response.audio_content)
     except:
@@ -94,8 +72,7 @@ def tts(request):
     return JsonResponse(response_data) 
 
 def store_blob(request):
-    database_updates.database_updated_by_student = True
-    # print('database updated by blob:', database_updates.database_updated_by_student)
+    # print('database updated by blob:', updates.updated_by_student)
     # code.interact(local=locals());
 
     blob = request.FILES['data']
@@ -123,6 +100,17 @@ def store_blob(request):
             # interference=interference,
             )
     a.save()
+    # settings.TIME00 = datetime.datetime.now()
+
+    update = Update.objects.latest('pk')
+    update.updated_aud = True
+    updated_audio_ids = jsonify_or_none(update.audio_ids)
+    if updated_audio_ids == None:
+        update.audio_ids = json.dumps([s.id])
+    else:
+        update.audio_ids = json.dumps((updated_audio_ids).append(s.id))
+    update.save()
+
     # need to save the file before can acces url to use ffmpeg (in utils.py)
     alternatives = get_speech_recognition(filename)
     if alternatives[0]['transcript'] != "":
@@ -131,6 +119,8 @@ def store_blob(request):
     else:
         audioFile = ""
         audioLength = 0
+
+    # need to save the file before can acces url to use ffmpeg (in utils.py)
     # print('transcription_list:', alternatives)
 
     # commented out as daniel will be doing his own thing here so wont need alignments

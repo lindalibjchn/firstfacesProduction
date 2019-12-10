@@ -26,11 +26,11 @@ function sendNewInfoToServer() {
             let updatedInfo = json.updated_info
             teacherVars.conversations[ userId ].info = updatedInfo
             $( '#studentInfoText' + phoneId ).text( updatedInfo.join(', ') );
-            console.log('newInfo successfully sent to server')
+          //console.log('newInfo successfully sent to server')
 
         },
         error: function() {
-            console.log("that's wrong");
+          //console.log("that's wrong");
         },
 
     });

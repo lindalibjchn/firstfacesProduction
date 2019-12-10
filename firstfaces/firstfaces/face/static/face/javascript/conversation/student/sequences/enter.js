@@ -53,11 +53,11 @@ function tiaSpeakGreetings() {
 
         if ( conversationVariables.first_conversation ) {
 
-            tiaSpeak( 'welcomeToFirst', cont=false, askAboutEmotion );
+            tiaPrepareToSpeak( 'welcome_to_your_first_class_at_ERLE', askAboutEmotion );
         
         } else {
             
-            tiaSpeak( 'greatToSee', cont=false, askAboutEmotion );
+            tiaPrepareToSpeak( "it's_great_to_see_you_again", askAboutEmotion );
             
         }
 
@@ -67,14 +67,14 @@ function tiaSpeakGreetings() {
 
 function askAboutEmotion() {
 
-    tiaSpeak( 'howAreYou', cont=false, showInitEmotionQuestions );
+    tiaPrepareToSpeak( 'how_are_you_feeling_today', showInitEmotionQuestions );
 
 }
         
 
 function showInitEmotionQuestions() {
 
-    console.log('in showInitEmotionQuestions');
+  //console.log('in showInitEmotionQuestions');
     $('#emotionQuestionsCont').fadeIn( tiaTimings.speechBubbleFadeInDuration );
 
     // allow emotions to be clickable
@@ -84,7 +84,7 @@ function showInitEmotionQuestions() {
 
 function goToAskTopic( emotion ) {
 
-    console.log(' go ask topic ' );
+  //console.log(' go ask topic ' );
     // remove speech bubble to ask which topic
     removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
     var calculatedExpressions;
@@ -146,7 +146,7 @@ function goToAskTopic( emotion ) {
 
 function talkAbout() {
 
-    tiaSpeak( "talkAbout", cont=false, showTopicChoices );
+    tiaPrepareToSpeak( "what_would_you_like_to_talk_about_today?", showTopicChoices );
 
 }
 
@@ -186,7 +186,7 @@ function showPreChoiceTextInput() {
 
     $('#topicChoicesCont').fadeOut( tiaTimings.speechBubbleFadeOutDuration, function() {
         
-        tiaSpeak( "mustTypeChoice", cont=false, showChoiceTextInput );
+        tiaPrepareToSpeak( "you_must_type_your_choice_in_the_box_below", showChoiceTextInput );
     
     } );
 
@@ -241,7 +241,7 @@ function afterStoreTopic() {
 
 function beginTalking() {
         
-    tiaSpeak( "beginWhenYou", cont=false, finalSpeak );
+    tiaPrepareToSpeak( "begin_when_you_are_ready", finalSpeak );
 
     setTimeout( function() {
     

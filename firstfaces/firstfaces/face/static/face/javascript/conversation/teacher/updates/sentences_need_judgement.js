@@ -1,20 +1,20 @@
 function updateSentencesNeedJudgement( updatedSentencesNeedJudgement ) {
 
     let lengthCurSentencesNeedJudgement = teacherVars.sentencesNeedJudgement.length;
-    let lengthUpdatedSentencesNeedJudgement = updatedSentencesNeedJudgement.length;
+    
+    for ( let i=0; i<updatedSentencesNeedJudgement.length; i++ ) {
 
-    if ( lengthUpdatedSentencesNeedJudgement > lengthCurSentencesNeedJudgement ) {
+        teacherVars.sentencesNeedJudgement.push( updatedSentencesNeedJudgement[ i ] );
 
-        let noNewSents = lengthUpdatedSentencesNeedJudgement - lengthCurSentencesNeedJudgement;
+        teacherVars.sentencesBeingRecorded = teacherVars.sentencesBeingRecorded.filter( function ( s ) {
 
-        for ( let i=0; i<noNewSents; i++ ) {
+            return !( s.sent_id ===  updatedSentencesNeedJudgement[ i ].sent_id );
 
-            teacherVars.sentencesBeingRecorded.shift( i );
-            teacherVars.sentencesNeedJudgement.push( updatedSentencesNeedJudgement[ lengthCurSentencesNeedJudgement + i ] );
-
-        }
+        })
 
     }
+
+    //}
 
     if ( lengthCurSentencesNeedJudgement === 0 ) {
 

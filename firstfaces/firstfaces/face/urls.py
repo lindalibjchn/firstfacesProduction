@@ -31,7 +31,9 @@ urlpatterns = [
     # sentence
     path('store_sent', student_sentence.store_sent, name='store_sent'),
     path('check_judgement', student_sentence.check_judgement, name='check_judgement'),
-    path('wait_for_correction', student_sentence.wait_for_correction, name='wait_for_correction'),
+    path('check_for_corrections', student_sentence.check_for_corrections, name='check_for_corrections'),
+    path('get_next_prompt', student_sentence.get_next_prompt, name='get_next_prompt'),
+    # path('wait_for_correction', student_sentence.wait_for_correction, name='wait_for_correction'),
     path('store_whats_wrong', student_sentence.store_whats_wrong, name='store_whats_wrong'),
     path('store_try_again', student_sentence.store_try_again, name='store_try_again'),
     path('store_next_sentence', student_sentence.store_next_sentence, name='store_next_sentence'),
@@ -54,6 +56,8 @@ urlpatterns = [
     # AJAX
     # store
     path('store_judgement', teacher_sentence.store_judgement, name='store_judgement'),
+    path('store_indexes_corrections', teacher_sentence.store_indexes_corrections, name='store_indexes_corrections'),
+    path('store_single_prompt', teacher_sentence.store_single_prompt, name='store_single_prompt'),
     # path('store_prompt', teacher_sentence.store_prompt, name='store_prompt'),
     # path('store_correction', teacher_sentence.store_correction, name='store_correction'),
     # check db

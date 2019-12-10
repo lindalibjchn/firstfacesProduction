@@ -43,10 +43,10 @@ function doAllignment(){
         processData: false,                                                     
         contentType: false,                                                     
         success: function(json){  
-            console.log("Allignment Worked")
+          //console.log("Allignment Worked")
         },
         error: function() {             
-            console.log("that's wrong");
+          //console.log("that's wrong");
         },
     });    
 
@@ -126,12 +126,12 @@ $('#forwardErrorSelection').click(function(){
         $('#upperSentenceHolder').empty();
         $('#lowerSentenceHolder').empty();
         
-        tiaSpeak("That is too many words, please choose again",true,function(){
-            reset_text(conversationVariables.sentence_being_recorded_audio.alternatives['0'].transcript);
-            $('#talkBtn').show();
-            $('#recordVoiceBtn').show();
-            $('#listenVoiceBtn').show();
-        });
+        //tiaSpeak("That is too many words, please choose again",true,function(){
+        reset_text(conversationVariables.sentence_being_recorded_audio.alternatives['0'].transcript);
+        $('#talkBtn').show();
+        $('#recordVoiceBtn').show();
+        $('#listenVoiceBtn').show();
+        //});
     }else{
         //empty upper and lower divs
         $('#upperSentenceHolder').empty(); 
@@ -681,7 +681,7 @@ function sendAttemptBlob( new_blob ){
 
         },
         error: function() {                                                                  
-            console.log("that's wrong");                                                     
+          //console.log("that's wrong");                                                     
         },                                                                                   
    });
 }
@@ -704,10 +704,10 @@ function closeStage3(){
         processData: false,                                                                  
         contentType: false,
         success: function(){ 
-            console.log("success");
+          //console.log("success");
         },
         error: function() {                                                                  
-            console.log("that's wrong");                                                     
+          //console.log("that's wrong");                                                     
         },                                                                                   
     });
 }
@@ -728,7 +728,7 @@ function getPronunciationErrors(){
             document.getElementById('pronunImg').src = wordcloud
         },
         error: function() {
-            console.log("That's wrong");
+          //console.log("That's wrong");
         },
 
     });
@@ -794,7 +794,7 @@ function sendErrorBlobToServer( new_blob ){
            conversationVariables.lastAttemptID = json['attempt_pk'];  
         },
         error: function() {
-            console.log("that's wrong");
+          //console.log("that's wrong");
         },
     });
 }
@@ -817,7 +817,7 @@ $('#refBtn').click(function(){
     //$('#refText').hide();
     //animation
    //document.getElementById("refAudio").play();
-   tiaSpeak('Ref_Word', cont=true);
+   tiaPrepareToSpeak('Ref_Word');
 
    //Fix Buttons
    $('#reRecordBtn').fadeIn();
@@ -998,7 +998,7 @@ function submitKeyboard(){
             }
         },
         error: function() {
-            console.log("that's wrong"); 
+          //console.log("that's wrong"); 
         },
     });
 }
@@ -1027,7 +1027,7 @@ function submitRecording(){
 
         },
         error: function() {
-            console.log("that's wrong");
+          //console.log("that's wrong");
         },
     });
 }

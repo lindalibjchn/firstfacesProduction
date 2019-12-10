@@ -3,6 +3,8 @@ $(window).on( 'load', function() {
     //$("#foregroundContainer").hide()
     // LOADS OBJECTS <three_js_objects.js>
     // AFTER LOADING 'enterOrReEnter()' WILL BE CALLED BELOW
+    readyTiaSynthSentences();
+
     init();
 
     readyBtns();
@@ -98,16 +100,27 @@ function setSynthesisAudioOnChangeEvent() {
 
     synthesisObject.audio.ondurationchange = function() {
 
-        synthesisObject.now.noOfPhones = synthesisObject.now.phones[ synthesisObject.sentenceNo ].length;
-
-        synthesisObject.now.noOfFrames = Math.floor( synthesisObject.audio.duration * 60 )
-        synthesisObject.now.noOfFramesPerPhone = Math.floor( synthesisObject.now.noOfFrames / ( synthesisObject.now.noOfPhones - 1 ) );
-
-        synthesisObject.now.noOfLeftoverFrames = synthesisObject.now.noOfFrames - synthesisObject.now.noOfFramesPerPhone * synthesisObject.now.noOfPhones;
-
+        let dur = synthesisObject.audio.duration
+        synthesisObject.now.noOfFrames = Math.floor( dur * 60 )
         synthesisObject.gotNewDuration = true;
+        breatheObject.singleBreath.outCount = dur;
 
-        breatheObject.singleBreath.outCount = synthesisObject.audio.duration
+        //console.log('DELAY_BEFORE_MIA_SPEAKS:', DELAY_BEFORE_MIA_SPEAKS)
+        //console.log('synthesisObject.audio.duration:', synthesisObject.audio.duration)
+        //let dur = synthesisObject.audio.duration - DELAY_BEFORE_MIA_SPEAKS
+        //let dur = synthesisObject.audio.duration
+        //console.log('dur:', dur)
+        //console.log('synthesisObject.audio.duration:', synthesisObject.audio.duration)
+        synthesisObject.now.noOfPhones = synthesisObject.now.visemes[ synthesisObject.sentenceNo ].length;
+
+        //synthesisObject.now.noOfFrames = Math.floor( dur * 60 )
+        //synthesisObject.now.noOfFramesPerPhone = Math.floor( synthesisObject.now.noOfFrames / ( synthesisObject.now.noOfPhones - 1 ) );
+
+        //synthesisObject.now.noOfLeftoverFrames = synthesisObject.now.noOfFrames - synthesisObject.now.noOfFramesPerPhone * synthesisObject.now.noOfPhones;
+
+        //synthesisObject.gotNewDuration = true;
+
+        //breatheObject.singleBreath.outCount = dur;
 
     }
 

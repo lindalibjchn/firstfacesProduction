@@ -23,13 +23,13 @@ function sendBlobToServer( blob_to_send ) {
             }
             
             aud.src = prefixURL + json.audio_file,
-            console.log('got response from sending blob to server');
+          //console.log('got response from sending blob to server');
             
             prepareToStopTyping();
 
         },
         error: function() {
-            console.log("that's wrong");
+          //console.log("that's wrong");
         },
 
     });
