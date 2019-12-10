@@ -2,8 +2,18 @@ import ast
 import pandas as pd
 from django.conf import settings
 from g2p_en import G2p
+import glob
+import json
+import numpy as np
+
+
+valid = [v.split("/")[-1][:-4] for v in glob.glob(settings.BASE_DIR+'/face/text_files/Trigrams/*.txt')]
+
 
 g2p = G2p()
+
+
+
 def get_phonemes(g2p_, word):
     phos = g2p_(word)
     return remove_numbers_vowel_phonemes(phos)
@@ -134,7 +144,68 @@ def get_word_details(word, pos):
     return [levels, defs, exs]
 
 
+## New Trigram Structure
+
+def load_tri(word, pos):
+    with open(settings.BASE_DIR+'/face/text_files/Trigrams/{}.txt'.format(word, pos)) as json_file:
+        data = json.load(json_file)
+    json_file.close()
+    return data
+
+
+def get_random_tri(word, pos):
+    out = {}
+    tris = load_tri(word, pos)
+    a = select_tri(tris)
+
+    fw = list(a['Trigram'].keys())[0]
+    fl = list(a['Levels'].keys())[0]
+
+    poss = select_tri_words(a)
+    levels = []
+    words = []
+    for word in poss:
+        w, idx = word.split("_")
+        words.append(w)
+        levels.append(a['Levels'][fl][int(idx)])
+    return {fw: words}, {fl: levels}, {"C_IDX": a['C_IDX'], "F_IDX": a['F_IDX']}
+
+
+def get_probs(tris):
+    p = []
+    for tri in tris:
+        p.append(tri['P'])
+    return p
+
+
+def select_tri(tris):
+    p = get_probs(tris)
+    return list(np.random.choice(tris, 1, replace=False, p=p))[0]
+
+
+def select_tri_words(tri):
+    p = []
+    w = []
+    count = 0
+    for i in tri['Trigram'][list(tri['Trigram'].keys())[0]]:
+        p.append(i[1])
+        w.append(i[0].split("_")[0] + "_" + str(count))
+        count += 1
+    ss = 6
+    if len(w) < 6:
+        ss = len(w)
+
+    return list(np.random.choice(w, ss, replace=False, p=normalise(p)))
+
+def normalise(vals):
+    prob_factor = 1/sum(vals)
+    return [prob_factor * v for v in vals]
+
+
 def get_tris(word, pos):
+    #if word+'_'+pos in valid:
+     #   words, levels, C get_random_tri("man", "NOUN")
+
     if word.strip().lower() in tri_df.Word.unique():
         temp = tri_df[tri_df.Word == word.strip().lower()]
         if len(temp == 1):
@@ -145,6 +216,7 @@ def get_tris(word, pos):
             if len(temp == 1):
                 out = temp.reset_index().iloc[0]
                 return out.Words, out.Levels, int(out.T_IDX), out.Trigram, out.Trigram_Visemes
+
 
 
 def get_tile_class(len_, idx):
