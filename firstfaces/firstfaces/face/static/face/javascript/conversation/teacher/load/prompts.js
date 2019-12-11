@@ -56,13 +56,9 @@ function storeSinglePromptBox( awaiting ) {
 
     } else {
 
-
-        if ( promptText !== "" ) {
-
-            teacherVars.sentencesNeedJudgement[ 0 ].awaiting_next_prompt = false,
-            storeSinglePrompt( promptNumber, promptText );
-
-        }
+        teacherVars.sentencesNeedJudgement[ 0 ].awaiting_next_prompt = false,
+        storeSinglePrompt( promptNumber, promptText );
+        //resetJudgement();
 
     }
 

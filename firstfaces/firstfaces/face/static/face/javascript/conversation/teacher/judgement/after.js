@@ -1,13 +1,14 @@
 function resetJudgement() {
 
+    console.log('in resetJudgement');
     addJudgedSentenceToPrevSentences();
-    clearJudgement();
     removeJudgedSentence();
-    putNextSentenceNeedingJudgementUpForViewing();
+    clearJudgement();
     setKeydownEvents();
-    resetPhoneColoursNeedJudgement();
     resetTempEmotionStates();
     unHighlightAndFocusOnPromptBox();
+    putNextSentenceNeedingJudgementUpForViewing();
+    resetPhoneColoursNeedJudgement();
 
 }
 
@@ -22,6 +23,7 @@ function clearJudgement() {
 
 function removeJudgedSentence() {
 
+    console.log('removeJudgedSentence');
     $('#sentenceForJudgement').empty() 
     $('#sentenceForJudgement').css( 'opacity', '0.7' ); 
     $( '.prompt-text' ).val('');

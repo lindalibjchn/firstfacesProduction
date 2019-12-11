@@ -79,7 +79,7 @@ class Sentence(models.Model):
     awaiting_next_prompt = models.NullBooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    for_prompt = models.CharField(max_length=1000, null=True, blank=True)
+    prompt_updated_by_teacher = models.NullBooleanField(null=True)
 
     def __str__(self):
         return  str(self.pk) + ": " + str(self.sentence)

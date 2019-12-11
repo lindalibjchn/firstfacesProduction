@@ -118,23 +118,36 @@ function getNextPrompt() {
         },
         success: function(json) {
             
-            conversationVariables.conversation_dict.completed_sentences[ 0 ].prompts = json.prompts;
+            console.log('json.new_prompt:', json.new_prompt );
             conversationVariables.conversation_dict.completed_sentences[ 0 ].awaiting_next_prompt = json.awaiting_more;
-            
-            createPromptFromServerPrompts();
-            //synthesisObject. = synthesisObject.data.prompt;
+            if ( json.new_prompt ) {
 
-            if ( json.awaiting_more ) {
+                console.log('in new prompt');
+                conversationVariables.conversation_dict.completed_sentences[ 0 ].prompts = json.prompts;
+                createPromptFromServerPrompts();
+                synthesisObject.newPromptArrived = json.new_prompt;
+                synthesisObject.awaiting_next_prompt_count = 0;
 
-              //console.log('getting next prompt')
-                setTimeout( getNextPrompt, 2000 );
+            }
+
+            if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].awaiting_next_prompt ) {
+
+                if ( synthesisObject.awaiting_next_prompt_count < 20 ) {
+    
+                    setTimeout( getNextPrompt, 2000 );
+
+                }
+
+            } else {
+
+
 
             }
 
         },
         error: function() {
             
-          //console.log('in error');
+          console.log('in error for getNextPrompt');
         
         },
 
@@ -145,7 +158,7 @@ function getNextPrompt() {
 
 function checkForCorrections() {
 
-  //console.log('in check for corrections')
+    //console.log('in check for corrections')
     $.ajax({
         url: "/check_for_corrections",
         type: "GET",

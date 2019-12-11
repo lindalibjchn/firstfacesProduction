@@ -6,11 +6,11 @@ function storeJudgement() {
         data: { sentMeta: JSON.stringify( teacherVars.sentencesNeedJudgement[ 0 ] ) }, 
         success: function(json) {
            
-          //console.log('judgement successfully sent to server')
+          console.log('judgement successfully sent to server')
 
         },
         error: function() {
-          //console.log("that's wrong");
+          console.log("judgement not saved");
         },
 
     });
@@ -45,7 +45,9 @@ function storeSinglePrompt( promptNumber, promptText ) {
 
         },
         error: function() {
-          //console.log("that's wrong");
+          
+            console.log("prompt not saved");
+        
         },
 
     });
@@ -57,7 +59,6 @@ function storeSinglePrompt( promptNumber, promptText ) {
     }
 
 }
-
 
 function storeFinal() {
     
@@ -80,11 +81,11 @@ function storeFinal() {
             }, 
             success: function(json) {
                
-              //console.log('judgement successfully sent to server')
+              console.log('judgement successfully sent to server')
 
             },
             error: function() {
-              //console.log("that's wrong");
+              console.log("judgement failed to save");
             },
 
         });

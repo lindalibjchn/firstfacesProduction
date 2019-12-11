@@ -29,8 +29,8 @@ def check_for_change(request):
             # t0 = datetime.datetime.now()
             if check_for_change_count < 40:
                 # logger.error('check_for_change_count < 100')
-                if check_for_change_count % 20 == 0:
-                    print('sente_update:', check_for_change_count)
+                if check_for_change_count == 39:
+                    print('check_for_change_count: 39')
                     # logger.error('check_for_change_count:' + str(check_for_change_count))
                 check_for_change_count += 1
                 time.sleep(0.5)

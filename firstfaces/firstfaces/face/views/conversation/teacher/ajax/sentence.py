@@ -50,9 +50,12 @@ def store_single_prompt(request):
     prompt_number = int(request.POST['promptNumber'])
     prompt_name = prompt_text.replace(' ', '_')
     sent.awaiting_next_prompt = sent_meta['awaiting_next_prompt']
+    print('awaiting_next_prompt', sent.awaiting_next_prompt)
 
     prompt_levels_already_entered = [p.level for p in sent.prompts.all()]
 
+    print('prompt_levels_already_entered:', prompt_levels_already_entered)
+    print('prompt_number:', prompt_number)
     prompt_saved = False
     if prompt_number not in prompt_levels_already_entered:
 
@@ -79,15 +82,21 @@ def store_single_prompt(request):
             
         else:
 
-            promptN = Prompt.objects.filter(level=prompt_number, name=prompt_name)
-            if promptN.exists():
-                prompt = promptN[0]
-                print('already exists')
-            else:     
-                prompt = create_prompt_instance( prompt_text, prompt_number, initial_delay=500 )
-                print('created new:', prompt_number)
+            if prompt_number == 2 and prompt_text == "":
+                pass
 
-            sent.prompts.add(prompt)
+            else:
+
+                promptN = Prompt.objects.filter(level=prompt_number, name=prompt_name)
+                if promptN.exists():
+                    prompt = promptN[0]
+                    print('already exists')
+                else:     
+                    prompt = create_prompt_instance( prompt_text, prompt_number, initial_delay=500 )
+                    print('created new:', prompt_number)
+
+                sent.prompts.add(prompt)
+                sent.prompt_updated_by_teacher = True
 
         sent.save()
         prompt_saved = True

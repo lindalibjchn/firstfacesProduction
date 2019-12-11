@@ -87,16 +87,16 @@ function tiaSpeakAfterReturningFromThinking() {
     } else if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === "P" ) {
 
         createPromptFromServerPrompts();
-
-        if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].awaiting_next_prompt ) {
-
-            setTimeout( getNextPrompt, 5000 );
-
-        }
-
         conversationVariables.promptSpeaking = true;
         tiaPrepareToSpeak( "prompt" );
         
+        if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].awaiting_next_prompt ) {
+
+            synthesisObject.awaiting_next_prompt_count = 0;
+            setTimeout( getNextPrompt, 3000 );
+
+        }
+
     } else if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === "M" ) {
 
         conversationVariables.promptSpeaking = true;

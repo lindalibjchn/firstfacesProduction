@@ -142,13 +142,20 @@ def check_for_corrections(request):
 def get_next_prompt(request):
 
     sent_id = int(request.GET['sentId'])
-
     sent = Sentence.objects.get(pk=sent_id)
-
-    prompts = convert_django_prompt_to_json( sent.prompts.all() )
+    prompts = None
+    new_prompt = False
+    print('in get_next_prompt')
+    if sent.prompt_updated_by_teacher:
+        print('in prompt_updated_by_teacher')
+        prompts = convert_django_prompt_to_json( sent.prompts.all() )
+        sent.prompt_updated_by_teacher = False
+        sent.save()
+        new_prompt = True
 
     response_data = {
 
+        'new_prompt': new_prompt,
         'awaiting_more': sent.awaiting_next_prompt,
         'prompts': prompts,
 

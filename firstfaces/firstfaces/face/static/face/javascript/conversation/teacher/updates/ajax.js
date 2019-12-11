@@ -23,7 +23,8 @@ function checkForChange() {
 
         },
         error: function() {
-          console.log("check_for_change gone wrong");
+            console.log("check_for_change gone wrong");
+            setTimeout( function(){ location.reload() }, 2000 );
         },
 
     });
@@ -58,7 +59,8 @@ function updateConversationsDictFromServer() {
 
         },
         error: function() {
-          //console.log("that's wrong");
+            console.log("updateConversationsDictFromServer gone wrong");
+            setTimeout( function(){ location.reload() }, 2000 );
         },
 
     });
