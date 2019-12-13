@@ -17,7 +17,6 @@ function storeJudgement() {
 
     if ( [ 'D', '3' ].includes(teacherVars.sentencesNeedJudgement[ 0 ].judgement) ) {
 
-        $(document).off( 'keydown' );
         resetJudgement();
 
     } else {
@@ -55,6 +54,10 @@ function storeSinglePrompt( promptNumber, promptText ) {
     if ( promptNumber === 2 ) {
 
         resetJudgement();
+
+    } else {
+
+        setKeydownEvents();
 
     }
 

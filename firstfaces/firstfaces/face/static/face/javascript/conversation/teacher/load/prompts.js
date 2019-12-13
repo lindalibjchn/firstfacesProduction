@@ -62,7 +62,7 @@ function storeSinglePromptBox( awaiting ) {
 
     }
 
-    if ( !awaiting ) {
+    if ( !awaiting && promptNumber !== 2 ) {
 
         resetJudgement();
 

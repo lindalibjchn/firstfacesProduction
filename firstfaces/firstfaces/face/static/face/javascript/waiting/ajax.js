@@ -8,7 +8,7 @@ function bookConversation( enterTutorial ) {
     }).unbind('click');
     
     console.log('in bookConversation');
-    //if ( scheduleDict.in_class_now === false ) {
+    if ( waitingVariables.in_class_now === false ) {
 
         $.ajax({
             url: "/book_conversation",
@@ -34,10 +34,10 @@ function bookConversation( enterTutorial ) {
             },
         });
 
-    //} else {
+    } else {
 
+        enterConversation();
 
-
-    //}
+    }
 
 }

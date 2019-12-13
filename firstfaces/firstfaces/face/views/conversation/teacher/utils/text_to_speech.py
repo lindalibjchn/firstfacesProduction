@@ -83,7 +83,18 @@ def create_tia_tts_url(text, directory, filename, initial_delay, breathing, spea
     # print('viseme_data:', viseme_data)
     # print('request:', request)
 
-    return request.fileUrl, viseme_data
+    url = create_url( request.fileUrl, directory, filename )
+
+    return url, viseme_data
+
+def create_url(url, directory, name):
+
+    with urllib.request.urlopen(url) as response:
+        with open(settings.BASE_DIR + '/media/' + directory + name + '.wav', 'wb') as output:
+            output.write(response.read())
+
+    return directory + name + '.wav'
+
 
 dic = {
     '0': "SIL",

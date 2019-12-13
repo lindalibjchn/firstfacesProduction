@@ -41,6 +41,10 @@ function createPromptFromServerPrompts() {
         synthesisObject.now.texts = synthesisObject.data.prompt.texts; 
         synthesisObject.now.visemes = synthesisObject.data.prompt.visemes;
 
+    } else {
+
+        console.log('synthesisObject.now === undefined') 
+
     }
 
 }

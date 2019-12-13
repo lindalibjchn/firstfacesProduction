@@ -10,6 +10,11 @@ $(window).on( 'load', function() {
     
     }
     $('#pronunciationClearOverlayArea').click( hidePronunciationDataContainer );
+    if ( waitingVariables.currently_in_class ) {
+
+        waitingVariables.conversation_id = waitingVariables.conversations[ 0 ].id
+
+    }
 
 });
 

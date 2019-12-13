@@ -132,7 +132,7 @@ function getNextPrompt() {
 
             if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].awaiting_next_prompt ) {
 
-                if ( synthesisObject.awaiting_next_prompt_count < 20 ) {
+                if ( synthesisObject.awaiting_next_prompt_count < 500 ) {
     
                     setTimeout( getNextPrompt, 2000 );
 
@@ -140,7 +140,7 @@ function getNextPrompt() {
 
             } else {
 
-
+                console.log('not awaiting next prompt' );
 
             }
 
