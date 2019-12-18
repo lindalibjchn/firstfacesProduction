@@ -14,21 +14,25 @@ function sendSentToServer() {
     if ( sent.length > 2 || sent.length < 300 ) {
             
         if(conversationVariables.usePlayAud){
-            
             // temporary fix
             if ( !conversationVariables.FAFailed ) {
             
                 play_audio();
 
             }
+            else{
+                   aud.play();
+            }
             conversationVariables.usePlayAud = false;
         
         } else {
-            
             if ( !conversationVariables.FAFailed ) {
             
                 aud.play();
             
+            }
+            else{
+                aud.play();
             }
 
         }
