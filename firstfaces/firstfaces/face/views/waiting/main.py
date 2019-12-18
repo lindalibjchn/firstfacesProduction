@@ -46,47 +46,59 @@ def waiting(request):
     
     #except:
     
-        time_now = timezone.localtime(timezone.now()).strftime("%H:%M")
-        date_now = timezone.localtime(timezone.now()).date()
-
-        groups = request.user.groups.values_list('name', flat=True)
-        available_objects = get_availables_for_schedule(groups)
-
-        availables = create_list_of_javascript_available_times_from_django_objects(available_objects)
-
-        currently_in_class, class_finished_today = check_if_currently_in_class_or_class_finished(request.user)
-
-        conversations = get_prev_conversations( request.user )
-
-        # check if user has completed tutorial
         user_profile = Profile.objects.get(learner=request.user)
         tutorial_complete = user_profile.tutorial_complete
 
-        waiting_variables = {
+        if tutorial_complete:
 
-            # 'schedule_dict': json.dumps(schedule_dict),
-            # 'schedule_now': json.dumps(schedule_now),
-            'conversations': conversations,
-            'availables': availables,
-            'tutorial_complete': tutorial_complete,
-            'currently_in_class': currently_in_class,
-            'class_finished_today': class_finished_today,
-            'in_development': settings.DEBUG,
-            # 'no_live_sessions': no_live_sessions,
+            time_now = timezone.localtime(timezone.now()).strftime("%H:%M")
+            date_now = timezone.localtime(timezone.now()).date()
 
-        }
+            groups = request.user.groups.values_list('name', flat=True)
+            available_objects = get_availables_for_schedule(groups)
+            availables = create_list_of_javascript_available_times_from_django_objects(available_objects)
+            currently_in_class, class_finished_today = check_if_currently_in_class_or_class_finished(request.user)
+            conversations = get_prev_conversations( request.user )
 
-        # print('waiting_variables:', json.dumps(waiting_variables))
-        context = {
+            # check if user has completed tutorial
+            waiting_variables = {
 
-            'waiting_variables': json.dumps(waiting_variables),
-            'timeNowForNavbar': time_now,
-            'waiting': True,
+                # 'schedule_dict': json.dumps(schedule_dict),
+                # 'schedule_now': json.dumps(schedule_now),
+                'conversations': conversations,
+                'availables': availables,
+                'tutorial_complete': tutorial_complete,
+                'currently_in_class': currently_in_class,
+                'class_finished_today': class_finished_today,
+                'in_development': settings.DEBUG,
+                # 'no_live_sessions': no_live_sessions,
 
-        }
+            }
 
-        return render(request, 'face/waiting/main.html', context)
+            # print('waiting_variables:', json.dumps(waiting_variables))
+            context = {
 
+                'waiting_variables': json.dumps(waiting_variables),
+                'timeNowForNavbar': time_now,
+                'waiting': True,
+
+            }
+
+            return render(request, 'face/waiting/main.html', context)
+
+        else:
+        
+            # check if tutorial already open
+            if Conversation.objects.filter(learner=request.user).count() == 1:
+                
+                conversation = Conversation.objects.filter(learner=request.user)[0]
+                
+            else:
+
+                conversation = Conversation(learner=request.user, start_time=timezone.now(), topic="tutorial") 
+                conversation.save()
+            
+            return redirect('conversation_student', conversation.id)
 
 def book_conversation(request):
 

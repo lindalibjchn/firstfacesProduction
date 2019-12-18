@@ -3,7 +3,7 @@
     /*position: absolute;*/
     position: relative;
     /*top: 40%;*/
-    height: 28%;
+    height: 30%;
     width: 100%;
     /*border: 1px solid red;*/
     display:flex;
@@ -14,9 +14,10 @@
 
 #allScoresInnerContainer {
 
-    position: relative;
-    height: 95%;
-    width: 95%;
+    position: absolute;
+    bottom: 0;
+    height: 80%;
+    width: 90%;
     /*border: 1px solid #188ac7;*/
     border-radius: 20px;
     /*display:flex;*/
