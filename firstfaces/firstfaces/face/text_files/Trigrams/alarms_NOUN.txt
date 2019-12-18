@@ -1,0 +1,1 @@
+[{"Word": "alarms", "POS": "NOUN", "Trigram": {"the": [["smoke_NOUN", 0.003575685339690107]]}, "Score": 2.7890380687188592e-05, "C_IDX": 2, "F_IDX": 0, "Levels": {"a1": ["a2"]}, "P": 0.10164877269824842, "Viseme": ["th", "e"], "Visemes": {"['th', 'e']": [["s", "b", "e", "k", "t", "u", "e", "t"]]}}]

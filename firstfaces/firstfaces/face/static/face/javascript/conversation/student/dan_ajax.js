@@ -29,11 +29,13 @@ function doAllignment(){
     if(!conversationVariables.trying_again){
         fd.append('trans',conversationVariables.sentence_being_recorded_audio.alternatives[0].transcript);
         fd.append('fn',conversationVariables.sentence_being_recorded_audio.Aud_Fname);
+        fd.append('sessionID',conversationVariables.sentence_being_recorded.conv_id);
     }else{
         fd.append('trans',conversationVariables.conversation_dict.completed_sentences[0].sentence);
         fd.append('fn',conversationVariables.previous_sent_Aud_Fname);
+        fd.append('sessionID',conversationVariables.previous_sent_conv_id);
     }
-    fd.append('sessionID',conversationVariables.sentence_being_recorded.conv_id);
+
 
     //Makes ajax call creating allignment file and map.json files
     $.ajax({                                                                    
@@ -70,7 +72,11 @@ $('#forwardErrorSelection').click(function(){
     }
     else{
         conversationVariables.totalAudioLength = conversationVariables.previous_sent_totalAudioLength;
-        var words = conversationVariables.conversation_dict.completed_sentences[0].sentence.split(" ");
+         var temp = conversationVariables.conversation_dict.completed_sentences[0].sentence;
+        var words = []
+        for(i=0;i<temp.length;i++){
+            words.push(temp[i][0]);
+        }
     }
     //Allignment is done
     doAllignment();
@@ -238,6 +244,7 @@ $('#bottomCent').keyup(function(event){
 // Fucntion is used to open modal overaly for a given error
 function correctError(idx){
     //Unnecessary buttons are hidden
+    conversationVariables.stage_2_increased = false;
     $('#backCorrection').hide();
     $('#recordVoiceBtn').hide();
     //hide text area
@@ -391,8 +398,17 @@ function doneError(){
 $('#backCorrection').click(function(){
     $('#recordVoiceBtn').fadeIn();
     conversationVariables.playStage2 = false;
-    conversationVariables.totalAudioLength = conversationVariables.sentence_being_recorded_audio.totalAudioLength
-    var words = conversationVariables.sentence_being_recorded_audio.alternatives[0].transcript.split(" ");
+    if(!conversationVariables.trying_again){
+        conversationVariables.totalAudioLength = conversationVariables.sentence_being_recorded_audio.totalAudioLength
+        var words = conversationVariables.sentence_being_recorded_audio.alternatives[0].transcript.split(" ");
+    }else{
+        conversationVariables.totalAudioLength = conversationVariables.previous_sent_totalAudioLength;
+        var temp = conversationVariables.conversation_dict.completed_sentences[0].sentence;
+        var words = []
+        for(i=0;i<temp.length;i++){
+            words.push(temp[i][0]);
+        }
+    }
     conversationVariables.uncorrectedErrors = []; 
     // reset divs
     //empty upper and lower divs
@@ -411,9 +427,12 @@ $('#backCorrection').click(function(){
      },duration);                                                       
 
     // reset buttons
-    $('#talkBtn').show();
+
     $('#backCorrection').hide();
-    $('#listenVoiceBtn').css('display','block');
+    if(!conversationVariables.trying_again){
+        $('#listenVoiceBtn').css('display','block');
+        $('#talkBtn').show();
+    }
     selected = [];
     $('#forwardErrorSelection').prop("disabled",false);
     $('#backCorrection').prop("disabled",false);
@@ -594,7 +613,7 @@ function sendAttemptBlob( new_blob ){
                 $("#reRecordBtn").prop( "disabled", false );
                 $('#backOverlay').prop("disabled",false);
                 var cent_found = false;
-                if(json.trans.trim() != ""){
+                if(json.trans.trim() != ""){sent_id
                     $('#hypBtn').show();
                     trans = json.trans;
                     err_trans = $('#refText').text().trim();
@@ -702,10 +721,16 @@ function closeStage3(){
     conversationVariables.stage3 = false;
     let fd = new FormData();
     fd.append('sessionID',conversationVariables.conversation_dict.id);
-    fd.append('blob_no_text_sent_id',conversationVariables.sentence_being_recorded.sent_id);
+    if(!conversationVariables.trying_again){
+        fd.append('blob_no_text_sent_id',conversationVariables.sentence_being_recorded.sent_id);
+        fd.append('audio_id',conversationVariables.sentence_being_recorded_audio.currentAudID);
+    }else{
+        fd.append('blob_no_text_sent_id',conversationVariables.previous_sent_sent_id);
+        fd.append('audio_id',conversationVariables.previous_sent_currentAudID);
+    }
     fd.append('start_idx',conversationVariables.startIDX);
     fd.append('error_pk',conversationVariables.errors[conversationVariables.startIDX]);
-    fd.append('audio_id',conversationVariables.sentence_being_recorded_audio.currentAudID);
+
     fd.append('correctio_id', conversationVariables.correctionAttemptID);
     fd.append('clicks', conversationVariables.specClicks);
     $.ajax({                                                                                 
@@ -747,15 +772,21 @@ function getPronunciationErrors(){
 
 //Function is called if user tries to rerecord audio
 function sendErrorBlobToServer( new_blob ){
-
+    $('#keyboardOverlay').hide();
+    $('#reRecordBtn').hide();
     let fd = new FormData();
     fd.append('data',new_blob);
     fd.append('sessionID',conversationVariables.conversation_dict.id);
     fd.append('blob_no_text',conversationVariables.blob_no_txt);
-    fd.append('blob_no_text_sent_id',conversationVariables.sentence_being_recorded.sent_id);
+     if(!conversationVariables.trying_again){
+        fd.append('blob_no_text_sent_id',conversationVariables.sentence_being_recorded.sent_id);
+        fd.append('audio_id',conversationVariables.sentence_being_recorded_audio.currentAudID);
+    }else{
+        fd.append('blob_no_text_sent_id',conversationVariables.previous_sent_sent_id);
+        fd.append('audio_id',conversationVariables.previous_sent_currentAudID);
+    }
     fd.append('error_list',JSON.stringify(conversationVariables.errors));
     fd.append('start_idx',conversationVariables.startIDX);
-    fd.append('audio_id',conversationVariables.sentence_being_recorded_audio.currentAudID);
     fd.append('trans', $('#centeredErrorText').text().trim());
     $('#bottomCent').hide();
     decrease_type_size_stage2();
@@ -788,7 +819,7 @@ function sendErrorBlobToServer( new_blob ){
 
                         document.getElementById('audio_'+json['error_start']).src = prefixURL+json.audio_url;
                         $('#audio_'+json['error_start']).attr('duration',json.audio_len);
-                    },2000);
+                    },1000);
                 },500);
                 $('#overlayTextBox').text(json['error_trans']);
                 //show mic
@@ -900,8 +931,12 @@ function submitKeyboard(){
     fd.append("trans",trans);
     fd.append("etrans",err_trans);
     fd.append('error_list',JSON.stringify(conversationVariables.errors));                        
-    fd.append('start_idx',conversationVariables.startIDX);                                       
-    fd.append('audio_id',conversationVariables.sentence_being_recorded_audio.currentAudID);
+    fd.append('start_idx',conversationVariables.startIDX);
+    if(conversationVariables.trying_again){
+        fd.append('audio_id',conversationVariables.previous_sent_currentAudID);
+    }else{
+        fd.append('audio_id',conversationVariables.sentence_being_recorded_audio.currentAudID);
+    }
     if(!conversationVariables.goToStage3){
                 fd.append('gender', conversationVariables.gender);
     }else{
@@ -1172,7 +1207,12 @@ function getSentence(){
         var words = conversationVariables.sentence_being_recorded_audio.alternatives[0].transcript.split(" ");
     }
     else{
-        var words = conversationVariables.conversation_dict.completed_sentences[0].sentence.split(" ");
+        var temp = conversationVariables.conversation_dict.completed_sentences[0].sentence;
+        var words = []
+        for(i=0;i<temp.length;i++){
+            words.push(temp[i][0]);
+        }
+
     }
     var curr = 0;
     var i = 0;

@@ -79,12 +79,14 @@ function setUpSpectrospin() {
 
 function disable_everything(){
     //$('.tile-word')
+    console.log("disabled")
     $('#tophalfSpec').unbind('click');
     $('#bottomhalfSpec').unbind('click');
     $('.tile-word').unbind('click');
 }
 
 function enable_everything(){
+    console.log("enabled")
     $('#tophalfSpec').click(function(){
         secondTopClick();
     });
@@ -110,17 +112,25 @@ var hiddenBottom = []
 
 
  function secondBottomClick(){
+    console.log("animate down");
     getTops();
     disable_everything();
       if(hiddenTop.length != 0){
+            console.log(tiles);
             var next = hiddenTop[(hiddenTop.length-1)];
+            console.log(next);
             hiddenTop.splice(hiddenTop.length-1, 1)
             appear_top(next);
+            console.log(tiles);
             animate_down(0);
+            console.log(tiles);
             animate_down(1);
+            console.log(tiles);
             animate_down(2);
+            console.log(tiles);
             animate_down(3);
-            setTimeout(function(){fix_locations(conversationVariables.IDX_Val)},300);
+            console.log(tiles);
+            setTimeout(function(){fix_location_1(conversationVariables.ss_fid, conversationVariables.ss_cid)},300);
 
 
             if(tiles[4] != ''){
@@ -130,7 +140,6 @@ var hiddenBottom = []
             setTimeout(function(){
                 tiles = [next,tiles[0],tiles[1],tiles[2],tiles[3]];
             },700);
-            setTimeout(function(){tiles = [next,tiles[0],tiles[1],tiles[2],tiles[3]]},700);
             setTimeout(enable_everything,750);
 
       }
@@ -144,7 +153,7 @@ var hiddenBottom = []
                     $("#"+tiles[4]).removeClass("third-tile-bottom").addClass("hidden_tile");
                     hiddenBottom.push(tiles[4])
                 }
-                setTimeout(function(){fix_locations(conversationVariables.IDX_Val)},300);
+                setTimeout(function(){fix_location_1(conversationVariables.ss_fid, conversationVariables.ss_cid)},300);
                 setTimeout(function(){
                     tiles = ['',tiles[0],tiles[1],tiles[2],tiles[3]];
 
@@ -156,7 +165,7 @@ var hiddenBottom = []
                     animate_down(1);
                     animate_down(2);
                     animate_down(3);
-                    setTimeout(function(){fix_locations(conversationVariables.IDX_Val)},300);
+                    setTimeout(function(){fix_location_1(conversationVariables.ss_fid, conversationVariables.ss_cid)},300);
                     if(tiles[4] != ''){
                         $("#"+tiles[4]).removeClass("third-tile-bottom").addClass("hidden_tile");
                         hiddenBottom.push(tiles[4])
@@ -190,7 +199,7 @@ var hiddenBottom = []
                 hiddenTop.push(tiles[0])
             }
 
-            setTimeout(function(){fix_locations(conversationVariables.IDX_Val)},300);
+            setTimeout(function(){fix_location_1(conversationVariables.ss_fid, conversationVariables.ss_cid)},300);
             setTimeout(function(){tiles = [tiles[1],tiles[2],tiles[3], tiles[4], next ]},700);
             setTimeout(enable_everything,750);
       }
@@ -204,7 +213,7 @@ var hiddenBottom = []
                     $("#"+tiles[0]).removeClass("third-tile-top").addClass("hidden_tile");
                     hiddenTop.push(tiles[0])
                 }
-                setTimeout(function(){fix_locations(conversationVariables.IDX_Val)},300);
+                setTimeout(function(){fix_location_1(conversationVariables.ss_fid, conversationVariables.ss_cid)},300);
                 setTimeout(function(){tiles = [tiles[1],tiles[2],tiles[3], tiles[4], '' ]},700);
                 setTimeout(enable_everything,750);
             }
@@ -217,7 +226,7 @@ var hiddenBottom = []
                         $("#"+tiles[0]).removeClass("third-tile-top").addClass("hidden_tile");
                         hiddenTop.push(tiles[0])
                     }
-                    setTimeout(function(){fix_locations(conversationVariables.IDX_Val)},300);
+                    setTimeout(function(){fix_location_1(conversationVariables.ss_fid, conversationVariables.ss_cid)},300);
                     setTimeout(function(){tiles = [tiles[1],tiles[2],tiles[3], "", '' ]},700);
                     setTimeout(enable_everything,750);
                 }
@@ -273,6 +282,7 @@ function appear_top(id){
         var moveDist = tops[1] -tops[0];
         $('#'+id).removeClass('hidden_tile').addClass(classes[0]).css('opacity',0).animate({'top': '-='+((moveDist/2)*.9)+'px'})
         $('#'+id).animate({top: '+='+((moveDist/2)*.9)+'px',opacity:opacities[0]},200);
+        setTimeout(function(){fix_location_1(conversationVariables.ss_fid, conversationVariables.ss_cid)},650);
 }
 
 
@@ -280,5 +290,6 @@ function appear_bottom(id){
         var moveDist = tops[4] -tops[3];
         $('#'+id).removeClass('hidden_tile').addClass(classes[4]).css('opacity',0).animate({'top': '+='+((moveDist/2)*.9)+'px'});
         $('#'+id).animate({top: '-='+((moveDist/2)*.9)+'px',opacity:opacities[4]},200);
+        setTimeout(function(){fix_location_1(conversationVariables.ss_fid, conversationVariables.ss_cid)},650);
 }
 

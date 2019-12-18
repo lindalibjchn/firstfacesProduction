@@ -1,0 +1,1 @@
+[{"Word": "dinners", "POS": "NOUN", "Trigram": {"breakfasts": [["lunches_NOUN", 0.5]]}, "Score": 0.0021665720004529, "C_IDX": 2, "F_IDX": 0, "Levels": {"a1": ["a1"]}, "P": 0.5, "Viseme": ["b", "r", "e", "k", "f", "e", "s", "t", "s"], "Visemes": {"['b', 'r', 'e', 'k', 'f', 'e', 's', 't', 's']": [["l", "e", "t", "s", "e", "t", "s", "e", "t"]]}}]

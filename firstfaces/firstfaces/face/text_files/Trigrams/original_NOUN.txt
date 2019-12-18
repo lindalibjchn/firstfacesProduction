@@ -1,0 +1,1 @@
+[{"Word": "original", "POS": "NOUN", "Trigram": {"a": [["hellenistic_ADJ", 0.17647058823529413]]}, "Score": 0.00337725773400874, "C_IDX": 2, "F_IDX": 0, "Levels": {"a1": ["c2"]}, "P": 0.9984341045672043, "Viseme": ["e"], "Visemes": {"['e']": [["e", "e", "l", "e", "t", "s", "e", "t", "e", "k", "e", "t", "e", "t"]]}}]

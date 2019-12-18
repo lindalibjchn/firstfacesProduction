@@ -1,0 +1,1 @@
+[{"Word": "castles", "POS": "NOUN", "Trigram": {"late": [["medieval_ADJ", 0.008379888268156424]]}, "Score": 5.603523433616779e-05, "C_IDX": 2, "F_IDX": 0, "Levels": {"a1": ["c1"]}, "P": 0.21318681318681318, "Viseme": ["l", "e", "t"], "Visemes": {"['l', 'e', 't']": [["b", "e", "t", "i", "e", "f", "e", "l", "s", "i"]]}}]

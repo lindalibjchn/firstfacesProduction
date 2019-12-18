@@ -1,0 +1,1 @@
+[{"Word": "attacks", "POS": "VERB", "Trigram": {"that": [["virus_NOUN", 0.005494505494505495]]}, "Score": 0.00014618246528173013, "C_IDX": 2, "F_IDX": 1, "Levels": {"a1": ["a2"]}, "P": 0.5610249954392966, "Viseme": ["th", "e", "t"], "Visemes": {"['th', 'e', 't']": [["f", "e", "r", "e", "t", "s", "e", "t"]]}}]

@@ -26,10 +26,14 @@ function goToThinkingPos() {
 }
 
 function resetSentenceBeingRecorded() {
-
-    conversationVariables.sentence_being_recorded = null;
-    conversationVariables.previous_sent_Aud_Fname  = $.extend(true, {}, conversationVariables.sentence_being_recorded_audio.Aud_Fname);
-    conversationVariables.previous_sent_totalAudioLength  = $.extend(true, {}, conversationVariables.sentence_being_recorded_audio.totalAudioLength);
+    if(conversationVariables.sentence_being_recorded_audio != null){
+        conversationVariables.previous_sent_conv_id =  conversationVariables.sentence_being_recorded.conv_id;
+        conversationVariables.previous_sent_Aud_Fname  = conversationVariables.sentence_being_recorded_audio.Aud_Fname;
+        conversationVariables.previous_sent_currentAudID  = conversationVariables.sentence_being_recorded_audio.currentAudID;
+        conversationVariables.previous_sent_totalAudioLength  = conversationVariables.sentence_being_recorded_audio.totalAudioLength;
+        conversationVariables.previous_sent_sent_id = conversationVariables.sentence_being_recorded.sent_id;
+    }
     conversationVariables.sentence_being_recorded_audio = null;
+    conversationVariables.sentence_being_recorded = null;
 
 }

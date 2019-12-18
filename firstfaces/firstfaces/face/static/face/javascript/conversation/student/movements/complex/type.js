@@ -76,7 +76,7 @@ function dealWithAfterTap() {
     } else {
 
         if(!conversationVariables.stage2 && !conversationVariables.stage3){
-
+            conversationVariables.trying_again = false;
 
 
             buttonsAfterTiaListensToLearnersSentenceAndTaps();

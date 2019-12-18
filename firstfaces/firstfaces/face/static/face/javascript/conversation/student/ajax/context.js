@@ -32,7 +32,7 @@ function get_word_context(){
             if(json.success == 0){
               //console.log("Context error.")
                 $('#btnCont').removeClass().addClass('wholeSide');
-                $('#refBtn').removeClass().addClass("wholeSpec").addClass("ref-word");
+                $('#refBtn').removeClass().addClass("ref-word");
                 $('#SpectroSpinHolder').removeClass().addClass('noSide');
                 $('#fixedWord').removeClass().addClass('noSide');
 
@@ -46,25 +46,7 @@ function get_word_context(){
             }
             else{
                 conversationVariables.Trigram = true;
-                if(json.id == 0){
-                   $('#btnCont').removeClass().addClass('leftSide');
-                   $('#refBtn').removeClass("centered").removeClass('right-sided').addClass('left-sided');
-                   $('#SpectroSpinHolder').removeClass().addClass('rightSide');
-                   $('#fixedWord').removeClass().addClass('centerSide');
 
-                }
-                else if(json.id == 1){
-                   $('#btnCont').removeClass().addClass('centerSide');
-                   $('#refBtn').removeClass("left-sided").removeClass('right-sided').addClass('centered');
-                   $('#SpectroSpinHolder').removeClass().addClass('rightSide');
-                   $('#fixedWord').removeClass().addClass('centerSide');
-                }
-                else{
-                     $('#btnCont').removeClass().addClass('rightSide');
-                     $('#refBtn').removeClass("centered").removeClass('left-sided').addClass('right-sided');
-                     $('#SpectroSpinHolder').removeClass().addClass('leftSide');
-                     $('#fixedWord').removeClass().addClass('centerSide');
-                }
                 $('#SpectroSpinCont').empty().append('<div id="tophalfSpec"></div>').append('<div id="bottomhalfSpec"></div>');
 
                 conversationVariables.Audio_Dicts = {};
@@ -111,16 +93,19 @@ function get_word_context(){
                 }
                 if(hiddenBottom.length > 0){
                     for(i=0;i<hiddenBottom.length;i++){
-                        $('#tileAudios').append('<audio id="'+hiddenBottom[i]+'_audio" src="' + prefixURL +json.tile_audio[i+tile.length]+'" />' )
+                        $('#tileAudios').append('<audio id="'+hiddenBottom[i]+'_audio" src="' + prefixURL +json.tile_audio[i+tiles.length]+'" />' )
                         synthesisObject.data[hiddenBottom[i]] = {
-                             'URLs':[prefixURL +json.tile_audio[i+tile.length]],
+                             'URLs':[prefixURL +json.tile_audio[i+tiles.length]],
                              'texts':[$('#'+hiddenBottom[i]).find('span.tile-main-word').text()],
-                             'phones':[json.tile_vis[i+tile.length]],
-                             'duration':json.tile_durations[i+tile.length]
+                             'phones':[json.tile_vis[i+tiles.length]],
+                             'duration':json.tile_durations[i+tiles.length]
                          }
                     }
                 }
-                fix_locations(json.id);
+                //fix_locations(json.id);
+                fix_location_1(json.fid, json.cid)
+                conversationVariables.ss_fid = json.fid;
+                conversationVariables.ss_cid = json.cid;
                 setUpSpectrospin();
             }
 
@@ -129,7 +114,7 @@ function get_word_context(){
           //console.log("Context error.");
             conversationVariables.Trigram = false;
             $('#btnCont').removeClass().addClass('wholeSide');
-            $('#refBtn').removeClass().addClass("wholeSpec").addClass("ref-word");
+            $('#refBtn').removeClass().addClass("ref-word");
             $('#SpectroSpinHolder').removeClass().addClass('noSide');
             $('#fixedWord').removeClass().addClass('noSide');
         },
@@ -145,6 +130,7 @@ function get_word_context(){
 function fix_locations(value){
     conversationVariables.IDX_Val = value
   //console.log("CALLED FIX LOCATIONS");
+    alert("TESTMP")
     if(value == 0){
         $('.main-tile').css({'width':'90%','left':'0','border-radius':'0 5px 5px 0','border-top':'3px solid black','border-bottom':'3px solid black','border-right':'3px solid black','border-left':'0'})
         $('.second-tile-top').css({"width":"72%","left":"9%","top":"23.2%", 'border':"3px solid black", 'border-radius': '0 5px 5px 0'});
@@ -391,33 +377,38 @@ $('#playTrigramBtn').click(function(){
 });
 
 function increase_type_size_stage2(){
-    $('#reRecordBtn').hide();
-    $('#correctionOverlay').css({'background-color':'rgba(255,255,255,0.8)', 'z-index':4}).animate({height:'100%'},300);
-    $('#sentenceShowHolder').css('background-color','rgba(255,255,255,0)')
-    $('#overlayBtnBox').css('height','10%');
-    $('#finishClassIconContainer').hide()
-    $('#prevSentsIconContainer').hide()
-    $('#closeTallType').css("display","flex");
-    conversationVariables.size_increased = true;
+    if(!conversationVariables.stage_2_increased){
+        $('#reRecordBtn').hide();
+        $('#correctionOverlay').css({'background-color':'rgba(255,255,255,0.8)', 'z-index':4}).animate({height:'100%'},300);
+        $('#sentenceShowHolder').css('background-color','rgba(255,255,255,0)')
+        $('#overlayBtnBox').css('height','10%');
+        $('#finishClassIconContainer').hide()
+        $('#prevSentsIconContainer').hide()
+        $('#closeTallType').css("display","flex");
+        conversationVariables.stage_2_increased = true;
+    }
 }
 
 $('#closeTallTypeText').click(decrease_type_size_stage2);
 
 function decrease_type_size_stage2(){
-    $('#reRecordBtn').show();
-    $('#correctionOverlay').css({'background-color':'rgba(255,255,255,0)', 'z-index':2}).animate({height:'50%'},300);
-    $('#sentenceShowHolder').css('background-color','rgba(255,255,255,0.8)')
-    $('#overlayBtnBox').css('height','20%');
-    $('#finishClassIconContainer').show()
-    $('#prevSentsIconContainer').show()
-    $('#closeTallType').css("display","none");
-    if($('#bottomCent').text().trim().length == 0){
-        conversationVariables.movedText = true;
-        unmoveText();
-        $('#bottomCent').hide();
+    if(conversationVariables.stage_2_increased){
+        $('#reRecordBtn').show();
+        $('#correctionOverlay').css({'background-color':'rgba(255,255,255,0)', 'z-index':2}).animate({height:'50%'},300);
+        $('#sentenceShowHolder').css('background-color','rgba(255,255,255,0.8)')
+        $('#overlayBtnBox').css('height','20%');
+        $('#finishClassIconContainer').show()
+        $('#prevSentsIconContainer').show()
+        $('#closeTallType').css("display","none");
+        if($('#bottomCent').text().trim().length == 0){
+            conversationVariables.movedText = true;
+            unmoveText();
+            $('#bottomCent').hide();
+        }
+        $("#bottomCent").attr("contenteditable",false);
+        $('#keyboardOverlay').show();
+        conversationVariables.stage_2_increased = false;
     }
-    $("#bottomCent").attr("contenteditable",false);
-    $('#keyboardOverlay').show();
 
 }
 

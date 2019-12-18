@@ -1,0 +1,1 @@
+[{"Word": "radars", "POS": "NOUN", "Trigram": {"air": [["defense_NOUN", 0.0033984706881903144]]}, "Score": 1.4726062874786067e-05, "C_IDX": 2, "F_IDX": 0, "Levels": {"a1": ["c2"]}, "P": 0.2227602905569007, "Viseme": ["e", "r"], "Visemes": {"['e', 'r']": [["t", "e", "f", "e", "t", "s", "e", "t"]]}}]

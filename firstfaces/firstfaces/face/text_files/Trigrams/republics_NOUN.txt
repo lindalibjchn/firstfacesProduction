@@ -1,0 +1,1 @@
+[{"Word": "republics", "POS": "NOUN", "Trigram": {"former": [["yugoslav_ADJ", 0.061068702290076333]]}, "Score": 0.0012013529050981264, "C_IDX": 2, "F_IDX": 0, "Levels": {"b2": ["c2"]}, "P": 0.7937122890376374, "Viseme": ["f", "e", "r", "b", "r"], "Visemes": {"['f', 'e', 'r', 'b', 'r']": [["e", "u", "k", "e", "s", "l", "e", "f", "e", "t"]]}}]

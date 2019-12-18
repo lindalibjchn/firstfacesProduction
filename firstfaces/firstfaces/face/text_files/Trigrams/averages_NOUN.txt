@@ -1,0 +1,1 @@
+[{"Word": "averages", "POS": "NOUN", "Trigram": {"grade": [["point_NOUN", 0.05542168674698795]]}, "Score": 0.00024015014944779134, "C_IDX": 2, "F_IDX": 0, "Levels": {"b1": ["a1"]}, "P": 0.4539473684210526, "Viseme": ["k", "r", "e", "t"], "Visemes": {"['k', 'r', 'e', 't']": [["b", "e", "t", "t", "e", "t"]]}}]
