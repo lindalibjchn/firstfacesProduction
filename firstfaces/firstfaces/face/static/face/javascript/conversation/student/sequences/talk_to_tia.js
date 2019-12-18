@@ -26,7 +26,7 @@ function goToThinkingPos() {
 }
 
 function resetSentenceBeingRecorded() {
-    if(conversationVariables.trying_again){
+    if(conversationVariables.sentence_being_recorded_audio != null){
         conversationVariables.previous_sent_conv_id =  conversationVariables.sentence_being_recorded.conv_id;
         conversationVariables.previous_sent_Aud_Fname  = conversationVariables.sentence_being_recorded_audio.Aud_Fname;
         conversationVariables.previous_sent_currentAudID  = conversationVariables.sentence_being_recorded_audio.currentAudID;

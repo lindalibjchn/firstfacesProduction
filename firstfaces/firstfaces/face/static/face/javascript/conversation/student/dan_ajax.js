@@ -427,9 +427,12 @@ $('#backCorrection').click(function(){
      },duration);                                                       
 
     // reset buttons
-    $('#talkBtn').show();
+
     $('#backCorrection').hide();
-    $('#listenVoiceBtn').css('display','block');
+    if(!conversationVariables.trying_again){
+        $('#listenVoiceBtn').css('display','block');
+        $('#talkBtn').show();
+    }
     selected = [];
     $('#forwardErrorSelection').prop("disabled",false);
     $('#backCorrection').prop("disabled",false);
