@@ -53,7 +53,11 @@ function getRemainingAudio(){
     }
     fd.append('ends',audio_ends);
     fd.append("poss",new_ids);
-    fd.append("fn", conversationVariables.sentence_being_recorded_audio.Aud_Fname);
+    if(!conversationVariables.trying_again){
+        fd.append("fn", conversationVariables.sentence_being_recorded_audio.Aud_Fname);
+    }else{
+        fd.append("fn", conversationVariables.previous_sent_Aud_Fname);
+    }
     fd.append('sessionID',conversationVariables.conversation_dict.id);
     fd.append("ids",conversationVariables.correct_audio);
     fd.append("poss", new_ids);

@@ -1,0 +1,1 @@
+[{"Word": "oceans", "POS": "NOUN", "Trigram": {"in": [["tropical_ADJ", 0.0021333333333333334]]}, "Score": 2.590005202280403e-05, "C_IDX": 2, "F_IDX": 0, "Levels": {"a1": ["b2"]}, "P": 0.16207358855951137, "Viseme": ["e", "t"], "Visemes": {"['e', 't']": [["t", "r", "e", "b", "e", "k", "e", "l", "e", "s", "t"]]}}]

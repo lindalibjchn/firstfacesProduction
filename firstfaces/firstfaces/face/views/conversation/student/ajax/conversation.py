@@ -12,6 +12,7 @@ import librosa
 from g2p_en import G2p
 import numpy as np
 import itertools
+import face.views.conversation.teacher.utils.text_to_speech as ts
 
 
 
@@ -253,103 +254,50 @@ def get_vis_now(words):
 def get_context(request):
     word = request.POST['word']
     word = word.lower()
+    print("\n\n", ts.create_word_audio(word), "\n\n")
     pos = request.POST['pos']
     if len(word.split(",")) != 1:
         return get_vis_now(word.split(","))
 
 
 
+
     try:
-        words, levels, idx, poss, viss = get_tris(word, pos)
-        c_vis = [ v+'Emp' for v in get_word_visemes(word)]
+        words, levels, c_idx, f_idx, viss = get_tris(word, pos)
+        c_vis = [v+'Emp' for v in get_word_visemes(word)]
         if len(c_vis) == 0:
             c_vis = [v + 'Emp' for v in Visemes(word)]
 
-        if idx == 1:
-            print("\nHERE\n")
-            fixed_word = list(words.keys())[0]
-            fixed_word_level = list(levels.keys())[0]
-            fixed_word_vis = ast.literal_eval(list(viss.keys())[0])
-            tile_words = list(words[fixed_word])
-            tile_levels = list(levels[fixed_word_level])
-            tile_viss = list(viss[list(viss.keys())[0]])
-            #tile_pos = poss[0]
-            tile_pos = poss[1]
-            tiles_html = []
-            tile_audio = []
-            tile_audio_durations = []
-            mx = len(tile_words)
-            print(mx)
-            print("MEME")
-            for i in range(len(tile_words)):
-                class_ = get_tile_class(mx, i)
-                print(i)
-                tiles_html.append(create_tile(tile_levels[i], tile_words[i], tile_pos, class_, i))
-                print(i)
-                #tile_audio.append(get_audio_path(tile_words[i]))
-                tile_audio.append("")
-                #tile_audio_durations.append(get_audio_length(settings.BASE_DIR+'/'+tile_audio[i]))
-                tile_audio_durations.append(0)
-                print(i)
-            print("HERE NOW")
-            fixed_tile = create_fixed_tile(fixed_word, poss[2], fixed_word_level)
-            #fixed_audio = get_audio_path(fixed_word)
-            #fixed_duration = get_audio_length(settings.BASE_DIR+'/'+fixed_audio)
-            fixed_audio = ""
-            fixed_duration = 0
-            tiles = append_tile_list(mx)
-            num_tiles = mx
-            hidden_bottom = hidden_tiles(mx)
 
-        elif idx == 0:
-            fixed_word = list(words.keys())[0]
-            fixed_word_level = list(levels.keys())[0]
-            fixed_word_vis = ast.literal_eval(list(viss.keys())[0])
-            tile_words = list(words[fixed_word])
-            tile_levels = list(levels[fixed_word_level])
-            tile_viss = list(viss[list(viss.keys())[0]])
-            tile_audio_durations = []
-            tile_pos = poss[2]
-            tiles_html = []
-            tile_audio = []
-            mx = len(tile_words)
-            for i in range(len(tile_words)):
-                class_ = get_tile_class(mx, i)
-                tiles_html.append(create_tile(tile_levels[i], tile_words[i], tile_pos, class_, i))
-                tile_audio.append(get_audio_path(tile_words[i]))
-                tile_audio_durations.append(get_audio_length(settings.BASE_DIR + '/' + tile_audio[i]))
-            fixed_tile = create_fixed_tile(fixed_word, poss[1], fixed_word_level)
-            fixed_audio = get_audio_path(fixed_word)
-            fixed_duration = get_audio_length(settings.BASE_DIR + '/' + fixed_audio)
-            tiles = append_tile_list(mx)
-            num_tiles = mx
-            hidden_bottom = hidden_tiles(mx)
-
-        else:
-            fixed_word = list(words.keys())[0]
-
-            fixed_word_level = list(levels.keys())[0]
-            fixed_word_vis = ast.literal_eval(list(viss.keys())[0])
-            tile_words = list(words[fixed_word])
-            tile_levels = list(levels[fixed_word_level])
-            tile_viss = list(viss[list(viss.keys())[0]])
-            tile_pos = poss[1]
-            tiles_html = []
-            tile_audio = []
-            tile_audio_durations = []
-            mx = len(tile_words)
-            for i in range(len(tile_words)):
-                class_ = get_tile_class(mx, i)
-                tiles_html.append(create_tile(tile_levels[i], tile_words[i], tile_pos, class_, i))
-                tile_audio.append(get_audio_path(tile_words[i]))
-                tile_audio_durations.append(get_audio_length(settings.BASE_DIR + '/' + tile_audio[i]))
-            fixed_tile = create_fixed_tile(fixed_word, poss[0], fixed_word_level)
-            fixed_audio = get_audio_path(fixed_word)
-            fixed_duration = get_audio_length(settings.BASE_DIR + '/' + fixed_audio)
-            tiles = append_tile_list(mx)
-            num_tiles = mx
-            hidden_bottom = hidden_tiles(mx)
-        # print('\n\n', tile_audio_durations, '\n\n')
+        fixed_word = list(words.keys())[0]
+        fixed_word_level = list(levels.keys())[0]
+        fixed_word_vis = ast.literal_eval(list(viss.keys())[0])
+        tile_words = list(words[fixed_word])
+        tile_levels = list(levels[fixed_word_level])
+        tile_viss = list(viss[list(viss.keys())[0]])
+        print("\n\n", words, levels)
+        tile_pos = ""
+        tiles_html = []
+        tile_audio = []
+        tile_audio_durations = []
+        mx = len(tile_words)
+        print("\n\nHERE")
+        for i in range(len(tile_words)):
+            class_ = get_tile_class(mx, i)
+            tiles_html.append(create_tile(tile_levels[i], tile_words[i], "", class_, i))
+            ts.create_word_audio(tile_words[i])
+            #tile_audio.append(get_audio_path(tile_words[i]))
+            tile_audio.append("")
+            #tile_audio_durations.append(get_audio_length(settings.BASE_DIR+'/'+tile_audio[i]))
+            tile_audio_durations.append(0)
+        fixed_tile = create_fixed_tile(fixed_word, "", fixed_word_level)
+        #fixed_audio = get_audio_path(fixed_word)
+        #fixed_duration = get_audio_length(settings.BASE_DIR+'/'+fixed_audio)
+        fixed_audio = ""
+        fixed_duration = 0
+        tiles = append_tile_list(mx)
+        num_tiles = mx
+        hidden_bottom = hidden_tiles(mx)
 
         response_data = {
             'success': 1,
@@ -361,7 +309,8 @@ def get_context(request):
             'fixed_audio': fixed_audio,
             'tiles': tiles,
             'levels': levels,
-            'id': idx,
+            'cid': c_idx,
+            'fid': f_idx,
             'word': word,
             'c_vis': c_vis,
             'fixed_vis': fixed_word_vis,

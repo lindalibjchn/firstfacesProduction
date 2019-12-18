@@ -311,6 +311,7 @@ def error_typing_used(request):
     audioPath = convert_audio(filename)
     #Get audio
     ERR_trans = request.POST['etrans']
+    print("\n\nHHHHHH\n\n")
     idx = int(request.POST['first_word_id'])
     endid = idx + (len(ERR_trans.strip().split(" "))-1) 
     try:

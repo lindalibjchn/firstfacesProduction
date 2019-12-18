@@ -1,0 +1,1 @@
+[{"Word": "orange", "POS": "NOUN", "Trigram": {"a": [["reddish_NOUN", 0.3333333333333333]]}, "Score": 0.002382732076999423, "C_IDX": 2, "F_IDX": 0, "Levels": {"a1": ["c2"]}, "P": 0.9947598253275111, "Viseme": ["e"], "Visemes": {"['e']": [["r", "e", "t", "e", "s", "t", "w", "e", "t"]]}}]

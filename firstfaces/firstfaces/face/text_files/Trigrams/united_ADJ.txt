@@ -1,0 +1,1 @@
+[{"Word": "united", "POS": "ADJ", "Trigram": {"remained": [["titles_NOUN", 0.4666666666666667]]}, "Score": 0.0019368498842624161, "C_IDX": 2, "F_IDX": 1, "Levels": {"c2": ["a1"]}, "P": 0.9955572309432134, "Viseme": ["r", "e", "b", "e", "t", "t"], "Visemes": {"['r', 'e', 'b', 'e', 't', 't']": [["t", "e", "t", "e", "l", "s", "e", "t"]]}}]

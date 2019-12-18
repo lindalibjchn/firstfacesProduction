@@ -1,0 +1,1 @@
+[{"Word": "greens", "POS": "NOUN", "Trigram": {"dark": [["leafy_ADJ", 0.5]]}, "Score": 0.003343435648724678, "C_IDX": 2, "F_IDX": 0, "Levels": {"a1": ["c2"]}, "P": 0.7599999999999999, "Viseme": ["t", "e", "r", "k"], "Visemes": {"['t', 'e', 'r', 'k']": [["l", "e", "f", "i", "e", "s", "t"]]}}]

@@ -118,7 +118,8 @@ class AudioErrorCorrectionAttempt(models.Model):
     clicks = models.CharField(max_length=5000, blank=True, null=True)
 
     def __str__(self):
-        return  str(self.error)
+        return str(self.error)
+
 
 class StockPhrases(models.Model):
     name = models.CharField(max_length=1000, blank=True, null=True)
@@ -127,7 +128,17 @@ class StockPhrases(models.Model):
     visemes = models.CharField(max_length=20000, blank=True, null=True)
 
     def __str__(self):
-        return  str(self.texts)
+        return str(self.texts)
+
+
+class StockWord(models.Model):
+    name = models.CharField(max_length=1000, blank=True, null=True)
+    texts = models.CharField(max_length=1000, blank=True, null=True)
+    urls = models.CharField(max_length=1000, blank=True, null=True)
+    visemes = models.CharField(max_length=20000, blank=True, null=True)
+
+    def __str__(self):
+        return str(self.texts)
 
 # class PermAudioFile(models.Model):
     # sentence = models.ForeignKey(Sentence, on_delete=models.CASCADE)

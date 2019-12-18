@@ -1,0 +1,1 @@
+[{"Word": "philosophers", "POS": "NOUN", "Trigram": {"ancient": [["greek_ADJ", 0.006818181818181818]]}, "Score": 4.559230430079107e-05, "C_IDX": 2, "F_IDX": 0, "Levels": {"a2": ["c2"]}, "P": 0.022656597067969787, "Viseme": ["e", "t", "s", "e", "t", "t"], "Visemes": {"['e', 't', 's', 'e', 't', 't']": [["k", "r", "i", "k", "e", "s"]]}}]

@@ -32,7 +32,11 @@ function sendSentToServer() {
             }
 
         }
-        setTimeout( goToThinkingPos, conversationVariables.sentence_being_recorded_audio.totalAudioLength );
+        if(!conversationVariables.trying_again){
+            setTimeout( goToThinkingPos, conversationVariables.sentence_being_recorded_audio.totalAudioLength );
+        }else{
+            setTimeout( goToThinkingPos, conversationVariables.previous_sent_totalAudioLength );
+        }
         conversationVariables.FAFailed = false;
         talkToTia(); 
         // set this to false until judgement comes in where it will be changed to true
@@ -44,13 +48,22 @@ function sendSentToServer() {
         recTimes = {};
         recTimes.clickTalkBtn = Date.now() / 1000;
 
+
+         if(!conversationVariables.trying_again){
+                sent_id = conversationVariables.sentence_being_recorded.sent_id;
+                curr_id = conversationVariables.sentence_being_recorded.conv_id;
+         }else{
+                 sent_id = conversationVariables.previous_sent_sent_id;
+                 curr_id = conversationVariables.previous_sent_conv_id
+        }
+        conversationVariables.trying_again = false
         $.ajax({
             url: "/store_sent",
             type: "POST",
             data: { 
                 'sent': sent,
-                'sent_id': conversationVariables.sentence_being_recorded.sent_id,
-                'conversation_id': conversationVariables.sentence_being_recorded.conv_id
+                'sent_id':sent_id,
+                'conversation_id': curr_id
             },
             success: function(json) {
                 

@@ -1,4 +1,1 @@
-look
-at
-the
-man
+look,nn,at,in,the,dt,man,nn

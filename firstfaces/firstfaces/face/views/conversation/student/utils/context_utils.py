@@ -147,7 +147,7 @@ def get_word_details(word, pos):
 ## New Trigram Structure
 
 def load_tri(word, pos):
-    with open(settings.BASE_DIR+'/face/text_files/Trigrams/{}.txt'.format(word, pos)) as json_file:
+    with open(settings.BASE_DIR+'/face/text_files/Trigrams/{}_{}.txt'.format(word, pos)) as json_file:
         data = json.load(json_file)
     json_file.close()
     return data
@@ -156,19 +156,24 @@ def load_tri(word, pos):
 def get_random_tri(word, pos):
     out = {}
     tris = load_tri(word, pos)
-    a = select_tri(tris)
 
+    a = select_tri(tris)
     fw = list(a['Trigram'].keys())[0]
+    print(fw)
     fl = list(a['Levels'].keys())[0]
+
+    fv = list(a['Visemes'].keys())[0]
 
     poss = select_tri_words(a)
     levels = []
     words = []
+    viss = []
     for word in poss:
         w, idx = word.split("_")
         words.append(w)
         levels.append(a['Levels'][fl][int(idx)])
-    return {fw: words}, {fl: levels}, {"C_IDX": a['C_IDX'], "F_IDX": a['F_IDX']}
+        viss.append(a['Visemes'][fv][int(idx)])
+    return {fw: words}, {fl: levels},  a['C_IDX'],  a['F_IDX'], {fv: viss}
 
 
 def get_probs(tris):
@@ -179,8 +184,8 @@ def get_probs(tris):
 
 
 def select_tri(tris):
-    p = get_probs(tris)
-    return list(np.random.choice(tris, 1, replace=False, p=p))[0]
+    p = normalise(get_probs(tris))
+    return list(np.random.choice(tris, 1,replace=False, p=p))[0]
 
 
 def select_tri_words(tri):
@@ -203,32 +208,33 @@ def normalise(vals):
 
 
 def get_tris(word, pos):
-    #if word+'_'+pos in valid:
-     #   words, levels, C get_random_tri("man", "NOUN")
+    if word+'_'+pos in valid:
+        print(word+'_'+pos)
+        return get_random_tri(word, pos)
 
-    if word.strip().lower() in tri_df.Word.unique():
-        temp = tri_df[tri_df.Word == word.strip().lower()]
-        if len(temp == 1):
-            out = temp.reset_index().iloc[0]
-            return out.Words,out.Levels,int(out.T_IDX),out.Trigram, out.Trigram_Visemes
-        elif len(temp == 2):
-            temp = temp[temp.POS == pos]
-            if len(temp == 1):
-                out = temp.reset_index().iloc[0]
-                return out.Words, out.Levels, int(out.T_IDX), out.Trigram, out.Trigram_Visemes
+    #if word.strip().lower() in tri_df.Word.unique():
+     #   temp = tri_df[tri_df.Word == word.strip().lower()]
+      #  if len(temp == 1):
+       #     out = temp.reset_index().iloc[0]
+        #    return out.Words,out.Levels,int(out.T_IDX),out.Trigram, out.Trigram_Visemes
+        #elif len(temp == 2):
+         #   temp = temp[temp.POS == pos]
+          #  if len(temp == 1):
+            #    out = temp.reset_index().iloc[0]
+           #     return out.Words, out.Levels, int(out.T_IDX), out.Trigram, out.Trigram_Visemes
 
 
 
-def get_tile_class(len_, idx):
-    if (len_ > 5):
-        len_ = 5
-    if idx > 5:
+def get_tile_class(len , idx):
+    if (len > 5):
+        len = 5
+    if idx >= 5:
         return 'hidden_tile'
 
     else:
 
         one = {0: 'main-tile'}
-        two = {0: 'main-tile', 0: "second-tile-bottom"}
+        two = {0: 'main-tile', 1: "second-tile-bottom"}
         three = {0: 'second-tile-top', 1: 'main-tile', 2: "second-tile-bottom"}
         four = {0: 'second-tile-top', 1: 'main-tile', 2: "second-tile-bottom", 3: "third-tile-bottom"}
         five = {0: 'third-tile-top', 1: "second-tile-top", 2: 'main-tile', 3: "second-tile-bottom",
@@ -242,7 +248,7 @@ def get_tile_class(len_, idx):
             5: five,
         }
 
-        return class_dic[len_][idx]
+        return class_dic[len][idx]
 
 
 def append_tile_list(len_):

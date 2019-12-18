@@ -1,0 +1,1 @@
+[{"Word": "ambulances", "POS": "NOUN", "Trigram": {"life": [["support_NOUN", 0.004341534008683068]]}, "Score": 1.8812492044453547e-05, "C_IDX": 2, "F_IDX": 0, "Levels": {"a1": ["a2"]}, "P": 0.17689100655151874, "Viseme": ["l", "e", "f"], "Visemes": {"['l', 'e', 'f']": [["s", "e", "b", "e", "r", "t", "e", "t"]]}}]

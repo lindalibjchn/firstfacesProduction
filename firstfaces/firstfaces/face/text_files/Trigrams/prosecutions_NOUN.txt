@@ -1,0 +1,1 @@
+[{"Word": "prosecutions", "POS": "NOUN", "Trigram": {"of": [["public_ADJ", 0.0017349397590361445]]}, "Score": 8.579424583586668e-05, "C_IDX": 2, "F_IDX": 0, "Levels": {"a1": ["a2"]}, "P": 0.35694030893634626, "Viseme": ["e", "f"], "Visemes": {"['e', 'f']": [["b", "e", "b", "l", "e", "k", "e", "t"]]}}]
