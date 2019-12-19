@@ -8,6 +8,7 @@ function buttonsHideAllContainers() {
     $('#optionBtns').hide();
     $('#listenNextSentenceBtnCont').hide();
     $('#recordBtnsCont').hide();
+    $('#tutorialBtnDoubleCont').hide();
 
 }
 
@@ -43,15 +44,15 @@ function buttonsListenNextSentenceWaiting() {
     
 }
 
-function buttonsFinishListenNextSentence() {
+//function buttonsFinishListenNextSentence() {
 
-    buttonsHideAllContainers();
-    $('#listenNextSentenceBtnCont').show();
-    $('#listenNextSentenceBtn').hide();
-    $('#waitNextSentenceBtn').hide();
-    $('#finishListenNextSentenceBtn').show();
+    //buttonsHideAllContainers();
+    //$('#listenNextSentenceBtnCont').show();
+    //$('#listenNextSentenceBtn').hide();
+    //$('#waitNextSentenceBtn').hide();
+    //$('#finishListenNextSentenceBtn').show();
     
-}
+//}
 
 function buttonsAfterMicClicked() {
 
@@ -72,6 +73,8 @@ function buttonsAfterTiaListensToLearnersSentenceAndTaps() {
     $('#recordVoiceBtn').show();
     $('#talkBtn').show();
     $('#listenVoiceBtn').show();
+    $('.play-btn').prop( "disabled", false);
+    $('#talkBtn').prop( "disabled", false);
 
 }
 

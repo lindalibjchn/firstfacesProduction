@@ -25,14 +25,15 @@ def conversation_student(request, conversation_id):
         # if conversation is ended, or user not the owner, return to waiting
         if conversation_object.end_time == None and request.user == conversation_object.learner:
 
+            prof = Profile.objects.get(learner=request.user)
+            gender = prof.gender
+            tutorial_complete = prof.tutorial_complete
+
             # boolean values for each of the following
-            first_conversation = determine_if_first_full_conversation(request.user)
+            first_conversation = determine_if_first_full_conversation(request.user, tutorial_complete)
             first_enter = determine_if_first_entry(conversation_object) 
 
             conversation_dict, sentence_awaiting_judgement, sentence_being_recorded = get_student_conversation(conversation_object, request.user.id, True)
-
-            prof = Profile.objects.get(learner=request.user)
-            gender = prof.gender
 
             stock_phrases = {}
             for s_p in StockPhrases.objects.all():
@@ -69,6 +70,7 @@ def conversation_student(request, conversation_id):
                     # 'alternatives': [{'transcript': "I have a pet dog"}],
                 # },
                 'gender': gender,
+                'tutorial_complete': tutorial_complete,
                 'first_conversation': first_conversation,
                 'inDevelopment': settings.DEBUG,
 
@@ -97,7 +99,7 @@ def conversation_student(request, conversation_id):
         return redirect('waiting')
     
 
-def determine_if_first_full_conversation(u):
+def determine_if_first_full_conversation(ui, tutorial_complete):
 
     first_full_conversation = False
 
@@ -107,7 +109,7 @@ def determine_if_first_full_conversation(u):
 
     try:
         all_convs = Conversation.objects.filter(learner=u)
-        if len(all_convs) == 1:
+        if len(all_convs) == 1 and tutorial_complete:
             first_full_conversation = True
     except:
         pass

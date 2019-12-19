@@ -312,3 +312,18 @@
 
 }
 
+#tutorialBtnDoubleCont {
+
+    display: none;
+    width: 100%;
+    height: 100%;
+
+}
+
+.tut-double-btn {
+
+    /*width: 98%;*/
+    font-size: 5vw;
+
+}
+

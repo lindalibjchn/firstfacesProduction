@@ -6,7 +6,11 @@ function tiaPrepareToSpeak( tiaSays, speakCb=function(){},  playbackRate=0.9) {
     synthesisObject.audio.src = prefixURL + 'media/' + synthesisObject.now.URLs[ synthesisObject.sentenceNo ];
     synthesisObject.audio.playbackRate = playbackRate;
     synthesisObject.callback = speakCb;
-    buttonsListenNextSentence();
+    if ( conversationVariables.tutorial_complete ) {
+
+        buttonsListenNextSentence();
+
+    }
 
 }
 

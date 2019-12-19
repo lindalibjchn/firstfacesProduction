@@ -79,7 +79,15 @@ function dealWithAfterTap() {
             conversationVariables.trying_again = false;
 
 
-            buttonsAfterTiaListensToLearnersSentenceAndTaps();
+            if ( conversationVariables.tutorial_complete ) {
+            
+                buttonsAfterTiaListensToLearnersSentenceAndTaps();
+
+            } else {
+
+                tutorialOption031();
+
+            }
 
             if (($(".selectable-word").length > 0)||($(".selected-word").length >0)){
                 //reset text
@@ -112,13 +120,6 @@ function dealWithAfterTap() {
             }
 
             //reset what tia is saying and add back in the two buttons
-            $('.play-btn').prop( "disabled", false);
-            $('#talkBtn').prop( "disabled", false);
-            $('#recordVoiceBtn').show();
-            
-            //Daniel
-
-            $('#talkBtn').show();
             //change correct transcipt to #talkBtn
             //$('#correctTranscript').show();
             //Adding speech bubble for tia 

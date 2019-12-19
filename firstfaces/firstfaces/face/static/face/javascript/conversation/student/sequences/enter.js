@@ -51,7 +51,11 @@ function tiaSpeakGreetings() {
 
     setTimeout( function() {
 
-        if ( conversationVariables.first_conversation ) {
+        if ( !conversationVariables.tutorial_complete ) {
+
+            runTutorial();
+        
+        } else if ( conversationVariables.first_conversation ) {
 
             tiaPrepareToSpeak( 'welcome_to_your_first_class_at_ERLE', askAboutEmotion );
         
