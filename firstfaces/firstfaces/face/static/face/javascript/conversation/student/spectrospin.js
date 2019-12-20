@@ -57,7 +57,7 @@ function setUpSpectrospin() {
         var idx = tiles.indexOf($(this).attr('id'));
 
         if(idx == 2){
-            tiaSpeak($(this).attr("id"), cont=true);
+            tiaPrepareToSpeakWord($(this).attr("id"));
         }
 
         if(idx >= 3){
@@ -69,7 +69,7 @@ function setUpSpectrospin() {
     });
     $('#fixedWordTile').unbind('click');
     $('#fixedWordTile').click(function(){
-        tiaSpeak('Fixed_Word', cont=true);
+        tiaPrepareToSpeakWord('Fixed_Word');
     });
 
  }
@@ -99,7 +99,7 @@ function enable_everything(){
             secondBottomClick();
         }
         if(idx == 2){
-             tiaSpeak($(this).attr("id"), cont=true);
+             tiaPrepareToSpeakWord($(this).attr("id"));
         }
         if(idx <= 1){
             secondTopClick();

@@ -2,7 +2,7 @@ from django.http import JsonResponse
 from face.utils import *
 from django.utils import timezone
 import json
-from face.models import Conversation, Sentence, Profile, AudioFile, AudioError, AudioErrorCorrectionAttempt, AudioErrorAttempt
+from face.models import Conversation, Sentence, Profile, AudioFile, AudioError, AudioErrorCorrectionAttempt, AudioErrorAttempt, StockWord
 import matplotlib.pyplot as plt
 import spacy
 from face.views.conversation.student.utils.context_utils import *
@@ -13,15 +13,18 @@ from g2p_en import G2p
 import numpy as np
 import itertools
 import face.views.conversation.teacher.utils.text_to_speech as ts
-
-
-
+import glob
 from face.views.conversation.all.praat_utils import get_audio_length
 nlp = spacy.load("en_core_web_sm")
 import code
 import string
 import math
 import ast
+from face.views.conversation.all.modify_data import jsonify_or_none
+
+
+valid = [v.split("/")[-1][:-4] for v in glob.glob(settings.BASE_DIR+'/media/prePreparedWords/audio/*.wav')]
+
 
 # def store_sound_mic(request):
 
@@ -229,32 +232,15 @@ def tag_sentence(request):
 
 
 def get_vis_now(words):
-    c_vis = []
-    if isinstance(words, list):
-        for word in words:
-            c_vis += [v+'Emp' for v in Visemes(word)]
-
-        response_data = {
-            'success':0,
-            'c_vis': c_vis,
-            'joined_word': " ".join(words).strip()
-        }
-    else:
-
-        c_vis = [v + 'Emp' for v in Visemes(words)]
-
-        response_data = {
-            'success': 0,
-            'c_vis': c_vis,
-            'joined_word': words.strip()
-        }
+    response_data = {
+        'success': 0,
+    }
     return JsonResponse(response_data)
 
 
 def get_context(request):
     word = request.POST['word']
     word = word.lower()
-    print("\n\n", ts.create_word_audio(word), "\n\n")
     pos = request.POST['pos']
     if len(word.split(",")) != 1:
         return get_vis_now(word.split(","))
@@ -268,33 +254,51 @@ def get_context(request):
         if len(c_vis) == 0:
             c_vis = [v + 'Emp' for v in Visemes(word)]
 
-
         fixed_word = list(words.keys())[0]
         fixed_word_level = list(levels.keys())[0]
-        fixed_word_vis = ast.literal_eval(list(viss.keys())[0])
+
         tile_words = list(words[fixed_word])
         tile_levels = list(levels[fixed_word_level])
-        tile_viss = list(viss[list(viss.keys())[0]])
-        print("\n\n", words, levels)
+        tile_viss = []
         tile_pos = ""
         tiles_html = []
         tile_audio = []
         tile_audio_durations = []
         mx = len(tile_words)
-        print("\n\nHERE")
         for i in range(len(tile_words)):
             class_ = get_tile_class(mx, i)
             tiles_html.append(create_tile(tile_levels[i], tile_words[i], "", class_, i))
-            ts.create_word_audio(tile_words[i])
-            #tile_audio.append(get_audio_path(tile_words[i]))
-            tile_audio.append("")
-            #tile_audio_durations.append(get_audio_length(settings.BASE_DIR+'/'+tile_audio[i]))
-            tile_audio_durations.append(0)
+            if tile_words[i] not in valid:
+                temp = ts.create_word_audio(tile_words[i])
+                valid.append(tile_words[i])
+                texts = jsonify_or_none(temp.texts)
+                url = ['media/'+URL for URL in jsonify_or_none(temp.urls)]
+                visemes = jsonify_or_none(temp.visemes)
+            else:
+                temp = StockWord.objects.get(name=tile_words[i])
+                texts = jsonify_or_none(temp.texts)
+                url = ['media/'+URL for URL in jsonify_or_none(temp.urls)]
+                visemes = jsonify_or_none(temp.visemes)
+
+            tile_viss.append(visemes)
+            tile_audio.append(url)
+            print(tile_audio,tile_viss)
+            tile_audio_durations.append(get_audio_length(url[0]))
         fixed_tile = create_fixed_tile(fixed_word, "", fixed_word_level)
-        #fixed_audio = get_audio_path(fixed_word)
-        #fixed_duration = get_audio_length(settings.BASE_DIR+'/'+fixed_audio)
-        fixed_audio = ""
-        fixed_duration = 0
+        if fixed_word not in valid:
+            temp = ts.create_word_audio(fixed_word)
+            valid.append(fixed_word)
+            texts = jsonify_or_none(temp.texts)
+            url = ['media/'+URL for URL in jsonify_or_none(temp.urls)]
+            visemes = jsonify_or_none(temp.visemes)
+        else:
+            temp = StockWord.objects.get(name=fixed_word)
+            texts = jsonify_or_none(temp.texts)
+            url = ['media/' + URL for URL in jsonify_or_none(temp.urls)]
+            visemes = jsonify_or_none(temp.visemes)
+        fixed_audio = url
+        fixed_word_vis = visemes
+        fixed_duration = get_audio_length(fixed_audio[0])
         tiles = append_tile_list(mx)
         num_tiles = mx
         hidden_bottom = hidden_tiles(mx)
@@ -329,7 +333,6 @@ def get_context(request):
 def get_spliced_audio(request):
     # code.interact(local=locals());
     words = request.POST['words'].split(',')
-    vis = request.POST['viss'].split(',')
     # print("\n\n",vis,"\n\n",request.POST['viss'],"\n\n")
     urls = request.POST['urls'].split(',')
     for i in range(len(urls)):
@@ -354,7 +357,6 @@ def get_spliced_audio(request):
         'path': out_path,
         'duration': duration,
         'words': " ".join(words).strip(),
-        'viss': vis,
     }
     # print("there")
     return JsonResponse(response_data)

@@ -32,16 +32,11 @@ function get_word_context(){
             if(json.success == 0){
               //console.log("Context error.")
                 $('#btnCont').removeClass().addClass('wholeSide');
-                $('#refBtn').removeClass().addClass("ref-word");
+                $('#refBtn').removeClass().addClass("ref-word").addClass("centered");
                 $('#SpectroSpinHolder').removeClass().addClass('noSide');
                 $('#fixedWord').removeClass().addClass('noSide');
 
-                synthesisObject.data.Ref_Word = {
-                    'URLs':[$('#refAudio').attr('src')],
-                    'phones':[json.c_vis],
-                    'texts': [json.joined_word],
-                    'duration':conversationVariables.refLenOriginal
-                }
+
                 conversationVariables.Trigram = false;
             }
             else{
@@ -62,17 +57,12 @@ function get_word_context(){
 
                 var fixedAudioURL = prefixURL + json.fixed_audio;
                 var fixedAudio = document.getElementById("fixedAudio");
-                fixedAudio.src = fixedAudioURL;
 
-                 synthesisObject.data.Ref_Word = {
-                    'URLs':[$('#refAudio').attr('src')],
-                    'phones':[json.c_vis],
-                    'texts': [json.word],
-                    'duration':conversationVariables.refLenOriginal
-                }
+
+
                 synthesisObject.data.Fixed_Word = {
                     'URLs':[fixedAudioURL],
-                    'phones':[json.fixed_vis],
+                    'visemes':json.fixed_vis,
                     'texts': [json.fixed_word],
                     'duration':json.fixed_duration
                 }
@@ -85,7 +75,7 @@ function get_word_context(){
                          synthesisObject.data[tiles[i]] = {
                              'URLs':[prefixURL +json.tile_audio[count]],
                              'texts':[$('#'+tiles[i]).find('span.tile-main-word').text()],
-                             'phones':[json.tile_vis[count]],
+                             'visemes':json.tile_vis[count],
                              'duration':json.tile_durations[count]
                          }
                         count++;
@@ -97,7 +87,7 @@ function get_word_context(){
                         synthesisObject.data[hiddenBottom[i]] = {
                              'URLs':[prefixURL +json.tile_audio[i+tiles.length]],
                              'texts':[$('#'+hiddenBottom[i]).find('span.tile-main-word').text()],
-                             'phones':[json.tile_vis[i+tiles.length]],
+                             'visemes':json.tile_vis[i+tiles.length],
                              'duration':json.tile_durations[i+tiles.length]
                          }
                     }
@@ -107,6 +97,8 @@ function get_word_context(){
                 conversationVariables.ss_fid = json.fid;
                 conversationVariables.ss_cid = json.cid;
                 setUpSpectrospin();
+
+
             }
 
         },
@@ -114,7 +106,7 @@ function get_word_context(){
           //console.log("Context error.");
             conversationVariables.Trigram = false;
             $('#btnCont').removeClass().addClass('wholeSide');
-            $('#refBtn').removeClass().addClass("ref-word");
+            $('#refBtn').removeClass().addClass("ref-word").addClass("centered");
             $('#SpectroSpinHolder').removeClass().addClass('noSide');
             $('#fixedWord').removeClass().addClass('noSide');
         },
@@ -130,7 +122,6 @@ function get_word_context(){
 function fix_locations(value){
     conversationVariables.IDX_Val = value
   //console.log("CALLED FIX LOCATIONS");
-    alert("TESTMP")
     if(value == 0){
         $('.main-tile').css({'width':'90%','left':'0','border-radius':'0 5px 5px 0','border-top':'3px solid black','border-bottom':'3px solid black','border-right':'3px solid black','border-left':'0'})
         $('.second-tile-top').css({"width":"72%","left":"9%","top":"23.2%", 'border':"3px solid black", 'border-radius': '0 5px 5px 0'});
@@ -273,6 +264,15 @@ function tag_sentence(){
     });
 }
 
+function fix_visemes(vis, p_duration){
+    var out = []
+    for(i=0;i<vis.length;i++){
+        var temp = {"name":vis[i].name, "start":vis[i].start+p_duration ,"end":vis[i].end+p_duration, "Viseme": vis[i].Viseme+"Emp", "stress": vis[i].stress};
+        out.push(temp);
+    }
+    return out;
+}
+
 function splice_audio(){
     out = []
     words = []
@@ -282,75 +282,73 @@ function splice_audio(){
         tiaPrepareToSpeak('Ref_Word');
     }else{
         if($('#btnCont').hasClass('leftSide')){
-            viss.push(synthesisObject.data.Ref_Word.phones);
-            out.push($('#refAudio').attr('src'));
-            words.push($('#refText').text());
+            viss = viss.concat(fix_visemes(synthesisObject.data.Ref_Word.visemes[0],0));
+            out.push(synthesisObject.data.Ref_Word.URLs[0]);
+            words.push(synthesisObject.data.Ref_Word.texts[0]);
             if($('#fixedWord').hasClass('centerSide')){
-                out.push($('#fixedAudio').attr('src'));
-                words.push($('#fixedWord').find("span.tile-main-word").text());
-                viss.push(synthesisObject.data.Fixed_Word.phones);
-                out.push($('#'+document.getElementsByClassName('main-tile')[0].id+"_audio").attr('src'));
-                words.push($('#'+document.getElementsByClassName('main-tile')[0].id).find("span.tile-main-word").text());
-                viss.push(synthesisObject.data[document.getElementsByClassName('main-tile')[0].id].phones);
+                out.push(synthesisObject.data.Fixed_Word.URLs[0]);
+                words.push(synthesisObject.data.Fixed_Word.texts[0]);
+                viss = viss.concat(fix_visemes(synthesisObject.data.Fixed_Word.visemes[0],synthesisObject.data.Ref_Word.duration));
+                out.push(synthesisObject.data[document.getElementsByClassName('main-tile')[0].id].URLs[0]);
+                words.push(synthesisObject.data[document.getElementsByClassName('main-tile')[0].id].texts[0]);
+                viss = viss.concat(fix_visemes(synthesisObject.data[document.getElementsByClassName('main-tile')[0].id].visemes[0],synthesisObject.data.Ref_Word.duration+synthesisObject.data.Fixed_Word.duration));
 
             }
             else if($('#SpectroSpinHolder').hasClass('centerSide')){
-                out.push($('#'+document.getElementsByClassName('main-tile')[0].id+"_audio").attr('src'));
-                words.push($('#'+document.getElementsByClassName('main-tile')[0].id).find("span.tile-main-word").text());
-                viss.push(synthesisObject.data[document.getElementsByClassName('main-tile')[0].id].phones);
-                out.push($('#fixedAudio').attr('src'));
-                viss.push(synthesisObject.data.Fixed_Word.phones);
-                words.push($('#fixedWord').find("span.tile-main-word").text());
+                out.push(synthesisObject.data[document.getElementsByClassName('main-tile')[0].id].URLs[0]);
+                words.push(synthesisObject.data[document.getElementsByClassName('main-tile')[0].id].texts[0]);
+                viss = viss.concat(fix_visemes(synthesisObject.data[document.getElementsByClassName('main-tile')[0].id].visemes[0],synthesisObject.data.Ref_Word.duration));
+                out.push(synthesisObject.data.Fixed_Word.URLs[0]);
+                viss = viss.concat(fix_visemes(synthesisObject.data.Fixed_Word.visemes[0],synthesisObject.data.Ref_Word.duration+synthesisObject.data[document.getElementsByClassName('main-tile')[0].id].duration));
+                words.push(synthesisObject.data.Fixed_Word.texts[0]);
             }
         }
         else if($('#SpectroSpinHolder').hasClass('leftSide')){
-            out.push($('#'+document.getElementsByClassName('main-tile')[0].id+"_audio").attr('src'));
-            words.push($('#'+document.getElementsByClassName('main-tile')[0].id).find("span.tile-main-word").text());
-            viss.push(synthesisObject.data[document.getElementsByClassName('main-tile')[0].id].phones);
+            out.push(synthesisObject.data[document.getElementsByClassName('main-tile')[0].id].URLs[0]);
+            words.push(synthesisObject.data[document.getElementsByClassName('main-tile')[0].id].texts[0]);
+            viss = viss.concat(fix_visemes(synthesisObject.data[document.getElementsByClassName('main-tile')[0].id].visemes[0],0));
             if($('#btnCont').hasClass('centerSide')){
-                out.push($('#refAudio').attr('src'));
-                words.push($('#refText').text());
-                viss.push(synthesisObject.data.Ref_Word.phones);
-                out.push($('#fixedAudio').attr('src'));
-                viss.push(synthesisObject.data.Fixed_Word.phones);
-                words.push($('#fixedWord').find("span.tile-main-word").text());
+                out.push(synthesisObject.data.Ref_Word.URLs[0]);
+                words.push(synthesisObject.data.Ref_Word.texts[0]);
+                viss = viss.concat(fix_visemes(synthesisObject.data.Ref_Word.visemes[0],synthesisObject.data[document.getElementsByClassName('main-tile')[0].id].duration));
+                out.push(synthesisObject.data.Fixed_Word.URLs[0]);
+                viss = viss.concat(fix_visemes(synthesisObject.data.Fixed_Word.visemes[0],synthesisObject.data[document.getElementsByClassName('main-tile')[0].id].duration+synthesisObject.data.Ref_Word.duration));
+                words.push(synthesisObject.data.Fixed_Word.texts[0]);
             }
             else if($('#fixedWord').hasClass('centerSide')){
-                 out.push($('#fixedAudio').attr('src'));
-                 words.push($('#fixedWord').find("span.tile-main-word").text());
-                 viss.push(synthesisObject.data.Fixed_Word.phones);
-                 out.push($('#refAudio').attr('src'));
-                 words.push($('#refText').text());
-                 viss.push(synthesisObject.data.Ref_Word.phones);
+                 out.push(synthesisObject.data.Fixed_Word.URLs[0]);
+                 words.push(synthesisObject.data.Fixed_Word.texts[0]);
+                 viss = viss.concat(fix_visemes(synthesisObject.data.Fixed_Word.visemes[0],synthesisObject.data[document.getElementsByClassName('main-tile')[0].id].duration));
+                 out.push(synthesisObject.data.Ref_Word.URLs[0]);
+                 words.push(synthesisObject.data.Ref_Word.texts[0]);
+                 viss = viss.concat(fix_visemes(synthesisObject.data.Ref_Word.visemes[0],synthesisObject.data[document.getElementsByClassName('main-tile')[0].id].duration+synthesisObject.data.Fixed_Word.duration));
             }
         }
         else if($('#fixedWord').hasClass('leftSide')){
-            out.push($('#fixedAudio').attr('src'));
-            words.push($('#fixedWord').find("span.tile-main-word").text());
-            viss.push(synthesisObject.data.Fixed_Word.phones);
+            out.push(synthesisObject.data.Fixed_Word.URLs[0]);
+            words.push(synthesisObject.data.Fixed_Word.texts[0]);
+            viss = viss.concat(fix_visemes(synthesisObject.data.Fixed_Word.visemes[0],0));
            if($('#btnCont').hasClass('centerSide')){
-                out.push($('#refAudio').attr('src'));
-                words.push($('#refText').text());
-                viss.push(synthesisObject.data.Ref_Word.phones);
-                out.push($('#'+document.getElementsByClassName('main-tile')[0].id+"_audio").attr('src'));
-                words.push($('#'+document.getElementsByClassName('main-tile')[0].id).find("span.tile-main-word").text());
-                viss.push(synthesisObject.data[document.getElementsByClassName('main-tile')[0].id].phones);
+                out.push(synthesisObject.data.Ref_Word.URLs[0]);
+                words.push(synthesisObject.data.Ref_Word.texts[0]);
+                viss = viss.concat(fix_visemes(synthesisObject.data.Ref_Word.visemes[0], synthesisObject.data.Fixed_Word.duration));
+                out.push(synthesisObject.data[document.getElementsByClassName('main-tile')[0].id].URLs[0]);
+                words.push(synthesisObject.data[document.getElementsByClassName('main-tile')[0].id].texts[0]);
+                viss = viss.concat(fix_visemes(synthesisObject.data[document.getElementsByClassName('main-tile')[0].id].visemes[0],synthesisObject.data.Fixed_Word.duration+synthesisObject.data.Ref_Word.duration));
            }
            else if($('#SpectroSpinHolder').hasClass('centerSide')){
-                out.push($('#'+document.getElementsByClassName('main-tile')[0].id+"_audio").attr('src'));
-                words.push($('#'+document.getElementsByClassName('main-tile')[0].id).find("span.tile-main-word").text());
-                viss.push(synthesisObject.data[document.getElementsByClassName('main-tile')[0].id].phones);
-                 out.push($('#refAudio').attr('src'));
-                 words.push($('#refText').text());
-                 viss.push(synthesisObject.data.Ref_Word.phones);
+                out.push(synthesisObject.data[document.getElementsByClassName('main-tile')[0].id].URLs[0]);
+                words.push(synthesisObject.data[document.getElementsByClassName('main-tile')[0].id].texts[0]);
+                viss = viss.concat(fix_visemes(synthesisObject.data[document.getElementsByClassName('main-tile')[0].id].visemes[0],synthesisObject.data.Fixed_Word.duration));
+                out.push(synthesisObject.data.Ref_Word.URLs[0]);
+                words.push(synthesisObject.data.Ref_Word.texts[0]);
+                viss = viss.concat(fix_visemes(synthesisObject.data.Ref_Word.visemes[0],synthesisObject.data.Fixed_Word.duration+synthesisObject.data[document.getElementsByClassName('main-tile')[0].id].duration));
            }
         }
-
 
         let fd = new FormData();
             fd.append("urls",out);
             fd.append("words", words);
-            fd.append("viss", viss);
         $.ajax({
             url: "/get_spliced_audio",
             type: "POST",
@@ -362,10 +360,10 @@ function splice_audio(){
                 synthesisObject.data['Spliced_Audio'] = {
                              'URLs':[path],
                              'texts':[json.words],
-                             'phones':[json.viss],
+                             'visemes':[viss],
                              'duration':json.duration,
                          }
-                 tiaPrepareToSpeak('Spliced_Audio');
+                 tiaPrepareToSpeakWord('Spliced_Audio');
             },
             error: function() {console.log("Error slicing audio")},
         });

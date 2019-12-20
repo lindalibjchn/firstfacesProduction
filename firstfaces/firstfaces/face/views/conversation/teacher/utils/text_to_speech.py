@@ -22,7 +22,7 @@ else:
 
 saved_audios = [v.split("/")[-1][:-4] for v in glob.glob(settings.BASE_DIR+'/media/prePreparedWords/audio/*.wav')]
 
-def create_word_audio(word, initial_delay=0, breathing=False, speaking_rate=100, pitch='+0', volume='+0'):
+def create_word_audio(word, initial_delay=500, breathing=False, speaking_rate=100, pitch='+0', volume='+0'):
     name = word
     s = StockWord(name=name, texts=json.dumps(word))
     urls = []
@@ -36,7 +36,7 @@ def create_word_audio(word, initial_delay=0, breathing=False, speaking_rate=100,
     return s
 
 
-def create_stock_instance( texts, initial_delay=0, breathing=False, speaking_rate=100, pitch='+0', volume='+0'):
+def create_stock_instance( texts, initial_delay=500, breathing=False, speaking_rate=100, pitch='+0', volume='+0'):
 
     # texts = [ 'this is a...', 'second here is..', ...]
 
@@ -54,7 +54,7 @@ def create_stock_instance( texts, initial_delay=0, breathing=False, speaking_rat
     return s
 
 
-def create_prompt_instance( text, prompt_number, initial_delay=0, breathing=False, speaking_rate=100, pitch='+0', volume='+0' ):
+def create_prompt_instance( text, prompt_number, initial_delay=500, breathing=False, speaking_rate=100, pitch='+0', volume='+0' ):
 
     name = text.replace(' ', '_')
     p = Prompt(name=name, level=prompt_number)

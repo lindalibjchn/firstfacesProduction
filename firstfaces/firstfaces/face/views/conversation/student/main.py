@@ -5,8 +5,9 @@ from face.views.conversation.student.utils.text_to_speech import create_hello_wa
 from face.views.conversation.teacher.utils.sessions_sentences import get_student_conversation 
 from django.utils import timezone
 import json
-from face.models import Conversation, Sentence, AudioFile, Profile, AudioError, AudioErrorAttempt, AudioErrorCorrectionAttempt, StockPhrases, Prompt
+from face.models import Conversation, Sentence, AudioFile, Profile, AudioError, AudioErrorAttempt, AudioErrorCorrectionAttempt, StockPhrases, Prompt, StockWord
 from django.conf import settings
+from django.http import JsonResponse
 from face.utils import * #for now
 import time
 import datetime
@@ -95,7 +96,31 @@ def conversation_student(request, conversation_id):
 
         logger.error('\n\nerror from try except in conversation:' + str(e) + '\n')
         return redirect('waiting')
-    
+
+
+def load_stock_word_model(request):
+    print(request.POST['word'])
+    temp = StockWord.objects.get(name=request.POST['word'])
+    try:
+        temp = StockWord.objects.get(name=request.POST['word'])
+        texts = jsonify_or_none(temp.texts)
+        url = [URL for URL in jsonify_or_none(temp.urls)]
+        visemes = jsonify_or_none(temp.visemes)
+        status_code = 0
+    except:
+        url = []
+        texts = []
+        visemes = {}
+        status_code = 1
+    response_data = {
+        'urls': url,
+        'status_code': status_code,
+        'texts': texts,
+        'visemes': visemes
+    }
+
+    return JsonResponse(response_data)
+
 
 def determine_if_first_full_conversation(u):
 

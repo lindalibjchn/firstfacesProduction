@@ -16,6 +16,7 @@ urlpatterns = [
     # CONVERSATION
     # MAIN
     path('conversation_student/<int:conversation_id>', conversation_student_main.conversation_student, name="conversation_student"),
+    path('load_stock_word_model', conversation_student_main.load_stock_word_model, name="load_stock_word_model"),
     # AJAX
     # conversation
     path('store_emotion', conversation.store_emotion, name='store_emotion'),

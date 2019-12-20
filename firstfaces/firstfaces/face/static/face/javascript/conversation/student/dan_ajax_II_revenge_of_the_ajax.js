@@ -58,3 +58,23 @@ function reCorrectError(num){
     $('#bottomCent').text(corrText);
     $('#centeredErrorText').text(errText);
 };
+
+function get_word_model(word){
+    let fd = new FormData();
+    fd.append('word', word);
+     $.ajax({
+        url: "/load_stock_word_model",
+        type: "POST",
+        data: fd,
+        processData: false,
+        contentType: false,
+        success: function(json){
+            console.log(json.visemes);
+        },
+        error: function() {
+          console.log("failed");
+        },
+    });
+
+
+}
