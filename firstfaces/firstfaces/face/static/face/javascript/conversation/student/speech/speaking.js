@@ -52,22 +52,7 @@ function tiaSpeakIndividualSentences() {
     synthesisObject.now.phoneCount = 0;
     synthesisObject.now.visemeOverrun = 0;
 
-    if(conversationVariables.stage3){
-        var new_duration = synthesisObject.now.duration / ((parseInt(document.getElementById("myRange").value)+20)/100);
-      //console.log(new_duration);
-        synthesisObject.audioS3.src = prefixURL + 'media/' + synthesisObject.now.URLs[ synthesisObject.sentenceNo ];
-        synthesisObject.audioS3.playbackRate = conversationVariables.playspeed;
-        synthesisObject.now.newDuration = new_duration;
-        synthesisObject.now.noOfPhones = synthesisObject.now.visemes[ synthesisObject.sentenceNo ].length;
-        synthesisObject.now.noOfFrames = Math.floor( (new_duration/1000) * 60 )
-        synthesisObject.now.noOfFramesPerPhone = Math.floor( synthesisObject.now.noOfFrames / ( synthesisObject.now.noOfPhones - 1 ) );
-        synthesisObject.now.noOfLeftoverFrames = synthesisObject.now.noOfFrames - synthesisObject.now.noOfFramesPerPhone * synthesisObject.now.noOfPhones;
-        synthesisObject.gotNewDuration = true;
-        //breatheObject.singleBreath.outCount = new_duration
-        animateFirstPhoneSlowly();
-        synthesisObject.audioS3.play();
-    }
-    else{
+    if ( !conversationVariables.stage3 ) {
 
         initSingleBreath( 1, breatheObject.speakingBreathMult, tiaTimings.durationOfFirstSpeakingPhones );
         setTimeout( function () {
@@ -77,9 +62,11 @@ function tiaSpeakIndividualSentences() {
             
         }, tiaTimings.durationOfFirstSpeakingPhones * 1100 )
         //console.log('sentenceNo:', synthesisObject.sentenceNo);
-        showSpeechBubbleNText();
-        animatePhonesInOrder();
+
     }
+
+    showSpeechBubbleNText();
+    animatePhonesInOrder();
 
 }
 
@@ -285,7 +272,7 @@ function endTiaTalking() {
 
         synthesisObject.callback();
 
-        if ( !conversationVariables.entranceSequence ) {
+        if ( !conversationVariables.entranceSequence  && !conversationVariables.stage3) {
 
             setTimeout( function() {
             
@@ -308,8 +295,14 @@ function endTiaTalking() {
 
 
 function pronunciationController( expressionTo, phoneEndTime, cb ) {
-
-    let weightedPhoneEndTime = phoneEndTime / synthesisObject.audio.playbackRate;
+    let weightedPhoneEndTime = phoneEndTime / 0.9;
+    console.log('weightedPhoneEndTime 0:', weightedPhoneEndTime)
+    if(!conversationVariables.stage3){
+        weightedPhoneEndTime = phoneEndTime / synthesisObject.audio.playbackRate;
+    } else {
+        weightedPhoneEndTime = phoneEndTime / synthesisObject.audioS3.playbackRate;
+    }
+    console.log('weightedPhoneEndTime 1:',weightedPhoneEndTime)
     //console.log('in pronunciation controller')
     //console.log( 'phoneEndTime:', phoneEndTime );
     //console.log( 'phonneCount:', synthesisObject.now.phoneCount );

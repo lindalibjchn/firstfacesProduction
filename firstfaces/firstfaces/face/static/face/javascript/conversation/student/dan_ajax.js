@@ -922,7 +922,7 @@ $('#refBtn').click(function(){
     //$('#refText').hide();
     //animation
    //document.getElementById("refAudio").play();
-   tiaPrepareToSpeak('Ref_Word');
+   tiaPrepareToSpeakWord('Ref_Word');
 
    //Fix Buttons
    $('#reRecordBtn').fadeIn();
@@ -1044,6 +1044,13 @@ function submitKeyboard(){
             var refImage = document.getElementById("refImg");
             refImg.src = ref_image_url;
 
+             synthesisObject.data.Ref_Word = {
+                    'URLs':[prefixURL +json.ref_audio_url],
+                    'visemes':json.ref_vis,
+                    'texts': [trans],
+                    'duration':json.ref_length
+             }
+
             if(!json.ts_error){
                 var hyp_image_url = prefixURL + json.hyp_image_url;
                 var hypImage = document.getElementById("hypImg");
@@ -1105,6 +1112,7 @@ function submitKeyboard(){
                 closeStage3();
                 $('#exitOverlay').click();
             }
+
         },
         error: function() {
           //console.log("that's wrong"); 

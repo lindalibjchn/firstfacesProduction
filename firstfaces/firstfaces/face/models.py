@@ -132,7 +132,7 @@ class StockPhrases(models.Model):
 
 
 class StockWord(models.Model):
-    name = models.CharField(max_length=1000, blank=True, null=True)
+    name = models.CharField(max_length=1000, blank=True, null=True, unique=True)
     texts = models.CharField(max_length=1000, blank=True, null=True)
     urls = models.CharField(max_length=1000, blank=True, null=True)
     visemes = models.CharField(max_length=20000, blank=True, null=True)

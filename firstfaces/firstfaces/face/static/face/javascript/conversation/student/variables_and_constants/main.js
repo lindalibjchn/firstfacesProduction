@@ -20,6 +20,7 @@ function definePrefixURL() {
 definePrefixURL();
 
 const tiaMediaLoc = "media/prePreparedTiaPhrases/";
+const tiaWordMediaLoc = "media/prePreparedWords/";
 
 var scene, renderer, camera, pointLight, ambientLight, loader
 var mainCount = 0;

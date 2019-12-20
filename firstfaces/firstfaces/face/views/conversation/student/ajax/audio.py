@@ -4,10 +4,10 @@ from face.views.conversation.all.sentences import convert_django_sentence_object
 from face.views.conversation.all.praat_utils import get_audio_length, get_text_path, get_out_path, convert_audio, get_timestamps, play_errored_text, ref_path, get_hyp_audio_path
 from django.conf import settings
 from face.views.conversation.all.modify_data import jsonify_or_none
-
+import glob
 from django.utils import timezone
 import json
-from face.models import Conversation, Sentence, AudioFile, AudioError, AudioErrorAttempt, AudioErrorCorrectionAttempt, Update
+from face.models import Conversation, Sentence, AudioFile, AudioError, AudioErrorAttempt, AudioErrorCorrectionAttempt, Update, StockWord
 import code
 import os
 import time
@@ -17,6 +17,10 @@ import ast
 import subprocess
 from google.cloud import texttospeech
 from face.views.conversation.all.dan_utils import get_spectogram, get_sim
+import face.views.conversation.teacher.utils.text_to_speech as ts
+from face.views.conversation.all.modify_data import jsonify_or_none
+
+
 import logging
 import datetime
 logger = logging.getLogger(__name__)
@@ -312,52 +316,47 @@ def error_typing_used(request):
     audioPath = convert_audio(filename)
     #Get audio
     ERR_trans = request.POST['etrans']
-    print("\n\nHHHHHH\n\n")
     idx = int(request.POST['first_word_id'])
     endid = idx + (len(ERR_trans.strip().split(" "))-1) 
     try:
-        ts = get_timestamps(idx,endid, session_id)
+        tis = get_timestamps(idx,endid, session_id)
         ts_error = False
 
         fn = request.POST['sessionID']+"_"+timezone.now().strftime( '%H-%M-%S' )+"_error.wav"
-        errorPath = play_errored_text(audioPath,ts,fn)
+        errorPath = play_errored_text(audioPath,tis,fn)
     except:
         ts_error = True
         fn = ""
         errorPath = ""
     #Synth Audio
-    gender = request.POST['gender']
-    if gender == 'F':
-        speaking_voice = 'en-GB-Wavenet-A'
-    elif gender == 'M':
-        speaking_voice = 'en-GB-Wavenet-B'
+
+    text_ = request.POST['trans']
+    valid = [v.split("/")[-1][:-4] for v in glob.glob(settings.BASE_DIR + '/media/prePreparedWords/audio/*.wav')]
+    if text_ not in valid:
+        temp = ts.create_word_audio(text_)
+        valid.append(text_)
+        texts = jsonify_or_none(temp.texts)
+        url = ['media/' + URL for URL in jsonify_or_none(temp.urls)]
+        visemes = jsonify_or_none(temp.visemes)
     else:
-        speaking_voice = 'en-GB-Wavenet-A'
-    pitch_designated = float(request.POST['pitch'])
-    speaking_rate_designated = float(request.POST['speaking_rate'])      
+        temp = StockWord.objects.get(name=text_)
+        texts = jsonify_or_none(temp.texts)
+        url = ['media/' + URL for URL in jsonify_or_none(temp.urls)]
+        visemes = jsonify_or_none(temp.visemes)
 
-    client = texttospeech.TextToSpeechClient()
-    input_text = texttospeech.types.SynthesisInput(text=request.POST['trans'])
-    voice = texttospeech.types.VoiceSelectionParams(language_code='en-GB',name=speaking_voice)
-    audio_config = texttospeech.types.AudioConfig(audio_encoding=texttospeech.enums.AudioEncoding.LINEAR16,pitch = pitch_designated,speaking_rate= speaking_rate_designated)
-    try:
-        response = client.synthesize_speech(input_text, voice, audio_config)
-        synthURL1 = 'media/synths/session' + session_id + '_'+ 'error' + timezone.now().strftime('%H-%M-%S') + '.mp3'
-        with open( os.path.join(settings.BASE_DIR, synthURL1 ), 'wb') as out:
-            out.write(response.audio_content)
+    ref_url = url
+    ref_vis = visemes
 
-        synthURL1 = convert_mp3_to_wav(synthURL1)
 
-    except:  
-        synthURL1 = 'fault'
+
+
     
     #Above code works but for development is not being utilised
 
-    synthFN = settings.BASE_DIR + '/' + synthURL1
+
     #synthFN = generate_synth_audio(request.POST['trans'],fn)
-    start = time.time()
-    ref_image = get_spectogram(synthFN, 0, "ref_"+session_id+"_"+timezone.now().strftime('%H-%M-%S')+".png", 0)
-    sim = get_sim(ERR_trans,request.POST['trans'])
+    ref_image = get_spectogram(settings.BASE_DIR+'/' +ref_url[0], 0, "ref_"+session_id+"_"+timezone.now().strftime('%H-%M-%S')+".png", 0)
+    sim = get_sim(ERR_trans, request.POST['trans'])
     hin = "hyp_"+session_id+"_"+timezone.now().strftime('%H-%M-%S')+".png"
 
     if not ts_error:
@@ -368,7 +367,7 @@ def error_typing_used(request):
         hyp_image = ""
         hypLen = 0
         hyp_audio = ""
-    refLen = get_audio_length(synthFN)
+    refLen = get_audio_length(settings.BASE_DIR+'/' +ref_url[0])
 
 
     #create empty Audio Error Correction Attempt
@@ -381,7 +380,8 @@ def error_typing_used(request):
 
     response_data = {
             #"ref_audio_url":ref_audio,
-            "ref_audio_url": synthURL1,
+            "ref_audio_url": ref_url[0],
+            "ref_vis": ref_vis,
             "ref_image_url": ref_image,
             "hyp_audio_url": hyp_audio,
             "hyp_image_url": hyp_image,
