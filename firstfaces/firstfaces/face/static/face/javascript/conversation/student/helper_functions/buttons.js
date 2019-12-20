@@ -1,4 +1,3 @@
-
 function buttonsHideAllContainers() {
 
     $('#meterContainer').hide();
@@ -85,3 +84,14 @@ function buttonsHideAllStop() {
 
 }
 
+function buttonsShowOnlyForwardErrorCorrection() {
+
+    buttonsHideAllContainers();
+    $('.record-btn').prop( "disabled", false );
+    $('.record-btn').hide();
+    $('#recordBtnsCont').show();
+    $('#forwardErrorSelection').show();
+    $('#forwardArrow').addClass('flash');
+
+
+}

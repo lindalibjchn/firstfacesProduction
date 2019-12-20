@@ -22,8 +22,18 @@ function tiaSpeakButtonEvent() {
         prepareHeadBobAndTalkingBoolOnFirstSentence()
 
     }
-    tiaSpeakIndividualSentences();
     synthesisObject.audio.play();
+
+    if ( appleDevice ) {
+    
+        console.log('speaking in apple device: 100ms delay')
+        setTimeout( tiaSpeakIndividualSentences, 1000 );
+
+    } else {
+
+        tiaSpeakIndividualSentences();
+
+    }
 
 }
 
@@ -129,6 +139,12 @@ function continueStockPhrases() {
             setTimeout( updateSentenceNumberAndAudioSrc, 500 );
        
         });    
+
+    }
+
+    if ( !conversationVariables.tutorial_complete ) {
+
+        dealWithTutorialSpeakingEvents(); // in tutorial.js at 
 
     }
 

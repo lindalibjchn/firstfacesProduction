@@ -85,7 +85,11 @@ function dealWithAfterTap() {
 
             } else {
 
-                tutorialOption031();
+                if ( conversationVariables.tutorialStep === '021' ) {
+
+                    tutorialOption031();
+
+                }
 
             }
 

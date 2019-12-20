@@ -1,11 +1,13 @@
 .input-btn-large {
 
     font-size: 3em !important;
+    touch-action: manipulation;
 
 }
 
 .input-btn {
-
+    
+    touch-action: manipulation;
     font-size: 1.9em !important;
     font-weight: bold !important;
     z-index: 100;
@@ -31,6 +33,7 @@
     background-color: #1fb030;
     border-radius: 50%;
     border: 3px solid white;
+    touch-action: manipulation;
 
 }
 
@@ -43,6 +46,7 @@
     /*margin-top: 20px;*/
     /*display: block;*/
     /*font-size: 1.8em;*/
+    touch-action: manipulation;
 
 }
 
@@ -60,6 +64,7 @@
     align-items: center !important;
     justify-content: center !important;
     z-index: 110;
+    touch-action: manipulation;
 
 
 }

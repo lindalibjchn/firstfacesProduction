@@ -147,6 +147,7 @@ def store_blob(request):
     return JsonResponse(response_data)    
 
 def store_error_blob(request):
+    # code.interact(local=locals());
     blob = request.FILES['data'] 
     startID = request.POST['start_idx']
     errors = json.loads(request.POST['error_list'])

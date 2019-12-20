@@ -32,10 +32,14 @@ function sendSentToServer() {
             }
 
         }
+        let extraDelay = 0;
+        if ( appleDevice ) {
+            extraDelay = 1000;
+        }
         if(!conversationVariables.trying_again){
-            setTimeout( goToThinkingPos, conversationVariables.sentence_being_recorded_audio.totalAudioLength );
+            setTimeout( goToThinkingPos, conversationVariables.sentence_being_recorded_audio.totalAudioLength + extraDelay );
         }else{
-            setTimeout( goToThinkingPos, conversationVariables.previous_sent_totalAudioLength );
+            setTimeout( goToThinkingPos, conversationVariables.previous_sent_totalAudioLength + extraDelay );
         }
         conversationVariables.FAFailed = false;
         talkToTia(); 

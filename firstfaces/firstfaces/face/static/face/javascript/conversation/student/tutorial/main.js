@@ -1,70 +1,3 @@
-function showSingleBtn( response, callback ) {
-
-    $('#tutorialBtnSingle').prop( 'disabled', false )
-    $('#tutorialBtnSingleCont').fadeIn( 500 );
-    $('#tutorialBtnSingle').text( response );
-    $('#tutorialBtnSingle').on( 'click', callback )
-
-}
-
-function showDoubleBtn( /*response01, response02,*/ callback01, callback02 ) {
-
-    $('.tut-double-btn').prop( 'disabled', false )
-    $('#tutorialBtnDoubleCont').fadeIn( 500 );
-    //$('#tutorialBtnDouble0').text( response01 );
-    //$('#tutorialBtnDouble1').text( response02 );
-    $('#tutorialBtnDouble0').on( 'click', callback01 );
-    $('#tutorialBtnDouble1').on( 'click', callback02 );
-
-}
-
-//function showQuadBtn( response01, response02, response03, response04, callback01, callback02, callback03, callback04 ) {
-
-    //$('.tut-quad-btn').prop( 'disabled', false )
-    //$('#tutorialBtnQuadCont').fadeIn( 500 );
-    //$('#tutorialBtnQuad0').text( response01 );
-    //$('#tutorialBtnQuad1').text( response02 );
-    //$('#tutorialBtnQuad2').text( response03 );
-    //$('#tutorialBtnQuad3').text( response04 );
-    //$('#tutorialBtnQuad0').on( 'click', callback01 );
-    //$('#tutorialBtnQuad1').on( 'click', callback02 );
-    //$('#tutorialBtnQuad2').on( 'click', callback03 );
-    //$('#tutorialBtnQuad3').on( 'click', callback04 );
-
-//}
-
-function removeSingleBtn() {
-
-    $('#tutorialBtnSingle').off( 'click' )
-    $('#tutorialBtnSingle').prop( 'disabled', true )
-    $('#tutorialBtnSingleCont').fadeOut( tiaTimings.speechBubbleFadeOutDuration );
-    removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
-
-}
-
-function removeDoubleBtn() {
-
-    $('#tutorialBtnDouble0').off( 'click' )
-    $('#tutorialBtnDouble1').off( 'click' )
-    $('.tut-double-btn').prop( 'disabled', true )
-    $('#tutorialBtnDoubleCont').fadeOut( tiaTimings.speechBubbleFadeOutDuration );
-    removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
-
-}
-
-/*function removeQuadBtn() {*/
-
-    //$('#tutorialBtnQuad0').off( 'click' )
-    //$('#tutorialBtnQuad1').off( 'click' )
-    //$('#tutorialBtnQuad2').off( 'click' )
-    //$('#tutorialBtnQuad3').off( 'click' )
-    //$('#tutorialBtnQuad4').off( 'click' )
-    //$('.tut-quad-btn').prop( 'disabled', true )
-    //$('#tutorialBtnQuadCont').fadeOut( tiaTimings.speechBubbleFadeOutDuration );
-    //removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration );
-
-/*}*/
-
 function runTutorial() {
 
     conversationVariables.tutorialStep = 0;
@@ -80,7 +13,7 @@ function runTutorial() {
 
 function tutorialOption010() {
 
-    conversationVariables.tutorialStep = 010;
+    conversationVariables.tutorialStep = '010';
     removeDoubleBtn();
     createSingleExpression( expressionObject.rel.sad, 0.5 );
     expressionController( expressionObject.calculated, 0.5 );
@@ -99,11 +32,11 @@ function tutorialOption010() {
 
 function tutorialOption011() {
 
-    conversationVariables.tutorialStep = 011;
+    conversationVariables.tutorialStep = '011';
     removeDoubleBtn();
     
-    tiaPrepareToSpeak("That's_great,_let's_get_started!", speakCb=function(){
-    //tiaPrepareToSpeak("tutorial_011", speakCb=function(){
+    //tiaPrepareToSpeak("That's_great,_let's_get_started!", speakCb=function(){
+    tiaPrepareToSpeak("tutorial_011", speakCb=function(){
 
         showDoubleBtn( tutorialOption020, tutorialOption021 ) 
 
@@ -119,7 +52,7 @@ function tutorialOption011() {
 
 function tutorialOption020() {
 
-    conversationVariables.tutorialStep = 020;
+    conversationVariables.tutorialStep = '020';
     removeDoubleBtn();
     createSingleExpression( expressionObject.rel.sad, 0.5 );
     expressionController( expressionObject.calculated, 0.5 );
@@ -138,11 +71,11 @@ function tutorialOption020() {
 
 function tutorialOption021() {
 
-    conversationVariables.tutorialStep = 021;
+    conversationVariables.tutorialStep = '021';
     removeDoubleBtn();
     
-    tiaPrepareToSpeak("I'm_glad_that_you_can_hear_my_voice", speakCb=function(){
-    //tiaPrepareToSpeak("tutorial_021", speakCb=function(){
+    //tiaPrepareToSpeak("I'm_glad_that_you_can_hear_my_voice", speakCb=function(){
+    tiaPrepareToSpeak("tutorial_021", speakCb=function(){
 
         //showDoubleBtn( tutorialOption030, tutorialOption031 ) 
         buttonsMicrophoneOnly();
@@ -159,7 +92,7 @@ function tutorialOption021() {
 
 function tutorialOption030() {
 
-    conversationVariables.tutorialStep = 030;
+    conversationVariables.tutorialStep = '030';
     removeDoubleBtn();
     createSingleExpression( expressionObject.rel.sad, 0.5 );
     expressionController( expressionObject.calculated, 0.5 );
@@ -178,14 +111,15 @@ function tutorialOption030() {
 
 function tutorialOption031() {
 
-    conversationVariables.tutorialStep = 031;
+    conversationVariables.tutorialStep = '031';
     buttonsHideAllContainers();
     
     if ( conversationVariables.sentence_being_recorded_audio.alternatives[ 0 ].transcript = "nice to meet you" ) {
 
-        tiaPrepareToSpeak("Well_done,_I_can_hear_you_perfectly", speakCb=function(){
-        //tiaPrepareToSpeak("tutorial_031", speakCb=function(){
-
+        //tiaPrepareToSpeak("Well_done,_I_can_hear_you_perfectly", speakCb=function(){
+        tiaPrepareToSpeak("tutorial_031", speakCb=function(){
+            
+            $( '#sentenceShowHolder' ).fadeOut()
             showDoubleBtn( tutorialOption040, tutorialOption041 ) 
 
         })
@@ -218,7 +152,7 @@ function tutorialOption031() {
 
 function tutorialOption040() {
 
-    conversationVariables.tutorialStep = 040;
+    conversationVariables.tutorialStep = '040';
     removeDoubleBtn();
     createSingleExpression( expressionObject.rel.sad, 0.5 );
     expressionController( expressionObject.calculated, 0.5 );
@@ -237,14 +171,155 @@ function tutorialOption040() {
 
 function tutorialOption041() {
 
-    conversationVariables.tutorialStep = 041;
+    conversationVariables.tutorialStep = '041';
     removeDoubleBtn();
     
-    //tiaPrepareToSpeak("I'm_glad_that_you_can_hear_my_voice", speakCb=function(){
-    tiaPrepareToSpeak("tutorial_041", speakCb=function(){
+    tiaPrepareToSpeak("If_the_words_are_wrong,_you_can_tap_the_microphone_button_and_try_saying_the_sentence_again_clearly", speakCb=function(){
+    //tiaPrepareToSpeak("tutorial_041", speakCb=function(){
 
-        //showDoubleBtn( tutorialOption030, tutorialOption031 ) 
-        buttonsMicrophoneOnly();
+        //showDoubleBtn( tutorialOption30, tutorialOption031 ) 
+        //buttonsMicrophoneOnly();
+
+    })
+
+    initNod(0.3, 0.3, function() {
+
+        buttonsListenNextSentence();
+
+    });
+
+}
+
+function tutorialOption050() {
+
+    conversationVariables.tutorialStep = '050';
+    removeDoubleBtn();
+    createSingleExpression( expressionObject.rel.sad, 0.5 );
+    expressionController( expressionObject.calculated, 0.5 );
+    //tiaPrepareToSpeak("Try_checking_your_volume", speakCb=function(){
+    tiaPrepareToSpeak("tutorial_040", speakCb=function(){
+
+    })
+
+    initNod(0.5, 0.5, function() {
+
+        buttonsListenNextSentence();
+
+    });
+
+}
+
+function tutorialOption051() {
+
+    conversationVariables.tutorialStep = '051';
+    removeDoubleBtn();
+    
+    tiaPrepareToSpeak("Now,_tap_the_microphone_button_and_say,_'cold',_then_tap_the_stop_button", speakCb=function(){
+    //tiaPrepareToSpeak("tutorial_051", speakCb=function(){
+
+        $( '#keyboardOverlay' ).hide();
+        $( '#overlayBtnBox' ).show();
+        $( '#reRecordBtn' ).fadeIn();
+        $( '#inputButtonsContainer' ).css('z-index', '1')
+        //showDoubleBtn( tutorialOption30, tutorialOption031 ) 
+        //buttonsMicrophoneOnly();
+
+    })
+
+    initNod(0.3, 0.3, function() {
+
+        buttonsListenNextSentence();
+
+    });
+
+}
+
+function tutorialOption060() {
+
+    conversationVariables.tutorialStep = '060';
+    removeDoubleBtn();
+    createSingleExpression( expressionObject.rel.sad, 0.5 );
+    expressionController( expressionObject.calculated, 0.5 );
+    //tiaPrepareToSpeak("Try_checking_your_volume", speakCb=function(){
+    tiaPrepareToSpeak("tutorial_060", speakCb=function(){
+
+    })
+
+    initNod(0.5, 0.5, function() {
+
+        buttonsListenNextSentence();
+
+    });
+
+}
+
+function tutorialOption061() {
+
+    conversationVariables.tutorialStep = '061';
+    $( '#overlayBtnBox' ).hide();
+    $( '#inputButtonsContainer' ).css('z-index', '10');
+
+    tiaPrepareToSpeak("That_is_perfect,_well_done", speakCb=function(){
+    //tiaPrepareToSpeak("tutorial_061", speakCb=function(){
+
+        $( '#inputButtonsContainer' ).css('z-index', '1');
+        $( '#reRecordBtn' ).hide();
+        $( '#overlayBtnBox' ).show();
+        $( '#keyboardOverlay' ).fadeIn();
+
+    })
+
+    initNod(0.3, 0.3, function() {
+
+        buttonsListenNextSentence();
+
+    });
+
+}
+
+function tutorialSpectrogramButtonClickEvent() {
+
+    if ( $('#bottomCent').text() === "cold" ) {
+
+        decrease_type_size_stage2()
+        tutorialOption071();
+
+    }
+
+}
+
+function tutorialOption070() {
+
+    conversationVariables.tutorialStep = '060';
+    removeDoubleBtn();
+    createSingleExpression( expressionObject.rel.sad, 0.5 );
+    expressionController( expressionObject.calculated, 0.5 );
+    //tiaPrepareToSpeak("Try_checking_your_volume", speakCb=function(){
+    tiaPrepareToSpeak("tutorial_060", speakCb=function(){
+
+    })
+
+    initNod(0.5, 0.5, function() {
+
+        buttonsListenNextSentence();
+
+    });
+
+}
+
+function tutorialOption071() {
+
+    conversationVariables.tutorialStep = '071';
+    $( '#overlayBtnBox' ).hide();
+    $( '#inputButtonsContainer' ).css('z-index', '10');
+
+    tiaPrepareToSpeak("Excellent,_good_job", speakCb=function(){
+    //tiaPrepareToSpeak("tutorial_071", speakCb=function(){
+
+        $( '#inputButtonsContainer' ).css('z-index', '1');
+        $( '#reRecordBtn' ).hide();
+        $( '#overlayBtnBox' ).show();
+        $( '#keyboardOverlay' ).fadeIn();
 
     })
 
