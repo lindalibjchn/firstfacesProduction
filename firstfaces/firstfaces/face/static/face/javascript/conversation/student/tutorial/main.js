@@ -281,7 +281,13 @@ function tutorialSpectrogramButtonClickEvent() {
 
     if ( $('#bottomCent').text() === "cold" ) {
 
+        $( '#inputButtonsContainer' ).css('z-index', '10');
+        $( '#overlayBtnBox' ).hide();
+
+        submitKeyboard();
+        $('#keyboardOverlay').hide();
         decrease_type_size_stage2()
+        removeSpeechBubble();
         tutorialOption071();
 
     }
@@ -310,16 +316,14 @@ function tutorialOption070() {
 function tutorialOption071() {
 
     conversationVariables.tutorialStep = '071';
+
+    $( '#talkBtn' ).hide();
     $( '#overlayBtnBox' ).hide();
     $( '#inputButtonsContainer' ).css('z-index', '10');
 
     tiaPrepareToSpeak("Excellent,_good_job", speakCb=function(){
-    //tiaPrepareToSpeak("tutorial_071", speakCb=function(){
 
-        $( '#inputButtonsContainer' ).css('z-index', '1');
-        $( '#reRecordBtn' ).hide();
-        $( '#overlayBtnBox' ).show();
-        $( '#keyboardOverlay' ).fadeIn();
+        $( '#talkBtn' ).show();
 
     })
 
@@ -330,6 +334,206 @@ function tutorialOption071() {
     });
 
 }
+
+function tutorialOption080() {
+
+    conversationVariables.tutorialStep = '080';
+    removeDoubleBtn();
+    createSingleExpression( expressionObject.rel.sad, 0.5 );
+    expressionController( expressionObject.calculated, 0.5 );
+    //tiaPrepareToSpeak("Try_checking_your_volume", speakCb=function(){
+    tiaPrepareToSpeak("tutorial_080", speakCb=function(){
+
+    })
+
+    initNod(0.5, 0.5, function() {
+
+        buttonsListenNextSentence();
+
+    });
+
+}
+
+function tutorialOption081() {
+
+    conversationVariables.tutorialStep = '081';
+
+    $( '#talkBtn' ).hide();
+    $('#correctionOverlay').hide();
+    $('#textInputContainer').hide();
+    tiaPrepareToSpeak("When_your_sentence_is_correct,_my_expression_will_change,_and_I_will_talk_to_you", speakCb=function(){
+
+        console.log('tutorialOption 081 after speak');
+        //expressionController( expressionObject.calculated, 0.8, function(){
+            
+            tutorialOption082();
+            buttonsListenNextSentence();
+         
+        //})
+
+    })
+
+
+}
+
+function tutorialOption082() {
+
+    conversationVariables.tutorialStep = '082';
+
+    tiaPrepareToSpeak("If_you_say_something_positive,_I_will_be_happy", speakCb=function(){
+
+        //expressionController( expressionObject.calculated, 0.8, function(){ 
+            
+            tutorialOption083();
+            buttonsListenNextSentence();
+
+        //});
+
+    });
+
+}
+
+function tutorialOption083() {
+
+    conversationVariables.tutorialStep = '083';
+
+    tiaPrepareToSpeak("You_can_also_make_me_feel_surprised...", speakCb=function(){
+
+        //expressionController( expressionObject.calculated, 0.8, function(){
+            
+            tutorialOption084();
+            buttonsListenNextSentence();
+
+        //});
+
+    });
+
+}
+
+function tutorialOption084() {
+
+    conversationVariables.tutorialStep = '084';
+
+    tiaPrepareToSpeak("content...", speakCb=function(){
+
+        //expressionController( expressionObject.calculated, 0.8, function(){
+            
+            tutorialOption085();
+            buttonsListenNextSentence();
+
+        //});
+
+    });
+
+}
+
+function tutorialOption085() {
+
+    conversationVariables.tutorialStep = '085';
+
+    tiaPrepareToSpeak("scared...", speakCb=function(){
+
+        //expressionController( expressionObject.calculated, 0.8, function(){
+            
+            tutorialOption086();
+            buttonsListenNextSentence();
+
+        //});
+
+    });
+
+}
+
+function tutorialOption086() {
+
+    conversationVariables.tutorialStep = '086';
+
+    tiaPrepareToSpeak("and_disgusted...", speakCb=function(){
+
+        //expressionController( expressionObject.calculated, 0.8, function(){
+            
+            createSingleExpression( expressionObject.rel.happy, 0.8 )
+            
+            setTimeout( function(){
+
+                expressionController( expressionObject.half, 1.2, function() {
+            
+                    tutorialOption091();
+                    buttonsListenNextSentence();
+
+                });
+
+            }, 1000);
+
+        //});
+
+    });
+
+}
+
+function tutorialOption091() {
+
+    conversationVariables.tutorialStep = '091';
+
+    tiaPrepareToSpeak("But,_you_will_only_see_these_expressions_if_your_sentence_is_correct", speakCb=function(){
+
+
+    })
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function greeting03() {
 
