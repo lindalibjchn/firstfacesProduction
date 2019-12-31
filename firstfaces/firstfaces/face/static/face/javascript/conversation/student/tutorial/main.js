@@ -4,10 +4,51 @@ function runTutorial() {
     //tiaPrepareToSpeak("Hello,_and_welcome_to_ERLE", speakCb=function(){
     tiaPrepareToSpeak("tutorial_start", speakCb=function(){
 
-        showDoubleBtn( tutorialOption010, tutorialOption011 ) 
+        showDoubleBtn( tutorialOption000, tutorialOption001 ) 
 
     })
     buttonsListenNextSentence();
+
+}
+
+function tutorialOption000() {
+
+    conversationVariables.tutorialStep = '000';
+    removeDoubleBtn();
+    createSingleExpression( expressionObject.rel.sad, 0.5 );
+    expressionController( expressionObject.calculated, 0.5 );
+    //tiaPrepareToSpeak("tutorial_010", speakCb=function(){
+
+    initNod(0.5, 0.5, function() {
+
+        tiaPrepareToSpeak("That's_fine", speakCb=function(){
+            
+        
+        })
+
+        buttonsListenNextSentence();
+
+    });
+
+}
+
+function tutorialOption001() {
+
+    conversationVariables.tutorialStep = '001';
+    removeDoubleBtn();
+    
+    initNod(0.3, 0.3, function() {
+
+        //tiaPrepareToSpeak("That's_great!", speakCb=function(){
+        tiaPrepareToSpeak("tutorial_001", speakCb=function(){
+
+            showDoubleBtn( tutorialOption010, tutorialOption011 ) 
+
+        })
+
+        buttonsListenNextSentence();
+
+    });
 
 }
 
@@ -17,8 +58,8 @@ function tutorialOption010() {
     removeDoubleBtn();
     createSingleExpression( expressionObject.rel.sad, 0.5 );
     expressionController( expressionObject.calculated, 0.5 );
-    //tiaPrepareToSpeak("It's_been_nice_meeting_you,_and_feel_free_to_come_back_again_any_time.", speakCb=function(){
-    tiaPrepareToSpeak("tutorial_010", speakCb=function(){
+    tiaPrepareToSpeak("It's_been_nice_meeting_you,_and_feel_free_to_come_back_again_any_time.", speakCb=function(){
+    //tiaPrepareToSpeak("tutorial_010", speakCb=function(){
 
     })
 
@@ -35,14 +76,14 @@ function tutorialOption011() {
     conversationVariables.tutorialStep = '011';
     removeDoubleBtn();
     
-    //tiaPrepareToSpeak("That's_great,_let's_get_started!", speakCb=function(){
-    tiaPrepareToSpeak("tutorial_011", speakCb=function(){
-
-        showDoubleBtn( tutorialOption020, tutorialOption021 ) 
-
-    })
-
     initNod(0.3, 0.3, function() {
+
+        tiaPrepareToSpeak("okay,_let's_get_started", speakCb=function(){
+        //tiaPrepareToSpeak("tutorial_011", speakCb=function(){
+
+            showDoubleBtn( tutorialOption020, tutorialOption021 ) 
+
+        })
 
         buttonsListenNextSentence();
 
@@ -56,8 +97,8 @@ function tutorialOption020() {
     removeDoubleBtn();
     createSingleExpression( expressionObject.rel.sad, 0.5 );
     expressionController( expressionObject.calculated, 0.5 );
-    //tiaPrepareToSpeak("Try_checking_your_volume", speakCb=function(){
-    tiaPrepareToSpeak("tutorial_020", speakCb=function(){
+    tiaPrepareToSpeak("Try_checking_your_volume", speakCb=function(){
+    //tiaPrepareToSpeak("tutorial_020", speakCb=function(){
 
     })
 
@@ -74,8 +115,8 @@ function tutorialOption021() {
     conversationVariables.tutorialStep = '021';
     removeDoubleBtn();
     
-    //tiaPrepareToSpeak("I'm_glad_that_you_can_hear_my_voice", speakCb=function(){
-    tiaPrepareToSpeak("tutorial_021", speakCb=function(){
+    tiaPrepareToSpeak("I'm_glad_that_you_can_hear_my_voice", speakCb=function(){
+    //tiaPrepareToSpeak("tutorial_021", speakCb=function(){
 
         //showDoubleBtn( tutorialOption030, tutorialOption031 ) 
         buttonsMicrophoneOnly();
@@ -96,8 +137,8 @@ function tutorialOption030() {
     removeDoubleBtn();
     createSingleExpression( expressionObject.rel.sad, 0.5 );
     expressionController( expressionObject.calculated, 0.5 );
-    //tiaPrepareToSpeak("Try_checking_your_volume", speakCb=function(){
-    tiaPrepareToSpeak("tutorial_030", speakCb=function(){
+    tiaPrepareToSpeak("Try_checking_your_volume", speakCb=function(){
+    //tiaPrepareToSpeak("tutorial_030", speakCb=function(){
 
     })
 
@@ -116,8 +157,8 @@ function tutorialOption031() {
     
     if ( conversationVariables.sentence_being_recorded_audio.alternatives[ 0 ].transcript = "nice to meet you" ) {
 
-        //tiaPrepareToSpeak("Well_done,_I_can_hear_you_perfectly", speakCb=function(){
-        tiaPrepareToSpeak("tutorial_031", speakCb=function(){
+        tiaPrepareToSpeak("Well_done,_I_can_hear_you_perfectly", speakCb=function(){
+        //tiaPrepareToSpeak("tutorial_031", speakCb=function(){
             
             $( '#sentenceShowHolder' ).fadeOut()
             showDoubleBtn( tutorialOption040, tutorialOption041 ) 
@@ -156,8 +197,8 @@ function tutorialOption040() {
     removeDoubleBtn();
     createSingleExpression( expressionObject.rel.sad, 0.5 );
     expressionController( expressionObject.calculated, 0.5 );
-    //tiaPrepareToSpeak("Try_checking_your_volume", speakCb=function(){
-    tiaPrepareToSpeak("tutorial_040", speakCb=function(){
+    tiaPrepareToSpeak("Try_checking_your_volume", speakCb=function(){
+    //tiaPrepareToSpeak("tutorial_040", speakCb=function(){
 
     })
 
@@ -196,8 +237,8 @@ function tutorialOption050() {
     removeDoubleBtn();
     createSingleExpression( expressionObject.rel.sad, 0.5 );
     expressionController( expressionObject.calculated, 0.5 );
-    //tiaPrepareToSpeak("Try_checking_your_volume", speakCb=function(){
-    tiaPrepareToSpeak("tutorial_040", speakCb=function(){
+    tiaPrepareToSpeak("Try_checking_your_volume", speakCb=function(){
+    //tiaPrepareToSpeak("tutorial_040", speakCb=function(){
 
     })
 

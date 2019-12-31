@@ -1,18 +1,32 @@
 $(window).on( 'load', function() {
 
-    addAvailablesToTimetable( waitingVariables.availables )
-    addAllScores( waitingVariables.conversations )
-    if ( waitingVariables.conversations.length !== 0 ) {
-        
-        showConversationSentences( 0 );
-        //setUpPreviousSentsBtns( waitingVariables.conversations[0].completed_sentences )
-        //addData( 'sentences', waitingVariables.conversations[0].completed_sentences )
-    
-    }
-    $('#pronunciationClearOverlayArea').click( hidePronunciationDataContainer );
-    if ( waitingVariables.currently_in_class ) {
+    if ( waitingVariables.tutorial_complete ) {
 
-        waitingVariables.conversation_id = waitingVariables.conversations[ 0 ].id
+        addAvailablesToTimetable( waitingVariables.availables )
+        addAllScores( waitingVariables.conversations )
+        if ( waitingVariables.conversations.length > 1 ) {
+            
+            showConversationSentences( 0 );
+            //setUpPreviousSentsBtns( waitingVariables.conversations[0].completed_sentences )
+            //addData( 'sentences', waitingVariables.conversations[0].completed_sentences )
+        
+        }
+        $('#pronunciationClearOverlayArea').click( hidePronunciationDataContainer );
+        if ( waitingVariables.currently_in_class ) {
+
+            waitingVariables.conversation_id = waitingVariables.conversations[ 0 ].id
+
+        }
+
+    } else {
+
+        console.log(' in tutorial not complete' );
+        $( '#tutorialNotDoneButton' ).click( function(){
+
+            console.log(' in click' )
+            window.location.href = prefixURL + "conversation_student/" + waitingVariables.tutorial_conversation_id.toString();
+
+        })
 
     }
 
@@ -20,7 +34,7 @@ $(window).on( 'load', function() {
 
 function enterConversation() {
 
-    window.location.href = "/conversation_student/" + waitingVariables.conversation_id.toString();
+    window.location.href = prefixURL + "/conversation_student/" + waitingVariables.conversation_id.toString();
 
 }
 

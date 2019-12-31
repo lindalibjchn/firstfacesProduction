@@ -1,4 +1,4 @@
-function tiaPrepareToSpeak( tiaSays, speakCb=function(){},  playbackRate=0.9) {
+function tiaPrepareToSpeak( tiaSays, speakCb=function(){}, playbackRate=1) {
 
     synthesisObject.newPromptArrived = false;
     synthesisObject.sentenceNo = 0;
