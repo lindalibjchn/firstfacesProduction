@@ -46,22 +46,34 @@ def waiting(request):
     
     #except:
     
+        user_profile = Profile.objects.get(learner=request.user)
+        tutorial_complete = user_profile.tutorial_complete
+
         time_now = timezone.localtime(timezone.now()).strftime("%H:%M")
         date_now = timezone.localtime(timezone.now()).date()
 
         groups = request.user.groups.values_list('name', flat=True)
         available_objects = get_availables_for_schedule(groups)
-
         availables = create_list_of_javascript_available_times_from_django_objects(available_objects)
-
         currently_in_class, class_finished_today = check_if_currently_in_class_or_class_finished(request.user)
-
         conversations = get_prev_conversations( request.user )
 
-        # check if user has completed tutorial
-        user_profile = Profile.objects.get(learner=request.user)
-        tutorial_complete = user_profile.tutorial_complete
+        tutorial_conversation_id = None
+        if not tutorial_complete:
 
+            # check if tutorial already open
+            if Conversation.objects.filter(learner=request.user).count() == 1:
+                
+                conversation = Conversation.objects.filter(learner=request.user)[0]
+                
+            else:
+
+                conversation = Conversation(learner=request.user, start_time=timezone.now(), topic="tutorial") 
+                conversation.save()
+            
+            tutorial_conversation_id = conversation.id
+
+        # check if user has completed tutorial
         waiting_variables = {
 
             # 'schedule_dict': json.dumps(schedule_dict),
@@ -72,6 +84,7 @@ def waiting(request):
             'currently_in_class': currently_in_class,
             'class_finished_today': class_finished_today,
             'in_development': settings.DEBUG,
+            'tutorial_conversation_id': tutorial_conversation_id,
             # 'no_live_sessions': no_live_sessions,
 
         }
@@ -79,6 +92,7 @@ def waiting(request):
         # print('waiting_variables:', json.dumps(waiting_variables))
         context = {
 
+            'tutorial_complete': tutorial_complete,
             'waiting_variables': json.dumps(waiting_variables),
             'timeNowForNavbar': time_now,
             'waiting': True,
@@ -86,7 +100,6 @@ def waiting(request):
         }
 
         return render(request, 'face/waiting/main.html', context)
-
 
 def book_conversation(request):
 

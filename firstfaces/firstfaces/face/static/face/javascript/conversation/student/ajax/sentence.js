@@ -1,89 +1,105 @@
 function sendSentToServer() {
     
-    if(conversationVariables.playStage2){
-        getRemainingAudio();
-        
-       //i getAudioLength();
-    }
+    if ( conversationVariables.tutorial_complete ) {
 
-    // all below for developing
-    let sent = getSentence();
-
-    //console.log('sent:', sent);
-    //console.log('sent length:', sent.length);
-    if ( sent.length > 2 || sent.length < 300 ) {
+        if(conversationVariables.playStage2){
+            getRemainingAudio();
             
-        if(conversationVariables.usePlayAud){
-            // temporary fix
-            if ( !conversationVariables.FAFailed ) {
-            
-                play_audio();
-
-            }
-            else{
-                   aud.play();
-            }
-            conversationVariables.usePlayAud = false;
-        
-        } else {
-            if ( !conversationVariables.FAFailed ) {
-            
-                aud.play();
-            
-            }
-            else{
-                aud.play();
-            }
-
+           //i getAudioLength();
         }
-        if(!conversationVariables.trying_again){
-            setTimeout( goToThinkingPos, conversationVariables.sentence_being_recorded_audio.totalAudioLength );
-        }else{
-            setTimeout( goToThinkingPos, conversationVariables.previous_sent_totalAudioLength );
-        }
-        conversationVariables.FAFailed = false;
-        talkToTia(); 
-        // set this to false until judgement comes in where it will be changed to true
-        conversationVariables.awaitingJudgement = true;
 
-        // fade out text box
-        $('#textInputContainer').fadeOut( 500 );
+        // all below for developing
+        let sent = getSentence();
 
-        recTimes = {};
-        recTimes.clickTalkBtn = Date.now() / 1000;
-
-
-         if(!conversationVariables.trying_again){
-                sent_id = conversationVariables.sentence_being_recorded.sent_id;
-                curr_id = conversationVariables.sentence_being_recorded.conv_id;
-         }else{
-                 sent_id = conversationVariables.previous_sent_sent_id;
-                 curr_id = conversationVariables.previous_sent_conv_id
-        }
-        conversationVariables.trying_again = false
-        $.ajax({
-            url: "/store_sent",
-            type: "POST",
-            data: { 
-                'sent': sent,
-                'sent_id':sent_id,
-                'conversation_id': curr_id
-            },
-            success: function(json) {
+        //console.log('sent:', sent);
+        //console.log('sent length:', sent.length);
+        if ( sent.length > 2 || sent.length < 300 ) {
                 
-              //console.log('sentence successfully sent to server');
-                conversationVariables.sentence_awaiting_judgement = json.sentence
+            if(conversationVariables.usePlayAud){
+                // temporary fix
+                if ( !conversationVariables.FAFailed ) {
+                
+                    play_audio();
 
-            },
-            error: function() {
-                alert("sentence failed to send to server. Please refresh");
-            },
+                }
+                else{
+                    aud.play();
+                }
+                conversationVariables.usePlayAud = false;
+            
+            } else {
+                if ( !conversationVariables.FAFailed ) {
+                
+                    aud.play();
+                
+                }
+                else{
+                    aud.play();
+                }
 
-        });
+            }
+            let extraDelay = 0;
+            if ( appleDevice ) {
+                extraDelay = 1000;
+            }
+            if(!conversationVariables.trying_again){
+                setTimeout( goToThinkingPos, conversationVariables.sentence_being_recorded_audio.totalAudioLength + extraDelay );
+            }else{
+                setTimeout( goToThinkingPos, conversationVariables.previous_sent_totalAudioLength + extraDelay );
+            }
+            conversationVariables.FAFailed = false;
+            talkToTia(); 
+            // set this to false until judgement comes in where it will be changed to true
+            conversationVariables.awaitingJudgement = true;
+
+            // fade out text box
+            $('#textInputContainer').fadeOut( 500 );
+
+            recTimes = {};
+            recTimes.clickTalkBtn = Date.now() / 1000;
+
+
+             if(!conversationVariables.trying_again){
+                    sent_id = conversationVariables.sentence_being_recorded.sent_id;
+                    curr_id = conversationVariables.sentence_being_recorded.conv_id;
+             }else{
+                     sent_id = conversationVariables.previous_sent_sent_id;
+                     curr_id = conversationVariables.previous_sent_conv_id
+            }
+            conversationVariables.trying_again = false
+            $.ajax({
+                url: "/store_sent",
+                type: "POST",
+                data: { 
+                    'sent': sent,
+                    'sent_id':sent_id,
+                    'conversation_id': curr_id
+                },
+                success: function(json) {
+                    
+                  //console.log('sentence successfully sent to server');
+                    conversationVariables.sentence_awaiting_judgement = json.sentence
+
+                },
+                error: function() {
+                    alert("sentence failed to send to server. Please refresh");
+                },
+
+            });
+
+        } else {
+
+            alert( 'This sentence is too long. Please simplify and try again.')
+
+        }
 
     } else {
 
-        alert( 'This sentence is too long. Please simplify and try again.')
+        if ( conversationVariables.tutorialStep === '071' ) {
+
+            tutorialOption081();
+
+        }
 
     }
 

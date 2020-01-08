@@ -51,26 +51,23 @@ function tiaSpeakGreetings() {
 
     setTimeout( function() {
 
-        if ( conversationVariables.first_conversation ) {
+        if ( !conversationVariables.tutorial_complete ) {
 
-            tiaPrepareToSpeak( 'welcome_to_your_first_class_at_ERLE', askAboutEmotion );
+            runTutorial();
+        
+        } else if ( conversationVariables.first_conversation ) {
+
+            tiaPrepareToSpeak( 'Hello_again,_and_welcome_to_your_first_full_class_at_ERLE', showInitEmotionQuestions );
         
         } else {
             
-            tiaPrepareToSpeak( "it's_great_to_see_you_again", askAboutEmotion );
+            tiaPrepareToSpeak( "Hi,_great_to_see_you_again", showInitEmotionQuestions );
             
         }
 
     }, 500 )
 
 }
-
-function askAboutEmotion() {
-
-    tiaPrepareToSpeak( 'how_are_you_feeling_today', showInitEmotionQuestions );
-
-}
-        
 
 function showInitEmotionQuestions() {
 
@@ -115,38 +112,53 @@ function goToAskTopic( emotion ) {
 
         initNod( 0.4, 0.3, function() {
             
-            talkAbout( emotion );
+            if ( conversationVariables.first_conversation ) {
+            
+                talkAboutFirstClass();
                 
-        } );
+            } else {
 
-    } );
+                empathise( emotion );
+                
+            }
+
+        });
+
+    });
 
 }
 
 
-//function empathise( emotion_ ) {
+function empathise( emotion_ ) {
 
+    // remove emotion questions container, making sure to unbind the click event to avoid multiple clicks
+    if ( emotion_ === 4 ) {
 
-    //// remove emotion questions container, making sure to unbind the click event to avoid multiple clicks
-    //if ( emotion_ > 2 ) {
+        tiaPrepareToSpeak( "That's_great,_I'm_really_happy_to_hear_that", showTopicChoices );
 
-        //tiaSpeak( "thatsGreat", cont=false, talkAbout );
+    } else if ( emotion_ == 3 ) {
 
-    //} else if ( emotion_ == 2 ) {
+        tiaPrepareToSpeak( "That's_good,_I'm_glad_to_hear_that", showTopicChoices );
 
-        //talkAbout();
+    } else if ( emotion_ == 2 ) {
 
-    //} else {
+        tiaPrepareToSpeak( "Okay,_I_understand", showTopicChoices );
 
-        //tiaSpeak( "sorryToHear", cont=false, talkAbout );
+    } else if ( emotion_ == 1 ) {
 
-    //}
+        tiaPrepareToSpeak( "I'm_sorry_to_hear_that", showTopicChoices );
 
-//}
+    } else {
 
-function talkAbout() {
+        tiaPrepareToSpeak( "I'm_so_sorry_to_hear_you_feel_like_that", showTopicChoices );
 
-    tiaPrepareToSpeak( "what_would_you_like_to_talk_about_today?", showTopicChoices );
+    }
+
+}
+
+function talkAboutFirstClass() {
+
+    tiaPrepareToSpeak( "You_might_remember_from_the_tutorial,_that_the_topic_of_this_class_is_your_choice", showTopicChoices );
 
 }
 
@@ -186,7 +198,7 @@ function showPreChoiceTextInput() {
 
     $('#topicChoicesCont').fadeOut( tiaTimings.speechBubbleFadeOutDuration, function() {
         
-        tiaPrepareToSpeak( "you_must_type_your_choice_in_the_box_below", showChoiceTextInput );
+        showChoiceTextInput();
     
     } );
 
@@ -217,7 +229,7 @@ function getOwnTopicFromTextbox() {
 
     if ( ownTopic === '' ) {
 
-        showPreChoiceTextInput();
+        tiaPrepareToSpeak( "Please_type_your_choice_in_the_box_below", showChoiceTextInput );
 
     } else {
 
@@ -241,13 +253,22 @@ function afterStoreTopic() {
 
 function beginTalking() {
         
-    tiaPrepareToSpeak( "begin_when_you_are_ready", finalSpeak );
 
-    setTimeout( function() {
+    if ( conversationVariables.first_conversation ) {
     
-        movementController( movementObject.abs.armBegin, 1, 1 );
-    
-    }, 1000 );
+        tiaPrepareToSpeak( "Okay,_let's_talk_about_that_then", finalSpeak );
+
+    } else {
+
+        tiaPrepareToSpeak( "Begin_when_you_are_ready", finalSpeak );
+
+        setTimeout( function() {
+        
+            movementController( movementObject.abs.armBegin, 1, 1 );
+        
+        }, 1000 );
+
+    }
 
 }
 

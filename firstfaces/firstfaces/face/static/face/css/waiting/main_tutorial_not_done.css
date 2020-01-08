@@ -1,0 +1,71 @@
+#tutorialNotDoneContainer {
+
+    position: absolute;
+    bottom: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /*border: 1px solid black;*/
+
+}
+
+#tutorialNotDoneInnerContainer {
+
+    position: absolute;
+    height: 40%;
+    width: 80%;
+    /*background-color: #188ac7;*/
+    /*border: 1px dashed red;*/
+
+}
+
+#tutorialNotDoneTextContainer {
+
+    position: relative;
+    height: 50%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /*border: 1px solid black;*/
+    background-color: #102858;
+
+}
+
+#tutorialNotDoneText {
+
+    /*position: absolute;*/
+    height: 100%;
+    width: 80%;
+    bottom: 0;
+    color: white;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /*border: 1px solid black;*/
+
+}
+
+#tutorialNotDoneButtonContainer {
+
+    position: relative;
+    height: 50%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /*border: 1px dashed red;*/
+    background-color: #1fb030;
+
+}
+
+#tutorialNotDoneButton {
+
+    border: 2px solid green;
+    color: green;
+    background-color: white;
+
+}

@@ -1,4 +1,4 @@
-function tiaPrepareToSpeak( tiaSays, speakCb=function(){},  playbackRate=0.9) {
+function tiaPrepareToSpeak( tiaSays, speakCb=function(){}, playbackRate=1) {
 
     synthesisObject.newPromptArrived = false;
     synthesisObject.sentenceNo = 0;
@@ -6,7 +6,11 @@ function tiaPrepareToSpeak( tiaSays, speakCb=function(){},  playbackRate=0.9) {
     synthesisObject.audio.src = prefixURL + 'media/' + synthesisObject.now.URLs[ synthesisObject.sentenceNo ];
     synthesisObject.audio.playbackRate = playbackRate;
     synthesisObject.callback = speakCb;
-    buttonsListenNextSentence();
+    if ( conversationVariables.tutorial_complete ) {
+
+        buttonsListenNextSentence();
+
+    }
 
 }
 
@@ -18,8 +22,18 @@ function tiaSpeakButtonEvent() {
         prepareHeadBobAndTalkingBoolOnFirstSentence()
 
     }
-    tiaSpeakIndividualSentences();
     synthesisObject.audio.play();
+
+    if ( appleDevice ) {
+    
+        //console.log('speaking in apple device: 100ms delay')
+        setTimeout( tiaSpeakIndividualSentences, 1000 );
+
+    } else {
+
+        tiaSpeakIndividualSentences();
+
+    }
 
 }
 
@@ -103,15 +117,28 @@ function continueStockPhrases() {
 
     if ( synthesisObject.sentenceNo === synthesisObject.now.texts.length - 1 ) {
 
+        if ( !conversationVariables.tutorial_complete ) {
+
+            dealWithTutorialSpeakingEvents();
+
+        }
+
         endTiaTalking();
 
     } else {
 
+            
         expressionController( expressionObject.quarter, tiaTimings.durationOfLastSpeakingPhones, function() {
+
+            if ( !conversationVariables.tutorial_complete ) {
+                
+                dealWithTutorialSpeakingEvents();
+
+            } 
 
             setTimeout( updateSentenceNumberAndAudioSrc, 500 );
        
-        });    
+        });
 
     }
 
@@ -119,10 +146,10 @@ function continueStockPhrases() {
 
 function continuePrompt() {
 
-    console.log( '\nin continuePrompt\n' );
-    console.log( 'sentenceNo:', synthesisObject.sentenceNo );
-    console.log( 'sentenceNo:', synthesisObject.now );
-    console.log( '\nin continuePrompt\n' );
+    //console.log( '\nin continuePrompt\n' );
+    //console.log( 'sentenceNo:', synthesisObject.sentenceNo );
+    //console.log( 'sentenceNo:', synthesisObject.now );
+    //console.log( '\nin continuePrompt\n' );
     //if last sentence then just show mic, but if more sentences to come then show 'next' button
     
     if ( synthesisObject.sentenceNo === synthesisObject.now.URLs.length - 1 ) {
@@ -169,7 +196,7 @@ function speakJudgementM() {
 
 function speakJudgementP() {
 
-    console.log('in speakJudgementP')
+    //console.log('in speakJudgementP')
     if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].awaiting_next_prompt ) {
 
         expressionController( expressionObject.quarter, tiaTimings.durationOfLastSpeakingPhones, function() {
@@ -190,8 +217,8 @@ function speakJudgementP() {
 function updateSentenceNumberAndAudioSrc() {
 
     synthesisObject.sentenceNo += 1;
-    console.log( 'sentenceNo:', synthesisObject.sentenceNo );
-    console.log( 'synthesisObject.now.URLs[ synthesisObject.sentenceNo ]:', synthesisObject.now.URLs[ synthesisObject.sentenceNo ] );
+    //console.log( 'sentenceNo:', synthesisObject.sentenceNo );
+    //console.log( 'synthesisObject.now.URLs[ synthesisObject.sentenceNo ]:', synthesisObject.now.URLs[ synthesisObject.sentenceNo ] );
     if ( synthesisObject.now.URLs[ synthesisObject.sentenceNo ] === undefined ) {
 
         endTiaTalking();
@@ -276,13 +303,13 @@ function endTiaTalking() {
 
 function pronunciationController( expressionTo, phoneEndTime, cb ) {
     let weightedPhoneEndTime = phoneEndTime / 0.9;
-    console.log('weightedPhoneEndTime 0:', weightedPhoneEndTime)
+    //console.log('weightedPhoneEndTime 0:', weightedPhoneEndTime)
     if(!conversationVariables.stage3){
         weightedPhoneEndTime = phoneEndTime / synthesisObject.audio.playbackRate;
     } else {
         weightedPhoneEndTime = phoneEndTime / synthesisObject.audioS3.playbackRate;
     }
-    console.log('weightedPhoneEndTime 1:',weightedPhoneEndTime)
+    //console.log('weightedPhoneEndTime 1:',weightedPhoneEndTime)
     //console.log('in pronunciation controller')
     //console.log( 'phoneEndTime:', phoneEndTime );
     //console.log( 'phonneCount:', synthesisObject.now.phoneCount );

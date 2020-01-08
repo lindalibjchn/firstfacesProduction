@@ -1,11 +1,13 @@
 .input-btn-large {
 
     font-size: 3em !important;
+    touch-action: manipulation;
 
 }
 
 .input-btn {
-
+    
+    touch-action: manipulation;
     font-size: 1.9em !important;
     font-weight: bold !important;
     z-index: 100;
@@ -31,6 +33,7 @@
     background-color: #1fb030;
     border-radius: 50%;
     border: 3px solid white;
+    touch-action: manipulation;
 
 }
 
@@ -43,6 +46,7 @@
     /*margin-top: 20px;*/
     /*display: block;*/
     /*font-size: 1.8em;*/
+    touch-action: manipulation;
 
 }
 
@@ -60,6 +64,7 @@
     align-items: center !important;
     justify-content: center !important;
     z-index: 110;
+    touch-action: manipulation;
 
 
 }
@@ -79,6 +84,17 @@
 #myEmotion {
 
     background-color: #1fb030;
+
+}
+
+#stopAllButtonEffectsExceptInputButtons {
+
+    position: fixed;
+    width: 100%;
+    height: 90%;
+    top: 0;
+    display: none;
+    z-index: 1001;
 
 }
 
@@ -309,6 +325,36 @@
     height: 100%;
     position: absolute;
     display: none;
+
+}
+
+#tutorialBtnDoubleCont {
+
+    display: none;
+    width: 100%;
+    height: 100%;
+
+}
+
+.tut-double-btn {
+
+    /*width: 98%;*/
+    font-size: 5vw;
+
+}
+
+#tutorialBtnSingleCont {
+
+    display: none;
+    width: 100%;
+    height: 100%;
+
+}
+
+.tut-single-btn {
+
+    /*width: 98%;*/
+    font-size: 5vw;
 
 }
 

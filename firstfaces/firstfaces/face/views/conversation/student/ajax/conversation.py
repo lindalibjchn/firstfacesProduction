@@ -144,10 +144,7 @@ def store_conversation_over(request):
 
     conv_id = int(request.POST['convId'])
     ratings = json.loads(request.POST['ratings'])
-
-
-    # print('in store_conversation_over:', ratings)
-
+    tutorial_complete = json.loads(request.POST['tutorial_complete'])
 
     # code.interact(local=locals());
     time_now = timezone.now();
@@ -158,6 +155,13 @@ def store_conversation_over(request):
     conv.comment = ratings['comment']
     # conv.score = score
     conv.save()
+
+    print('tutorial_complete:', tutorial_complete)
+    print('tutorial_complete:', type(tutorial_complete))
+    if not tutorial_complete:
+        p = Profile.objects.get(learner=request.user)
+        p.tutorial_complete = True
+        p.save()
 
     response_data = {
 

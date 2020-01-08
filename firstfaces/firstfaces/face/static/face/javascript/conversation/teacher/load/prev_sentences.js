@@ -23,7 +23,7 @@ function addPreviousSentences( conversation_, phoneId, bottom=true ) {
 
 function createExchangeHTML( exchange_ ) {
 
-    //console.log('exchange_:', exchange_);
+    console.log('exchange_:', exchange_);
     let exchangeContainer = document.createElement("div");
     exchangeContainer.className = "sentence-container";
     exchangeContainer.id = "exchangeContainer_" + exchange_.sent_id.toString();
@@ -298,6 +298,7 @@ function makeWrongSentsHighlighted( exchange_ ) {
 
         }
 
+        console.log('exchange_.indexes:', exchange_.indexes );
         exchange_.indexes.forEach( function( i ) {
 
             //console.log('i:', i);

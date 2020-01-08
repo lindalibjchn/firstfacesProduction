@@ -79,7 +79,9 @@ $('#forwardErrorSelection').click(function(){
         }
     }
     //Allignment is done
-    doAllignment();
+    if ( conversationVariables.tutorial_complete ) {
+        doAllignment();
+    }
     conversationVariables.usePlayAud = true;
     //Words are looped through and sequential blocks of errored and correct words are place into their own span tags
     conversationVariables.playStage2 = true;
@@ -182,6 +184,20 @@ $('#forwardErrorSelection').click(function(){
         //The first error is opened for correction
         animate_open_overlay(conversationVariables.uncorrectedErrors[0]);
     }
+    if ( !conversationVariables.tutorial_complete ) {
+
+        if ( conversationVariables.tutorialStep === '041' ) {
+
+            //$( '#reRecordBtn' ).hide();
+            $( '#keyBoardOverlay' ).hide();
+            $( '#overlayBtnBox' ).hide();
+            $( '#inputButtonsContainer' ).css('z-index', '10')
+            tutorialOption051()
+
+        }
+
+    }
+
 });
 
 
@@ -294,29 +310,55 @@ function selectErrWord(idx){
         $('#forwardArrow').addClass('flash');
         selected.push(num);
         selected.sort();
-        if(selected.length == 1){
-            $('#talkBtn').hide();
-            $('#forwardErrorSelection').show();
+        if ( conversationVariables.tutorial_complete ) {
+            if(selected.length == 1){
+                $('#talkBtn').hide();
+                $('#forwardErrorSelection').show();
+            }
+        } else {
+
+            if ( selected.length === 1 && selected[ 0 ] === 7 ) {
+
+                buttonsShowOnlyForwardErrorCorrection();
+
+            } else {
+
+                buttonsHideAllContainers();
+
+            }
+
         }
     }
     //if unselected remove from selected
     else{
-        var temp = [];
-        $('.selected-word').each(function(){
-            if(this.id != idx){
-                var num = parseInt(this.id.split("_")[1]); 
-                temp.push(num);
+            var temp = [];
+            $('.selected-word').each(function(){
+                if(this.id != idx){
+                    var num = parseInt(this.id.split("_")[1]); 
+                    temp.push(num);
+                }
+            });
+            selected = temp;
+            if(selected.length == 0){
+                if ( conversationVariables.tutorial_complete ) {
+                    $('#talkBtn').show();
+                    remove_blur_record();
+                    $('#forwardArrow').removeClass('flash');
+                    $('#forwardErrorSelection').hide();
+                } else {
+                    if ( selected.length === 1 && selected[ 0 ] === 7 ) {
+
+                        buttonsShowOnlyForwardErrorCorrection();
+
+                    } else {
+
+                        buttonsHideAllContainers();
+                    }
+
+                }
             }
-        });
-        selected = temp;
-        if(selected.length == 0){
-            $('#talkBtn').show();
-            remove_blur_record();
-            $('#forwardArrow').removeClass('flash');
-            $('#forwardErrorSelection').hide();
-        }
-        selected.sort();
-        document.getElementById(idx).className = 'selectable-word';
+            selected.sort();
+            document.getElementById(idx).className = 'selectable-word';
     }
 }
 
@@ -380,10 +422,16 @@ function doneError(){
 
     //Check if all errors are corrected
     if($('.uncorrected-error').length == 0){
-        $('#recordBtnsCont').show();
-        $("#talkBtn").show();
-        //$('#recordVoiceBtn').show();
-        $('#backCorrection').show();
+
+        if ( conversationVariables.tutorial_complete ) {
+
+            $('#recordBtnsCont').show();
+            $("#talkBtn").show();
+            //$('#recordVoiceBtn').show();
+            $('#backCorrection').show();
+
+        }
+
     }
     else{
         animate_open_overlay(conversationVariables.uncorrectedErrors[0]);   
@@ -518,9 +566,15 @@ $('#keyboardOverlay').click(function(){
     $('#spectrogramBtn').hide();
     $("#spectrogramBtn").off("click");
     $("#spectrogramBtn").click(function(){
-        submitKeyboard();
-        decrease_type_size_stage2();
-        $('#keyboardOverlay').hide();
+        if ( conversationVariables.tutorial_complete ) {
+            submitKeyboard();
+            decrease_type_size_stage2();
+            $('#keyboardOverlay').hide();
+        } else {
+            if ( conversationVariables.tutorialStep === '061' ) {
+                tutorialSpectrogramButtonClickEvent();
+            }
+        }
      });;
     setTimeout(function(){
         $("#bottomCent").focus();
@@ -811,15 +865,28 @@ function sendErrorBlobToServer( new_blob ){
                         $('#bottomCent').show();
                     }
 
-                    setTimeout(function(){
-                        $("#submitOverlay").fadeIn();
-                        $("#reRecordBtn").fadeIn();
-                        $("#reRecordBtn").prop( "disabled", false );
-                        $("#keyboardOverlay").fadeIn();
+                    if ( conversationVariables.tutorial_complete ) {
+                    
+                        setTimeout(function(){
+                            $("#submitOverlay").fadeIn();
+                            $("#reRecordBtn").fadeIn();
+                            $("#reRecordBtn").prop( "disabled", false );
+                            $("#keyboardOverlay").fadeIn();
 
-                        document.getElementById('audio_'+json['error_start']).src = prefixURL+json.audio_url;
-                        $('#audio_'+json['error_start']).attr('duration',json.audio_len);
-                    },1000);
+                            document.getElementById('audio_'+json['error_start']).src = prefixURL+json.audio_url;
+                            $('#audio_'+json['error_start']).attr('duration',json.audio_len);
+                        },1000);
+
+                    } else {
+
+                        if ( conversationVariables.tutorialStep = '051' ) {
+
+                            tutorialOption061()
+
+                        }
+
+                    }
+
                 },500);
                 $('#overlayTextBox').text(json['error_trans']);
                 //show mic

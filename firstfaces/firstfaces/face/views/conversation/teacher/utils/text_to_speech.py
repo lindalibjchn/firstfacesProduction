@@ -10,6 +10,8 @@ from face.models import StockPhrases, Prompt, StockWord
 from suds.client import Client
 import urllib
 import glob
+import random
+import re
 # import ffmpeg
 
 if settings.DEVELOPMENT_ENV == 'john':
@@ -22,12 +24,14 @@ else:
 
 saved_audios = [v.split("/")[-1][:-4] for v in glob.glob(settings.BASE_DIR+'/media/prePreparedWords/audio/*.wav')]
 
-def create_word_audio(word, initial_delay=500, breathing=False, speaking_rate=100, pitch='+0', volume='+0'):
+def create_word_audio(word, gesture=None, initial_delay=500, breathing=False, speaking_rate=100, pitch='+0', volume='+0', emotion=''):
     name = word
     s = StockWord(name=name, texts=json.dumps(word))
     urls = []
     visemes = []
-    url, viseme_list = create_tia_tts_url(word, 'prePreparedWords/audio/', name, initial_delay, breathing, speaking_rate, pitch, volume)
+    ssml = "<voice emotion='" + emotion + "'>" + word + "</voice>"
+# def create_tia_tts_url(first_word, gesture, text, directory, filename, initial_delay, breathing, speaking_rate, pitch, volume ):
+    url, viseme_list = create_tia_tts_url(word, gesture, ssml, 'prePreparedWords/audio/', name, initial_delay, breathing, speaking_rate, pitch, volume )
     urls.append(url)
     visemes.append(viseme_list)
     s.urls = json.dumps(urls)
@@ -35,17 +39,43 @@ def create_word_audio(word, initial_delay=500, breathing=False, speaking_rate=10
     s.save()
     return s
 
+vocal_gesture_dict = {
+    'haha': ['g0001_021', 'g0001_022', 'g0001_023', 'g0001_024'],
+    'umm': ['g0001_015', 'g0001_016'],
+    'err': ['g0001_017', 'g0001_018'],
+    'hehe': ['g0001_019', 'g0001_020'],
+    'argh': ['g0001_032', 'g0001_033'],
+    'hmm': ['g0001_014'],
+    'gasp': ['g0001_052'],
+}
 
-def create_stock_instance( texts, initial_delay=500, breathing=False, speaking_rate=100, pitch='+0', volume='+0'):
+unwanted_punctuation = [',', '.', '!', '?']
+
+def create_vocal_gesture( gesture_text ):
+
+    return "<spurt audio='" + random.choice(vocal_gesture_dict[gesture_text]) + "'>laugh</spurt> "
+
+
+def create_stock_instance( texts, initial_delay=500, breathing=False, speaking_rate=100, pitch='+0', volume='+0', emotion=''):
 
     # texts = [ 'this is a...', 'second here is..', ...]
 
-    name = texts[0].replace(' ', '_')
+    name = texts[0].replace(' ', '_').replace('?', '')
     s = StockPhrases(name=name, texts=json.dumps(texts))
     urls = []
     visemes = []
     for i, t in enumerate(texts):
-        url, viseme_list = create_tia_tts_url(t, 'prePreparedTiaPhrases/stockPhrases/', name + '_0' + str(i), initial_delay, breathing, speaking_rate, pitch, volume)
+        text_without_punctuation = ''.join(c for c in t if c not in unwanted_punctuation)
+        print('text_without_punctuation:', text_without_punctuation)
+        split_t = text_without_punctuation.split()
+        first_word = split_t[0]
+        gesture = None
+        if first_word in [*vocal_gesture_dict]:
+            gesture = first_word
+            t = create_vocal_gesture( first_word ) + "<break time='1000ms'/>" + " ".join(split_t[1:])
+            first_word = split_t[1]
+        ssml = "<voice emotion='" + emotion + "'>" + t + "</voice>"
+        url, viseme_list = create_tia_tts_url(first_word, gesture, ssml, 'prePreparedTiaPhrases/stockPhrases/', name + '_0' + str(i), initial_delay, breathing, speaking_rate, pitch, volume)
         urls.append(url)
         visemes.append(viseme_list)
     s.urls = json.dumps(urls)
@@ -54,12 +84,25 @@ def create_stock_instance( texts, initial_delay=500, breathing=False, speaking_r
     return s
 
 
-def create_prompt_instance( text, prompt_number, initial_delay=500, breathing=False, speaking_rate=100, pitch='+0', volume='+0' ):
+def create_prompt_instance( text, prompt_number, initial_delay=500, breathing=False, speaking_rate=100, pitch='+0', volume='+0', emotion='' ):
 
-    name = text.replace(' ', '_')
+    text_without_punctuation = ''.join(c for c in t if c not in unwanted_punctuation)
+    second_word_on = text_without_punctuation
+    split_t = text.split()
+    first_word = split_t[0]
+    gesture = None
+    if first_word in [*vocal_gesture_dict]:
+        second_word_on = " ".join(split_t[1:])
+        gesture = first_word
+        t = create_vocal_gesture( first_word ) + "<break time='1000ms'/>" + second_word_on
+        first_word = split_t[1]
+
+    name = second_word_on.replace(' ', '_').replace('?', '')
     p = Prompt(name=name, level=prompt_number)
+    print('name:', name)
     
-    url, visemes = create_tia_tts_url(text, 'prePreparedTiaPhrases/prompt' + str(prompt_number) + '/', name, initial_delay, breathing, speaking_rate, pitch, volume)
+    ssml = "<voice emotion='" + emotion + "'>" + t + "</voice>"
+    url, visemes = create_tia_tts_url(first_word, gesture, ssml, 'prePreparedTiaPhrases/prompt' + str(prompt_number) + '/', name, initial_delay, breathing, speaking_rate, pitch, volume)
     p.url = url
 
     p.visemes = json.dumps(visemes)
@@ -67,23 +110,21 @@ def create_prompt_instance( text, prompt_number, initial_delay=500, breathing=Fa
     
     return p
 
-# def create_tia_speak_sentence_URL_and_visemes(text, directory, filename, initial_delay, speaking_rate, pitch, volume):
+viseme_gesture_dict = {
+    'haha': [{"name": "haha", "start": 800, "end": 800, "Viseme": "happy", "stress": "0"}, {"name": "haha", "start": 0, "end": 0, "Viseme": "happy", "stress": "0"}],
+    'umm': [{"name": "umm", "start": 1000, "end": 1000, "Viseme": "b", "stress": "0"}, {"name": "laugh", "umm": 0, "end": 0, "Viseme": "b", "stress": "0"}],
+    'err': [{"name": "err", "start": 800, "end": 800, "Viseme": "r", "stress": "0"}, {"name": "laugh", "err": 0, "end": 0, "Viseme": "r", "stress": "0"}],
+    'hehe': [{"name": "hehe", "start": 800, "end": 800, "Viseme": "happy", "stress": "0"}, {"name": "hehe", "start": 0, "end": 0, "Viseme": "happy", "stress": "0"}],
+    'argh': [{"name": "argh", "start": 800, "end": 800, "Viseme": "disgust", "stress": "0"}, {"name": "argh", "start": 0, "end": 0, "Viseme": "disgust", "stress": "0"}],
+    'hmm': [{"name": "hmm", "start": 800, "end": 800, "Viseme": "b", "stress": "0"}, {"name": "hmm", "start": 0, "end": 0, "Viseme": "b", "stress": "0"}],
+    'gasp': [{"name": "gasp", "start": 800, "end": 800, "Viseme": "surprise", "stress": "0"}, {"name": "gasp", "start": 0, "end": 0, "Viseme": "surprise", "stress": "0"}],
+}
 
-    # # list_of_text_to_speak = get_text(jsonify_or_none(sent.sentence), sent.judgement, jsonify_or_none(sent.prompt), jsonify_or_none(sent.indexes))
-    # # for i, s in enumerate(list_of_text_to_speak):
+accountID = '5dea1f13b1519'
+password = 'wg3BbQ53cP'
+soapclient = Client("https://cerevoice.com/soap/soap_1_1.php?WSDL")
 
-    # URL = create_tia_tts_url( text, directory, filename, initial_delay, speaking_rate, pitch, volume)
-    # # sent_data = change_sentence_to_list_n_add_data( text )
-    
-    # # concatenate separate viseme lists
-    # visemes = []
-    # for s_d in sent_data:
-        # for vis in s_d[2]:
-            # visemes.append(vis)
-    
-    # return [URL, visemes]
-
-def create_tia_tts_url(text, directory, filename, initial_delay, breathing, speaking_rate, pitch, volume ):
+def create_tia_tts_url(first_word, gesture, text, directory, filename, initial_delay, breathing, speaking_rate, pitch, volume ):
 
     breath = "";
     # print('breathing:', breathing)
@@ -93,13 +134,16 @@ def create_tia_tts_url(text, directory, filename, initial_delay, breathing, spea
 
     ssml_text = "<s><break time='" + str(initial_delay) + "ms'/>" + breath + "<prosody rate='" + str(speaking_rate) + "%' pitch='" + pitch + "%' volume='" + volume + "db' >" + text + "</prosody></s>"
 
-    accountID = '5dea1f13b1519'
-    password = 'wg3BbQ53cP'
-    soapclient = Client("https://cerevoice.com/soap/soap_1_1.php?WSDL")
     request = soapclient.service.speakExtended(accountID, password, 'Caitlin-CereWave', ssml_text, 'wav', 22050, False, True)
-    viseme_data = get_viseme_data(request.metadataUrl)
-    # print('viseme_data:', viseme_data)
-    # print('request:', request)
+    viseme_data = get_viseme_data(first_word, request.metadataUrl)
+    print('viseme_data:', viseme_data)
+    print('request:', request)
+    print('first_word:', first_word)
+    if gesture != None:
+        first_two_visemes = viseme_gesture_dict[gesture]
+        first_two_visemes[1]['start'] = viseme_data[1]["end"] - 600
+        first_two_visemes[1]['end'] = viseme_data[1]["end"] - 600
+        viseme_data = first_two_visemes + viseme_data
 
     url = create_url( request.fileUrl, directory, filename )
 
@@ -140,9 +184,9 @@ dic = {
     "w":"w"
 }
 
-def get_viseme_data(metadataUrl):
+def get_viseme_data(first_word, metadataUrl):
     xml = get_xml_from_url(metadataUrl)
-    parsed_xml = parse_xml(xml)
+    parsed_xml = parse_xml(first_word, xml)
     return parsed_xml
 
 def get_xml_from_url(metadataUrl):
@@ -151,8 +195,20 @@ def get_xml_from_url(metadataUrl):
         data = [line.decode('utf-8') for line in response]
     return data
 
-def parse_xml(xml):
-    rel = [l for l in xml if "<phone" in l]
+def parse_xml(first_word, xml):
+
+    rid_of_unwanted_beginning = []
+    after_first_word = False
+    for line in xml:
+        if after_first_word:
+            rid_of_unwanted_beginning.append(line)
+        else:
+            if '<word name="' + first_word.lower() + '"' in line:
+                after_first_word = True
+
+    # print('rid_of_unwanted_beginning:', rid_of_unwanted_beginning)
+
+    rel = [l for l in rid_of_unwanted_beginning if "<phone" in l]
     out = []
     for r in rel:
         temp = {}

@@ -9,10 +9,10 @@ function remove_blur_record(){
 }
 
 function blink_button(){
-    $('.flash').fadeOut(800);
-    $('.flash').fadeIn(800);
+    $('.flash').fadeTo(1000, 0.5);
+    $('.flash').fadeTo(1000, 1);
 }
-setInterval(blink_button, 1600);
+setInterval(blink_button, 2000);
 
 $('#tempRecord').click(function(){
     alert("Cannot record while errors are selected.");

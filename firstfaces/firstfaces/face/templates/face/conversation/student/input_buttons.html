@@ -1,5 +1,7 @@
 {% load static %}
 
+<div id="stopAllButtonEffectsExceptInputButtons"></div>
+
 <div id="inputButtonsContainer">
 
     <div id="meterContainer" class="input-btns">
@@ -278,9 +280,9 @@
 
             <div class="input-btns">
 
-                <button id="waitNextSentenceBtn" class="w3-btn w3-red" disabled>wait</button>
-                <button id="listenNextSentenceBtn" class="w3-btn w3-blue">&gt;&gt;</button>
-                <button id="finishListenNextSentenceBtn" class="w3-btn w3-green">next</button>
+                <button id="waitNextSentenceBtn" class="w3-btn w3-red" disabled><div class="flash">wait</div></button>
+                <button id="listenNextSentenceBtn" class="w3-btn w3-circle w3-blue"><div class="flash">&gt;&gt;</div></button>
+                <!--<button id="finishListenNextSentenceBtn" class="w3-btn w3-circle w3-green"><div class="flash">&gt;&gt;</div></button>-->
         
             </div>
 
@@ -290,5 +292,54 @@
 
     </div>
 
+    <div id="tutorialBtnDoubleCont" class="w3-row">
+
+        <div class="w3-col l3 w3-hide-medium w3-hide-small">&nbsp</div>
+        
+        <div class="w3-col l2 m4 s4">
+        
+            <div class="input-btns">
+
+                <button id="tutorialBtnDouble0" class="tut-double-btn w3-btn w3-circle w3-red">✘</button>
+        
+            </div>
+        
+        </div>
+        
+        <div class="w3-col l2 m4 s4">&nbsp</div>
+        
+        <div class="w3-col l2 m4 s4">
+
+            <div class="input-btns">
+
+                <button id="tutorialBtnDouble1" class="tut-double-btn w3-btn w3-circle w3-green">✔</button>
+        
+            </div>
+
+        </div>
+        
+        <div class="w3-col l3 w3-hide-medium w3-hide-small">&nbsp</div>
+
+    </div>
+
+    <div id="tutorialBtnSingleCont" class="w3-row">
+
+        <div class="w3-col l3 w3-hide-medium w3-hide-small">&nbsp</div>
+        
+        <div class="w3-col l4 m8 s8">&nbsp</div>
+        
+        <div class="w3-col l2 m4 s4">
+
+            <div class="input-btns">
+
+                <button id="tutorialBtnSingle" class="tut-single-btn w3-btn w3-circle w3-green">✔</button>
+        
+            </div>
+
+        </div>
+        
+        <div class="w3-col l3 w3-hide-medium w3-hide-small">&nbsp</div>
+
+    </div>
 
 </div>

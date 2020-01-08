@@ -1,9 +1,8 @@
 #timetableContainer {
 
     position: relative;
-    height: 25%;
+    height: 30%;
     width: 100%;
-    /*border: 1px solid red;*/
     display:flex;
     align-items:center;
     justify-content:center;
@@ -14,7 +13,7 @@
 
     position: absolute;
     bottom: 0;
-    height: 75%;
+    height: 65%;
     width: 95%;
     /*border: 2px dashed green;*/
 
@@ -98,8 +97,8 @@
 .times {
 
     position: relative;
-    top: -14%;
-    left: -7px;
+    top: -18%;
+    left: -14px;
     font-size: 3vw;
     color: #969696;
 

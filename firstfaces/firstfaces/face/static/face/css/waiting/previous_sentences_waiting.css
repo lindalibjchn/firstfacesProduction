@@ -1,11 +1,11 @@
 #prevSentsWaitingContainer {
 
     position: absolute;
-    height: 48%;
+    height: 35%;
     width: 100%;
     bottom: 0;
     /*border: 1px solid black;*/
-    display:flex;
+    display: none;
     align-items:center;
     justify-content:center;
 
@@ -17,10 +17,16 @@
 
 }
 
+#allErrorsChartContainer {
+
+    top: 10%;
+
+}
+
 #detailedErrorsChartInnerContainer {
 
-    width: 60%;
-    height: 60%;
+    width: 50%;
+    height: 50%;
     top: 5%;
 
 }

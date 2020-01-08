@@ -44,27 +44,38 @@ function whatsWrong() {
 
     //recTimes.clickOptionBtn = Date.now() / 1000;
 
-    $.ajax({
-        url: "/store_whats_wrong",
-        type: "GET",
-        data: {'sentId': conversationVariables.conversation_dict.completed_sentences[ 0 ].sent_id},
-        success: function(json) {
-        },
-        error: function() {
-          //console.log("that's wrong");
-        },
-        
-    });
-    // dont want user to click more buttons
-    $('.option-btn').prop( "disabled", true);
-    $('#optionBtns').fadeOut( 500 )
+    if ( conversationVariables.tutorial_complete ) {
 
-    conversationVariables.tapKeyForErrors = true;
-    createSingleExpression( expressionObject.rel.confused, 0.5 )
-        
-    tiaLookAtLaptopAndType();
+        $.ajax({
+            url: "/store_whats_wrong",
+            type: "GET",
+            data: {'sentId': conversationVariables.conversation_dict.completed_sentences[ 0 ].sent_id},
+            success: function(json) {
+            },
+            error: function() {
+              //console.log("that's wrong");
+            },
+            
+        });
+        // dont want user to click more buttons
+        $('.option-btn').prop( "disabled", true);
+        $('#optionBtns').fadeOut( 500 )
 
-    checkForCorrections();
+        conversationVariables.tapKeyForErrors = true;
+        createSingleExpression( expressionObject.rel.confused, 0.5 )
+            
+        tiaLookAtLaptopAndType();
+
+        checkForCorrections();
+
+    } else {
+
+        highlightWrong();
+        $('#tryAgainBtn').hide();
+        $('#nextSentenceBtn').hide();
+        $('#whatsWrongBtn').hide();
+
+    }
 
 }
 

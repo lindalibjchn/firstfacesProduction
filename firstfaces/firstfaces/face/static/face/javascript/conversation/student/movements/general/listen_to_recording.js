@@ -90,18 +90,35 @@ function subsequentFlinches() {
 
 function dealWithBlankTranscription() {
 
-    $('#recordBtnsCont').hide();
-    $('#upperSentenceHolder').empty();
-    $('#lowerSentenceHolder').empty();
-    tiaPrepareToSpeak( "I_couldn't_hear_anything", speakCb=function() {
-     
-        $('#recordVoiceBtn').show();
-        conversationVariables.mainRecord = false;
+    if ( conversationVariables.tutorial_complete ) {
 
-        $('#recordBtnsCont').fadeIn();
-        //removeSpeechBubble();
+        $('#recordBtnsCont').hide();
+        $('#upperSentenceHolder').empty();
+        $('#lowerSentenceHolder').empty();
+        tiaPrepareToSpeak( "I_couldn't_hear_anything", speakCb=function() {
+         
+            $('#recordVoiceBtn').show();
+            conversationVariables.mainRecord = false;
 
-    } );
+            $('#recordBtnsCont').fadeIn();
+            //removeSpeechBubble();
+
+        } );
+
+    } else {
+
+        if ( conversationVariables.tutorialStep === '021' ) {
+
+            tutorialOption031();
+
+        } else if ( conversationVariables.tutorialStep === '051' ) {
+
+            tutorialOption061();
+
+        }
+
+
+    }
 
 }
 
