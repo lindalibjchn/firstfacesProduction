@@ -1,0 +1,131 @@
+{
+  "transcript": "the\ncat\nsat\non\nthe\nmat\n",
+  "words": [
+    {
+      "alignedWord": "the",
+      "case": "success",
+      "end": 0.93,
+      "endOffset": 3,
+      "phones": [
+        {
+          "duration": 0.07,
+          "phone": "dh_B"
+        },
+        {
+          "duration": 0.08,
+          "phone": "ah_E"
+        }
+      ],
+      "start": 0.78,
+      "startOffset": 0,
+      "word": "the"
+    },
+    {
+      "alignedWord": "cat",
+      "case": "success",
+      "end": 1.29,
+      "endOffset": 7,
+      "phones": [
+        {
+          "duration": 0.11,
+          "phone": "k_B"
+        },
+        {
+          "duration": 0.13,
+          "phone": "ae_I"
+        },
+        {
+          "duration": 0.07,
+          "phone": "t_E"
+        }
+      ],
+      "start": 0.98,
+      "startOffset": 4,
+      "word": "cat"
+    },
+    {
+      "alignedWord": "sat",
+      "case": "success",
+      "end": 1.75,
+      "endOffset": 11,
+      "phones": [
+        {
+          "duration": 0.19,
+          "phone": "s_B"
+        },
+        {
+          "duration": 0.09,
+          "phone": "ae_I"
+        },
+        {
+          "duration": 0.08,
+          "phone": "t_E"
+        }
+      ],
+      "start": 1.39,
+      "startOffset": 8,
+      "word": "sat"
+    },
+    {
+      "alignedWord": "on",
+      "case": "success",
+      "end": 2.07,
+      "endOffset": 14,
+      "phones": [
+        {
+          "duration": 0.13,
+          "phone": "ao_B"
+        },
+        {
+          "duration": 0.17,
+          "phone": "n_E"
+        }
+      ],
+      "start": 1.77,
+      "startOffset": 12,
+      "word": "on"
+    },
+    {
+      "alignedWord": "the",
+      "case": "success",
+      "end": 2.25,
+      "endOffset": 18,
+      "phones": [
+        {
+          "duration": 0.07,
+          "phone": "dh_B"
+        },
+        {
+          "duration": 0.07,
+          "phone": "ah_E"
+        }
+      ],
+      "start": 2.11,
+      "startOffset": 15,
+      "word": "the"
+    },
+    {
+      "alignedWord": "mat",
+      "case": "success",
+      "end": 2.28,
+      "endOffset": 22,
+      "phones": [
+        {
+          "duration": 0.01,
+          "phone": "m_B"
+        },
+        {
+          "duration": 0.01,
+          "phone": "ae_I"
+        },
+        {
+          "duration": 0.01,
+          "phone": "t_E"
+        }
+      ],
+      "start": 2.25,
+      "startOffset": 19,
+      "word": "mat"
+    }
+  ]
+}

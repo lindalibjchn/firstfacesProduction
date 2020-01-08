@@ -1,8 +1,8 @@
-function showSingleBtn( response, callback ) {
+function showSingleBtn( /* response,*/ callback ) {
 
     $('#tutorialBtnSingle').prop( 'disabled', false )
     $('#tutorialBtnSingleCont').fadeIn( 500 );
-    $('#tutorialBtnSingle').text( response );
+    //$('#tutorialBtnSingle').text( response );
     $('#tutorialBtnSingle').on( 'click', callback )
 
 }

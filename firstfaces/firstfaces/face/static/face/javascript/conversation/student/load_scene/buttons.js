@@ -27,6 +27,13 @@ function readyBtns() {
     $('#showCorrectionBtn').on( 'click', showCorrection );
     $('#nextSentenceBtn').on( 'click', nextSentence );
 
+
+    if ( !conversationVariables.tutorial_complete ) {
+
+        hideTopButtons();
+
+    }
+
 }
 
 function setUpAudioBtns() {

@@ -3,9 +3,11 @@ $(window).on( 'load', function() {
     if ( waitingVariables.tutorial_complete ) {
 
         addAvailablesToTimetable( waitingVariables.availables )
-        addAllScores( waitingVariables.conversations )
-        if ( waitingVariables.conversations.length > 1 ) {
-            
+
+        if ( waitingVariables.conversations.length !== 0 ) {
+        
+            $( '#prevSentsWaitingContainer' ).css( 'display', 'flex' );
+            addAllScores( waitingVariables.conversations )
             showConversationSentences( 0 );
             //setUpPreviousSentsBtns( waitingVariables.conversations[0].completed_sentences )
             //addData( 'sentences', waitingVariables.conversations[0].completed_sentences )
@@ -20,7 +22,6 @@ $(window).on( 'load', function() {
 
     } else {
 
-        console.log(' in tutorial not complete' );
         $( '#tutorialNotDoneButton' ).click( function(){
 
             console.log(' in click' )

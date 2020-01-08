@@ -11,6 +11,14 @@ function setUpPreviousSentsBtns( sentences ) {
         //updateScroll( document.getElementById('prevSentsInnerContainer0') );
         addData( 'sentences', sentences );
 
+        if ( !conversationVariables.tutorial_complete ) {
+
+            $('#stopAllButtonEffectsExceptInputButtons').show();
+            removeSpeechBubble();
+            setTimeout( tutorialOption161, 8000 );
+
+        }
+
     });
 
     $('#sentencesTitleContainer').on( 'click', function() {

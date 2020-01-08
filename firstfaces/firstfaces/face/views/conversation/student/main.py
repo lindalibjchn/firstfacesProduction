@@ -124,7 +124,7 @@ def load_stock_word_model(request):
     return JsonResponse(response_data)
 
 
-def determine_if_first_full_conversation(ui, tutorial_complete):
+def determine_if_first_full_conversation(u, tutorial_complete):
 
     first_full_conversation = False
 
@@ -134,7 +134,7 @@ def determine_if_first_full_conversation(ui, tutorial_complete):
 
     try:
         all_convs = Conversation.objects.filter(learner=u)
-        if len(all_convs) == 1 and tutorial_complete:
+        if len(all_convs) == 2 and tutorial_complete:
             first_full_conversation = True
     except:
         pass

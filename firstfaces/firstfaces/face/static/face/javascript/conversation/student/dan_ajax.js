@@ -422,10 +422,16 @@ function doneError(){
 
     //Check if all errors are corrected
     if($('.uncorrected-error').length == 0){
-        $('#recordBtnsCont').show();
-        $("#talkBtn").show();
-        //$('#recordVoiceBtn').show();
-        $('#backCorrection').show();
+
+        if ( conversationVariables.tutorial_complete ) {
+
+            $('#recordBtnsCont').show();
+            $("#talkBtn").show();
+            //$('#recordVoiceBtn').show();
+            $('#backCorrection').show();
+
+        }
+
     }
     else{
         animate_open_overlay(conversationVariables.uncorrectedErrors[0]);   

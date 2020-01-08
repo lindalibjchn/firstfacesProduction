@@ -59,7 +59,11 @@ function highlightWrong() {
 
                             if ( i === conversationVariables.conversation_dict.completed_sentences[ 0 ].indexes.length - 1 ) {
 
-                                showErrorBtns();
+                                if ( conversationVariables.tutorial_complete ) {
+                                
+                                    showErrorBtns();
+
+                                }
 
                             }
 
@@ -80,7 +84,15 @@ function highlightWrong() {
 
                             if ( i === conversationVariables.conversation_dict.completed_sentences[ 0 ].indexes.length - 1 ) {
 
-                                showErrorBtns();
+                                if ( conversationVariables.tutorial_complete ) {
+                                
+                                    showErrorBtns();
+
+                                } else {
+
+                                    tutorialOption121();
+
+                                }
 
                             }
 

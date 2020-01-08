@@ -333,6 +333,7 @@ def error_typing_used(request):
     text_ = request.POST['trans']
     valid = [v.split("/")[-1][:-4] for v in glob.glob(settings.BASE_DIR + '/media/prePreparedWords/audio/*.wav')]
     if text_ not in valid:
+        print('\n\ntext_:', text_)
         temp = ts.create_word_audio(text_)
         valid.append(text_)
         texts = jsonify_or_none(temp.texts)

@@ -15,7 +15,7 @@ function movementController( movementTo, saccDur, bodyDur, moveCb=function(){} )
     } else {
 
         movementObject.bool = false;
-        //console.log( "\nmovement initiated\n" );
+        //console.log( "\nmovement initiated\n", movementTo );
 
         movementObject.callback = moveCb;
 

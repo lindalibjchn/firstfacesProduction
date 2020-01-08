@@ -5,7 +5,7 @@
     width: 100%;
     bottom: 0;
     /*border: 1px solid black;*/
-    display:flex;
+    display: none;
     align-items:center;
     justify-content:center;
 

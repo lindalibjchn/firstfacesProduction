@@ -24,12 +24,14 @@ else:
 
 saved_audios = [v.split("/")[-1][:-4] for v in glob.glob(settings.BASE_DIR+'/media/prePreparedWords/audio/*.wav')]
 
-def create_word_audio(word, initial_delay=500, breathing=False, speaking_rate=100, pitch='+0', volume='+0'):
+def create_word_audio(word, gesture=None, initial_delay=500, breathing=False, speaking_rate=100, pitch='+0', volume='+0', emotion=''):
     name = word
     s = StockWord(name=name, texts=json.dumps(word))
     urls = []
     visemes = []
-    url, viseme_list = create_tia_tts_url(word, 'prePreparedWords/audio/', name, initial_delay, breathing, speaking_rate, pitch, volume)
+    ssml = "<voice emotion='" + emotion + "'>" + word + "</voice>"
+# def create_tia_tts_url(first_word, gesture, text, directory, filename, initial_delay, breathing, speaking_rate, pitch, volume ):
+    url, viseme_list = create_tia_tts_url(word, gesture, ssml, 'prePreparedWords/audio/', name, initial_delay, breathing, speaking_rate, pitch, volume )
     urls.append(url)
     visemes.append(viseme_list)
     s.urls = json.dumps(urls)
@@ -107,22 +109,6 @@ def create_prompt_instance( text, prompt_number, initial_delay=500, breathing=Fa
     p.save()
     
     return p
-
-# def create_tia_speak_sentence_URL_and_visemes(text, directory, filename, initial_delay, speaking_rate, pitch, volume):
-
-    # # list_of_text_to_speak = get_text(jsonify_or_none(sent.sentence), sent.judgement, jsonify_or_none(sent.prompt), jsonify_or_none(sent.indexes))
-    # # for i, s in enumerate(list_of_text_to_speak):
-
-    # URL = create_tia_tts_url( text, directory, filename, initial_delay, speaking_rate, pitch, volume)
-    # # sent_data = change_sentence_to_list_n_add_data( text )
-    
-    # # concatenate separate viseme lists
-    # visemes = []
-    # for s_d in sent_data:
-        # for vis in s_d[2]:
-            # visemes.append(vis)
-    
-    # return [URL, visemes]
 
 viseme_gesture_dict = {
     'haha': [{"name": "haha", "start": 800, "end": 800, "Viseme": "happy", "stress": "0"}, {"name": "haha", "start": 0, "end": 0, "Viseme": "happy", "stress": "0"}],

@@ -78,7 +78,6 @@ function dealWithAfterTap() {
         if(!conversationVariables.stage2 && !conversationVariables.stage3){
             conversationVariables.trying_again = false;
 
-
             if ( conversationVariables.tutorial_complete ) {
             
                 buttonsAfterTiaListensToLearnersSentenceAndTaps();
@@ -92,6 +91,7 @@ function dealWithAfterTap() {
                 }
 
             }
+
 
             if (($(".selectable-word").length > 0)||($(".selected-word").length >0)){
                 //reset text

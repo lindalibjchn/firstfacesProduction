@@ -36,7 +36,7 @@ class Prompt(models.Model):
     level = models.SmallIntegerField(null=True, blank=True)
     name = models.CharField(max_length=500)
     url = models.CharField(max_length=500)
-    visemes = models.CharField(max_length=20000, blank=True, null=True)
+    visemes = models.CharField(max_length=40000, blank=True, null=True)
 
     def __str__(self):
         return  str(self.name)
@@ -125,7 +125,7 @@ class StockPhrases(models.Model):
     name = models.CharField(max_length=2000, blank=True, null=True)
     texts = models.CharField(max_length=2000, blank=True, null=True)
     urls = models.CharField(max_length=2000, blank=True, null=True)
-    visemes = models.CharField(max_length=20000, blank=True, null=True)
+    visemes = models.CharField(max_length=40000, blank=True, null=True)
 
     def __str__(self):
         return str(self.texts)

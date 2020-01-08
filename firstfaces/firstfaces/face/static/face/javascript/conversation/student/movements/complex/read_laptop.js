@@ -40,7 +40,7 @@ function stopTyping() {
 
             setTimeout( function() {
 
-                movementController(movementObject.abs.blank, 1, 1, function() {
+                movementController(movementObject.abs.blank, 1, 1.5, function() {
                     
                     dealWithBlankTranscription();
                     

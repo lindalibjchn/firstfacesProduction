@@ -93,5 +93,22 @@ function buttonsShowOnlyForwardErrorCorrection() {
     $('#forwardErrorSelection').show();
     $('#forwardArrow').addClass('flash');
 
+}
+
+function hideTopButtons() {
+
+    $('#finishClassIconContainer').hide();
+    $('#prevSentsIconContainer').hide();
 
 }
+
+
+
+
+
+
+
+
+
+
+

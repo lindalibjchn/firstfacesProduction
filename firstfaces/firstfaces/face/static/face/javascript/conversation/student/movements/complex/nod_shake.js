@@ -67,6 +67,7 @@ function nod( main ) {
 
 function initShake( depth, secs, shakeCb=function(){}  ) {
 
+    //console.log('in initShake')
     if ( shakeObject.bool ) {
 
       //console.log('can shake while still shaking!')
