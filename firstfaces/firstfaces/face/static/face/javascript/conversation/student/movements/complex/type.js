@@ -69,17 +69,76 @@ function dealWithAfterTap() {
 
     } else if ( conversationVariables.showingSpectrograms ) {
 
+         $("#overlayErrorBox").hide();
+         $("#overlayTextBox").hide();
+         $('#centeredError').hide();
+         $("#submitOverlay").hide();
+
         conversationVariables.showingSpectrograms = false;
-        $("#praatCont").fadeIn(800);
-        setTimeout(function(){
-            $("#reRecordBtn").fadeIn(800);
-        },200);
-        setTimeout(function(){
-            $("#backOverlay").fadeIn(750);
-        },250);
+        if(!conversationVariables.goToStage3){
+                closeStage3();
+                $('#exitOverlay').click();
+        }else{
+            $("#praatCont").fadeIn(800);
+            setTimeout(function(){
+                $("#reRecordBtn").fadeIn(800);
+            },200);
+            setTimeout(function(){
+                $("#backOverlay").fadeIn(750);
+            },250);
+        }
 
     // this one is for after listening to the learners speech - Daniel's stuff
-    } else {
+    } else if (conversationVariables.stage2 && !conversationVariables.stage3){
+            if (conversationVariables.error_trans){
+                moveText();
+                setTimeout(function(){
+                    $('#bottomCent').text(conversationVariables.error_dict["trans"]);
+                    $("#bottomCent").attr("contenteditable",false);
+                    if(conversationVariables.movedText){
+                        $('#bottomCent').show();
+                    }
+                    if ( conversationVariables.tutorial_complete ) {
+                        setTimeout(function(){
+                            $("#submitOverlay").fadeIn();
+                            $("#reRecordBtn").fadeIn();
+                            $("#reRecordBtn").prop( "disabled", false );
+                            $("#keyboardOverlay").fadeIn();
+
+                            document.getElementById('audio_'+conversationVariables.error_dict["start"]).src = prefixURL+conversationVariables.error_dict["url"];
+                            $('#audio_'+conversationVariables.error_dict["start"]).attr('duration',conversationVariables.error_dict["len"]);
+                        },1000);
+
+                    } else {
+
+                        if ( conversationVariables.tutorialStep = '051' ) {
+
+                            tutorialOption061()
+
+                        }
+
+                    }
+
+                },500);
+                $('#overlayTextBox').text(conversationVariables.error_dict["trans"]);
+                //show mic
+                $("#submitOverlay").off("click");
+                $("#submitOverlay").click(submitRecording);
+                //make textbox not editable
+                $("#overlayTextBox").attr("contenteditable",false);
+                //save last transcription into class
+            } else {
+               dealWithBlankTranscription();
+               conversationVariables.noTransError = true;
+               $('#backOverlay').prop('disabled',false);
+               $("#reRecordBtn").show().prop( "disabled", false );
+               $("#keyboardOverlay").show();
+
+            }
+            conversationVariables.error_trans = false;
+
+
+    }else {
 
         if(!conversationVariables.stage2 && !conversationVariables.stage3){
             conversationVariables.trying_again = false;

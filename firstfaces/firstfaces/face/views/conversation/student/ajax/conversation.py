@@ -342,15 +342,19 @@ def get_spliced_audio(request):
     for i in range(len(urls)):
         urls[i] = settings.BASE_DIR+'/media'+urls[i].split('media')[1]
 
+    min_fs = 0
+    first = True
     out = []
-    min_fs = 24000
     for url in urls:
-        fs, data = wavfile.read(url)
-        if fs < min_fs:
-            min_fs = fs
-
-    for url in urls:
-        out += list(librosa.load(url, sr=min_fs)[0])
+        if first:
+            min_fs, data = remove_start_audio(url, 0)
+            print("First-", url)
+            out += list(data)
+            first = False
+        else:
+            print("Next-", url)
+            min_fs, data = remove_start_audio(url, 500)
+            out += list(data)
 
     filename = '_'.join(words)+"_"+timezone.now().strftime('%H-%M-%S')+".wav"
     out_path = 'media/prePreparedWords/trigrams/'+filename
@@ -362,5 +366,11 @@ def get_spliced_audio(request):
         'duration': duration,
         'words': " ".join(words).strip(),
     }
-    # print("there")
     return JsonResponse(response_data)
+
+
+
+def remove_start_audio(path,time_ms):
+    fs, data = wavfile.read(path)
+    frames = int((fs/1000)*time_ms)
+    return fs, data[frames:]

@@ -583,6 +583,7 @@ $('#keyboardOverlay').click(function(){
             submitKeyboard();
             decrease_type_size_stage2();
             $('#keyboardOverlay').hide();
+            $('#reRecordBtn').hide();
         } else {
             if ( conversationVariables.tutorialStep === '061' ) {
                 tutorialSpectrogramButtonClickEvent();
@@ -671,6 +672,7 @@ function sendAttemptBlob( new_blob ){
         contentType: false,
         success: function(json){
             //john
+            alert("In Function");
             conversationVariables.showingSpectrograms = true;
             prepareToStopTyping();
           
@@ -680,7 +682,7 @@ function sendAttemptBlob( new_blob ){
                 $("#reRecordBtn").prop( "disabled", false );
                 $('#backOverlay').prop("disabled",false);
                 var cent_found = false;
-                if(json.trans.trim() != ""){sent_id
+                if(json.trans.trim() != ""){
                     $('#hypBtn').show();
                     trans = json.trans;
                     err_trans = $('#refText').text().trim();
@@ -870,50 +872,15 @@ function sendErrorBlobToServer( new_blob ){
             prepareToStopTyping();
             //display transcript
             if(json['error_trans'] != ""){
-                moveText();
-                setTimeout(function(){
-                    $('#bottomCent').text(json['error_trans']);
-                    $("#bottomCent").attr("contenteditable",false);
-                    if(conversationVariables.movedText){
-                        $('#bottomCent').show();
-                    }
-
-                    if ( conversationVariables.tutorial_complete ) {
-                    
-                        setTimeout(function(){
-                            $("#submitOverlay").fadeIn();
-                            $("#reRecordBtn").fadeIn();
-                            $("#reRecordBtn").prop( "disabled", false );
-                            $("#keyboardOverlay").fadeIn();
-
-                            document.getElementById('audio_'+json['error_start']).src = prefixURL+json.audio_url;
-                            $('#audio_'+json['error_start']).attr('duration',json.audio_len);
-                        },1000);
-
-                    } else {
-
-                        if ( conversationVariables.tutorialStep = '051' ) {
-
-                            tutorialOption061()
-
-                        }
-
-                    }
-
-                },500);
-                $('#overlayTextBox').text(json['error_trans']);
-                //show mic
-                $("#submitOverlay").off("click");
-                $("#submitOverlay").click(submitRecording);
-                //make textbox not editable
-                $("#overlayTextBox").attr("contenteditable",false);
-                //save last transcription into class
+                conversationVariables.error_trans = true;
+                conversationVariables.error_dict = {
+                        "trans":json['error_trans'],
+                        "start":json['error_start'],
+                        "url":json.audio_url,
+                        "len":json.audio_len,
+                }
            }else {
-               dealWithBlankTranscription();
-               conversationVariables.noTransError = true;
-               $('#backOverlay').prop('disabled',false);
-               $("#reRecordBtn").show().prop( "disabled", false );
-               $("#keyboardOverlay").show();
+               conversationVariables.error_trans = false;
            }
            conversationVariables.lastAttemptID = json['attempt_pk'];  
         },
@@ -1046,8 +1013,9 @@ function submitKeyboard(){
             // john
             //  tia taps and looks at student
             conversationVariables.showingSpectrograms = true;
-            prepareToStopTyping();
-
+            if(!conversationVariables.goToStage3){
+                prepareToStopTyping();
+            }
             //$('#reRecordBtn').show();
 
             var refAudioURL = prefixURL + json.ref_audio_url;
@@ -1090,12 +1058,7 @@ function submitKeyboard(){
              $("#hypText").removeClass().addClass('small-text');
              $("#refText").removeClass().addClass('small-text');
 
-            $("#overlayErrorBox").hide();                                                    
-            $("#overlayTextBox").hide();
-            $('#centeredError').hide();
-            // john - moving this to tapKeyFull()
-            //$("#praatCont").fadeIn(800);
-            $("#submitOverlay").hide();
+
 
             var sim = parseFloat(json.sim);
             if(sim <= 0.15){
@@ -1127,10 +1090,7 @@ function submitKeyboard(){
             finAudio.src = hyp_audio_url;                                     
             $('#audio_'+conversationVariables.startIDX).attr('duration',json.hyp_length);
             get_word_context();
-            if(!conversationVariables.goToStage3){
-                closeStage3();
-                $('#exitOverlay').click();
-            }
+
 
         },
         error: function() {
@@ -1322,7 +1282,7 @@ function getSentence(){
 //Slider for changing the playback speed of the spectogram buttons
 var slider = document.getElementById("myRange");
 slider.oninput = function() { 
-    var val = (20 + parseInt(this.value));
+    var val = (50 + parseInt(this.value));
     $('#sliderVal').text(val+"%");
     val = val / 100;
     conversationVariables.playspeed = val;
