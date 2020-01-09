@@ -28,7 +28,7 @@ function get_word_context(){
         contentType: false,
         success: function(json) {
 
-
+            prepareToStopTyping();
             if(json.success == 0){
               //console.log("Context error.")
                 $('#btnCont').removeClass().addClass('wholeSide');
@@ -288,18 +288,18 @@ function splice_audio(){
             if($('#fixedWord').hasClass('centerSide')){
                 out.push(synthesisObject.data.Fixed_Word.URLs[0]);
                 words.push(synthesisObject.data.Fixed_Word.texts[0]);
-                viss = viss.concat(fix_visemes(synthesisObject.data.Fixed_Word.visemes[0],synthesisObject.data.Ref_Word.duration));
+                viss = viss.concat(fix_visemes(synthesisObject.data.Fixed_Word.visemes[0],synthesisObject.data.Ref_Word.duration-500));
                 out.push(synthesisObject.data[document.getElementsByClassName('main-tile')[0].id].URLs[0]);
                 words.push(synthesisObject.data[document.getElementsByClassName('main-tile')[0].id].texts[0]);
-                viss = viss.concat(fix_visemes(synthesisObject.data[document.getElementsByClassName('main-tile')[0].id].visemes[0],synthesisObject.data.Ref_Word.duration+synthesisObject.data.Fixed_Word.duration));
+                viss = viss.concat(fix_visemes(synthesisObject.data[document.getElementsByClassName('main-tile')[0].id].visemes[0],synthesisObject.data.Ref_Word.duration+synthesisObject.data.Fixed_Word.duration-1000));
 
             }
             else if($('#SpectroSpinHolder').hasClass('centerSide')){
                 out.push(synthesisObject.data[document.getElementsByClassName('main-tile')[0].id].URLs[0]);
                 words.push(synthesisObject.data[document.getElementsByClassName('main-tile')[0].id].texts[0]);
-                viss = viss.concat(fix_visemes(synthesisObject.data[document.getElementsByClassName('main-tile')[0].id].visemes[0],synthesisObject.data.Ref_Word.duration));
+                viss = viss.concat(fix_visemes(synthesisObject.data[document.getElementsByClassName('main-tile')[0].id].visemes[0],synthesisObject.data.Ref_Word.duration-500));
                 out.push(synthesisObject.data.Fixed_Word.URLs[0]);
-                viss = viss.concat(fix_visemes(synthesisObject.data.Fixed_Word.visemes[0],synthesisObject.data.Ref_Word.duration+synthesisObject.data[document.getElementsByClassName('main-tile')[0].id].duration));
+                viss = viss.concat(fix_visemes(synthesisObject.data.Fixed_Word.visemes[0],synthesisObject.data.Ref_Word.duration+synthesisObject.data[document.getElementsByClassName('main-tile')[0].id].duration-1000));
                 words.push(synthesisObject.data.Fixed_Word.texts[0]);
             }
         }
@@ -310,18 +310,18 @@ function splice_audio(){
             if($('#btnCont').hasClass('centerSide')){
                 out.push(synthesisObject.data.Ref_Word.URLs[0]);
                 words.push(synthesisObject.data.Ref_Word.texts[0]);
-                viss = viss.concat(fix_visemes(synthesisObject.data.Ref_Word.visemes[0],synthesisObject.data[document.getElementsByClassName('main-tile')[0].id].duration));
+                viss = viss.concat(fix_visemes(synthesisObject.data.Ref_Word.visemes[0],synthesisObject.data[document.getElementsByClassName('main-tile')[0].id].duration-500));
                 out.push(synthesisObject.data.Fixed_Word.URLs[0]);
-                viss = viss.concat(fix_visemes(synthesisObject.data.Fixed_Word.visemes[0],synthesisObject.data[document.getElementsByClassName('main-tile')[0].id].duration+synthesisObject.data.Ref_Word.duration));
+                viss = viss.concat(fix_visemes(synthesisObject.data.Fixed_Word.visemes[0],synthesisObject.data[document.getElementsByClassName('main-tile')[0].id].duration+synthesisObject.data.Ref_Word.duration-1000));
                 words.push(synthesisObject.data.Fixed_Word.texts[0]);
             }
             else if($('#fixedWord').hasClass('centerSide')){
                  out.push(synthesisObject.data.Fixed_Word.URLs[0]);
                  words.push(synthesisObject.data.Fixed_Word.texts[0]);
-                 viss = viss.concat(fix_visemes(synthesisObject.data.Fixed_Word.visemes[0],synthesisObject.data[document.getElementsByClassName('main-tile')[0].id].duration));
+                 viss = viss.concat(fix_visemes(synthesisObject.data.Fixed_Word.visemes[0],synthesisObject.data[document.getElementsByClassName('main-tile')[0].id].duration-500));
                  out.push(synthesisObject.data.Ref_Word.URLs[0]);
                  words.push(synthesisObject.data.Ref_Word.texts[0]);
-                 viss = viss.concat(fix_visemes(synthesisObject.data.Ref_Word.visemes[0],synthesisObject.data[document.getElementsByClassName('main-tile')[0].id].duration+synthesisObject.data.Fixed_Word.duration));
+                 viss = viss.concat(fix_visemes(synthesisObject.data.Ref_Word.visemes[0],synthesisObject.data[document.getElementsByClassName('main-tile')[0].id].duration+synthesisObject.data.Fixed_Word.duration-1000));
             }
         }
         else if($('#fixedWord').hasClass('leftSide')){
@@ -331,18 +331,18 @@ function splice_audio(){
            if($('#btnCont').hasClass('centerSide')){
                 out.push(synthesisObject.data.Ref_Word.URLs[0]);
                 words.push(synthesisObject.data.Ref_Word.texts[0]);
-                viss = viss.concat(fix_visemes(synthesisObject.data.Ref_Word.visemes[0], synthesisObject.data.Fixed_Word.duration));
+                viss = viss.concat(fix_visemes(synthesisObject.data.Ref_Word.visemes[0], synthesisObject.data.Fixed_Word.duration-(500)));
                 out.push(synthesisObject.data[document.getElementsByClassName('main-tile')[0].id].URLs[0]);
                 words.push(synthesisObject.data[document.getElementsByClassName('main-tile')[0].id].texts[0]);
-                viss = viss.concat(fix_visemes(synthesisObject.data[document.getElementsByClassName('main-tile')[0].id].visemes[0],synthesisObject.data.Fixed_Word.duration+synthesisObject.data.Ref_Word.duration));
+                viss = viss.concat(fix_visemes(synthesisObject.data[document.getElementsByClassName('main-tile')[0].id].visemes[0],synthesisObject.data.Fixed_Word.duration+synthesisObject.data.Ref_Word.duration-1000));
            }
            else if($('#SpectroSpinHolder').hasClass('centerSide')){
                 out.push(synthesisObject.data[document.getElementsByClassName('main-tile')[0].id].URLs[0]);
                 words.push(synthesisObject.data[document.getElementsByClassName('main-tile')[0].id].texts[0]);
-                viss = viss.concat(fix_visemes(synthesisObject.data[document.getElementsByClassName('main-tile')[0].id].visemes[0],synthesisObject.data.Fixed_Word.duration));
+                viss = viss.concat(fix_visemes(synthesisObject.data[document.getElementsByClassName('main-tile')[0].id].visemes[0],synthesisObject.data.Fixed_Word.duration-500));
                 out.push(synthesisObject.data.Ref_Word.URLs[0]);
                 words.push(synthesisObject.data.Ref_Word.texts[0]);
-                viss = viss.concat(fix_visemes(synthesisObject.data.Ref_Word.visemes[0],synthesisObject.data.Fixed_Word.duration+synthesisObject.data[document.getElementsByClassName('main-tile')[0].id].duration));
+                viss = viss.concat(fix_visemes(synthesisObject.data.Ref_Word.visemes[0],synthesisObject.data.Fixed_Word.duration+synthesisObject.data[document.getElementsByClassName('main-tile')[0].id].duration-1000));
            }
         }
 

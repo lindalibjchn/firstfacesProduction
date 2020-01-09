@@ -235,7 +235,7 @@ button:active {
 
 .selected-word{
     opacity:1;
-    border:1px solid white;
+    border:1.5px solid white;
     background-color:green;
     color:white;
     border-radius:0.5em;
