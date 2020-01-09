@@ -83,6 +83,8 @@ function showWrong() {
 
     $('#textInputContainer').fadeIn();
     $('#submittedNCorrectedSentenceCont').show()
+    $('#submittedSentence').show()
+    showWrongSentence();
 
     prepareToStopTyping();
 

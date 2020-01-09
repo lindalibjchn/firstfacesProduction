@@ -8,7 +8,7 @@ function bookConversation( enterTutorial ) {
     }).unbind('click');
     
     console.log('in bookConversation');
-    if ( waitingVariables.in_class_now === false ) {
+    if ( waitingVariables.currently_in_class === false ) {
 
         $.ajax({
             url: "/book_conversation",
@@ -19,6 +19,7 @@ function bookConversation( enterTutorial ) {
             success: function(json) {
                 if ( json.conversationCreated ) {
                     
+                    console.log('in conversation created:', json)
                     waitingVariables.conversation_id = json.conversation_id;
                     enterConversation();
 

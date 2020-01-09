@@ -56,6 +56,7 @@ def waiting(request):
         available_objects = get_availables_for_schedule(groups)
         availables = create_list_of_javascript_available_times_from_django_objects(available_objects)
         currently_in_class, class_finished_today = check_if_currently_in_class_or_class_finished(request.user)
+        print('\n\ncurrently_in_class:', currently_in_class)
         conversations = get_prev_conversations( request.user )
 
         tutorial_conversation_id = None

@@ -24,8 +24,34 @@
 
 .sentence-box {
 
+    position: relative;
     float: right;
     border-radius: 5px 0px 5px 5px;
+
+}
+
+.points-box {
+
+    position: absolute;
+    top: 0;
+    margin: 1px;
+    /*font-size: 5vw;*/
+    font-weight: bold;
+    color: green;
+    width: 10%;
+    height: 100%;
+    left: -10%;
+    /*border: 1px solid black;*/
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.points-pts {
+
+    /*font-size: 10px;*/
+    font-weight: normal;
 
 }
 

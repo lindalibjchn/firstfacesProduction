@@ -1,9 +1,11 @@
 
 //Function sets each of the words as selectable 
+conversationVariables.currentTranscriptionSplitWords = [];
 function set_selectable(trans){
    // Resets the list of selected words
    selected = [];
    var words = trans.split(" ");
+   conversationVariables.currentTranscriptionSplitWords = words;
    var i;
    //Make words selectable 
    for(i=0;i<words.length;i++){
@@ -528,12 +530,23 @@ $('#closeOverlayArea').click(function(){
 function closePrevSents() {
 
     $('#prevSentsContainer').fadeOut();
-    $('#prevSentsIconContainer').fadeIn();
+
+    if ( conversationVariables.conversation_dict.completed_sentences.length !== 0 ) {
+
+        $('#prevSentsIconContainer').fadeIn();
+
+    }
 
 }
 
 function closeTimeOverlayCont(){
-     $('#prevSentsIconContainer').fadeIn();
+
+    if ( conversationVariables.conversation_dict.completed_sentences.length !== 0 ) {
+
+        $('#prevSentsIconContainer').fadeIn();
+     
+    }
+     
      $('#finishClassIcon').fadeIn();
      $('#timeElapsedCont').fadeOut();
      $('#timeOverlayContainer').fadeOut( function(){

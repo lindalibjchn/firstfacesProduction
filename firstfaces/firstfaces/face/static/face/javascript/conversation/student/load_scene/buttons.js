@@ -32,6 +32,10 @@ function readyBtns() {
 
         hideTopButtons();
 
+    } else if ( conversationVariables.conversation_dict.completed_sentences.length === 0 ) {
+
+        $( '#prevSentsIconContainer' ).hide();
+
     }
 
 }
@@ -61,8 +65,14 @@ function setUpFinishClassBtns() {
 
     $('#finishClassIconContainer').on( 'click', function() {
 
-        addOverallData( conversationVariables.conversation_dict.completed_sentences );
-        $('#prevSentsIconContainer').fadeIn();
+
+        if ( conversationVariables.conversation_dict.completed_sentences.length !== 0 ) {
+
+            addOverallData( conversationVariables.conversation_dict.completed_sentences );
+            $('#prevSentsIconContainer').fadeIn();
+        
+        }
+
         $('#prevSentsContainer').hide();
         showTime();
         //$('#prevSentsIconContainer').fadeOut();

@@ -22,7 +22,13 @@ function initInputReady( from ) {
     
     }
 
-  //console.log( 'in initInputReady' );
+    if ( conversationVariables.conversation_dict.completed_sentences.length !== 0 ) {
+  
+        $( '#prevSentsIconContainer' ).show();
+    
+    }
+
+    //console.log( 'in initInputReady' );
     addPreviousSentences( conversationVariables.conversation_dict, 0 );
 
 }

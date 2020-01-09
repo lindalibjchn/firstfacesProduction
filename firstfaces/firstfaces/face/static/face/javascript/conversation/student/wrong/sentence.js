@@ -28,11 +28,5 @@ function showWrongSentence() {
     };
 
 
-    if ( conversationVariables.tutorial_complete ) {
-
-        highlightWrong();
-
-    }
-        
 }
 

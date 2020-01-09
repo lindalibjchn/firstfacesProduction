@@ -23,7 +23,7 @@ function addPreviousSentences( conversation_, phoneId, bottom=true ) {
 
 function createExchangeHTML( exchange_ ) {
 
-    console.log('exchange_:', exchange_);
+    //console.log('exchange_:', exchange_);
     let exchangeContainer = document.createElement("div");
     exchangeContainer.className = "sentence-container";
     exchangeContainer.id = "exchangeContainer_" + exchange_.sent_id.toString();
@@ -63,6 +63,22 @@ function createSentenceBox( exchange_ ) {
 
     sentenceBox.innerHTML = newInnerHTML;
     giveSentenceBoxColorBasedOnJudgement( sentenceBox, exchange_ );
+
+    //for points 
+    if ( [ 'P', 'B' ].includes( exchange_.judgement ) ) {
+
+        let points = convertCorrectSentenceLengthToPoints( exchange_.sentence.length )
+        if ( points !== 0 ) {
+
+            let pointsBox = document.createElement("div");
+            pointsBox.className = "points-box";
+            pointsBox.id = "pointsBox_" + exchange_.sent_id.toString();
+            pointsBox.innerHTML = '<div class="points-value">' + points.toString() + '<span class="points-pts">pts</span></div>';
+            sentenceBox.appendChild( pointsBox );
+
+        }
+
+    }
 
     return sentenceBox;
 
@@ -298,7 +314,7 @@ function makeWrongSentsHighlighted( exchange_ ) {
 
         }
 
-        console.log('exchange_.indexes:', exchange_.indexes );
+        //console.log('exchange_.indexes:', exchange_.indexes );
         exchange_.indexes.forEach( function( i ) {
 
             //console.log('i:', i);

@@ -16,8 +16,8 @@ function highlightWrong() {
 
     conversationVariables.conversation_dict.completed_sentences[ 0 ].indexes.forEach( function(ind, i) {
 
-        //console.log('ind', ind)
-        //console.log('i', i)
+        console.log('ind', ind)
+        console.log('i', i)
         setTimeout( function() {
 
             // for spaces
@@ -32,6 +32,12 @@ function highlightWrong() {
                     $('#wrongWord_' + ind[0].toString()).css( {
                         'background-image': 'linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0), red, rgba(0,0,0,0), rgba(0,0,0,0))',
                     });
+                    if ( conversationVariables.tutorial_complete ) {
+                    
+                        showErrorBtns();
+
+                    }
+
                 }, 1000);
 
             } else {

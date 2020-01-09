@@ -50,6 +50,7 @@ function addTia() {
         mat[1].skinning = true;
         mat[0].morphtargets = true;
         mat[1].morphtargets = true;
+        //mat[1].color.setHex( '0x743D2B' );
 
         tiaObject.mBody = new THREE.SkinnedMesh( geom, mat );
        
@@ -79,6 +80,9 @@ function addTia() {
         mat[0].morphtargets = true;
         mat[1].morphtargets = true;
         mat[2].morphtargets = true;
+        //mat[0].color.setHex( '0x743D2B' );
+        //mat[1].color.setHex( '0xE35D6A' );
+        //mat[2].color.setHex( '0x030106' );
 
         tiaObject.mFace = new THREE.SkinnedMesh( geom, mat );
 
@@ -154,6 +158,7 @@ function addTia() {
 
     function addHair( geom, mat ) {
 
+        //mat[0].color.setHex( '0x030106' );
         tiaObject.mHair = new THREE.Mesh( geom, mat );
 
         // need to manually assign position again

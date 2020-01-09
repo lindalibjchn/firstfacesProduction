@@ -87,5 +87,5 @@ def get_prev_conversations( user ):
 
         # }
                 
-    return conversations_list[1:] 
+    return conversations_list[:-1] 
 

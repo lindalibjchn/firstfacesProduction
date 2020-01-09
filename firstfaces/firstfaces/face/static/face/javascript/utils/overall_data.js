@@ -97,13 +97,61 @@ function calculateCorrectIncorrectDunnoSentences( sentencesArray ) {
 }
 
 function addPercentageCorrectInCentreOfDoughnut( sentencesArray ) {
-
-    judgements = calculateCorrectIncorrectDunnoSentences( sentencesArray );
-    percentCorrect = parseInt( 100 * judgements[ 'P' ] / sentencesArray.length );
-    $('#percentSentencesCorrectNo').text( percentCorrect );
+    
+    //console.log( 'sentencesArray:', sentencesArray );
+    let totalPoints = getTotalPointsForAClass( sentencesArray )
+    //judgements = calculateCorrectIncorrectDunnoSentences( sentencesArray );
+    //percentCorrect = parseInt( 100 * judgements[ 'P' ] / sentencesArray.length );
+    $('#percentSentencesCorrectNo').text( totalPoints );
 
 }
 
+function getTotalPointsForAClass( sentencesArray ) {
 
+    let tPoints = 0;
+
+    sentencesArray.forEach( function(s) {
+
+        if ( [ 'P', 'B' ].includes( s.judgement ) ) {
+
+            //console.log( 's:', s.sentence.length );
+            let correctSentenceLength = s.sentence.length;
+            tPoints += convertCorrectSentenceLengthToPoints( correctSentenceLength );
+
+        }
+
+    } );
+
+    if ( tPoints > 100 ) {
+
+        tPoints = 100;
+
+    }
+
+    return tPoints
+
+}
+
+function convertCorrectSentenceLengthToPoints( len ) {
+
+    points = 0;
+
+    if ( len >= 15 ) {
+
+        points = 5;
+
+    } else if ( len >= 10 ) {
+
+        points = 4;
+
+    } else if ( len >= 5 ) {
+
+        points = 3;
+
+    }
+
+    return points
+
+}
 
 

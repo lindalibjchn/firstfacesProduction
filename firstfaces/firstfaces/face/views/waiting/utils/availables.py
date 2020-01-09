@@ -91,7 +91,9 @@ def check_if_currently_in_class_or_class_finished(u):
 
         elif todays_date == most_recent_conversation.end_time.date():
         
-            class_finished_today = True
+            if len(conversations) != 1:
+            
+                class_finished_today = True
 
     return [currently_in_class, class_finished_today]
 

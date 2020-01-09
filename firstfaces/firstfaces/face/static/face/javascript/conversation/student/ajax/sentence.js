@@ -13,7 +13,15 @@ function sendSentToServer() {
 
         //console.log('sent:', sent);
         //console.log('sent length:', sent.length);
-        if ( sent.length > 2 || sent.length < 300 ) {
+        if ( conversationVariables.currentTranscriptionSplitWords.length < 3 ) {
+            
+            alert('this sentence is too short to send - the minimum is 3 words')
+            
+        } else if ( conversationVariables.currentTranscriptionSplitWords.length > 30 ) {
+
+            alert('this sentence is too long to send - the mamiximum is 30 words')
+            
+        } else {
                 
             if(conversationVariables.usePlayAud){
                 // temporary fix
@@ -86,10 +94,6 @@ function sendSentToServer() {
                 },
 
             });
-
-        } else {
-
-            alert( 'This sentence is too long. Please simplify and try again.')
 
         }
 

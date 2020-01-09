@@ -128,17 +128,18 @@ function determineIfArticleErrorAndAddToArticleErrorsObject( sentenceObject ) {
 
         //console.log( 'word_index:', word_index );
         //console.log( 'i:', i );
+        //console.log( 'sentenceObject:', sentenceObject );
         if ( word_index.length === 1 ) {
 
             withSpaceIndex = word_index[ 0 ];
 
             if ( withSpaceIndex % 2 === 0 ) {
 
-                if ( sentenceObject.prompt[ i ] === "the" ) {
+                if ( sentenceObject.correction[ i ] === "the" ) {
 
                     articleErrors[ 'x-the' ] += 1;
 
-                } else if ( sentenceObject.prompt[ i ] === "a" ) {
+                } else if ( sentenceObject.correction[ i ] === "a" ) {
 
                     articleErrors[ 'x-a' ] += 1;
 
@@ -150,35 +151,35 @@ function determineIfArticleErrorAndAddToArticleErrorsObject( sentenceObject ) {
 
                 if ( sentenceObject.sentence[ withoutSpacesIndex ][ 0 ] === "the" ) {
 
-                    Object.keys( sentenceObject.prompts ).forEach( function( p ) {
+                    //Object.keys( sentenceObject.prompts ).forEach( function( p ) {
 
-                        if ( sentenceObject.prompts[ p ][ i ] === "a" ) {
+                        if ( sentenceObject.correction[ i ] === "a" ) {
 
                             articleErrors['the-a'] += 1;
 
-                        } else if ( sentenceObject.prompts[ p ][ i ]  === "x" ) {
+                        } else if ( sentenceObject.correction[ i ]  === "x" ) {
 
                             articleErrors['the-x'] += 1;
 
                         }
 
-                    })
+                    //})
 
                 } else if ( sentenceObject.sentence[ withoutSpacesIndex ][ 0 ] === "a" ) {
 
-                    Object.keys( sentenceObject.prompts ).forEach( function( p ) {
+                    //Object.keys( sentenceObject.prompts ).forEach( function( p ) {
 
-                        if ( sentenceObject.prompts[ p ][ i ] === "the") {
+                        if ( sentenceObject.correction[ i ] === "the") {
 
                             articleErrors['a-the'] += 1;
 
-                        } else if ( sentenceObject.prompts[ p ][ i ] === "x" ) {
+                        } else if ( sentenceObject.correction[ i ] === "x" ) {
 
                             articleErrors['a-x'] += 1;
 
                         }
 
-                    })
+                    //})
 
                 }
 

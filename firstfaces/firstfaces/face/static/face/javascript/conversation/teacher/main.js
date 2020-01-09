@@ -21,6 +21,8 @@ $(window).on( 'load', function() {
     disablePromptBox();
     loadPreMadePrompt0s();
 
+    $('.points-box').hide();
+
 });
 
 var mediaLocation = 'media/'

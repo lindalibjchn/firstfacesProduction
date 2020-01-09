@@ -54,7 +54,13 @@ function dealWithAfterTap() {
         expressionController( expressionObject.calculated, tiaTimings.changeExpressionDuration );
 
         // display errors
-        showWrongSentence();
+        if ( conversationVariables.tutorial_complete ) {
+
+            highlightWrong();
+
+        }
+        
+        //showWrongSentence();
 
     } else if ( conversationVariables.tapKeyForCorrection ) {
 

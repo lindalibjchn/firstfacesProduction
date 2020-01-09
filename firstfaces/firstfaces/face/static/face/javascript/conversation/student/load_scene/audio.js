@@ -122,8 +122,6 @@ function checkIfClickedStop() {
 
         conversationVariables.over15secs = true;
 
-        hideVolumeBar();
-
         onStopClick();
 
         //alert('You have 15 seconds to say each sentence. If it is a very long sentence, try breaking it up into smaller sentences.')
@@ -159,17 +157,16 @@ function onStopClick() {
 
 function onMediaRecorderStop() {
  
+    hideVolumeBar();
+
     if ( conversationVariables.over15secs ) {
 
         conversationVariables.over15secs = false;
         alert( 'you have 15 seconds to say each sentence' );
-
-    }
+        initInputReady();
 
     // i first interference then dont need to do any of this stuff
-    if ( !conversationVariables.interference ) {
-
-        hideVolumeBar();
+    } else if ( !conversationVariables.interference ) {
 
         //$('#talkBtn').prop( "disabled", true )
         //conversationVariables.blob = new Blob(chunks, { type : 'audio/webm; codecs: opus' });

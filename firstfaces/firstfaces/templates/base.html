@@ -18,6 +18,12 @@
                 position: fixed;
             }
 
+            #totalPoints {
+
+                font-weight: bold;
+
+            }
+
             </style>
 	
         </head>
@@ -54,7 +60,11 @@
 
             {% else %}
 
-                    {% if waiting %}
+                    {% if not waiting %}
+
+                        <div id="navbar" class="w3-bar" style="position: fixed; z-index: 100; color: white">
+
+                    {% else %}
 
                         <div id="navbar" class="w3-bar" style="position: fixed; z-index: 100; color: blue">
 
@@ -64,9 +74,15 @@
 
                             </div>
 
-                    {% else %}
+                            <div style="right: 20%; position: absolute;">
 
-                        <div id="navbar" class="w3-bar" style="position: fixed; z-index: 100; color: white">
+                                <div class="w3-bar-item">
+
+                                    <a href="#" class="w3-button w3-round-xxlarge w3-padding-small" style="border: 1px solid #188ac7; color: #188ac7; height: 30px; "><span id="totalPoints">256</span> points</a>
+                            
+                                </div>
+
+                            </div>
 
                     {% endif %}
 
@@ -93,7 +109,7 @@
 
                                 <div class="w3-bar-item">
 
-                                    <a href="{% url 'logout' %}" class="w3-button w3-round-xxlarge w3-padding-small" style="border: 1px solid #188ac7; color: #188ac7; height: 30px; ">logout</a>
+                                    <a href="{% url 'logout' %}" class="w3-button w3-round-xxlarge w3-padding-small" style="border: 1px solid #188ac7; color: #188ac7; height: 30px; font-weight: bold;">logout</a>
                             
                                 </div>
 

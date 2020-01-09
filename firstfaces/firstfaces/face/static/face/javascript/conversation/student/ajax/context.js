@@ -391,12 +391,21 @@ $('#closeTallTypeText').click(decrease_type_size_stage2);
 
 function decrease_type_size_stage2(){
     if(conversationVariables.stage_2_increased){
-        $('#reRecordBtn').show();
+        if ( conversationVariables.tutorial_complete ) {
+        
+            $('#reRecordBtn').show();
+            $('#finishClassIconContainer').show()
+            $('#prevSentsIconContainer').show()
+        
+        } else {
+
+            $('#stopAllButtonEffectsExceptInputButtons').show();
+
+        }
+            
         $('#correctionOverlay').css({'background-color':'rgba(255,255,255,0)', 'z-index':2}).animate({height:'50%'},300);
         $('#sentenceShowHolder').css('background-color','rgba(255,255,255,0.8)')
         $('#overlayBtnBox').css('height','20%');
-        $('#finishClassIconContainer').show()
-        $('#prevSentsIconContainer').show()
         $('#closeTallType').css("display","none");
         if($('#bottomCent').text().trim().length == 0){
             conversationVariables.movedText = true;

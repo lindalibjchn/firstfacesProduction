@@ -86,7 +86,7 @@ def create_stock_instance( texts, initial_delay=500, breathing=False, speaking_r
 
 def create_prompt_instance( text, prompt_number, initial_delay=500, breathing=False, speaking_rate=100, pitch='+0', volume='+0', emotion='' ):
 
-    text_without_punctuation = ''.join(c for c in t if c not in unwanted_punctuation)
+    text_without_punctuation = ''.join(c for c in text if c not in unwanted_punctuation)
     second_word_on = text_without_punctuation
     split_t = text.split()
     first_word = split_t[0]
@@ -101,7 +101,7 @@ def create_prompt_instance( text, prompt_number, initial_delay=500, breathing=Fa
     p = Prompt(name=name, level=prompt_number)
     print('name:', name)
     
-    ssml = "<voice emotion='" + emotion + "'>" + t + "</voice>"
+    ssml = "<voice emotion='" + emotion + "'>" + text + "</voice>"
     url, visemes = create_tia_tts_url(first_word, gesture, ssml, 'prePreparedTiaPhrases/prompt' + str(prompt_number) + '/', name, initial_delay, breathing, speaking_rate, pitch, volume)
     p.url = url
 
@@ -142,7 +142,7 @@ def create_tia_tts_url(first_word, gesture, text, directory, filename, initial_d
     if gesture != None:
         first_two_visemes = viseme_gesture_dict[gesture]
         first_two_visemes[1]['start'] = viseme_data[1]["end"] - 600
-        first_two_visemes[1]['end'] = viseme_data[1]["end"] - 600
+        first_two_visemes[1]['end'] = viseme_data[1]["end"] - 800
         viseme_data = first_two_visemes + viseme_data
 
     url = create_url( request.fileUrl, directory, filename )

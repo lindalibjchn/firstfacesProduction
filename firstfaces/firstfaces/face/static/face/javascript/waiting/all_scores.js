@@ -9,7 +9,7 @@ function addAllScores( allConversations ) {
 function calculateCorrectSentencesNWrongArticlesPercentForEachConversation( allConversations ) {
 
     allConversationsStartTimes = [];
-    allConversationsCorrectPercentage = [];
+    allConversationsTotalPoints = [];
     allConversationsWrongArticlesPercentage = [];
     
     allConversations.forEach( function( c ) {
@@ -20,10 +20,10 @@ function calculateCorrectSentencesNWrongArticlesPercentForEachConversation( allC
             let startTimeDateStringForChart = convertStartTimeIntToDayMonthStringForChart( c.start_time );
             allConversationsStartTimes.unshift( startTimeDateStringForChart );
         
-            let correctIncorrectDunno = calculateCorrectIncorrectDunnoSentences( c.completed_sentences );
+            let totalPoints = getTotalPointsForAClass( c.completed_sentences );
             
-            let correctPercentage = parseInt( 100 * correctIncorrectDunno['P'] / totalSentences );
-            allConversationsCorrectPercentage.unshift( correctPercentage );
+            //let correctPercentage = parseInt( 100 * correctIncorrectDunno['P'] / totalSentences );
+            allConversationsTotalPoints.unshift( totalPoints );
 
             let wrongArticlesPercentage = parseInt( 100 - calculateArticleErrors( c.completed_sentences )[ 0 ] );
             allConversationsWrongArticlesPercentage.unshift( wrongArticlesPercentage );
@@ -32,7 +32,7 @@ function calculateCorrectSentencesNWrongArticlesPercentForEachConversation( allC
 
     } );
 
-    return [ allConversationsStartTimes, allConversationsCorrectPercentage, allConversationsWrongArticlesPercentage ]
+    return [ allConversationsStartTimes, allConversationsTotalPoints, allConversationsWrongArticlesPercentage ]
 
 }
 
@@ -72,7 +72,7 @@ function drawLineChartAllScores( allData ) {
 			labels: allData[ 0 ],
             radius: 8,
 			datasets: [{
-                label: 'correct sentences',
+                label: 'points',
 				data: allData[ 1 ],
 				backgroundColor: 'rgba(17, 219, 13, 0.7)',
 				borderColor: 'rgba(0, 100, 0, 0.5)',
@@ -80,10 +80,10 @@ function drawLineChartAllScores( allData ) {
                 fill: false,
                 pointRadius: correctBorderRadii,
                 //pointHitRadius: 1,
-                pointHitRadius: 20,
+                pointHitRadius: 15,
             },
             {
-                label: 'article errors',
+                label: '% article errors',
 				data: allData[ 2 ],
 				backgroundColor: 'rgba(219, 17, 13, 0.7)',
 				borderColor: 'rgba(219, 17, 13, 0.5)',

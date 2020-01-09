@@ -6,12 +6,16 @@ $(window).on( 'load', function() {
 
         if ( waitingVariables.conversations.length !== 0 ) {
         
-            $( '#prevSentsWaitingContainer' ).css( 'display', 'flex' );
-            addAllScores( waitingVariables.conversations )
-            showConversationSentences( 0 );
-            //setUpPreviousSentsBtns( waitingVariables.conversations[0].completed_sentences )
-            //addData( 'sentences', waitingVariables.conversations[0].completed_sentences )
+            if ( !(waitingVariables.conversations.length === 1 && waitingVariables.currently_in_class ) ) { 
+
+                $( '#prevSentsWaitingContainer' ).css( 'display', 'flex' );
+                addAllScores( waitingVariables.conversations )
+                showConversationSentences( 0 );
+                //setUpPreviousSentsBtns( waitingVariables.conversations[0].completed_sentences )
+                //addData( 'sentences', waitingVariables.conversations[0].completed_sentences )
         
+            }
+
         }
         $('#pronunciationClearOverlayArea').click( hidePronunciationDataContainer );
         if ( waitingVariables.currently_in_class ) {
@@ -35,7 +39,7 @@ $(window).on( 'load', function() {
 
 function enterConversation() {
 
-    window.location.href = prefixURL + "/conversation_student/" + waitingVariables.conversation_id.toString();
+    window.location.href = prefixURL + "conversation_student/" + waitingVariables.conversation_id.toString();
 
 }
 

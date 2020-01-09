@@ -132,19 +132,19 @@ function goToAskTopic( emotion ) {
 function empathise( emotion_ ) {
 
     // remove emotion questions container, making sure to unbind the click event to avoid multiple clicks
-    if ( emotion_ === 4 ) {
+    if ( emotion_ === "4" ) {
 
         tiaPrepareToSpeak( "That's_great,_I'm_really_happy_to_hear_that", showTopicChoices );
 
-    } else if ( emotion_ == 3 ) {
+    } else if ( emotion_ == "3" ) {
 
         tiaPrepareToSpeak( "That's_good,_I'm_glad_to_hear_that", showTopicChoices );
 
-    } else if ( emotion_ == 2 ) {
+    } else if ( emotion_ == "2" ) {
 
         tiaPrepareToSpeak( "Okay,_I_understand", showTopicChoices );
 
-    } else if ( emotion_ == 1 ) {
+    } else if ( emotion_ == "1" ) {
 
         tiaPrepareToSpeak( "I'm_sorry_to_hear_that", showTopicChoices );
 
@@ -224,7 +224,7 @@ function getOwnTopicFromTextbox() {
     
     $('#textInputContainer').fadeOut( tiaTimings.speechBubbleFadeOutDuration );
     $('#textInput').value = '';
-    $('#textInputBoxInnerCont').fadeOut( tiaTimings.speechBubbleFadeOutDuration );
+    $('#textInputBoxContCont').fadeOut( tiaTimings.speechBubbleFadeOutDuration );
     $('#submitTopicBtnCont').fadeOut( tiaTimings.speechBubbleFadeOutDuration )
 
     if ( ownTopic === '' ) {
