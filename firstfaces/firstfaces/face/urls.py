@@ -11,6 +11,7 @@ from face.views.conversation.teacher.ajax import sentence as teacher_sentence
 from face.views.conversation.teacher.ajax import updates
 from face.views.waiting import main as waiting_main
 from face.views.entrance import main as entrance_main
+from face.views.waiting.utils import store as store_main
 
 urlpatterns = [
     # CONVERSATION
@@ -49,6 +50,7 @@ urlpatterns = [
     path('close_attempt', audio.close_attempt, name="close_attempt"),
     path('get_remaining_audio', audio.get_remaining_audio, name="get_remaining_audio"),
     path('do_allignment',audio.do_allignment, name="do_allignment"),
+    path("get_stock_words", audio.get_stock_words, name ="get_stock_words"),
 
     
     # TEACHER
@@ -86,4 +88,11 @@ urlpatterns = [
     # path('add_listen_synth_data', views_temp.add_listen_synth_data, name='add_listen_synth_data'),
     # path('check_prompt_indexes', views_temp.check_prompt_indexes, name='check_prompt_indexes'),
     # path('group_data', views_temp.group_data, name="group_data"),
+
+    #SHOP
+    path('get_attributes', store_main.get_attributes, name='get_attributes'),
+    path('get_background_colors', store_main.get_background_colors, name='get_background_colors'),
+
+
+
     ]

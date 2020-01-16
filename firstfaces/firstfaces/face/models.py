@@ -236,6 +236,7 @@ class Profile(models.Model):
     microphone = models.NullBooleanField()
     tutorial_complete = models.BooleanField(default=False)
     spectrospin = models.BooleanField(default=False)
+    points = models.SmallIntegerField(default=0)
 
     def __str__(self):
         return str(self.learner)
@@ -256,3 +257,32 @@ class Update(models.Model):
 
     # def __str__(self):
         # return self.date.strftime("%a %d %b %Y") + " -- " + self.title
+
+
+# Shop Items
+class BackgroundColour(models.Model):
+    name = models.CharField(max_length=30, null=False, blank=True)
+    description = models.CharField(max_length=30, null=True, blank=True)
+    price = models.SmallIntegerField()
+    hex = models.CharField(max_length=6, null=False, blank=True)
+
+
+class HairColour(models.Model):
+    name = models.CharField(max_length=30, null=False, blank=True)
+    description = models.CharField(max_length=30, null=True, blank=True)
+    price = models.SmallIntegerField()
+    hair_hex = models.CharField(max_length=6, null=False, blank=True)
+    brow_hex = models.CharField(max_length=6, null=False, blank=True)
+
+
+class TiaAttributes(models.Model):
+    learner = models.ForeignKey(User, on_delete=models.CASCADE)
+    backgroundColour = models.CharField(max_length=6, null=False, blank=True)
+    hairColour = models.CharField(max_length=6, null=False, blank=True)
+
+
+class UserProducts(models.Model):
+    learner = models.ForeignKey(User, on_delete=models.CASCADE)
+    backgroundColours = models.CharField(max_length=2000, blank=True, null=True)
+    hairColours = models.CharField(max_length=2000, blank=True, null=True)
+

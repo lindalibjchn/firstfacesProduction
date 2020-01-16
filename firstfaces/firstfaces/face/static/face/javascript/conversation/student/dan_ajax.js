@@ -658,8 +658,6 @@ function sendAttemptBlob( new_blob ){
         processData: false,                                                                  
         contentType: false,
         success: function(json){
-            //john
-            alert("In Function");
             conversationVariables.showingSpectrograms = true;
             prepareToStopTyping();
           

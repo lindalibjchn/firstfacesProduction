@@ -78,3 +78,20 @@ function get_word_model(word){
 
 
 }
+
+function get_stock_words(){
+    let fd = new FormData();
+     $.ajax({
+        url: "/get_stock_words",
+        type: "POST",
+        data: fd,
+        processData: false,
+        contentType: false,
+        success: function(json){
+            alert(json['SW']);
+        },
+        error: function() {
+          console.log("Error_Getting_Stock");
+        },
+    });
+}

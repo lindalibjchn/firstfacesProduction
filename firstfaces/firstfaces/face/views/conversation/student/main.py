@@ -19,7 +19,6 @@ logger = logging.getLogger(__name__)
 def conversation_student(request, conversation_id):
 
     try:
-
         # when entering a conversation, must check that a conversation exists at that url e.g. 'conversation/234'. If a DoesNot
         conversation_object = Conversation.objects.get(id=conversation_id)
         
