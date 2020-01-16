@@ -21,6 +21,7 @@ urlpatterns = [
     # conversation
     path('store_emotion', conversation.store_emotion, name='store_emotion'),
     path('store_topic', conversation.store_topic, name='store_topic'),
+    path('store_slow_FPS', conversation.store_slow_FPS, name='store_slow_FPS'),
     path('get_pronunciation_errors',conversation.get_pronunciation_errors,name="get_pronunciation_errors"),
     # path('store_tutorial_end', conversation.store_tutorial_end, name='store_tutorial_end'),
     # path('timings', conversation.timings, name='timings'),

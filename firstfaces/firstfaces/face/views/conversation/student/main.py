@@ -144,7 +144,7 @@ def determine_if_first_full_conversation(u, tutorial_complete):
 def determine_if_first_entry(c):
 
     first_enter = True
-    if c.topic != None:    
+    if c.topic != None and c.topic != 'tutorial':    
         first_enter = False
 
     return first_enter

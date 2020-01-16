@@ -1,7 +1,9 @@
 function tiaLookAtLaptopAndType() {
 
+    //console.log('tiaLookAtLaptopAndType');
     movementController( movementObject.abs.laptop, 0.4, 1, function() {
     
+        startAudioStream();
         conversationVariables.tiaTyping = true;
         backNReadALine();
         initType( 'R' );
@@ -104,6 +106,8 @@ function typeArm( main, side ) {
 
 function backNReadALine() {
 
+    //console.trace();
+    //console.log('in backNReadALine');
     var randomReadingMovement = $.extend( true, {}, movementObject.abs.laptop );
 
     let plusOrMinusX = Math.random() - 0.5; 
@@ -123,6 +127,7 @@ function backNReadALine() {
 
         if ( conversationVariables.tiaTyping ) {
 
+            //console.log('in backNReadALine callback');
             backNReadALine();
 
         }

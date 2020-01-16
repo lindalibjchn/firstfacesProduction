@@ -13,7 +13,7 @@ function get_word_context(){
         }
 
 
-        pos = conversationVariables.POS_Tags[idx];
+        pos = conversationVariables.POS_Tags[parseInt(idx)];
         word = $('#bottomCent').text().trim().split(" ");
 
 

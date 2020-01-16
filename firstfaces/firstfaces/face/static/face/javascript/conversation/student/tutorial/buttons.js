@@ -3,6 +3,7 @@ function showSingleBtn( /* response,*/ callback ) {
     $('#tutorialBtnSingle').prop( 'disabled', false )
     $('#tutorialBtnSingleCont').fadeIn( 500 );
     //$('#tutorialBtnSingle').text( response );
+    $('#tutorialBtnSingle').off( 'click' )
     $('#tutorialBtnSingle').on( 'click', callback )
 
 }
@@ -13,6 +14,8 @@ function showDoubleBtn( /*response01, response02,*/ callback01, callback02 ) {
     $('#tutorialBtnDoubleCont').fadeIn( 500 );
     //$('#tutorialBtnDouble0').text( response01 );
     //$('#tutorialBtnDouble1').text( response02 );
+    $('#tutorialBtnDouble0').off( 'click' );
+    $('#tutorialBtnDouble1').off( 'click' );
     $('#tutorialBtnDouble0').on( 'click', callback01 );
     $('#tutorialBtnDouble1').on( 'click', callback02 );
 

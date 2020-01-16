@@ -154,6 +154,41 @@
 
 }
 
+#finishPtsContainer {
+
+    /*position: absolute;*/
+    width: 100%;
+    height: 100%;
+    display: none;
+
+}
+
+#finishPtsInnerContainer {
+
+    width: 100%;
+    height: 100%;
+    /*border: 2px solid black;*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+#finishPts {
+
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
+
+}
+
+#finishPtsSpan {
+
+    font-size: 18px;
+    font-weight: normal;
+
+}
+
 #confirmFinishContainer {
 
     position: absolute;

@@ -1315,7 +1315,7 @@ function moveText(){
 
 //If the text has been moved up it is now moved back to its original position
 function unmoveText(){
-    console.log("Unmove - "+conversationVariables.movedText);
+    //console.log("Unmove - "+conversationVariables.movedText);
     if(conversationVariables.movedText){
         $('#moveText').animate({top:'+='+conversationVariables.textDiff+"px"},1);
         conversationVariables.movedText = false;

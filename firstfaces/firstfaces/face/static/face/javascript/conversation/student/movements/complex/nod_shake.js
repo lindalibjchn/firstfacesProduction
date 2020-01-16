@@ -1,6 +1,7 @@
 function initNod( depth, secs, nodCb=function(){} ) {
 
     // EX: initNod(0.1, '0.5')
+    //console.trace()
 
     if ( nodObject.bool ) {
 

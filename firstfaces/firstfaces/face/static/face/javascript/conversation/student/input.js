@@ -1,4 +1,4 @@
-function initInputReady( from ) {
+function initInputReady( from, showPtsBool=false ) {
     conversationVariables.stage2 = false;
     conversationVariables.stage3 = false;
     // tia's eyelids werren't closing properly this below is a failsafe to reset them.
@@ -30,6 +30,45 @@ function initInputReady( from ) {
 
     //console.log( 'in initInputReady' );
     addPreviousSentences( conversationVariables.conversation_dict, 0 );
+
+    if ( showPtsBool ) {
+
+        showPts();
+
+    }
+
+}
+
+function showPts() {
+
+    if ( ['P', 'B' ].includes( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement ) ) {
+
+        let pts = convertCorrectSentenceLengthToPoints( conversationVariables.conversation_dict.completed_sentences[ 0 ].sentence.length )
+
+        if ( pts > 0 ) {
+
+            $( '#finishPtsSpan' ).text( pts.toString() )
+            $( '#finishClassIcon' ).fadeOut( function() {
+
+                $( '#finishPtsContainer' ).fadeIn( function() {
+                 
+                    setTimeout( function() {
+
+                        $( '#finishPtsContainer' ).fadeOut( function() {
+
+                            $( '#finishClassIcon' ).fadeIn();
+
+                        });
+
+                    }, 1000 );
+                    
+                });
+
+            });
+
+        }
+
+    }
 
 }
 

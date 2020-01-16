@@ -28,7 +28,7 @@ function tapKeyFull() {
             } else {
 
                 armTapObject.currentCoords = [[0,0,0],[0,0,0]];
-                movementController( movementObject.abs.blank, 0.5, 1.0, startAudioStream );
+                movementController( movementObject.abs.blank, 0.5, 1.0, afterMovementBackFromTap );
                 dealWithAfterTap();
 
             }
@@ -78,6 +78,7 @@ function dealWithAfterTap() {
         if(!conversationVariables.goToStage3){
                 closeStage3();
                 $('#exitOverlay').click();
+                
         }else{
             $("#praatCont").fadeIn(800);
             setTimeout(function(){
@@ -108,14 +109,6 @@ function dealWithAfterTap() {
                             document.getElementById('audio_'+conversationVariables.error_dict["start"]).src = prefixURL+conversationVariables.error_dict["url"];
                             $('#audio_'+conversationVariables.error_dict["start"]).attr('duration',conversationVariables.error_dict["len"]);
                         },1000);
-
-                    } else {
-
-                        if ( conversationVariables.tutorialStep = '051' ) {
-
-                            tutorialOption061()
-
-                        }
 
                     }
 
@@ -149,11 +142,7 @@ function dealWithAfterTap() {
 
             } else {
 
-                if ( conversationVariables.tutorialStep === '021' ) {
-
-                    tutorialOption031();
-
-                }
+                buttonsHideAllContainers()
 
             }
 
@@ -231,3 +220,41 @@ function addWords(word,count) {
    $('#lowerSentenceHolder').append("<span id="+idx+"' class='hidden-word' >"+word+"</span>");
    $('#lowerSentenceHolder').append(" ");
 }
+
+function afterMovementBackFromTap() {
+
+    if ( !conversationVariables.tutorial_complete ) {
+
+        if ( conversationVariables.tutorialStep === '021' ) {
+
+            if(!conversationVariables.stage2 && !conversationVariables.stage3) {
+
+                tutorialOption031();
+
+            }
+
+        } else if ( conversationVariables.tutorialStep === '051' ) {
+
+            if ( conversationVariables.stage2 && !conversationVariables.stage3 ) {
+
+                tutorialOption061()
+
+            }
+
+        } else if ( conversationVariables.tutorialStep === '061' ) {
+
+            tutorialOption071();
+        
+        }
+
+    }
+
+}
+
+
+
+
+
+
+
+

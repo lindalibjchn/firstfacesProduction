@@ -67,13 +67,24 @@ def create_stock_instance( texts, initial_delay=500, breathing=False, speaking_r
     for i, t in enumerate(texts):
         text_without_punctuation = ''.join(c for c in t if c not in unwanted_punctuation)
         print('text_without_punctuation:', text_without_punctuation)
-        split_t = text_without_punctuation.split()
+        split_t_with_single_quotations = text_without_punctuation.split()
+        split_t = []
+        for w in split_t_with_single_quotations:
+            new_w = w;
+            if new_w[0] == "'":
+                new_w = new_w[1:]
+            if new_w[-1] == "'":
+                new_w = new_w[:-1]
+            split_t.append(new_w)
         first_word = split_t[0]
         gesture = None
+        to_be_spoken = "" 
         if first_word in [*vocal_gesture_dict]:
             gesture = first_word
-            t = create_vocal_gesture( first_word ) + "<break time='1000ms'/>" + " ".join(split_t[1:])
+            to_be_spoken = create_vocal_gesture( first_word ) + "<break time='1000ms'/>" + " ".join(split_t[1:])
             first_word = split_t[1]
+        else:
+            to_be_spoken = " ".join(split_t)
         ssml = "<voice emotion='" + emotion + "'>" + t + "</voice>"
         url, viseme_list = create_tia_tts_url(first_word, gesture, ssml, 'prePreparedTiaPhrases/stockPhrases/', name + '_0' + str(i), initial_delay, breathing, speaking_rate, pitch, volume)
         urls.append(url)
@@ -88,20 +99,33 @@ def create_prompt_instance( text, prompt_number, initial_delay=500, breathing=Fa
 
     text_without_punctuation = ''.join(c for c in text if c not in unwanted_punctuation)
     second_word_on = text_without_punctuation
-    split_t = text.split()
+    split_t_with_single_quotations = text_without_punctuation.split()
+    
+    split_t = []
+    for w in split_t_with_single_quotations:
+        new_w = w;
+        if new_w[0] == "'":
+            new_w = new_w[1:]
+        if new_w[-1] == "'":
+            new_w = new_w[:-1]
+        split_t.append(new_w)
+
     first_word = split_t[0]
     gesture = None
+    to_be_spoken = "" 
     if first_word in [*vocal_gesture_dict]:
         second_word_on = " ".join(split_t[1:])
         gesture = first_word
-        t = create_vocal_gesture( first_word ) + "<break time='1000ms'/>" + second_word_on
+        to_be_spoken = create_vocal_gesture( first_word ) + "<break time='1000ms'/>" + " ".join(split_t[1:])
         first_word = split_t[1]
+    else:
+        to_be_spoken = " ".join(split_t)
 
     name = second_word_on.replace(' ', '_').replace('?', '')
     p = Prompt(name=name, level=prompt_number)
     print('name:', name)
     
-    ssml = "<voice emotion='" + emotion + "'>" + text + "</voice>"
+    ssml = "<voice emotion='" + emotion + "'>" + text_without_punctuation + "</voice>"
     url, visemes = create_tia_tts_url(first_word, gesture, ssml, 'prePreparedTiaPhrases/prompt' + str(prompt_number) + '/', name, initial_delay, breathing, speaking_rate, pitch, volume)
     p.url = url
 

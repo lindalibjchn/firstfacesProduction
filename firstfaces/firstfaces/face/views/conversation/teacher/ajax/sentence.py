@@ -116,14 +116,14 @@ def store_indexes_corrections(request):
     sent = Sentence.objects.get(pk=sent_id)
     sent.indexes = request.POST['indexes']
     
-    logger.error('\nindexes:', str(sent.indexes))
-    logger.error('judgement:', str(sent.judgement))
+    # logger.error('\nindexes:', str(sent.indexes))
+    # logger.error('judgement:', str(sent.judgement))
     print('\nindexes:', sent.indexes)
     print('judgement:', sent.judgement)
     if sent.judgement == 'M':
 
         unsure_strings = get_mean_by_text(json.loads(sent.sentence), json.loads(sent.indexes))
-        logger.error('unsure_strings:', str(unsure_strings))
+        # logger.error('unsure_strings:', str(unsure_strings))
         prompt = create_prompt_instance( unsure_strings[1:], 3, 850 )
         sent.prompts.add(prompt)
 

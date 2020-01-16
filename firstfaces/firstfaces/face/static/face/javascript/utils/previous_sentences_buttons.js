@@ -15,7 +15,7 @@ function setUpPreviousSentsBtns( sentences ) {
 
             $('#stopAllButtonEffectsExceptInputButtons').show();
             removeSpeechBubble();
-            setTimeout( tutorialOption161, 8000 );
+            setTimeout( tutorialOption161, 5000 );
 
         }
 

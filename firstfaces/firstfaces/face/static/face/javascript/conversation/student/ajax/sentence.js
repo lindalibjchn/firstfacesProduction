@@ -48,7 +48,7 @@ function sendSentToServer() {
             }
             let extraDelay = 0;
             if ( appleDevice ) {
-                extraDelay = 1000;
+                extraDelay = 900;
             }
             if(!conversationVariables.trying_again){
                 setTimeout( goToThinkingPos, conversationVariables.sentence_being_recorded_audio.totalAudioLength + extraDelay );
@@ -101,6 +101,7 @@ function sendSentToServer() {
 
         if ( conversationVariables.tutorialStep === '071' ) {
 
+            tiaSpeakButtonEvent();
             tutorialOption081();
 
         }

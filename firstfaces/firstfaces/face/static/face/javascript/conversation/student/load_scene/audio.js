@@ -16,7 +16,7 @@ function readyAudio() {
 
 function startAudioStream() {
 
-    //console.log( 'in start audio stream' )
+    console.log( 'in start audio stream' )
     //console.log( 'AUDIO_N_VIDEO_SETTINGS:', AUDIO_N_VIDEO_SETTINGS )
     //alert('in getUserMedia')
 
@@ -37,7 +37,7 @@ function startAudioStream() {
         }
 
         mediaRecorder.onstop = onMediaRecorderStop;
-            
+
     })
 
     // Error callback

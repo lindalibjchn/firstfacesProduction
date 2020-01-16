@@ -103,6 +103,22 @@ def store_topic(request):
 
     return JsonResponse(response_data)    
 
+def store_slow_FPS(request):
+
+    device = request.POST['device']
+    conversation_id = request.POST['conversationId']
+    conv = Conversation.objects.get(pk=conversation_id)
+    conv.device = device
+    conv.slow_FPS = True
+    conv.slow_FPS_timestamp = timezone.now()
+    conv.save()
+
+    response_data = {
+
+    }
+
+    return JsonResponse(response_data)    
+
 # def timings(request):
 
     # # code.interact(local=locals());

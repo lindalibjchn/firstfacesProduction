@@ -65,4 +65,23 @@ function storeTopic( topicChoice ) {
 
 }
 
+function sendSlowFPSReportToServer() {
+
+    $.ajax({
+        url: "/store_slow_FPS",
+        type: "POST",
+        data: {
+            'device': navigator.userAgent,
+            'conversationId': conversationVariables.conversation_dict.id,
+        },
+        success: function(json) {
+
+        },
+        error: function() {
+            console.log("didn't store device");
+        },
+    });
+
+}
+
 

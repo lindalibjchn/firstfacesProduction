@@ -27,7 +27,7 @@ function tiaSpeakButtonEvent() {
     if ( appleDevice ) {
     
         //console.log('speaking in apple device: 100ms delay')
-        setTimeout( tiaSpeakIndividualSentences, 1000 );
+        setTimeout( tiaSpeakIndividualSentences, 900 );
 
     } else {
 
@@ -89,25 +89,37 @@ function animatePhonesInOrder() {
     //console.log( 'in animatePhonesInOrder:', synthesisObject.now );
     if ( synthesisObject.now.phoneCount < synthesisObject.now.noOfPhones ) {
 
-        pronunciationController( expressionObject.abs[ synthesisObject.now.visemes[ synthesisObject.sentenceNo ][ synthesisObject.now.phoneCount ][ 'Viseme' ] ], synthesisObject.now.visemes[ synthesisObject.sentenceNo ][ synthesisObject.now.phoneCount ][ 'end' ], function() {
-            
-            
-            synthesisObject.now.phoneCount += 1;
-            animatePhonesInOrder()
-                
-        })
+        if ( conversationVariables.slowFPS ) {
 
-    } else if ( synthesisObject.now.phoneCount === synthesisObject.now.noOfPhones ) { 
-        
-        if ( !conversationVariables.promptSpeaking ) {
-        
-            continueStockPhrases();
+            setTimeout( endAnimatePhonesInOrder, synthesisObject.audio.duration * 1000 );
 
         } else {
 
-            continuePrompt();
+            pronunciationController( expressionObject.abs[ synthesisObject.now.visemes[ synthesisObject.sentenceNo ][ synthesisObject.now.phoneCount ][ 'Viseme' ] ], synthesisObject.now.visemes[ synthesisObject.sentenceNo ][ synthesisObject.now.phoneCount ][ 'end' ], function() {
+                
+                synthesisObject.now.phoneCount += 1;
+                animatePhonesInOrder()
+                    
+            })
 
         }
+
+    } else if ( synthesisObject.now.phoneCount === synthesisObject.now.noOfPhones ) { 
+        
+        endAnimatePhonesInOrder();
+    }
+
+}
+
+function endAnimatePhonesInOrder() {
+
+    if ( !conversationVariables.promptSpeaking ) {
+    
+        continueStockPhrases();
+
+    } else {
+
+        continuePrompt();
 
     }
 
@@ -284,7 +296,7 @@ function endTiaTalking() {
             setTimeout( function() {
             
                 removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration * 3 );
-                initInputReady();
+                initInputReady( 'judgement', conversationVariables.correctSentence );
                 $('#prevSentsIconContainer').css('font-size', '17px');
                 setTimeout( function() {
 

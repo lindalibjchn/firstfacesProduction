@@ -14,6 +14,9 @@ class Conversation(models.Model):
     final_emotion = models.SmallIntegerField(null=True, blank=True)
     rating = models.SmallIntegerField(null=True, blank=True)
     comment = models.CharField(max_length=200, null=True, blank=True)
+    slow_FPS = models.NullBooleanField(null=True, blank=True)
+    slow_FPS_timestamp = models.DateTimeField(null=True, blank=True)
+    device = models.CharField(max_length=500, null=True, blank=True)
                          
     def __str__(self):
         return  str(self.pk) + "___" + self.learner.username + '___' + str(self.start_time.strftime("%a %d %b %H:%M")) + '___' + str(self.topic)

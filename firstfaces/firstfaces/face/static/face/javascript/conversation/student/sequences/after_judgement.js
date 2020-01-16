@@ -1,6 +1,7 @@
 function runAfterJudgement() {
 
     resetSentenceBeingRecorded();
+    conversationVariables.correctSentence = false;
 
     if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === "I" ) {
 
@@ -88,6 +89,7 @@ function tiaSpeakAfterReturningFromThinking() {
 
         createPromptFromServerPrompts();
         conversationVariables.promptSpeaking = true;
+        conversationVariables.correctSentence = true;
         tiaPrepareToSpeak( "prompt" );
         
         if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].awaiting_next_prompt ) {

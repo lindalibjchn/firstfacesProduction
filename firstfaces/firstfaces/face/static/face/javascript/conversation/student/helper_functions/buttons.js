@@ -8,6 +8,7 @@ function buttonsHideAllContainers() {
     $('#listenNextSentenceBtnCont').hide();
     $('#recordBtnsCont').hide();
     $('#tutorialBtnDoubleCont').hide();
+    $('#tutorialBtnSingleCont').hide();
 
 }
 
@@ -101,6 +102,33 @@ function hideTopButtons() {
     $('#prevSentsIconContainer').hide();
 
 }
+
+//function changeNextSentenceButtonAppearanceToAgree() {
+
+    //$('#listenNextSentenceBtnCont').fadeIn();
+    //$('#listenNextSentenceBtn').text('✔')
+    //$('#listenNextSentenceBtn').css({
+     
+        //'font-size': '5vw',
+
+    //})
+    //$('#listenNextSentenceBtn').addClass('w3-green');
+
+//}
+
+//function resetNextSentenceButtonAppearance() {
+
+    //$('#listenNextSentenceBtn').text('>>')
+    //$('#listenNextSentenceBtn').css({
+     
+        ////'font-size': '5vw',
+        //'font-size': '15px',
+
+    //})
+    //$('#listenNextSentenceBtn').removeClass('w3-green');
+
+//}
+
 
 
 

@@ -61,7 +61,7 @@ function tiaSpeakGreetings() {
         
         } else {
             
-            tiaPrepareToSpeak( "Hi,_great_to_see_you_again", showInitEmotionQuestions );
+            tiaPrepareToSpeak( "Hello,_it's_great_to_see_you_again", showInitEmotionQuestions );
             
         }
 
@@ -256,7 +256,7 @@ function beginTalking() {
 
     if ( conversationVariables.first_conversation ) {
     
-        tiaPrepareToSpeak( "Okay,_let's_talk_about_that_then", finalSpeak );
+        tiaPrepareToSpeak( "That's_grand,_now_remember_that_this_is_your_topic,_and_you_will_talk_to_me_about_it", finalSpeak );
 
     } else {
 
