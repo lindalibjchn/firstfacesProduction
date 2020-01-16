@@ -93,7 +93,7 @@ urlpatterns = [
     #SHOP
     path('get_attributes', store_main.get_attributes, name='get_attributes'),
     path('get_background_colors', store_main.get_background_colors, name='get_background_colors'),
-
+    path('get_balance', store_main.get_balance, name='get_balance'),
 
 
     ]

@@ -26,7 +26,7 @@ saved_audios = [v.split("/")[-1][:-4] for v in glob.glob(settings.BASE_DIR+'/med
 
 def create_word_audio(word, gesture=None, initial_delay=500, breathing=False, speaking_rate=100, pitch='+0', volume='+0', emotion=''):
     name = word
-    s = StockWord(name=name, texts=json.dumps(word))
+    s = StockWord(name=name, texts=word)
     urls = []
     visemes = []
     ssml = "<voice emotion='" + emotion + "'>" + word + "</voice>"

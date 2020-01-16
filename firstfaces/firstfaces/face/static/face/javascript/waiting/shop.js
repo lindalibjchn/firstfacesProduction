@@ -3,7 +3,8 @@ var tiaH, tiaW;
 var remH
 function setHeight(){
     //get products
-    get_backgrounds()
+    get_backgrounds();
+    get_balance();
 
     swidth = $(document).width()
     sheight = ($('#footer').offset()['top'] - ($('#shop-balance').offset()['top']+$('#shop-balance').height()));
@@ -98,21 +99,25 @@ function show_description(name,color,price){
     hide_shop_content();
     $('#product_description_price').hide();
     $('#product_description_title').hide();
-     $('#product_description_back').hide();
+    $('#product_description_back').hide();
+    $('#product_description_btns').hide();
     $('#product_description').show();
     $('#product_description_title').css('color',color);
+    $('#buy_equip_btn').css('background-color',color);
     $('#product_description_price').empty()
     $('#product_description_title').empty()
     setTimeout(function(){
          $('#product_description_price').append(price).fadeIn(600);
          $('#product_description_title').text(name).fadeIn(600);
          $('#product_description_back').fadeIn(600);
+         $('#product_description_btns').fadeIn(600);
     },800);
 }
 function hide_description(){
     $('#product_description_price').fadeOut(300);
     $('#product_description_title').fadeOut(300);
-    $('#product_description_back').fadeOut(600);
+    $('#product_description_back').fadeOut(300);
+    $('#product_description_btns').fadeOut(300);
     setTimeout(function(){
         $('#product_description').hide();
          $('#product_description_price').empty()
@@ -140,10 +145,13 @@ function clicked_background(id){
 
         if( waitingVariables.products.backgrounds[id].class == 'owned'){
             price ='<i style="color:green;" class="fa fa-check" ></i>'
+            txt = "equip";
         }
         else{
             price = '<p>'+waitingVariables.products.backgrounds[id].price+"</p>";
+            txt = "buy";
         }
+        $('#buy_equip_btn').text(txt);
         $('#product_description_back_btn').click(function(){unclicked_background();});
         show_description(waitingVariables.products.backgrounds[id].name, '#'+waitingVariables.products.backgrounds[id].hex, price)
         animate_background_colour(waitingVariables.attributes["background-colour"],waitingVariables.products.backgrounds[id].hex,600);
@@ -227,3 +235,39 @@ function change_color_with_delay(i,colours,end){
     },16.666666667);
 }
 
+
+function get_balance(){
+    let fd = new FormData();
+     $.ajax({
+        url: "/get_balance",
+        type: "POST",
+        data: fd,
+        processData: false,
+        contentType: false,
+        success: function(json){
+            $('#shop-balance').text(json.balance);
+        },
+        error: function() {
+          console.log("Error Getting Balance");
+        },
+    });
+}
+
+function equip_background(){
+    let fd = new FormData();
+    fd.append(id)
+     $.ajax({
+        url: "/equip_background",
+        type: "POST",
+        data: fd,
+        processData: false,
+        contentType: false,
+        success: function(json){
+            $('#shop-balance').text(json.balance);
+        },
+        error: function() {
+          console.log("Error Getting Balance");
+        },
+    });
+
+}

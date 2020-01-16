@@ -20,6 +20,15 @@ def get_attributes(request):
     return JsonResponse(response_data)
 
 
+def get_balance(request):
+    user = request.user
+    balance = Profile.objects.filter(learner=user)[0].points
+    response_data = {
+        "balance": balance,
+    }
+
+    return JsonResponse(response_data)
+
 
 def get_background_colors(request):
     bcs = BackgroundColour.objects.all()

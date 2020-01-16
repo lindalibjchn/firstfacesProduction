@@ -181,7 +181,7 @@ function addTia() {
 
         scene.add( tiaObject.mBody );
 
-        //engineRunning();
+        engineRunning();
 
     }
     
