@@ -7,13 +7,14 @@
 STYLESHEETS
 -------------------------------------------------------------------------->
 {% include 'face/waiting/stylesheets.html' %}
-
+{% include 'face/waiting/popup.html' %}
 {% if tutorial_complete %}
 
-    <!----------------------------------------------------------------------- 
-    TIMETABLE
-    -------------------------------------------------------------------------->
-    {% include 'face/waiting/timetable.html' %}
+    {% include 'face/waiting/home.html' %}
+    {% include 'face/waiting/shop.html' %}
+    {% include 'face/waiting/history.html' %}
+    {% include 'face/waiting/profile.html' %}
+    {% include 'face/waiting/about.html' %}
 
     <!----------------------------------------------------------------------- 
     ALL SCORES
@@ -46,6 +47,7 @@ STYLESHEETS
 <!----------------------------------------------------------------------- 
 SCRIPTS
 -------------------------------------------------------------------------->
+{% include 'face/waiting/footer.html' %}
 {% include 'face/waiting/scripts.html' %}
 
 {% endblock %}

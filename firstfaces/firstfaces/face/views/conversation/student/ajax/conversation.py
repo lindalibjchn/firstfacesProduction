@@ -21,9 +21,10 @@ import string
 import math
 import ast
 from face.views.conversation.all.modify_data import jsonify_or_none
+from face.views.conversation.all.dan_utils import get_StockWords
 
 
-valid = [v.split("/")[-1][:-4] for v in glob.glob(settings.BASE_DIR+'/media/prePreparedWords/audio/*.wav')]
+valid = get_StockWords()
 
 
 # def store_sound_mic(request):

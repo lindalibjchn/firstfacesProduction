@@ -20,6 +20,7 @@ from PIL import Image
 import cv2
 from pydub import AudioSegment
 from pydub.playback import play
+from face.models import StockWord
 
 sim_path = settings.BASE_DIR+"/face/text_files/pho_diffs.csv"
 dict_path = settings.BASE_DIR+"/face/text_files/cmudict.txt"
@@ -378,3 +379,11 @@ def cut_wav(wav_path):
     newA = newA[begining:finish]
     newA.export(wav_path,format='wav')
     return
+
+
+def get_StockWords():
+    out = []
+    sws = StockWord.objects.all()
+    for sw in sws:
+        out.append(sw.texts)
+    return out

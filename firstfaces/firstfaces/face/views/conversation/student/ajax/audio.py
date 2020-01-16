@@ -19,6 +19,8 @@ from google.cloud import texttospeech
 from face.views.conversation.all.dan_utils import get_spectogram, get_sim
 import face.views.conversation.teacher.utils.text_to_speech as ts
 from face.views.conversation.all.modify_data import jsonify_or_none
+from face.views.conversation.all.dan_utils import get_StockWords
+
 
 
 import logging
@@ -331,7 +333,7 @@ def error_typing_used(request):
     #Synth Audio
 
     text_ = request.POST['trans']
-    valid = [v.split("/")[-1][:-4] for v in glob.glob(settings.BASE_DIR + '/media/prePreparedWords/audio/*.wav')]
+    valid = get_StockWords()
     if text_ not in valid:
         print('\n\ntext_:', text_)
         temp = ts.create_word_audio(text_)
@@ -446,12 +448,26 @@ def store_attempt_blob(request):
     aeca = AudioErrorCorrectionAttempt(error=ae)
     aeca.save()        
     response_data = {
-        "correct":correct,
-        "audio_url":audio_url,
-        "image_url":pic_url,
-        "trans":trans,
-        "att_id":aeca.id,
-        "hypLen":lenAudio,
-        "sim":sim,
+        "correct": correct,
+        "audio_url": audio_url,
+        "image_url": pic_url,
+        "trans": trans,
+        "att_id": aeca.id,
+        "hypLen": lenAudio,
+        "sim": sim,
     }
+    return JsonResponse(response_data)
+
+
+def get_stock_words(request):
+    out = []
+    sws = StockWord.objects.all()
+    for sw in sws:
+        if sw.texts in out:
+            print("duplicate - "+sw.texts+"\n\n\n")
+        out.append(sw.texts)
+    response_data = {
+        "SW":out,
+    }
+
     return JsonResponse(response_data)
