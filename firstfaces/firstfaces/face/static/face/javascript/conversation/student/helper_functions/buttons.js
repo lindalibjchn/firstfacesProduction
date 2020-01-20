@@ -1,6 +1,6 @@
 function buttonsHideAllContainers() {
 
-    $('#meterContainer').hide();
+    //$('#meterContainer').hide();
     $('#emotionQuestionsCont').hide();
     $('#topicChoicesCont').hide();
     $('#submitTopicBtnCont').hide();

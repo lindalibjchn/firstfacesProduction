@@ -590,6 +590,8 @@ $('#keyboardOverlay').click(function(){
             }
         }
      });;
+    $( '#closeTallTypeText' ).off( 'click' );
+    $( '#closeTallType' ).hide();
     setTimeout(function(){
         $("#bottomCent").focus();
     },900);

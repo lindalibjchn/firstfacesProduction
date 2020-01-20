@@ -157,17 +157,27 @@ function onStopClick() {
 
 function onMediaRecorderStop() {
  
-    hideVolumeBar();
-
     if ( conversationVariables.over15secs ) {
 
         conversationVariables.over15secs = false;
         alert( 'you have 15 seconds to say each sentence' );
-        initInputReady();
+        
+        if ( !conversationVariables.stage2 && !conversationVariables.stage3 ) {
+
+            initInputReady();
+
+        } else {
+
+            movementController( movementObject.abs.blank, 1, 1 );
+            $('#reRecordBtn').fadeIn();
+
+        }
 
     // i first interference then dont need to do any of this stuff
     } else if ( !conversationVariables.interference ) {
 
+        stopDrawingVolumeBar();
+        hideVolumeBar()
         //$('#talkBtn').prop( "disabled", true )
         //conversationVariables.blob = new Blob(chunks, { type : 'audio/webm; codecs: opus' });
         conversationVariables.blob = new Blob(chunks, { type : 'audio/webm; codecs: opus' });

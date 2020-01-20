@@ -237,14 +237,22 @@ function afterMovementBackFromTap() {
 
             if ( conversationVariables.stage2 && !conversationVariables.stage3 ) {
 
-                tutorialOption061()
+                if ( $('#bottomCent').text() !== "" ) {
+
+                    tutorialOption061();
+
+                }
 
             }
 
         } else if ( conversationVariables.tutorialStep === '061' ) {
 
-            tutorialOption071();
+            if ( conversationVariables.goToTutorialOption071 ) {
+            
+                tutorialOption071();
         
+            }
+
         }
 
     }

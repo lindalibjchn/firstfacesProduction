@@ -334,16 +334,17 @@ def error_typing_used(request):
 
     text_ = request.POST['trans']
     valid = get_StockWords()
+    print('valid (audio.py):', valid)
     if text_ not in valid:
         print('\n\ntext_:', text_)
         temp = ts.create_word_audio(text_)
         valid.append(text_)
-        texts = jsonify_or_none(temp.texts)
+        texts = temp.texts
         url = ['media/' + URL for URL in jsonify_or_none(temp.urls)]
         visemes = jsonify_or_none(temp.visemes)
     else:
         temp = StockWord.objects.get(name=text_)
-        texts = jsonify_or_none(temp.texts)
+        texts = temp.texts
         url = ['media/' + URL for URL in jsonify_or_none(temp.urls)]
         visemes = jsonify_or_none(temp.visemes)
 

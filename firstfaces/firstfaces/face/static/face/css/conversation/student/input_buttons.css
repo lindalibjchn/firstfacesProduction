@@ -117,7 +117,7 @@
     z-index: 9;
     height: 100%;
     width: 100%;
-    /*display: none;*/
+    display: none;
     /*border: 1px solid blue;*/
     position: absolute;
     /*right: 0;*/
