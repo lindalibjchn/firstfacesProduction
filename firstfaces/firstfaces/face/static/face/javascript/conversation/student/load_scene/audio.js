@@ -157,6 +157,8 @@ function onStopClick() {
 
 function onMediaRecorderStop() {
  
+    stopDrawingVolumeBar();
+    hideVolumeBar()
     if ( conversationVariables.over15secs ) {
 
         conversationVariables.over15secs = false;
@@ -176,8 +178,6 @@ function onMediaRecorderStop() {
     // i first interference then dont need to do any of this stuff
     } else if ( !conversationVariables.interference ) {
 
-        stopDrawingVolumeBar();
-        hideVolumeBar()
         //$('#talkBtn').prop( "disabled", true )
         //conversationVariables.blob = new Blob(chunks, { type : 'audio/webm; codecs: opus' });
         conversationVariables.blob = new Blob(chunks, { type : 'audio/webm; codecs: opus' });
