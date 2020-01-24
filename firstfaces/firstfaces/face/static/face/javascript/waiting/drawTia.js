@@ -358,7 +358,7 @@ function hide_background(hex_str){
     renderer.setClearColor( "FFFFFF" , 0);
 }
 
-function fade_background(time=300,wait=0){
-    set
-
+function change_eye(hex_str){
+    tiaObject.mEyeL2.material[0].color.setHex('0x'+hex_str);
 }
+

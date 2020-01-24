@@ -49,7 +49,14 @@ function onClick(event) {
                         zoom(300,camera_values.face);
                         waitingVariables.zoomed = true;
                         setTimeout(function(){
-                            show_click_me();
+                             if(intersects[0].object.name == 'mHair'){
+                                flash_hair(300);
+                                show_title('Hair',wait=300,time=500,st_callback=show_hair);
+                            }
+                            if(intersects[0].object.name.substring(0,4) == 'mEye'){
+                                flash_eyes(time=200)
+                                show_title('Eyes',wait=300,time=500,st_callback=show_eyes);
+                            }
                         },300);
                     },200);
                 }
@@ -59,7 +66,7 @@ function onClick(event) {
                         show_title('Hair',wait=300,time=500,st_callback=show_hair);
                     }
                     if(intersects[0].object.name.substring(0,4) == 'mEye'){
-                        alert("EYE")
+                        flash_eyes(time=200)
                         show_title('Eyes',wait=300,time=500,st_callback=show_eyes);
                     }
                 }
@@ -70,7 +77,8 @@ function onClick(event) {
                     zoom(300,camera_values.original);
                     waitingVariables.zoomed = false;
                     setTimeout(function(){
-                        show_click_me();
+                       flash_clothes(200);
+                        show_title('Clothing',wait=300,time=500, st_callback= show_clothes);
                     },300);
                  }
                  else{
@@ -85,10 +93,11 @@ function onClick(event) {
                 waitingVariables.zoomed = false;
                 hide_products();
                 setTimeout(function(){
-                    show_click_me();
+                    flash_background(200);
+                    show_title('backgrounds',wait=300,time=500,st_callback=show_backgrounds);
                 },300);
             } else {
-                flash_background(300);
+                flash_background(200);
                 show_title('backgrounds',wait=300,time=500,st_callback=show_backgrounds);
 
             }
