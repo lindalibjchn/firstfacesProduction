@@ -22,6 +22,7 @@ $(window).on( 'load', function() {
 
 function engineRunning() {
 
+    console.log('in engine running');
     setBaseExpressionsAndMovements(); // do this after all of Tia is loaded
     setSynthesisAudioOnChangeEvent();
     animate();

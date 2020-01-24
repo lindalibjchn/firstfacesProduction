@@ -22,14 +22,14 @@ function initInputReady( from, showPtsBool=false ) {
     
     }
 
-    if ( conversationVariables.conversation_dict.completed_sentences.length !== 0 ) {
+    if ( conversationVariables.conversation_dict.completed_sentences.length !== 0 && conversationVariables.tutorial_complete ) {
   
         $( '#prevSentsIconContainer' ).show();
+        addPreviousSentences( conversationVariables.conversation_dict, 0 );
     
     }
 
     //console.log( 'in initInputReady' );
-    addPreviousSentences( conversationVariables.conversation_dict, 0 );
 
     if ( showPtsBool ) {
 

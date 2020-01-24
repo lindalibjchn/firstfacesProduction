@@ -41,7 +41,7 @@ def store_sent(request):
     update = Update.objects.latest('pk')
     update.updated_sent = True
     updated_sentence_ids = jsonify_or_none(update.sentence_ids)
-    if update.sentence_ids == None:
+    if updated_sentence_ids == None:
         update.sentence_ids = json.dumps([s.id])
     else:
         update.sentence_ids = json.dumps(updated_sentence_ids.append(s.id))

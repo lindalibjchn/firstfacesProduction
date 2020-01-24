@@ -45,6 +45,8 @@ function listenToRecording( intensity ) {
 
 function firstFlinch() {
 
+    console.log('in firstFlinch');
+
     onStopClick();
 
     expressionController( expressionObject.abs.flinch, tiaTimings.flinchDuration / 2 )//express discomfort 
@@ -52,14 +54,18 @@ function firstFlinch() {
         
         setTimeout( function() {
 
-            hideVolumeBar();//always hide it even if not shown, same as if statement
+            //stopDrawingVolumeBar();//always hide it even if not shown, same as if statement
             expressionController( expressionObject.abs.blank, 1 ) 
-            movementController( movementObject.abs.blank, 0.5, 1.5, moveCb=function(){tiaPrepareToSpeak( "That_was_very_loud", speakCb=function(){
+            movementController( movementObject.abs.blank, 0.5, 1.5, moveCb=function(){
+                
+                tiaPrepareToSpeak( "That_was_very_loud", speakCb=function(){
              
                     conversationVariables.interference = false;  
-                    canvasContext.fillStyle = "#33ff00";
+                    //canvasContext.fillStyle = "#33ff00";
                
                 })
+            
+                hideVolumeBar();
             
             });
 
@@ -70,15 +76,16 @@ function firstFlinch() {
 }
 
 function subsequentFlinches() {
-  //console.log('in subsequentFlinches');
+    
+    console.log('in subsequentFlinches');
+    conversationVariables.interference = false;
 
     expressionController( expressionObject.abs.halfFlinch, tiaTimings.flinchDuration / 4, expressCb=function(){
        
+        canvasContext.fillStyle = "#33ff00";
         setTimeout( function() {
 
             expressionController( expressionObject.abs.speechRecognition, tiaTimings.flinchDuration, expressCb=function(){
-         
-                setTimeout( beginDrawingVolumeBar, 1000 );
 
             } ); 
 

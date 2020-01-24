@@ -157,13 +157,23 @@ function onStopClick() {
 
 function onMediaRecorderStop() {
  
-    hideVolumeBar();
-
+    stopDrawingVolumeBar();
+    hideVolumeBar()
     if ( conversationVariables.over15secs ) {
 
         conversationVariables.over15secs = false;
         alert( 'you have 15 seconds to say each sentence' );
-        initInputReady();
+        
+        if ( !conversationVariables.stage2 && !conversationVariables.stage3 ) {
+
+            initInputReady();
+
+        } else {
+
+            movementController( movementObject.abs.blank, 1, 1 );
+            $('#reRecordBtn').fadeIn();
+
+        }
 
     // i first interference then dont need to do any of this stuff
     } else if ( !conversationVariables.interference ) {

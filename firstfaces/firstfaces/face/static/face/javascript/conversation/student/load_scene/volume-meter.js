@@ -13,8 +13,8 @@ function initMicVolumeBar() {
 
     mediaStreamSource.connect(meter);
 
-    volumeObject.bool = true;// detect volume and be ready to show volume bar
-    showVolumeBar();
+
+    beginDrawingVolumeBar();
 
 }
 
@@ -120,13 +120,17 @@ function drawLoop() {
 
     if ( meter.checkClipping() ) {
 
-        stopDrawingVolumeBar();
+        if ( conversationVariables.interference_count === 0 ) {
 
+            stopDrawingVolumeBar();
+
+        }
+
+        conversationVariables.interference = true;
         if ( conversationVariables.interference_count === 0 && conversationVariables.tutorial_complete ) {
         
             if ( !conversationVariables.stage2 && !conversationVariables.stage3 ) {
                // don't want to do full flinch animation in later stages
-                conversationVariables.interference = true;
                 tiaConfusedAfterClipping( true );
 
             } else {
@@ -160,14 +164,50 @@ function drawVolumeBar() {
 
 function stopDrawingVolumeBar() {
 
+    console.log('stopDrawingVolumeBar');
     volumeObject.bool = false;
+
+}
+
+function hideVolumeBar() {
+
+    $('#meterContainer').fadeOut(); 
 
 }
 
 function beginDrawingVolumeBar() {
 
+    putVolumeBarInCorrectStage();
+
     volumeObject.bool = true;
+    $('#meterContainer').show(); 
     canvasContext.fillStyle = "#33ff00";
+
+}
+
+function putVolumeBarInCorrectStage() {
+
+    if ( conversationVariables.stage2 ) {
+
+        if ( $('#meterContainer').parent('#overlayBtnBox').length === 0 ) {
+
+            $('#meterContainer').prependTo($('#overlayBtnBox'));
+            $('#meterContainer').css('z-index', '4');
+            $('#inputButtonsContainer > #meterContainer').css( 'remove' );
+
+        }
+
+    } else {
+
+        if ( $('#meterContainer').parent('#inputButtonsContainer').length === 0 ) {
+
+            $('#meterContainer').prependTo($('#inputButtonsContainer'));
+            $('#meterContainer').css('z-index', '5');
+            $('#overlayBtnBox > #meterContainer').css( 'remove' );
+
+        }
+
+    }
 
 }
 
@@ -193,19 +233,4 @@ function tiaConfusedAfterClipping( firstTime ) {
     }
 
 }
-
-function showVolumeBar() {
-
-    $('#meterContainer').show(); 
-    volumeObject.bool = true;
-
-}
-
-function hideVolumeBar() {
-
-    $('#meterContainer').hide(); 
-    volumeObject.bool = false;
-
-}
-
 

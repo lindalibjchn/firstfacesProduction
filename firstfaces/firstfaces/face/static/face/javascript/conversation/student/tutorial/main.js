@@ -3,6 +3,7 @@ function runTutorial() {
     blinkInterval = setInterval( blink_button, 1500 );
     $('#stopAllButtonEffectsExceptInputButtons').show();
     conversationVariables.tutorialStep = 0;
+    conversationVariables.interference_count = 1;
     //["Hello, and a very warm welcome to Emotional Response Language Education", "This is your personal, private classroom, where you can practise your English speaking", "My name is Saoirse, and I will be your teacher", "I will help you improve your English, by showing you your vocabulary and grammar mistakes", "I am a very honest teacher, so every time you make a mistake, even a small one, I will tell you", "Would you like to try a class with me?"]
     //tiaPrepareToSpeak("Hello,_and_a_very_warm_welcome_to_Emotional_Response_Language_Education", speakCb=function(){
     tiaPrepareToSpeak("tutorial_start", speakCb=function(){
@@ -62,8 +63,8 @@ function tutorialOption010() {
     conversationVariables.tutorialStep = '010';
     removeDoubleBtn();
 
-    //tiaPrepareToSpeak("No_problem,_you_can_always_come_back_another_time", speakCb=function(){
-    tiaPrepareToSpeak("tutorial_010", speakCb=function(){
+    tiaPrepareToSpeak("No_problem,_you_can_always_come_back_another_time", speakCb=function(){
+    //tiaPrepareToSpeak("tutorial_010", speakCb=function(){
         
         window.location.href = prefixURL + 'waiting'
 
@@ -95,7 +96,7 @@ function tutorialOption011() {
 function tutorialOption012() {
 
     conversationVariables.tutorialStep = '012';
-    removeSingleBtn();
+    //removeSingleBtn();
     
     tiaPrepareToSpeak("Let's_try_this_again,_can_you_hear_my_voice_now", speakCb=function(){
     //tiaPrepareToSpeak("tutorial_011", speakCb=function(){
@@ -144,8 +145,7 @@ function tutorialOption021() {
 
     conversationVariables.tutorialStep = '021';
     //removeDoubleBtn();
-    
-    // ["That's great, now let's check that I can hear your voice too", "After I finish speaking, a blue microphone button will appear below", "please tap it and say, 'nice to meet you', then tap the red stop button"]
+    //["Brilliant, now let's check that I can hear your voice too", "tap the blue microphone button below and say, 'nice to meet you', then tap the red stop button"]
     //tiaPrepareToSpeak("Brilliant,_now_let's_check_that_I_can_hear_your_voice_too", speakCb=function(){
      tiaPrepareToSpeak("tutorial_021", speakCb=function(){
 
@@ -165,7 +165,7 @@ function tutorialOption022() {
 
     //removeSingleBtn();
     
-    tiaPrepareToSpeak("Tap_the_microphone_button_again_and_say,_'nice_to_meet_you',_then_tap_the_red_stop_button", speakCb=function(){
+    tiaPrepareToSpeak("Tap_the_microphone_button_again_and_say,_'nice_to_meet_you',_then_tap_the_stop_button", speakCb=function(){
     //tiaPrepareToSpeak("Let's_try_that_again", speakCb=function(){
 
         buttonsMicrophoneOnly();
@@ -423,6 +423,7 @@ function tutorialSpectrogramButtonClickEvent() {
         $( '#inputButtonsContainer' ).css('z-index', '10');
         $( '#overlayBtnBox' ).hide();
 
+        conversationVariables.goToTutorialOption071 = true;
         submitKeyboard();
         $('#keyboardOverlay').hide();
         decrease_type_size_stage2()
@@ -431,6 +432,7 @@ function tutorialSpectrogramButtonClickEvent() {
 
     } else {
 
+        $("#bottomCent").text('');
         $("#bottomCent").focus();
 
     }
@@ -474,7 +476,7 @@ function tutorialOption081() {
 
     $( '#talkBtn' ).hide();
     $('#correctionOverlay').fadeOut();
-    $('#textInputContainer').fadeOut();
+    $("#textInputContainer").animate({left: '100%'}, function(){$("#textInputContainer").hide().css('left', '0')})
     //setTimeout( buttonsListenNextSentence, 500 );
 
 }
@@ -483,12 +485,22 @@ function tutorialOption090() {
 
     conversationVariables.tutorialStep = '090';
     removeDoubleBtn();
-    tutorialOption101();
     tiaPrepareToSpeak("That's_ok,_I_will_show_you_the_mistake_soon", speakCb=function(){
 
-        showSingleBtn( tiaSpeakButtonEvent ) 
+        tutorialOption101();
 
     })
+    createSingleExpression( expressionObject.rel.content, 0.1 );
+    expressionController( expressionObject.calculated, 0.5, function(){
+        
+        initNod(0.4, 0.4, function() {
+
+            buttonsListenNextSentence();
+
+        });
+        
+    });
+
     
 }
 
@@ -524,7 +536,8 @@ function tutorialOption101() {
 
     //initNod(0.3, 0.3, function() {
 
-        buttonsListenNextSentence();
+    createSingleExpression( expressionObject.rel.confused, 0.5 );
+    buttonsListenNextSentence();
 
     //});
 
@@ -547,7 +560,8 @@ function goToConfusedTutorial() {
         setTimeout( function() {
 
             movementController( movementObject.abs.blank, tiaTimings.movementToConfusedDuration / 2, tiaTimings.movementToConfusedDuration )
-            expressionController( expressionObject.abs.neutral, tiaTimings.changeExpressionToConfusedDuration, tutorialOption111 );
+            createSingleExpression( expressionObject.rel.happy, 0.5 );
+            expressionController( expressionObject.calculated, tiaTimings.changeExpressionToConfusedDuration, tutorialOption111 );
 
         }, 1500);
         

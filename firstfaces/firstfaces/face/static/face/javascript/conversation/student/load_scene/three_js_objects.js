@@ -2,7 +2,7 @@ function renderScene() {
 
     renderer = new THREE.WebGLRenderer();
     renderer.setSize( WIDTH, HEIGHT );
-    renderer.setClearColor(0x000022, 0.5);
+    renderer.setClearColor(0x00ffff, 0.5);
     document.body.appendChild( renderer.domElement );
 
 }
