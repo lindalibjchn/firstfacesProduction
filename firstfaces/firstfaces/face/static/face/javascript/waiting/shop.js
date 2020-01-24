@@ -1,36 +1,209 @@
 var sheight, swidth;
 var tiaH, tiaW;
 var remH
+var tiaEyes = []
 function setHeight(){
     //get products
-    get_backgrounds()
+
+    get_balance();
+
 
     swidth = $(document).width()
     sheight = ($('#footer').offset()['top'] - ($('#shop-balance').offset()['top']+$('#shop-balance').height()));
-    tiaH = Math.round(sheight*0.6);
-    $('#demoHolder').css({"height":tiaH, 'width':swidth});
+    tiaH = Math.round(sheight*0.7);
+    tiaW = Math.round(swidth*.95);
+    $('#demoHolderCont').css("height",tiaH);
+    $('#demoHolder').css({"height":tiaH, 'width':tiaW});
 
-    tiaW = swidth;
 
-    $('#tiaHolder').css({"height":"100%", 'width':'100%', 'border-bottom': '3px solid #102858'});
+    $('#tiaHolder').css({"height":"100%", 'width':'100%'});
     remH = sheight - tiaH;
-    pd_h = Math.round(sheight*0.4)
+    pd_h = Math.round(sheight*0.3)
     $('#product_description').css({"height":pd_h+"px", "width":'100%'});
     $('#product_description').hide();
-    btnH = Math.round(sheight*0.12);
-    product_h = Math.round(sheight*0.28);
-    $('.product-category').css('height',product_h+"px");
-    btnP = Math.round(((swidth*.95) - (btnH*5))/6 )
-    $('#category-btns').css('height',btnH+"px")
-    btnH = Math.round(btnH*0.9);
-    fH = Math.round(btnH*.6);
-    $('.product-btn-cat-img').css({'max-height':fH+"px"})
-    $('.product-category-button').css({"height":btnH+"px", 'width':btnH+"px", "margin-left":btnP+"px", "font-size":fH+"px"});
-    $('.last-btn').css("margin-right",btnP+"px");
+    $('.product-category').css('height',pd_h+"px");
+    waitingVariables.zoomed = false;
+    show_click_me()
 
 };
 
+function equip_eyes(id){
+    let fd = new FormData();
+    fd.append("id_",id);
+     $.ajax({
+        url: "/equip_eyes",
+        type: "POST",
+        data: fd,
+        processData: false,
+        contentType: false,
+        success: function(json){
+            waitingVariables.attributes['eyes'] = id;
+            waitingVariables.products.eyes = json.eyes
+            type = 'eyes';
+            $('#product-cont').empty();
+            for(x in waitingVariables.products[type]){
+                $('#product-cont').append(waitingVariables.products[type][x].html)
+            }
+            unclicked_eyes();
+        },
+        error: function() {
+          console.log("Error Getting Balance");
+        },
+    });
+}
+function buy_eyes(id){
+    let fd = new FormData();
+    fd.append("id_",id);
+    fd.append("price",waitingVariables.products.eyes[id].price);
+     $.ajax({
+        url: "/buy_eyes",
+        type: "POST",
+        data: fd,
+        processData: false,
+        contentType: false,
+        success: function(json){
+            $('#shop-balance').text(json.balance);
+            //Show fake red balance appear then move down and fade out
+            waitingVariables.attributes['eyes'] = id;
+            waitingVariables.products.eyes = json.eyes
+            type = 'eyes';
+            $('#product-cont').empty();
+            for(x in waitingVariables.products[type]){
+                $('#product-cont').append(waitingVariables.products[type][x].html)
+            }
+            unclicked_eyes();
+
+        },
+        error: function() {
+          console.log("Error Getting Balance");
+        },
+    });
+}
+
+
+function equip_background(id){
+    let fd = new FormData();
+    fd.append("id_",id);
+     $.ajax({
+        url: "/equip_background",
+        type: "POST",
+        data: fd,
+        processData: false,
+        contentType: false,
+        success: function(json){
+            // Change class of equipped to equipped
+            // Remove previously equipped class
+            hex = waitingVariables.products.backgrounds[id].hex;
+            waitingVariables.attributes['background-colour'] = hex;
+            waitingVariables.products.backgrounds = json.backgrounds
+            type = 'backgrounds';
+            $('#product-cont').empty();
+            for(x in waitingVariables.products[type]){
+                $('#product-cont').append(waitingVariables.products[type][x].html)
+            }
+            unclicked_background();
+        },
+        error: function() {
+          console.log("Error Getting Balance");
+        },
+    });
+}
+
+function equip_clothes(id){
+    let fd = new FormData();
+    fd.append("id_",id);
+     $.ajax({
+        url: "/equip_clothes",
+        type: "POST",
+        data: fd,
+        processData: false,
+        contentType: false,
+        success: function(json){
+            // Change class of equipped to equipped
+            // Remove previously equipped class
+            hex = waitingVariables.products.clothes[id].hex;
+            waitingVariables.attributes['clothes-colour'] = hex;
+            waitingVariables.products.clothes = json.clothes
+            type = 'clothes';
+            $('#product-cont').empty();
+            for(x in waitingVariables.products[type]){
+                $('#product-cont').append(waitingVariables.products[type][x].html)
+            }
+            unclicked_clothes();
+        },
+        error: function() {
+          console.log("Error Getting Clothes");
+        },
+    });
+}
+
+function buy_clothes(id){
+    let fd = new FormData();
+    fd.append("id_",id);
+    fd.append("price",waitingVariables.products.clothes[id].price);
+     $.ajax({
+        url: "/buy_clothes",
+        type: "POST",
+        data: fd,
+        processData: false,
+        contentType: false,
+        success: function(json){
+            hex = waitingVariables.products.clothes[id].hex;
+            $('#shop-balance').text(json.balance);
+            //Show fake red balance appear then move down and fade out
+            waitingVariables.attributes['clothes-colour'] = hex;
+            waitingVariables.products.clothes = json.clothes
+            $('.product-category-cont').empty();
+            type = 'clothes';
+            for(x in waitingVariables.products[type]){
+                $('.product-category-cont').append(waitingVariables.products[type][x].html)
+            }
+            unclicked_clothes();
+
+        },
+        error: function() {
+          console.log("Error Getting Clothes");
+        },
+    });
+}
+
+
+
+function buy_background(id){
+    let fd = new FormData();
+    fd.append("id_",id);
+    fd.append("price",waitingVariables.products.backgrounds[id].price);
+     $.ajax({
+        url: "/buy_background",
+        type: "POST",
+        data: fd,
+        processData: false,
+        contentType: false,
+        success: function(json){
+            hex = waitingVariables.products.backgrounds[id].hex;
+            $('#shop-balance').text(json.balance);
+            //Show fake red balance appear then move down and fade out
+            waitingVariables.attributes['background-colour'] = hex;
+            waitingVariables.products.backgrounds = json.backgrounds
+            $('.product-category-cont').empty();
+            type = 'backgrounds';
+            for(x in waitingVariables.products[type]){
+                $('.product-category-cont').append(waitingVariables.products[type][x].html)
+            }
+            unclicked_background();
+
+        },
+        error: function() {
+          console.log("Error Getting Balance");
+        },
+    });
+}
+
+
+
+
 function get_tia_attributes(){
+
     let fd = new FormData();
      $.ajax({
         url: "/get_attributes",
@@ -45,7 +218,10 @@ function get_tia_attributes(){
                 "background-colour-id":json.BC_id,
                 "hair-colour-id":json.HC_id,
                 "hair-colour":json.HairC,
-                "brow-colour":json.BrowC
+                "brow-colour":json.BrowC,
+                "clothes-colour":json.CC,
+                "clothes-id":json.CC_id,
+                "eyes":json.eyes
             }
             createTia("tiaHolder", tiaH, tiaW);
         },
@@ -55,7 +231,7 @@ function get_tia_attributes(){
     });
 }
 
-
+//Functions for getting products
 function get_backgrounds(){
     let fd = new FormData();
      $.ajax({
@@ -73,18 +249,131 @@ function get_backgrounds(){
     });
 }
 
+function get_eyes(){
+    let fd = new FormData();
+     $.ajax({
+        url: "/get_eye_colors",
+        type: "POST",
+        data: fd,
+        processData: false,
+        contentType: false,
+        success: function(json){
+            waitingVariables.products.eyes = json.eyes
+            tiaEyes =  Object.keys(waitingVariables.products.eyes);
+        },
+        error: function() {
+          console.log("Error getting eyes");
+        },
+    });
+}
+
+function get_hairColours(){
+    let fd = new FormData();
+     $.ajax({
+        url: "/get_hair_colors",
+        type: "POST",
+        data: fd,
+        processData: false,
+        contentType: false,
+        success: function(json){
+            waitingVariables.products.hair = json.hair
+            console.log("Success")
+        },
+        error: function() {
+          console.log("Errorr getting hair");
+        },
+    });
+}
+function get_clothingColours(){
+    let fd = new FormData();
+     $.ajax({
+        url: "/get_clothes_colors",
+        type: "POST",
+        data: fd,
+        processData: false,
+        contentType: false,
+        success: function(json){
+            waitingVariables.products.clothes = json.clothes
+        },
+        error: function() {
+          console.log("Error_Getting_Stock");
+        },
+    });
+}
+
+function equip_hair(id){
+    let fd = new FormData();
+    fd.append("id_",id);
+     $.ajax({
+        url: "/equip_hair",
+        type: "POST",
+        data: fd,
+        processData: false,
+        contentType: false,
+        success: function(json){
+            // Change class of equipped to equipped
+            // Remove previously equipped class
+            hex_hair = waitingVariables.products.hair[id].hex_hair;
+            hex_brow = waitingVariables.products.hair[id].hex_brow;
+            waitingVariables.attributes['hair-colour'] = hex_hair;
+            waitingVariables.attributes['brow-colour'] = hex_brow;
+            get_hairColours();
+            waitingVariables.products.hair = json.hair
+            type = 'hair';
+            $('.product-category-cont').empty();
+            for(x in waitingVariables.products[type]){
+                $('.product-category-cont').append(waitingVariables.products[type][x].html)
+            }
+            unclicked_hair();
+        },
+        error: function() {
+          console.log("Error Getting Balance");
+        },
+    });
+}
+
+function buy_hair(id){
+    let fd = new FormData();
+    fd.append("id_",id);
+    fd.append("price",waitingVariables.products.hair[id].price);
+     $.ajax({
+        url: "/buy_hair",
+        type: "POST",
+        data: fd,
+        processData: false,
+        contentType: false,
+        success: function(json){
+            hex_hair = waitingVariables.products.hair[id].hex_hair;
+            hex_brow = waitingVariables.products.hair[id].hex_brow;
+            waitingVariables.attributes['hair-colour'] = hex_hair;
+            waitingVariables.attributes['brow-colour'] = hex_brow;
+            $('#shop-balance').text(json.balance);
+            //Show fake red balance appear then move down and fade out
+            waitingVariables.products.hair = json.hair
+            $('.product-category-cont').empty();
+            type = 'hair';
+            for(x in waitingVariables.products[type]){
+                $('.product-category-cont').append(waitingVariables.products[type][x].html)
+            }
+            unclicked_hair();
+
+        },
+        error: function() {
+          console.log("Error Getting Balance");
+        },
+    });
+}
+
 $('.product-category-button').click(function(){
     var type = $(this).attr('id');
     $('.product-category-cont').empty();
     for(x in waitingVariables.products[type]){
        $('.product-category-cont').append(waitingVariables.products[type][x].html)
-
     }
 });
 
 function hide_shop_content(){
     $('.product-category').fadeOut(300);
-    $('#category-btns').fadeOut(300);
     return
 }
 function show_shop_content(){
@@ -96,23 +385,29 @@ function show_shop_content(){
 
 function show_description(name,color,price){
     hide_shop_content();
-    $('#product_description_price').hide();
-    $('#product_description_title').hide();
-     $('#product_description_back').hide();
-    $('#product_description').show();
-    $('#product_description_title').css('color',color);
-    $('#product_description_price').empty()
-    $('#product_description_title').empty()
     setTimeout(function(){
-         $('#product_description_price').append(price).fadeIn(600);
-         $('#product_description_title').text(name).fadeIn(600);
-         $('#product_description_back').fadeIn(600);
-    },800);
+        $('#product_description_price').hide();
+        $('#product_description_title').hide();
+        $('#product_description_back').hide();
+        $('#product_description_btns').hide();
+        $('#product_description').show();
+        $('#product_description_title').css('color',color);
+        $('#buy_equip_btn').css('background-color',color);
+        $('#product_description_price').empty()
+        $('#product_description_title').empty()
+        setTimeout(function(){
+             $('#product_description_price').append(price).fadeIn(600);
+             $('#product_description_title').text(name).fadeIn(600);
+             $('#product_description_back').fadeIn(600);
+             $('#product_description_btns').fadeIn(600);
+        },800);
+    },300);
 }
 function hide_description(){
     $('#product_description_price').fadeOut(300);
     $('#product_description_title').fadeOut(300);
-    $('#product_description_back').fadeOut(600);
+    $('#product_description_back').fadeOut(300);
+    $('#product_description_btns').fadeOut(300);
     setTimeout(function(){
         $('#product_description').hide();
          $('#product_description_price').empty()
@@ -133,27 +428,109 @@ function flash_border(){
 }
 
 function clicked_background(id){
+
         if(waitingVariables.products.backgrounds[id].class == 'locked'){
             $('#'+id).effect("shake", {distance:5, times: 3},300);
             return;
         }
-
+        disable_click();
         if( waitingVariables.products.backgrounds[id].class == 'owned'){
             price ='<i style="color:green;" class="fa fa-check" ></i>'
+            txt = "equip";
+            $('#buy_equip_btn').attr('onclick','equip_background("'+id+'")');
         }
         else{
             price = '<p>'+waitingVariables.products.backgrounds[id].price+"</p>";
+            txt = "buy";
+            $('#buy_equip_btn').attr('onclick','buy_background("'+id+'")');
         }
+        $('#buy_equip_btn').text(txt);
+
         $('#product_description_back_btn').click(function(){unclicked_background();});
         show_description(waitingVariables.products.backgrounds[id].name, '#'+waitingVariables.products.backgrounds[id].hex, price)
         animate_background_colour(waitingVariables.attributes["background-colour"],waitingVariables.products.backgrounds[id].hex,600);
+}
 
+function clicked_clothes(id){
+        if(waitingVariables.products.clothes[id].class == 'locked'){
+            $('#'+id).effect("shake", {distance:5, times: 3},300);
+            return;
+        }
+        disable_click();
+        if( waitingVariables.products.clothes[id].class == 'owned'){
+            price ='<i style="color:green;" class="fa fa-check" ></i>'
+            txt = "equip";
+            $('#buy_equip_btn').attr('onclick','equip_clothes("'+id+'")');
+        }
+        else{
+            price = '<p>'+waitingVariables.products.clothes[id].price+"</p>";
+            txt = "buy";
+            $('#buy_equip_btn').attr('onclick','buy_clothes("'+id+'")');
+        }
+        $('#buy_equip_btn').text(txt);
+        $('#product_description_back_btn').click(function(){unclicked_clothes();});
+        show_description(waitingVariables.products.clothes[id].name, '#'+waitingVariables.products.clothes[id].hex, price)
+        animate_clothes_colour(waitingVariables.attributes["clothes-colour"],waitingVariables.products.clothes[id].hex,600);
+}
+
+function clicked_hair(id){
+        if(waitingVariables.products.hair[id].class == 'locked'){
+            $('#'+id).effect("shake", {distance:5, times: 3},300);
+            return;
+        }
+        disable_click();
+        if( waitingVariables.products.hair[id].class == 'owned'){
+            price ='<i style="color:green;" class="fa fa-check" ></i>'
+            txt = "equip";
+            $('#buy_equip_btn').attr('onclick','equip_hair("'+id+'")');
+        }
+        else{
+            price = '<p>'+waitingVariables.products.hair[id].price+"</p>";
+            txt = "buy";
+            $('#buy_equip_btn').attr('onclick','buy_hair("'+id+'")');
+        }
+        $('#buy_equip_btn').text(txt);
+
+        $('#product_description_back_btn').click(function(){unclicked_hair();});
+        show_description(waitingVariables.products.hair[id].name, '#'+waitingVariables.products.hair[id].hex_hair, price)
+        animate_hair_colour(waitingVariables.attributes['hair-colour'], waitingVariables.attributes['brow-colour'] ,waitingVariables.products.hair[id].hex_hair, waitingVariables.products.hair[id].hex_brow,600);
+}
+function unclicked_hair(){
+        hide_description();
+        animate_hair_colour(decimal_rgb_hex(tiaObject.mHair.material[0].color), decimal_rgb_hex(tiaObject.mFace.material[2].color),waitingVariables.attributes['hair-colour'], waitingVariables.attributes['brow-colour'],600);
+        setTimeout(function(){enable_click();},600);
+}
+function unclicked_clothes(){
+        hide_description();
+        animate_clothes_colour(decimal_rgb_hex(tiaObject.mBody.material[0].color),waitingVariables.attributes['clothes-colour'],600);
+        setTimeout(function(){enable_click();},600);
+}
+
+
+
+function get_balance(){
+    let fd = new FormData();
+     $.ajax({
+        url: "/get_balance",
+        type: "POST",
+        data: fd,
+        processData: false,
+        contentType: false,
+        success: function(json){
+            $('#shop-balance').text(json.balance);
+        },
+        error: function() {
+          console.log("Error Getting Balance");
+        },
+    });
 }
 
 function unclicked_background(){
         hide_description()
         animate_background_colour(decimal_rgb_hex(renderer.getClearColor()),waitingVariables.attributes['background-colour'],600);
-
+        setTimeout(function(){
+            enable_click();
+        },600);
 }
 
 function decimal_rgb_hex(st){
@@ -161,8 +538,7 @@ function decimal_rgb_hex(st){
     return rgb_to_hex(temp);
 }
 
-
-
+// Change Colours
 function get_transition_colors(start_hex, end_hex, time){
     intervals = Math.round(time/16.666666667)-1;
     var start_rgb = hex_to_rgb(start_hex);
@@ -171,7 +547,6 @@ function get_transition_colors(start_hex, end_hex, time){
     r_dist = end_rgb[0] - start_rgb[0] ;
     g_dist = end_rgb[1] - start_rgb[1];
     b_dist = end_rgb[2] - start_rgb[2];
-    console.log(r_dist, g_dist, b_dist, intervals)
     r_change = r_dist/intervals;
     g_change = g_dist/intervals;
     b_change = b_dist/intervals;
@@ -181,7 +556,6 @@ function get_transition_colors(start_hex, end_hex, time){
         out.push([out[i-1][0]+r_change, out[i-1][1]+g_change, out[i-1][2]+b_change])
     }
     out.push(end_rgb);
-    console.log(out)
     temp = [];
     for(i=0;i<out.length;i++){
         temp.push(rgb_to_hex(out[i]))
@@ -215,7 +589,6 @@ function rgb_to_hex(rgb){
 function animate_background_colour(start_hex, end_hex, time){
     var colours = get_transition_colors(start_hex, end_hex, time)
     change_color_with_delay(0,colours,colours.length);
-
 }
 function change_color_with_delay(i,colours,end){
     setTimeout(function(){
@@ -225,5 +598,438 @@ function change_color_with_delay(i,colours,end){
             change_color_with_delay(i,colours,end);
         }
     },16.666666667);
+}
+
+// Animate change in hair colour
+function animate_hair_colour(curr_hex1, curr_hex2, end_hex1, end_hex2, time){
+    var colours1 = get_transition_colors(curr_hex1, end_hex1, time);
+    var colours2 = get_transition_colors(curr_hex2, end_hex2, time);
+    change_hair_colour_with_delay(0, colours1, colours2, colours1.length);
+}
+function change_hair_colour_with_delay(i, colours1, colours2, end){
+    setTimeout(function(){
+        change_hair(colours1[i], colours2[i]);
+        i++;
+        if(i < end){
+            change_hair_colour_with_delay(i, colours1, colours2, end);
+        }
+    },16.666666667);
+}
+//Animate Clothing Colour change
+function animate_clothes_colour(cur_hex, end_hex, time){
+    var colours = get_transition_colors(cur_hex, end_hex, time);
+    change_clothes_colour_with_delay(0, colours, colours.length);
+}
+function change_clothes_colour_with_delay(i,colours,end){
+    setTimeout(function(){
+        change_clothes(colours[i])
+        i++;
+        if(i < end){
+            change_clothes_colour_with_delay(i,colours,end);
+        }
+    },16.666666667);
+}
+// Animate face colour
+function animate_face_colour(cur_hex, end_hex, time){
+    var colours = get_transition_colors(cur_hex, end_hex, time);
+    change_face_colour_with_delay(0, colours, colours.length);
+}
+function change_face_colour_with_delay(i,colours,end){
+    setTimeout(function(){
+        change_face(colours[i])
+        i++;
+        if(i < end){
+            change_face_colour_with_delay(i,colours,end);
+        }
+    },16.666666667);
+}
+//Animate Lip Colour
+function animate_lip_colour(cur_hex, end_hex, time){
+    var colours = get_transition_colors(cur_hex, end_hex, time);
+    change_lip_colour_with_delay(0, colours, colours.length);
+}
+function change_lip_colour_with_delay(i,colours,end){
+    setTimeout(function(){
+        change_lips(colours[i]);
+        i++;
+        if(i < end){
+            change_lip_colour_with_delay(i,colours,end);
+        }
+    },16.666666667);
+}
+
+
+function get_lighter_colour(hex){
+     value = hex_to_rgb(hex)
+     new_r  = value[0] + Math.round(value[0]*.4)
+     if(new_r > 255){
+        new_r = 255;
+     } else if (new_r < 0){
+        new_r = 0
+     }
+
+     new_g  = value[1] + Math.round(value[1]*.4)
+     if(new_g > 255){
+        new_g = 255;
+     } else if (new_g < 0){
+        new_g = 0
+     }
+     new_b  = value[2] + Math.round(value[2]*.4)
+     if(new_b > 255){
+        new_b = 255;
+     } else if (new_b < 0){
+        new_b = 0
+     }
+     return rgb_to_hex([new_r, new_g, new_b])
+}
+
+
+// Functions to flash colour of object
+function flash_background(time){
+    if (waitingVariables.flashing_background){
+        console.log("Already Flashing background");
+        return
+    }
+    waitingVariables.flashing_background = true;
+    curr = decimal_rgb_hex(renderer.getClearColor());
+    lighter = get_lighter_colour(curr);
+    animate_background_colour(curr, lighter, time);
+    setTimeout(function(){
+        animate_background_colour(lighter, curr, time);
+    },time);
+    setTimeout(function(){
+        waitingVariables.flashing_background = false;
+    },(time*2));
+}
+
+function flash_lips(time){
+    if (waitingVariables.flashing_lips){
+        console.log("Already Flashing Lips");
+        return
+    }
+    waitingVariables.flashing_lips = true;
+    curr = decimal_rgb_hex(tiaObject.mFace.material[1].color);
+    lighter = get_lighter_colour(curr);
+    animate_lip_colour(curr, lighter, time);
+    setTimeout(function(){
+        animate_lip_colour(lighter, curr, time);
+    },time);
+    setTimeout(function(){
+        waitingVariables.flashing_lips = false;
+    },(time*2));
+}
+
+function flash_clothes(time){
+     if (waitingVariables.flashing_clothes){
+        console.log("Already Flashing Clothes");
+        return
+    }
+    waitingVariables.flashing_clothes = true;
+    curr = decimal_rgb_hex(tiaObject.mBody.material[0].color);
+    lighter = get_lighter_colour(curr);
+    animate_clothes_colour(curr, lighter, time);
+    setTimeout(function(){
+        animate_clothes_colour(lighter, curr, time);
+    },time);
+    setTimeout(function(){
+        waitingVariables.flashing_clothes = false;
+    },(time*2));
+
+}
+
+function flash_face(time){
+    if (waitingVariables.flashing_face){
+        console.log("Already Flashing Face");
+        return
+    }
+    waitingVariables.flashing_face = true;
+    curr = decimal_rgb_hex(tiaObject.mFace.material[0].color);
+    lighter = get_lighter_colour(curr);
+    animate_face_colour(curr, lighter, time);
+    setTimeout(function(){
+        animate_face_colour(lighter, curr, time);
+    },time);
+    setTimeout(function(){
+        waitingVariables.flashing_face = false;
+    },(time*2));
+}
+
+
+function flash_hair(time){
+    if (waitingVariables.flashing_hair){
+        console.log("Already Flashing Hair");
+        return
+    }
+    waitingVariables.flashing_hair = true;
+    curr1 = decimal_rgb_hex(tiaObject.mHair.material[0].color);
+    curr2 = decimal_rgb_hex(tiaObject.mFace.material[2].color);
+    lighter1 = get_lighter_colour(curr1);
+    lighter2 = get_lighter_colour(curr2);
+    animate_hair_colour(curr1, curr2, lighter1, lighter2, time);
+     setTimeout(function(){
+        animate_hair_colour(lighter1, lighter2, curr1, curr2, time);
+    },time);
+    setTimeout(function(){
+        waitingVariables.flashing_hair = false;
+    },(time*2));
+}
+
+function flash_head(time=300){
+    flash_face(time);
+    flash_hair(time);
+}
+
+
+// Animate Camera Movements
+var face_zoom_vals = [30,0.03,30];
+var original_zoom_vals = [35, -0.1, 55];
+
+var camera_values = {
+    "face": {
+        "position": {
+            "y": 0,
+            "z": 34,
+            "x": 0
+        },
+        "rotation":{
+            "y": 0,
+            "z": -0.01,
+            "x": 0
+        },
+        "fov":30
+    },
+    "original": {
+        "position": {
+            "y": -2,
+            "z": 35,
+            "x": 0
+        },
+        "rotation":{
+            "y": 0,
+            "z": 0,
+            "x": -0.078
+        },
+        "fov":55
+    },
+
+}
+
+
+
+
+function zoom(time, vals){
+    disable_click();
+    intervals = Math.round(time/16.666666667)-1;
+
+    //Change position values
+    curr_pos_x = camera.position.x;
+    curr_pos_y = camera.position.y;
+    curr_pos_z = camera.position.z;
+
+    diff_pos_x = (vals['position']['x'] - curr_pos_x)/intervals;
+    diff_pos_y = (vals['position']['y'] - curr_pos_y)/intervals;
+    diff_pos_z = (vals['position']['z'] - curr_pos_z)/intervals;
+
+    //Rotations
+    curr_rot_x = camera.rotation.x;
+    curr_rot_y = camera.rotation.y;
+    curr_rot_z = camera.rotation.z;
+
+    diff_rot_x = (vals['rotation']['x'] - curr_rot_x)/intervals;
+    diff_rot_y = (vals['rotation']['y'] - curr_rot_y)/intervals;
+    diff_rot_z = (vals['rotation']['z'] - curr_rot_z)/intervals;
+
+    //FOV
+    curr_fov = camera.fov
+
+    diff_fov = (vals['fov'] - curr_fov)/intervals;
+
+
+    out = [[
+            curr_pos_x,
+            curr_pos_y,
+            curr_pos_z,
+            curr_rot_x,
+            curr_rot_y,
+            curr_rot_z,
+            curr_fov
+          ]
+    ]
+    for(i=1;i<intervals;i++){
+        temp = [
+            out[i-1][0]+diff_pos_x,
+            out[i-1][1]+diff_pos_y,
+            out[i-1][2]+diff_pos_z,
+            out[i-1][3]+diff_rot_x,
+            out[i-1][4]+diff_rot_y,
+            out[i-1][5]+diff_rot_z,
+            out[i-1][6]+diff_fov
+        ]
+        out.push(temp);
+    }
+    out.push([
+            vals['position']['x'],
+            vals['position']['y'],
+            vals['position']['z'],
+            vals['rotation']['x'],
+            vals['rotation']['y'],
+            vals['rotation']['z'],
+            vals['fov']
+
+        ]);
+    return animate_zoom(0,out,out.length);
+}
+function apply_camera_change(vals){
+    //Change positions
+    camera.position.x = vals[0]
+    camera.position.y = vals[1]
+    camera.position.z = vals[2]
+
+    //Change Rotations
+    camera.rotation.x = vals[3];
+    camera.rotation.y = vals[4];
+    camera.rotation.z = vals[5];
+
+    //Change FOV
+    camera.fov = vals[6];
+    camera.updateProjectionMatrix();
+}
+function animate_zoom(i,vals,end){
+    setTimeout(function(){
+        apply_camera_change(vals[i])
+        i++;
+        if(i < end){
+            animate_zoom(i,vals,end);
+        }
+        else{
+            enable_click();
+        }
+    },16.666666667);
+}
+
+
+function clicked_eye(id){
+
+        if(waitingVariables.products.eyes[id].class == 'locked'){
+            $('#'+id).effect("shake", {distance:5, times: 3},300);
+            return;
+        }
+
+        if( waitingVariables.products.eyes[id].class == 'owned'){
+            price ='<i style="color:green;" class="fa fa-check" ></i>'
+            txt = "equip";
+            $('#buy_equip_btn').attr('onclick','equip_eyes("'+id+'")');
+        }
+        else{
+            price = '<p>'+waitingVariables.products.eyes[id].price+"</p>";
+            txt = "buy";
+            $('#buy_equip_btn').attr('onclick','buy_eyes("'+id+'")');
+        }
+        $('#buy_equip_btn').text(txt);
+
+    $('#product_description_back_btn').click(function(){unclicked_eyes();});
+    show_description(waitingVariables.products.eyes[id].name, '#'+waitingVariables.products.eyes[id].hex, price)
+
+    disable_click();
+    closeEyes(time=500);
+    setTimeout(function(){
+        change_eyes(id=id);
+        openEyes(wait=400,st_callback=openEyesEmp());
+        setTimeout(function(){
+            openEyes(time=400);
+        },900);
+    },500);
+
+}
+
+function unclicked_eyes(){
+    hide_description();
+    closeEyes(time=300);
+    setTimeout(function(){
+        change_eyes(id=waitingVariables.attributes.eyes);
+        openEyes(wait=300,st_callback=enable_click());
+        setTimeout(function(){enable_click();},600);
+    },300);
+}
+
+function closeEyes(time=200, st_callback=function(){}, wait=0, argument=""){
+    if( eyelidObject.bool){
+        setTimeout(function(){
+            console.log("Waiting and retrying");
+            closeEyes(time, st_callback, wait, argument);
+            return
+        },50);
+    }
+    setTimeout(function(){
+        initMoveEyelids(-1,1,time/1000);
+        setTimeout(function(){
+            if(argument == ""){
+                st_callback()
+            }else{
+                st_callback(argument)
+            }
+
+        },time/1000)
+    },wait);
+}
+
+function change_eyes(id, st_callback=function(){}, argument=""){
+     tiaObject['mEyeR'+id].visible = true;
+     tiaObject['mEyeL'+id].visible = true;
+     for(i=0;i<tiaEyes.length;i++){
+        if(tiaEyes[i] != id.toString()){
+            tiaObject['mEyeR'+tiaEyes[i]].visible = false;
+            tiaObject['mEyeL'+tiaEyes[i]].visible = false;
+        }
+    }
+    if(argument == ""){
+        st_callback()
+    }else{
+        st_callback(argument)
+    }
+}
+
+
+
+function openEyes(time=300, st_callback=function(){}, wait=0, argument=""){
+    if( eyelidObject.bool){
+        setTimeout(function(){
+            console.log("Waiting and retrying");
+            openEyes(time, st_callback, wait, argument);
+            return
+        },50);
+    }
+    setTimeout(function(){
+        initMoveEyelids(0,0,time/1000);
+        setTimeout(function(){
+            if(argument == ""){
+                st_callback()
+            }else{
+                st_callback(argument)
+            }
+
+        },time/1000)
+    },wait);
+}
+
+function openEyesEmp(time=200, st_callback=function(){}, wait=0, argument=""){
+    if( eyelidObject.bool){
+        setTimeout(function(){
+            console.log("Waiting and retrying");
+            openEyes(time, st_callback, wait, argument);
+            return
+        },50);
+    }
+    setTimeout(function(){
+       initMoveEyelids(0.1,-0.1,time/1000);
+        setTimeout(function(){
+            if(argument == ""){
+                st_callback()
+            }else{
+                st_callback(argument)
+            }
+
+        },time/1000)
+    },wait);
 }
 

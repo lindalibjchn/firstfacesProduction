@@ -15,15 +15,15 @@
     display:flex;
     justify-content:center;
     align-items:center;
-    font-size: 17px;
+    font-size: 20px;
     font-weight: 900;
+    height:30px;
 }
 
 .product-category{
     height:150px;
     width:100%;
     position:relative;
-    margin-bottom: 30px;
      display:flex;
     justify-content:center;
     align-items:center;
@@ -41,27 +41,50 @@
 
 .product-category-cont{
     position:relative;
-    height:80%;
+    height:90%;
     width:95%;
     /*border-top:1px solid #2E8AC7;
     border-bottom:1px solid #2E8AC7;*/
+}
+#product-category-options{
+    position:absolute;
+    height:20%;
+    width:100%;
+    left:0;
+    top:0;
+    background-colour:red;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+#product-cont{
+    position:absolute;
+    height:75%;
+    width:100%;
+    left:0;
+    top:20%;
+    background-colour:green;
     overflow-x: scroll;
     overflow-y: hidden;
     white-space: nowrap;
 }
 
+
 .product{
     position:relative;
-    height:100px;
+    height:80%;
     width:72px;
     display:inline-block;
+    margin-left: 5px;
+    margin-right: 4px;
+    margin-top: 4%;
 }
 
 .product-price{
     font-family: 'Oswald', sans-serif;
     color:#ECD421;
     font-size:15px;
-    height:20px;
+    height:20%;
     width:100%;
     position:absolute;
     bottom:0;
@@ -72,37 +95,24 @@
 
 .product-img-cont{
     position:absolute;
-    height:60px;
-    width:100%;
-    top:20px;
+    height:80%;
+    width: 100%;;
     display:flex;
     justify-content:center;
     align-items:center;
 }
 .lockHolder{
     position:absolute;
-    height:60px;
+    height:80%;
     width:100%;
-    top:20px;
+    top:5%;
     display:flex;
     justify-content:center;
     align-items:center;
-    z-index:100000;
+    z-index:2;
 
 }
 
-.product-name{
-    font-family: sans-serif;
-    color:black;
-    font-size:11px;
-    height:20px;
-    width:100%;
-    position:absolute;
-    top:0;
-    display:flex;
-    justify-content:center;
-    align-items:flex-end;
-}
 
 .background-color-img{
     height:60px;
@@ -112,7 +122,9 @@
 }
 
 #demoHolder{
-position:relative;
+    position:relative;
+    border-radius:5px;
+    overflow:hidden;
 }
 #tiaHolder{
     position:absolute;
@@ -125,7 +137,16 @@ position:relative;
 }
 #productDescription{
     position:absolute;
-
+}
+#product_description{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#product_description-cont{
+    position: relative;
+    height: 90%;
+    width: 95%;
 }
 
 .border-cont{
@@ -203,12 +224,12 @@ position:relative;
     justify-content:center;
     align-items:center;
     font-size:40px;
-    z-index:999;
+    z-index:2;
     color:white;
 }
 
 #product_description_title{
-    height:50%;
+    height:40%;
     width:100%;
     display:flex;
     justify-content:center;
@@ -218,7 +239,7 @@ position:relative;
     font-size: 30px;
 }
 #product_description_price{
-    height:30%;
+    height:20%;
     width:100%;
     display:flex;
     justify-content:center;
@@ -230,11 +251,16 @@ position:relative;
 #product_description_btns{
     height:20%;
     width:100%;
-
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase;
+    font-size: 15px;
 }
 #product_description_back{
     position:absolute;
-    height:20%;
+    height:10%;
     width:100%;
     display:flex;
     justify-content:flex-start;
@@ -248,4 +274,70 @@ position:relative;
 }
 .green-border{
     border: 0px solid green;
+}
+
+#buy_equip_btn{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:40%;
+    width:20%;
+    max-width:60px;
+    min-height:22px;
+    max-height:30px;
+    border-radius:5px;
+    color:white;
+}
+
+.equipped{
+    border:3px solid green;
+}
+
+.img_product{
+   max-height:100%;
+   max-width:100%;
+}
+
+.tile{
+    border-radius:5px;
+    box-shadow:1px 3px 7px 3px rgba(173,173,173,0.35);
+    border-top:1px solid gba(173,173,173,0.25)
+}
+
+.tile_smaller{
+    border-radius:5px;
+    box-shadow:1px 3px 7px 2px rgba(173,173,173,0.35);
+    border-top:1px solid gba(173,173,173,0.25)
+}
+
+#demoHolderCont{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+}
+
+.locked{
+    border: 1px solid #cfcfcf;
+}
+.unequipped{
+    border: 1px solid #cfcfcf;
+}
+
+.option{
+    display: inline-block;
+    padding-left: 6px;
+    padding-right: 6px;
+    font-family: 'Oswald', sans-serif;
+    color:#adadad;
+    font-size:17px;
+}
+.active{
+    color: #102858;
+
+}
+
+#product-category-options{
+    display:none;
 }

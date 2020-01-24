@@ -93,7 +93,17 @@ urlpatterns = [
     #SHOP
     path('get_attributes', store_main.get_attributes, name='get_attributes'),
     path('get_background_colors', store_main.get_background_colors, name='get_background_colors'),
+    path('get_balance', store_main.get_balance, name='get_balance'),
+    path('equip_background', store_main.equip_background, name='equip_background'),
+    path('buy_background', store_main.buy_background, name='buy_background'),
+    path('get_hair_colors', store_main.get_hair_colors, name='get_hair_colors'),
+    path('equip_hair', store_main.equip_hair, name="equip_hair"),
+    path('buy_hair', store_main.buy_hair, name="buy_hair"),
+    path('buy_clothes', store_main.buy_clothes, name="buy_clothes"),
+    path('get_clothes_colors', store_main.get_clothes_colors, name="get_clothes_colors"),
+    path('equip_clothes', store_main.equip_clothes, name="equip_clothes"),
+    path('get_eye_colors', store_main.get_eye_colors, name="get_eye_colors"),
+    path('equip_eyes', store_main.equip_eyes, name="equip_eyes"),
+    path('buy_eyes', store_main.buy_eyes, name="buy_eyes"),
 
-
-
-    ]
+]
