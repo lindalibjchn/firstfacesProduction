@@ -278,14 +278,40 @@ class HairColour(models.Model):
     brow_hex = models.CharField(max_length=6, null=False, blank=True)
 
 
+class ClothesColour(models.Model):
+    name = models.CharField(max_length=30, null=False, blank=True)
+    description = models.CharField(max_length=30, null=True, blank=True)
+    price = models.SmallIntegerField()
+    hex = models.CharField(max_length=6, null=False, blank=True)
+
+
 class TiaAttributes(models.Model):
     learner = models.ForeignKey(User, on_delete=models.CASCADE)
     backgroundColour = models.CharField(max_length=6, null=False, blank=True)
     hairColour = models.CharField(max_length=6, null=False, blank=True)
+    clothesColour = models.CharField(max_length=6, null=False, blank=True)
+    eyeColour = models.CharField(max_length=6, null=False, blank=True)
 
 
 class UserProducts(models.Model):
     learner = models.ForeignKey(User, on_delete=models.CASCADE)
     backgroundColours = models.CharField(max_length=2000, blank=True, null=True)
     hairColours = models.CharField(max_length=2000, blank=True, null=True)
+    clothesColour = models.CharField(max_length=2000, blank=True, null=True)
+    EyeTypes = models.CharField(max_length=2000, blank=True, null=True)
 
+
+class EyeTypes(models.Model):
+    name = models.CharField(max_length=30, null=False, blank=True)
+    description = models.CharField(max_length=30, null=True, blank=True)
+    price = models.SmallIntegerField()
+    hex = models.CharField(max_length=6, null=False, blank=True)
+    filename = models.CharField(max_length=40, null=False, blank=True)
+
+
+class BackgroundGIF(models.Model):
+    name = models.CharField(max_length=30, null=False, blank=True)
+    description = models.CharField(max_length=30, null=True, blank=True)
+    price = models.SmallIntegerField()
+    hex = models.CharField(max_length=6, null=False, blank=True)
+    filename = models.CharField(max_length=40, null=False, blank=True)

@@ -1,32 +1,33 @@
 {% load static %}
 <div id="shop-cont">
 
-    <div id="shop-title">Shop</div>
-    <div id="shop-balance">10,000 <i class="fa fa-money-bill"></i></div>
-
-    <div id="demoHolder">
-        <div id="tiaHolder"></div>
-        <div id="tiaHolderCont"><div class="border-cont"></div></div>
-    </div>
-    <div id="category-btns">
-        <div id="backgrounds" class="product-category-button" style="background-color:#D64A4B; color:white;">B</div>
-        <div class="product-category-button" style="background-color:#2ecc71; color:white;"><i class="fa fa-eye"></i></div>
-        <div class="product-category-button" style="background-color:#46a1de; color:white;">H</div>
-        <div class="product-category-button" style="background-color:#8e44ad; color:white;">C<i class="fa fa-brush"></i></div>
-        <div class="product-category-button last-btn" style="background-color:#bdc3c7; color:white;">A<i class="fa fa-brush"></i></div>
-
-    </div>
-    <div class="product-category">
-        <div class="product-category-cont">
-
+    <!--<div id="shop-title">Balance</div>-->
+    <div id="shop-balance">0<i class="fa fa-money-bill"></i></div>
+    <div id="demoHolderCont">
+        <div id="demoHolder" class="tile">
+            <div id="tiaHolder"></div>
+            <div id="tiaHolderCont"><div></div></div>
         </div>
     </div>
+    <div class="product-category">
+
+        <div class="product-category-cont">
+            <div id="product-category-options" class="">
+                <div class="option active" id="colours">Colours</div>
+                <div class="option" id="Gifs">GIFs</div>
+            </div>
+            <div id="product-cont" class=""></div>
+        </div>
+    </div>
+
     <div id="product_description">
-        <div id="product_description_back"><i id="product_description_back_btn" style="padding:5%;" class="fa fa-arrow-left"></i></div>
-        <div id="product_description_title"></div>
-        <div id="product_description_price"></div>
-        <div id="product_description_btns">
-            <div id="buy_equip_btn"></div>
+        <div id="product_description-cont" class="tile">
+            <div id="product_description_back"><i id="product_description_back_btn" style="padding:5%;" class="fa fa-arrow-left"></i></div>
+            <div id="product_description_title"></div>
+            <div id="product_description_price"></div>
+            <div id="product_description_btns">
+                <div id="buy_equip_btn" class="tile"></div>
+            </div>
         </div>
     </div>
 

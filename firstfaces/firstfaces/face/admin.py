@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Conversation, Available, Sentence, AudioFile, Profile, AudioError, UserProducts, AudioErrorAttempt, HairColour, AudioErrorCorrectionAttempt, StockPhrases, TiaAttributes, Prompt, Update, StockWord, BackgroundColour
+from .models import Conversation, Available, Sentence, AudioFile, Profile, AudioError, UserProducts, EyeTypes, AudioErrorAttempt, HairColour, AudioErrorCorrectionAttempt, ClothesColour, StockPhrases, TiaAttributes, Prompt, Update, StockWord, BackgroundColour
 
 admin.site.register( Conversation )
 admin.site.register( Available )
@@ -17,3 +17,5 @@ admin.site.register( BackgroundColour )
 admin.site.register( TiaAttributes )
 admin.site.register( UserProducts )
 admin.site.register( HairColour )
+admin.site.register( ClothesColour )
+admin.site.register( EyeTypes )

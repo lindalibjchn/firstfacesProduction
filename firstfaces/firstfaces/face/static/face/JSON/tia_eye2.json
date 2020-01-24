@@ -40,7 +40,7 @@
         "colorDiffuse":[0.62,0.62,0.62],
         "specularCoef":50,
         "colorSpecular":[0.2,0.2,0.2],
-        "mapDiffuse":"eye_img.png",
+        "mapDiffuse":"eye_img_florescent_blue.png",
         "mapDiffuseAnisotropy":1,
         "mapDiffuseWrap":["repeat","repeat"],
         "mapDiffuseRepeat":[1,1]

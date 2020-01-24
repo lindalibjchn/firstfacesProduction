@@ -5,6 +5,7 @@
 <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 
+
 <!-- my own scripts -->
 <script src="{% static 'face/javascript/waiting/main.js' %}"></script>
 <script src="{% static 'face/javascript/waiting/timetable.js' %}"></script>
@@ -14,6 +15,37 @@
 <script src="{% static 'face/javascript/waiting/clock.js' %}"></script>
 <script src="{% static 'face/javascript/waiting/popup.js' %}"></script>
 <script src="{% static 'face/javascript/waiting/shop.js' %}"></script>
+<script src="{% static 'face/javascript/waiting/tiaClick.js' %}"></script>
+<script src="{% static 'face/javascript/waiting/variables.js' %}"></script>
+<script src="{% static 'face/javascript/waiting/animate.js' %}"></script>
+<script src="{% static 'face/javascript/conversation/student/movements/complex/eyes.js' %}"></script>
+<script src="{% static 'face/javascript/conversation/student/movements/expression/get_expressions.js' %}"></script>
+<script src="{% static 'face/javascript/variables_and_constants.js' %}"></script>
+<script src="{% static 'face/javascript/conversation/student/variables_and_constants/expressions.js' %}"></script>
+<script src="{% static 'face/javascript/conversation/student/variables_and_constants/movements.js' %}"></script>
+<script src="{% static 'face/javascript/conversation/student/movements/body/get_movements.js' %}"></script>
+<script src="{% static 'face/javascript/conversation/student/movements/body/move.js' %}"></script>
+<!-- COMPLEX -->
+<script src="{% static 'face/javascript/conversation/student/movements/complex/eyes.js' %}"></script>
+<script src="{% static 'face/javascript/conversation/student/movements/complex/nod_shake.js' %}"></script>
+<script src="{% static 'face/javascript/conversation/student/movements/complex/read_laptop.js' %}"></script>
+<script src="{% static 'face/javascript/conversation/student/movements/complex/type.js' %}"></script>
+<!-- EXPRESSION -->
+<script src="{% static 'face/javascript/conversation/student/movements/expression/create.js' %}"></script>
+<script src="{% static 'face/javascript/conversation/student/movements/expression/get_expressions.js' %}"></script>
+<script src="{% static 'face/javascript/conversation/student/movements/expression/move.js' %}"></script>
+<script src="{% static 'face/javascript/conversation/student/movements/individual.js' %}"></script>
+<!-- GENERAL -->
+<script src="{% static 'face/javascript/conversation/student/movements/general/listen_to_recording.js' %}"></script>
+<!-- RANDOM -->
+<script src="{% static 'face/javascript/conversation/student/movements/random/blink.js' %}"></script>
+<script src="{% static 'face/javascript/conversation/student/movements/random/breathe.js' %}"></script>
+<script src="{% static 'face/javascript/conversation/student/movements/random/tilt.js' %}"></script>
+
+<script src="{% static 'face/javascript/conversation/student/movements/individual.js' %}"></script>
+
+
+
 
 <!-- Draw Tia -->
 <!-- <script src="{% static 'face/javascript/conversation/student/load_scene/three_js_objects.js' %}"></script>-->
@@ -21,7 +53,10 @@
 <script src="{% static 'face/javascript/waiting/drawTia.js' %}"></script>
 <script>var face = "{% static 'face/JSON/tia_face.json' %}"</script>
 <script>var mouth = "{% static 'face/JSON/tia_mouth.json' %}"</script>
-<script>var eye = "{% static 'face/JSON/tia_eye.json' %}"</script>
+<script>var eye3 = "{% static 'face/JSON/tia_eye3.json' %}"</script>
+<script>var eye3 = "{% static 'face/JSON/tia_eye3.json' %}"</script>
+<script>var eye2 = "{% static 'face/JSON/tia_eye2.json' %}"</script>
+<script>var eye1 = "{% static 'face/JSON/tia_eye1.json' %}"</script>
 <script>var hair = "{% static 'face/JSON/tia_hair.json' %}"</script>
 <script>var hair00 = "{% static 'face/JSON/tia_hair00.json' %}"</script>
 <script>var body = "{% static 'face/JSON/tia_body.json' %}"</script>
@@ -38,3 +73,4 @@
 <!--from teacher side-->
 <script src="{% static 'face/javascript/conversation/teacher/load/prev_sentences.js' %}"></script>
 
+<script src="{% static 'face/javascript/conversation/student/variables_and_constants/objects.js' %}"></script>
