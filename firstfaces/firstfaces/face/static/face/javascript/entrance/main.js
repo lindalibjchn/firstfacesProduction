@@ -1,20 +1,20 @@
-$(window).on( 'load', function() {
+/*$(window).on( 'load', function() {
 
-    runUCDGif();
+    //runUCDGif();
 
     // login dropdown
-    $("#logInDropdown").on( "click", showLogInDropdown )
-    $("#closeSignInContainer").on( "click", hideLogInDropdown )
+    //$("#logInDropdown").on( "click", showLogInDropdown )
+    //$("#closeSignInContainer").on( "click", hideLogInDropdown )
     //$("#signUpBtn").on( "click", showSignUpForm )
     
     // log in
-    $( "#loginForm" ).on( "submit", function( event ) {
+    /*$( "#loginForm" ).on( "submit", function( event ) {
      
         event.preventDefault();
         console.log("in prevent default for login submission");
         logIn()
         
-    });
+    });*/
 
     // sign up User
     //$( "#infoBtn" ).on( "click", function() { 
@@ -65,8 +65,63 @@ $(window).on( 'load', function() {
         
     //});
    
+//});
+$( document ).ready(function(){
+    setHeight();
+    load_screen();
+    cycle_feedback();
 });
+var dist = 0;
+function setHeight(){
+    console.log("Here")
+    swidth = $(document).width()
+    sheight = ($('#footer').offset()['top'] - parseInt($('#navbar').css('height')));
+    dist = sheight+6;
+    $('#overforeground').css({"height":sheight, 'top':parseInt($('#navbar').css('height'))});
+    $('#foregroundContainer').css("height",sheight);
+};
 
+function load_screen(){
+    $('.hide2').hide();
+    $('#text0').css('opacity','0');
+    $('#text1').css('opacity','0');
+    $('#text2').css('opacity','0');
+    time1 = 200;
+    time2 = 1300;
+    sent_time = 500;
+    time3 = time1 + (time2*4);
+    $('.video_holder').hide();
+    $('.video-cont').css({"background":"#D3D3D3", "opacity":"0.15"});
+
+    setTimeout(function(){
+        $('.hide1').show();
+        setTimeout(function(){
+            $('#text0').animate({opacity: 1}, sent_time);
+            setTimeout(function(){
+                $('#text1').animate({opacity: 1}, sent_time);
+                setTimeout(function(){
+                    $('#text2').animate({opacity: 1}, sent_time);
+                },time2);
+            },time2);
+        },time2);
+    },time1);
+    setTimeout(function(){
+        $('.hide2').fadeIn(sent_time*2);
+        $('.video-cont').animate({opacity: 1}, sent_time*2);
+        $('.video_holder').fadeIn(sent_time*2);
+    },time3);
+
+}
+
+function close_alert(){
+    $('#overforeground').fadeOut(700);
+}
+function open_alert(){
+    $('#overforeground').fadeIn(700);
+}
+
+
+/*
 function runUCDGif() {
 
     $("#foregroundImage").hide();
@@ -81,8 +136,8 @@ function runUCDGif() {
     }, 2000 )
 
 }
-
-function displayTextNVideos() {
+*/
+/*function displayTextNVideos() {
 
     $( '#text0' ).fadeIn( 1500, function() {
         
@@ -98,8 +153,8 @@ function displayTextNVideos() {
         
     }); 
 
-}
-
+}*/
+/*
 function showLogInDropdown() {
 
     $('#closeSignInContainer').fadeIn();
@@ -143,7 +198,7 @@ function logIn() {
             console.log("that's shite");
         },
     });
-}
+}*/
 
 //function registerProfile() {
 
@@ -227,11 +282,56 @@ function logIn() {
 
 
 
+var curr_feedback = 1;
+
+function cycle_feedback(){
+    next_feedback = curr_feedback+1;
+    if(next_feedback > 3){
+        next_feedback -= 3;
+    }
+    $('#feedback_'+curr_feedback).fadeOut(600);
+    setTimeout(function(){
+        $('#feedback_'+next_feedback).fadeIn(600);
+        setTimeout(function(){
+            curr_feedback = next_feedback;
+            cycle_feedback()
+        }, 3600);
+    }, 600);
+}
 
 
 
+$('#popup-btn').click(function(){
+    if($('#popup-btn').hasClass("clicked")){
+        $('#logo-left-cont').fadeIn(200);
+        setTimeout(function(){$('#popup').hide();},200);
+        $('#popup').animate({height:'0'},200);
+        AnimateRotate(180,"#popup-btn",200);
+        $('#popup-btn').removeClass("clicked");
+    }else{
+        $('#logo-left-cont').fadeOut(200);
+        $('#popup').show();
+        $('#popup').animate({height: dist.toString()+"px"},200);
+        AnimateRotate(90,"#popup-btn",200);
+        $('#popup-btn').addClass("clicked");
+    }
+});
 
+function AnimateRotate(angle,id,duration) {
+    // caching the object for performance reasons
+    var $elem = $(id);
 
+    // we use a pseudo object for the animation
+    // (starts from `0` to `angle`), you can name it as you want
+    $({deg: 0}).animate({deg: angle}, {
+        duration: duration,
+        step: function(now) {
+            $elem.css({
+                transform: 'rotate(' + now + 'deg)'
+            });
+        }
+    });
+}
 
 
 

@@ -1,15 +1,23 @@
 from django.http import JsonResponse
 from django.conf import settings
-from face.models import TiaAttributes, BackgroundColour, HairColour, UserProducts, Profile, ClothesColour, EyeTypes
+from face.models import TiaAttributes, BackgroundColour, HairColour, UserProducts, Profile, ClothesColour, EyeTypes, BackgroundGIF
 import json
 
 
 def get_attributes(request):
     user = request.user
     attr = TiaAttributes.objects.filter(learner=user)[0]
-    bc = BackgroundColour.objects.get(pk=attr.backgroundColour)
+
     hc = HairColour.objects.get(pk=attr.hairColour)
     cc = ClothesColour.objects.get(pk=attr.clothesColour)
+    print()
+    if attr.color_background:
+        bc = BackgroundColour.objects.get(pk=attr.backgroundColour)
+        gif = ""
+    else:
+        bc = ""
+        gif = BackgroundGIF.objects.get(pk=attr.gif_background)
+
     response_data = {
         'BC': bc.hex,
         'BC_id': bc.pk,
@@ -18,7 +26,9 @@ def get_attributes(request):
         "BrowC": hc.brow_hex,
         "CC_id": cc.pk,
         "CC": cc.hex,
-        'eyes': attr.eyeColour
+        'eyes': attr.eyeColour,
+        "gif_bool": attr.color_background,
+        "gif": gif,
     }
 
     return JsonResponse(response_data)
@@ -63,6 +73,8 @@ def equip_background(request):
     response_data = {
         "backgrounds": out
     }
+
+
     return JsonResponse(response_data)
 
 
@@ -254,8 +266,13 @@ def buy_clothes(request):
 
 def get_background_colors(request):
     bcs = BackgroundColour.objects.all()
+    gifs = BackgroundGIF.objects.all()
+
     user = request.user
-    owned = [f[1:-1] for f in UserProducts.objects.filter(learner=user)[0].backgroundColours[1:-1].split(",") if
+    user_products = UserProducts.objects.filter(learner=user)[0]
+
+    backgrounds = {}
+    owned = [f[1:-1] for f in user_products.backgroundColours[1:-1].split(",") if
              f.strip() != ""]
     balance = Profile.objects.filter(learner=user)[0].points
     attr = TiaAttributes.objects.filter(learner=user)[0]
@@ -274,9 +291,30 @@ def get_background_colors(request):
         else:
             html = background_to_html("affordable", bc.price, bc.hex, bc.pk)
             out[bc.pk] = background_to_json("affordable", bc.name, bc.price, bc.hex, html)
+    backgrounds['colours'] = out
+
+    gifs_out = {}
+    owned = [f[1:-1] for f in user_products.gif_backgrounds[1:-1].split(",") if
+             f.strip() != ""]
+    for g in gifs:
+        if str(g.pk) in owned:
+            if attr.gif_background == str(g.pk) and not attr.color_background:
+                html = gif_to_html("owned equipped", g.price, g.filename, g.pk)
+                gifs_out[bc.pk] = eye_to_json("owned", g.name, g.price, g.hex, html, g.filename)
+            else:
+                html = gif_to_html("owned", g.price, g.filename, g.pk)
+                gifs_out[bc.pk] = eye_to_json("owned", g.name, g.price, g.hex, html, g.filename)
+        elif bc.price > balance:
+            html = gif_to_html("locked", g.price, g.filename, g.pk)
+            gifs_out[g.pk] = eye_to_json("locked", g.name, g.price, g.hex, html, g.filename)
+        else:
+            html = gif_to_html("affordable", g.price, g.filename, g.pk)
+            gifs_out[g.pk] = eye_to_json("affordable", g.name, g.price, g.hex, html, g.filename)
+
+    backgrounds['gifs'] = gifs_out
 
     response_data = {
-        "backgrounds": out,
+        "backgrounds": backgrounds,
     }
 
     return JsonResponse(response_data)
@@ -514,6 +552,15 @@ def eye_to_html(class_, price, eye_file_name, id_):
     if class_ == "owned" or class_ == "owned equipped":
         price = '<i class="fa fa-check"></i>'
     html = '<div class="product {} tile_smaller" id="{}" onclick="clicked_eye(this.id)" ><div class="lockHolder"><div class="lock-div"><i class="fa fa-lock"></i></div></div><div class="product-img-cont"><div class="background-color-img"><img class="img_product" src="{}"/></div></div><div class="product-price">{}</div></div>'
+    return html.format(class_, id_, prefixURL+prefix+eye_file_name, price)
+
+
+def gif_to_html(class_, price, eye_file_name, id_):
+    prefixURL = 'http://127.0.0.1:8000/'
+    prefix = 'media/gifs/'
+    if class_ == "owned" or class_ == "owned equipped":
+        price = '<i class="fa fa-check"></i>'
+    html = '<div class="product {} tile_smaller" id="{}" onclick="clicked_gif(this.id)" ><div class="lockHolder"><div class="lock-div"><i class="fa fa-lock"></i></div></div><div class="product-img-cont"><div class="background-color-img"><img class="img_product" src="{}"/></div></div><div class="product-price">{}</div></div>'
     return html.format(class_, id_, prefixURL+prefix+eye_file_name, price)
 
 

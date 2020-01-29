@@ -93,13 +93,13 @@ function equip_background(id){
         success: function(json){
             // Change class of equipped to equipped
             // Remove previously equipped class
-            hex = waitingVariables.products.backgrounds[id].hex;
+            hex = waitingVariables.products.backgrounds['colours'][id].hex;
             waitingVariables.attributes['background-colour'] = hex;
             waitingVariables.products.backgrounds = json.backgrounds
             type = 'backgrounds';
             $('#product-cont').empty();
             for(x in waitingVariables.products[type]){
-                $('#product-cont').append(waitingVariables.products[type][x].html)
+                $('#product-cont').append(waitingVariables.products[type]['colours'][x].html)
             }
             unclicked_background();
         },
@@ -221,7 +221,10 @@ function get_tia_attributes(){
                 "brow-colour":json.BrowC,
                 "clothes-colour":json.CC,
                 "clothes-id":json.CC_id,
-                "eyes":json.eyes
+                "eyes":json.eyes,
+                "gif_bool":json.gif_bool,
+                "gif":json.filename
+
             }
             createTia("tiaHolder", tiaH, tiaW);
         },
@@ -428,27 +431,27 @@ function flash_border(){
 }
 
 function clicked_background(id){
-
-        if(waitingVariables.products.backgrounds[id].class == 'locked'){
+        st = 'colours'
+        if(waitingVariables.products.backgrounds[st][id].class == 'locked'){
             $('#'+id).effect("shake", {distance:5, times: 3},300);
             return;
         }
         disable_click();
-        if( waitingVariables.products.backgrounds[id].class == 'owned'){
+        if( waitingVariables.products.backgrounds[st][id].class == 'owned'){
             price ='<i style="color:green;" class="fa fa-check" ></i>'
             txt = "equip";
             $('#buy_equip_btn').attr('onclick','equip_background("'+id+'")');
         }
         else{
-            price = '<p>'+waitingVariables.products.backgrounds[id].price+"</p>";
+            price = '<p>'+waitingVariables.products.backgrounds[st][id].price+"</p>";
             txt = "buy";
             $('#buy_equip_btn').attr('onclick','buy_background("'+id+'")');
         }
         $('#buy_equip_btn').text(txt);
 
         $('#product_description_back_btn').click(function(){unclicked_background();});
-        show_description(waitingVariables.products.backgrounds[id].name, '#'+waitingVariables.products.backgrounds[id].hex, price)
-        animate_background_colour(waitingVariables.attributes["background-colour"],waitingVariables.products.backgrounds[id].hex,600);
+        show_description(waitingVariables.products.backgrounds[st][id].name, '#'+waitingVariables.products.backgrounds[st][id].hex, price)
+        animate_background_colour(waitingVariables.attributes["background-colour"],waitingVariables.products.backgrounds[st][id].hex,600);
 }
 
 function clicked_clothes(id){

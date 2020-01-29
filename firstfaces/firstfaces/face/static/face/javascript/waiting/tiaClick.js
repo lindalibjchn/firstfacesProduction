@@ -108,14 +108,15 @@ function onClick(event) {
 function show_backgrounds(time=500, st_callback=function(){} ){
     waitingVariables.products_showing = true;
     var type = 'backgrounds';
-
+    var subtype = "colours"
     $('#product-cont').fadeOut(time);
     setTimeout(function(){
          $('#product-cont').hide();
 
         $('#product-cont').empty().removeClass("tile");
-        for(x in waitingVariables.products[type]){
-            $('#product-cont').append(waitingVariables.products[type][x].html)
+        change_options([['Colours', 'colours'], ['Animated','gifs']], type);
+        for(x in waitingVariables.products[type][subtype]){
+            $('#product-cont').append(waitingVariables.products[type][subtype][x].html)
         }
         $('#product-category-options').css("display", "flex").hide().fadeIn(time);
          $('#product-cont').fadeIn(time);
@@ -125,16 +126,32 @@ function show_backgrounds(time=500, st_callback=function(){} ){
     },time);
 }
 
-function change_options(keys){
+function change_options(keys,type){
     $('#product-category-options').empty()
     for(i=0;i<keys.length;i++){
         if(i==0){
-            temp = "<div class='option active' onclick='option_click(\""+keys[i]+"\")' id='"+keys[i]+"'>"+keys[i]+"</div>"
+            temp = "<div class='option active' id='"+keys[i][1]+"' onclick='option_click(\""+keys[i][1]+"\",\""+type+"\")'>"+keys[i][0]+"</div>"
         } else {
-            temp = "<div class='option' id='"+keys[i]+"'  onclick='option_click(\""+keys[i]+"\")'>"+keys[i]+"</div>"
+            temp = "<div class='option' id='"+keys[i][1]+"'  onclick='option_click(\""+keys[i][1]+"\",\""+type+"\")'>"+keys[i][0]+"</div>"
+            temp = "<div class='option' id='"+keys[i][1]+"'  onclick='option_click(\""+keys[i][1]+"\",\""+type+"\")'>"+keys[i][0]+"</div>"
         }
         $('#product-category-options').append(temp);
     }
+}
+
+function option_click(subtype,type){
+    $('.option').removeClass("active");
+    $('#'+subtype).addClass("active");
+    time = 800;
+    $('.product').fadeOut(time);
+    setTimeout(function(){
+        $('product-cont').empty()
+        for(x in waitingVariables.products[type][subtype]){
+            $('#product-cont').append(waitingVariables.products[type][subtype][x].html)
+        }
+         $('#product-cont').fadeIn(time);
+    },time+100);
+
 }
 
 
@@ -251,10 +268,3 @@ function show_click_me(time=300){
         enable_click();
     }, time);
 }
-
-function option_click(id){
-    $('.option').removeClass("active");
-    $('#'+id).addClass("active");
-
-}
-

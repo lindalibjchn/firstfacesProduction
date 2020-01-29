@@ -1,10 +1,65 @@
 {% load static %}
 
 <div id="foregroundContainer">
+    <div id="logoHolder">
+        <img id="ucdLogo" src="{% static 'ucd_logo.png' %}"/>
+    </div>
 
-    <img id="foregroundImage" src="{% static 'gif_animation/gifBackgroundImage.png' %}">
+    <div id="infoSentenceContainer" class="w3-center hide1">
+
+            <div id="moreInfoSentence">
+
+                <div id="text0" class="three-sentence-info">Your spoken English</div>
+                <div id="text1" class="three-sentence-info">Native speaker judgement</div>
+                <div id="text2" class="three-sentence-info">Emotional response</div>
+
+            </div>
+    </div>
+
+    <div class="info-card hide2" id="moreInfoCard01">
+        <div class="w3-container w3-center" id="TEDVideoTitle">
+            <div class="card-titles">Background</div>
+        </div>
+        <div class="video-cont">
+            <div class="card-content video_holder">
+                <iframe width="100%" height="100%"src="https://www.youtube.com/embed/6boGtBCbclc?modestbranding=1&;showinfo=0&;autohide=1&;rel=0;" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <div class="info-card hide2" id="moreInfoCard02">
+        <div id="howItWorksTitle" class="w3-container w3-center">
+            <!--<h3 style="padding: 0px; margin: 3px;">Development - <strong style="font-size: 32px;">AI</strong></h3>-->
+            <div class="card-titles">How it Works</div>
+        </div>
+        <div class="video-cont">
+            <div class="card-content video_holder">
+                <iframe width="100%" height="100%" src="https://www.youtube.com/embed/xYNMh4sZu6k?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+     <div class="info-card hide2" id="joinInfoCard01">
+         <div id="studentFeedback" class="w3-container w3-center">
+             <div class="card-titles" id="feedbackTitle">Student Feedback</div>
+         </div>
+         <div class="card-content feedback_content">
+             <div class="w3-center feedback-outer">
+                 <div id="feedback_div">
+                     <div id="feedback_div_feedback">
+                        <p class="feedback" id="feedback_1">"It is so helpful. You correct so many mistakes which I didn't know before."</p>
+                         <p class="feedback" id="feedback_2">"It's a simple process. This program is easy to use and feedback is very fast"</p>
+                         <p class="feedback" id="feedback_3">"It's good for me that grammar mistakes are corrected everytime because I can learn the correct sentences."</p>
+                     </div>
+                 </div>
+
+             </div>
+         </div>
+     </div>
+
+    <!--<img id="foregroundImage" src="{% static 'gif_animation/gifBackgroundImage.png' %}">
     <img id="foregroundImageNoHarp" src="{% static 'gif_animation/gifBackgroundImageNoHarp.png' %}">
-    <img id="foregroundImageGif" src="{% static 'gif_animation/ERLE_logo_animation.gif' %}">
+    <img id="foregroundImageGif" src="{% static 'gif_animation/ERLE_logo_animation.gif' %}">-->
 
 </div>
 

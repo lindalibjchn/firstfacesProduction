@@ -291,6 +291,8 @@ class TiaAttributes(models.Model):
     hairColour = models.CharField(max_length=6, null=False, blank=True)
     clothesColour = models.CharField(max_length=6, null=False, blank=True)
     eyeColour = models.CharField(max_length=6, null=False, blank=True)
+    color_background = models.NullBooleanField(null=True, default=False, blank=True)
+    gif_background = models.CharField(max_length=6, null=True, default="None")
 
 
 class UserProducts(models.Model):
@@ -299,6 +301,7 @@ class UserProducts(models.Model):
     hairColours = models.CharField(max_length=2000, blank=True, null=True)
     clothesColour = models.CharField(max_length=2000, blank=True, null=True)
     EyeTypes = models.CharField(max_length=2000, blank=True, null=True)
+    gif_backgrounds = models.CharField(max_length=2000, blank=True, null=True)
 
 
 class EyeTypes(models.Model):
@@ -315,3 +318,4 @@ class BackgroundGIF(models.Model):
     price = models.SmallIntegerField()
     hex = models.CharField(max_length=6, null=False, blank=True)
     filename = models.CharField(max_length=40, null=False, blank=True)
+

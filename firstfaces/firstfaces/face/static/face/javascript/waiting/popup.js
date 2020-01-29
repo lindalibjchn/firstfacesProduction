@@ -28,7 +28,6 @@ function get_products(){
 
 
 $('#popup-btn').click(function(){
-
     if($('#popup-btn').hasClass("clicked")){
         $('#logo-left-cont').fadeIn(200);
         setTimeout(function(){$('#popup').hide();},200);

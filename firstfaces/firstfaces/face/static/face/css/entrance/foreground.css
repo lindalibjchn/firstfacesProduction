@@ -1,17 +1,20 @@
 #foregroundContainer {
 
-    background-color: #1fb030;
+    /*background-color: #1fb030;*/
     /*border: 2px dashed red;*/
-    /*position: absolute;*/
-    height: 200%;*/
-    width: 100%;
-    background-color: #1fb030;
+    position: absolute;
+    left:2.5%;
+    height: 100%;
+    width: 95%;
+
+    background-color: white;;
     /*background-color: black;*/
     /*z-index: 1000;*/
-    /*display: flex;*/
-    /*align-items: center;*/
-    /*justify-content: center;*/
 
+    -webkit-box-shadow: inset 0px 4px 5px -5px rgba(0,0,0,0.75), inset 0px -5px 5px -5px rgba(18,40,84,0.65);
+    -moz-box-shadow: inset 0px 4px 5px -5px rgba(0,0,0,0.75), inset 0px -5px 5px -5px rgba(18,40,84,0.65);
+    box-shadow: inset 0px 5px 5px -5px rgba(18,40,84,0.65), inset 0px -5px 5px -5px rgba(18,40,84,0.65);
+    overflow-y: scroll;
 }
 
 #foregroundImage {
@@ -66,3 +69,190 @@
 /*}*/
 
 
+#ucdLogo{
+    /*max-width:30%;
+    min-width:30%;*/
+    height: 124px;
+    width: 80px;
+    margin-bottom: 4%;
+}
+#logoHolder{
+    position:relative;
+    width:100%;
+    height:150px;
+    display:flex;
+    align-items:flex-end;
+    justify-content:center;
+    margin-top:5%;
+}
+
+#informationContainer {
+    position: relative;
+    width: 100%;
+    height: 50%;
+    opacity: 1;
+    /*border: 2px dashed blue;*/
+    /*display: none;*/
+
+}
+
+#infoSentenceContainer {
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width: 100%;
+    padding-bottom: 5%;
+    /*border-bottom: 1px solid #00427A;*/
+    box-shadow: inset 0px -1px 1px -1px rgba(18,40,84,0.65);
+}
+
+#moreInfoSentence {
+
+    padding: 1%;
+    font-size: 4vw;
+    color: #00427A;
+    font-family: 'Raleway', sans-serif;
+    /*background: rgba( 255, 255, 255, 1.0);*/
+    margin-bottom: 1%;
+    height: 15%;
+
+}
+
+
+/*Videos*/
+#TEDVideoTitle {
+    display:flex;
+    align-item:center;
+    justify-content:center;
+    background-color: transparent;
+}
+#howItWorksTitle {
+    display:flex;
+    align-item:center;
+    justify-content:center;
+    background-color: transparent;
+}
+.info-card {
+
+    width: 100%;
+    height: 33%;
+    padding-bottom: 5%;
+
+}
+.video-cont{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:none;
+    height:80%;
+    width:100%;
+}
+.card-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow:hidden;
+    height:100%;
+    width:100%;
+ }
+
+#moreInfoCard01 {
+    padding-top:5%;
+    position:relative;
+    box-shadow: inset 0px 1px 1px -1px rgba(18,40,84,0.65), inset 0px -1px 1px -1px rgba(18,40,84,0.65);
+}
+
+#moreInfoCard02 {
+    padding-top:5%;
+    position:relative;
+    box-shadow: inset 0px 1px 1px -1px rgba(18,40,84,0.65), inset 0px -1px 1px -1px rgba(18,40,84,0.65);
+}
+
+
+.card-titles {
+    font-family: 'Raleway', sans-serif;
+    color: #00427A;
+    margin: 3px;
+    font-size: 4vw;
+    font-weight: bold;
+    letter-spacing:0.5vw;
+   height: 20%;
+}
+
+
+#feedbackTitle {
+     display:flex;
+    align-items:center;
+    justify-content:center;
+    background-color: transparent;
+}
+
+.feedback-outer {
+    padding: 1%;
+
+}
+
+.feedback {
+    margin-top:0px;
+    font-size: 3.5vw;
+    color: #484747;
+    font-family: 'Raleway', sans-serif;
+    font-style: italic;
+    margin-bottom: 0;
+
+
+}
+#studentFeedback {
+
+    background-color: none;
+
+}
+#joinInfoCard01{
+    padding-top: 5%;
+    position: relative;
+    box-shadow: inset 0px 1px 1px -1px rgba(18,40,84,0.65), inset 0px -1px 1px -1px rgba;
+    height: 25%;
+}
+.feedback-outer{
+    width:100%;
+    height:100%;
+
+}
+#feedback_div{
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+#feedback_div_logo{
+    left: 0;
+    width: 20%;
+    position: absolute;
+    height: 100%;
+    font-size: 3vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#feedback_div_feedback{
+    left: 15%;
+    width: 70%;
+    position: absolute;
+    height: 100%;
+    font-size: 3vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+.feedback_content{
+    height: 80%;
+    width: 100%;
+}
+
+#feedback_1{}
+#feedback_2{
+    display:none;
+}
+#feedback_3{
+    display:none;
+}
