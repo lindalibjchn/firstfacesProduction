@@ -103,32 +103,38 @@ function colourDaysInUCDCOlours( d ) {
 
     for ( let i=1; i<6; i++ ) {
 
-        let colour = '#188ac7';
-        let textColour = '#ffffff';
-        let border = 'none';
+        let colour = '#102858';
+        //let textColour = '#ffffff';
+        let textColour = '#E7CA00';
+        //let border = 'none';
+        let border = "1px solid #188ac7";
+        let borderRight = "1px solid #188ac7";
+        let borderLeft = "1px solid #102858";
 
         if ( i === d ) {
 
             //colour = '#102858';
             //colour = '#188ac7';
             colour = '#ffffff';
-            textColour = '#188ac7';
+            textColour = '#102858';
             border = "1px solid #188ac7";
 
         } else if ( i > d ) {
 
-            colour = '#188ac7';
+            colour = '#102858';
             //colour = '#1fb030';
 
         }
 
         $('#dayText' + i).css('background-color', colour);
         $('#dayText' + i).css('color', textColour);
-        $('#dayText' + i).css('border', border);
+        $('#dayText' + i).css('border-right', borderRight);
+        $('#dayText' + i).css('border-left', borderLeft);
 
     }
 
 }
+
 function turnThisBarIntoButtonToEnterConversation( barId ) {
 
     $('#' + barId ).addClass( 'button-for-entering-conversation' );
