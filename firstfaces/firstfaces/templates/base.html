@@ -23,16 +23,41 @@
                 font-weight: bold;
 
             }
+            .navbar_icon{
+                height:100%;
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                font-family: 'Oswald', sans-serif;
+                text-transform: uppercase;
+                font-size: 2vh;
+                color: #102858;
+                text-align:center;
+            }
+            .navbar_icon_left:hover{
+                color: #1C8AC4
+            }
+            .navbar_icon_right:hover{
+                color: #E9CC01
+            }
+            #navbar_desktop{
+                height:75px;
+                background:white;
+                border-bottom:3px solid #102858;
+                box-shadow: 0px 0px 2px -2px rgba(0,0,0,0.6);
+
+            }
 
             </style>
-	
+        <!--Bootstrap-->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"/>
         </head>
 	
         <body>
             
             <!-- w3.css styling -->
             <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
             <!--script src="https://kit.fontawesome.com/ff429d8bc2.js" crossorigin="anonymous"></script>-->
 
             <!-- jQuery -->
@@ -53,6 +78,8 @@
 
             <!-- AJAXpost -->
             <script src="{% static 'ajaxPost.js' %}"></script>
+
+
 
             
             <!-- navbar -->
@@ -87,30 +114,63 @@
 
 
                         {% else %}
-                            <div id="navbar" class="w3-bar" style="position: relative; z-index: 100; color: blue; width:100%; height:70px;min-height:70px;">
 
-                            <div  style="border-bottom:3px solid #102858; height:100%; width:95%; position:absolute; left:2.5%;">
-                                 <div style="position:relative; height:100%; width:100%; -webkit-box-shadow: 0 4px 6px -6px #222;-moz-box-shadow: 0 4px 6px -6px #222; box-shadow: 0 4px 6px -6px #222;"></div>
-                            </div>
+                            {% if request.user_agent.is_mobile %}
 
-                            <div id="logo-left-cont" style=" color:#102858; position:absolute; height:90%; width:15%; left:2.5%; background-color: white; display:flex; align-items:center; justify-content:center;">
-                            </div>
+                                <div id="navbar" class="w3-bar" style="position: relative; z-index: 100; color: blue; width:100%; height:70px;min-height:70px;">
+                                    <div id="navbar-grey-cover" style=""></div>
+                                <div  style="border-bottom:3px solid #102858; height:100%; width:100%; position:absolute;">
+                                     <div style="position:relative; height:100%; width:100%; -webkit-box-shadow: 0 4px 6px -6px #222;-moz-box-shadow: 0 4px 6px -6px #222; box-shadow: 0 4px 6px -6px #222;"></div>
+                                </div>
 
-                            <div  style="position:relative; height:100%; width:100%; display:flex; align-items:center; justify-content:center;">
-                                <div class="logoCont" style="position:absolute; left:20%; width:60%; height:90%;">
-                                    <div style="width:100%; height:100%; position:absolute; top:0; display:flex; align-items:center; justify-content:center;">
-                                        <img id="main-logo" style="height:80%;" id="foregroundImageGif" src="{% static 'gif_animation/logo_b.png' %}">
+                                <div id="logo-left-cont" style=" color:#102858; position:absolute; height:90%; width:15%; left:2.5%; display:flex; align-items:center; justify-content:center;">
+                                </div>
+
+                                <div  style="position:relative; height:100%; width:100%; display:flex; align-items:center; justify-content:center;">
+                                    <div class="logoCont" style="position:absolute; left:20%; width:60%; height:90%;">
+                                        <div style="width:100%; height:100%; position:absolute; top:0; display:flex; align-items:center; justify-content:center;">
+                                            <img id="main-logo" style="height:80%;" id="foregroundImageGif" src="{% static 'gif_animation/logo_n.png' %}">
+                                        </div>
+                                    </div>
+
+                                    <div id="popup-btn-cont" style="position:absolute; height:90%; width:15%; right:2.5%;  display:flex; align-items:center; justify-content:center;">
+                                        <i id="popup-btn" class="fa fa-bars fa-2x" style="color:#102858;"></i>
                                     </div>
                                 </div>
-
-                                <div style="position:absolute; height:90%; width:15%; right:2.5%; background-color: white; display:flex; align-items:center; justify-content:center;">
-                                    <i id="popup-btn" class="fa fa-bars fa-2x" style="color:#102858;"></i>
                                 </div>
-                            </div>
-                            </div>
-                            <!--<button class="w3-bar-item w3-button w3-round-xxlarge" id="signUpBtn" style="border: 1px solid white; margin: 3px;">Sign Up</button>-->
-                            <!--<button class="w3-bar-item w3-button w3-hover-white w3-round-xxlarge" id="logInDropdown" style="border: 1px solid white; margin: 3px;">Log In</button>-->
+                                <!--<button class="w3-bar-item w3-button w3-round-xxlarge" id="signUpBtn" style="border: 1px solid white; margin: 3px;">Sign Up</button>-->
+                                <!--<button class="w3-bar-item w3-button w3-hover-white w3-round-xxlarge" id="logInDropdown" style="border: 1px solid white; margin: 3px;">Log In</button>-->
+                            {% else %}
+                                <div id="navbar_desktop" class="container-fluid" style="height:75px;">
+                                  <div class="row" style="height:75px;">
+                                       <div class="col-xs-12 col-sm-12 col-lg-12">
+                                                <div class="row" style="height:100%;">
+                                                    <div class="col-xs-4 col-sm-4 col-lg-4">
+                                                        <div class="row" style="height:100%;">
+                                                            <div class="col-xs-3 col-sm-3 col-lg-3"></div>
+                                                            <div class="col-xs-3 col-sm-3 col-lg-3 navbar_icon navbar_icon_left out-of-order">Contact</div>
+                                                            <div class="col-xs-3 col-sm-3 col-lg-3 navbar_icon navbar_icon_left out-of-order">FAQs</div>
+                                                            <div class="col-xs-3 col-sm-3 col-lg-3"></div>
 
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-4 col-sm-4 col-lg-4" style=" height:100%;display:flex; align-items:center; justify-content:center;">
+                                                        <img id="main-logo" style="height:50px;" id="foregroundImageGif" src="{% static 'gif_animation/logo_n.png' %}">
+                                                    </div>
+
+                                                    <div class="col-xs-4 col-sm-4 col-lg-4">
+                                                        <div class="row" style="height:100%;">
+                                                            <div class="col-xs-3 col-sm-3 col-lg-3"></div>
+                                                            <div class="col-xs-3 col-sm-3 col-lg-3 navbar_icon navbar_icon_right out-of-order">Sign In</div>
+                                                            <div class="col-xs-3 col-sm-3 col-lg-3 navbar_icon navbar_icon_right out-of-order">Sign Up</div>
+                                                            <div class="col-xs-3 col-sm-3 col-lg-3"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                       </div>
+                                  </div>
+                                </div>
+                            {% endif %}
                         {% endif %}
 
                     </div>

@@ -127,3 +127,20 @@ def book_conversation(request):
         }
 
     return JsonResponse(response_data)    
+
+
+def contact_us(request):
+    time_now = timezone.localtime(timezone.now()).strftime("%H:%M")
+    date_now = timezone.localtime(timezone.now()).date()
+    name = request.POST['name']
+    email = request.POST['email']
+    message = request.POST['message']
+
+    str_ = "Time: "+str(time_now)+"\nDate: "+str(date_now)+"\nName: "+name+"\nEmail: "+email+"\n\nMessage:\n"+message
+
+    send_mail("Contact Us Message", str_, 'ucd.erle@gmail.com', ['daniel.maguire@ucdconnect.ie'])
+
+    response_data = {
+    }
+
+    return JsonResponse(response_data)

@@ -72,6 +72,7 @@ urlpatterns = [
 
     #WAITING
     path('waiting', waiting_main.waiting, name="waiting"),
+    path('contact_us', waiting_main.contact_us, name="contact_us"),
     path('book_conversation', waiting_main.book_conversation, name="book_conversation"),
 
     #ENTRANCE

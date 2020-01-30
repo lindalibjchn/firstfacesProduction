@@ -1,0 +1,118 @@
+#overforeground{
+    width:100%;
+    height:100%;
+    background-color:transparent;
+    z-index:3;
+    position:absolute;
+    display:none;
+}
+#overforeground-background{
+    width:100%;
+    height:100%;
+    background-color:black;
+    z-index:4;
+    position:absolute;
+    top:0;
+    left:0;
+    opacity:0.5;
+}
+#overforeground-cont{
+    width:100%;
+    height:100%;
+    z-index:5;
+    position:absolute;
+
+    top:0;
+    left:0;
+    opacity:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+#alert_box{
+    width:70%;
+    height:50%;
+    margin-top:15%;
+    background:white;
+    border-radius:5px;
+    position:relative;
+    -webkit-box-shadow: 0px 0px 2px 2px hsla(0, 0%, 0%, 0.18);
+    -moz-box-shadow: 0px 0px 2px 2px hsla(0, 0%, 0%, 0.18);
+    box-shadow: 0px 0px 2px 2px hsla(0, 0%, 0%, 0.18);
+
+
+}
+#alert_title{
+    width:100%;
+    position:absolute;
+    height:30%;
+    top:0;
+    left:0;
+    background:#2E8AC7;
+    font-size: 3vh;
+    color:white;
+    border-radius:5px 5px 0 0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow:0px 2px 2px -2px rgba(18,40,84,0.65);
+    font-family: 'Oswald', sans-serif;
+}
+#alert_body{
+    width:100%;
+    position:absolute;
+    height:70%;
+    top:30%;;
+    left:0;
+    color:black;
+    border-radius:5px 5px 0 0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family: 'Oswald', sans-serif;
+
+}
+#alert_body_top{
+    width:100%;
+    position:absolute;
+    height:40%;
+    top:0;
+    left:0;
+    color:black;
+    display:flex;
+    align-items:flex-end;
+    justify-content:center;
+
+}
+#est{
+ font-size: 2.5vh;
+ color:#122854;
+}
+#estDate{
+ font-size: 3.5vh;
+ color:#009C4A;
+}
+
+#alert_body_bottom{
+    width:100%;
+    position:absolute;
+    height:60%;
+    top:40%;
+    left:0;
+    color:black;
+    display:flex;
+     align-items:flex-start;
+    justify-content:center;
+}
+#overfooter{
+    position:absolute;
+    bottom:0;
+    height:75px;
+    width:100%;
+    background-color:black;
+    z-index:4;
+    opacity:0.5;
+    z-index:555;
+    display:none;
+}

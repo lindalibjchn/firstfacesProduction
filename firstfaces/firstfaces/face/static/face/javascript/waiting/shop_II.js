@@ -96,8 +96,23 @@ function unclicked_gif(){
         setTimeout(function(){
             enable_click();
         },600);
-
 }
+
+function animate_background_colour(start_hex, end_hex, time){
+    var colours = get_transition_colors(start_hex, end_hex, time)
+    change_color_with_delay(0,colours,colours.length);
+}
+function change_color_with_delay(i,colours,end){
+    setTimeout(function(){
+        change_background(colours[i])
+        i++;
+        if(i < end){
+            change_color_with_delay(i,colours,end);
+        }
+    },16.666666667);
+}
+
+
 
 function flash_gif(){
     //flash background to slighty brighter less opaque colour

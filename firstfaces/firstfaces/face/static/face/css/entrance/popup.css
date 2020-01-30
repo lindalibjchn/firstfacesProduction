@@ -1,0 +1,39 @@
+#popup{
+    position:absolute;
+    top:70px;
+    width:100%;
+    background-color:white;
+    z-index:999;
+    margin-top:-3px;
+    border-bottom:3px solid #102858;
+    display:none;
+}
+#popup-cont-cont{
+    height:100%;
+    width:100%;
+    position:relative;
+}
+#popup-cont{
+    height:90%;
+    width:100%;
+    top:5%;
+    position:absolute;
+}
+
+.popup-item{
+    height:16.66666667%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase;
+    font-size: 3vh;
+    color: #102858
+}
+.logout{
+    color:#990000;
+}
+
+.out-of-order{
+    opacity:0.7;
+}

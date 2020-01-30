@@ -5,7 +5,15 @@
 <link rel="stylesheet" type="text/css" href="{% static 'face/css/entrance/sign_up.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'face/css/entrance/sign_in.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'face/css/entrance/information.css' %}" />
-<link rel="stylesheet" type="text/css" href="{% static 'face/css/entrance/foreground.css' %}" />
+
+{% if request.user_agent.is_mobile %}
+    <link rel="stylesheet" type="text/css" href="{% static 'face/css/entrance/foreground.css' %}" />
+{% else %}
+    <link rel="stylesheet" type="text/css" href="{% static 'face/css/entrance/foreground_desktop.css' %}" />
+{% endif %}
+
+
 <link rel="stylesheet" type="text/css" href="{% static 'face/css/entrance/footer.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'face/css/entrance/popup.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'face/css/entrance/overforeground.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'face/css/entrance/contact.css' %}" />

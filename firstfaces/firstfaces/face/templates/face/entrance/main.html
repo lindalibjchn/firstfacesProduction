@@ -12,11 +12,19 @@ STYLESHEETS
 BACKGROUND
 -------------------------------------------------------------------------->
 {% include 'face/entrance/over_foreground.html' %}
-{% include 'face/entrance/foreground.html' %}
+{% include 'face/entrance/contact_us.html' %}
+
+{% if request.user_agent.is_mobile %}
+    {% include 'face/entrance/footer.html' %}
+    {% include 'face/entrance/foreground.html' %}
+{% else %}
+    {% include 'face/entrance/footer_desktop.html' %}
+    {% include 'face/entrance/foreground_desktop.html' %}
+{% endif %}
 {% include 'face/entrance/popup.html' %}
 
 
-{% include 'face/entrance/footer.html' %}
+
 <!----------------------------------------------------------------------- 
 SCRIPTS
 -------------------------------------------------------------------------->
