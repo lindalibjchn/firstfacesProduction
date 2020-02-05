@@ -22,7 +22,7 @@ function initInputReady( from, showPtsBool=false ) {
     
     }
 
-    if ( conversationVariables.conversation_dict.completed_sentences.length !== 0 && conversationVariables.tutorial_complete ) {
+    if ( conversationVariables.conversation_dict.completed_sentences.length !== 0 && !conversationVariables.tutorial ) {
   
         $( '#prevSentsIconContainer' ).show();
         addPreviousSentences( conversationVariables.conversation_dict, 0 );

@@ -2,27 +2,7 @@ $(window).on( 'load', function() {
 
     if ( waitingVariables.tutorial_complete ) {
 
-        addAvailablesToTimetable( waitingVariables.availables )
-
-        if ( waitingVariables.conversations.length !== 0 ) {
-        
-            if ( !(waitingVariables.conversations.length === 1 && waitingVariables.currently_in_class ) ) { 
-
-                //$( '#prevSentsWaitingContainer' ).css( 'display', 'flex' );
-                //addAllScores( waitingVariables.conversations )
-                //showConversationSentences( 0 );
-                //setUpPreviousSentsBtns( waitingVariables.conversations[0].completed_sentences )
-                //addData( 'sentences', waitingVariables.conversations[0].completed_sentences )
-        
-            }
-
-        }
-        $('#pronunciationClearOverlayArea').click( hidePronunciationDataContainer );
-        if ( waitingVariables.currently_in_class ) {
-
-            waitingVariables.conversation_id = waitingVariables.conversations[ 0 ].id
-
-        }
+        showTutorialCompleteDashboard()
 
     } else {
 
@@ -37,6 +17,33 @@ $(window).on( 'load', function() {
     }
 
 });
+
+function showTutorialCompleteDashboard() {
+
+    addAvailablesToTimetable( waitingVariables.availables )
+
+    if ( waitingVariables.conversations.length !== 0 ) {
+    
+        if ( !(waitingVariables.conversations.length === 1 && waitingVariables.currently_in_class ) ) { 
+
+            //$( '#prevSentsWaitingContainer' ).css( 'display', 'flex' );
+            //addAllScores( waitingVariables.conversations )
+            //showConversationSentences( 0 );
+            //setUpPreviousSentsBtns( waitingVariables.conversations[0].completed_sentences )
+            //addData( 'sentences', waitingVariables.conversations[0].completed_sentences )
+    
+        }
+
+    }
+    $('#pronunciationClearOverlayArea').click( hidePronunciationDataContainer );
+    if ( waitingVariables.currently_in_class ) {
+
+        waitingVariables.conversation_id = waitingVariables.conversations[ 0 ].id;
+        $('.enter-button-text').text('continue');
+
+    }
+
+}
 
 function enterConversation() {
 

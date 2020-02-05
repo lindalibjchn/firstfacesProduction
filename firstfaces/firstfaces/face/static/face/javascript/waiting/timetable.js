@@ -9,6 +9,20 @@ function addAvailablesToTimetable( availableTuples ) {
     
     colourDaysInUCDCOlours( today.getDay() );
 
+    // add time now blinker
+    let todaysDay = today.getDay();
+    $('#timetableRow' + todaysDay).append(
+            
+        '<div id="timeNowBlinkerContainer"><div id="timeNowBlinker" class="time-now-bright"></div></div>'
+
+    )
+    let todaysLeft = 100 * ( timeNow - nineAms[ todaysDay - 1 ] ) / nineToFiveJavascriptTime
+    $('#timeNowBlinkerContainer').css({
+        
+        'left': todaysLeft.toString() + '%',
+
+    })
+
     availableTuples.forEach( function( tup, ind ) {
 
         let date = new Date( tup[ 0 ] );

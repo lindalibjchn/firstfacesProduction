@@ -44,7 +44,7 @@ function whatsWrong() {
 
     //recTimes.clickOptionBtn = Date.now() / 1000;
 
-    if ( conversationVariables.tutorial_complete ) {
+    if (!conversationVariables.tutorial ) {
 
         $.ajax({
             url: "/store_whats_wrong",

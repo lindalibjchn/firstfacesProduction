@@ -32,7 +32,7 @@ function highlightWrong() {
                     $('#wrongWord_' + ind[0].toString()).css( {
                         'background-image': 'linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0), red, rgba(0,0,0,0), rgba(0,0,0,0))',
                     });
-                    if ( conversationVariables.tutorial_complete ) {
+                    if (!conversationVariables.tutorial ) {
                     
                         showErrorBtns();
 
@@ -65,7 +65,7 @@ function highlightWrong() {
 
                             if ( i === conversationVariables.conversation_dict.completed_sentences[ 0 ].indexes.length - 1 ) {
 
-                                if ( conversationVariables.tutorial_complete ) {
+                                if (!conversationVariables.tutorial ) {
                                 
                                     showErrorBtns();
 
@@ -90,7 +90,7 @@ function highlightWrong() {
 
                             if ( i === conversationVariables.conversation_dict.completed_sentences[ 0 ].indexes.length - 1 ) {
 
-                                if ( conversationVariables.tutorial_complete ) {
+                                if (!conversationVariables.tutorial ) {
                                 
                                     showErrorBtns();
 

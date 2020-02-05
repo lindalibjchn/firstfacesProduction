@@ -51,7 +51,7 @@ function tiaSpeakGreetings() {
 
     setTimeout( function() {
 
-        if ( !conversationVariables.tutorial_complete ) {
+        if ( conversationVariables.tutorial ) {
 
             runTutorial();
         

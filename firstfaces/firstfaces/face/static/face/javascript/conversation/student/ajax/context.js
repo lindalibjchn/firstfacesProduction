@@ -391,7 +391,7 @@ $('#closeTallTypeText').click(decrease_type_size_stage2);
 
 function decrease_type_size_stage2(){
     if(conversationVariables.stage_2_increased){
-        if ( conversationVariables.tutorial_complete ) {
+        if (!conversationVariables.tutorial ) {
         
             $('#reRecordBtn').show();
             $('#finishClassIconContainer').show()

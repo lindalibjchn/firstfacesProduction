@@ -6,7 +6,7 @@ function tiaPrepareToSpeak( tiaSays, speakCb=function(){}, playbackRate=1) {
     synthesisObject.audio.src = prefixURL + 'media/' + synthesisObject.now.URLs[ synthesisObject.sentenceNo ];
     synthesisObject.audio.playbackRate = playbackRate;
     synthesisObject.callback = speakCb;
-    if ( conversationVariables.tutorial_complete ) {
+    if (!conversationVariables.tutorial ) {
 
         buttonsListenNextSentence();
 
@@ -129,7 +129,7 @@ function continueStockPhrases() {
 
     if ( synthesisObject.sentenceNo === synthesisObject.now.texts.length - 1 ) {
 
-        if ( !conversationVariables.tutorial_complete ) {
+        if ( conversationVariables.tutorial ) {
 
             dealWithTutorialSpeakingEvents();
 
@@ -142,7 +142,7 @@ function continueStockPhrases() {
             
         expressionController( expressionObject.quarter, tiaTimings.durationOfLastSpeakingPhones, function() {
 
-            if ( !conversationVariables.tutorial_complete ) {
+            if ( conversationVariables.tutorial ) {
                 
                 dealWithTutorialSpeakingEvents();
 

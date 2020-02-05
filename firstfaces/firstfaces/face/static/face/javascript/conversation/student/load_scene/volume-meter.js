@@ -127,7 +127,7 @@ function drawLoop() {
         }
 
         conversationVariables.interference = true;
-        if ( conversationVariables.interference_count === 0 && conversationVariables.tutorial_complete ) {
+        if ( conversationVariables.interference_count === 0 && !conversationVariables.tutorial ) {
         
             if ( !conversationVariables.stage2 && !conversationVariables.stage3 ) {
                // don't want to do full flinch animation in later stages

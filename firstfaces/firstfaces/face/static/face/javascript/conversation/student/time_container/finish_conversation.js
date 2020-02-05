@@ -26,7 +26,7 @@ function endConversation() {
         data: {
             'ratings': JSON.stringify(conversationVariables.ratings),
             'convId': conversationVariables.conversation_dict.id,
-            'tutorial_complete': conversationVariables.tutorial_complete,
+            'tutorial_complete':!conversationVariables.tutorial,
         },
         success: function(json) {
 

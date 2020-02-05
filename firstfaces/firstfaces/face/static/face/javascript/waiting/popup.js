@@ -151,12 +151,16 @@ function open_about(){
 
 function openTutorial() {
 
-    
+    bookConversation( enterTutorial=true )
+    $('#tutorialButton').css({
+        'background-color': 'green',
+        'color': 'white',
+    })
 
 }
 
 $('#shop-btn').click(function(){open_shop()});
-$('#tutorialButton').click(function(){open_tutorial()});
+$('#tutorialButton').click( openTutorial );
 $('#main-logo').click(function(){open_home()});
 $('#history-btn').click(function(){open_history()});
 $('#profile-btn').click(function(){open_profile()});

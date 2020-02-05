@@ -1,6 +1,6 @@
 function sendSentToServer() {
     
-    if ( conversationVariables.tutorial_complete ) {
+    if (!conversationVariables.tutorial ) {
 
         if(conversationVariables.playStage2){
             getRemainingAudio();
