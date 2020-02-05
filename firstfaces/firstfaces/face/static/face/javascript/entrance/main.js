@@ -90,11 +90,13 @@ function load_screen(){
     $('#text0').css('opacity','0');
     $('#text1').css('opacity','0');
     $('#text2').css('opacity','0');
-    time1 = 200;
-    time2 = 1300;
+    time1 = 500;
+    time2 = 1000;
     sent_time = 500;
     time3 = time1 + (time2*4);
     $('.video_holder').hide();
+
+    $('#foregroundAllWhiteAllWhiteAllWhite').fadeOut( time2 );
     $('.video-cont').css({"background":"#D3D3D3", "opacity":"0.15"});
 
     setTimeout(function(){
@@ -458,7 +460,7 @@ function hideLogInDropdown() {
     $('#signInContainer').fadeOut();
 
 }
-
+*/
 function logIn() {
     
     $("#misMatch").hide();
@@ -487,8 +489,8 @@ function logIn() {
             console.log("that's shite");
         },
     });
-}*/
-
+}
+/*
 //function registerProfile() {
 
     //console.log('in register');

@@ -149,7 +149,14 @@ function open_about(){
     $('#popup-btn').click();
 }
 
+function openTutorial() {
+
+    
+
+}
+
 $('#shop-btn').click(function(){open_shop()});
+$('#tutorialButton').click(function(){open_tutorial()});
 $('#main-logo').click(function(){open_home()});
 $('#history-btn').click(function(){open_history()});
 $('#profile-btn').click(function(){open_profile()});

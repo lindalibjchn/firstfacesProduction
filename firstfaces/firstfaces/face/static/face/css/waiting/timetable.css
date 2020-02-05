@@ -57,7 +57,7 @@
 
 .days-text {
 
-    font-size: 3vw;
+    font-size: min(3vw, 20px);
     /*background-color: #969696;*/
     color: white;
     font-weight: bold;
@@ -97,9 +97,9 @@
 .times {
 
     position: relative;
-    top: -18%;
-    left: -14px;
-    font-size: 3.5vw;
+    top: -15%;
+    left: -35%;
+    font-size: min(3vw, 20px);
     color: #102858;
 
 }
