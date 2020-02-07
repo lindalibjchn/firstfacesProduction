@@ -1,0 +1,56 @@
+#enterButtonContainer {
+
+    position: relative;
+    height: 22.5%;
+    width: 100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+}
+
+#enterButtonInnerContainer {
+
+    position: absolute;
+    display: none;
+    bottom: 0;
+    height: 85%;
+    width: 90%;
+    /*border: 2px dashed green;*/
+
+}
+
+#enterButtonMainCont {
+
+    position: relative;
+    height: 100%;
+    width: 100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    /*border: 2px solid black;*/
+
+}
+
+.enter-button {
+
+    height: min(35%, 150px);
+    width: min(30%, 200px);
+    background-color: #1fb030;
+    border-radius: 5px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+}
+
+.enter-button-text {
+
+    color: white;
+    font-weight: bold;
+    font-size: min(4vw, 20px) 
+
+}
+
+
+

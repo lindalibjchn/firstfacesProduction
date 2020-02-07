@@ -28,7 +28,7 @@ function readyBtns() {
     $('#nextSentenceBtn').on( 'click', nextSentence );
 
 
-    if ( !conversationVariables.tutorial_complete ) {
+    if ( conversationVariables.tutorial ) {
 
         hideTopButtons();
 

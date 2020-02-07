@@ -86,7 +86,7 @@ $(function(){
         // Stupid, I know. Lets shift all the days one position down,
         // and make Sunday last
 
-
+        updateTimeNowBlinker();
 
         // Set the am/pm text:
 
@@ -97,3 +97,24 @@ $(function(){
 
 
 });
+
+function updateTimeNowBlinker() {
+
+    if ( $('#timeNowBlinker' ).hasClass( 'time-now-bright' ) ) {
+
+        $('#timeNowBlinker' ).removeClass( 'time-now-bright' );
+        $('#timeNowBlinker' ).addClass( 'time-now-dim' );
+
+    } else {
+
+        $('#timeNowBlinker' ).removeClass( 'time-now-dim' );
+        $('#timeNowBlinker' ).addClass( 'time-now-bright' );
+
+    }
+
+}
+
+
+
+
+

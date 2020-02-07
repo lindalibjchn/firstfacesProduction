@@ -9,6 +9,20 @@ function addAvailablesToTimetable( availableTuples ) {
     
     colourDaysInUCDCOlours( today.getDay() );
 
+    // add time now blinker
+    let todaysDay = today.getDay();
+    $('#timetableRow' + todaysDay).append(
+            
+        '<div id="timeNowBlinkerContainer"><div id="timeNowBlinker" class="time-now-bright"></div></div>'
+
+    )
+    let todaysLeft = 100 * ( timeNow - nineAms[ todaysDay - 1 ] ) / nineToFiveJavascriptTime
+    $('#timeNowBlinkerContainer').css({
+        
+        'left': todaysLeft.toString() + '%',
+
+    })
+
     availableTuples.forEach( function( tup, ind ) {
 
         let date = new Date( tup[ 0 ] );
@@ -33,13 +47,24 @@ function addAvailablesToTimetable( availableTuples ) {
             'left': left.toString() + '%',
             'width': width.toString() + '%',
             'background-color': barColour,
-            'opacity': 1,
+            'opacity': 0.5,
 
         })
 
         if ( openNow ) {
 
-            turnThisBarIntoButtonToEnterConversation( 'available' + ind );
+            $('#available' + ind).css({
+
+                'opacity': 1,
+
+            });
+
+            $('#enterButtonInnerContainer').show();
+
+            $('#enterButton').click( bookConversation );
+
+            //turnThisBarIntoButtonToEnterConversation( 'available' + ind );
+            //need to activate enter button here
 
         }
 
@@ -72,11 +97,11 @@ function getBarColourAndOpenNow( timeNow_, tup_ ) {
     if ( timeNow_ < tup_[ 0 ] ) {
 
             //colour = '#1fb030';
-            colour = '#188ac7';
+            colour = '#1fb030';
 
     } else if ( timeNow_ > tup_[ 1 ] ) {
 
-            colour = '#188ac7';
+            colour = '#1fb030';
 
     } else {
 
@@ -84,7 +109,7 @@ function getBarColourAndOpenNow( timeNow_, tup_ ) {
         
             //colour = '#102858';
             //colour = '#188ac7';
-            colour = '#fffff';
+            colour = '#1fb030';
             open = true;
 
         } else {
@@ -105,7 +130,7 @@ function colourDaysInUCDCOlours( d ) {
 
         let colour = '#102858';
         //let textColour = '#ffffff';
-        let textColour = '#E7CA00';
+        let textColour = '#ffffff';
         //let border = 'none';
         let border = "1px solid #188ac7";
         let borderRight = "1px solid #188ac7";
@@ -113,10 +138,12 @@ function colourDaysInUCDCOlours( d ) {
 
         if ( i === d ) {
 
-            //colour = '#102858';
+            colour = '#102858';
             //colour = '#188ac7';
-            colour = '#ffffff';
-            textColour = '#102858';
+            //colour = '#1fb030';
+            //colour = '#ffffff';
+            //textColour = '#E7CA00';
+            textColour = '#E7CA00';
             border = "1px solid #188ac7";
 
         } else if ( i > d ) {

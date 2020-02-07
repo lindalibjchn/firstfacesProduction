@@ -27,10 +27,12 @@ def conversation_student(request, conversation_id):
 
             prof = Profile.objects.get(learner=request.user)
             gender = prof.gender
-            tutorial_complete = prof.tutorial_complete
+            tutorial = False
+            if conversation_object.topic == 'tutorial':
+                tutorial = True
 
             # boolean values for each of the following
-            first_conversation = determine_if_first_full_conversation(request.user, tutorial_complete)
+            first_conversation = determine_if_first_full_conversation(request.user, tutorial)
             first_enter = determine_if_first_entry(conversation_object) 
 
             conversation_dict, sentence_awaiting_judgement, sentence_being_recorded = get_student_conversation(conversation_object, request.user.id, True)
@@ -70,7 +72,7 @@ def conversation_student(request, conversation_id):
                     # 'alternatives': [{'transcript': "I have a pet dog"}],
                 # },
                 'gender': gender,
-                'tutorial_complete': tutorial_complete,
+                'tutorial': tutorial,
                 'first_conversation': first_conversation,
                 'inDevelopment': settings.DEBUG,
 
@@ -123,7 +125,7 @@ def load_stock_word_model(request):
     return JsonResponse(response_data)
 
 
-def determine_if_first_full_conversation(u, tutorial_complete):
+def determine_if_first_full_conversation(u, tutorial):
 
     first_full_conversation = False
 
@@ -132,9 +134,16 @@ def determine_if_first_full_conversation(u, tutorial_complete):
         # create_hello_wav(u.username)
 
     try:
-        all_convs = Conversation.objects.filter(learner=u)
-        if len(all_convs) == 2 and tutorial_complete:
-            first_full_conversation = True
+        if tutorial:
+            return True
+        else:
+            all_convs = Conversation.objects.filter(learner=u)
+            number_tutorials = 0
+            for c in all_convs:
+                if c.topic == tutorial:
+                    number_tutorials += 1  
+            if number_tutorials == len(all_convs) - 1:
+                first_full_conversation = True
     except:
         pass
 

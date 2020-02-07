@@ -1,11 +1,11 @@
-function bookConversation( enterTutorial ) {
+function bookConversation( enterTutorial=false ) {
 
-    $(this).css({
+    //$(this).css({
 
-        'background-color': 'white',
-        'color': '#102858',
+        //'background-color': 'white',
+        //'color': '#102858',
 
-    }).unbind('click');
+    //}).unbind('click');
     
     console.log('in bookConversation');
     if ( waitingVariables.currently_in_class === false ) {
@@ -14,7 +14,7 @@ function bookConversation( enterTutorial ) {
             url: "/book_conversation",
             type: "POST",
             data: {
-                //'tutorial': enterTutorial,
+                'tutorial': enterTutorial,
             },
             success: function(json) {
                 if ( json.conversationCreated ) {

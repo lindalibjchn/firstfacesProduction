@@ -54,7 +54,7 @@ function dealWithAfterTap() {
         expressionController( expressionObject.calculated, tiaTimings.changeExpressionDuration );
 
         // display errors
-        if ( conversationVariables.tutorial_complete ) {
+        if (!conversationVariables.tutorial ) {
 
             highlightWrong();
 
@@ -99,7 +99,7 @@ function dealWithAfterTap() {
                     if(conversationVariables.movedText){
                         $('#bottomCent').show();
                     }
-                    if ( conversationVariables.tutorial_complete ) {
+                    if (!conversationVariables.tutorial ) {
                         setTimeout(function(){
                             $("#submitOverlay").fadeIn();
                             $("#reRecordBtn").fadeIn();
@@ -136,7 +136,7 @@ function dealWithAfterTap() {
         if(!conversationVariables.stage2 && !conversationVariables.stage3){
             conversationVariables.trying_again = false;
 
-            if ( conversationVariables.tutorial_complete ) {
+            if (!conversationVariables.tutorial ) {
             
                 buttonsAfterTiaListensToLearnersSentenceAndTaps();
 
@@ -223,7 +223,7 @@ function addWords(word,count) {
 
 function afterMovementBackFromTap() {
 
-    if ( !conversationVariables.tutorial_complete ) {
+    if ( conversationVariables.tutorial ) {
 
         if ( conversationVariables.tutorialStep === '021' ) {
 

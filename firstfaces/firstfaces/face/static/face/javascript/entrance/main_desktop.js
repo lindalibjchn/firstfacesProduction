@@ -2,6 +2,14 @@ $( document ).ready(function(){
     setHeight()
     load_screen();
     cycle_feedback();
+    $( "#loginForm" ).on( "submit", function( event ) {
+     
+        event.preventDefault();
+        console.log("in prevent default for login submission");
+        logIn()
+        
+    });
+
 });
 
 function load_screen(){
@@ -90,3 +98,33 @@ function open_alert(){
 $('#navbar-grey-cover').click(close_alert);
 $('#overfooter').click(close_alert);
 $('#overforeground-cont').click(close_alert);
+
+function logIn() {
+    
+    $("#misMatch").hide();
+    // below is from stackoverflow to change serialized form data into nice json
+    let search = $("#loginForm").serialize();
+    let formData = JSON.parse('{"' + search.replace(/&/g, '","').replace(/=/g,'":"') + '"}', function(key, value) { return key===""?value:decodeURIComponent(value) })
+
+    $.ajax({
+        url: "/login",
+        type: "POST",
+        data: formData,
+        success: function(json) {
+            if ( json.loggedIn ) {
+                
+                window.location.href = "/waiting"
+
+            } else {
+
+                $("#misMatch").text("your username or password didn't match. Please try again.").slideDown( 1000 );
+                $("username").val('');
+
+            }
+
+        },
+        error: function() {
+            console.log("that's shite");
+        },
+    });
+}

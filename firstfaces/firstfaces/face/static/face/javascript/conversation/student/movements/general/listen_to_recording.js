@@ -97,7 +97,7 @@ function subsequentFlinches() {
 
 function dealWithBlankTranscription() {
 
-    if ( conversationVariables.tutorial_complete ) {
+    if (!conversationVariables.tutorial ) {
 
         $('#recordBtnsCont').hide();
         $('#upperSentenceHolder').empty();

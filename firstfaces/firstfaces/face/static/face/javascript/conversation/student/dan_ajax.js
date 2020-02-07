@@ -81,7 +81,7 @@ $('#forwardErrorSelection').click(function(){
         }
     }
     //Allignment is done
-    if ( conversationVariables.tutorial_complete ) {
+    if (!conversationVariables.tutorial ) {
         doAllignment();
     }
     conversationVariables.usePlayAud = true;
@@ -186,7 +186,7 @@ $('#forwardErrorSelection').click(function(){
         //The first error is opened for correction
         animate_open_overlay(conversationVariables.uncorrectedErrors[0]);
     }
-    if ( !conversationVariables.tutorial_complete ) {
+    if ( conversationVariables.tutorial ) {
 
         if ( conversationVariables.tutorialStep === '041' ) {
 
@@ -312,7 +312,7 @@ function selectErrWord(idx){
         $('#forwardArrow').addClass('flash');
         selected.push(num);
         selected.sort();
-        if ( conversationVariables.tutorial_complete ) {
+        if (!conversationVariables.tutorial ) {
             if(selected.length == 1){
                 $('#talkBtn').hide();
                 $('#forwardErrorSelection').show();
@@ -342,7 +342,7 @@ function selectErrWord(idx){
             });
             selected = temp;
             if(selected.length == 0){
-                if ( conversationVariables.tutorial_complete ) {
+                if (!conversationVariables.tutorial ) {
                     $('#talkBtn').show();
                     remove_blur_record();
                     $('#forwardArrow').removeClass('flash');
@@ -425,7 +425,7 @@ function doneError(){
     //Check if all errors are corrected
     if($('.uncorrected-error').length == 0){
 
-        if ( conversationVariables.tutorial_complete ) {
+        if (!conversationVariables.tutorial ) {
 
             $('#recordBtnsCont').show();
             $("#talkBtn").show();
@@ -579,7 +579,7 @@ $('#keyboardOverlay').click(function(){
     $('#spectrogramBtn').hide();
     $("#spectrogramBtn").off("click");
     $("#spectrogramBtn").click(function(){
-        if ( conversationVariables.tutorial_complete ) {
+        if (!conversationVariables.tutorial ) {
             submitKeyboard();
             decrease_type_size_stage2();
             $('#keyboardOverlay').hide();

@@ -14,14 +14,16 @@ BACKGROUND
 {% include 'face/entrance/over_foreground.html' %}
 {% include 'face/entrance/contact_us.html' %}
 
-<!--{% if true %}-->
+
+{% if mobile_device %}
     {% include 'face/entrance/footer.html' %}
     {% include 'face/entrance/foreground.html' %}
-<!--{% else %}
+{% else %}
     {% include 'face/entrance/footer_desktop.html' %}
     {% include 'face/entrance/foreground_desktop.html' %}
-{% endif %}-->
+{% endif %}
 {% include 'face/entrance/popup.html' %}
+{% include 'face/entrance/sign_in.html' %}
 
 
 

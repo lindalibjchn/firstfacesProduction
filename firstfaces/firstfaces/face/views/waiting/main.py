@@ -59,20 +59,20 @@ def waiting(request):
         print('\n\ncurrently_in_class:', currently_in_class)
         conversations = get_prev_conversations( request.user )
 
-        tutorial_conversation_id = None
-        if not tutorial_complete:
+        # tutorial_conversation_id = None
+        # if not tutorial_complete:
 
-            # check if tutorial already open
-            if Conversation.objects.filter(learner=request.user).count() == 1:
+            # # check if tutorial already open
+            # if Conversation.objects.filter(learner=request.user).count() == 1:
                 
-                conversation = Conversation.objects.filter(learner=request.user)[0]
+                # conversation = Conversation.objects.filter(learner=request.user)[0]
                 
-            else:
+            # else:
 
-                conversation = Conversation(learner=request.user, start_time=timezone.now(), topic="tutorial") 
-                conversation.save()
+                # conversation = Conversation(learner=request.user, start_time=timezone.now(), topic="tutorial") 
+                # conversation.save()
             
-            tutorial_conversation_id = conversation.id
+            # tutorial_conversation_id = conversation.id
 
         # check if user has completed tutorial
         waiting_variables = {
@@ -85,7 +85,7 @@ def waiting(request):
             'currently_in_class': currently_in_class,
             'class_finished_today': class_finished_today,
             'in_development': settings.DEBUG,
-            'tutorial_conversation_id': tutorial_conversation_id,
+            # 'tutorial_conversation_id': tutorial_conversation_id,
             # 'no_live_sessions': no_live_sessions,
 
         }
@@ -106,14 +106,19 @@ def book_conversation(request):
 
     user = request.user
     time_now = timezone.now()
-    # tutorial = json.loads(request.POST['tutorial'])
+    tutorial = json.loads(request.POST['tutorial'])
     
     if user is not None:
         
         conversation = Conversation(learner=user, start_time=time_now) 
+        if tutorial:
+            send_mail('Tutorial booked by: ' + request.user.username, 'starts soon', 'ucd.erle@gmail.com', ['john.sloan.1@ucdconnect.ie'])
+            conversation.topic = 'tutorial'
+        else:
+            send_mail('Class booked by: ' + request.user.username, 'starts soon', 'ucd.erle@gmail.com', ['john.sloan.1@ucdconnect.ie'])
+
         conversation.save()
 
-        # send_mail('Class booked by: ' + request.user.username, 'starts soon', 'ucd.erle@gmail.com', ['john.sloan.1@ucdconnect.ie'])
 
         response_data = {
             'conversationCreated': True,

@@ -19,6 +19,16 @@
   display: none;
 }
 
+#foregroundAllWhiteAllWhiteAllWhite {
+
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: white;
+    z-index: 1000000;
+
+}
+
 #foregroundImage {
 
     position: absolute;
