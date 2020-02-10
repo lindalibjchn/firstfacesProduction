@@ -14,8 +14,8 @@ class UserForm(ModelForm):
         super(UserForm, self).__init__(*args, **kwargs)
         # then do extra stuff:
         self.fields['username'].help_text = ''
-        self.fields['username'].widget = forms.TextInput(attrs={'placeholder': '', 'style': 'font-size: 20', 'class': 'w3-input w3-border'})
-        self.fields['password'].widget = forms.PasswordInput(attrs={'placeholder': '', 'style': 'font-size: 20', 'class': 'w3-input w3-border'})
+        self.fields['username'].widget = forms.TextInput(attrs={'placeholder': '', 'style': 'font-size: 20', 'class': 'loginField w3-input w3-border'})
+        self.fields['password'].widget = forms.PasswordInput(attrs={'placeholder': '', 'style': 'font-size: 20', 'class': ' loginField w3-input w3-border'})
         # self.fields['password'].widget.attrs['class'] = 'form-control'       
 
 class SignUpForm(ModelForm):

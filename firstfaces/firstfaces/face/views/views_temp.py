@@ -40,9 +40,10 @@ def out_or_in(request):
         return redirect('entrance')
 
 def my_login(request):
-
+    print("HERE")
     username = request.POST['username']
     password = request.POST['password']
+    print("\n\n", username, password, "\n\n")
     user = authenticate(request, username=username, password=password)
     
     if user is not None:

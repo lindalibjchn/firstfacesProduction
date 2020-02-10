@@ -16,6 +16,11 @@ $(window).on( 'load', function() {
 
     }
 
+    var cont_height = getContHeight();
+    $('.cont_').css("height",cont_height);
+
+
+
 });
 
 function showTutorialCompleteDashboard() {
@@ -72,5 +77,7 @@ const mediaLocation = "media/";
 
 
 
-
+function getContHeight(){
+    return $('#footer').offset()['top'] - parseInt($('#navbar').css('height'));
+}
 

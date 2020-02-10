@@ -71,7 +71,12 @@ $( document ).ready(function(){
     close_alert(0,0);
     load_screen();
     cycle_feedback();
+
+    //Log-IN
+
+
 });
+
 var dist = 0;
 function setHeight(){
     console.log("Here")
@@ -150,12 +155,7 @@ $('#signup-btn').click(function(){
         open_alert();
     },200)
 });
-$('#signin-btn').click(function(){
-    $('#popup-btn').click();
-    setTimeout(function(){
-        open_alert();
-    },200)
-});
+
 $('#faq-btn').click(function(){
     $('#popup-btn').click();
     setTimeout(function(){
@@ -445,7 +445,7 @@ function runUCDGif() {
     }); 
 
 }*/
-/*
+
 function showLogInDropdown() {
 
     $('#closeSignInContainer').fadeIn();
@@ -460,8 +460,19 @@ function hideLogInDropdown() {
     $('#signInContainer').fadeOut();
 
 }
-*/
-function logIn() {
+
+$( "#loginForm" ).on( "submit", function( event ) {
+
+        event.preventDefault();
+        console.log("in prevent default for login submission");
+        logIn()
+
+    });
+
+
+
+
+function logIn(){
     
     $("#misMatch").hide();
     // below is from stackoverflow to change serialized form data into nice json
@@ -479,7 +490,7 @@ function logIn() {
 
             } else {
 
-                $("#misMatch").text("your username or password didn't match. Please try again.").slideDown( 1000 );
+                $("#misMatch").text("your username or password didn't match. Please try again.").show();
                 $("username").val('');
 
             }
@@ -490,7 +501,14 @@ function logIn() {
         },
     });
 }
-/*
+$('#signin-btn').click(function(){
+    $('#popup-btn').click();
+    setTimeout(function(){
+        showLogInDropdown();
+    },200)
+});
+
+
 //function registerProfile() {
 
     //console.log('in register');

@@ -6,11 +6,11 @@
 <link rel="stylesheet" type="text/css" href="{% static 'face/css/entrance/sign_in.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'face/css/entrance/information.css' %}" />
 
-<!--{% if true %}-->
+{% if mobile_device %}
     <link rel="stylesheet" type="text/css" href="{% static 'face/css/entrance/foreground.css' %}" />
-<!--{% else %}
+{% else %}
     <link rel="stylesheet" type="text/css" href="{% static 'face/css/entrance/foreground_desktop.css' %}" />
-{% endif %}-->
+{% endif %}
 
 
 <link rel="stylesheet" type="text/css" href="{% static 'face/css/entrance/footer.css' %}" />

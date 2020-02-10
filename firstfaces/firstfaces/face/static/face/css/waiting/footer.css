@@ -9,8 +9,8 @@
 #footer-border{
     position:absolute;
     top:0;
-    width:95%;
-    left:2.5%;
+    width:100%;
+    left:0;
     border-top:3px solid #102858;
 }
 

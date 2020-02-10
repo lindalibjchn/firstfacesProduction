@@ -10,15 +10,20 @@
 
             <form method="POST" id="loginForm">
                 {% csrf_token %}
-                <p id="misMatch" style="display: none; color: red;"></p><!-- errors go here -->
 
-                <p class="formLabelTag w3-text-blue">{{ form.username.label_tag }}</p>
-                <p id="username">{{ form.username }}</p>
-                <p class="formLabelTag w3-text-blue">{{ form.password.label_tag }}</p>
-                <p>{{ form.password }}</p>
-                        
-                <div class="w3-center w3-container">
-                    <input class="w3-button w3-padding-large w3-xlarge w3-green w3-hover-teal w3-ripple" type="submit" value="login" style="margin: 20px;"/>
+                <div id="loginError">
+                    <p id="misMatch" style="display: none; color: red;"></p><!-- errors go here -->
+                </div>
+                <div id="loginUsername">
+                    <p class="formLabelTag">{{ form.username.label_tag }}</p>
+                    <p id="username">{{ form.username }}</p>
+                </div>
+                <div id="loginPassword">
+                    <p class="formLabelTag">{{ form.password.label_tag }}</p>
+                    <p>{{ form.password }}</p>
+                </div>
+                <div id="loginBtn" class="w3-center w3-container">
+                    <input id="sign_in_btn" class="" type="submit" value="login" style="margin: 20px;"/>
                 </div>
             </form>
                 
