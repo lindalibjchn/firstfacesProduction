@@ -1,0 +1,404 @@
+<div id="su_cont">
+    <div id="top-half-su"><div id="top-half-su-before"></div></div>
+
+    <div id="cont-contact">
+        <div id="su_back"><i class="fa fa-arrow-left"></i></div>
+        <div id="su-title">Sign Up</div>
+
+        <div id="su_information_box" class="su_s1">
+            <div id="su_information_title">Information Sheet</div>
+            <div id="su_info_qs">
+                <p class="information-sheet-pb"> What is this research about? </p>
+                <p class="information-sheet-p"> ERLE is a language learning website which uses the emotions of an avatar to give feedback. I am interested in how users interact with the website and the avatar.</p>
+                <p class="information-sheet-pb"> Why are you doing this research? </p>
+                <p class="information-sheet-p"> I believe facial expressions are a very important means of non-verbal communication. I want to understand how language learners feel about interacting with an avatar who displays different emotions depending on their sentences.</p>
+                <p class="information-sheet-pb"> Why have I been invited to take part? </p>
+                <p class="information-sheet-p">You are an intermediate English language learner who is over 18. Your teacher/professor has indicated that your level is suitable for this project.</p>
+                <p class="information-sheet-pb">What will happen if I decide to take part in this research study? </p>
+                <p class="information-sheet-p">If you decide to participate, you will be able to practice your English with the avatar for 30 minutes in each class. You may choose to type or speak to input sentences. You will receive feedback from a native English speaker. This feedback will be shown in the facial expressions of the avatar. If you make mistakes, you will be able to see where the errors are and what the correction is.</p>
+                <p class="information-sheet-pb"> How will the data be used? </p>
+                <p class="information-sheet-p"> The sentences you type and speak will be used to understand how you change your language pronunciation and production after receiving feedback. The recordings from the sentences you speak will be saved and used to train a pronunciation model. </p>
+                <p class="information-sheet-pb"> How will you protect my privacy? </p>
+                <p class="information-sheet-p"> You will choose a username which has no connection to your real name. In the study you will be referred to only by the basic demographic information you provide: age, sex and nationality. </p>
+
+                <p class="information-sheet-pb">How is this research funded? </p>
+                <p class="information-sheet-p">This project is funded by UCD Computer Science.</p>
+
+                <p class="information-sheet-pb">What are the benefits of taking part in this research study? </p>
+                <p class="information-sheet-p">You will be able to practice your English. You may find it enjoyable to interact with an avatar who responds to your sentences.</p>
+                <p class="information-sheet-pb">What are the risks of taking part in this research study? </p>
+                <p class="information-sheet-p answer_p">If you see negative expressions from the avatar you may feel bad. When using the speech recognition, it may be frustrating to see a different result from what you expect. The sentences you input by speech may be identifiable.</p>
+
+                <p class="information-sheet-pb">Can I change my mind at any stage and withdraw from the study? </p>
+                <p class="information-sheet-p">Yes. You can change your mind anytime and withdraw with no disadvantage. If you wish to withdraw, you can send an email to john.sloan.1@ucdconnect.ie with the subject “withdraw from ERLE - <username>”. If you want a copy of your data, or wish your data to be deleted, you can state that in the email and we will follow your request. </p>
+                <p class="information-sheet-pb">Has this research project received ethical approval? </p>
+                <p class="information-sheet-p">Yes.</p>
+
+                <p class="information-sheet-pb">How will I find out what happens with this project? </p>
+                <p class="information-sheet-p">You can email - john.sloan.1@ucdconnect.ie</p>
+            </div>
+        </div>
+        <div id="su_information_below" class="su_s1">
+            <div>Have you read through the information sheet?</div>
+        </div>
+
+        <div class="su_information_below_ticks su_s1">
+            <div class="su_information_below_ticks_left">
+                <div class="su_btn" id="yes_info">Yes</div>
+            </div>
+            <div class="su_information_below_ticks_right">
+                <div class="su_btn" id="no_info">No</div>
+            </div>
+        </div>
+
+
+        <div class="stage_holder su_s2">
+            <div class="question_holder su_s2a">
+                <div id = "age_q" class="su_question">I am over 18 years old</div>
+                <div class="su_question_option">
+                    <div class="su_information_below_ticks_left">
+                        <div>
+                            <input type="radio" id="age_yes" name="age" value="yes"> <label for="age_yes">Yes</label>
+                        </div>
+                    </div>
+                    <div class="su_information_below_ticks_right">
+                        <div>
+                            <input type="radio" id="age_no" name="age" value="no"> <label for="age_no">No</label>
+                        </div>
+                    </div>
+
+                     <div style="display:none;">
+                         <input type="radio" id="age_def" name="age" value="no" checked="checked">
+                     </div>
+
+                </div>
+                <div id="age_q_error" class="su_question_error">You will be unable to participate in the study.</div>
+            </div>
+
+
+
+            <div class="question_holder su_s2a">
+                <div id = "eng_q" class="su_question">I understand that I will talk or type English sentences when using ERLE</div>
+                <div class="su_question_option">
+                    <div class="su_information_below_ticks_left">
+                        <div>
+                            <input type="radio" id="eng_yes" name="eng" value="yes"> <label for="eng_yes">Yes</label>
+                        </div>
+                    </div>
+                    <div class="su_information_below_ticks_right">
+                        <div>
+                            <input type="radio" id="eng_no" name="eng" value="no"> <label for="eng_no">No</label>
+                        </div>
+                    </div>
+
+                     <div style="display:none;">
+                         <input type="radio" id="eng_def" name="eng" value="no" checked="checked">
+                     </div>
+
+                </div>
+                <div id="eng_q_error" class="su_question_error">You will be unable to participate in the study.</div>
+            </div>
+
+            <div class="question_holder su_s2a">
+                <div id = "emo_q" class="su_question">I understand that I will receive feedback in the form of facial expressions of an avatar</div>
+                <div class="su_question_option">
+                    <div class="su_information_below_ticks_left">
+                        <div>
+                            <input type="radio" id="emo_yes" name="emo" value="yes"> <label for="emo_yes">Yes</label>
+                        </div>
+                    </div>
+                    <div class="su_information_below_ticks_right">
+                        <div>
+                            <input type="radio" id="emo_no" name="emo" value="no"> <label for="emo_no">No</label>
+                        </div>
+                    </div>
+
+                     <div style="display:none;">
+                         <input type="radio" id="emo_def" name="emo" value="no" checked="checked">
+                     </div>
+
+                </div>
+                <div id="emo_q_error" class="su_question_error">You will be unable to participate in the study.</div>
+            </div>
+
+
+            <div class="question_holder su_s2a">
+                <div id = "ano_q" class="su_question">I understand that all data I submit is anonymous</div>
+                <div class="su_question_option">
+                    <div class="su_information_below_ticks_left">
+                        <div>
+                            <input type="radio" id="ano_yes" name="ano" value="yes"> <label for="ano_yes">Yes</label>
+                        </div>
+                    </div>
+                    <div class="su_information_below_ticks_right">
+                        <div>
+                            <input type="radio" id="ano_no" name="ano" value="no"> <label for="ano_no">No</label>
+                        </div>
+                    </div>
+
+                     <div style="display:none;">
+                         <input type="radio" id="ano_def" name="ano" value="no" checked="checked">
+                     </div>
+
+                </div>
+                <div id="ano_q_error" class="su_question_error">You will be unable to participate in the study.</div>
+            </div>
+
+
+            <!-- Section 2b -->
+            <div class="question_holder su_s2b">
+                <div id = "dat_q" class="su_question">I understand that all data I submit will be securely stored and archived</div>
+                <div class="su_question_option">
+                    <div class="su_information_below_ticks_left">
+                        <div>
+                            <input type="radio" id="dat_yes" name="dat" value="yes"> <label for="dat_yes">Yes</label>
+                        </div>
+                    </div>
+                    <div class="su_information_below_ticks_right">
+                        <div>
+                            <input type="radio" id="dat_no" name="dat" value="no"> <label for="dat_no">No</label>
+                        </div>
+                    </div>
+
+                     <div style="display:none;">
+                         <input type="radio" id="dat_def" name="dat" value="no" checked="checked">
+                     </div>
+
+                </div>
+                <div id="dat_q_error" class="su_question_error">You will be unable to participate in the study.</div>
+            </div>
+
+            <div class="question_holder su_s2b">
+                <div id = "rec_q" class="su_question">I consent to the recordings I submit being used to train pronunciation models</div>
+                <div class="su_question_option">
+                    <div class="su_information_below_ticks_left">
+                        <div>
+                            <input type="radio" id="rec_yes" name="rec" value="yes"> <label for="rec_yes">Yes</label>
+                        </div>
+                    </div>
+                    <div class="su_information_below_ticks_right">
+                        <div>
+                            <input type="radio" id="rec_no" name="rec" value="no"> <label for="rec_no">No</label>
+                        </div>
+                    </div>
+
+                     <div style="display:none;">
+                         <input type="radio" id="rec_def" name="rec" value="no" checked="checked">
+                     </div>
+
+                </div>
+                <div id="rec_q_error" class="su_question_error">You will be unable to participate in the study.</div>
+            </div>
+
+            <div class="question_holder su_s2b">
+                <div id = "lan_q" class="su_question">I consent to the sentences I submit being used to train language models</div>
+                <div class="su_question_option">
+                    <div class="su_information_below_ticks_left">
+                        <div>
+                            <input type="radio" id="lan_yes" name="lan" value="yes"> <label for="lan_yes">Yes</label>
+                        </div>
+                    </div>
+                    <div class="su_information_below_ticks_right">
+                        <div>
+                            <input type="radio" id="lan_no" name="lan" value="no"> <label for="lan_no">No</label>
+                        </div>
+                    </div>
+
+                     <div style="display:none;">
+                         <input type="radio" id="lan_def" name="dat" value="no" checked="checked">
+                     </div>
+
+                </div>
+                <div id="lan_q_error" class="su_question_error">You will be unable to participate in the study.</div>
+            </div>
+
+
+            <div class="question_holder su_s2b">
+                <div id = "del_q" class="su_question">I understand that I can request the deletion of my data at any time</div>
+                <div class="su_question_option">
+                    <div class="su_information_below_ticks_left">
+                        <div>
+                            <input type="radio" id="del_yes" name="del" value="yes"> <label for="del_yes">Yes</label>
+                        </div>
+                    </div>
+                    <div class="su_information_below_ticks_right">
+                        <div>
+                            <input type="radio" id="del_no" name="del" value="no"> <label for="del_no">No</label>
+                        </div>
+                    </div>
+
+                     <div style="display:none;">
+                         <input type="radio" id="del_def" name="dat" value="no" checked="checked">
+                     </div>
+
+                </div>
+                <div id="del_q_error" class="su_question_error">You will be unable to participate in the study.</div>
+            </div>
+
+            <div class="question_holder su_s2c">
+                <div id = "par_q" class="su_question">I understand that I can stop participating in this research project at any time</div>
+                <div class="su_question_option">
+                    <div class="su_information_below_ticks_left">
+                        <div>
+                            <input type="radio" id="par_yes" name="par" value="yes"> <label for="par_yes">Yes</label>
+                        </div>
+                    </div>
+                    <div class="su_information_below_ticks_right">
+                        <div>
+                            <input type="radio" id="par_no" name="par" value="no"> <label for="par_no">No</label>
+                        </div>
+                    </div>
+
+                     <div style="display:none;">
+                         <input type="radio" id="par_def" name="par" value="no" checked="checked">
+                     </div>
+
+                </div>
+                <div id="par_q_error" class="su_question_error">You will be unable to participate in the study.</div>
+            </div>
+
+            <div class="question_holder su_s2c">
+                <div id = "con_q" class="su_question">I consent to taking part in this research</div>
+                <div class="su_question_option">
+                    <div class="su_information_below_ticks_left">
+                        <div>
+                            <input type="radio" id="con_yes" name="con" value="yes"> <label for="con_yes">Yes</label>
+                        </div>
+                    </div>
+                    <div class="su_information_below_ticks_right">
+                        <div>
+                            <input type="radio" id="con_no" name="con" value="no"> <label for="con_no">No</label>
+                        </div>
+                    </div>
+
+                     <div style="display:none;">
+                         <input type="radio" id="con_def" name="con" value="no" checked="checked">
+                     </div>
+
+                </div>
+                <div id="con_q_error" class="su_question_error">You will be unable to participate in the study.</div>
+            </div>
+
+
+
+            </div>
+
+        <div class="stage_holder su_s3">
+            <form method="POST" id="signUpUserForm">
+
+                {% csrf_token %}
+
+                <div class="su_field">
+                    <div id="username_field" class="su_field_entry">
+                        <div class="su-field-icon-holder"><i class="fa fa-user"></i></div>
+                        <div id="username_field_entry" class="su-field-typeble">Username</div>
+                    </div>
+                    <div id="username_error" class="su_field_error">Username exists</div>
+                </div>
+                <div class="su_field">
+                    <div id="email_field" class="su_field_entry">
+                        <div class="su-field-icon-holder"><i class="fa fa-envelope"></i></div>
+                        <div id="email_field_entry" class="su-field-typeble">Email</div>
+                    </div>
+                    <div id="emailError" class="su_field_error">Invalid E-Mail</div>
+                </div>
+                <div class="su_field">
+                    <div id="password_field"  class="su_field_entry">
+                        <div class="su-field-icon-holder"><i class="fa fa-lock"></i></div>
+                        <div id="password_field_entry" class="su-field-typeble">Password</div>
+                    </div>
+                    <div id="password_error" class="su_field_error">Username exists</div>
+                </div>
+
+                <div  class="su_field_submit"><div id="su_username_submit" class="su_btn su_s3_btn">submit</div></div>
+                <!--<div id="learnerID" class="sign-up-pages">
+
+
+                    <p class="formLabelTag w3-text-indigo">Please choose a username:</p>
+                    <p>{{ signUpUserForm.username }}</p>
+
+                    <p class="formLabelTag w3-text-indigo">{{ signUpUserForm.email.label_tag }}</p>
+                    <p>{{ signUpUserForm.email }}</p>
+
+                    <p class="formLabelTag w3-text-indigo">Password</p>
+                    <p>{{ signUpUserForm.password1 }}</p>
+
+                    <<div class="w3-center w3-container">
+                        <input id="IDBtn" class="w3-button w3-padding-large w3-xlarge w3-blue w3-hover-indigo w3-ripple" type="submit" value="next" style="margin: 20px;"/>
+                    </div>
+
+                </div>-->
+
+            </form>
+        </div>
+
+        <div class="su_s4 ">
+            <form method="POST" id="signUpForm">
+            <!--{% csrf_token %}-->
+            <div id="profile" class="sign-up-pages">
+                <p class="formLabelTag profileTag w3-text-indigo">Where are you from?</p>
+                <p class="form-select">{{ signUpForm.nationality }}</p>
+
+                <p class="formLabelTag profileTag w3-text-indigo">What is your native language?</p>
+                <p class="form-select">{{ signUpForm.language }}</p>
+
+                <p class="formLabelTag profileTag w3-text-indigo">Where do you live now?</p>
+                <p class="form-select">{{ signUpForm.living_now }}</p>
+
+                <p class="formLabelTag profileTag w3-text-indigo">Born</p>
+                <p class="form-select">{{ signUpForm.born }}</p>
+
+                <p class="formLabelTag profileTag w3-text-indigo">Gender</p>
+                <p class="form-select">{{ signUpForm.gender }}</p>
+
+                <p class="formLabelTag profileTag w3-text-indigo">Education</p>
+                <p class="form-select">{{ signUpForm.education }}</p>
+
+                <p class="formLabelTag profileTag w3-text-indigo">English Level</p>
+                <p class="form-select">{{ signUpForm.english_level }}</p>
+
+                <p class="formLabelTag profileTag w3-text-indigo">How long have you lived in an English speaking country?</p>
+                <p class="form-select">{{ signUpForm.lived_in_english_speaking_country }}</p>
+
+                <div class="w3-center w3-container">
+                    <input id="profileBtn" class="su_btn su_s4_btn" type="submit" value="Sign Up"/>
+                </div>
+
+            </div>
+            </form>
+        </div>
+
+
+        <div id="progress_holder">
+            <div class="section">
+                <div class="dot_holder">
+                    <div id="pdot_1" class="progress_dot" style="border-color:#2E89CF"></div>
+                </div>
+            </div><div class="section">
+                <div class="dot_holder">
+                    <div  id="pdot_2" class="progress_dot" style="border-color:#1A3A6B"></div>
+                </div>
+            </div><div class="section">
+                <div class="dot_holder">
+                    <div id="pdot_3" class="progress_dot" style="border-color:#2F9D4A"></div>
+                </div>
+             </div><div class="section">
+                <div class="dot_holder">
+                    <div cid="pdot_4" class="progress_dot" style="border-color:#EAD132"></div>
+                </div>
+             </div>
+        </div>
+
+
+    </div>
+
+
+
+    <div id="congrats-cont" class="cont_">
+        <div id="congrats-body" class="shadow">
+            <div id="congrats_text">Thanks for contacting us!<br><br>We will reply as soon as possible!</div>
+
+        </div>
+
+    </div>
+</div>
