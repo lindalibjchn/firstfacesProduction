@@ -66,8 +66,10 @@ $(function(){
 
         var now = moment().tz("Europe/Dublin").format("hhmmssdA");
 
-        hours1 = now[0]
-        hours2 = now[1]
+        hours1 = now[0];
+        hours2 = now[1];
+        secs = now[4]+now[5];
+        //console.log('secs:', secs);
         if(ampm.text() == 'PM'){
             hours = parseInt(hours1)*10 + parseInt(hours2);
             hours = (hours+12).toString();
@@ -86,7 +88,7 @@ $(function(){
         // Stupid, I know. Lets shift all the days one position down,
         // and make Sunday last
 
-        updateTimeNowBlinker();
+        updateTimeNowBlinker( secs );
 
         // Set the am/pm text:
 
@@ -95,10 +97,9 @@ $(function(){
 
     })();
 
-
 });
 
-function updateTimeNowBlinker() {
+function updateTimeNowBlinker( secs ) {
 
     if ( $('#timeNowBlinker' ).hasClass( 'time-now-bright' ) ) {
 
@@ -112,7 +113,14 @@ function updateTimeNowBlinker() {
 
     }
 
+    if ( secs === "00" ) {
+
+        addAvailablesToTimetable( waitingVariables.availables )
+
+    }
+
 }
+
 
 
 

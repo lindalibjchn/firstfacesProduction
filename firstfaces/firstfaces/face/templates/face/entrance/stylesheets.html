@@ -6,7 +6,7 @@
 <link rel="stylesheet" type="text/css" href="{% static 'face/css/entrance/sign_in.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'face/css/entrance/information.css' %}" />
 
-{% if mobile_device %}
+{% if mobile_or_tablet_device %}
     <link rel="stylesheet" type="text/css" href="{% static 'face/css/entrance/foreground.css' %}" />
 {% else %}
     <link rel="stylesheet" type="text/css" href="{% static 'face/css/entrance/foreground_desktop.css' %}" />

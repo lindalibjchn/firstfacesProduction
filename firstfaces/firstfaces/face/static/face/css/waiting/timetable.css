@@ -1,7 +1,7 @@
 #timetableContainer {
 
     position: relative;
-    height: 35%;
+    height: 40%;
     width: 100%;
     display:flex;
     align-items:center;
@@ -13,7 +13,7 @@
 
     position: absolute;
     bottom: 0;
-    height: 85%;
+    height: 100%;
     width: 90%;
     /*border: 2px dashed green;*/
 

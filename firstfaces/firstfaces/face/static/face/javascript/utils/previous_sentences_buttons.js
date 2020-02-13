@@ -11,7 +11,7 @@ function setUpPreviousSentsBtns( sentences ) {
         //updateScroll( document.getElementById('prevSentsInnerContainer0') );
         addData( 'sentences', sentences );
 
-        if ( !conversationVariables.tutorial_complete ) {
+        if ( conversationVariables.tutorial ) {
 
             $('#stopAllButtonEffectsExceptInputButtons').show();
             removeSpeechBubble();
@@ -21,17 +21,17 @@ function setUpPreviousSentsBtns( sentences ) {
 
     });
 
-    $('#sentencesTitleContainer').on( 'click', function() {
+    //$('#sentencesTitleContainer').on( 'click', function() {
 
-        addData( 'sentences', sentences );
+        //addData( 'sentences', sentences );
 
-    } );
+    //} );
 
-    $('#grammarTitleContainer').on( 'click', function() {
+    //$('#grammarTitleContainer').on( 'click', function() {
 
-        addData( 'grammar', 'article', sentences );
+        //addData( 'grammar', 'article', sentences );
 
-    } );
+    //} );
 
     //$('#pronunciationTitleContainer').on( 'click', function() {
 
@@ -39,11 +39,11 @@ function setUpPreviousSentsBtns( sentences ) {
 
     //} );
 
-    $('#articlesTabContainer').on( 'click', function() {
+    //$('#articlesTabContainer').on( 'click', function() {
 
-        addData( 'grammar', 'article', sentences );
+        //addData( 'grammar', 'article', sentences );
 
-    } );
+    //} );
 
     //$('#verbsTabContainer').on( 'click', function() {
 
