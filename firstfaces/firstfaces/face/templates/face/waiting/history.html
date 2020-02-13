@@ -1,4 +1,28 @@
 <div id="history-cont" class="cont_">
-    <p>History</p>
+
+    <div id="historyTitleContainer">
+        
+        <div id="historyTitle">Conversations</div>
+
+    </div>
+
+    <!----------------------------------------------------------------------- 
+    ALL SCORES
+    -------------------------------------------------------------------------->
+    {% include 'face/waiting/all_scores.html' %}
+
+    <!----------------------------------------------------------------------- 
+    PRONUNCIATION
+    -------------------------------------------------------------------------->
+    {% include 'face/waiting/pronunciation.html' %}
+
+    <!----------------------------------------------------------------------- 
+    PREVIOUS SENTENCES
+    -------------------------------------------------------------------------->
+    <div id="prevSentsWaitingContainer">
+
+        {% include 'face/conversation/student/previous_sentences.html' %}
+
+    </div>
 
 </div>

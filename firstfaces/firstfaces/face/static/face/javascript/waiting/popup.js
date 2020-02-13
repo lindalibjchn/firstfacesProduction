@@ -118,6 +118,32 @@ function open_history(){
 
      //Click burger
      $('#popup-btn').click();
+
+     showScoresAndSentences();
+
+}
+
+function showScoresAndSentences() {
+
+    waitingVariables.finishedConversationsNotTutorial = waitingVariables.conversations.filter( function( obj ) {
+        
+        return obj.topic !== 'tutorial';
+
+    })
+
+    console.log( 'waitingVariables.finishedConversationsNotTutorial:', waitingVariables.finishedConversationsNotTutorial )
+
+    if ( waitingVariables.finishedConversationsNotTutorial.length !== 0 ) {
+    
+        $( '#prevSentsWaitingContainer' ).css( 'display', 'flex' );
+        addAllScores( waitingVariables.finishedConversationsNotTutorial )
+        showConversationSentences( 0 );
+        //setUpPreviousSentsBtns( finishedConversationsNotTutorial[0].completed_sentences )
+        //addData( 'sentences', finishedConversationsNotTutorial[0].completed_sentences )
+    
+    }
+    $('#pronunciationClearOverlayArea').click( hidePronunciationDataContainer );
+
 }
 
 function open_profile(){

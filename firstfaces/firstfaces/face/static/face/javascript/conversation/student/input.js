@@ -47,22 +47,32 @@ function showPts() {
 
         if ( pts > 0 ) {
 
-            $( '#finishPtsSpan' ).text( pts.toString() )
-            $( '#finishClassIcon' ).fadeOut( function() {
+            $( '#finishPtsAdd' ).text( "+" + pts.toString() )
+            
+            $( '#finishPtsAdd' ).fadeIn( function() {
 
-                $( '#finishPtsContainer' ).fadeIn( function() {
+                setTimeout( function() {
+
+                    let totalPoints = getTotalPointsForAClass(conversationVariables.conversation_dict.completed_sentences)
+                    $( '#ErleESymbolContainer' ).html( '<img id="ErleESymbol" src="/static/face/JSON/ErleESymbolWhite.png">' )
+                    $( '#finishPts' ).html( totalPoints.toString() )
+                    $( '#finishPts' ).css( 'font-size', '24' )
                  
                     setTimeout( function() {
 
-                        $( '#finishPtsContainer' ).fadeOut( function() {
+                        $( '#finishPts' ).css( 'font-size', '20' )
 
-                            $( '#finishClassIcon' ).fadeIn();
+                        setTimeout( function() {
 
-                        });
+                            $( '#finishPtsAdd' ).fadeOut();
 
-                    }, 1000 );
+                        }, 500 );
+
+                    }, 500 )
+
+                }, 500 );
                     
-                });
+                //});
 
             });
 

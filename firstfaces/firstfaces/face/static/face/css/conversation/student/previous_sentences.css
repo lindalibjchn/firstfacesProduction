@@ -21,6 +21,12 @@
 
 }
 
+.prev-sents-inner-container {
+
+    box-shadow: inset 0px 0px 2px 2px rgba(0,0,0,0.1);
+
+}
+
 #prevSentsContainer {
 
     position: absolute;
@@ -76,7 +82,7 @@
 
 .background-title {
 
-    background-color: rgba(0,0,0,0.2);
+    background-color: rgba(0,0,0,0.1);
     font-weight: normal;
     color: white;
 

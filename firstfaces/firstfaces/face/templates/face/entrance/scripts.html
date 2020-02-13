@@ -15,7 +15,7 @@
 <!--<script src="{% static 'face/javascript/entrance/loadBuilding.js' %}"></script>-->
 <!--<script src="{% static 'face/javascript/entrance/enterBuilding.js' %}"></script>-->
 
-{% if mobile_device %}
+{% if mobile_or_tablet_device %}
     <script src="{% static 'face/javascript/entrance/main.js' %}"></script>
     <script src="{% static 'face/javascript/entrance/sign_up.js' %}"></script>
 {% else %}

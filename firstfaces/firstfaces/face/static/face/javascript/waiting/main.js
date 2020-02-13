@@ -25,22 +25,7 @@ $(window).on( 'load', function() {
 
 function showTutorialCompleteDashboard() {
 
-    addAvailablesToTimetable( waitingVariables.availables )
-
-    if ( waitingVariables.conversations.length !== 0 ) {
-    
-        if ( !(waitingVariables.conversations.length === 1 && waitingVariables.currently_in_class ) ) { 
-
-            //$( '#prevSentsWaitingContainer' ).css( 'display', 'flex' );
-            //addAllScores( waitingVariables.conversations )
-            //showConversationSentences( 0 );
-            //setUpPreviousSentsBtns( waitingVariables.conversations[0].completed_sentences )
-            //addData( 'sentences', waitingVariables.conversations[0].completed_sentences )
-    
-        }
-
-    }
-    $('#pronunciationClearOverlayArea').click( hidePronunciationDataContainer );
+    addAvailablesToTimetable( waitingVariables.availables, first=true )
     if ( waitingVariables.currently_in_class ) {
 
         waitingVariables.conversation_id = waitingVariables.conversations[ 0 ].id;

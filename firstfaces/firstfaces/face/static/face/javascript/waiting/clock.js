@@ -69,7 +69,6 @@ $(function(){
         hours1 = now[0]
         hours2 = now[1]
         if(ampm_val == 'PM' && hours1+hours2 != '12'){
-
             hours = parseInt(hours1)*10 + parseInt(hours2);
             hours = (hours+12).toString();
         }else{
@@ -87,7 +86,7 @@ $(function(){
         // Stupid, I know. Lets shift all the days one position down,
         // and make Sunday last
 
-        updateTimeNowBlinker();
+        updateTimeNowBlinker( secs );
 
         // Set the am/pm text:
 
@@ -96,10 +95,9 @@ $(function(){
 
     })();
 
-
 });
 
-function updateTimeNowBlinker() {
+function updateTimeNowBlinker( secs ) {
 
     if ( $('#timeNowBlinker' ).hasClass( 'time-now-bright' ) ) {
 
@@ -113,7 +111,14 @@ function updateTimeNowBlinker() {
 
     }
 
+    if ( secs === "00" ) {
+
+        addAvailablesToTimetable( waitingVariables.availables )
+
+    }
+
 }
+
 
 
 

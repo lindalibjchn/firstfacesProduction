@@ -36,14 +36,14 @@ def entrance(request):
 
         return redirect('waiting')
 
-    mobile_device = request.user_agent.is_mobile
-    print('mobile_device:', mobile_device)
+    mobile_or_tablet_device = request.user_agent.is_mobile or request.user_agent.is_tablet
+    print('mobile_or_tablet_device:', mobile_or_tablet_device)
     form = UserForm()
     sign_up_form = SignUpForm()
     sign_up_user_form = SignUpUserForm()
     context = {
         'form': form,
-        'mobile_device': mobile_device,
+        'mobile_or_tablet_device': mobile_or_tablet_device,
         'signUpForm': sign_up_form,
         'signUpUserForm': sign_up_user_form,
     }

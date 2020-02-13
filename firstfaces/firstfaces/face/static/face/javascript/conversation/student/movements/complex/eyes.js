@@ -22,7 +22,7 @@ function initMoveEyelids( upperPos, lowerPos, secs ) {
 
     if ( eyelidObject.bool ) {
 
-        console.log( 'initMoveEyelids called when the bool is true. What gives?')
+        //console.log( 'initMoveEyelids called when the bool is true. What gives?')
 
     } else {
 
@@ -46,7 +46,7 @@ function moveEyelids( main ) {
     let main_start = main - eyelidObject.startCount;
     let sinAmount = eyelidObject.sin[ main_start ]
 
-    console.log('in moveEyelids')
+    //console.log('in moveEyelids')
     if ( main_start < eyelidObject.sinLength ) {
 
         // upper eyelid

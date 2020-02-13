@@ -2,10 +2,10 @@ function showConversationSentences( indexOfConversation ) {
 
     waitingVariables.indexOfCurrentVisibleConversation = indexOfConversation;
     $( '#prevSentsContainer0' ).show();
-    addPreviousSentences( waitingVariables.conversations[ indexOfConversation ], 0, bottom=false );
+    addPreviousSentences( waitingVariables.finishedConversationsNotTutorial[ indexOfConversation ], 0, bottom=false );
     $('.sentence-box').click( showPronunciationDataContainer );
-    setUpPreviousSentsBtns( waitingVariables.conversations[ indexOfConversation ].completed_sentences )
-    addData( 'sentences', 'article',  waitingVariables.conversations[ indexOfConversation ].completed_sentences )
+    //setUpPreviousSentsBtns( waitingVariables.finishedConversationsNotTutorial[ indexOfConversation ].completed_sentences )
+    addData( 'sentences', 'article',  waitingVariables.finishedConversationsNotTutorial[ indexOfConversation ].completed_sentences )
 
 }
 

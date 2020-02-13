@@ -65,7 +65,6 @@ function setUpFinishClassBtns() {
 
     $('#finishClassIconContainer').on( 'click', function() {
 
-
         if ( conversationVariables.conversation_dict.completed_sentences.length !== 0 ) {
 
             addOverallData( conversationVariables.conversation_dict.completed_sentences );

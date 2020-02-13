@@ -16,7 +16,7 @@ def get_availables_for_schedule(groups):
     this_weeks_dates = get_this_weeks_dates()
 
     # get all availables in this period
-    this_weeks_availables = Available.objects.filter( avail_group__name__in=groups).filter( start_availability__gte=this_weeks_dates[ 0 ] ).filter( end_availability__lte=this_weeks_dates[ 1 ] ) 
+    this_weeks_availables = Available.objects.filter( avail_group__name__in=groups).filter( start_availability__gte=this_weeks_dates[ 0 ] ).filter( end_availability__lte=this_weeks_dates[ 1 ] ).order_by('end_availability') 
     print('this weeks availables: ', this_weeks_availables)
 
     return this_weeks_availables
@@ -72,7 +72,7 @@ def create_list_of_javascript_available_times_from_django_objects( availables_q_
 
 def convert_django_time_to_javascript(t):
     
-    return int(time.mktime((t).timetuple()) * 1000)
+    return int(time.mktime((t).timetuple()) * 1000 + 3600000 )
 
 def check_if_currently_in_class_or_class_finished(u):
 
@@ -91,7 +91,6 @@ def check_if_currently_in_class_or_class_finished(u):
 
             if c.end_time == None:
 
-                print('topic', c.topic)
                 if c.topic == 'tutorial' or c.start_time < time_now_minus_30_mins:
 
                     c.end_time = time_now
@@ -100,6 +99,12 @@ def check_if_currently_in_class_or_class_finished(u):
                 else:
 
                     currently_in_class = True
+
+            if c.end_time != None:
+
+                if c.end_time.date() == todays_date:
+
+                    class_finished_today = True
 
     return [currently_in_class, class_finished_today]
 

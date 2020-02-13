@@ -17,6 +17,7 @@ function calculateCorrectSentencesNWrongArticlesPercentForEachConversation( allC
         let totalSentences = c.completed_sentences.length;
         //if ( totalSentences !== 0 ) {
 
+            console.log( 'c.start_time:', c.start_time );
             let startTimeDateStringForChart = convertStartTimeIntToDayMonthStringForChart( c.start_time );
             allConversationsStartTimes.unshift( startTimeDateStringForChart );
         
@@ -38,12 +39,13 @@ function calculateCorrectSentencesNWrongArticlesPercentForEachConversation( allC
 
 function convertStartTimeIntToDayMonthStringForChart( t ) {
 
-    let dateObject = new Date( t * 1000 );
+    let dateObject = new Date( t );
     let day = dateObject.getDate();
-    let month = dateObject.getMonth();
+    let month = dateObject.getMonth() + 1;
 
     let stringDayMonth =  day.toString() + '/' + month.toString();
     
+    console.log('stringDayMonth', stringDayMonth)
     return stringDayMonth
 
 }
@@ -54,14 +56,14 @@ function drawLineChartAllScores( allData ) {
 	// ok, so have to individually add sizes and colours of points in a list so I can individually control them later. there must be anther way but I can't find one now and hitRadius returns to normal size. FIID!!
 	let noOfConv = allData[0].length;
 	let correctBorderRadii = [];
-	let articleBorderRadii = [];
+	//let articleBorderRadii = [];
 	for (let i=0; i<noOfConv; i++) {
         if (i=== noOfConv - 1) {
-		    correctBorderRadii.push( 12 );
-		    articleBorderRadii.push( 8 );
+		    correctBorderRadii.push( 10 );
+			//articleBorderRadii.push( 8 );
         } else {
 		    correctBorderRadii.push( 5 );
-		    articleBorderRadii.push( 3 );
+			//articleBorderRadii.push( 3 );
         }
     }
 
@@ -69,36 +71,39 @@ function drawLineChartAllScores( allData ) {
 	let myLineChart = new Chart(ctx, {
 		type: 'line',
 		data: { 
-			labels: allData[ 0 ],
+            labels: allData[ 0 ],
             radius: 8,
-			datasets: [{
-                label: 'points',
-				data: allData[ 1 ],
-				backgroundColor: 'rgba(17, 219, 13, 0.7)',
-				borderColor: 'rgba(0, 100, 0, 0.5)',
-                borderWidth: 2,
-                fill: false,
-                pointRadius: correctBorderRadii,
-                //pointHitRadius: 1,
-                pointHitRadius: 15,
-            },
-            {
-                label: '% article errors',
-				data: allData[ 2 ],
-				backgroundColor: 'rgba(219, 17, 13, 0.7)',
-				borderColor: 'rgba(219, 17, 13, 0.5)',
-                fill: false,
-                borderWidth: 2,
-                pointRadius: 4,
-                borderDash: [5, 5],
-                pointStyle: 'triangle',
-			}],
+			datasets: [
+                {
+                    label: 'points',
+                    data: allData[ 1 ],
+                    backgroundColor: 'rgba( 231, 202, 0, 1 )',
+                    borderColor: 'rgba(31, 176, 48, 1)',
+                    borderWidth: 2,
+                    fill: false,
+                    pointRadius: correctBorderRadii,
+                    //pointHitRadius: 1,
+                    pointHitRadius: 15,
+                },
+                //{
+                    //label: '% article errors',
+                    //data: allData[ 2 ],
+                    //backgroundColor: 'rgba(219, 17, 13, 0.7)',
+                    //borderColor: 'rgba(219, 17, 13, 0.5)',
+                    //fill: false,
+                    //borderWidth: 2,
+                    //pointRadius: 4,
+                    //borderDash: [5, 5],
+                    //pointStyle: 'triangle',
+                //}
+            ],
             //pointHitRadius: 9,
             //hoverRadius: 9,
 		},
 		options: {
 			//responsive: true,
 			legend: {
+                display: false,
                 //position: 'top',
                 //align: 'left',
                 labels: {
@@ -108,26 +113,37 @@ function drawLineChartAllScores( allData ) {
 			},
             title: {
                 //display: true,
-                //text: 'All Conversations',
+                text: 'Conversations',
+                fontColor: '#102858',
+                fontSize: 16,
             },
             scales: {
                 yAxes: [{
                     ticks: {
                         beginAtZero: true,
-                        fontColor: '#102858',
                         fontStyle: 'bold',
-                        max: 100,
+                        //max: 100,
                     },
-                    //scaleLabel: {
-                        //display: true,
-                        //labelString:'%'
-                    //}
+                    scaleLabel: {
+                        display: false,
+                        labelString:'points',
+                        fontColor: '#102858',
+                        fontSize: 14,
+                        fontStyle: 'bold',
+                    }
                 }],
                 xAxes: [{
                     ticks: {
                         fontColor: '#102858',
                         fontStyle: 'bold',
                     },
+                    scaleLabel: {
+                        display: false,
+                        labelString:'date',
+                        fontColor: '#102858',
+                        fontSize: 14,
+                        fontStyle: 'bold',
+                    }
                 }]
             },
             tooltips: {enabled: false},
@@ -150,6 +166,8 @@ function drawLineChartAllScores( allData ) {
                     };
 
                     this.data.datasets[0].pointRadius[elementIndex] = 12;
+                    console.log( this.data.datasets[0] );
+                    
                     this.update();
 
                     showConversationSentences( lenPoints - elementIndex - 1 );
