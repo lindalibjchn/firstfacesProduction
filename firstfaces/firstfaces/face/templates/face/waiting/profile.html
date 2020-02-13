@@ -1,4 +1,72 @@
+
+{% load static %}
 <div id="profile-cont" class="cont_">
-    <p>Profile</p>
+
+    <div id="profile_description">
+        <div id="profile-picture-cont">
+            <div id="profile-picture">
+                <img style="height: 100%;" id="harpIMG" src="{% static 'face/images/country-flags/svg/cn.svg' %}"/>
+            </div>
+        </div>
+        <div id="profile_description_text">
+            <div id="profile_description_username">Daniel</div>
+            <div id="profile_description_joined">Joined in May 2019</div>
+        </div>
+        <div id="profile_description-before"></div>
+    </div>
+
+    <div id="profile_stats_holder">
+        <div id="profile_stats_left">
+
+            <div id="conversations_tile" class="stats_tile">
+                <div class="stats_tile_pic_cont">
+                    <div class="stats_tile_pic">
+                        <i class="fa fa-calendar"></i>
+                    </div>
+                </div>
+                <div id="conversations_num" class="stats_tile_value">
+                    54
+                </div>
+                <div class="stats_tile_label">
+                    Conversations
+                </div>
+
+            </div>
+
+            <div id="points_tile" class="stats_tile">
+                <div class="stats_tile_pic_cont">
+                    <div class="stats_tile_pic">
+                        <i class="fa fa-calendar"></i>
+                    </div>
+                </div>
+                <div id="point_num" class="stats_tile_value">
+                    54
+                </div>
+                <div class="stats_tile_label">
+                    Points
+                </div>
+
+            </div>
+
+        </div>
+        <div id="profile_stats_right">
+
+            <div id="clock_tile" class="stats_tile">
+                <div class="stats_tile_pic_cont">
+                    <div class="stats_tile_pic">
+                      <i class="fa fa-hourglass-end"></i>
+                    </div>
+                </div>
+                <div id="clock_num" class="stats_tile_value">
+                    54
+                </div>
+                <div class="stats_tile_label">
+                    Hours
+                </div>
+
+            </div>
+
+        </div>
+    </div>
 
 </div>

@@ -64,13 +64,13 @@
     align-items:center;
 }
 .first{
-    top:20%;
+    top:15%;
 }
 .second{
-    top:37.5%;
+    top:30%;
 }
 .third{
-    top:55%;
+    top:45%;
 }
 .filled{
     box-shadow:0px 0px 2px 1px rgba(1,167,72,0.7);
@@ -125,7 +125,7 @@ overflow-x:scroll;
 overflow-x:scroll;
 }
 .double{
-    height:25%;
+    height:40%;
 }
 .message_text{
     overflow-y:scroll;

@@ -25,6 +25,7 @@
     height:45%;
     z-index: 102;
     width: 95%;
+    margin-top:75px;
     border-radius:3px;
     overflow:hidden;
     box-shadow:0px 0px 2px 2px hsla(0, 0%, 0%, 0.18);
@@ -37,7 +38,7 @@
     width: 100%;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
 
 
 }

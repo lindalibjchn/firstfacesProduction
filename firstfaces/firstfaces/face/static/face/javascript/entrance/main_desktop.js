@@ -112,7 +112,7 @@ function logIn() {
         data: formData,
         success: function(json) {
             if ( json.loggedIn ) {
-                
+
                 window.location.href = "/waiting"
 
             } else {

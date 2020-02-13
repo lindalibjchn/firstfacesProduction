@@ -16,6 +16,7 @@ $( document ).ready(function(){
 });
 $(window).on('pageshow', function() {
     get_products();
+
 });
 
 function get_products(){
@@ -129,7 +130,7 @@ function open_profile(){
 
     //Show shop
     $('#profile-cont').show()
-
+    fix_picture_height();
     //Click burger
     $('#popup-btn').click();
 }

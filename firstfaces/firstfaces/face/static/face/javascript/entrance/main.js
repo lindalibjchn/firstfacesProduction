@@ -88,6 +88,7 @@ function setHeight(){
     $('#overforeground').css({"height":sheight, 'top':tp});
     $('#foregroundContainer').css("height",sheight);
     $('#contact_cont').css({"height":sheight, "top":tp});
+    $('#su_cont').css({"height":sheight, "top":tp});
 };
 
 function load_screen(){
@@ -149,12 +150,7 @@ $('#overfooter').click(close_alert);
 $('#overforeground-cont').click(close_alert);
 
 
-$('#signup-btn').click(function(){
-    $('#popup-btn').click();
-    setTimeout(function(){
-        open_alert();
-    },200)
-});
+
 
 $('#faq-btn').click(function(){
     $('#popup-btn').click();
@@ -166,6 +162,7 @@ $('#faq-btn').click(function(){
 $('#main-logo').click(function(){
     $('#foregroundContainer').show();
     $('#contact_cont').hide();
+    $('#su_cont').hide();
     reset_contact();
     if($('#popup-btn').hasClass("clicked")){
         $('#popup-btn').click();
@@ -174,6 +171,7 @@ $('#main-logo').click(function(){
 $('#home-btn').click(function(){
     $('#foregroundContainer').show();
     $('#contact_cont').hide();
+    $('#su_cont').hide();
     reset_contact();
     if($('#popup-btn').hasClass("clicked")){
         $('#popup-btn').click();
@@ -182,6 +180,7 @@ $('#home-btn').click(function(){
 $('#harpIMG').click(function(){
     $('#foregroundContainer').show();
     $('#contact_cont').hide();
+    $('#su_cont').hide();
     reset_contact();
     if($('#popup-btn').hasClass("clicked")){
         $('#popup-btn').click();
@@ -193,6 +192,7 @@ $('#harpIMG').click(function(){
 $('#contact-btn').click(function(){
     reset_contact();
     $('#foregroundContainer').hide();
+    $('#su_cont').hide();
     $('#contact_cont').show();
     $('#popup-btn').click();
 });
@@ -412,6 +412,9 @@ function change_background(color,id){
     $('#'+id).css("background-color",color);
 }
 
+
+$('#closeSignInContainer').click(function(){$('#signInContainer').hide()})
+
 /*
 function runUCDGif() {
 
@@ -452,6 +455,13 @@ function showLogInDropdown() {
     $('#signInContainer').fadeIn();
 
 }
+
+$('#signup-btn').click(function(){
+    $('#foregroundContainer').hide();
+    $('#su_cont').show();
+    $('#popup-btn').click();
+});
+
 
 function hideLogInDropdown() {
 

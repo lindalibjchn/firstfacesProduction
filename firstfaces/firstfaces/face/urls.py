@@ -81,6 +81,8 @@ urlpatterns = [
     path('sign_up_user', views_temp.sign_up_user, name='sign_up_user'),
     path('login', views_temp.my_login, name='login'),
     path('logout', LogoutView.as_view(next_page=reverse_lazy('entrance')), name='logout'),
+    path('validate_username', entrance_main.validate_username, name="validate_username"),
+    path('create_user', entrance_main.create_user, name="create_user"),
     
     path('', views_temp.out_or_in, name="out_or_in"),
     # path('store_test_score', views_temp.store_test_score, name='store_test_score'),

@@ -22,7 +22,16 @@
     justify-content:center;
     font-family: 'Oswald', sans-serif;
     text-transform: uppercase;
-    font-size: 2vh;
+    font-size: 1.5vh;
+}
+.full_height{
+    height:100%;
+}
+.left_text{
+    justify-content:flex-start;
+}
+.right_text{
+    justify-content:flex-end;
 }
 
 #footer-border{

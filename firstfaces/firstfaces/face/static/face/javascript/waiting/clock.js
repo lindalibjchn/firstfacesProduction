@@ -65,10 +65,11 @@ $(function(){
         // d is for day of week and A is for AM/PM
 
         var now = moment().tz("Europe/Dublin").format("hhmmssdA");
-
+        ampm_val = now[7]+now[8];
         hours1 = now[0]
         hours2 = now[1]
-        if(ampm.text() == 'PM'){
+        if(ampm_val == 'PM' && hours1+hours2 != '12'){
+
             hours = parseInt(hours1)*10 + parseInt(hours2);
             hours = (hours+12).toString();
         }else{
