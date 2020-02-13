@@ -296,7 +296,16 @@ function endTiaTalking() {
             setTimeout( function() {
             
                 removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration * 3 );
-                initInputReady( 'judgement', conversationVariables.correctSentence );
+                if ( !conversationVariables.tutorial ) {
+
+                    initInputReady( 'judgement', showPtsBool=true );
+
+                } else {
+
+                    initInputReady( 'judgement', showPtsBool=false );
+
+                }
+
                 $('#prevSentsIconContainer').css('font-size', '17px');
                 setTimeout( function() {
 

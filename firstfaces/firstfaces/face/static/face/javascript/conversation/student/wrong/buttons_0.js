@@ -162,7 +162,7 @@ function returnToLaptop( from ) {
     //console.log( 'in return to laptop');
     movementController( movementObject.abs.blank, 0.5, 1 );
     //addPreviousSentences( conversationVariables.conversation_dict, 0 );
-    initInputReady( from )
+    initInputReady( from, showPtsBool=true )
 
     expressionController( expressionObject.abs.neutral, tiaTimings.changeExpressionDuration );
 

@@ -41,41 +41,45 @@ function initInputReady( from, showPtsBool=false ) {
 
 function showPts() {
 
-    if ( ['P', 'B' ].includes( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement ) ) {
+    if ( conversationVariables.conversation_dict.completed_sentences.length !== 0 ) {
+        
+        $( '#ErleESymbolContainer' ).html( '<img id="ErleESymbol" src="/static/face/JSON/ErleESymbolWhite.png">' )
+        let totalPoints = getTotalPointsForAClass(conversationVariables.conversation_dict.completed_sentences)
 
-        let pts = convertCorrectSentenceLengthToPoints( conversationVariables.conversation_dict.completed_sentences[ 0 ].sentence.length )
+        let pts = 0;
+        if ( ['P', 'B' ].includes( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement ) ) {
 
-        if ( pts > 0 ) {
+            pts = convertCorrectSentenceLengthToPoints( conversationVariables.conversation_dict.completed_sentences[ 0 ].sentence.length )
+
+        }
+
+        if ( totalPoints === 0 ) {
+
+            $( '#finishPts' ).html( totalPoints.toString() )
+
+        } else if ( pts > 0 ) {
 
             $( '#finishPtsAdd' ).text( "+" + pts.toString() )
-            
-            $( '#finishPtsAdd' ).fadeIn( function() {
+        
+            $( '#finishPtsAdd' ).show( function() {
 
+                $( '#finishPts' ).html( totalPoints.toString() )
+                $( '#finishPts' ).css( 'font-size', '30' )
+             
                 setTimeout( function() {
 
-                    let totalPoints = getTotalPointsForAClass(conversationVariables.conversation_dict.completed_sentences)
-                    $( '#ErleESymbolContainer' ).html( '<img id="ErleESymbol" src="/static/face/JSON/ErleESymbolWhite.png">' )
-                    $( '#finishPts' ).html( totalPoints.toString() )
-                    $( '#finishPts' ).css( 'font-size', '24' )
-                 
+                    $( '#finishPts' ).css( 'font-size', '26' )
+
                     setTimeout( function() {
 
-                        $( '#finishPts' ).css( 'font-size', '20' )
+                        $( '#finishPtsAdd' ).fadeOut();
 
-                        setTimeout( function() {
+                    }, 500 );
 
-                            $( '#finishPtsAdd' ).fadeOut();
-
-                        }, 500 );
-
-                    }, 500 )
-
-                }, 500 );
-                    
-                //});
+                }, 500 )
 
             });
-
+                    
         }
 
     }

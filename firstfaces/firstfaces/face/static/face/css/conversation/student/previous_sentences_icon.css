@@ -6,7 +6,7 @@
     display: flex;
     justify-content: middle;
     align-items: center;
-    margin-top: 6px;
+    margin-top: 9px;
     right: 36px;
 
 }
@@ -78,7 +78,7 @@
 .finish-points {
 
     color: white;
-    font-size: 22px;
+    font-size: 26px;
     font-weight: bold;
 
 }

@@ -2,7 +2,7 @@ function addOverallData( sentencesArray ) {
 
    addTotalSentencesText( sentencesArray );
    addDoughnutChart( sentencesArray );
-   addPercentageCorrectInCentreOfDoughnut( sentencesArray ); 
+   //addPercentageCorrectInCentreOfDoughnut( sentencesArray ); 
 
 }
 
