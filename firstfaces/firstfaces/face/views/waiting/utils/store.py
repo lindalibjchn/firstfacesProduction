@@ -670,6 +670,8 @@ def get_stats(request):
                 num_secs += secs
                 if conv.rating != None:
                     rating += int(conv.rating)
+        else:
+            num_conversations -= 1
 
     if num_secs <= 100:
         label = "Seconds"
