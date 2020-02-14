@@ -1,7 +1,10 @@
 from django.http import JsonResponse
 from django.conf import settings
-from face.models import TiaAttributes, BackgroundColour, HairColour, UserProducts, Profile, ClothesColour, EyeTypes, BackgroundGIF
+from face.models import TiaAttributes, BackgroundColour, HairColour, UserProducts, Profile, ClothesColour, EyeTypes, BackgroundGIF, Conversation,Sentence
 import json
+import time
+import math
+from django.utils import timezone
 
 
 def get_attributes(request):
@@ -631,3 +634,78 @@ def change_eyes(url, eye):
     save_json(change_eyes(parse_json(url), eye), url)
     return
 
+
+def get_stats(request):
+    user = request.user
+
+    # Get number of products
+    products = 0;
+    up = UserProducts.objects.get(learner=user)
+    products += (len(up.backgroundColours[1:-1].split(",")) - 1)
+    products += (len(up.hairColours[1:-1].split(",")) - 1)
+    products += (len(up.clothesColour[1:-1].split(",")) - 1)
+    products += (len(up.EyeTypes[1:-1].split(",")) - 1)
+    products += (len(up.gif_backgrounds[1:-1].split(",")) - 1)
+
+
+    username = user.username
+
+    date = convert_django_time_to_javascript(user.date_joined)
+    profile = Profile.objects.get(learner=user)
+    points = profile.points
+    num_sent = len(Sentence.objects.filter(learner=user))
+    conversations = Conversation.objects.filter(learner=user)
+    num_conversations = len(conversations)
+    rating = 0
+    num_secs = 0
+    for conv in conversations:
+        secs = get_second_diff(convert_django_time_to_javascript(conv.end_time),convert_django_time_to_javascript(conv.start_time))/1000
+        if secs < 300:
+            num_conversations -= 1
+        else:
+            num_secs += secs
+            rating += int(conv.rating)
+
+    if num_secs <= 100:
+        label = "Seconds"
+        total_time = math.floor(num_secs)
+    elif num_secs/60 <= 100:
+        label = "Minutes"
+        total_time = math.floor(num_secs/60)
+    else:
+        label = "Hours"
+        total_time = math.floor(num_secs/(3600))
+
+
+    flag_fname = "media/flags/"+get_nationality_code(profile.nationality).lower()+".svg"
+    rating /= num_conversations
+    rating = round(rating*2)/2
+
+
+    response_data = {
+        "flag_name": flag_fname,
+        "username": username,
+        "date": date,
+        "num_conv": num_conversations,
+        "time_tot": total_time,
+        "time_label": label,
+        "num_sent": num_sent,
+        "rating": rating,
+        "points": points,
+        "products": products
+    }
+    return JsonResponse(response_data)
+
+
+def convert_django_time_to_javascript(t):
+    return int(time.mktime((t).timetuple()) * 1000 + 3600000)
+
+def get_second_diff(end,start):
+    return float(end) - float(start)
+
+
+def get_nationality_code(country_name):
+    with open(settings.BASE_DIR + '/face/static/face/images/country-flags/countries_flipped.json') as f:
+        countries = json.load(f)
+
+    return countries.get(country_name)
