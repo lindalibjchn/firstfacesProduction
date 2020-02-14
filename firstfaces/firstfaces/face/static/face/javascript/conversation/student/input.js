@@ -41,45 +41,49 @@ function initInputReady( from, showPtsBool=false ) {
 
 function showPts() {
 
-    if ( conversationVariables.conversation_dict.completed_sentences.length !== 0 ) {
-        
-        $( '#ErleESymbolContainer' ).html( '<img id="ErleESymbol" src="/static/face/JSON/ErleESymbolWhite.png">' )
-        let totalPoints = getTotalPointsForAClass(conversationVariables.conversation_dict.completed_sentences)
+    if ( conversationVariables.experimental_group !== "control" ) {
 
-        let pts = 0;
-        if ( ['P', 'B' ].includes( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement ) ) {
+        if ( conversationVariables.conversation_dict.completed_sentences.length !== 0 ) {
+            
+            //$( '#ErleESymbolContainer' ).html( '<img id="ErleESymbol" src="/static/face/JSON/ErleESymbolWhite.png">' )
+            let totalPoints = getTotalPointsForAClass(conversationVariables.conversation_dict.completed_sentences)
 
-            pts = convertCorrectSentenceLengthToPoints( conversationVariables.conversation_dict.completed_sentences[ 0 ].sentence.length )
+            let pts = 0;
+            if ( ['P', 'B' ].includes( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement ) ) {
 
-        }
+                pts = convertCorrectSentenceLengthToPoints( conversationVariables.conversation_dict.completed_sentences[ 0 ].sentence.length )
 
-        if ( totalPoints === 0 ) {
+            }
 
-            $( '#finishPts' ).html( totalPoints.toString() )
-
-        } else if ( pts > 0 ) {
-
-            $( '#finishPtsAdd' ).text( "+" + pts.toString() )
-        
-            $( '#finishPtsAdd' ).show( function() {
+            if ( totalPoints === 0 ) {
 
                 $( '#finishPts' ).html( totalPoints.toString() )
-                $( '#finishPts' ).css( 'font-size', '30' )
-             
-                setTimeout( function() {
 
-                    $( '#finishPts' ).css( 'font-size', '26' )
+            } else if ( pts > 0 ) {
 
+                $( '#finishPtsAdd' ).text( "+" + pts.toString() )
+            
+                $( '#finishPtsAdd' ).show( function() {
+
+                    $( '#finishPts' ).html( totalPoints.toString() )
+                    $( '#finishPts' ).css( 'font-size', '28' )
+                 
                     setTimeout( function() {
 
-                        $( '#finishPtsAdd' ).fadeOut();
+                        $( '#finishPts' ).css( 'font-size', '24' )
 
-                    }, 500 );
+                        setTimeout( function() {
 
-                }, 500 )
+                            $( '#finishPtsAdd' ).fadeOut();
 
-            });
-                    
+                        }, 500 );
+
+                    }, 500 )
+
+                });
+                        
+            }
+
         }
 
     }

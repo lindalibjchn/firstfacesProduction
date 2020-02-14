@@ -45,8 +45,8 @@
 
 #overallDataInnerContainer {
 
-    width: 70%;
-    height: 70%;
+    width: 60%;
+    height: 60%;
     position:  absolute;
     /*bottom: 0;*/
     display: flex;

@@ -27,6 +27,11 @@ def conversation_student(request, conversation_id):
 
             prof = Profile.objects.get(learner=request.user)
             gender = prof.gender
+
+            groups = request.user.groups.values_list('name', flat=True)
+            experimental_group = groups[0]
+            control_group = True if experimental_group == "control" else False
+            
             tutorial = False
             if conversation_object.topic == 'tutorial':
                 tutorial = True
@@ -64,6 +69,7 @@ def conversation_student(request, conversation_id):
                 'sentence_awaiting_judgement': sentence_awaiting_judgement,
                 'sentence_being_recorded': sentence_being_recorded,
                 'sentence_being_recorded_audio': {},
+                'experimental_group': experimental_group,
                 # 'sentence_being_recorded': {
                     # 'sent_id': 64,
                     # 'conv_id': 1,
@@ -82,6 +88,7 @@ def conversation_student(request, conversation_id):
 
                 'conversation_variables': json.dumps(conversation_variables), 
                 'conversation': True, # for the navbar to know we are in conversation
+                'control_group': control_group,
 
             }
 

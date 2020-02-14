@@ -1,25 +1,35 @@
+{% load static %}
+
 <div id="prevSentsIconContainer">
 
-    <div id="ErleESymbolContainer"></div>
+    {% if control_group %}
+    
+        <div id="ErleESymbolContainer"><div class="finish-points-S">S</div></div>
+    
+    {% else %}
 
-    <div id="finishPtsContainer" class="finish-points-container">
+        <div id="ErleESymbolContainer"><img id="ErleESymbol" src="{% static 'face/JSON/ErleESymbolWhite.png' %}"></div>
 
-        <div id="finishPtsInnerContainer" class="finish-points-inner-container">
+        <div id="finishPtsContainer" class="finish-points-container">
 
-            <div id="finishPts" class="finish-points">0</div>
+            <div id="finishPtsInnerContainer" class="finish-points-inner-container">
 
-        </div>
+                <div id="finishPts" class="finish-points">0</div>
 
-    </div>
-
-    <div id="finishPtsAddContainer" class="finish-points-container">
-
-        <div id="finishPtsAddInnerContainer" class="finish-points-inner-container">
-
-            <div id="finishPtsAdd" class="finish-points">+3</div>
+            </div>
 
         </div>
 
-    </div>
+        <div id="finishPtsAddContainer" class="finish-points-container">
+
+            <div id="finishPtsAddInnerContainer" class="finish-points-inner-container">
+
+                <div id="finishPtsAdd" class="finish-points">+3</div>
+
+            </div>
+
+        </div>
+
+    {% endif %}
 
 </div> 
