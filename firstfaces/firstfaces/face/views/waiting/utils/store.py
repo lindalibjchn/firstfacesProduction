@@ -659,16 +659,17 @@ def get_stats(request):
     rating = 0
     num_secs = 0
     for conv in conversations:
-        try:
-            secs = get_second_diff(convert_django_time_to_javascript(conv.end_time),convert_django_time_to_javascript(conv.start_time))/1000
-        except:
-            secs = 0
-        if secs < 300:
-            num_conversations -= 1
-        else:
-            num_secs += secs
-            if conv.rating != None:
-                rating += int(conv.rating)
+        if conv.topic != 'tutorial':
+            try:
+                secs = get_second_diff(convert_django_time_to_javascript(conv.end_time),convert_django_time_to_javascript(conv.start_time))/1000
+            except:
+                secs = 0
+            if secs < 300:
+                num_conversations -= 1
+            else:
+                num_secs += secs
+                if conv.rating != None:
+                    rating += int(conv.rating)
 
     if num_secs <= 100:
         label = "Seconds"
