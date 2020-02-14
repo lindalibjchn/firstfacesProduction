@@ -18,6 +18,7 @@ function showPronunciationDataContainer() {
 
     let sentId = this.id.substring( 12 );
 
+    //console.log( 'sentId:', sentId );
     getIndividualSentencePronunciationData( sentId );
 
 }
@@ -31,7 +32,8 @@ function hidePronunciationDataContainer() {
 
 function getIndividualSentencePronunciationData( sentId ) {
     
-    let thisConversationSentences = waitingVariables.conversations[ waitingVariables.indexOfCurrentVisibleConversation ].completed_sentences;
+    let thisConversationSentences = waitingVariables.finishedConversationsNotTutorial[ waitingVariables.indexOfCurrentVisibleConversation ].completed_sentences;
+    console.log( 'thisConversationSentences:', thisConversationSentences );
 
     let sentence = thisConversationSentences.find( ({ sent_id }) => sent_id === parseInt( sentId ) );
 
@@ -41,6 +43,7 @@ function getIndividualSentencePronunciationData( sentId ) {
 
 function showIndividualSentencePronunciationData( sentence ) {
 
+    console.log('sentence:', sentence)
     $('#pronunciationIndividualSentenceInnerContainer').empty();
     sentence.audiofile_data.forEach( function( a, index ) {
 

@@ -589,7 +589,7 @@ function tutorialOption121() {
 
     conversationVariables.tutorialStep = '121';
 
-    tiaPrepareToSpeak("Now_tap_'show_correction'_to_see_the_correct_sentence", speakCb=function(){
+    tiaPrepareToSpeak("Now_tap_'correction'_to_see_the_correct_sentence", speakCb=function(){
 
         showOptionBtns();
         $('#whatsWrongBtn').hide();
@@ -733,33 +733,59 @@ function tutorialOption151() {
 
     conversationVariables.tutorialStep = '151';
 
-    tiaPrepareToSpeak("Remember,_you_will_only_see_these_expressions_and_hear_me_speaking_to_you_if_your_sentence_is_correct", speakCb=function(){
+    if ( conversationVariables.experimental_group === "shop" ) {
 
-        conversationVariables.conversation_dict.completed_sentences = [
-        {
-            'sentence': [["I", "DT"], ["feel", "NN"], ["bad", "VBD"], ["because", "IN"], ["I", "DT"], ["catch", "NN"], ["a", "NN"], ["cold", "NN"]],
-            'judgement': 'I',
-            'indexes': [[11, 11]],
-            'correction': ['caught'],
-            'sent_id': 1,
-            'prompts': [{'text': ""}],
-        },
-        {
-            'sentence': [["nice", "DT"], ["to", "NN"], ["meet", "VBD"], ["you", "IN"]],
-            'judgement': 'P',
-            'sent_id': 0,
-            'prompts': [{'text': "it's great to meet you too"}],
-            'indexes': [],
-        },
+        tiaPrepareToSpeak("Remember,_you_will_only_see_these_expressions_and_hear_me_speaking_to_you_if_your_sentence_is_correct", speakCb=function(){
 
-        ]
-        addPreviousSentences( conversationVariables.conversation_dict, 0 )
-        $('#stopAllButtonEffectsExceptInputButtons').hide();
-        $('#prevSentsIconContainer').show();
+            tutorialOption152();
 
-    })
-                  
+        })
+
+    } else if ( conversationVariables.experimental_group === "points" ) {
+
+        tiaPrepareToSpeak("Remember,_you_will_only_see_these_expressions_and_hear_me_speak_to_you_if_your_sentence_is_correct", speakCb=function(){
+
+            tutorialOption152();
+
+        })
+
+    }
+
+        tiaPrepareToSpeak("You_will_only_see_these_expressions_and_hear_me_speak_to_you_if_your_sentence_is_correct", speakCb=function(){
+
+            tutorialOption152();
+
+        })
+
+    }
+
     buttonsListenNextSentence();
+
+}
+
+function tutorialOption152() {
+
+    conversationVariables.conversation_dict.completed_sentences = [
+    {
+        'sentence': [["I", "DT"], ["feel", "NN"], ["bad", "VBD"], ["because", "IN"], ["I", "DT"], ["catch", "NN"], ["a", "NN"], ["cold", "NN"]],
+        'judgement': 'I',
+        'indexes': [[11, 11]],
+        'correction': ['caught'],
+        'sent_id': 1,
+        'prompts': [{'text': ""}],
+    },
+    {
+        'sentence': [["nice", "DT"], ["to", "NN"], ["meet", "VBD"], ["you", "IN"]],
+        'judgement': 'P',
+        'sent_id': 0,
+        'prompts': [{'text': "it's great to meet you too"}],
+        'indexes': [],
+    },
+
+    ]
+    addPreviousSentences( conversationVariables.conversation_dict, 0 )
+    $('#stopAllButtonEffectsExceptInputButtons').hide();
+    $('#prevSentsIconContainer').show();
 
 }
 

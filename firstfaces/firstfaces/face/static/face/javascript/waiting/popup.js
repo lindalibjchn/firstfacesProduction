@@ -136,7 +136,13 @@ function showScoresAndSentences() {
     if ( waitingVariables.finishedConversationsNotTutorial.length !== 0 ) {
     
         $( '#prevSentsWaitingContainer' ).css( 'display', 'flex' );
-        addAllScores( waitingVariables.finishedConversationsNotTutorial )
+
+        if ( waitingVariables.experimental_group !== "control" ) {
+
+            addAllScores( waitingVariables.finishedConversationsNotTutorial );
+        
+        }
+
         showConversationSentences( 0 );
         //setUpPreviousSentsBtns( finishedConversationsNotTutorial[0].completed_sentences )
         //addData( 'sentences', finishedConversationsNotTutorial[0].completed_sentences )
