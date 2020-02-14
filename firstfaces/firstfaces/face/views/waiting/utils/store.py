@@ -1,7 +1,10 @@
 from django.http import JsonResponse
 from django.conf import settings
-from face.models import TiaAttributes, BackgroundColour, HairColour, UserProducts, Profile, ClothesColour, EyeTypes, BackgroundGIF
+from face.models import TiaAttributes, BackgroundColour, HairColour, UserProducts, Profile, ClothesColour, EyeTypes, BackgroundGIF, Conversation
 import json
+import time
+import math
+from django.utils import timezone
 
 
 def get_attributes(request):
@@ -631,3 +634,54 @@ def change_eyes(url, eye):
     save_json(change_eyes(parse_json(url), eye), url)
     return
 
+
+def get_stats(request):
+    user = request.user
+    username = user.username
+    date = convert_django_time_to_javascript(user.date_joined);
+    profile = Profile.objects.get(learner=user)
+
+    conversations = Conversation.objects.filter(learner=user)
+    num_conversations = len(conversations)
+    num_secs = 0
+    for conv in conversations:
+        secs =  get_second_diff(convert_django_time_to_javascript(conv.end_time),convert_django_time_to_javascript(conv.start_time))/1000
+        print(secs)
+        num_secs += secs
+
+    if num_secs <= 100:
+        label = "Seconds"
+        total_time = math.floor(num_secs)
+    elif num_secs/60 <= 100:
+        label = "Minutes"
+        total_time = math.floor(num_secs/60)
+    else:
+        label = "Hours"
+        total_time = math.floor(num_secs/(3600))
+
+
+    flag_fname = "media/flags/"+get_nationality_code(profile.nationality).lower()+".svg"
+
+    response_data = {
+        "flag_name": flag_fname,
+        "username": username,
+        "date": date,
+        "num_conv": num_conversations,
+        "time_tot": total_time,
+        "time_label": label
+    }
+    return JsonResponse(response_data)
+
+
+def convert_django_time_to_javascript(t):
+    return int(time.mktime((t).timetuple()) * 1000 + 3600000)
+
+def get_second_diff(end,start):
+    return float(end) - float(start)
+
+
+def get_nationality_code(country_name):
+    with open(settings.BASE_DIR + '/face/static/face/images/country-flags/countries_flipped.json') as f:
+        countries = json.load(f)
+
+    return countries.get(country_name)

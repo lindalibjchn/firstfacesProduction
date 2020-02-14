@@ -108,5 +108,6 @@ urlpatterns = [
     path('get_eye_colors', store_main.get_eye_colors, name="get_eye_colors"),
     path('equip_eyes', store_main.equip_eyes, name="equip_eyes"),
     path('buy_eyes', store_main.buy_eyes, name="buy_eyes"),
+    path('get_stats', store_main.get_stats, name="get_stats"),
 
 ]

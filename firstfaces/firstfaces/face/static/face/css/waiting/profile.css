@@ -1,4 +1,8 @@
 
+#profile-cont{
+    overflow-x: hidden;
+}
+
 #profile_description{
     height: 40%;
     background: #102858;
@@ -38,6 +42,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
 }
 
 #profile_description_text{
@@ -86,10 +91,10 @@
 .stats_tile{
     width: 60%;
     border-radius: 5px;
-    height: 125px;
+    height: 35%;
     border: 2px solid black;
     margin: auto;
-    margin-top: 20%;
+    margin-top: 15%;
     background: #EACF15;
     box-shadow: 0px 0px 4px 2px rgba(107, 107, 107, 0.4);
 
