@@ -172,7 +172,7 @@ function buy_clothes(id){
 function buy_background(id){
     let fd = new FormData();
     fd.append("id_",id);
-    fd.append("price",waitingVariables.products.backgrounds[id].price);
+    fd.append("price",waitingVariables.products.backgrounds.colours[id].price);
      $.ajax({
         url: "/buy_background",
         type: "POST",
@@ -180,15 +180,16 @@ function buy_background(id){
         processData: false,
         contentType: false,
         success: function(json){
-            hex = waitingVariables.products.backgrounds[id].hex;
+            hex = waitingVariables.products.backgrounds.colours[id].hex;
             $('#shop-balance').text(json.balance);
             //Show fake red balance appear then move down and fade out
             waitingVariables.attributes['background-colour'] = hex;
             waitingVariables.products.backgrounds = json.backgrounds
             $('.product-category-cont').empty();
             type = 'backgrounds';
+            sub_type = "colours"
             for(x in waitingVariables.products[type]){
-                $('.product-category-cont').append(waitingVariables.products[type][x].html)
+                $('.product-category-cont').append(waitingVariables.products[type][sub_type][x].html)
             }
             unclicked_background();
 

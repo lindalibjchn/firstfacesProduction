@@ -93,9 +93,17 @@ def waiting(request):
 
         }
 
+        control = False
+        no_shop = False
+        if experimental_group == "control" or experimental_group == "points":
+            no_shop = True
+            if experimental_group == "control":
+                control = True
+
         # print('waiting_variables:', json.dumps(waiting_variables))
         context = {
-
+            'control': control,
+            'no_shop': no_shop,
             'tutorial_complete': tutorial_complete,
             'waiting_variables': json.dumps(waiting_variables),
             'timeNowForNavbar': time_now,

@@ -1,10 +1,11 @@
 $(window).on( 'load', function() {
 
     if ( waitingVariables.tutorial_complete ) {
-
+        $('#popup-btn').show();
         showTutorialCompleteDashboard()
 
     } else {
+
         setTimeout(function(){
             fade_in_tutorial()
         },1000);
@@ -69,10 +70,11 @@ function getContHeight(){
 }
 
 function fade_in_tutorial(){
+
     $('#tutorialNotDoneBackground').animate({opacity: 0.8}, 1000);
     $('#tutorialNotDoneInnerContainer').animate({opacity: 1}, 1200);
-    /*setTimeout(function(){
-        $('#tutorialNotDoneInnerContainer').animate({opacity: 1}, 200);
-    },900);*/
+    setTimeout(function(){
+        $('#popup-btn').fadeIn(300);
+    },900);
 
 }

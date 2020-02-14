@@ -1,6 +1,6 @@
 
 {% load static %}
-<div id="profile-cont" class="cont_">
+<div id="profile-cont" class="cont_" style="display:none;">
 
     <div id="profile_description">
         <div id="profile-picture-cont">
@@ -17,6 +17,21 @@
 
     <div id="profile_stats_holder">
         <div id="profile_stats_left">
+            {% if not control %}
+            <div id="points_tile" class="stats_tile">
+                <div class="stats_tile_pic_cont">
+                    <div class="stats_tile_pic">
+                        <img style="height: 5.5vh;" src="{% static 'face/JSON/ErleESymbolBlack.png' %}"/>
+                    </div>
+                </div>
+                <div id="point_num" class="stats_tile_value">
+                    0
+                </div>
+                <div class="stats_tile_label">
+                    Total Points
+                </div>
+            </div>
+            {% endif %}
 
             <div id="conversations_tile" class="stats_tile">
                 <div class="stats_tile_pic_cont">
@@ -25,32 +40,40 @@
                     </div>
                 </div>
                 <div id="conversations_num" class="stats_tile_value">
-                    54
+                    0
                 </div>
                 <div class="stats_tile_label">
                     Conversations
                 </div>
-
             </div>
-
-            <div id="points_tile" class="stats_tile">
+            {% if control %}
+            <div id="rating_tile" class="stats_tile">
                 <div class="stats_tile_pic_cont">
                     <div class="stats_tile_pic">
-                        <img style="height: 5.5vh;" src="{% static 'face/JSON/ErleESymbolBlack.png' %}"/>
+                        <i id="start_half_1" class="fa fa-star-half" style="display:none;"></i>
+                        <i id="start_full_1" class="fa fa-star" style="display:none;"></i>
+                        <i id="start_half_2" class="fa fa-star-half" style="display:none;"></i>
+                        <i id="start_full_2" class="fa fa-star" style="display:none;"></i>
+                        <i id="start_half_3" class="fa fa-star-half" style="display:none;"></i>
+                        <i id="start_full_3" class="fa fa-star" style="display:none;"></i>
+                        <i id="start_half_4" class="fa fa-star-half" style="display:none;"></i>
+                        <i id="start_full_4" class="fa fa-star" style="display:none;"></i>
+                        <i id="start_half_5" class="fa fa-star-half" style="display:none;"></i>
+                        <i id="start_full_5" class="fa fa-star" style="display:none;"></i>
                     </div>
                 </div>
-                <div id="point_num" class="stats_tile_value">
-                    54
+                <div id="star_num" class="stats_tile_value">
+                    0
                 </div>
                 <div class="stats_tile_label">
-                    Points
+                    Average Rating
                 </div>
-
             </div>
+            {% endif %}
 
         </div>
         <div id="profile_stats_right">
-
+            {% if no_shop %}
             <div id="clock_tile" class="stats_tile">
                 <div class="stats_tile_pic_cont">
                     <div class="stats_tile_pic">
@@ -58,10 +81,40 @@
                     </div>
                 </div>
                 <div id="clock_num" class="stats_tile_value">
-                    54
+                    0
                 </div>
                 <div id="time_label" class="stats_tile_label">
                     Hours
+                </div>
+            </div>
+            {% else %}
+            <div id="products_tile" class="stats_tile">
+                <div class="stats_tile_pic_cont">
+                    <div class="stats_tile_pic">
+                     <i class="fa fa-shopping-cart"></i>
+                    </div>
+                </div>
+                <div id="product_num" class="stats_tile_value">
+                    0
+                </div>
+                <div id="product_label" class="stats_tile_label">
+                    Products Bought
+                </div>
+            </div>
+
+            {% endif %}
+
+            <div id="sentences_tile" class="stats_tile">
+                <div class="stats_tile_pic_cont">
+                    <div class="stats_tile_pic">
+                      <i class="fa fa-comment"></i>
+                    </div>
+                </div>
+                <div id="sent_num" class="stats_tile_value">
+                    0
+                </div>
+                <div id="sent_label" class="stats_tile_label">
+                    Sentences
                 </div>
 
             </div>

@@ -12,6 +12,7 @@ $( document ).ready(function(){
 
 $(window).load(function() {
       get_products();
+      get_user_stats();
 });
 
 function get_products(){
@@ -108,6 +109,9 @@ function open_home(){
     };
 }
 function open_history(){
+    if(!waitingVariables.tutorial_complete){
+        $('#tutorialNotDoneContainer').hide();
+    }
     $('#logo-left-cont').empty().append('<i class="fa fa-history fa-2x"></i>');
     //Hide all others
     $('#home-cont').hide()
@@ -149,6 +153,10 @@ function showScoresAndSentences() {
 }
 
 function open_profile(){
+
+    if(!waitingVariables.tutorial_complete){
+        $('#tutorialNotDoneContainer').hide();
+    }
     $('#logo-left-cont').empty().append('<i class="fa fa-user fa-2x"></i>');
     //Hide all others
     $('#home-cont').hide()
@@ -161,9 +169,13 @@ function open_profile(){
     fix_picture_height();
     //Click burger
     $('#popup-btn').click();
+
 }
 
 function open_about(){
+    if(!waitingVariables.tutorial_complete){
+        $('#tutorialNotDoneContainer').hide();
+    }
     $('#logo-left-cont').empty().append('<i class="fa fa-question-circle fa-2x"></i>');
     //Hide all others
     $('#home-cont').hide()
