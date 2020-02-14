@@ -68,7 +68,7 @@ $(function(){
         ampm_val = now[7]+now[8];
         hours1 = now[0]
         hours2 = now[1]
-        secs = now[4]+now[5];
+        secs = now[4] + now[5]
         if(ampm_val == 'PM' && hours1+hours2 != '12'){
             hours = parseInt(hours1)*10 + parseInt(hours2);
             hours = (hours+12).toString();

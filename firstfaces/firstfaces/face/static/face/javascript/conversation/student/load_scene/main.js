@@ -41,6 +41,7 @@ function engineRunning() {
     createSingleExpression( expressionObject.rel.neutral, 1 );
     expressionController( expressionObject.calculated, 1 );
 
+    showPts();
     runUCDGif();
     setTimeout( function() {
         
