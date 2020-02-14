@@ -166,7 +166,7 @@ function drawLineChartAllScores( allData ) {
                     };
 
                     this.data.datasets[0].pointRadius[elementIndex] = 12;
-                    console.log( this.data.datasets[0] );
+                    //console.log( this.data.datasets[0] );
                     
                     this.update();
 

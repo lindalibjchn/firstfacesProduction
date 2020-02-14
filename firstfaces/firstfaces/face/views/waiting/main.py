@@ -53,6 +53,8 @@ def waiting(request):
         date_now = timezone.localtime(timezone.now()).date()
 
         groups = request.user.groups.values_list('name', flat=True)
+        experimental_group = groups[0]
+
         available_objects = get_availables_for_schedule(groups)
         availables = create_list_of_javascript_available_times_from_django_objects(available_objects)
         currently_in_class, class_finished_today = check_if_currently_in_class_or_class_finished(request.user)
@@ -85,6 +87,7 @@ def waiting(request):
             'currently_in_class': currently_in_class,
             'class_finished_today': class_finished_today,
             'in_development': settings.DEBUG,
+            'experimental_group': experimental_group,
             # 'tutorial_conversation_id': tutorial_conversation_id,
             # 'no_live_sessions': no_live_sessions,
 

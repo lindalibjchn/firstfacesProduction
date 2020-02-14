@@ -2,13 +2,21 @@ function addOverallData( sentencesArray ) {
 
    addTotalSentencesText( sentencesArray );
    addDoughnutChart( sentencesArray );
-   addPercentageCorrectInCentreOfDoughnut( sentencesArray ); 
+   //addPercentageCorrectInCentreOfDoughnut( sentencesArray ); 
 
 }
 
 function addTotalSentencesText( sentencesArray ) {
 
-    $( '#totalSentencesNumber' ).text( sentencesArray.length );
+    if ( sentencesArray.length === 1 ) {
+
+        $( '#totalSentencesNumber' ).text( sentencesArray.length.toString() + ' sentence' );
+
+    } else {
+
+        $( '#totalSentencesNumber' ).text( sentencesArray.length.toString() + ' sentences' );
+
+    }
 
 }
 

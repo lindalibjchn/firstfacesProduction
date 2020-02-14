@@ -45,8 +45,8 @@
 
 #overallDataInnerContainer {
 
-    width: 70%;
-    height: 70%;
+    width: 60%;
+    height: 60%;
     position:  absolute;
     /*bottom: 0;*/
     display: flex;
@@ -63,15 +63,22 @@
 
 }
 
-#percentSentencesCorrect {
+/*#percentSentencesCorrect {*/
 
-    position: absolute;
-    top: 50%;
-    color: #11db0d;
-    font-size: 12vw;
-    font-weight: bold;
+    /*position: absolute;*/
+    /*top: 50%;*/
+    /*color: #1fb030;*/
+    /*font-size: 40px;*/
+    /*font-weight: bold;*/
 
-}
+/*}*/
+
+/*#ErleESymbolFinish {*/
+
+    /*height: 24px;*/
+    /*margin-bottom: 5px;*/
+
+/*}*/
 
 #pts {
 
