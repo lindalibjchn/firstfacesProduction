@@ -436,13 +436,16 @@ $('#signUpForm').on('submit', function(e) {
         contentType: false,
         success: function(json) {
             if ( json.loggedIn ) {
-                alert("Beef")
                 window.location.href = "/waiting"
+                $('#shop-cont').hide();
+                $('#history-cont').hide();
+                $('#profile-cont').hide()
+                $('#about-cont').hide()
+                var dist = $('#footer').offset()['top'] -64;
+                var shop_opened = false;
 
             } else {
-
-                alert("fail")
-
+                alert("Error signing up");
             }
 
         },

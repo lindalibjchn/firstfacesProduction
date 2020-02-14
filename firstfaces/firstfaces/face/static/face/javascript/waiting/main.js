@@ -5,7 +5,9 @@ $(window).on( 'load', function() {
         showTutorialCompleteDashboard()
 
     } else {
-
+        setTimeout(function(){
+            fade_in_tutorial()
+        },1000);
         $( '#tutorialNotDoneButton' ).click( function(){
 
             console.log(' in click tutorial button' )
@@ -66,3 +68,11 @@ function getContHeight(){
     return $('#footer').offset()['top'] - parseInt($('#navbar').css('height'));
 }
 
+function fade_in_tutorial(){
+    $('#tutorialNotDoneBackground').animate({opacity: 0.8}, 1000);
+    $('#tutorialNotDoneInnerContainer').animate({opacity: 1}, 1200);
+    /*setTimeout(function(){
+        $('#tutorialNotDoneInnerContainer').animate({opacity: 1}, 200);
+    },900);*/
+
+}

@@ -8,7 +8,6 @@ STYLESHEETS
 -------------------------------------------------------------------------->
 {% include 'face/waiting/stylesheets.html' %}
 {% include 'face/waiting/popup.html' %}
-{% if tutorial_complete %}
 
     {% include 'face/waiting/home.html' %}
     {% include 'face/waiting/shop.html' %}
@@ -16,14 +15,13 @@ STYLESHEETS
     {% include 'face/waiting/profile.html' %}
     {% include 'face/waiting/about.html' %}
 
-{% else %}
 
     <!----------------------------------------------------------------------- 
     TUTORIAL NOT DONE
     -------------------------------------------------------------------------->
     {% include 'face/waiting/tutorial_not_done.html' %}
 
-{% endif %}
+
 
 <!----------------------------------------------------------------------- 
 SCRIPTS

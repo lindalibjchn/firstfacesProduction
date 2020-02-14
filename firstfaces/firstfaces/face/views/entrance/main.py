@@ -12,7 +12,7 @@ from face.utils import *
 # from face.speech_to_text_utils import *
 from django.utils import timezone
 import json
-from face.models import Conversation, Sentence, AudioFile, Profile, AudioError, AudioErrorAttempt, AudioErrorCorrectionAttempt
+from face.models import Conversation, Sentence, AudioFile, Profile, AudioError, AudioErrorAttempt, AudioErrorCorrectionAttempt, UserProducts, TiaAttributes
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 import code
@@ -114,6 +114,16 @@ def create_user(request):
                 gender=gender, education=education, english_level=english_level,
                 lived_in_english_speaking_country=lived_in_english_speaking_country)
     p.save()
+
+    # Create user products
+    up = UserProducts(learner=u, backgroundColours='["1"]', hairColours='["1"]',
+                      clothesColour='["1"]', EyeTypes='["1"]', gif_backgrounds='[]')
+    up.save()
+
+    # Create tia attributes
+    ta = TiaAttributes(learner=u, backgroundColour=1, hairColour=1, clothesColour=1, eyeColour=1,
+                       color_background=True)
+    ta.save()
 
     user = authenticate(request, username=username, password=password)
     login(request, user)

@@ -7,6 +7,7 @@ from face.views.conversation.all.sentences import get_student_conversation
 from django.conf import settings
 from django.contrib.auth.models import User
 
+
 def get_students_in_conversation_now_ids():
     
     cur_conversations = Conversation.objects.filter(end_time=None)
@@ -17,6 +18,7 @@ def get_students_in_conversation_now_ids():
         students_in_conversation_now_ids.append(c.learner.pk)
 
     return students_in_conversation_now_ids
+
 
 def get_students_conversations(students_in_conversation_now_ids_):
 
@@ -51,6 +53,7 @@ def get_students_conversations(students_in_conversation_now_ids_):
 
     return students_conversations
 
+
 def get_student_conversations(student_id_):
         
     student_conversation_objects = Conversation.objects.filter(learner__id=student_id_).order_by('pk')
@@ -77,6 +80,7 @@ def get_nationality_code( country_name ):
         countries = json.load( f )
         
     return countries.get( country_name )
+
 
 def get_learner_age( years_of_birth ):
 
