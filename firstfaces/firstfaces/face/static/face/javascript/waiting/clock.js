@@ -113,7 +113,6 @@ function updateTimeNowBlinker( secs ) {
     }
 
     if ( secs === "00" ) {
-
         addAvailablesToTimetable( waitingVariables.availables )
 
     }

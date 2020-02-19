@@ -1,14 +1,25 @@
+var myInterval;
+var is_interval_running = false; //Optional
+
 $( document ).ready(function(){
     setHeight();
     visitor_save();
     load_screen();
-    cycle_feedback();
+
     $( "#loginForm" ).on( "submit", function( event ) {
-     
+        click_save("#loginForm" );
         event.preventDefault();
         console.log("in prevent default for login submission");
-        logIn()
+        logIn();
         
+    });
+    $(window).focus(function () {
+        clearInterval(myInterval); // Clearing interval if for some reason it has not been cleared yet
+        if  (!is_interval_running) //Optional
+            myInterval = setInterval(cycle_feedback, 3600);
+    }).blur(function () {
+        clearInterval(myInterval); // Clearing interval on window blur
+        is_interval_running = false; //Optional
     });
 
 });
@@ -18,6 +29,24 @@ function visitor_save(){
 
     $.ajax({
         url: "/site_access",
+        type: "POST",
+        data: fd,
+        processData: false,
+        contentType: false,
+        success: function(json) {
+            console.log("success")
+        },
+        error: function() {
+            console.log("Failure")
+        },
+    });
+}
+
+function click_save(id){
+    let fd = new FormData();
+    fd.append('element',id)
+    $.ajax({
+        url: "/site_click",
         type: "POST",
         data: fd,
         processData: false,
@@ -80,19 +109,21 @@ function cycle_feedback(){
     }, 600);
 }
 
-setInterval(function(){ cycle_feedback(); },3600);
 
 $('#contact_btn').click(function(){
+    click_save("#contact_btn" );
     $( this ).effect( "shake" ,{times:3,distance:3},500);
     change_alert("Contact Details", "Please contact us at:", "ucd.erle@gmail.com");
     open_alert();
 });
 $('#signin_btn').click(function(){
+    click_save("#signin_btn" );
     $( this ).effect( "shake" ,{times:3,distance:3},500);
     change_alert("Mobile Only", "To access application please use:", "A Smartphone or Tablet");
     open_alert();
 });
 $('#signup_btn').click(function(){
+    click_save("#signup_btn" );
     $( this ).effect( "shake" ,{times:3,distance:3},500);
     change_alert("Mobile Only", "To access application please use:", "A Smartphone or Tablet");
     open_alert();
@@ -128,9 +159,18 @@ function open_alert(){
         $('#alert_box').fadeIn(500);
     },0);
 }
-$('#navbar-grey-cover').click(close_alert);
-$('#overfooter').click(close_alert);
-$('#overforeground-cont').click(close_alert);
+$('#navbar-grey-cover').click(function(){
+    close_alert();
+    click_save("#navbar-grey-cover");
+});
+$('#overfooter').click(function(){
+    close_alert();
+    click_save("#overfooter");
+});
+$('#overforeground-cont').click(function(){
+    close_alert();
+    click_save("#overforeground-cont");
+});
 
 function logIn() {
     

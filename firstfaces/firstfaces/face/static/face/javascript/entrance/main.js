@@ -73,10 +73,32 @@ $( document ).ready(function(){
     load_screen();
     cycle_feedback();
 
-    //Log-IN
+    $("#TED-Video").load(function(){
+        $("#TED-Video").contents().click( function(){
+            alert("Click detected inside iframe.");
+        });
+    });
 
 
 });
+
+function click_save(id){
+    let fd = new FormData();
+    fd.append('element',id)
+    $.ajax({
+        url: "/site_click",
+        type: "POST",
+        data: fd,
+        processData: false,
+        contentType: false,
+        success: function(json) {
+            console.log("success")
+        },
+        error: function() {
+            console.log("Failure")
+        },
+    });
+}
 
 var dist = 0;
 function setHeight(){
@@ -146,14 +168,25 @@ function open_alert(){
         $('#alert_box').fadeIn(500);
     },0);
 }
-$('#navbar-grey-cover').click(close_alert);
-$('#overfooter').click(close_alert);
-$('#overforeground-cont').click(close_alert);
 
+
+$('#navbar-grey-cover').click(function(){
+    click_save('#navbar-grey-cover');
+    close_alert();
+});
+$('#overfooter').click(function(){
+    click_save('#overfooter');
+    close_alert();
+});
+$('#overforeground-cont').click(function(){
+    click_save('#overfooter');
+    close_alert();
+});
 
 
 
 $('#faq-btn').click(function(){
+    click_save('#faq-btn');
     $('#popup-btn').click();
     setTimeout(function(){
         open_alert();
@@ -161,6 +194,7 @@ $('#faq-btn').click(function(){
 });
 
 $('#main-logo').click(function(){
+    click_save('#main-logo');
     $('#foregroundContainer').show();
     $('#contact_cont').hide();
     $('#su_cont').hide();
@@ -170,6 +204,7 @@ $('#main-logo').click(function(){
     }
 });
 $('#home-btn').click(function(){
+    click_save('#home-btn');
     $('#foregroundContainer').show();
     $('#contact_cont').hide();
     $('#su_cont').hide();
@@ -179,6 +214,7 @@ $('#home-btn').click(function(){
     }
 });
 $('#harpIMG').click(function(){
+    click_save('#harpIMG');
     $('#foregroundContainer').show();
     $('#contact_cont').hide();
     $('#su_cont').hide();
@@ -192,6 +228,7 @@ $('#harpIMG').click(function(){
 
 $('#contact-btn').click(function(){
     reset_contact();
+    click_save('#contact-btn');
     $('#foregroundContainer').hide();
     $('#su_cont').hide();
     $('#contact_cont').show();
@@ -199,6 +236,7 @@ $('#contact-btn').click(function(){
 });
 
 $('#email-icon').click(function(){
+    click_save('#email-btn');
     reset_contact();
     $('#foregroundContainer').hide();
     $('#contact_cont').show();
@@ -209,7 +247,7 @@ $('#email-icon').click(function(){
 
 $('#contact_send').click(function(){
     fields = ["email","name","message"];
-
+    click_save('#contact_send');
 
 
 
@@ -414,7 +452,10 @@ function change_background(color,id){
 }
 
 
-$('#closeSignInContainer').click(function(){$('#signInContainer').hide()})
+$('#closeSignInContainer').click(function(){
+    $('#signInContainer').hide();
+    click_save('#closeSignInContainer');
+})
 
 /*
 function runUCDGif() {
@@ -458,9 +499,15 @@ function showLogInDropdown() {
 }
 
 $('#signup-btn').click(function(){
-    $('#foregroundContainer').hide();
-    $('#su_cont').show();
+    //click_save('#signup-btn');
+    //$('#foregroundContainer').hide();
+    //$('#su_cont').show();
+    //$('#popup-btn').click();
+     click_save('#faq-btn');
     $('#popup-btn').click();
+    setTimeout(function(){
+        open_alert();
+    },200)
 });
 
 
@@ -473,7 +520,7 @@ function hideLogInDropdown() {
 }
 
 $( "#loginForm" ).on( "submit", function( event ) {
-
+        click_save('#loginForm');
         event.preventDefault();
         console.log("in prevent default for login submission");
         logIn()
@@ -529,6 +576,7 @@ function logIn(){
     });
 }
 $('#signin-btn').click(function(){
+    click_save('#signin-btn')
     $('#popup-btn').click();
     setTimeout(function(){
         showLogInDropdown();
@@ -656,8 +704,7 @@ function reset_contact(){
 }
 
 $('#popup-btn').click(function(){
-
-
+    click_save('#popup-btn');
     if($('#popup-btn').hasClass("clicked")){
         $('#logo-left-cont').fadeIn(200);
         setTimeout(function(){$('#popup').hide();},200);
@@ -689,7 +736,9 @@ function AnimateRotate(angle,id,duration) {
     });
 }
 
-
+$('#TED-Video').click(function(){
+    click_save('#TED-Video');
+})
 
 
 

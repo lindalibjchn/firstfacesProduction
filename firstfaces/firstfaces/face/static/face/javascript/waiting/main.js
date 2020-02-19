@@ -1,10 +1,7 @@
 $(window).on( 'load', function() {
+    showTutorialCompleteDashboard()
 
-    if ( waitingVariables.tutorial_complete ) {
-        $('#popup-btn').show();
-        showTutorialCompleteDashboard()
-
-    } else {
+    if ( ! waitingVariables.tutorial_complete ) {
 
         setTimeout(function(){
             fade_in_tutorial()

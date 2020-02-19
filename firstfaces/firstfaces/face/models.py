@@ -240,6 +240,7 @@ class Profile(models.Model):
     tutorial_complete = models.BooleanField(default=False)
     spectrospin = models.BooleanField(default=False)
     points = models.SmallIntegerField(default=0)
+    total_points = models.SmallIntegerField(default=0)
 
     def __str__(self):
         return str(self.learner)
@@ -322,5 +323,12 @@ class BackgroundGIF(models.Model):
 
 class siteVisit(models.Model):
     ip_address = models.CharField(max_length=50, null=False, blank=True)
-    time = models.CharField(max_length=50, null=False, blank=True)
+    time = models.DateTimeField(auto_now_add=True)
     mobile_bool = models.BooleanField(default=False)
+
+
+class enteranceClick(models.Model):
+    ip_address = models.CharField(max_length=50, null=False, blank=True)
+    time = models.DateTimeField(auto_now_add=True)
+    mobile_bool = models.BooleanField(default=False)
+    element_id = models.CharField(max_length=50, null=False, blank=True)
