@@ -749,7 +749,7 @@ function tutorialOption151() {
 
         })
 
-    }
+    } else {
 
         tiaPrepareToSpeak("You_will_only_see_these_expressions_and_hear_me_speak_to_you_if_your_sentence_is_correct", speakCb=function(){
 

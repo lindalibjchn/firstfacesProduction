@@ -143,12 +143,8 @@ function showScoresAndSentences() {
     
         $( '#prevSentsWaitingContainer' ).css( 'display', 'flex' );
 
-        if ( waitingVariables.experimental_group !== "control" ) {
-
-            addAllScores( waitingVariables.finishedConversationsNotTutorial );
+        addAllScores( waitingVariables.finishedConversationsNotTutorial );
         
-        }
-
         showConversationSentences( 0 );
         //setUpPreviousSentsBtns( finishedConversationsNotTutorial[0].completed_sentences )
         //addData( 'sentences', finishedConversationsNotTutorial[0].completed_sentences )
