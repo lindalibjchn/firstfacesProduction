@@ -1,4 +1,5 @@
 $('#yes_info').click(function(){
+    click_save('#yes_info');
     $('.su_s1').fadeOut(400);
     animate_color_colour('top-half-su','1A3A6B', 400);
     animate_color_colour('top-half-su-before','1A3A6B', 400);
@@ -17,12 +18,17 @@ var sign_up_details = {};
 
 function reset_sign_up(){
     //Hide and empty all stages
-    reset_s1();
-    reset_s2();
     reset_s4();
+    reset_s3();
+    reset_s2();
+    reset_s1();
+
+
+
 }
 
 function back_to_s1(){
+    click_save('#su_back');
     $('.su_s2').fadeOut(400);
     animate_color_colour('top-half-su','0089Cf', 400);
     animate_color_colour('top-half-su-before','0089Cf', 400);
@@ -46,8 +52,26 @@ function back_to_s2(){
         $('#su_back').hide().css({"display":"flex", "z-index":"3"}).fadeIn(400);
         $('#su_back').off('click').click(function(){
             back_to_s1();
+            click_save('#su_back');
         });
         reset_s3()
+    },400);
+}
+function back_to_s3(){
+    click_save('#su_back');
+    $('.su_s4').fadeOut(400);
+    reset_s3();
+    animate_color_colour('top-half-su','2F9D4A', 400);
+    animate_color_colour('top-half-su-before','2F9D4A', 400);
+    animate_color_colour('pdot_3','FFFFFF', 400);
+    setTimeout(function(){
+        show_stage_3(400);
+        $('#su_back').hide().css({"display":"flex", "z-index":"3"}).fadeIn(400);
+        $('#su_back').off('click').click(function(){
+            back_to_s2();
+            click_save('#su_back');
+        });
+        reset_s4()
     },400);
 }
 
@@ -76,8 +100,18 @@ function reset_s1(){
 function reset_s3(){
     $('#username_field_entry').text('Username').css('opacity','0.8');
     $('#email_field_entry').text('Email').css('opacity','0.8');
-    $('#passsword_field_entry').text('Password').css('opacity','0.8');
+    $('#password_field_entry').text('Password').css('opacity','0.8');
     sign_up_details = {};
+}
+function reset_s4(){
+    $('#id_nationality').prop('selectedIndex',0);
+    $('#id_language').prop('selectedIndex',0);
+    $('#id_living_now').prop('selectedIndex',0);
+    $('#id_born').prop('selectedIndex',0);
+    $('#id_gender').prop('selectedIndex',0);
+    $('#id_education').prop('selectedIndex',0);
+    $('#id_english_level').prop('selectedIndex',0);
+    $('#id_lived_in_english_speaking_country').prop('selectedIndex',0);
 }
 
 function reset_s2(){
@@ -175,6 +209,7 @@ function done_stage_2b_check(){
 }
 
 function done_stage_2c_check(){
+     click_save('Sign-up --> Stage3');
     if(par_selected && con_selected){
         $('.su_s2').fadeOut(400);
         animate_color_colour('top-half-su','2F9D4A', 400);
@@ -188,6 +223,19 @@ function done_stage_2c_check(){
         },400);
     }
     return
+}
+function done_stage_3(){
+        click_save('Sign-up --> Stage4');
+        $('.su_s3').fadeOut(400);
+        animate_color_colour('top-half-su','EAD132', 400);
+        animate_color_colour('top-half-su-before','EAD132', 400);
+        animate_color_colour('pdot_3','2F9D4A', 400);
+        setTimeout(function(){
+            show_stage_4(400);
+            $('#su_back').off('click').click(function(){
+                back_to_s3();
+            });
+        },400);
 }
 
 
@@ -339,6 +387,7 @@ $('#password_field').click(function(){
 });
 
 $('#su_username_submit').click(function(){
+    click_save('#su_username_submit');
     username = $('#username_field_entry').text();
     password = $('#password_field_entry').text();
     email = $('#email_field_entry').text();
@@ -389,19 +438,12 @@ $('#su_username_submit').click(function(){
 });
 
 
-function done_stage_3(){
-        $('.su_s3').fadeOut(400);
-        animate_color_colour('top-half-su','EAD132', 400);
-        animate_color_colour('top-half-su-before','EAD132', 400);
-        animate_color_colour('pdot_3','2F9D4A', 400);
-        setTimeout(function(){
-            show_stage_4(400);
-        },400);
-}
+
 
 
 $('#signUpForm').on('submit', function(e) {
     e.preventDefault()
+    click_save('#signUpForm');
     country = $('#id_nationality').val();
     native = $('#id_language').val();
     living = $('#id_living_now').val();

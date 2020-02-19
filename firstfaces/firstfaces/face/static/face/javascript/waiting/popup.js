@@ -23,6 +23,7 @@ function get_products(){
     get_clothingColours();
     get_balance();
     $('#logo-left-cont').css("display","flex").hide().fadeIn(700);
+    $('#popup-btn').show();
     $('#logo-right-cont').css("display","flex").hide().fadeIn(700);
     $('#home-cont').fadeIn(700);
 }

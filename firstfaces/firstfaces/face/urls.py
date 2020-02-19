@@ -84,6 +84,7 @@ urlpatterns = [
     path('validate_username', entrance_main.validate_username, name="validate_username"),
     path('create_user', entrance_main.create_user, name="create_user"),
     path('site_access', entrance_main.site_access, name="site_access"),
+    path('site_click', entrance_main.site_click, name="site_click"),
     
     path('', views_temp.out_or_in, name="out_or_in"),
     # path('store_test_score', views_temp.store_test_score, name='store_test_score'),

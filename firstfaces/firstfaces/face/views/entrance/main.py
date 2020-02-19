@@ -12,7 +12,7 @@ from face.utils import *
 # from face.speech_to_text_utils import *
 from django.utils import timezone
 import json
-from face.models import Conversation, Sentence, AudioFile, Profile, AudioError, AudioErrorAttempt, AudioErrorCorrectionAttempt, UserProducts, TiaAttributes, siteVisit
+from face.models import Conversation, Sentence, AudioFile, Profile, AudioError, AudioErrorAttempt, AudioErrorCorrectionAttempt, UserProducts, TiaAttributes, siteVisit, enteranceClick
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 import code
@@ -82,12 +82,22 @@ def validate_username(request):
 
 
 def site_access(request):
-
-    now = str(datetime.datetime.now())
     mobile_or_tablet_device = request.user_agent.is_mobile or request.user_agent.is_tablet
     ip = visitor_ip_address(request)
-    sa = siteVisit(ip_address=ip, time=now, mobile_bool=mobile_or_tablet_device)
+    sa = siteVisit(ip_address=ip, mobile_bool=mobile_or_tablet_device)
     sa.save()
+    response_data = {
+    }
+
+    return JsonResponse(response_data)
+
+
+def site_click(request):
+    mobile_or_tablet_device = request.user_agent.is_mobile or request.user_agent.is_tablet
+    ip = visitor_ip_address(request)
+    element_id = request.POST['element']
+    sc = enteranceClick(ip_address=ip, mobile_bool=mobile_or_tablet_device, element_id=element_id)
+    sc.save()
     response_data = {
     }
 
@@ -151,6 +161,8 @@ def create_user(request):
     ta.save()
 
     user = authenticate(request, username=username, password=password)
+    send_mail("Profile Created", 'Profile Created:\nUsername:\t'+username+'\nEmail:\t'+email+"\nNationality:\t"+nationality, 'ucd.erle@gmail.com', ['john.sloan.1@ucdconnect.ie', 'daniel.maguire@ucdconnect.ie'])
+
     login(request, user)
 
     response_data = {

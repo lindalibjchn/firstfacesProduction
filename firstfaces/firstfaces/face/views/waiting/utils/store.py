@@ -774,27 +774,30 @@ def get_stats(request):
 
     date = convert_django_time_to_javascript(user.date_joined)
     profile = Profile.objects.get(learner=user)
-    points = profile.points
+    points = profile.total_points
     num_sent = 0
     conversations = Conversation.objects.filter(learner=user)
     num_conversations = len(conversations)
     rating = 0
     num_secs = 0
-    for conv in conversations:
-        if conv.topic != 'tutorial':
-            try:
-                secs = get_second_diff(convert_django_time_to_javascript(conv.end_time),convert_django_time_to_javascript(conv.start_time))/1000
-            except:
-                secs = 0
-            if secs < 300:
-                num_conversations -= 1
+    if num_conversations > 0:
+        for conv in conversations:
+            if conv.topic != 'tutorial':
+                try:
+                    secs = get_second_diff(convert_django_time_to_javascript(conv.end_time),convert_django_time_to_javascript(conv.start_time))/1000
+                except:
+                    secs = 0
+                if secs < 300:
+                    num_conversations -= 1
+                else:
+                    num_secs += secs
+                    if conv.rating != None:
+                        rating += int(conv.rating)
+                    for sent in Sentence.objects.filter(conversation=conv):
+                        if sent.sentence != None:
+                            num_sent += 1
             else:
-                num_secs += secs
-                if conv.rating != None:
-                    rating += int(conv.rating)
-                num_sent+= len(Sentence.objects.filter(conversation=conv))
-        else:
-            num_conversations -= 1
+                num_conversations -= 1
 
     if num_secs <= 100:
         label = "Seconds"
@@ -808,9 +811,11 @@ def get_stats(request):
 
 
     flag_fname = "media/flags/"+get_nationality_code(profile.nationality).lower()+".svg"
-    rating /= num_conversations
-    rating = round(rating*2)/2
-
+    if num_conversations != 0:
+        rating /= num_conversations
+        rating = round(rating*2)/2
+    else:
+        rating == 0
 
     response_data = {
         "flag_name": flag_fname,
