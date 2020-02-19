@@ -1,20 +1,56 @@
+function get_tia_attributes(){
+
+    let fd = new FormData();
+     $.ajax({
+        url: "/get_attributes_conv",
+        type: "POST",
+        data: fd,
+        processData: false,
+        contentType: false,
+        success: function(json){
+            // Set up Tia Attribute Json
+            conversationVariables.attributes ={
+                "background-colour":json.BC,
+                "background-colour-id":json.BC_id,
+                "hair-colour-id":json.HC_id,
+                "hair-colour":json.HairC,
+                "brow-colour":json.BrowC,
+                "clothes-colour":json.CC,
+                "clothes-id":json.CC_id,
+                "eyes":json.eyes,
+                "gif_bool":json.gif_bool,
+                "gif":json.gif
+
+            }
+            init();
+        },
+        error: function() {
+          console.log("Error getting attributes");
+        },
+    });
+}
+
+var gif_prefix = prefixURL+"media/gifs/";
+
+function set_background_as_gif(gif){
+    $('#gifHolder').hide().attr("src",gif_prefix+gif).show();
+}
+
 function renderScene() {
 
-    renderer = new THREE.WebGLRenderer();
+    renderer = new THREE.WebGLRenderer( { alpha: true } );
     renderer.setSize( WIDTH, HEIGHT );
-    renderer.setClearColor(0x00ffff, 0.5);
+    var colour =  new THREE.Color(parseInt('0x'+conversationVariables.attributes['background-colour'],16));
+    if(conversationVariables.attributes.gif_bool){
+       renderer.setClearColor( colour , 1);
+    } else {
+       set_background_as_gif(conversationVariables.attributes.gif);
+       renderer.setClearColor( colour , 0);
+    }
     document.body.appendChild( renderer.domElement );
 
 }
 
-function renderSceneDan(loc,h, w) {
-
-    renderer = new THREE.WebGLRenderer();
-    renderer.setSize( w, h );
-    renderer.setClearColor('#00ffff', 0.5);
-    document.getElementById(loc).appendChild( renderer.domElement );
-
-}
 
 function dealWithResizing() {
 
@@ -65,7 +101,7 @@ function addTia() {
        
         let randTwoNumberString = randStrIntChangeEveryDay + randStrIntChangeEveryTenDays
         let tiaClothesColour = "0x" + randTwoNumberString + randTwoNumberString + randTwoNumberString;
-        mat[0].color.setHex( tiaClothesColour );
+        mat[0].color.setHex( '0x'+conversationVariables.attributes['clothes-colour'] )
 
         // iterate over the bones in the JSON file and put them into the global bodyBones object. Call bones with bodyBones["<bone name>"] 
         for (var i=0; i<tiaObject.mBody.skeleton.bones.length; i++) {
@@ -92,7 +128,7 @@ function addTia() {
         //mat[0].color.setHex( '0x743D2B' );
         //mat[1].color.setHex( '0xE35D6A' );
         //mat[2].color.setHex( '0x030106' );
-
+         mat[2].color.setHex( '0x'+conversationVariables.attributes['brow-colour'] )
         tiaObject.mFace = new THREE.SkinnedMesh( geom, mat );
 
         // iterate over the bones in the JSON file and put them into the global faceBones object. Call bones with faceBones["<bone name>"] 
@@ -130,7 +166,15 @@ function addTia() {
 
         tiaObject.faceBones.head.add( tiaObject.mMouth );
 
-        loader.load( eye, addEyes)
+        if(conversationVariables.attributes.eyes == "1"){
+            loader.load( eye1, addEyes)
+        } else if(conversationVariables.attributes.eyes == "2"){
+            loader.load( eye2, addEyes)
+        } else if(conversationVariables.attributes.eyes == "3"){
+            loader.load( eye3, addEyes)
+        } else {
+            loader.load( eye1, addEyes)
+        }
 
     }
 
@@ -165,6 +209,7 @@ function addTia() {
     
     }
 
+
     function addHair( geom, mat ) {
 
         //mat[0].color.setHex( '0x030106' );
@@ -173,7 +218,7 @@ function addTia() {
 
         // need to manually assign position again
         tiaObject.mHair.position.set( -0.1, 5.5, 1.9 );
-        
+        mat[0].color.setHex( '0x'+conversationVariables.attributes['hair-colour'] )
         // again, parent to headbone
         tiaObject.faceBones.head.add( tiaObject.mHair );
 

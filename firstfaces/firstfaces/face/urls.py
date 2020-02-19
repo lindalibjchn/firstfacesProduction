@@ -83,6 +83,7 @@ urlpatterns = [
     path('logout', LogoutView.as_view(next_page=reverse_lazy('entrance')), name='logout'),
     path('validate_username', entrance_main.validate_username, name="validate_username"),
     path('create_user', entrance_main.create_user, name="create_user"),
+    path('site_access', entrance_main.site_access, name="site_access"),
     
     path('', views_temp.out_or_in, name="out_or_in"),
     # path('store_test_score', views_temp.store_test_score, name='store_test_score'),
@@ -94,11 +95,15 @@ urlpatterns = [
     # path('group_data', views_temp.group_data, name="group_data"),
 
     #SHOP
+
     path('get_attributes', store_main.get_attributes, name='get_attributes'),
+    path('get_attributes_conv', store_main.get_attributes_conv, name='get_attributes_conv'),
     path('get_background_colors', store_main.get_background_colors, name='get_background_colors'),
     path('get_balance', store_main.get_balance, name='get_balance'),
     path('equip_background', store_main.equip_background, name='equip_background'),
     path('buy_background', store_main.buy_background, name='buy_background'),
+    path('buy_background_gif', store_main.buy_background_gif, name='buy_background_gif'),
+    path('equip_background_gif', store_main.equip_background_gif, name='equip_background_gif'),
     path('get_hair_colors', store_main.get_hair_colors, name='get_hair_colors'),
     path('equip_hair', store_main.equip_hair, name="equip_hair"),
     path('buy_hair', store_main.buy_hair, name="buy_hair"),

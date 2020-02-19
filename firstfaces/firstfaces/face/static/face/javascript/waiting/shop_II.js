@@ -40,7 +40,6 @@ function fadeBackground(time=300, wait=0, st_callback=function(){}, reversed=fal
         vals.push(0);
         if(reversed){
             vals = vals.reverse();
-            console.log("HERE")
         }
         console.log(vals);
         fade_background_with_delay(0, vals, colour, vals.length);
@@ -75,12 +74,12 @@ function clicked_gif(id){
         if( waitingVariables.products.backgrounds[st][id].class == 'owned'){
             price ='<i style="color:green;" class="fa fa-check" ></i>'
             txt = "equip";
-            $('#buy_equip_btn').attr('onclick','equip_background("'+id+'")');
+            $('#buy_equip_btn').attr('onclick','equip_gif("'+id+'")');
         }
         else{
             price = '<p>'+waitingVariables.products.backgrounds[st][id].price+"</p>";
             txt = "buy";
-            $('#buy_equip_btn').attr('onclick','buy_background("'+id+'")');
+            $('#buy_equip_btn').attr('onclick','buy_gif("'+id+'")');
         }
         $('#buy_equip_btn').text(txt);
 
@@ -90,13 +89,7 @@ function clicked_gif(id){
 
 }
 
-function unclicked_gif(){
-    hide_description()
-    fadeBackground(time=600,0,function(){},true);
-        setTimeout(function(){
-            enable_click();
-        },600);
-}
+
 
 function animate_background_colour(start_hex, end_hex, time){
     var colours = get_transition_colors(start_hex, end_hex, time)
@@ -114,8 +107,25 @@ function change_color_with_delay(i,colours,end){
 
 
 
-function flash_gif(){
-    //flash background to slighty brighter less opaque colour
+function flash_gif(time=150){
+        intervals = Math.round(time/16.666666667)-1;
+        var colour =  new THREE.Color(parseInt('0x'+decimal_rgb_hex(renderer.getClearColor()),16));
+        diff = 0.3/intervals;
+        vals = [0];
+        for(i=1;i<intervals;i++){
+            vals.push(vals[i-1]+diff);
+        }
+        vals.push(0.3);
+        console.log(vals)
+        start = vals.length;
+        console.log("start",start);
+        for(i=(start);i<(start+intervals);i++){
+            vals.push(vals[i-1]-diff);
+        }
+        vals.push(0);
+
+        console.log(vals);
+        fade_background_with_delay(0, vals, 0xFFFFFF, vals.length);
 }
 function transition_gif_gif(){
 }

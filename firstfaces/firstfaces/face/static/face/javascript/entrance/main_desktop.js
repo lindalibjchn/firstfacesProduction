@@ -1,5 +1,6 @@
 $( document ).ready(function(){
-    setHeight()
+    setHeight();
+    visitor_save();
     load_screen();
     cycle_feedback();
     $( "#loginForm" ).on( "submit", function( event ) {
@@ -11,6 +12,24 @@ $( document ).ready(function(){
     });
 
 });
+
+function visitor_save(){
+    let fd = new FormData();
+
+    $.ajax({
+        url: "/site_access",
+        type: "POST",
+        data: fd,
+        processData: false,
+        contentType: false,
+        success: function(json) {
+            console.log("success")
+        },
+        error: function() {
+            console.log("Failure")
+        },
+    });
+}
 
 function load_screen(){
     /*$('.hide2').hide();
@@ -45,6 +64,8 @@ function load_screen(){
 }
 var curr_feedback = 1;
 
+
+
 function cycle_feedback(){
     next_feedback = curr_feedback+1;
     if(next_feedback > 3){
@@ -55,13 +76,25 @@ function cycle_feedback(){
         $('#feedback_'+next_feedback).fadeIn(600);
         setTimeout(function(){
             curr_feedback = next_feedback;
-            cycle_feedback()
         }, 3600);
     }, 600);
 }
 
-$('.navbar_icon').click(function(){
+setInterval(function(){ cycle_feedback(); },3600);
+
+$('#contact_btn').click(function(){
     $( this ).effect( "shake" ,{times:3,distance:3},500);
+    change_alert("Contact Details", "Please contact us at:", "ucd.erle@gmail.com");
+    open_alert();
+});
+$('#signin_btn').click(function(){
+    $( this ).effect( "shake" ,{times:3,distance:3},500);
+    change_alert("Mobile Only", "To access application please use:", "A Smartphone or Tablet");
+    open_alert();
+});
+$('#signup_btn').click(function(){
+    $( this ).effect( "shake" ,{times:3,distance:3},500);
+    change_alert("Mobile Only", "To access application please use:", "A Smartphone or Tablet");
     open_alert();
 });
 
@@ -127,4 +160,11 @@ function logIn() {
             console.log("that's shite");
         },
     });
+}
+
+
+function change_alert(title, body1, body2){
+    $('#alert_title').text(title);
+    $('#est').text(body1);
+    $('#estDate').text(body2);
 }

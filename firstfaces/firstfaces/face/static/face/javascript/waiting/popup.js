@@ -5,9 +5,9 @@ $( document ).ready(function(){
     $('#history-cont').hide();
     $('#profile-cont').hide()
     $('#about-cont').hide()
+    $('#home-cont').hide();
     waitingVariables.dist = $('#footer').offset()['top'] -64;
     waitingVariables.shop_opened = false;
-
 });
 
 $(window).load(function() {
@@ -21,6 +21,10 @@ function get_products(){
     get_backgrounds();
     get_hairColours();
     get_clothingColours();
+    get_balance();
+    $('#logo-left-cont').css("display","flex").hide().fadeIn(700);
+    $('#logo-right-cont').css("display","flex").hide().fadeIn(700);
+    $('#home-cont').fadeIn(700);
 }
 
 
@@ -58,7 +62,10 @@ function AnimateRotate(angle,id,duration) {
 
 
 function open_shop(){
-    $('#logo-left-cont').empty().append('<i class="fa fa-shopping-cart fa-2x"></i>');
+    if(waitingVariables.experimental_group == "control"){
+         $('#logo-left-cont').empty().append('<i class="fa fa-shopping-cart fa-2x"></i>');
+    }
+
     //Hide all others
     $('#home-cont').hide()
     if(!waitingVariables.tutorial_complete){
@@ -82,6 +89,7 @@ function open_shop(){
         zoom(0,camera_values.original);
         show_click_me(time=0);
         enable_click();
+
      }
      //Click burger
      $('#popup-btn').click();
@@ -93,7 +101,9 @@ function open_home(){
    if(!waitingVariables.tutorial_complete){
         $('#tutorialNotDoneContainer').show();
     }
-    $('#logo-left-cont').empty();
+    if(!waitingVariables.experimental_group == "control"){
+        $('#logo-left-cont').empty();
+    }
     //Hide all others
     $('#shop-cont').hide()
     $('#history-cont').hide()
@@ -112,7 +122,9 @@ function open_history(){
     if(!waitingVariables.tutorial_complete){
         $('#tutorialNotDoneContainer').hide();
     }
-    $('#logo-left-cont').empty().append('<i class="fa fa-history fa-2x"></i>');
+    if(!waitingVariables.experimental_group == "control"){
+        $('#logo-left-cont').empty().append('<i class="fa fa-history fa-2x"></i>');
+    }
     //Hide all others
     $('#home-cont').hide()
     $('#shop-cont').hide()
@@ -159,7 +171,9 @@ function open_profile(){
     if(!waitingVariables.tutorial_complete){
         $('#tutorialNotDoneContainer').hide();
     }
-    $('#logo-left-cont').empty().append('<i class="fa fa-user fa-2x"></i>');
+    if(!waitingVariables.experimental_group == "control"){
+        $('#logo-left-cont').empty().append('<i class="fa fa-user fa-2x"></i>');
+    }
     //Hide all others
     $('#home-cont').hide()
     $('#shop-cont').hide()
@@ -178,7 +192,9 @@ function open_about(){
     if(!waitingVariables.tutorial_complete){
         $('#tutorialNotDoneContainer').hide();
     }
-    $('#logo-left-cont').empty().append('<i class="fa fa-question-circle fa-2x"></i>');
+    if(!waitingVariables.experimental_group == "control"){
+        $('#logo-left-cont').empty().append('<i class="fa fa-question-circle fa-2x"></i>');
+    }
     //Hide all others
     $('#home-cont').hide()
     $('#shop-cont').hide()

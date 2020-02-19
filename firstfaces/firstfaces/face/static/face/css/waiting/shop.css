@@ -83,8 +83,8 @@
 .product-price{
     font-family: 'Oswald', sans-serif;
     color:#ECD421;
-    font-size:15px;
-    height:20%;
+    font-size:2.5vh;
+    height:40%;
     width:100%;
     position:absolute;
     bottom:0;
@@ -95,7 +95,7 @@
 
 .product-img-cont{
     position:absolute;
-    height:80%;
+    height:60%;
     width: 100%;;
     display:flex;
     justify-content:center;
@@ -103,7 +103,7 @@
 }
 .lockHolder{
     position:absolute;
-    height:80%;
+    height:60%;
     width:100%;
     top:5%;
     display:flex;
@@ -228,7 +228,7 @@
     display:flex;
     justify-content:center;
     align-items:center;
-    font-size:40px;
+    font-size: 5.5vh;
     z-index:2;
     color:white;
 }
@@ -241,7 +241,7 @@
     align-items:flex-end;
     font-family: 'Oswald', sans-serif;
     text-transform: uppercase;
-    font-size: 30px;
+    font-size: 4.5vh;
 }
 #product_description_price{
     height:20%;
@@ -251,7 +251,7 @@
     align-items:center;
     font-family: 'Oswald', sans-serif;
     text-transform: uppercase;
-    font-size: 20px;
+    font-size: 3.5vh;
 }
 #product_description_btns{
     height:20%;
@@ -261,7 +261,7 @@
     align-items:center;
     font-family: 'Oswald', sans-serif;
     text-transform: uppercase;
-    font-size: 15px;
+    font-size: 2vh;
 }
 #product_description_back{
     position:absolute;
@@ -301,6 +301,8 @@
 .img_product{
    max-height:100%;
    max-width:100%;
+   min-width: 100%;
+   min-height: 100%;
 }
 
 .tile{
@@ -310,8 +312,7 @@
 
 .tile_smaller{
     border-radius:5px;
-    box-shadow:1px 3px 7px 2px rgba(173,173,173,0.35);
-    border-top:1px solid gba(173,173,173,0.25)
+    box-shadow:0px 0px 3px 1px rgba(173,173,173,0.55);
 }
 
 #demoHolderCont{

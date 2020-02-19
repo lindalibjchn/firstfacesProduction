@@ -9,23 +9,39 @@ function setHeight(){
 
 
     swidth = $(document).width()
-    sheight = ($('#footer').offset()['top'] - ($('#shop-balance').offset()['top']+$('#shop-balance').height()));
+    sheight = waitingVariables.dist*0.95;
     tiaH = Math.round(sheight*0.7);
     tiaW = Math.round(swidth*.95);
-    $('#demoHolderCont').css("height",tiaH);
+    $('#demoHolderCont').css({"height":tiaH, "margin-top":sheight*0.025});
     $('#demoHolder').css({"height":tiaH, 'width':tiaW});
 
 
     $('#tiaHolder').css({"height":"100%", 'width':'100%'});
     remH = sheight - tiaH;
-    pd_h = Math.round(sheight*0.3)
+    pd_h = Math.round(sheight*0.30)
     $('#product_description').css({"height":pd_h+"px", "width":'100%'});
     $('#product_description').hide();
     $('.product-category').css('height',pd_h+"px");
+    img_hw = pd_h*0.42380*.95;
+    $('.background-color-img').css({'height':img_hw+"px", "width":img_hw+"px"})
+
+
     waitingVariables.zoomed = false;
     show_click_me()
 
 };
+
+function fix_img_size(){
+    img_h = $('.product-category').height()*0.324*.85;
+    img_w = 72*.85
+    if(img_h > img_w){
+        $('.background-color-img').css({'height':img_w+"px", "width":img_w+"px"});
+    } else {
+        $('.background-color-img').css({'height':img_h+"px", "width":img_h+"px"});
+    }
+
+}
+
 
 function equip_eyes(id){
     let fd = new FormData();
@@ -40,21 +56,24 @@ function equip_eyes(id){
             waitingVariables.attributes['eyes'] = id;
             waitingVariables.products.eyes = json.eyes
             type = 'eyes';
+            subtype = "colours";
             $('#product-cont').empty();
-            for(x in waitingVariables.products[type]){
-                $('#product-cont').append(waitingVariables.products[type][x].html)
+            for(x in waitingVariables.products[type][subtype]){
+                $('#product-cont').append(waitingVariables.products[type][subtype][x].html)
             }
+            fix_img_size();
             unclicked_eyes();
         },
         error: function() {
           console.log("Error Getting Balance");
+
         },
     });
 }
 function buy_eyes(id){
     let fd = new FormData();
     fd.append("id_",id);
-    fd.append("price",waitingVariables.products.eyes[id].price);
+    fd.append("price",waitingVariables.products.eyes.colours[id].price);
      $.ajax({
         url: "/buy_eyes",
         type: "POST",
@@ -63,14 +82,17 @@ function buy_eyes(id){
         contentType: false,
         success: function(json){
             $('#shop-balance').text(json.balance);
+             $('#balance_header').text(json.balance);
             //Show fake red balance appear then move down and fade out
             waitingVariables.attributes['eyes'] = id;
             waitingVariables.products.eyes = json.eyes
             type = 'eyes';
+            subtype = "colours";
             $('#product-cont').empty();
-            for(x in waitingVariables.products[type]){
-                $('#product-cont').append(waitingVariables.products[type][x].html)
+            for(x in waitingVariables.products[type][subtype]){
+                $('#product-cont').append(waitingVariables.products[type][subtype][x].html)
             }
+            fix_img_size();
             unclicked_eyes();
 
         },
@@ -95,12 +117,14 @@ function equip_background(id){
             // Remove previously equipped class
             hex = waitingVariables.products.backgrounds['colours'][id].hex;
             waitingVariables.attributes['background-colour'] = hex;
-            waitingVariables.products.backgrounds = json.backgrounds
+            waitingVariables.attributes.gif_bool = true;
+            waitingVariables.products.backgrounds.colours = json.backgrounds
             type = 'backgrounds';
             $('#product-cont').empty();
-            for(x in waitingVariables.products[type]){
+            for(x in waitingVariables.products[type]['colours']){
                 $('#product-cont').append(waitingVariables.products[type]['colours'][x].html)
             }
+            fix_img_size();
             unclicked_background();
         },
         error: function() {
@@ -108,6 +132,37 @@ function equip_background(id){
         },
     });
 }
+
+function equip_gif(id){
+    let fd = new FormData();
+    fd.append("id_",id);
+     $.ajax({
+        url: "/equip_background_gif",
+        type: "POST",
+        data: fd,
+        processData: false,
+        contentType: false,
+        success: function(json){
+            // Change class of equipped to equipped
+            // Remove previously equipped class
+            hex = waitingVariables.products.backgrounds['gifs'][id].hex;
+            waitingVariables.attributes['gif'] = id;
+            waitingVariables.products.backgrounds.gifs = json.backgrounds
+            waitingVariables.attributes.gif_bool = false;
+            type = 'backgrounds';
+            $('#product-cont').empty();
+            for(x in waitingVariables.products[type]['gifs']){
+                $('#product-cont').append(waitingVariables.products[type]['gifs'][x].html)
+            }
+            fix_img_size();
+            unclicked_gif();
+        },
+        error: function() {
+          console.log("Error Getting Balance");
+        },
+    });
+}
+
 
 function equip_clothes(id){
     let fd = new FormData();
@@ -121,14 +176,16 @@ function equip_clothes(id){
         success: function(json){
             // Change class of equipped to equipped
             // Remove previously equipped class
-            hex = waitingVariables.products.clothes[id].hex;
+            hex = waitingVariables.products.clothes.colours[id].hex;
             waitingVariables.attributes['clothes-colour'] = hex;
             waitingVariables.products.clothes = json.clothes
             type = 'clothes';
+            subtype = "colours"
             $('#product-cont').empty();
-            for(x in waitingVariables.products[type]){
-                $('#product-cont').append(waitingVariables.products[type][x].html)
+            for(x in waitingVariables.products[type][subtype]){
+                $('#product-cont').append(waitingVariables.products[type][subtype][x].html)
             }
+            fix_img_size()
             unclicked_clothes();
         },
         error: function() {
@@ -140,7 +197,7 @@ function equip_clothes(id){
 function buy_clothes(id){
     let fd = new FormData();
     fd.append("id_",id);
-    fd.append("price",waitingVariables.products.clothes[id].price);
+    fd.append("price",waitingVariables.products.clothes.colours[id].price);
      $.ajax({
         url: "/buy_clothes",
         type: "POST",
@@ -148,16 +205,20 @@ function buy_clothes(id){
         processData: false,
         contentType: false,
         success: function(json){
-            hex = waitingVariables.products.clothes[id].hex;
+            hex = waitingVariables.products.clothes.colours[id].hex;
             $('#shop-balance').text(json.balance);
+             $('#balance_header').text(json.balance);
             //Show fake red balance appear then move down and fade out
             waitingVariables.attributes['clothes-colour'] = hex;
             waitingVariables.products.clothes = json.clothes
             $('.product-category-cont').empty();
             type = 'clothes';
-            for(x in waitingVariables.products[type]){
-                $('.product-category-cont').append(waitingVariables.products[type][x].html)
+            subtype = "colours"
+            $('#product-cont').empty();
+            for(x in waitingVariables.products[type][subtype]){
+                $('#product-cont').append(waitingVariables.products[type][subtype][x].html)
             }
+            fix_img_size()
             unclicked_clothes();
 
         },
@@ -182,12 +243,46 @@ function buy_background(id){
         success: function(json){
             hex = waitingVariables.products.backgrounds.colours[id].hex;
             $('#shop-balance').text(json.balance);
+             $('#balance_header').text(json.balance);
             //Show fake red balance appear then move down and fade out
             waitingVariables.attributes['background-colour'] = hex;
-            waitingVariables.products.backgrounds = json.backgrounds
+            waitingVariables.attributes.gif_bool = true;
+            waitingVariables.products.backgrounds.colours = json.backgrounds
             $('.product-category-cont').empty();
             type = 'backgrounds';
             sub_type = "colours"
+            for(x in waitingVariables.products[type]){
+                $('.product-category-cont').append(waitingVariables.products[type][sub_type][x].html)
+            }
+            unclicked_gif();
+
+        },
+        error: function() {
+          console.log("Error Getting Balance");
+        },
+    });
+}
+
+function buy_gif(id){
+    let fd = new FormData();
+    fd.append("id_",id);
+    fd.append("price",waitingVariables.products.backgrounds.gifs[id].price);
+     $.ajax({
+        url: "/buy_background_gif",
+        type: "POST",
+        data: fd,
+        processData: false,
+        contentType: false,
+        success: function(json){
+            $('#shop-balance').text(json.balance);
+            $('#balance_header').text(json.balance);
+            //Show fake red balance appear then move down and fade out
+            waitingVariables.attributes['gif'] = id;
+            waitingVariables.attributes['gif_bool'] = false;
+            waitingVariables.products.backgrounds.gifs = json.backgrounds
+            $('.product-category-cont').empty();
+            type = 'backgrounds';
+            sub_type = "gifs"
             for(x in waitingVariables.products[type]){
                 $('.product-category-cont').append(waitingVariables.products[type][sub_type][x].html)
             }
@@ -199,7 +294,6 @@ function buy_background(id){
         },
     });
 }
-
 
 
 
@@ -224,7 +318,7 @@ function get_tia_attributes(){
                 "clothes-id":json.CC_id,
                 "eyes":json.eyes,
                 "gif_bool":json.gif_bool,
-                "gif":json.filename
+                "gif":json.gif
 
             }
             createTia("tiaHolder", tiaH, tiaW);
@@ -263,7 +357,7 @@ function get_eyes(){
         contentType: false,
         success: function(json){
             waitingVariables.products.eyes = json.eyes
-            tiaEyes =  Object.keys(waitingVariables.products.eyes);
+            tiaEyes =  Object.keys(waitingVariables.products.eyes.colours);
         },
         error: function() {
           console.log("Error getting eyes");
@@ -317,17 +411,19 @@ function equip_hair(id){
         success: function(json){
             // Change class of equipped to equipped
             // Remove previously equipped class
-            hex_hair = waitingVariables.products.hair[id].hex_hair;
-            hex_brow = waitingVariables.products.hair[id].hex_brow;
+            hex_hair = waitingVariables.products.hair.colours[id].hex_hair;
+            hex_brow = waitingVariables.products.hair.colours[id].hex_brow;
             waitingVariables.attributes['hair-colour'] = hex_hair;
             waitingVariables.attributes['brow-colour'] = hex_brow;
             get_hairColours();
             waitingVariables.products.hair = json.hair
             type = 'hair';
+            subtype = "colours";
             $('.product-category-cont').empty();
-            for(x in waitingVariables.products[type]){
-                $('.product-category-cont').append(waitingVariables.products[type][x].html)
+            for(x in waitingVariables.products[type][subtype]){
+                $('.product-category-cont').append(waitingVariables.products[type][subtype][x].html)
             }
+            fix_img_size();
             unclicked_hair();
         },
         error: function() {
@@ -339,7 +435,7 @@ function equip_hair(id){
 function buy_hair(id){
     let fd = new FormData();
     fd.append("id_",id);
-    fd.append("price",waitingVariables.products.hair[id].price);
+    fd.append("price",waitingVariables.products.hair.colours[id].price);
      $.ajax({
         url: "/buy_hair",
         type: "POST",
@@ -347,18 +443,21 @@ function buy_hair(id){
         processData: false,
         contentType: false,
         success: function(json){
-            hex_hair = waitingVariables.products.hair[id].hex_hair;
-            hex_brow = waitingVariables.products.hair[id].hex_brow;
+            hex_hair = waitingVariables.products.hair.colours[id].hex_hair;
+            hex_brow = waitingVariables.products.hair.colours[id].hex_brow;
             waitingVariables.attributes['hair-colour'] = hex_hair;
             waitingVariables.attributes['brow-colour'] = hex_brow;
             $('#shop-balance').text(json.balance);
+             $('#balance_header').text(json.balance);
             //Show fake red balance appear then move down and fade out
             waitingVariables.products.hair = json.hair
             $('.product-category-cont').empty();
             type = 'hair';
-            for(x in waitingVariables.products[type]){
-                $('.product-category-cont').append(waitingVariables.products[type][x].html)
+            subtype = "colours";
+            for(x in waitingVariables.products[type][subtype]){
+                $('.product-category-cont').append(waitingVariables.products[type][subtype][x].html)
             }
+            fix_img_size();
             unclicked_hair();
 
         },
@@ -456,48 +555,48 @@ function clicked_background(id){
 }
 
 function clicked_clothes(id){
-        if(waitingVariables.products.clothes[id].class == 'locked'){
+        if(waitingVariables.products.clothes.colours[id].class == 'locked'){
             $('#'+id).effect("shake", {distance:5, times: 3},300);
             return;
         }
         disable_click();
-        if( waitingVariables.products.clothes[id].class == 'owned'){
+        if( waitingVariables.products.clothes.colours[id].class == 'owned'){
             price ='<i style="color:green;" class="fa fa-check" ></i>'
             txt = "equip";
             $('#buy_equip_btn').attr('onclick','equip_clothes("'+id+'")');
         }
         else{
-            price = '<p>'+waitingVariables.products.clothes[id].price+"</p>";
+            price = '<p>'+waitingVariables.products.clothes.colours[id].price+"</p>";
             txt = "buy";
             $('#buy_equip_btn').attr('onclick','buy_clothes("'+id+'")');
         }
         $('#buy_equip_btn').text(txt);
         $('#product_description_back_btn').click(function(){unclicked_clothes();});
-        show_description(waitingVariables.products.clothes[id].name, '#'+waitingVariables.products.clothes[id].hex, price)
-        animate_clothes_colour(waitingVariables.attributes["clothes-colour"],waitingVariables.products.clothes[id].hex,600);
+        show_description(waitingVariables.products.clothes.colours[id].name, '#'+waitingVariables.products.clothes.colours[id].hex, price)
+        animate_clothes_colour(waitingVariables.attributes["clothes-colour"],waitingVariables.products.clothes.colours[id].hex,600);
 }
 
 function clicked_hair(id){
-        if(waitingVariables.products.hair[id].class == 'locked'){
+        if(waitingVariables.products.hair.colours[id].class == 'locked'){
             $('#'+id).effect("shake", {distance:5, times: 3},300);
             return;
         }
         disable_click();
-        if( waitingVariables.products.hair[id].class == 'owned'){
+        if( waitingVariables.products.hair.colours[id].class == 'owned'){
             price ='<i style="color:green;" class="fa fa-check" ></i>'
             txt = "equip";
             $('#buy_equip_btn').attr('onclick','equip_hair("'+id+'")');
         }
         else{
-            price = '<p>'+waitingVariables.products.hair[id].price+"</p>";
+            price = '<p>'+waitingVariables.products.hair.colours[id].price+"</p>";
             txt = "buy";
             $('#buy_equip_btn').attr('onclick','buy_hair("'+id+'")');
         }
         $('#buy_equip_btn').text(txt);
 
         $('#product_description_back_btn').click(function(){unclicked_hair();});
-        show_description(waitingVariables.products.hair[id].name, '#'+waitingVariables.products.hair[id].hex_hair, price)
-        animate_hair_colour(waitingVariables.attributes['hair-colour'], waitingVariables.attributes['brow-colour'] ,waitingVariables.products.hair[id].hex_hair, waitingVariables.products.hair[id].hex_brow,600);
+        show_description(waitingVariables.products.hair.colours[id].name, '#'+waitingVariables.products.hair.colours[id].hex_hair, price)
+        animate_hair_colour(waitingVariables.attributes['hair-colour'], waitingVariables.attributes['brow-colour'] ,waitingVariables.products.hair.colours[id].hex_hair, waitingVariables.products.hair.colours[id].hex_brow,600);
 }
 function unclicked_hair(){
         hide_description();
@@ -522,6 +621,7 @@ function get_balance(){
         contentType: false,
         success: function(json){
             $('#shop-balance').text(json.balance);
+            $('#balance_header').text(json.balance);
         },
         error: function() {
           console.log("Error Getting Balance");
@@ -531,10 +631,27 @@ function get_balance(){
 
 function unclicked_background(){
         hide_description()
-        animate_background_colour(decimal_rgb_hex(renderer.getClearColor()),waitingVariables.attributes['background-colour'],600);
+        if(waitingVariables.attributes.gif_bool){
+            animate_background_colour(decimal_rgb_hex(renderer.getClearColor()),waitingVariables.attributes['background-colour'],600);
+        } else {
+            switch_to_gif(waitingVariables.products.backgrounds['gifs'][waitingVariables.attributes.gif].filename,600);
+        }
         setTimeout(function(){
             enable_click();
         },600);
+}
+
+function unclicked_gif(){
+    hide_description()
+        if(waitingVariables.attributes.gif_bool){
+            animate_background_colour(decimal_rgb_hex(renderer.getClearColor()),waitingVariables.attributes['background-colour'],600);
+        } else {
+            switch_to_gif(waitingVariables.products.backgrounds['gifs'][waitingVariables.attributes.gif].filename,600);
+        }
+        setTimeout(function(){
+            enable_click();
+        },600);
+
 }
 
 function decimal_rgb_hex(st){
@@ -914,25 +1031,25 @@ function animate_zoom(i,vals,end){
 
 function clicked_eye(id){
 
-        if(waitingVariables.products.eyes[id].class == 'locked'){
+        if(waitingVariables.products.eyes.colours[id].class == 'locked'){
             $('#'+id).effect("shake", {distance:5, times: 3},300);
             return;
         }
 
-        if( waitingVariables.products.eyes[id].class == 'owned'){
+        if( waitingVariables.products.eyes.colours[id].class == 'owned'){
             price ='<i style="color:green;" class="fa fa-check" ></i>'
             txt = "equip";
             $('#buy_equip_btn').attr('onclick','equip_eyes("'+id+'")');
         }
         else{
-            price = '<p>'+waitingVariables.products.eyes[id].price+"</p>";
+            price = '<p>'+waitingVariables.products.eyes.colours[id].price+"</p>";
             txt = "buy";
             $('#buy_equip_btn').attr('onclick','buy_eyes("'+id+'")');
         }
         $('#buy_equip_btn').text(txt);
 
     $('#product_description_back_btn').click(function(){unclicked_eyes();});
-    show_description(waitingVariables.products.eyes[id].name, '#'+waitingVariables.products.eyes[id].hex, price)
+    show_description(waitingVariables.products.eyes.colours[id].name, '#'+waitingVariables.products.eyes.colours[id].hex, price)
 
     disable_click();
     closeEyes(time=500);

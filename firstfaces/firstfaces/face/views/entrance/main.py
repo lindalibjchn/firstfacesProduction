@@ -12,7 +12,7 @@ from face.utils import *
 # from face.speech_to_text_utils import *
 from django.utils import timezone
 import json
-from face.models import Conversation, Sentence, AudioFile, Profile, AudioError, AudioErrorAttempt, AudioErrorCorrectionAttempt, UserProducts, TiaAttributes
+from face.models import Conversation, Sentence, AudioFile, Profile, AudioError, AudioErrorAttempt, AudioErrorCorrectionAttempt, UserProducts, TiaAttributes, siteVisit
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 import code
@@ -50,6 +50,7 @@ def entrance(request):
 
     return render(request, 'face/entrance/main.html', context)
 
+
 def validate_username(request):
     username = request.POST['username']
     u_valid = True
@@ -78,6 +79,30 @@ def validate_username(request):
     }
 
     return JsonResponse(response_data)
+
+
+def site_access(request):
+
+    now = str(datetime.datetime.now())
+    mobile_or_tablet_device = request.user_agent.is_mobile or request.user_agent.is_tablet
+    ip = visitor_ip_address(request)
+    sa = siteVisit(ip_address=ip, time=now, mobile_bool=mobile_or_tablet_device)
+    sa.save()
+    response_data = {
+    }
+
+    return JsonResponse(response_data)
+
+
+def visitor_ip_address(request):
+
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    return ip
 
 
 def create_user(request):

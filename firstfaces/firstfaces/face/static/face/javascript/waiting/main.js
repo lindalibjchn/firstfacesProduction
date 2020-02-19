@@ -70,7 +70,7 @@ function getContHeight(){
 }
 
 function fade_in_tutorial(){
-
+    $("#tutorialNotDoneContainer").css("display","flex").show();
     $('#tutorialNotDoneBackground').animate({opacity: 0.8}, 1000);
     $('#tutorialNotDoneInnerContainer').animate({opacity: 1}, 1200);
     setTimeout(function(){
