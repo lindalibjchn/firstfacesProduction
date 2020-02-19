@@ -9,17 +9,39 @@ from django.utils import timezone
 
 def get_attributes(request):
     user = request.user
-    attr = TiaAttributes.objects.filter(learner=user)[0]
+    attr = TiaAttributes.objects.get(learner=user)
 
     hc = HairColour.objects.get(pk=attr.hairColour)
     cc = ClothesColour.objects.get(pk=attr.clothesColour)
-    print()
-    if attr.color_background:
-        bc = BackgroundColour.objects.get(pk=attr.backgroundColour)
-        gif = ""
-    else:
-        bc = ""
-        gif = BackgroundGIF.objects.get(pk=attr.gif_background)
+    bc = BackgroundColour.objects.get(pk=attr.backgroundColour)
+    gif = attr.gif_background
+
+
+    response_data = {
+        'BC': bc.hex,
+        'BC_id': bc.pk,
+        'HC_id': hc.pk,
+        "HairC": hc.hair_hex,
+        "BrowC": hc.brow_hex,
+        "CC_id": cc.pk,
+        "CC": cc.hex,
+        'eyes': attr.eyeColour,
+        "gif_bool": attr.color_background,
+        "gif": gif,
+    }
+
+    return JsonResponse(response_data)
+
+
+def get_attributes_conv(request):
+    user = request.user
+    attr = TiaAttributes.objects.get(learner=user)
+
+    hc = HairColour.objects.get(pk=attr.hairColour)
+    cc = ClothesColour.objects.get(pk=attr.clothesColour)
+    bc = BackgroundColour.objects.get(pk=attr.backgroundColour)
+    gif = BackgroundGIF.objects.get(pk=attr.gif_background).filename
+    print("\n\n",gif,"\n\n")
 
     response_data = {
         'BC': bc.hex,
@@ -50,8 +72,10 @@ def equip_background(request):
     # Change tia attributes and tia attributes on json
     user = request.user
     attr = TiaAttributes.objects.filter(learner=user)[0]
+    gif_bool = attr.color_background
     id_ = request.POST['id_']
     attr.backgroundColour = id_
+    attr.color_background = True
     attr.save()
     owned = [f[1:-1] for f in UserProducts.objects.filter(learner=user)[0].backgroundColours[1:-1].split(",") if
              f.strip() != ""]
@@ -61,7 +85,7 @@ def equip_background(request):
     out = {}
     for bc in bcs:
         if str(bc.pk) in owned:
-            if str(equipped) == str(bc.pk):
+            if str(equipped) == str(bc.pk) and gif_bool:
                 html = background_to_html("owned equipped", bc.price, bc.hex, bc.pk)
                 out[bc.pk] = background_to_json("owned", bc.name, bc.price, bc.hex, html)
             else:
@@ -77,6 +101,42 @@ def equip_background(request):
         "backgrounds": out
     }
 
+
+    return JsonResponse(response_data)
+
+
+def equip_background_gif(request):
+    # Change tia attributes and tia attributes on json
+    user = request.user
+    attr = TiaAttributes.objects.filter(learner=user)[0]
+    gif_bool = attr.color_background
+    id_ = request.POST['id_']
+    attr.gif_background = id_
+    attr.color_background = False
+    attr.save()
+    owned = [f[1:-1] for f in UserProducts.objects.filter(learner=user)[0].gif_backgrounds[1:-1].split(",") if
+             f.strip() != ""]
+    equipped = id_
+    balance = Profile.objects.filter(learner=user)[0].points
+    bcs = BackgroundGIF.objects.all()
+    out = {}
+    for g in bcs:
+        if str(g.pk) in owned:
+            if attr.gif_background == str(g.pk) and not attr.color_background:
+                html = gif_to_html("owned equipped", g.price, g.filename, g.pk)
+                out[g.pk] = eye_to_json("owned", g.name, g.price, g.hex, html, g.filename)
+            else:
+                html = gif_to_html("owned", g.price, g.filename, g.pk)
+                out[g.pk] = eye_to_json("owned", g.name, g.price, g.hex, html, g.filename)
+        elif g.price > balance:
+            html = gif_to_html("locked", g.price, g.filename, g.pk)
+            out[g.pk] = eye_to_json("locked", g.name, g.price, g.hex, html, g.filename)
+        else:
+            html = gif_to_html("affordable", g.price, g.filename, g.pk)
+            out[g.pk] = eye_to_json("affordable", g.name, g.price, g.hex, html, g.filename)
+    response_data = {
+        "backgrounds": out
+    }
 
     return JsonResponse(response_data)
 
@@ -108,8 +168,9 @@ def equip_eyes(request):
         else:
             html = eye_to_html("affordable", bc.price, bc.filename, bc.pk)
             out[bc.pk] = eye_to_json("affordable", bc.name, bc.price, bc.hex, html, bc.filename)
+    final = {"colours": out}
     response_data = {
-        "eyes": out
+        "eyes": final
     }
     return JsonResponse(response_data)
 
@@ -155,12 +216,12 @@ def buy_eyes(request):
         else:
             html = eye_to_html("affordable", bc.price, bc.filename, bc.pk)
             out[bc.pk] = eye_to_json("affordable", bc.name, bc.price, bc.hex, html, bc.filename)
+    final = {"colours": out}
     response_data = {
         "balance": balance,
-        "eyes": out
+        "eyes": final
     }
     return JsonResponse(response_data)
-
 
 
 def buy_background(request):
@@ -174,6 +235,8 @@ def buy_background(request):
 
     # set bought background as current
     attr = TiaAttributes.objects.filter(learner=user)[0]
+    attr.color_background = True
+    gif_bool = attr.color_background
     id_ = request.POST['id_']
     attr.backgroundColour = id_
     attr.save()
@@ -193,7 +256,7 @@ def buy_background(request):
     bcs = BackgroundColour.objects.all()
     for bc in bcs:
         if str(bc.pk) in owned:
-            if str(equipped) == str(bc.pk):
+            if str(equipped) == str(bc.pk) and gif_bool:
                 html = background_to_html("owned equipped", bc.price, bc.hex, bc.pk)
                 out[bc.pk] = background_to_json("owned", bc.name, bc.price, bc.hex, html)
             else:
@@ -213,6 +276,60 @@ def buy_background(request):
         "backgrounds": out
     }
     return JsonResponse(response_data)
+
+
+def buy_background_gif(request):
+    user = request.user
+
+    # deduct balance and return new
+    profile = Profile.objects.filter(learner=user)[0]
+    profile.points = int(profile.points) - int(request.POST['price'])
+    balance = profile.points
+    profile.save()
+
+    # set bought background as current
+    attr = TiaAttributes.objects.filter(learner=user)[0]
+    id_ = request.POST['id_']
+    attr.color_background = False
+    attr.gif_background= id_
+    attr.save()
+
+    # Add to user products
+    user_products = UserProducts.objects.filter(learner=user)[0]
+    gifs = [f for f in user_products.gif_backgrounds[1:-1].split(",") if f.strip() != ""]
+    gifs.append('"' + request.POST['id_'] + '"')
+    user_products.gif_backgrounds = "[" + ",".join(gifs) + "]"
+    user_products.save()
+
+    # reset backgrounds
+    owned = [f[1:-1] for f in gifs]
+    equipped = request.POST['id_']
+
+    out = {}
+    bcs = BackgroundGIF.objects.all()
+    for g in bcs:
+        if str(g.pk) in owned:
+            if attr.gif_background == str(g.pk) and not attr.color_background:
+                html = gif_to_html("owned equipped", g.price, g.filename, g.pk)
+                out[g.pk] = eye_to_json("owned", g.name, g.price, g.hex, html, g.filename)
+            else:
+                html = gif_to_html("owned", g.price, g.filename, g.pk)
+                out[g.pk] = eye_to_json("owned", g.name, g.price, g.hex, html, g.filename)
+        elif g.price > balance:
+            html = gif_to_html("locked", g.price, g.filename, g.pk)
+            out[g.pk] = eye_to_json("locked", g.name, g.price, g.hex, html, g.filename)
+        else:
+            html = gif_to_html("affordable", g.price, g.filename, g.pk)
+            out[g.pk] = eye_to_json("affordable", g.name, g.price, g.hex, html, g.filename)
+
+    # Change attibutes
+
+    response_data = {
+        "balance": balance,
+        "backgrounds": out
+    }
+    return JsonResponse(response_data)
+
 
 
 def buy_clothes(request):
@@ -259,10 +376,10 @@ def buy_clothes(request):
             out[bc.pk] = background_to_json("affordable", bc.name, bc.price, bc.hex, html)
 
     # Change attibutes
-
+    final = {"colours": out}
     response_data = {
         "balance": balance,
-        "clothes": out
+        "clothes": final
     }
     return JsonResponse(response_data)
 
@@ -279,10 +396,11 @@ def get_background_colors(request):
              f.strip() != ""]
     balance = Profile.objects.filter(learner=user)[0].points
     attr = TiaAttributes.objects.filter(learner=user)[0]
+    gif_bool = attr.color_background
     out = {}
     for bc in bcs:
         if str(bc.pk) in owned:
-            if attr.backgroundColour == str(bc.pk):
+            if attr.backgroundColour == str(bc.pk) and gif_bool:
                 html = background_to_html("owned equipped", bc.price, bc.hex, bc.pk)
                 out[bc.pk] = background_to_json("owned", bc.name, bc.price, bc.hex, html)
             else:
@@ -303,11 +421,11 @@ def get_background_colors(request):
         if str(g.pk) in owned:
             if attr.gif_background == str(g.pk) and not attr.color_background:
                 html = gif_to_html("owned equipped", g.price, g.filename, g.pk)
-                gifs_out[bc.pk] = eye_to_json("owned", g.name, g.price, g.hex, html, g.filename)
+                gifs_out[g.pk] = eye_to_json("owned", g.name, g.price, g.hex, html, g.filename)
             else:
                 html = gif_to_html("owned", g.price, g.filename, g.pk)
-                gifs_out[bc.pk] = eye_to_json("owned", g.name, g.price, g.hex, html, g.filename)
-        elif bc.price > balance:
+                gifs_out[g.pk] = eye_to_json("owned", g.name, g.price, g.hex, html, g.filename)
+        elif g.price > balance:
             html = gif_to_html("locked", g.price, g.filename, g.pk)
             gifs_out[g.pk] = eye_to_json("locked", g.name, g.price, g.hex, html, g.filename)
         else:
@@ -345,9 +463,9 @@ def get_eye_colors(request):
         else:
             html = eye_to_html("affordable", bc.price, bc.filename, bc.pk)
             out[bc.pk] = eye_to_json("affordable", bc.name, bc.price, bc.hex, html, bc.filename)
-
+    final = {"colours": out}
     response_data = {
-        "eyes": out,
+        "eyes": final,
     }
 
     return JsonResponse(response_data)
@@ -375,8 +493,9 @@ def get_clothes_colors(request):
         else:
             html = clothes_to_html("affordable", bc.price, bc.hex, bc.pk)
             out[bc.pk] = background_to_json("affordable", bc.name, bc.price, bc.hex, html)
+    final = {"colours": out}
     response_data = {
-        "clothes": out,
+        "clothes": final,
     }
 
     return JsonResponse(response_data)
@@ -409,8 +528,9 @@ def equip_clothes(request):
         else:
             html = clothes_to_html("affordable", bc.price, bc.hex, bc.pk)
             out[bc.pk] = background_to_json("affordable", bc.name, bc.price, bc.hex, html)
+    final = {"colours": out}
     response_data = {
-        "clothes": out
+        "clothes": final
     }
     return JsonResponse(response_data)
 
@@ -437,8 +557,9 @@ def get_hair_colors(request):
         else:
             html = hair_to_html("affordable", hc.price, hc.hair_hex, hc.pk)
             out[hc.pk] = hair_to_json("affordable", hc.name, hc.price, hc.hair_hex, hc.brow_hex, html)
+    final = {"colours": out}
     response_data = {
-        "hair": out,
+        "hair": final,
     }
 
     return JsonResponse(response_data)
@@ -472,8 +593,9 @@ def equip_hair(request):
         else:
             html = hair_to_html("affordable", hc.price, hc.hair_hex, hc.pk)
             out[hc.pk] = hair_to_json("affordable", hc.name, hc.price, hc.hair_hex, hc.brow_hex, html)
+    final = {"colours": out}
     response_data = {
-        "hair": out,
+        "hair": final,
     }
     return JsonResponse(response_data)
 
@@ -522,10 +644,10 @@ def buy_hair(request):
             out[hc.pk] = hair_to_json("affordable", hc.name, hc.price, hc.hair_hex, hc.brow_hex, html)
 
     # Change attibutes
-
+    final = {"colours": out}
     response_data = {
         "balance": balance,
-        "hair": out
+        "hair": final
     }
     return JsonResponse(response_data)
 
@@ -653,7 +775,7 @@ def get_stats(request):
     date = convert_django_time_to_javascript(user.date_joined)
     profile = Profile.objects.get(learner=user)
     points = profile.points
-    num_sent = len(Sentence.objects.filter(learner=user))
+    num_sent = 0
     conversations = Conversation.objects.filter(learner=user)
     num_conversations = len(conversations)
     rating = 0
@@ -670,6 +792,7 @@ def get_stats(request):
                 num_secs += secs
                 if conv.rating != None:
                     rating += int(conv.rating)
+                num_sent+= len(Sentence.objects.filter(conversation=conv))
         else:
             num_conversations -= 1
 

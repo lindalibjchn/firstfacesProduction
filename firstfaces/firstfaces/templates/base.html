@@ -47,6 +47,18 @@
                 box-shadow: 0px 0px 2px -2px rgba(0,0,0,0.6);
 
             }
+            #balance_header{
+                font-family: 'Oswald', sans-serif;
+                /* color: #ECD421; */
+                color:#102858;
+                font-size:20px;
+                margin:0;
+            }
+            #balance_symbol_header{
+                height: 100%;
+                display: flex;
+                align-items: center;
+            }
 
             </style>
         <!--Bootstrap-->
@@ -95,9 +107,14 @@
                             <div  style="border-bottom:3px solid #102858; height:100%; width:100%; position:absolute;">
                                 <div style="position:relative; height:100%; width:100%; -webkit-box-shadow: 0 4px 6px -6px #222;-moz-box-shadow: 0 4px 6px -6px #222; box-shadow: 0 4px 6px -6px #222;"></div>
                             </div>
-
+                            {% if not control %}
+                            <div id="logo-left-cont" style="color:#102858; position:absolute; height:90%; width:20%; left:2.5%; background-color: white; display:none; align-items:center; justify-content:center;">
+                                <div id="balacne_symbol_header"><img style="height:20px; margin-top: 2px;" src="{% static 'face/JSON/ErleESymbolYellow.png' %}"/></div><p id="balance_header">0</p>
+                            </div>
+                            {% else %}
                             <div id="logo-left-cont" style=" color:#102858; position:absolute; height:90%; width:15%; left:2.5%; background-color: white; display:flex; align-items:center; justify-content:center;">
                             </div>
+                            {% endif %}
 
                             <div  style="position:relative; height:100%; width:100%; display:flex; align-items:center; justify-content:center;">
                                 <div class="logoCont" style="position:absolute; left:20%; width:60%; height:90%;">
@@ -106,7 +123,7 @@
                                     </div>
                                 </div>
 
-                                <div style="position:absolute; height:90%; width:15%; right:2.5%; background-color: white; display:flex; align-items:center; justify-content:center;">
+                                <div id="logo-right-cont" style="position:absolute; height:90%; width:15%; right:2.5%; background-color: white; display:none; align-items:center; justify-content:center;">
                                     <i id="popup-btn" class="fa fa-bars fa-2x" style="color:#102858; display:none;"></i>
                                 </div>
                             </div>
@@ -148,7 +165,7 @@
                                                     <div class="col-xs-4 col-sm-4 col-lg-4">
                                                         <div class="row" style="height:100%;">
                                                             <div class="col-xs-3 col-sm-3 col-lg-3"></div>
-                                                            <div class="col-xs-3 col-sm-3 col-lg-3 navbar_icon navbar_icon_left out-of-order">Contact</div>
+                                                            <div class="col-xs-3 col-sm-3 col-lg-3 navbar_icon navbar_icon_left out-of-order" id="contact_btn">Contact</div>
                                                             <div class="col-xs-3 col-sm-3 col-lg-3 navbar_icon navbar_icon_left out-of-order">FAQs</div>
                                                             <div class="col-xs-3 col-sm-3 col-lg-3"></div>
 
@@ -161,8 +178,8 @@
                                                     <div class="col-xs-4 col-sm-4 col-lg-4">
                                                         <div class="row" style="height:100%;">
                                                             <div class="col-xs-3 col-sm-3 col-lg-3"></div>
-                                                            <div class="col-xs-3 col-sm-3 col-lg-3 navbar_icon navbar_icon_right out-of-order">Sign In</div>
-                                                            <div class="col-xs-3 col-sm-3 col-lg-3 navbar_icon navbar_icon_right out-of-order">Sign Up</div>
+                                                            <div class="col-xs-3 col-sm-3 col-lg-3 navbar_icon navbar_icon_right out-of-order" id="signin_btn">Sign In</div>
+                                                            <div class="col-xs-3 col-sm-3 col-lg-3 navbar_icon navbar_icon_right out-of-order" id="signup_btn">Sign Up</div>
                                                             <div class="col-xs-3 col-sm-3 col-lg-3"></div>
                                                         </div>
                                                     </div>

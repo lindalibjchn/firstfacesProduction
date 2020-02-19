@@ -68,6 +68,7 @@
 //});
 $( document ).ready(function(){
     setHeight();
+    visitor_save();
     close_alert(0,0);
     load_screen();
     cycle_feedback();
@@ -479,7 +480,23 @@ $( "#loginForm" ).on( "submit", function( event ) {
 
     });
 
+function visitor_save(){
+    let fd = new FormData();
 
+    $.ajax({
+        url: "/site_access",
+        type: "POST",
+        data: fd,
+        processData: false,
+        contentType: false,
+        success: function(json) {
+            console.log("success")
+        },
+        error: function() {
+            console.log("Failure")
+        },
+    });
+}
 
 
 function logIn(){

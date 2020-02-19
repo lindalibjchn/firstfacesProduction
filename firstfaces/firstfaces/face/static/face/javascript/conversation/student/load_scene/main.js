@@ -5,7 +5,7 @@ $(window).on( 'load', function() {
     // AFTER LOADING 'enterOrReEnter()' WILL BE CALLED BELOW
     readyTiaSynthSentences();
 
-    init();
+    get_tia_attributes();
 
     readyBtns();
 

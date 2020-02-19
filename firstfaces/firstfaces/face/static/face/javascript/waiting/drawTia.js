@@ -32,7 +32,12 @@ function renderScene(loc,h, w) {
     renderer = new THREE.WebGLRenderer({ alpha: true });
     renderer.setSize( w, h );
     var colour =  new THREE.Color(parseInt('0x'+waitingVariables.attributes['background-colour'],16));
-    renderer.setClearColor( colour , 1);
+    if(waitingVariables.attributes.gif_bool){
+       renderer.setClearColor( colour , 1);
+    } else {
+       set_background_as_gif(waitingVariables.products.backgrounds.gifs[waitingVariables.attributes.gif].filename,0)
+       renderer.setClearColor( colour , 0);
+    }
     document.addEventListener( 'mousedown', onClick, false );
     document.getElementById(loc).appendChild( renderer.domElement );
 
@@ -109,7 +114,7 @@ function addTia() {
         //mat[1].color.setHex( 0x8b0000 )
         tiaObject.mFace = new THREE.SkinnedMesh( geom, mat );
 
-         mat[2].color.setHex( '0x'+waitingVariables.attributes['brow-colour'] )
+        mat[2].color.setHex( '0x'+waitingVariables.attributes['brow-colour'] )
 
         // iterate over the bones in the JSON file and put them into the global faceBones object. Call bones with faceBones["<bone name>"]
         for (var i=0; i<tiaObject.mFace.skeleton.bones.length; i++) {
@@ -255,24 +260,22 @@ function addTia() {
         }
 
         function addHair( geom, mat ) {
+            tiaObject.mHair = new THREE.Mesh( geom, mat );
+            mat[0].color.setHex( '0x'+waitingVariables.attributes['hair-colour'] )
 
-        tiaObject.mHair = new THREE.Mesh( geom, mat );
-        mat[0].color.setHex( '0x'+waitingVariables.attributes['hair-colour'] )
+            // need to manually assign position again
+            tiaObject.mHair.position.set( -0.1, 5.5, 1.9 );
 
-        // need to manually assign position again
-        tiaObject.mHair.position.set( -0.1, 5.5, 1.9 );
+            // again, parent to headbone
+            tiaObject.faceBones.head.add( tiaObject.mHair );
 
-        // again, parent to headbone
-        tiaObject.faceBones.head.add( tiaObject.mHair );
+            //// SET CAMERAS AND TIA UP DEPENDING ON ENTER OR REENTER \\\\
 
-        //// SET CAMERAS AND TIA UP DEPENDING ON ENTER OR REENTER \\\\
-
-        scene.add( tiaObject.mBody );
-        tiaObject.mHair.name="mHair"
-        clickableObjects.push(tiaObject.mHair);
-        //engineRunning();
-        hide_eyes()
-
+            scene.add( tiaObject.mBody );
+            tiaObject.mHair.name="mHair"
+            clickableObjects.push(tiaObject.mHair);
+            //engineRunning();
+            hide_eyes()
     }
 
     // for change in clothes and color
@@ -320,6 +323,8 @@ function createTia(id, h, w) {
 
     animate();
     renderer.domElement.addEventListener("click", onClick, false);
+
+    flash_everything(300,100);
 }
 
 
@@ -334,6 +339,7 @@ function change_hair(hex_str1, hex_str2){
 function change_background(hex_str){
     var colour =  new THREE.Color(parseInt('0x'+hex_str,16));
     renderer.setClearColor( colour , 1);
+
     //renderer.setClearColor(colour)
 }
 function change_face(hex_str){
@@ -355,7 +361,7 @@ function hide_eyes(){
     }
 }
 function hide_background(hex_str){
-    renderer.setClearColor( "FFFFFF" , 0);
+    renderer.setClearColor( 0xFFFFFF , 0);
 }
 
 function change_eye(hex_str){

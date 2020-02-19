@@ -319,3 +319,8 @@ class BackgroundGIF(models.Model):
     hex = models.CharField(max_length=6, null=False, blank=True)
     filename = models.CharField(max_length=40, null=False, blank=True)
 
+
+class siteVisit(models.Model):
+    ip_address = models.CharField(max_length=50, null=False, blank=True)
+    time = models.CharField(max_length=50, null=False, blank=True)
+    mobile_bool = models.BooleanField(default=False)

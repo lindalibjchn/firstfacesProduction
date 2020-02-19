@@ -139,6 +139,7 @@ overflow-x:scroll;
     margin-left:5%;
     outline:none;
     width:95%;
+    margin-bottom: 0;
 }
 
 #contact_send{

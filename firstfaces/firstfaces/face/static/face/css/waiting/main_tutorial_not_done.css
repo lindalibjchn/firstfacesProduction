@@ -1,13 +1,14 @@
 #tutorialNotDoneContainer {
-
+    display:none;
     position: absolute;
     bottom: 0;
     height: 100%;
     width: 100%;
-    display: flex;
+
     align-items: center;
     justify-content: center;
-    /*border: 1px solid black;*/
+    /*border: 1px solid black;
+    display: flex;*/
 
 }
 #tutorialNotDoneBackground{

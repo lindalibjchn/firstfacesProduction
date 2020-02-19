@@ -10,6 +10,7 @@ function onClick(event) {
     if(waitingVariables.wait_on_foo){
         return;
     }
+    disable_click();
 
 
     if(event.clientY >= $('#tiaHolder').offset()['top'] && event.clientY <= $('#tiaHolder').offset()['top']+$('#tiaHolder').height()){
@@ -42,6 +43,7 @@ function onClick(event) {
     setTimeout(function(){
         if ( intersects.length > 0 ) {
             console.log(intersects[0].object.name)
+            disable_click();
             if(intersects[0].object.name == 'mFace' || intersects[0].object.name == 'mHair' || intersects[0].object.name.substring(0,4) == 'mEye'){
                 if(!waitingVariables.zoomed){
                     flash_head(200);
@@ -56,6 +58,9 @@ function onClick(event) {
                             if(intersects[0].object.name.substring(0,4) == 'mEye'){
                                 flash_eyes(time=200)
                                 show_title('Eyes',wait=300,time=500,st_callback=show_eyes);
+                            }
+                            else{
+                                enable_click();
                             }
                         },300);
                     },200);
@@ -72,6 +77,7 @@ function onClick(event) {
                 }
             }
           if(intersects[0].object.name == 'mBody'){
+
                  if(waitingVariables.zoomed){
                     console.log("here");
                     zoom(300,camera_values.original);
@@ -93,31 +99,44 @@ function onClick(event) {
                 waitingVariables.zoomed = false;
                 hide_products();
                 setTimeout(function(){
-                    flash_background(200);
+                    disable_click();
+                    if(waitingVariables.attributes.gif_bool){
+                        flash_background(200);
+                    } else {
+                        flash_gif(200);
+                    }
                     show_title('backgrounds',wait=300,time=500,st_callback=show_backgrounds);
                 },300);
             } else {
-                flash_background(200);
+                disable_click();
+                if(waitingVariables.attributes.gif_bool){
+                        flash_background(200);
+                } else {
+                        flash_gif(200);
+                 }
                 show_title('backgrounds',wait=300,time=500,st_callback=show_backgrounds);
 
             }
         }
     },delay);
+
 }
 
 function show_backgrounds(time=500, st_callback=function(){} ){
+
     waitingVariables.products_showing = true;
     var type = 'backgrounds';
     var subtype = "colours"
     $('#product-cont').fadeOut(time);
-    setTimeout(function(){
-         $('#product-cont').hide();
 
+    setTimeout(function(){
+        $('#product-cont').hide();
         $('#product-cont').empty().removeClass("tile");
         change_options([['Colours', 'colours'], ['Animated','gifs']], type);
         for(x in waitingVariables.products[type][subtype]){
             $('#product-cont').append(waitingVariables.products[type][subtype][x].html)
         }
+        fix_img_size();
         $('#product-category-options').css("display", "flex").hide().fadeIn(time);
          $('#product-cont').fadeIn(time);
         setTimeout(function(){
@@ -140,16 +159,19 @@ function change_options(keys,type){
 }
 
 function option_click(subtype,type){
+    time = 800
+    $('.option').hide();
     $('.option').removeClass("active");
     $('#'+subtype).addClass("active");
-    time = 800;
     $('.product').fadeOut(time);
     setTimeout(function(){
         $('product-cont').empty()
         for(x in waitingVariables.products[type][subtype]){
             $('#product-cont').append(waitingVariables.products[type][subtype][x].html)
         }
+        fix_img_size();
          $('#product-cont').fadeIn(time);
+         $('.option').fadeIn(time);
     },time+100);
 
 }
@@ -187,15 +209,16 @@ function show_eyes(time=500, st_callback=function(){} ){
 
     waitingVariables.products_showing = true;
     var type = 'eyes';
-
+    var subtype = "colours";
     $('#product-cont').fadeOut(time);
     setTimeout(function(){
-         $('#product-cont').hide();
-
+        $('#product-cont').hide();
         $('#product-cont').empty().removeClass("tile");
-        for(x in waitingVariables.products[type]){
-            $('#product-cont').append(waitingVariables.products[type][x].html)
+        change_options([['Colours', 'colours']], type);
+        for(x in waitingVariables.products[type][subtype]){
+            $('#product-cont').append(waitingVariables.products[type][subtype][x].html)
         }
+        fix_img_size();
         $('#product-category-options').css("display", "flex").hide().fadeIn(time);
          $('#product-cont').fadeIn(time);
         setTimeout(function(){
@@ -210,11 +233,15 @@ function show_clothes(time=500, st_callback=function(){} ){
     $('#product-cont').fadeOut(time);
     setTimeout(function(){
         $('#product-cont').hide();
-         $('#product-category-options').css("display", "flex").hide().fadeIn(time);
-         $('#product-cont').empty();
-        for(x in waitingVariables.products[type]){
-            $('#product-cont').append(waitingVariables.products[type][x].html)
+        $('#product-category-options').css("display", "flex").hide().fadeIn(time);
+        change_options([['Colours', 'colours']], type);
+        $('#product-cont').empty();
+        type = "clothes"
+        subtype = "colours";
+        for(x in waitingVariables.products[type][subtype]){
+            $('#product-cont').append(waitingVariables.products[type][subtype][x].html)
         }
+        fix_img_size();
         $('#product-cont').removeClass("tile").fadeIn(time);
         setTimeout(function(){
             st_callback();
@@ -228,6 +255,8 @@ function disable_click(wait=0){
         waitingVariables.wait_on_foo = true;
     },wait);
 }
+
+
 function enable_click(wait=0){
     setTimeout(function(){
         waitingVariables.wait_on_foo = false;
@@ -237,17 +266,18 @@ function enable_click(wait=0){
 function show_hair(time=500, st_callback=function(){}){
    waitingVariables.products_showing = true;
     var type = 'hair';
-
+    var subtype = "colours";
     $('#product-cont').fadeOut(time);
     setTimeout(function(){
-         $('#product-cont').hide();
-
+        $('#product-cont').hide();
+        change_options([['Colours', 'colours']], type);
         $('#product-cont').empty().removeClass("tile");
-        for(x in waitingVariables.products[type]){
-            $('#product-cont').append(waitingVariables.products[type][x].html)
+        for(x in waitingVariables.products[type][subtype]){
+            $('#product-cont').append(waitingVariables.products[type][subtype][x].html)
         }
+        fix_img_size();
         $('#product-category-options').css("display", "flex").hide().fadeIn(time);
-         $('#product-cont').fadeIn(time);
+        $('#product-cont').fadeIn(time);
         setTimeout(function(){
             st_callback();
         },time);
@@ -267,4 +297,25 @@ function show_click_me(time=300){
     setTimeout(function(){
         enable_click();
     }, time);
+}
+
+function flash_everything(time=200,delay=50,st_callback=function(){}){
+    if(waitingVariables.attributes.gif_bool){
+        flash_background(time);
+    } else {
+        flash_gif(time);
+    }
+
+    setTimeout(function(){
+        flash_clothes(time);
+        setTimeout(function(){
+            flash_hair(time);
+            setTimeout(function(){
+                flash_eyes(time);
+                setTimeout(function(){
+                    st_callback();
+                },time);
+            },time+delay);
+        },time+delay);
+    },time+delay);
 }
