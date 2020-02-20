@@ -75,3 +75,23 @@ function fade_in_tutorial(){
     },900);
 
 }
+
+function click_save(id, description=""){
+    let fd = new FormData();
+    fd.append('element',id);
+    fd.append('description',description);
+    $.ajax({
+        url: "/waiting_click",
+        type: "POST",
+        data: fd,
+        processData: false,
+        contentType: false,
+        success: function(json) {
+            console.log("success")
+        },
+        error: function() {
+            console.log("Failure")
+        },
+    });
+}
+

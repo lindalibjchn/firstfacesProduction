@@ -24,8 +24,6 @@ function getTimeNow( first ) {
     //timeNow = today.getTime() [>- 28800000<];
 }
 
-
-
 function addAvailablesToTimetable( availableTuples, first=false ) {
 
     getTimeNow( first );

@@ -35,33 +35,62 @@ def get_attributes(request):
 
 def get_attributes_conv(request):
     user = request.user
-    attr = TiaAttributes.objects.get(learner=user)
+    try:
+        attr = TiaAttributes.objects.get(learner=user)
+    except:
+        attr = create_default_attributes(user)
 
     hc = HairColour.objects.get(pk=attr.hairColour)
     cc = ClothesColour.objects.get(pk=attr.clothesColour)
     bc = BackgroundColour.objects.get(pk=attr.backgroundColour)
-    gif = BackgroundGIF.objects.get(pk=attr.gif_background).filename
-    print("\n\n",gif,"\n\n")
+    if not attr.color_background:
+        gif = BackgroundGIF.objects.get(pk=attr.gif_background).filename
 
-    response_data = {
-        'BC': bc.hex,
-        'BC_id': bc.pk,
-        'HC_id': hc.pk,
-        "HairC": hc.hair_hex,
-        "BrowC": hc.brow_hex,
-        "CC_id": cc.pk,
-        "CC": cc.hex,
-        'eyes': attr.eyeColour,
-        "gif_bool": attr.color_background,
-        "gif": gif,
-    }
-
+        response_data = {
+            'BC': bc.hex,
+            'BC_id': bc.pk,
+            'HC_id': hc.pk,
+            "HairC": hc.hair_hex,
+            "BrowC": hc.brow_hex,
+            "CC_id": cc.pk,
+            "CC": cc.hex,
+            'eyes': attr.eyeColour,
+            "gif_bool": attr.color_background,
+            "gif": gif,
+        }
+    else:
+        response_data = {
+            'BC': bc.hex,
+            'BC_id': bc.pk,
+            'HC_id': hc.pk,
+            "HairC": hc.hair_hex,
+            "BrowC": hc.brow_hex,
+            "CC_id": cc.pk,
+            "CC": cc.hex,
+            'eyes': attr.eyeColour,
+            "gif_bool": attr.color_background,
+            "gif": "",
+        }
     return JsonResponse(response_data)
 
 
+def create_default_attributes(user):
+    # Create user products
+    up = UserProducts(learner=user, backgroundColours='["1"]', hairColours='["1"]',
+                      clothesColour='["1"]', EyeTypes='["1"]', gif_backgrounds='[]')
+    up.save()
+
+    # Create tia attributes
+    ta = TiaAttributes(learner=user, backgroundColour=1, hairColour=1, clothesColour=1, eyeColour=1,
+                       color_background=True)
+    ta.save()
+    return ta
+
+
 def get_balance(request):
+
     user = request.user
-    balance = Profile.objects.filter(learner=user)[0].points
+    balance = Profile.objects.get(learner=user).points
     response_data = {
         "balance": balance,
     }
@@ -70,6 +99,7 @@ def get_balance(request):
 
 def equip_background(request):
     # Change tia attributes and tia attributes on json
+
     user = request.user
     attr = TiaAttributes.objects.filter(learner=user)[0]
     gif_bool = attr.color_background
