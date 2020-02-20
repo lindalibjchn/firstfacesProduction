@@ -1,6 +1,6 @@
 function get_tia_attributes(){
-
-    let fd = new FormData();
+    init();
+    /*let fd = new FormData();
      $.ajax({
         url: "/get_attributes_conv",
         type: "POST",
@@ -22,12 +22,12 @@ function get_tia_attributes(){
                 "gif":json.gif
 
             }
-            init();
+
         },
         error: function() {
           console.log("Error getting attributes");
         },
-    });
+    });*/
 }
 
 var gif_prefix = prefixURL+"media/gifs/";
