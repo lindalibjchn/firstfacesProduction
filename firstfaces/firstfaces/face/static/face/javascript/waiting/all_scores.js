@@ -76,10 +76,12 @@ function drawLineChartAllScores( allData ) {
         }
     }
 
-    let ptsLabel = ''
+    let ptsLabel = '';
+    let displayAxis = false
     if ( waitingVariables.experimental_group !== "control" ) {
 
-        label = 'points';
+        ptsLabel = 'points';
+        displayAxis = true;
 
     }
 
@@ -136,6 +138,7 @@ function drawLineChartAllScores( allData ) {
             scales: {
                 yAxes: [{
                     ticks: {
+                        display: displayAxis,
                         beginAtZero: true,
                         fontStyle: 'bold',
                         //max: 100,
@@ -146,7 +149,11 @@ function drawLineChartAllScores( allData ) {
                         fontColor: '#102858',
                         fontSize: 14,
                         fontStyle: 'bold',
-                    }
+                    },
+                    gridLines: {
+                        drawBorder: false,
+                        display: false,
+                    },
                 }],
                 xAxes: [{
                     ticks: {
@@ -159,7 +166,10 @@ function drawLineChartAllScores( allData ) {
                         fontColor: '#102858',
                         fontSize: 14,
                         fontStyle: 'bold',
-                    }
+                    },
+                    gridLines: {
+                        display: false,
+                    },
                 }]
             },
             tooltips: {enabled: false},
