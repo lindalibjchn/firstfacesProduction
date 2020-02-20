@@ -74,6 +74,9 @@ urlpatterns = [
     path('waiting', waiting_main.waiting, name="waiting"),
     path('contact_us', waiting_main.contact_us, name="contact_us"),
     path('book_conversation', waiting_main.book_conversation, name="book_conversation"),
+    path('waiting_click', waiting_main.waiting_click, name="waiting_click"),
+
+
 
     #ENTRANCE
     path('entrance', entrance_main.entrance, name='entrance'),

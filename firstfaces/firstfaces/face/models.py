@@ -332,3 +332,11 @@ class enteranceClick(models.Model):
     time = models.DateTimeField(auto_now_add=True)
     mobile_bool = models.BooleanField(default=False)
     element_id = models.CharField(max_length=50, null=False, blank=True)
+
+
+class waitingClick(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    time = models.DateTimeField(auto_now_add=True)
+    mobile_bool = models.BooleanField(default=False)
+    element_id = models.CharField(max_length=50, null=False, blank=True)
+    description = models.CharField(max_length=100, null=False, blank=True)

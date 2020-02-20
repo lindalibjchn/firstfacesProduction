@@ -67,7 +67,7 @@ function switch_to_gif(gif,time=300){
 function clicked_gif(id){
         st = 'gifs'
         if(waitingVariables.products.backgrounds[st][id].class == 'locked'){
-            $('#'+id).effect("shake", {distance:5, times: 3},300);
+            //$('#'+id).effect("shake", {distance:5, times: 3},300);
             return;
         }
         disable_click();

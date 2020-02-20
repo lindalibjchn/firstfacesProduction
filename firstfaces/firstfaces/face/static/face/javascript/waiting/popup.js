@@ -1,5 +1,4 @@
 
-waitingVariables.products = {};
 $( document ).ready(function(){
     $('#shop-cont').hide();
     $('#history-cont').hide();
@@ -11,7 +10,11 @@ $( document ).ready(function(){
 });
 
 $(window).load(function() {
-      get_products();
+      //get_products();
+       $('#logo-left-cont').css("display","flex").hide().fadeIn(700);
+       $('#popup-btn').show();
+       $('#logo-right-cont').css("display","flex").hide().fadeIn(700);
+       $('#home-cont').fadeIn(700);
       get_user_stats();
 });
 
@@ -22,21 +25,21 @@ function get_products(){
     get_hairColours();
     get_clothingColours();
     get_balance();
-    $('#logo-left-cont').css("display","flex").hide().fadeIn(700);
-    $('#popup-btn').show();
-    $('#logo-right-cont').css("display","flex").hide().fadeIn(700);
-    $('#home-cont').fadeIn(700);
+
 }
 
 
 $('#popup-btn').click(function(){
+
     if($('#popup-btn').hasClass("clicked")){
+        click_save("#popup-btn", "Menu closed");
         $('#logo-left-cont').fadeIn(200);
         setTimeout(function(){$('#popup').hide();},200);
         $('#popup').animate({height:'0'},200);
         AnimateRotate(180,"#popup-btn",200);
         $('#popup-btn').removeClass("clicked");
     }else{
+        click_save("#popup-btn", "Menu opened");
         $('#logo-left-cont').fadeOut(200);
         $('#popup').show();
         $('#popup').animate({height: waitingVariables.dist.toString()+"px"},200);
@@ -63,6 +66,7 @@ function AnimateRotate(angle,id,duration) {
 
 
 function open_shop(){
+
     if(waitingVariables.experimental_group == "control"){
          $('#logo-left-cont').empty().append('<i class="fa fa-shopping-cart fa-2x"></i>');
     }
@@ -219,10 +223,28 @@ function openTutorial() {
 
 }
 
-$('#shop-btn').click(function(){open_shop()});
-$('#tutorialButton').click( openTutorial );
-$('#main-logo').click(function(){open_home()});
-$('#history-btn').click(function(){open_history()});
-$('#profile-btn').click(function(){open_profile()});
-$('#about-btn').click(function(){open_about()});
+$('#shop-btn').click(function(){
+    click_save("#shop-btn", "Shop opened");
+    open_shop();
+});
+$('#tutorialButton').click(function(){
+    click_save("#tutorialButton", "Tutorial started");
+    openTutorial();
+});
+$('#main-logo').click(function(){
+    click_save("#tutorialButton", "Home opened");
+    open_home();
+});
+$('#history-btn').click(function(){
+    click_save("#history-btn", "History opened");
+    open_history()
+});
+$('#profile-btn').click(function(){
+    click_save("#profile-btn", "Profile opened");
+    open_profile()
+});
+$('#about-btn').click(function(){
+    click_save("#profile-btn", "Profile opened");
+    open_about()
+});
 

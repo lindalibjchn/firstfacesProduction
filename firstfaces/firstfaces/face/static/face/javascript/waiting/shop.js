@@ -533,7 +533,7 @@ function flash_border(){
 function clicked_background(id){
         st = 'colours'
         if(waitingVariables.products.backgrounds[st][id].class == 'locked'){
-            $('#'+id).effect("shake", {distance:5, times: 3},300);
+            //$('#'+id).effect("shake", {distance:5, times: 3},300);
             return;
         }
         disable_click();
@@ -556,7 +556,7 @@ function clicked_background(id){
 
 function clicked_clothes(id){
         if(waitingVariables.products.clothes.colours[id].class == 'locked'){
-            $('#'+id).effect("shake", {distance:5, times: 3},300);
+            //$('#'+id).effect("shake", {distance:5, times: 3},300);
             return;
         }
         disable_click();
@@ -578,7 +578,7 @@ function clicked_clothes(id){
 
 function clicked_hair(id){
         if(waitingVariables.products.hair.colours[id].class == 'locked'){
-            $('#'+id).effect("shake", {distance:5, times: 3},300);
+            //$('#'+id).effect("shake", {distance:5, times: 3},300);
             return;
         }
         disable_click();
@@ -1032,7 +1032,7 @@ function animate_zoom(i,vals,end){
 function clicked_eye(id){
 
         if(waitingVariables.products.eyes.colours[id].class == 'locked'){
-            $('#'+id).effect("shake", {distance:5, times: 3},300);
+            //$('#'+id).effect("shake", {distance:5, times: 3},300);
             return;
         }
 
