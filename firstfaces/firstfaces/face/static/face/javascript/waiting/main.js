@@ -59,7 +59,26 @@ definePrefixURL();
 
 const mediaLocation = "media/";
 
+function AnimateRotate(angle,id,duration) {
+    // caching the object for performance reasons
+    var $elem = $(id);
 
+    // we use a pseudo object for the animation
+    // (starts from `0` to `angle`), you can name it as you want
+    $({deg: 0}).animate({deg: angle}, {
+        duration: duration,
+        step: function(now) {
+            $elem.css({
+                transform: 'rotate(' + now + 'deg)'
+            });
+        }
+    });
+}
+
+
+$('#harp_img').click(function(){
+    AnimateRotate(360,"#harp_img",500)
+});
 
 
 function getContHeight(){
