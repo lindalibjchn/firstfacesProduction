@@ -172,6 +172,7 @@ function option_click(subtype,type){
         fix_img_size();
          $('#product-cont').fadeIn(time);
          $('.option').fadeIn(time);
+         setTimeout(function(){enable_click();},time)
     },time+100);
 
 }

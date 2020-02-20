@@ -1,5 +1,4 @@
 
-waitingVariables.products = {};
 $( document ).ready(function(){
     $('#shop-cont').hide();
     $('#history-cont').hide();
@@ -11,7 +10,11 @@ $( document ).ready(function(){
 });
 
 $(window).load(function() {
-      get_products();
+      //get_products();
+       $('#logo-left-cont').css("display","flex").hide().fadeIn(700);
+       $('#popup-btn').show();
+       $('#logo-right-cont').css("display","flex").hide().fadeIn(700);
+       $('#home-cont').fadeIn(700);
       get_user_stats();
 });
 
@@ -22,10 +25,7 @@ function get_products(){
     get_hairColours();
     get_clothingColours();
     get_balance();
-    $('#logo-left-cont').css("display","flex").hide().fadeIn(700);
-    $('#popup-btn').show();
-    $('#logo-right-cont').css("display","flex").hide().fadeIn(700);
-    $('#home-cont').fadeIn(700);
+
 }
 
 

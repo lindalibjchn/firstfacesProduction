@@ -27,7 +27,7 @@ import re
 import ast
 from face.views.waiting.utils.availables import get_availables_for_schedule, create_list_of_javascript_available_times_from_django_objects, check_if_currently_in_class_or_class_finished
 from face.views.waiting.utils.conversation import get_prev_conversations
-from face.views.waiting.utils.store_utils import get_eye_colors, get_attributes
+from face.views.waiting.utils.store_utils import get_eye_colors, get_attributes, get_background_colors, get_clothes_colors, get_hair_colors, get_stats
 from face.views.conversation.all.modify_data import jsonify_or_none, floatify
 
 group_leader_dict = {
@@ -79,13 +79,15 @@ def waiting(request):
 
         # Get Products
         attributes = get_attributes(request.user)
-        products = {'eyes': get_eye_colors(request.user)}
+        products = {'eyes': get_eye_colors(request.user), "backgrounds": get_background_colors(request.user),
+                    "hair": get_hair_colors(request.user), "clothes": get_clothes_colors(request.user)}
 
 
         # check if user has completed tutorial
         waiting_variables = {
-            'products1': products,
-            'attributes1': attributes,
+            'products': products,
+            'attributes': attributes,
+            'profile_stats': get_stats(request.user),
             # 'schedule_dict': json.dumps(schedule_dict),
             # 'schedule_now': json.dumps(schedule_now),
             'conversations': conversations,
