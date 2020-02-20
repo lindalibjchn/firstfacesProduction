@@ -3,7 +3,7 @@ conversationVariables.cumulativeStart = performance.now();
 conversationVariables.meanLastThreeFPS = 60;
 conversationVariables.slowFPS = false;
 conversationVariables.slowFPSIterator = 0;
-conversationVariables.secondsSinceLastSlowFPS
+conversationVariables.secondsSinceLastSlowFPS = 0;
 function animate() {
 
     runAnimations();
