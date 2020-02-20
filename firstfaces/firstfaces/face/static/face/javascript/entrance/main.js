@@ -194,6 +194,7 @@ $('#faq-btn').click(function(){
 });
 
 $('#main-logo').click(function(){
+     $('#congrats-cont').hide();
     click_save('#main-logo');
     $('#foregroundContainer').show();
     $('#contact_cont').hide();
@@ -463,6 +464,7 @@ function send_contact(name,message,email){
           animate_color_colour("top-half-contact-before","04A644",800)
           animate_color_colour("top-half-contact","04A644",800)
           setTimeout(function(){
+            $('#congrats-cont').css("display","flex");
             $('#congrats-body').css("display","flex").hide().fadeIn(500);
           },300);
           $('#contact_send').show()
@@ -777,6 +779,7 @@ function cycle_feedback(){
 }
 
 function reset_contact(){
+    $('#congrats-cont').hide();
     $('._field').removeClass('incorrect_filled').removeClass("filled").addClass('shadow');
     $('.error_msg').hide()
 
@@ -802,6 +805,9 @@ function reset_contact(){
 
 $('#popup-btn').click(function(){
     click_save('#popup-btn');
+    if($('#congrats-cont').css('display') == 'flex'){
+        $('#congrats-cont').hide();
+    }
     if($('#popup-btn').hasClass("clicked")){
         $('#logo-left-cont').fadeIn(200);
         setTimeout(function(){$('#popup').hide();},200);
