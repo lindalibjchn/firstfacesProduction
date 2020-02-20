@@ -21,8 +21,17 @@ function calculateCorrectSentencesNWrongArticlesPercentForEachConversation( allC
             let startTimeDateStringForChart = convertStartTimeIntToDayMonthStringForChart( c.start_time );
             allConversationsStartTimes.unshift( startTimeDateStringForChart );
         
-            let totalPoints = getTotalPointsForAClass( c.completed_sentences );
+            var totalPoints;
+            if ( waitingVariables.experimental_group !== "control" ) {
+
+                totalPoints = getTotalPointsForAClass( c.completed_sentences );
             
+            } else {
+
+                totalPoints = 0;
+
+            }
+
             //let correctPercentage = parseInt( 100 * correctIncorrectDunno['P'] / totalSentences );
             allConversationsTotalPoints.unshift( totalPoints );
 
@@ -67,6 +76,13 @@ function drawLineChartAllScores( allData ) {
         }
     }
 
+    let ptsLabel = ''
+    if ( waitingVariables.experimental_group !== "control" ) {
+
+        label = 'points';
+
+    }
+
 	let ctx = document.getElementById('allScoresChart').getContext('2d');
 	let myLineChart = new Chart(ctx, {
 		type: 'line',
@@ -75,7 +91,7 @@ function drawLineChartAllScores( allData ) {
             radius: 8,
 			datasets: [
                 {
-                    label: 'points',
+                    label: ptsLabel,
                     data: allData[ 1 ],
                     backgroundColor: 'rgba( 231, 202, 0, 1 )',
                     borderColor: 'rgba(31, 176, 48, 1)',

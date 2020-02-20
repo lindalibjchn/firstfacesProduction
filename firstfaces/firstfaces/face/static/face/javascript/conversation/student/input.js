@@ -47,6 +47,7 @@ function showPts() {
             
             //$( '#ErleESymbolContainer' ).html( '<img id="ErleESymbol" src="/static/face/JSON/ErleESymbolWhite.png">' )
             let totalPoints = getTotalPointsForAClass(conversationVariables.conversation_dict.completed_sentences)
+            conversationVariables.totalPoints = totalPoints;
 
             let pts = 0;
             if ( ['P', 'B' ].includes( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement ) ) {

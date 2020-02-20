@@ -160,6 +160,7 @@ def delete_session(request):
 def store_conversation_over(request):
 
     conv_id = int(request.POST['convId'])
+    points_from_class = int(request.POST['points'])
     ratings = json.loads(request.POST['ratings'])
     tutorial_complete = json.loads(request.POST['tutorial_complete'])
 
@@ -173,8 +174,11 @@ def store_conversation_over(request):
     # conv.score = score
     conv.save()
 
-    print('tutorial_complete:', tutorial_complete)
-    print('tutorial_complete:', type(tutorial_complete))
+    prof = Profile.objects.get(learner=request.user)
+    prof.points += points_from_class
+    prof.total_points += points_from_class
+    prof.save()
+
     if not tutorial_complete:
         p = Profile.objects.get(learner=request.user)
         p.tutorial_complete = True

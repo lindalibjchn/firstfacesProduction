@@ -3,6 +3,7 @@ conversationVariables.cumulativeStart = performance.now();
 conversationVariables.meanLastThreeFPS = 60;
 conversationVariables.slowFPS = false;
 conversationVariables.slowFPSIterator = 0;
+conversationVariables.secondsSinceLastSlowFPS = 0;
 function animate() {
 
     runAnimations();
@@ -201,11 +202,12 @@ function checkFPS( main ) {
     let FPS = 60 / ( conversationVariables.cumulativeMilliseconds / 1000 );
 
     conversationVariables.meanLastThreeFPS = ( ( conversationVariables.meanLastThreeFPS * 2 ) + FPS ) / 3
-    
+
     //console.log( 'conversationVariables.meanLastThreeFPS:', conversationVariables.meanLastThreeFPS );
 
     if ( conversationVariables.meanLastThreeFPS < 40 ) {
 
+        conversationVariables.secondsSinceLastSlowFPS = 0;
         conversationVariables.slowFPS = true;
         conversationVariables.slowFPSIterator += 1;
         
@@ -219,9 +221,16 @@ function checkFPS( main ) {
     } else {
 
         conversationVariables.slowFPS = false;
+        conversationVariables.secondsSinceLastSlowFPS += 1;
 
     }
 
     conversationVariables.cumulativeStart = performance.now();
+
+    if ( conversationVariables.secondsSinceLastSlowFPS > 60 ) {
+
+        conversationVariables.slowFPSIterator = 0;
+
+    }
 
 }

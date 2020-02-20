@@ -73,11 +73,11 @@ $( document ).ready(function(){
     load_screen();
     cycle_feedback();
 
-    $("#TED-Video").load(function(){
-        $("#TED-Video").contents().click( function(){
-            alert("Click detected inside iframe.");
-        });
-    });
+    //$("#TED-Video").load(function(){
+        //$("#TED-Video").contents().click( function(){
+            //alert("Click detected inside iframe.");
+        //});
+    //});
 
 
 });
@@ -189,7 +189,8 @@ $('#faq-btn').click(function(){
     click_save('#faq-btn');
     $('#popup-btn').click();
     setTimeout(function(){
-        open_alert();
+        //open_alert();
+        showFAQs();
     },200)
 });
 
@@ -843,7 +844,17 @@ $('#TED-Video').click(function(){
     click_save('#TED-Video');
 })
 
+function showFAQs() {
 
+    $('#FAQContainer').fadeIn();
+
+}
+
+$('#closeFAQContainer').click( function() {
+ 
+    $( '#FAQContainer' ).fadeOut();
+    
+})
 
 
 

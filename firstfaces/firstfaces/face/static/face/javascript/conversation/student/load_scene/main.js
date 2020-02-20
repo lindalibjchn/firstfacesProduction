@@ -3,22 +3,96 @@ $(window).on( 'load', function() {
     //$("#foregroundContainer").hide()
     // LOADS OBJECTS <three_js_objects.js>
     // AFTER LOADING 'enterOrReEnter()' WILL BE CALLED BELOW
-    readyTiaSynthSentences();
-
-    get_tia_attributes();
-
-    readyBtns();
-
-    //readyAudio();
-
-    conversationVariables.playspeed=1.0;
     
-    //// FOR VOLUME BAR
-    canvasContext = document.getElementById( "meter" ).getContext("2d");
-    canvasContext.transform(1, 0, 0, -1, 0, HEIGHT_VOL)
-    canvasContext.fillStyle = "#33ff00";
+    let getUserMediaOK = checkIfDeviceCanRunSite();
+
+    if ( getUserMediaOK ) {
+
+        readyTiaSynthSentences();
+
+        get_tia_attributes();
+
+        readyBtns();
+
+        //readyAudio();
+
+        conversationVariables.playspeed=1.0;
+        
+        //// FOR VOLUME BAR
+        canvasContext = document.getElementById( "meter" ).getContext("2d");
+        canvasContext.transform(1, 0, 0, -1, 0, HEIGHT_VOL)
+        canvasContext.fillStyle = "#33ff00";
+
+    }
 
 });
+
+function checkIfDeviceCanRunSite() {
+
+    if ( appleDevice ) {
+
+		function iOSversion() {
+            
+            if (/iP(hone|od|ad)/.test(navigator.platform)) {
+
+                // supports iOS 2.0 and later: <http://bit.ly/TJjs1V>
+                var v = (navigator.appVersion).match(/OS (\d+)_(\d+)_?(\d+)?/);
+                return [parseInt(v[1], 10), parseInt(v[2], 10), parseInt(v[3] || 0, 10)];
+            
+            } else {
+
+                return false
+
+            }
+
+        }
+
+        let thisUsersiOSVersion = iOSversion();
+
+        if ( thisUsersiOSVersion !== false ) {
+
+            if ( thisUsersiOSVersion[ 0 ] < 12 ) {
+
+                alert('Your phone needs to run iOS 12 or higer to use ERLE.\nPlease update.')
+                return false
+
+            } else {
+
+                let usingSafari = /^((?!chrome|android).)*safari/i.test( navigator.userAgent );
+                console.log( 'usingSafari:', usingSafari );
+
+                if ( usingSafari ) {
+
+                    if ( typeof MediaRecorder === 'undefined' ) {
+
+                        alert( "Please enable MediaRecorder via the following steps. Go to:\n1. settings\n2. Safari\n3. advanced\n4. experimental features\n5. turn 'MediaRecorder' on\n6. Refresh this page" )
+                        return false
+
+                    }
+
+                } else {
+
+                    alert( 'on Apple devices, ERLE only works on the Safari Browser' );
+                    return false
+
+                }
+
+            }
+
+        } else {
+
+            alert('your apple device is not compatible with ERLE')
+            return false
+
+        }
+
+    } else {
+
+        return true;
+
+    }
+
+}
 
 function engineRunning() {
 
@@ -41,6 +115,7 @@ function engineRunning() {
     createSingleExpression( expressionObject.rel.neutral, 1 );
     expressionController( expressionObject.calculated, 1 );
 
+    conversationVariables.totalPoints = 0
     showPts();
     runUCDGif();
     setTimeout( function() {

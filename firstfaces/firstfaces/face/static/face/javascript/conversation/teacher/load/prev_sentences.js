@@ -65,22 +65,52 @@ function createSentenceBox( exchange_ ) {
     giveSentenceBoxColorBasedOnJudgement( sentenceBox, exchange_ );
 
     //for points 
-    if ( [ 'P', 'B' ].includes( exchange_.judgement ) ) {
 
-        let points = convertCorrectSentenceLengthToPoints( exchange_.sentence.length )
-        if ( points !== 0 ) {
+    if ( typeof teacherVars === "undefined" ) {
 
-            let pointsBox = document.createElement("div");
-            pointsBox.className = "points-box";
-            pointsBox.id = "pointsBox_" + exchange_.sent_id.toString();
-            pointsBox.innerHTML = '<div class="points-value">' + points.toString() + '<span class="points-pts">pts</span></div>';
-            sentenceBox.appendChild( pointsBox );
+        let group = figureOutGroup();
+
+        if ( group !== "control" ) {
+
+            if ( [ 'P', 'B' ].includes( exchange_.judgement ) ) {
+
+                let points = convertCorrectSentenceLengthToPoints( exchange_.sentence.length )
+                if ( points !== 0 ) {
+
+                    let pointsBox = document.createElement("div");
+                    pointsBox.className = "points-box";
+                    pointsBox.id = "pointsBox_" + exchange_.sent_id.toString();
+
+                    pointsBox.innerHTML = '<div class="points-value">' + points.toString() + '<span class="points-pts"></span></div>';
+                    sentenceBox.appendChild( pointsBox );
+
+                }
+
+            }
 
         }
 
     }
 
     return sentenceBox;
+
+}
+
+function figureOutGroup() {
+
+    var page;
+
+    if ( typeof conversationVariables !== "undefined" ) {
+
+        page = conversationVariables;
+
+    } else if ( typeof waitingVariables !== "undefined" ) {
+
+        page = waitingVariables;
+
+    }
+
+    return page.experimental_group
 
 }
 

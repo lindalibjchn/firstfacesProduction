@@ -11,7 +11,7 @@ function getTimeNow( first ) {
 
     today_timezone = new Date();
     timezoneOffsetInUnix = today_timezone.getTimezoneOffset() * 60000
-    timeNow = today_timezone.getTime() + timezoneOffsetInUnix
+    timeNow = today_timezone.getTime() + timezoneOffsetInUnix; 
     today = new Date( timeNow )
 
     if ( first ) {
@@ -20,6 +20,7 @@ function getTimeNow( first ) {
         todaysDay = today_timezone.getUTCDay();
     
     }
+
 
     //timeNow = today.getTime() [>- 28800000<];
 }
@@ -112,7 +113,12 @@ function addAvailablesToTimetable( availableTuples, first=false ) {
 
     }
 
-    insertBlinker();
+    if ( today > nineAms[ todaysDay - 1 ] && today < nineAms[ todaysDay - 1 ] + nineToFiveJavascriptTime ) {
+
+        insertBlinker();
+
+    }
+
 }
 
 function getNineAms( d_/*, summertime_*/ ) {
