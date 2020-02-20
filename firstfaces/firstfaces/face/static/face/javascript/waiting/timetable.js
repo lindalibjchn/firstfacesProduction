@@ -24,6 +24,8 @@ function getTimeNow( first ) {
     //timeNow = today.getTime() [>- 28800000<];
 }
 
+
+
 function addAvailablesToTimetable( availableTuples, first=false ) {
 
     getTimeNow( first );
@@ -230,6 +232,7 @@ function insertBlinker() {
     
     getTimeNow();
     let todaysLeft = 100 * ( timeNow - nineAms[ todaysDay - 1 ] ) / nineToFiveJavascriptTime
+
     $('#timeNowBlinkerContainer').css({
         
         'left': todaysLeft.toString() + '%',
