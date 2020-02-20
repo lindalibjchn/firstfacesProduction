@@ -214,6 +214,7 @@ $('#home-btn').click(function(){
     }
 });
 $('#harpIMG').click(function(){
+    AnimateRotate(360,"#harpIMG",500)
     click_save('#harpIMG');
     $('#foregroundContainer').show();
     $('#contact_cont').hide();
@@ -226,18 +227,34 @@ $('#harpIMG').click(function(){
 
 
 
+$('#email-icon').click(function(){
+    click_save('#email-btn');
+    $('#contact_back_button').hide();
+    reset_contact();
+    click_save('#contact-btn');
+    $('#contact-form_2').hide();
+    $('#contact-form_1').show();
+    $('#contact_send_2').text("Next").off('click').click(function(){
+        to_form_stage_2();
+    });
+
+    $('#foregroundContainer').hide();
+    $('#contact_cont').show();
+     if($('#popup-btn').hasClass("clicked")){
+        $('#popup-btn').click();
+    }
+});
 $('#contact-btn').click(function(){
     reset_contact();
     click_save('#contact-btn');
-    $('#foregroundContainer').hide();
-    $('#su_cont').hide();
-    $('#contact_cont').show();
-    $('#popup-btn').click();
-});
+    $('#contact_back_button').hide();
+    click_save('#contact-btn');
+    $('#contact-form_2').hide();
+    $('#contact-form_1').show();
+    $('#contact_send_2').text("Next").off('click').click(function(){
+        to_form_stage_2();
+    });
 
-$('#email-icon').click(function(){
-    click_save('#email-btn');
-    reset_contact();
     $('#foregroundContainer').hide();
     $('#contact_cont').show();
      if($('#popup-btn').hasClass("clicked")){
@@ -245,7 +262,83 @@ $('#email-icon').click(function(){
     }
 });
 
-$('#contact_send').click(function(){
+function to_form_stage_2(){
+    errors = false
+
+     valid = ValidateEmail($('#email').text().trim())
+    if (!valid || $('#email').hasClass("not_typed")){
+        $('#email').removeClass('shadow').removeClass("filled").addClass('incorrect_filled');
+        $('#email_error').show();
+        errors = true;
+    }
+     else{
+        $('#email').removeClass('shadow').removeClass("incorrect_filled").addClass('filled')
+        $('#email_error').hide();
+        email = $('#email').text().trim();
+      }
+
+    valid = ValidateOthers($('#'+"name").text().trim())
+    if (!valid || $('#name').hasClass("not_typed")){
+        $('#'+"name").removeClass('shadow').removeClass("filled").addClass('incorrect_filled');
+        $('#'+"name"+'_error').show();
+        errors = true;
+    }else{
+        $('#'+"name").removeClass('shadow').removeClass("incorrect_filled").addClass('filled');
+        $('#'+"name"+'_error').hide();
+        name = $('#name').text().trim();
+    }
+    if(! errors){
+        $('#contact-form_1').fadeOut(400);
+        $('#contact_send_2').off('click');
+        animate_color_colour("top-half-contact-before","E8C700",800)
+        animate_color_colour("top-half-contact","E8C700",800)
+        animate_color_colour("contact_send_2","E8C700",800)
+        setTimeout(function(){
+            $('#contact-form_2').fadeIn(400);
+            $('#contact_back_button').fadeIn(400);
+            $('#contact_send_2').text("Send").off('click').click(function(){
+                send_contact_form();
+            });
+        },400);
+    }
+}
+
+
+function back_to_stage_1(){
+   $('#contact_back_button').hide();
+   $('#contact-form_2').fadeOut(400);
+   $('#contact_send_2').off('click');
+   animate_color_colour("top-half-contact-before","0089CF",800)
+   animate_color_colour("top-half-contact","0089CF",800)
+   animate_color_colour("contact_send_2","0089CF",800)
+   setTimeout(function(){
+            $('#contact-form_1').fadeIn(400);
+
+       $('#contact_send_2').text("Next").off('click').click(function(){
+            to_form_stage_2();
+        });
+    },400);
+
+
+}
+$('#contact_back_button').click(function(){back_to_stage_1();});
+
+$('#contact-btn').click(function(){
+    reset_contact();
+    click_save('#contact-btn');
+    $('#contact-form_2').hide();
+    $('#contact-form_1').show();
+    $('#contact_send_2').text("Next");
+
+    $('#foregroundContainer').hide();
+    $('#su_cont').hide();
+    $('#contact_cont').show();
+    $('#popup-btn').click();
+});
+
+
+
+function send_contact_form(){
     fields = ["email","name","message"];
     click_save('#contact_send');
 
@@ -294,7 +387,7 @@ $('#contact_send').click(function(){
 
     }
 
-})
+}
 
 var previous_field = ""
 $('._field').click(function(){
@@ -358,7 +451,7 @@ function send_contact(name,message,email){
     fd.append("name",name);
     fd.append("email",email);
     fd.append("message",message);
-
+    $('#cont-contact').fadeOut(300);
      $.ajax({
         url: "/contact_us",
         type: "POST",
@@ -366,7 +459,7 @@ function send_contact(name,message,email){
         processData: false,
         contentType: false,
         success: function(json){
-           $('#cont-contact').fadeOut(300);
+
           animate_color_colour("top-half-contact-before","04A644",800)
           animate_color_colour("top-half-contact","04A644",800)
           setTimeout(function(){
@@ -700,7 +793,11 @@ function reset_contact(){
     $('#cont-contact').show();
     $('#congrats-body').hide();
     animate_color_colour("top-half-contact-before","0089CF",0)
-    animate_color_colour("top-half-contact","0089CF",0)
+    animate_color_colour("top-half-contact","0089CF",0);
+    animate_color_colour("contact_send_2","0080CF",0)
+    $('#contact_send_2').text("Next").off('click').click(function(){
+        to_form_stage_2();
+    });
 }
 
 $('#popup-btn').click(function(){
