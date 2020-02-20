@@ -702,7 +702,8 @@ def hair_to_html(class_, price, hex_, id_):
 
 
 def eye_to_html(class_, price, eye_file_name, id_):
-    prefixURL = 'http://127.0.0.1:8000/'
+    # prefixURL = 'http://127.0.0.1:8000/'
+    prefixURL = 'https://erle.ucd.ie/'
     prefix = 'media/eyes/'
     if class_ == "owned" or class_ == "owned equipped":
         price = '<i class="fa fa-check"></i>'
@@ -711,7 +712,8 @@ def eye_to_html(class_, price, eye_file_name, id_):
 
 
 def gif_to_html(class_, price, eye_file_name, id_):
-    prefixURL = 'http://127.0.0.1:8000/'
+    #prefixURL = 'http://127.0.0.1:8000/'
+    prefixURL = 'https://erle.ucd.ie/'
     prefix = 'media/gifs/'
     if class_ == "owned" or class_ == "owned equipped":
         price = '<i class="fa fa-check"></i>'
