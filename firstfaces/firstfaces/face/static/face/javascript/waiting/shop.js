@@ -2,10 +2,13 @@ var sheight, swidth;
 var tiaH, tiaW;
 var remH
 var tiaEyes = []
+var Interval_Value = 1000/30;
+
 function setHeight(){
     //get products
 
     get_balance();
+
 
 
     swidth = $(document).width()
@@ -661,7 +664,7 @@ function decimal_rgb_hex(st){
 
 // Change Colours
 function get_transition_colors(start_hex, end_hex, time){
-    intervals = Math.round(time/16.666666667)-1;
+    intervals = Math.round(time/Interval_Value)-2;
     var start_rgb = hex_to_rgb(start_hex);
     var end_rgb = hex_to_rgb(end_hex);
 
@@ -718,7 +721,7 @@ function change_color_with_delay(i,colours,end){
         if(i < end){
             change_color_with_delay(i,colours,end);
         }
-    },16.666666667);
+    },Interval_Value);
 }
 
 // Animate change in hair colour
@@ -734,7 +737,7 @@ function change_hair_colour_with_delay(i, colours1, colours2, end){
         if(i < end){
             change_hair_colour_with_delay(i, colours1, colours2, end);
         }
-    },16.666666667);
+    },Interval_Value);
 }
 //Animate Clothing Colour change
 function animate_clothes_colour(cur_hex, end_hex, time){
@@ -748,7 +751,7 @@ function change_clothes_colour_with_delay(i,colours,end){
         if(i < end){
             change_clothes_colour_with_delay(i,colours,end);
         }
-    },16.666666667);
+    },Interval_Value);
 }
 // Animate face colour
 function animate_face_colour(cur_hex, end_hex, time){
@@ -762,7 +765,7 @@ function change_face_colour_with_delay(i,colours,end){
         if(i < end){
             change_face_colour_with_delay(i,colours,end);
         }
-    },16.666666667);
+    },Interval_Value);
 }
 //Animate Lip Colour
 function animate_lip_colour(cur_hex, end_hex, time){
@@ -776,7 +779,7 @@ function change_lip_colour_with_delay(i,colours,end){
         if(i < end){
             change_lip_colour_with_delay(i,colours,end);
         }
-    },16.666666667);
+    },Interval_Value);
 }
 
 
@@ -939,8 +942,7 @@ var camera_values = {
 
 
 function zoom(time, vals){
-    disable_click();
-    intervals = Math.round(time/16.666666667)-1;
+    intervals = Math.round(time/Interval_Value)-2;
 
     //Change position values
     curr_pos_x = camera.position.x;
@@ -1022,10 +1024,7 @@ function animate_zoom(i,vals,end){
         if(i < end){
             animate_zoom(i,vals,end);
         }
-        else{
-            enable_click();
-        }
-    },16.666666667);
+    },Interval_Value);
 }
 
 

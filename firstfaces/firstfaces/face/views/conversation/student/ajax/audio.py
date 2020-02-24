@@ -332,7 +332,7 @@ def error_typing_used(request):
         errorPath = ""
     #Synth Audio
 
-    text_ = request.POST['trans']
+    text_ = request.POST['trans'].lower()
     valid = get_StockWords()
     print('valid (audio.py):', valid)
     if text_ not in valid:
@@ -464,11 +464,11 @@ def get_stock_words(request):
     out = []
     sws = StockWord.objects.all()
     for sw in sws:
-        if sw.texts in out:
+        if sw.name.lower() in out:
             print("duplicate - "+sw.texts+"\n\n\n")
-        out.append(sw.texts)
+        out.append(sw.name.lower())
     response_data = {
-        "SW":out,
+        "SW": out,
     }
 
     return JsonResponse(response_data)

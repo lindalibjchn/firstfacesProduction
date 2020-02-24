@@ -4,14 +4,15 @@
 <div id="popup" style="display:none;">
     <div id="popup-cont-cont">
     <div id="popup-cont">
-    <div class="popup-item" id="profile-btn"><p><i class="fa fa-user"></i> Profile</p></div>
-    <div class="popup-item" id="history-btn"><p><i class="fa fa-history"></i> History</p></div>
+        <div class="popup-item " id="home-btn"><p><i class="fa fa-home"></i> Home</p></div>
+        <div class="popup-item" id="profile-btn"><p><i class="fa fa-user"></i> Profile</p></div>
+        <div class="popup-item" id="history-btn"><p><i class="fa fa-history"></i> History</p></div>
         {% if not no_shop %}
-        <div class="popup-item" id="shop-btn"><p><i class="fa fa-shopping-cart"></i> Shop</p></div>
+            <div class="popup-item" id="shop-btn"><p><i class="fa fa-shopping-cart"></i> Shop</p></div>
         {% endif %}
-    <div class="popup-item" id="tutorialButton"><p><i class="fa fa-graduation-cap"></i> Tutorial</p></div>
-        <div class="popup-item" id="about-btn"><p><i class="fa fa-question-circle"></i> About</p></div>
-    <div class=" logout popup-item"><a href="{% url 'logout' %}"  style="text-decoration: none;"><p> <i class="fa fa-sign-out-alt"></i> Logout</p></a></div>
+        <div class="popup-item" id="tutorialButton"><p><i class="fa fa-graduation-cap"></i> Tutorial</p></div>
+        <!--<div class="popup-item" id="about-btn"><p><i class="fa fa-question-circle"></i> About</p></div>-->
+        <div class=" logout popup-item"><a href="{% url 'logout' %}"  style="text-decoration: none;"><p> <i class="fa fa-sign-out-alt"></i> Logout</p></a></div>
     </div>
     </div>
 </div>

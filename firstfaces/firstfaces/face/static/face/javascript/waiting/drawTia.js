@@ -322,7 +322,7 @@ function createTia(id, h, w) {
     addTia();
 
     animate();
-    renderer.domElement.addEventListener("click", onClick, false);
+    //renderer.domElement.addEventListener("click", onClick, false);
 
     flash_everything(300,100);
 }

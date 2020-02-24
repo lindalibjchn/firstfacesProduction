@@ -2,7 +2,14 @@ var clickableObjects = [];
 
 
 function onClick(event) {
-
+    alert("Clicked");
+    disable_click();
+    if(event.clientY >= $('#tiaHolder').offset()['top'] && event.clientY <= $('#tiaHolder').offset()['top']+$('#tiaHolder').height()){
+        y_pos = event.clientY-$('#tiaHolder').offset()['top'];
+    }else{
+        enable_click();
+        return
+    }
     event.preventDefault();
     if($('#popup-btn').hasClass("clicked")){
         return;
@@ -10,14 +17,10 @@ function onClick(event) {
     if(waitingVariables.wait_on_foo){
         return;
     }
-    disable_click();
 
 
-    if(event.clientY >= $('#tiaHolder').offset()['top'] && event.clientY <= $('#tiaHolder').offset()['top']+$('#tiaHolder').height()){
-        y_pos = event.clientY-$('#tiaHolder').offset()['top'];
-    }else{
-        return
-    }
+
+
     var vector = new THREE.Vector3(
         ( event.clientX / $('#tiaHolder').width() ) * 2 - 1,
       - ( y_pos/ $('#tiaHolder').height() ) * 2 + 1,
@@ -39,11 +42,11 @@ function onClick(event) {
     }
     if( waitingVariables.click_me){
         $("#hidden-title-category").fadeOut(300);
+        waitingVariables.click_me = false;
     }
     setTimeout(function(){
         if ( intersects.length > 0 ) {
             console.log(intersects[0].object.name)
-            disable_click();
             if(intersects[0].object.name == 'mFace' || intersects[0].object.name == 'mHair' || intersects[0].object.name.substring(0,4) == 'mEye'){
                 if(!waitingVariables.zoomed){
                     flash_head(200);
@@ -51,7 +54,7 @@ function onClick(event) {
                         zoom(300,camera_values.face);
                         waitingVariables.zoomed = true;
                         setTimeout(function(){
-                             if(intersects[0].object.name == 'mHair'){
+                            if(intersects[0].object.name == 'mHair'){
                                 flash_hair(300);
                                 show_title('Hair',wait=300,time=500,st_callback=show_hair);
                             }
@@ -73,6 +76,9 @@ function onClick(event) {
                     if(intersects[0].object.name.substring(0,4) == 'mEye'){
                         flash_eyes(time=200)
                         show_title('Eyes',wait=300,time=500,st_callback=show_eyes);
+                    }
+                    else{
+                        enable_click();
                     }
                 }
             }
@@ -99,22 +105,26 @@ function onClick(event) {
                 waitingVariables.zoomed = false;
                 hide_products();
                 setTimeout(function(){
-                    disable_click();
                     if(waitingVariables.attributes.gif_bool){
                         flash_background(200);
                     } else {
                         flash_gif(200);
                     }
-                    show_title('backgrounds',wait=300,time=500,st_callback=show_backgrounds);
+                    setTimeout(function(){
+                        show_title('backgrounds',wait=300,time=500,st_callback=show_backgrounds);
+                    },200);
                 },300);
             } else {
-                disable_click();
                 if(waitingVariables.attributes.gif_bool){
-                        flash_background(200);
+                    flash_background(200);
                 } else {
-                        flash_gif(200);
-                 }
-                show_title('backgrounds',wait=300,time=500,st_callback=show_backgrounds);
+                    flash_gif(200);
+                }
+                setTimeout(function(){
+                    show_title('backgrounds',wait=300,time=500,st_callback=show_backgrounds);
+                },200);
+
+
 
             }
         }
@@ -123,7 +133,6 @@ function onClick(event) {
 }
 
 function show_backgrounds(time=500, st_callback=function(){} ){
-
     waitingVariables.products_showing = true;
     var type = 'backgrounds';
     var subtype = "colours"
@@ -140,7 +149,7 @@ function show_backgrounds(time=500, st_callback=function(){} ){
         $('#product-category-options').css("display", "flex").hide().fadeIn(time);
          $('#product-cont').fadeIn(time);
         setTimeout(function(){
-            st_callback();
+            enable_click();
         },time);
     },time);
 }
@@ -159,6 +168,7 @@ function change_options(keys,type){
 }
 
 function option_click(subtype,type){
+    alert("option_clicked()");
     time = 800
     $('.option').hide();
     $('.option').removeClass("active");
@@ -190,16 +200,16 @@ function hide_products(time=300){
    },time);
 }
 function show_title(text, wait=0, time=300, st_callback=function(){}){
-    console.log("In show title")
-    disable_click()
+
     setTimeout(function(){
+        alert("In show title")
         $('#product-cont').empty();
         $('#product-cont').append("<div style='height:100%; width:100%; display:flex; justify-content:center; align-items:center;'><p id='hidden-title-category' style=\"font-family:'Oswald', sans-serif; display:none; text-transform: uppercase; font-size: 25px; color: #102858;\">"+text+"</p></div>");
         $("#hidden-title-category").fadeIn(time);
         setTimeout(function(){
             $("#hidden-title-category").fadeOut(time);
             setTimeout(function(){
-                st_callback(st_callback=enable_click);
+                st_callback();
             },time);
         },time*2);
     },wait);
@@ -223,7 +233,7 @@ function show_eyes(time=500, st_callback=function(){} ){
         $('#product-category-options').css("display", "flex").hide().fadeIn(time);
          $('#product-cont').fadeIn(time);
         setTimeout(function(){
-            st_callback();
+           enable_click();
         },time);
     },time);
 }
@@ -245,13 +255,14 @@ function show_clothes(time=500, st_callback=function(){} ){
         fix_img_size();
         $('#product-cont').removeClass("tile").fadeIn(time);
         setTimeout(function(){
-            st_callback();
+            enable_click();
         },time);
     },time);
 
 }
 
 function disable_click(wait=0){
+    alert("disabled");
     setTimeout(function(){
         waitingVariables.wait_on_foo = true;
     },wait);
@@ -259,6 +270,7 @@ function disable_click(wait=0){
 
 
 function enable_click(wait=0){
+    alert("enabled");
     setTimeout(function(){
         waitingVariables.wait_on_foo = false;
     },wait);
@@ -300,23 +312,3 @@ function show_click_me(time=300){
     }, time);
 }
 
-function flash_everything(time=200,delay=50,st_callback=function(){}){
-    if(waitingVariables.attributes.gif_bool){
-        flash_background(time);
-    } else {
-        flash_gif(time);
-    }
-
-    setTimeout(function(){
-        flash_clothes(time);
-        setTimeout(function(){
-            flash_hair(time);
-            setTimeout(function(){
-                flash_eyes(time);
-                setTimeout(function(){
-                    st_callback();
-                },time);
-            },time+delay);
-        },time+delay);
-    },time+delay);
-}

@@ -7,7 +7,7 @@ function animate() {
 
     mainCount += 1;
 
-    if ( waitingVariables.slowFPS ) {
+    /*if ( waitingVariables.slowFPS ) {
 
         if ( mainCount % 2 === 0 ) {
 
@@ -25,23 +25,23 @@ function animate() {
 
         }
 
-    } else {
+    } else {*/
 
-        if ( expressionObject.bool ) {
+    if ( expressionObject.bool ) {
 
-            expression( mainCount );
-       
-        }
-
-        if ( movementObject.bool ) {
-
-            movement( mainCount );
-
-        }
+        expression( mainCount );
 
     }
 
-    if ( waitingVariables.slowFPSIterator < 5 ) {
+    if ( movementObject.bool ) {
+
+        movement( mainCount );
+
+    }
+
+    //}
+
+    /*if ( waitingVariables.slowFPSIterator < 5 ) {
 
         if ( mainCount % 60 === 0 ) {
 
@@ -49,7 +49,7 @@ function animate() {
 
         }
 
-    }
+    }*/
 
     if ( eyelidObject.bool ) {
 

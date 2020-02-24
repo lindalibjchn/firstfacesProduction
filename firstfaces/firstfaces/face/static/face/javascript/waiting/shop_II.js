@@ -14,7 +14,8 @@ function flash_eyes(time=300, wait=0, st_callback=function(){}){
 }
 
 
-function hide_tia()
+
+
 
 
 function animate_eye_colour(start_hex, end_hex, time){
@@ -28,12 +29,12 @@ function change_eye_color_with_delay(i,colours,end){
         if(i < end){
             change_eye_color_with_delay(i,colours,end);
         }
-    },16.666666667);
+    },Interval_Value);
 }
 
 
 function fadeBackground(time=300, wait=0, st_callback=function(){}, reversed=false){
-        intervals = Math.round(time/16.666666667)-1;
+        intervals = Math.round(time/Interval_Value)-2;
         var colour =  new THREE.Color(parseInt('0x'+decimal_rgb_hex(renderer.getClearColor()),16));
         diff = 1/intervals;
         vals = [1];
@@ -55,7 +56,7 @@ function fade_background_with_delay(i, vals, hex, end){
         if(i < end){
             fade_background_with_delay(i, vals, hex, end);
         }
-    },16.666666667);
+    },Interval_Value);
 }
 
 var gif_prefix = prefixURL+"media/gifs/";
@@ -106,13 +107,13 @@ function change_color_with_delay(i,colours,end){
         if(i < end){
             change_color_with_delay(i,colours,end);
         }
-    },16.666666667);
+    },Interval_Value);
 }
 
 
 
 function flash_gif(time=150){
-        intervals = Math.round(time/16.666666667)-1;
+        intervals = Math.round(time/Interval_Value)-2;
         var colour =  new THREE.Color(parseInt('0x'+decimal_rgb_hex(renderer.getClearColor()),16));
         diff = 0.3/intervals;
         vals = [0];
