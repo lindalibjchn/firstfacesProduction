@@ -64,7 +64,6 @@ def conversation_student(request, conversation_id):
                 
 
             conversation_variables = {
-                'balance':balance,
                 'attributes': attributes,
                 'stock_phrases': stock_phrases,
                 'prompts': prompts,
