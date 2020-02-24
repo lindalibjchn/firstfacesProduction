@@ -13,6 +13,10 @@ function flash_eyes(time=300, wait=0, st_callback=function(){}){
     },wait);
 }
 
+
+function hide_tia()
+
+
 function animate_eye_colour(start_hex, end_hex, time){
     var colours = get_transition_colors(start_hex, end_hex, time)
     change_eye_color_with_delay(0,colours,colours.length);

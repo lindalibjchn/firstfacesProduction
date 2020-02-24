@@ -108,11 +108,11 @@
                                 <div style="position:relative; height:100%; width:100%; -webkit-box-shadow: 0 4px 6px -6px #222;-moz-box-shadow: 0 4px 6px -6px #222; box-shadow: 0 4px 6px -6px #222;"></div>
                             </div>
                             {% if not control %}
-                            <div id="logo-left-cont" style="color:#102858; position:absolute; height:90%; width:20%; left:2.5%; background-color: white; display:none; align-items:center; justify-content:center;">
-                                <div id="balacne_symbol_header"><img style="height:20px; margin-top: 2px;" src="{% static 'face/JSON/ErleESymbolYellow.png' %}"/></div><p id="balance_header">0</p>
-                            </div>
+                                <div id="logo-left-cont" style="z-index:2; color:#102858; position:absolute; height:90%; width:20%; left:2.5%; background-color: white; display:none; align-items:center; justify-content:center;">
+                                    <div id="balacne_symbol_header"><img style="  height:20px; margin-top: 2px;" src="{% static 'face/JSON/ErleESymbolYellow.png' %}"/></div><p id="balance_header">0</p>
+                                </div>
                             {% else %}
-                            <div id="logo-left-cont" style=" color:#102858; position:absolute; height:90%; width:15%; left:2.5%; background-color: white; display:flex; align-items:center; justify-content:center;">
+                                    <div id="logo-left-cont" style=" color:#102858; position:absolute; height:90%; width:15%; left:2.5%; background-color: white; display:flex; align-items:center; justify-content:center;">
                             </div>
                             {% endif %}
 

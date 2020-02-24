@@ -64,6 +64,12 @@ function AnimateRotate(angle,id,duration) {
     });
 }
 
+$('#logo-left-cont').click(function(){
+    if(waitingVariables.experimental_group == "shop"){
+        click_save("#logo-left-cont", "Shop opened");
+        open_shop();
+    }
+});
 
 function open_shop(){
     $('#product-category-options').empty();
@@ -88,7 +94,7 @@ function open_shop(){
      if(!waitingVariables.shop_opened){
         setHeight();
         get_tia_attributes();
-        shop_opened = true;
+        waitingVariables.shop_opened = true;
      }
      else{
         zoom(0,camera_values.original);
@@ -97,7 +103,9 @@ function open_shop(){
 
      }
      //Click burger
-     $('#popup-btn').click();
+     if($('#popup-btn').hasClass("clicked")){
+        $('#popup-btn').click();
+     }
 
 
 

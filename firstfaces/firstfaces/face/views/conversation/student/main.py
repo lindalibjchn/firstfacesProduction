@@ -9,6 +9,7 @@ from face.models import Conversation, Sentence, AudioFile, Profile, AudioError, 
 from django.conf import settings
 from django.http import JsonResponse
 from face.utils import * #for now
+from face.views.waiting.utils.store_utils import get_attributes_conversation
 import time
 import datetime
 import logging
@@ -42,6 +43,8 @@ def conversation_student(request, conversation_id):
 
             conversation_dict, sentence_awaiting_judgement, sentence_being_recorded = get_student_conversation(conversation_object, request.user.id, True)
 
+
+            attributes = get_attributes_conversation(request.user);
             stock_phrases = {}
             for s_p in StockPhrases.objects.all():
                 stock_phrases[s_p.name] = {
@@ -59,7 +62,7 @@ def conversation_student(request, conversation_id):
                 
 
             conversation_variables = {
-
+                'attributes': attributes,
                 'stock_phrases': stock_phrases,
                 'prompts': prompts,
                 'username': request.user.username,

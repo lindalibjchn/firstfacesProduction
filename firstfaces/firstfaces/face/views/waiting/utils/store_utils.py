@@ -41,7 +41,7 @@ def get_attributes(user):
     hc = HairColour.objects.get(pk=attr.hairColour)
     cc = ClothesColour.objects.get(pk=attr.clothesColour)
     bc = BackgroundColour.objects.get(pk=attr.backgroundColour)
-    if attr.color_background:
+    if not attr.color_background:
         gif = attr.gif_background
     else:
         gif = None
@@ -54,6 +54,34 @@ def get_attributes(user):
         "BrowC": hc.brow_hex,
         "CC_id": cc.pk,
         "CC": cc.hex,
+        'eyes': attr.eyeColour,
+        "gif_bool": attr.color_background,
+        "gif": gif,
+    }
+
+    return response_data
+
+def get_attributes_conversation(user):
+    try:
+        attr = TiaAttributes.objects.get(learner=user)
+    except:
+        attr = create_default_attributes(user)
+    hc = HairColour.objects.get(pk=attr.hairColour)
+    cc = ClothesColour.objects.get(pk=attr.clothesColour)
+    bc = BackgroundColour.objects.get(pk=attr.backgroundColour)
+    if not attr.color_background:
+        gif = BackgroundGIF.objects.get(pk=attr.gif_background).filename
+    else:
+        gif = ""
+
+    response_data = {
+        'background-colour': bc.hex,
+        'background-colour-id': bc.pk,
+        'hair-colour-id': hc.pk,
+        "hair-colour": hc.hair_hex,
+        "brow-colour": hc.brow_hex,
+        "clothes-id": cc.pk,
+        "clothes-colour": cc.hex,
         'eyes': attr.eyeColour,
         "gif_bool": attr.color_background,
         "gif": gif,
