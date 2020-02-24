@@ -5,8 +5,8 @@ function runTutorial() {
     conversationVariables.tutorialStep = 0;
     conversationVariables.interference_count = 1;
     //["Hello, and a very warm welcome to Emotional Response Language Education", "This is your personal, private classroom, where you can practise your English speaking", "My name is Saoirse, and I will be your teacher", "I will help you improve your English, by showing you your vocabulary and grammar mistakes", "I am a very honest teacher, so every time you make a mistake, even a small one, I will tell you", "Would you like to try a class with me?"]
-    //tiaPrepareToSpeak("Hello,_and_a_very_warm_welcome_to_Emotional_Response_Language_Education", speakCb=function(){
-    tiaPrepareToSpeak("tutorial_start", speakCb=function(){
+    tiaPrepareToSpeak("Hello,_and_a_very_warm_welcome_to_Emotional_Response_Language_Education", speakCb=function(){
+    //tiaPrepareToSpeak("tutorial_start", speakCb=function(){
 
         tutorialOption001();
         showDoubleBtn( tutorialOption000, tiaSpeakButtonEvent ) 
@@ -42,8 +42,8 @@ function tutorialOption001() {
     //removeDoubleBtn();
     
     // ["That's great, but before we begin chatting, you need to complete a short tutorial", "Do you have 10 minutes to do the tutorial now?"]
-    //tiaPrepareToSpeak("That's_great,_but_before_we_begin_chatting,_you_need_to_complete_a_short_tutorial", speakCb=function(){
-    tiaPrepareToSpeak("tutorial_001", speakCb=function(){
+    tiaPrepareToSpeak("That's_great,_but_before_we_begin_chatting,_you_need_to_complete_a_short_tutorial", speakCb=function(){
+    //tiaPrepareToSpeak("tutorial_001", speakCb=function(){
 
         tutorialOption011();
         showDoubleBtn( tutorialOption010, tiaSpeakButtonEvent ) 
@@ -83,8 +83,8 @@ function tutorialOption011() {
     conversationVariables.tutorialStep = '011';
     
     // ["Fantastic, let's get started then", "First, please tell me, can you hear my voice?"]
-    //tiaPrepareToSpeak("Fantastic,_let's_get_started_then", speakCb=function(){
-    tiaPrepareToSpeak("tutorial_011", speakCb=function(){
+    tiaPrepareToSpeak("Fantastic,_let's_get_started_then", speakCb=function(){
+    //tiaPrepareToSpeak("tutorial_011", speakCb=function(){
 
         tutorialOption021();
         showDoubleBtn( tutorialOption020, tiaSpeakButtonEvent ) 
@@ -146,8 +146,8 @@ function tutorialOption021() {
     conversationVariables.tutorialStep = '021';
     //removeDoubleBtn();
     //["Brilliant, now let's check that I can hear your voice too", "tap the blue microphone button below and say, 'nice to meet you', then tap the red stop button"]
-    //tiaPrepareToSpeak("Brilliant,_now_let's_check_that_I_can_hear_your_voice_too", speakCb=function(){
-     tiaPrepareToSpeak("tutorial_021", speakCb=function(){
+    tiaPrepareToSpeak("Brilliant,_now_let's_check_that_I_can_hear_your_voice_too", speakCb=function(){
+    //tiaPrepareToSpeak("tutorial_021", speakCb=function(){
 
         buttonsMicrophoneOnly();
 
