@@ -169,6 +169,7 @@ function change_options(keys,type){
 
 function option_click(subtype,type){
     alert("option_clicked()");
+    disable_click();
     time = 800
     $('.option').hide();
     $('.option').removeClass("active");

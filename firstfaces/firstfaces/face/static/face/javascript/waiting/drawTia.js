@@ -365,6 +365,7 @@ function hide_background(hex_str){
 }
 
 function change_eye(hex_str){
-    tiaObject.mEyeL2.material[0].color.setHex('0x'+hex_str);
+    tiaObject['mEyeL'+waitingVariables.attributes.eyes].material[0].color.setHex('0x'+hex_str);
+    tiaObject['mEyeR'+waitingVariables.attributes.eyes].material[0].color.setHex('0x'+hex_str);
 }
 

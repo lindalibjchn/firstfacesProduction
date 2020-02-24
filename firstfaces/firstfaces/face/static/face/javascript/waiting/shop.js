@@ -1,14 +1,14 @@
 var sheight, swidth;
 var tiaH, tiaW;
 var remH
-var tiaEyes = []
+var tiaEyes = Object.keys(waitingVariables.products.eyes.colours);
 var Interval_Value = 1000/30;
 
 function setHeight(){
     //get products
 
     get_balance();
-
+    tiaEyes = Object.keys(waitingVariables.products.eyes.colours);
 
 
     swidth = $(document).width()

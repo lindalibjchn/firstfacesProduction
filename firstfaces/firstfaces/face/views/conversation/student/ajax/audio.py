@@ -333,21 +333,19 @@ def error_typing_used(request):
     #Synth Audio
 
     text_ = request.POST['trans'].lower()
-    valid = get_StockWords()
-    print('valid (audio.py):', valid)
-    if text_ not in valid:
-        print('\n\ntext_:', text_)
-        temp = ts.create_word_audio(text_)
-        valid.append(text_)
-        texts = temp.texts
-        url = ['media/' + URL for URL in jsonify_or_none(temp.urls)]
-        visemes = jsonify_or_none(temp.visemes)
-    else:
+
+    try:
         temp = StockWord.objects.get(name=text_)
         texts = temp.texts
         url = ['media/' + URL for URL in jsonify_or_none(temp.urls)]
         visemes = jsonify_or_none(temp.visemes)
-
+    except:
+        print('\n\ntext_:', text_)
+        temp = ts.create_word_audio(text_)
+        texts = temp.texts
+        url = ['media/' + URL for URL in jsonify_or_none(temp.urls)]
+        visemes = jsonify_or_none(temp.visemes)
+        
     ref_url = url
     ref_vis = visemes
 

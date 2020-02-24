@@ -22,7 +22,6 @@ else:
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/john/firstfaces/erle-3666ad7eec71.json"
 
 
-saved_audios = [v.split("/")[-1][:-4] for v in glob.glob(settings.BASE_DIR+'/media/prePreparedWords/audio/*.wav')]
 
 def create_word_audio(word, gesture=None, initial_delay=500, breathing=False, speaking_rate=100, pitch='+0', volume='+0', emotion=''):
     name = word
