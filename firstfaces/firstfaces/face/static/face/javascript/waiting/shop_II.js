@@ -25,6 +25,7 @@ function animate_eye_colour(start_hex, end_hex, time){
 function change_eye_color_with_delay(i,colours,end){
     setTimeout(function(){
         change_eye(colours[i])
+        console.log("eye+HereS")
         i++;
         if(i < end){
             change_eye_color_with_delay(i,colours,end);
