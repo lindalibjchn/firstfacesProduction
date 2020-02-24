@@ -1,6 +1,8 @@
 $(window).on( 'load', function() {
     showTutorialCompleteDashboard()
-
+    if(waitingVariables.experimental_group != "control"){
+        $('#balance_header').text(waitingVariables.balance);
+    }
     if ( ! waitingVariables.tutorial_complete ) {
 
         setTimeout(function(){

@@ -295,3 +295,8 @@ def get_nationality_code(country_name):
         countries = json.load(f)
 
     return countries.get(country_name)
+
+
+def get_balance(user):
+    return Profile.objects.get(learner=user).points
+

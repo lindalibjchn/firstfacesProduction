@@ -243,6 +243,10 @@ $('#main-logo').click(function(){
     click_save("#tutorialButton", "Home opened");
     open_home();
 });
+$('#home-btn').click(function(){
+    click_save("#home-btn", "Home opened");
+    open_home();
+});
 $('#history-btn').click(function(){
     click_save("#history-btn", "History opened");
     open_history()
