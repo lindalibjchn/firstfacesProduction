@@ -293,7 +293,7 @@ function show_hair(time=500, st_callback=function(){}){
         $('#product-category-options').css("display", "flex").hide().fadeIn(time);
         $('#product-cont').fadeIn(time);
         setTimeout(function(){
-            st_callback();
+            enable_click();
         },time);
     },time);
 }

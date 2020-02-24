@@ -345,7 +345,7 @@ def error_typing_used(request):
         texts = temp.texts
         url = ['media/' + URL for URL in jsonify_or_none(temp.urls)]
         visemes = jsonify_or_none(temp.visemes)
-        
+
     ref_url = url
     ref_vis = visemes
 
@@ -357,28 +357,29 @@ def error_typing_used(request):
 
 
     #synthFN = generate_synth_audio(request.POST['trans'],fn)
-    ref_image = get_spectogram(settings.BASE_DIR+'/' +ref_url[0], 0, "ref_"+session_id+"_"+timezone.now().strftime('%H-%M-%S')+".png", 0)
+    #ref_image = get_spectogram(settings.BASE_DIR+'/' +ref_url[0], 0, "ref_"+session_id+"_"+timezone.now().strftime('%H-%M-%S')+".png", 0)
     sim = get_sim(ERR_trans, request.POST['trans'])
-    hin = "hyp_"+session_id+"_"+timezone.now().strftime('%H-%M-%S')+".png"
+    #hin = "hyp_"+session_id+"_"+timezone.now().strftime('%H-%M-%S')+".png"
 
-    if not ts_error:
-        hyp_image = get_spectogram(errorPath, sim, hin, 1)
-        hypLen = get_audio_length(errorPath)
-        hyp_audio = ref_path(fn)
-    else:
-        hyp_image = ""
-        hypLen = 0
-        hyp_audio = ""
+    #if not ts_error:
+       # hyp_image = get_spectogram(errorPath, sim, hin, 1)
+       # hypLen = get_audio_length(errorPath)
+      #  hyp_audio = ref_path(fn)
+    #else:
+    hyp_image = ""
+    hypLen = 0
+    hyp_audio = ""
+    ref_image = ""
     refLen = get_audio_length(settings.BASE_DIR+'/' +ref_url[0])
 
 
     #create empty Audio Error Correction Attempt
-    ae.typed= True
+    ae.typed = True
     ae.intention = request.POST['trans']
     ae.save()
 
     aeca = AudioErrorCorrectionAttempt(error=ae)
-    aeca.save();
+    aeca.save()
 
     response_data = {
             #"ref_audio_url":ref_audio,
