@@ -5,6 +5,7 @@ $(window).on( 'load', function() {
     // AFTER LOADING 'enterOrReEnter()' WILL BE CALLED BELOW
     
     let getUserMediaOK = checkIfDeviceCanRunSite();
+    console.log( 'getUserMediaOK:', getUserMediaOK );
 
     if ( getUserMediaOK ) {
 
@@ -68,6 +69,10 @@ function checkIfDeviceCanRunSite() {
                         alert( "Please enable MediaRecorder via the following steps. Go to:\n1. settings\n2. Safari\n3. advanced\n4. experimental features\n5. turn 'MediaRecorder' on\n6. Refresh this page" )
                         return false
 
+                    } else {
+
+                        return true
+
                     }
 
                 } else {
@@ -88,7 +93,18 @@ function checkIfDeviceCanRunSite() {
 
     } else {
 
-        return true;
+        let isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+
+        if ( isChrome ) {
+
+            return true;
+
+        } else {
+
+            alert('ERLE is only available on Google Chrome on Android')
+            return false;
+
+        }
 
     }
 

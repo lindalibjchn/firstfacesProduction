@@ -235,7 +235,8 @@ $('#shop-btn').click(function(){
     click_save("#shop-btn", "Shop opened");
     open_shop();
 });
-$('#tutorialButton').click(function(){
+$('#tutorialButton').on('click', function(){
+    $('#tutorialButton').off('click');
     click_save("#tutorialButton", "Tutorial started");
     openTutorial();
 });

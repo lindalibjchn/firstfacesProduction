@@ -53,9 +53,11 @@ def check_for_change(request):
             sent_ids = jsonify_or_none(update.sentence_ids)
             if sent_ids != None:
                 for sent_id in sent_ids:
-                    sent = Sentence.objects.get(pk=sent_id)
-                    sentences_not_judged.append(convert_django_sentence_object_to_json(sent, sent.learner.id, sent.conversation.id))
-
+                    try:
+                        sent = Sentence.objects.get(pk=sent_id)
+                        sentences_not_judged.append(convert_django_sentence_object_to_json(sent, sent.learner.id, sent.conversation.id))
+                    except:
+                        pass
         if update.updated_aud:
 
             # print('\naudio updated\n')
@@ -63,8 +65,11 @@ def check_for_change(request):
             
             if aud_ids != None:
                 for sent_aud_id in aud_ids:
-                    sent_aud = Sentence.objects.get(pk=sent_aud_id)
-                    sentences_being_recorded.append(convert_django_sentence_object_to_json(sent_aud, sent_aud.learner.id, sent_aud.conversation.id))
+                    try:
+                        sent_aud = Sentence.objects.get(pk=sent_aud_id)
+                        sentences_being_recorded.append(convert_django_sentence_object_to_json(sent_aud, sent_aud.learner.id, sent_aud.conversation.id))
+                    except:
+                        pass
 
         update.sentence_ids = None
         update.updated_sent = False

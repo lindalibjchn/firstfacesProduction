@@ -3,7 +3,12 @@ function tiaLookAtLaptopAndType() {
     //console.log('tiaLookAtLaptopAndType');
     movementController( movementObject.abs.laptop, 0.4, 1, function() {
     
-        startAudioStream();
+        if ( appleDevice ) {
+        
+            startAudioStream();
+        
+        }
+
         conversationVariables.tiaTyping = true;
         backNReadALine();
         initType( 'R' );
