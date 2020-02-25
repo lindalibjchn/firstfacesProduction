@@ -47,6 +47,7 @@ function fix_img_size(){
 
 
 function equip_eyes(id){
+    click_save("#buy_equip_btn", "Equip Eyes-"+id);
     let fd = new FormData();
     fd.append("id_",id);
      $.ajax({
@@ -74,6 +75,7 @@ function equip_eyes(id){
     });
 }
 function buy_eyes(id){
+    click_save("#buy_equip_btn", "Buy Eyes-"+id);
     let fd = new FormData();
     fd.append("id_",id);
     fd.append("price",waitingVariables.products.eyes.colours[id].price);
@@ -107,6 +109,7 @@ function buy_eyes(id){
 
 
 function equip_background(id){
+    click_save("#buy_equip_btn", "Equip Background-"+id);
     let fd = new FormData();
     fd.append("id_",id);
      $.ajax({
@@ -127,6 +130,7 @@ function equip_background(id){
             for(x in waitingVariables.products[type]['colours']){
                 $('#product-cont').append(waitingVariables.products[type]['colours'][x].html)
             }
+            $('.gif_tile').removeClass("equipped");
             fix_img_size();
             unclicked_background();
         },
@@ -137,6 +141,7 @@ function equip_background(id){
 }
 
 function equip_gif(id){
+    click_save("#buy_equip_btn", "Equip GIF-"+id);
     let fd = new FormData();
     fd.append("id_",id);
      $.ajax({
@@ -157,6 +162,7 @@ function equip_gif(id){
             for(x in waitingVariables.products[type]['gifs']){
                 $('#product-cont').append(waitingVariables.products[type]['gifs'][x].html)
             }
+            $('.background_tile').removeClass("equipped");
             fix_img_size();
             unclicked_gif();
         },
@@ -168,6 +174,7 @@ function equip_gif(id){
 
 
 function equip_clothes(id){
+    click_save("#buy_equip_btn", "Equip Clothes-"+id);
     let fd = new FormData();
     fd.append("id_",id);
      $.ajax({
@@ -198,6 +205,7 @@ function equip_clothes(id){
 }
 
 function buy_clothes(id){
+    click_save("#buy_equip_btn", "Buy Clothes-"+id);
     let fd = new FormData();
     fd.append("id_",id);
     fd.append("price",waitingVariables.products.clothes.colours[id].price);
@@ -214,7 +222,7 @@ function buy_clothes(id){
             //Show fake red balance appear then move down and fade out
             waitingVariables.attributes['clothes-colour'] = hex;
             waitingVariables.products.clothes = json.clothes
-            $('.product-category-cont').empty();
+            //$('.product-category-cont').empty();
             type = 'clothes';
             subtype = "colours"
             $('#product-cont').empty();
@@ -234,6 +242,7 @@ function buy_clothes(id){
 
 
 function buy_background(id){
+    click_save("#buy_equip_btn", "Buy Background-"+id);
     let fd = new FormData();
     fd.append("id_",id);
     fd.append("price",waitingVariables.products.backgrounds.colours[id].price);
@@ -251,12 +260,14 @@ function buy_background(id){
             waitingVariables.attributes['background-colour'] = hex;
             waitingVariables.attributes.gif_bool = true;
             waitingVariables.products.backgrounds.colours = json.backgrounds
-            $('.product-category-cont').empty();
+            $('#product-cont').empty();
             type = 'backgrounds';
             sub_type = "colours"
-            for(x in waitingVariables.products[type]){
-                $('.product-category-cont').append(waitingVariables.products[type][sub_type][x].html)
+            for(x in waitingVariables.products[type][sub_type]){
+                $('#product-cont').append(waitingVariables.products[type][sub_type][x].html)
             }
+            fix_img_size();
+            $('.gif_tile').removeClass("equipped");
             unclicked_gif();
 
         },
@@ -267,6 +278,7 @@ function buy_background(id){
 }
 
 function buy_gif(id){
+    click_save("#buy_equip_btn", "Buy GIF-"+id);
     let fd = new FormData();
     fd.append("id_",id);
     fd.append("price",waitingVariables.products.backgrounds.gifs[id].price);
@@ -283,12 +295,14 @@ function buy_gif(id){
             waitingVariables.attributes['gif'] = id;
             waitingVariables.attributes['gif_bool'] = false;
             waitingVariables.products.backgrounds.gifs = json.backgrounds
-            $('.product-category-cont').empty();
+            $('#product-cont').empty();
             type = 'backgrounds';
             sub_type = "gifs"
-            for(x in waitingVariables.products[type]){
-                $('.product-category-cont').append(waitingVariables.products[type][sub_type][x].html)
+            for(x in waitingVariables.products[type][sub_type]){
+                $('#product-cont').append(waitingVariables.products[type][sub_type][x].html)
             }
+            $('.background_tile').removeClass("equipped");
+            fix_img_size();
             unclicked_background();
 
         },
@@ -403,6 +417,7 @@ function get_clothingColours(){
 }
 
 function equip_hair(id){
+    click_save("#buy_equip_btn", "Equip Hair-"+id);
     let fd = new FormData();
     fd.append("id_",id);
      $.ajax({
@@ -422,9 +437,9 @@ function equip_hair(id){
             waitingVariables.products.hair = json.hair
             type = 'hair';
             subtype = "colours";
-            $('.product-category-cont').empty();
+            $('#product-cont').empty();
             for(x in waitingVariables.products[type][subtype]){
-                $('.product-category-cont').append(waitingVariables.products[type][subtype][x].html)
+                $('#product-cont').append(waitingVariables.products[type][subtype][x].html)
             }
             fix_img_size();
             unclicked_hair();
@@ -436,6 +451,7 @@ function equip_hair(id){
 }
 
 function buy_hair(id){
+    click_save("#buy_equip_btn", "Buy Hair-"+id);
     let fd = new FormData();
     fd.append("id_",id);
     fd.append("price",waitingVariables.products.hair.colours[id].price);
@@ -454,11 +470,11 @@ function buy_hair(id){
              $('#balance_header').text(json.balance);
             //Show fake red balance appear then move down and fade out
             waitingVariables.products.hair = json.hair
-            $('.product-category-cont').empty();
+            $('#product-cont').empty();
             type = 'hair';
             subtype = "colours";
             for(x in waitingVariables.products[type][subtype]){
-                $('.product-category-cont').append(waitingVariables.products[type][subtype][x].html)
+                $('#product-cont').append(waitingVariables.products[type][subtype][x].html)
             }
             fix_img_size();
             unclicked_hair();
@@ -534,7 +550,11 @@ function flash_border(){
 }
 
 function clicked_background(id){
+        if(waitingVariables.wait_on_foo){
+            return;
+        }
         st = 'colours'
+        click_save(".product", "Opened Background-"+id);
         if(waitingVariables.products.backgrounds[st][id].class == 'locked'){
             //$('#'+id).effect("shake", {distance:5, times: 3},300);
             return;
@@ -552,12 +572,19 @@ function clicked_background(id){
         }
         $('#buy_equip_btn').text(txt);
 
-        $('#product_description_back_btn').click(function(){unclicked_background();});
+        $('#product_description_back_btn').click(function(){
+            click_save("#product_description_back_btn", "Closed Background-"+id);
+            unclicked_background();
+        });
         show_description(waitingVariables.products.backgrounds[st][id].name, '#'+waitingVariables.products.backgrounds[st][id].hex, price)
         animate_background_colour(waitingVariables.attributes["background-colour"],waitingVariables.products.backgrounds[st][id].hex,600);
 }
 
 function clicked_clothes(id){
+        if(waitingVariables.wait_on_foo){
+            return;
+        }
+        click_save(".product", "Opened Clothes-"+id);
         if(waitingVariables.products.clothes.colours[id].class == 'locked'){
             //$('#'+id).effect("shake", {distance:5, times: 3},300);
             return;
@@ -574,12 +601,19 @@ function clicked_clothes(id){
             $('#buy_equip_btn').attr('onclick','buy_clothes("'+id+'")');
         }
         $('#buy_equip_btn').text(txt);
-        $('#product_description_back_btn').click(function(){unclicked_clothes();});
+        $('#product_description_back_btn').click(function(){
+            click_save("#product_description_back_btn", "Closed Clothes-"+id);
+            unclicked_clothes();
+         });
         show_description(waitingVariables.products.clothes.colours[id].name, '#'+waitingVariables.products.clothes.colours[id].hex, price)
         animate_clothes_colour(waitingVariables.attributes["clothes-colour"],waitingVariables.products.clothes.colours[id].hex,600);
 }
 
 function clicked_hair(id){
+        if(waitingVariables.wait_on_foo){
+            return;
+        }
+        click_save(".product", "Opened Hair-"+id);
         if(waitingVariables.products.hair.colours[id].class == 'locked'){
             //$('#'+id).effect("shake", {distance:5, times: 3},300);
             return;
@@ -597,7 +631,10 @@ function clicked_hair(id){
         }
         $('#buy_equip_btn').text(txt);
 
-        $('#product_description_back_btn').click(function(){unclicked_hair();});
+        $('#product_description_back_btn').click(function(){
+            click_save("#product_description_back_btn", "Closed Hair-"+id);
+            unclicked_hair();
+         });
         show_description(waitingVariables.products.hair.colours[id].name, '#'+waitingVariables.products.hair.colours[id].hex_hair, price)
         animate_hair_colour(waitingVariables.attributes['hair-colour'], waitingVariables.attributes['brow-colour'] ,waitingVariables.products.hair.colours[id].hex_hair, waitingVariables.products.hair.colours[id].hex_brow,600);
 }
@@ -645,7 +682,7 @@ function unclicked_background(){
 }
 
 function unclicked_gif(){
-    hide_description()
+        hide_description()
         if(waitingVariables.attributes.gif_bool){
             animate_background_colour(decimal_rgb_hex(renderer.getClearColor()),waitingVariables.attributes['background-colour'],600);
         } else {
@@ -1029,7 +1066,10 @@ function animate_zoom(i,vals,end){
 
 
 function clicked_eye(id){
-
+        click_save(".product", "Opened Eye-"+id);
+        if(waitingVariables.wait_on_foo){
+            return;
+        }
         if(waitingVariables.products.eyes.colours[id].class == 'locked'){
             //$('#'+id).effect("shake", {distance:5, times: 3},300);
             return;
@@ -1047,7 +1087,10 @@ function clicked_eye(id){
         }
         $('#buy_equip_btn').text(txt);
 
-    $('#product_description_back_btn').click(function(){unclicked_eyes();});
+    $('#product_description_back_btn').click(function(){
+        click_save("#product_description_back_btn", "Closed Eye-"+id);
+        unclicked_eyes();
+    });
     show_description(waitingVariables.products.eyes.colours[id].name, '#'+waitingVariables.products.eyes.colours[id].hex, price)
 
     disable_click();
@@ -1063,11 +1106,12 @@ function clicked_eye(id){
 }
 
 function unclicked_eyes(){
+
     hide_description();
     closeEyes(time=300);
     setTimeout(function(){
         change_eyes(id=waitingVariables.attributes.eyes);
-        openEyes(wait=300,st_callback=enable_click());
+        openEyes(wait=300);
         setTimeout(function(){enable_click();},600);
     },300);
 }

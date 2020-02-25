@@ -3,7 +3,13 @@ function sendSentToServer() {
     if (!conversationVariables.tutorial ) {
 
         if(conversationVariables.playStage2){
-            getRemainingAudio();
+            if(conversationVariables.FAFailed){
+                console.log("Error in forced allignment")
+            }
+            else{
+                getRemainingAudio();
+            }
+
             
            //i getAudioLength();
         }
@@ -22,29 +28,22 @@ function sendSentToServer() {
             alert('this sentence is too long to send - the mamiximum is 30 words')
             
         } else {
-                
-            if(conversationVariables.usePlayAud){
-                // temporary fix
-                if ( !conversationVariables.FAFailed ) {
-                
-                    play_audio();
 
-                }
-                else{
+            if ( conversationVariables.playStage2) {
+                if(conversationVariables.FAFailed){
                     aud.play();
                 }
-                conversationVariables.usePlayAud = false;
+                else{
+                    play_audio();
+                }
+
+            } else {
+                aud.play();
+            }
+            conversationVariables.playStage2 = false;
             
             } else {
-                if ( !conversationVariables.FAFailed ) {
-                
-                    aud.play();
-                
-                }
-                else{
-                    aud.play();
-                }
-
+                 aud.play();
             }
             let extraDelay = 0;
             if ( appleDevice ) {
