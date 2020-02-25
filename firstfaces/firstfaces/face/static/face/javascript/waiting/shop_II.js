@@ -71,6 +71,7 @@ function switch_to_gif(gif,time=300){
 }
 
 function clicked_gif(id){
+        click_save(".product", "Opened GIF-"+id);
         st = 'gifs'
         if(waitingVariables.products.backgrounds[st][id].class == 'locked'){
             //$('#'+id).effect("shake", {distance:5, times: 3},300);
@@ -89,7 +90,10 @@ function clicked_gif(id){
         }
         $('#buy_equip_btn').text(txt);
 
-        $('#product_description_back_btn').click(function(){unclicked_gif();});
+        $('#product_description_back_btn').click(function(){
+            click_save("#product_description_back_btn", "Closed GIF-"+id);
+            unclicked_gif();
+         });
         show_description(waitingVariables.products.backgrounds[st][id].name, '#'+waitingVariables.products.backgrounds[st][id].hex, price)
         switch_to_gif(waitingVariables.products.backgrounds[st][id].filename,600);
 

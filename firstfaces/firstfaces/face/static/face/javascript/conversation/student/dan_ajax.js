@@ -1383,7 +1383,7 @@ function animate_open_overlay(err_id){
         },1000);
         //Once the verlay is opened the buttons underneath appear again
         setTimeout(function(){
-            $('#backCorrection').show();
+            //$('#backCorrection').show();
             //$('#recordVoiceBtn').show();
         },2000);
 

@@ -2,7 +2,6 @@ var clickableObjects = [];
 
 
 function onClick(event) {
-    alert("Clicked");
     disable_click();
     if(event.clientY >= $('#tiaHolder').offset()['top'] && event.clientY <= $('#tiaHolder').offset()['top']+$('#tiaHolder').height()){
         y_pos = event.clientY-$('#tiaHolder').offset()['top'];
@@ -12,9 +11,11 @@ function onClick(event) {
     }
     event.preventDefault();
     if($('#popup-btn').hasClass("clicked")){
+        enable_click();
         return;
     }
     if(waitingVariables.wait_on_foo){
+        click_save("#tiaHolder", "Disabled");
         return;
     }
 
@@ -56,13 +57,16 @@ function onClick(event) {
                         setTimeout(function(){
                             if(intersects[0].object.name == 'mHair'){
                                 flash_hair(300);
+                                click_save("#tiaHolder", "Show Hair");
                                 show_title('Hair',wait=300,time=500,st_callback=show_hair);
                             }
-                            if(intersects[0].object.name.substring(0,4) == 'mEye'){
+                            else if(intersects[0].object.name.substring(0,4) == 'mEye'){
                                 flash_eyes(time=200)
+                                click_save("#tiaHolder", "Show Eyes");
                                 show_title('Eyes',wait=300,time=500,st_callback=show_eyes);
                             }
                             else{
+                                click_save("#tiaHolder", "Show Face");
                                 enable_click();
                             }
                         },300);
@@ -70,14 +74,17 @@ function onClick(event) {
                 }
                 else{
                     if(intersects[0].object.name == 'mHair'){
+                        click_save("#tiaHolder", "Show Hair");
                         flash_hair(300);
                         show_title('Hair',wait=300,time=500,st_callback=show_hair);
                     }
-                    if(intersects[0].object.name.substring(0,4) == 'mEye'){
+                    else if(intersects[0].object.name.substring(0,4) == 'mEye'){
                         flash_eyes(time=200)
+                        click_save("#tiaHolder", "Show Eyes");
                         show_title('Eyes',wait=300,time=500,st_callback=show_eyes);
                     }
                     else{
+                        click_save("#tiaHolder", "Show Face");
                         enable_click();
                     }
                 }
@@ -85,15 +92,17 @@ function onClick(event) {
           if(intersects[0].object.name == 'mBody'){
 
                  if(waitingVariables.zoomed){
-                    console.log("here");
+
                     zoom(300,camera_values.original);
                     waitingVariables.zoomed = false;
                     setTimeout(function(){
-                       flash_clothes(200);
+                        click_save("#tiaHolder", "Show Clothes");
+                        flash_clothes(200);
                         show_title('Clothing',wait=300,time=500, st_callback= show_clothes);
                     },300);
                  }
                  else{
+                    click_save("#tiaHolder", "Show Clothes");
                     flash_clothes(200);
                     show_title('Clothing',wait=300,time=500, st_callback= show_clothes);
                  }
@@ -111,6 +120,7 @@ function onClick(event) {
                         flash_gif(200);
                     }
                     setTimeout(function(){
+                        click_save("#tiaHolder", "Show Backgrounds");
                         show_title('backgrounds',wait=300,time=500,st_callback=show_backgrounds);
                     },200);
                 },300);
@@ -121,6 +131,7 @@ function onClick(event) {
                     flash_gif(200);
                 }
                 setTimeout(function(){
+                    click_save("#tiaHolder", "Show Backgrounds");
                     show_title('backgrounds',wait=300,time=500,st_callback=show_backgrounds);
                 },200);
 
@@ -141,9 +152,12 @@ function show_backgrounds(time=500, st_callback=function(){} ){
     setTimeout(function(){
         $('#product-cont').hide();
         $('#product-cont').empty().removeClass("tile");
-        change_options([['Colours', 'colours'], ['Animated','gifs']], type);
+        change_options([['Colours', 'colours'], ['Wallpapers','gifs']], type);
         for(x in waitingVariables.products[type][subtype]){
             $('#product-cont').append(waitingVariables.products[type][subtype][x].html)
+        }
+        if(subtype == "colours" && type == "backgrounds" && !waitingVariables.attributes.gif_bool){
+            $('.background_tile').removeClass("equipped");
         }
         fix_img_size();
         $('#product-category-options').css("display", "flex").hide().fadeIn(time);
@@ -168,7 +182,10 @@ function change_options(keys,type){
 }
 
 function option_click(subtype,type){
-    alert("option_clicked()");
+    click_save(".option", "Option Clicked - ["+type+" , "+subtype+"]");
+    if(waitingVariables.wait_on_foo){
+        return;
+    }
     disable_click();
     time = 800
     $('.option').hide();
@@ -179,6 +196,12 @@ function option_click(subtype,type){
         $('product-cont').empty()
         for(x in waitingVariables.products[type][subtype]){
             $('#product-cont').append(waitingVariables.products[type][subtype][x].html)
+        }
+        if(subtype == "gifs" && type == "backgrounds" && waitingVariables.attributes.gif_bool){
+            $('.gif_tile').removeClass("equipped");
+        }
+        else if(subtype == "colours" && type == "backgrounds" && !waitingVariables.attributes.gif_bool){
+            $('.background_tile').removeClass("equipped");
         }
         fix_img_size();
          $('#product-cont').fadeIn(time);
@@ -201,9 +224,7 @@ function hide_products(time=300){
    },time);
 }
 function show_title(text, wait=0, time=300, st_callback=function(){}){
-
     setTimeout(function(){
-        alert("In show title")
         $('#product-cont').empty();
         $('#product-cont').append("<div style='height:100%; width:100%; display:flex; justify-content:center; align-items:center;'><p id='hidden-title-category' style=\"font-family:'Oswald', sans-serif; display:none; text-transform: uppercase; font-size: 25px; color: #102858;\">"+text+"</p></div>");
         $("#hidden-title-category").fadeIn(time);
@@ -263,7 +284,6 @@ function show_clothes(time=500, st_callback=function(){} ){
 }
 
 function disable_click(wait=0){
-    alert("disabled");
     setTimeout(function(){
         waitingVariables.wait_on_foo = true;
     },wait);
@@ -271,7 +291,6 @@ function disable_click(wait=0){
 
 
 function enable_click(wait=0){
-    alert("enabled");
     setTimeout(function(){
         waitingVariables.wait_on_foo = false;
     },wait);

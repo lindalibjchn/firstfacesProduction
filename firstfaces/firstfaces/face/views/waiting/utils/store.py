@@ -115,7 +115,7 @@ def equip_background(request):
     out = {}
     for bc in bcs:
         if str(bc.pk) in owned:
-            if str(equipped) == str(bc.pk) and gif_bool:
+            if str(equipped) == str(bc.pk):
                 html = background_to_html("owned equipped", bc.price, bc.hex, bc.pk)
                 out[bc.pk] = background_to_json("owned", bc.name, bc.price, bc.hex, html)
             else:
@@ -152,7 +152,7 @@ def equip_background_gif(request):
     out = {}
     for g in bcs:
         if str(g.pk) in owned:
-            if attr.gif_background == str(g.pk) and not attr.color_background:
+            if id_ == str(g.pk) and not attr.color_background:
                 html = gif_to_html("owned equipped", g.price, g.filename, g.pk)
                 out[g.pk] = eye_to_json("owned", g.name, g.price, g.hex, html, g.filename)
             else:
@@ -186,7 +186,7 @@ def equip_eyes(request):
     out = {}
     for bc in bcs:
         if str(bc.pk) in owned:
-            if attr.eyeColour == str(bc.pk):
+            if id_ == str(bc.pk):
                 html = eye_to_html("owned equipped", bc.price, bc.filename, bc.pk)
                 out[bc.pk] = eye_to_json("owned", bc.name, bc.price, bc.hex, html, bc.filename)
             else:
@@ -234,7 +234,7 @@ def buy_eyes(request):
     bcs = EyeTypes.objects.all()
     for bc in bcs:
         if str(bc.pk) in owned:
-            if attr.eyeColour == str(bc.pk):
+            if id_ == str(bc.pk):
                 html = eye_to_html("owned equipped", bc.price, bc.filename, bc.pk)
                 out[bc.pk] = eye_to_json("owned", bc.name, bc.price, bc.hex, html, bc.filename)
             else:
@@ -339,7 +339,7 @@ def buy_background_gif(request):
     bcs = BackgroundGIF.objects.all()
     for g in bcs:
         if str(g.pk) in owned:
-            if attr.gif_background == str(g.pk) and not attr.color_background:
+            if id_ == str(g.pk) and not attr.color_background:
                 html = gif_to_html("owned equipped", g.price, g.filename, g.pk)
                 out[g.pk] = eye_to_json("owned", g.name, g.price, g.hex, html, g.filename)
             else:
@@ -611,7 +611,7 @@ def equip_hair(request):
     out = {}
     for hc in hcs:
         if str(hc.pk) in owned:
-            if attr.backgroundColour == str(hc.pk):
+            if id_ == str(hc.pk):
                 html = hair_to_html("owned equipped", hc.price, hc.hair_hex, hc.pk)
                 out[hc.pk] = hair_to_json("owned", hc.name, hc.price, hc.hair_hex, hc.brow_hex, html)
             else:
@@ -660,7 +660,7 @@ def buy_hair(request):
     hcs = HairColour.objects.all()
     for hc in hcs:
         if str(hc.pk) in owned:
-            if attr.backgroundColour == str(hc.pk):
+            if id_ == str(hc.pk):
                 html = hair_to_html("owned equipped", hc.price, hc.hair_hex, hc.pk)
                 out[hc.pk] = hair_to_json("owned", hc.name, hc.price, hc.hair_hex, hc.brow_hex, html)
             else:
@@ -688,7 +688,7 @@ def background_to_html(class_, price, hex_, id_):
     if 'equipped' not in class_ and 'locked' not in class_:
         class_ += " unequipped"
         print("Meme")
-    out = '<div class="product {} tile_smaller" id="{}" onclick="clicked_background(this.id)" ><div class="lockHolder"><div class="lock-div"><i class="fa fa-lock"></i></div></div><div class="product-img-cont"><div class="background-color-img" style="background-color:#{};"></div></div><div class="product-price">{}</div></div>'.format(
+    out = '<div class="product {} background_tile tile_smaller" id="{}" onclick="clicked_background(this.id)" ><div class="lockHolder"><div class="lock-div"><i class="fa fa-lock"></i></div></div><div class="product-img-cont"><div class="background-color-img" style="background-color:#{};"></div></div><div class="product-price">{}</div></div>'.format(
         class_, id_, hex_, price)
     return out
 
@@ -717,7 +717,7 @@ def gif_to_html(class_, price, eye_file_name, id_):
     prefix = 'media/gifs/'
     if class_ == "owned" or class_ == "owned equipped":
         price = '<i class="fa fa-check"></i>'
-    html = '<div class="product {} tile_smaller" id="{}" onclick="clicked_gif(this.id)" ><div class="lockHolder"><div class="lock-div"><i class="fa fa-lock"></i></div></div><div class="product-img-cont"><div class="background-color-img"><img class="img_product" src="{}"/></div></div><div class="product-price">{}</div></div>'
+    html = '<div class="product gif_tile {} tile_smaller" id="{}" onclick="clicked_gif(this.id)" ><div class="lockHolder"><div class="lock-div"><i class="fa fa-lock"></i></div></div><div class="product-img-cont"><div class="background-color-img"><img class="img_product" src="{}"/></div></div><div class="product-price">{}</div></div>'
     return html.format(class_, id_, prefixURL+prefix+eye_file_name, price)
 
 

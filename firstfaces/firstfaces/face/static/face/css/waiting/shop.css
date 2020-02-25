@@ -231,6 +231,7 @@
     font-size: 5.5vh;
     z-index:2;
     color:white;
+    text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #0;
 }
 
 #product_description_title{
