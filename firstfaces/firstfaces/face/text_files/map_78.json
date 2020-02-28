@@ -1,0 +1,207 @@
+{
+  "transcript": "a,dt,woman,nn,woke,vbd,up,rb,very,rb,late,rb\n",
+  "words": [
+    {
+      "alignedWord": "a",
+      "case": "success",
+      "end": 1.5299999999999998,
+      "endOffset": 1,
+      "phones": [
+        {
+          "duration": 0.38,
+          "phone": "ah_S"
+        }
+      ],
+      "start": 1.15,
+      "startOffset": 0,
+      "word": "a"
+    },
+    {
+      "alignedWord": "<unk>",
+      "case": "success",
+      "end": 1.6,
+      "endOffset": 4,
+      "phones": [
+        {
+          "duration": 0.01,
+          "phone": "oov_S"
+        }
+      ],
+      "start": 1.59,
+      "startOffset": 2,
+      "word": "dt"
+    },
+    {
+      "alignedWord": "woman",
+      "case": "success",
+      "end": 2.0700000000000003,
+      "endOffset": 10,
+      "phones": [
+        {
+          "duration": 0.12,
+          "phone": "w_B"
+        },
+        {
+          "duration": 0.09,
+          "phone": "uh_I"
+        },
+        {
+          "duration": 0.04,
+          "phone": "m_I"
+        },
+        {
+          "duration": 0.07,
+          "phone": "ah_I"
+        },
+        {
+          "duration": 0.15,
+          "phone": "n_E"
+        }
+      ],
+      "start": 1.6,
+      "startOffset": 5,
+      "word": "woman"
+    },
+    {
+      "alignedWord": "<unk>",
+      "case": "success",
+      "end": 2.09,
+      "endOffset": 13,
+      "phones": [
+        {
+          "duration": 0.01,
+          "phone": "oov_S"
+        }
+      ],
+      "start": 2.08,
+      "startOffset": 11,
+      "word": "nn"
+    },
+    {
+      "alignedWord": "woke",
+      "case": "success",
+      "end": 2.45,
+      "endOffset": 18,
+      "phones": [
+        {
+          "duration": 0.09,
+          "phone": "w_B"
+        },
+        {
+          "duration": 0.08,
+          "phone": "ow_I"
+        },
+        {
+          "duration": 0.11,
+          "phone": "k_E"
+        }
+      ],
+      "start": 2.17,
+      "startOffset": 14,
+      "word": "woke"
+    },
+    {
+      "alignedWord": "<unk>",
+      "case": "success",
+      "end": 2.4699999999999998,
+      "endOffset": 22,
+      "phones": [
+        {
+          "duration": 0.01,
+          "phone": "oov_S"
+        }
+      ],
+      "start": 2.46,
+      "startOffset": 19,
+      "word": "vbd"
+    },
+    {
+      "alignedWord": "up",
+      "case": "success",
+      "end": 2.81,
+      "endOffset": 25,
+      "phones": [
+        {
+          "duration": 0.11,
+          "phone": "ah_B"
+        },
+        {
+          "duration": 0.2,
+          "phone": "p_E"
+        }
+      ],
+      "start": 2.5,
+      "startOffset": 23,
+      "word": "up"
+    },
+    {
+      "alignedWord": "<unk>",
+      "case": "success",
+      "end": 2.8499999999999996,
+      "endOffset": 28,
+      "phones": [
+        {
+          "duration": 0.01,
+          "phone": "oov_S"
+        }
+      ],
+      "start": 2.84,
+      "startOffset": 26,
+      "word": "rb"
+    },
+    {
+      "alignedWord": "very",
+      "case": "success",
+      "end": 3.32,
+      "endOffset": 33,
+      "phones": [
+        {
+          "duration": 0.08,
+          "phone": "v_B"
+        },
+        {
+          "duration": 0.08,
+          "phone": "eh_I"
+        },
+        {
+          "duration": 0.13,
+          "phone": "r_I"
+        },
+        {
+          "duration": 0.17,
+          "phone": "iy_E"
+        }
+      ],
+      "start": 2.86,
+      "startOffset": 29,
+      "word": "very"
+    },
+    {
+      "alignedWord": "<unk>",
+      "case": "success",
+      "end": 3.67,
+      "endOffset": 36,
+      "phones": [
+        {
+          "duration": 0.29,
+          "phone": "oov_S"
+        }
+      ],
+      "start": 3.38,
+      "startOffset": 34,
+      "word": "rb"
+    },
+    {
+      "case": "not-found-in-audio",
+      "endOffset": 41,
+      "startOffset": 37,
+      "word": "late"
+    },
+    {
+      "case": "not-found-in-audio",
+      "endOffset": 44,
+      "startOffset": 42,
+      "word": "rb"
+    }
+  ]
+}

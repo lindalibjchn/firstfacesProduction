@@ -22,6 +22,23 @@ $(window).on( 'load', function() {
     $('.cont_').css("height",cont_height);
 
 
+    waitingVariables.finishedConversationsNotTutorial = waitingVariables.conversations.filter( function( obj ) {
+        
+        console.log('obj:', obj)
+        return obj.topic !== 'tutorial' && obj.completed_sentences.length !== 0;
+
+    })
+    if ( waitingVariables.finishedConversationsNotTutorial.length === 1 ) {
+
+        waitingVariables.flashPoints = true;
+        setTimeout( flashPoints, 1000 );
+
+    }
+
+
+    console.log( 'waitingVariables.finishedConversationsNotTutorial:', waitingVariables.finishedConversationsNotTutorial )
+
+
 
 });
 

@@ -7,6 +7,7 @@ function bookConversation( enterTutorial=false ) {
 
     //}).unbind('click');
     
+    $('#enterButton').hide()
     console.log('in bookConversation');
     if ( waitingVariables.currently_in_class === false ) {
 

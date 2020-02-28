@@ -30,21 +30,26 @@ function sendSentToServer() {
         } else {
 
             if ( conversationVariables.playStage2) {
-                if(conversationVariables.FAFailed){
+
+                if (conversationVariables.FAFailed) {
+                    
                     aud.play();
-                }
-                else{
+                
+                } else {
+                    
                     play_audio();
+                
                 }
 
             } else {
+                
                 aud.play();
             }
             conversationVariables.playStage2 = false;
             
-            } else {
-                 aud.play();
-            }
+            //} else {
+                 //aud.play();
+            //}
             let extraDelay = 0;
             if ( appleDevice ) {
                 extraDelay = 900;

@@ -104,7 +104,7 @@ def update_conversation_objects(request):
     # print( 'user_ids_in_teacher_view:', user_ids_in_teacher_view )
     
     user_ids_in_conversation_in_database = []
-    for c in Conversation.objects.filter(end_time=None):
+    for c in Conversation.objects.filter(end_time=None).exclude(topic="tutorial"):
         user_ids_in_conversation_in_database.append( c.learner.id )
 
     user_ids_in_conversation_in_database_set = set(user_ids_in_conversation_in_database)

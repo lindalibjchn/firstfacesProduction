@@ -369,7 +369,11 @@ function makeWrongSentsHighlighted( exchange_ ) {
 
 function updateScroll( el ) {
 
-    el.scrollTop = el.scrollHeight;
+    if ( el !== null ) {
+
+        el.scrollTop = el.scrollHeight;
+
+    }
 
 }
 

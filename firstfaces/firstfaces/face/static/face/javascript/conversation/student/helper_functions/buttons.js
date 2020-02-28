@@ -2,8 +2,7 @@ function buttonsHideAllContainers() {
 
     //$('#meterContainer').hide();
     $('#emotionQuestionsCont').hide();
-    $('#topicChoicesCont').hide();
-    $('#submitTopicBtnCont').hide();
+    //$('#submitTopicBtnCont').hide();
     $('#optionBtns').hide();
     $('#listenNextSentenceBtnCont').hide();
     $('#recordBtnsCont').hide();

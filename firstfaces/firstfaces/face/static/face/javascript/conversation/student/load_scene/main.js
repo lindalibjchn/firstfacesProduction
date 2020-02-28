@@ -15,7 +15,7 @@ $(window).on( 'load', function() {
 
         readyBtns();
 
-        //readyAudio();
+        readyAudio();
 
         conversationVariables.playspeed=1.0;
         
@@ -123,7 +123,7 @@ function engineRunning() {
     } else {
 
         movementController( movementObject.abs.blank, 0.1, 0.1 );
-        readyAudio();
+        //readyAudio();
 
     }
 

@@ -146,15 +146,15 @@ function convertCorrectSentenceLengthToPoints( len ) {
 
     if ( len >= 15 ) {
 
-        points = 5;
+        points = 30;
 
     } else if ( len >= 10 ) {
 
-        points = 4;
+        points = 20;
 
     } else if ( len >= 5 ) {
 
-        points = 3;
+        points = 10;
 
     }
 

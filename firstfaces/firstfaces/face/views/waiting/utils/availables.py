@@ -79,7 +79,7 @@ def check_if_currently_in_class_or_class_finished(u):
     conversations = Conversation.objects.filter(learner=u).order_by('start_time')
     todays_date = timezone.localtime().date()
     time_now = timezone.now()
-    time_now_minus_30_mins = time_now - datetime.timedelta(minutes=30)
+    time_now_minus_30_mins = time_now - datetime.timedelta(minutes=45) #changed this cause 30 is too short
 
     currently_in_class = False
     class_finished_today = False

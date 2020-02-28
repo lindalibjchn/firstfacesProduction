@@ -94,28 +94,40 @@ function addAvailablesToTimetable( availableTuples, first=false ) {
 
     })
 
-    if ( classIsOpen === false ) {
+    if ( waitingVariables.currently_in_class ) {
 
-        //console.log( 'closestAfterClass:', closestAfterClass );
-        if ( closestAfterClass !== null ) { 
-
-            showButtonToEnterOrTextForUpcoming( 'upcoming', closestAfterClass );
-
-        } else {
-
-            showButtonToEnterOrTextForUpcoming( 'none', null );
-        
-        }
+        showButtonToEnterOrTextForUpcoming( 'enter', null );
 
     } else {
 
-        showButtonToEnterOrTextForUpcoming( 'enter', null );
+        if ( classIsOpen === false ) {
+
+            //console.log( 'closestAfterClass:', closestAfterClass );
+            if ( closestAfterClass !== null ) { 
+
+                showButtonToEnterOrTextForUpcoming( 'upcoming', closestAfterClass );
+
+            } else {
+
+                showButtonToEnterOrTextForUpcoming( 'none', null );
+            
+            }
+
+        } else {
+
+            showButtonToEnterOrTextForUpcoming( 'enter', null );
+
+        }
 
     }
 
     if ( today > nineAms[ todaysDay - 1 ] && today < nineAms[ todaysDay - 1 ] + nineToFiveJavascriptTime ) {
 
         insertBlinker();
+
+    } else {
+
+        $( '#timeNowBlinkerContainer' ).remove();
 
     }
 

@@ -8,6 +8,7 @@ function setHeight(){
     //get products
 
     get_balance();
+
     tiaEyes = Object.keys(waitingVariables.products.eyes.colours);
 
 
@@ -33,6 +34,22 @@ function setHeight(){
     show_click_me()
 
 };
+
+function flashPoints() {
+
+    if ( waitingVariables.flashPoints ) {
+
+        $('#logo-left-cont').fadeOut( 1000, flashPoints );
+        waitingVariables.flashPoints = false;
+
+    } else {
+
+        $('#logo-left-cont').fadeIn( 1000, flashPoints );
+        waitingVariables.flashPoints = true;
+
+    }
+
+}
 
 function fix_img_size(){
     img_h = $('.product-category').height()*0.324*.85;

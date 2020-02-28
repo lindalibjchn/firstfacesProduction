@@ -105,37 +105,37 @@ function mouthWordController() {
 
     mouthingObject.emphasis = false;
 
-    let POS1 = conversationVariables.sentence_awaiting_judgement.sentence[ thoughtBubbleObject.wordThinkingCount ][ 1 ][0]
+    //let POS1 = conversationVariables.sentence_awaiting_judgement.sentence[ thoughtBubbleObject.wordThinkingCount ][ 1 ][0]
 
-        // check if it is a grammar word (DET or VERB usually)
-    if ( Object.keys( grammarObject ).includes( POS1 ) ) {
+    //// check if it is a grammar word (DET or VERB usually)
+    //if ( Object.keys( grammarObject ).includes( POS1 ) ) {
     
-        let word = conversationVariables.sentence_awaiting_judgement.sentence[ thoughtBubbleObject.wordThinkingCount ][ 0 ]
-        if (['a', 'A', 'the', 'The'].includes( word ) ) {
+        //let word = conversationVariables.sentence_awaiting_judgement.sentence[ thoughtBubbleObject.wordThinkingCount ][ 0 ]
+        //if (['a', 'A', 'the', 'The'].includes( word ) ) {
             
-            if ( grammarObject[ POS1 ].show ) {
+            //if ( grammarObject[ POS1 ].show ) {
 
-                let phoneSeq = conversationVariables.sentence_awaiting_judgement.sentence[ thoughtBubbleObject.wordThinkingCount ][ 2 ]
+                //let phoneSeq = conversationVariables.sentence_awaiting_judgement.sentence[ thoughtBubbleObject.wordThinkingCount ][ 2 ]
 
-                performHandMovementWithMouthing( POS1, word, phoneSeq );
+                //performHandMovementWithMouthing( POS1, word, phoneSeq );
 
-            } else {
+            //} else {
 
-                tiaMouthPhoneSequence( conversationVariables.sentence_awaiting_judgement.sentence[ thoughtBubbleObject.wordThinkingCount ][ 2 ], tiaTimings.mouthingFramesPerPhone ) // to <speech/mouthing.js>
+                //tiaMouthPhoneSequence( conversationVariables.sentence_awaiting_judgement.sentence[ thoughtBubbleObject.wordThinkingCount ][ 2 ], tiaTimings.mouthingFramesPerPhone ) // to <speech/mouthing.js>
 
-            }
+            //}
 
-        } else {
+        //} else {
 
-            tiaMouthPhoneSequence( conversationVariables.sentence_awaiting_judgement.sentence[ thoughtBubbleObject.wordThinkingCount ][ 2 ], tiaTimings.mouthingFramesPerPhone ) // to <speech/mouthing.js>
+            //tiaMouthPhoneSequence( conversationVariables.sentence_awaiting_judgement.sentence[ thoughtBubbleObject.wordThinkingCount ][ 2 ], tiaTimings.mouthingFramesPerPhone ) // to <speech/mouthing.js>
 
-        }
+        //}
 
-    } else {
+    //} else {
 
-        tiaMouthPhoneSequence( conversationVariables.sentence_awaiting_judgement.sentence[ thoughtBubbleObject.wordThinkingCount ][ 2 ], tiaTimings.mouthingFramesPerPhone ); 
+    tiaMouthPhoneSequence( conversationVariables.sentence_awaiting_judgement.sentence[ thoughtBubbleObject.wordThinkingCount ][ 2 ], tiaTimings.mouthingFramesPerPhone ); 
 
-    }
+    //}
 
 }
 

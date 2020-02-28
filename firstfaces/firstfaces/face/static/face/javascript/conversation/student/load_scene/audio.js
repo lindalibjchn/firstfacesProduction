@@ -22,7 +22,7 @@ function startAudioStream() {
 
     navigator.mediaDevices.getUserMedia( AUDIO_N_VIDEO_SETTINGS ).then( function( stream ) {
  
-        alert('in getUserMedia')
+        //alert('in getUserMedia')
         conversationVariables.stream = stream; // make it globally accessible to simplify all else
         conversationVariables.audio = true; // ??
         mediaRecorder = new MediaRecorder( conversationVariables.stream );
