@@ -252,10 +252,77 @@ function addTia() {
             tiaObject.eyeBones.eyeL3.rotation.set( EYEL_ROT.x, EYEL_ROT.y, EYEL_ROT.z );
             tiaObject.eyeBones.eyeR3.rotation.set( EYER_ROT.x, EYER_ROT.y, EYER_ROT.z );
 
-            tiaObject.mEyeL3.name="mEyeL2"
-            tiaObject.mEyeR3.name="mEyeR2"
+            tiaObject.mEyeL3.name="mEyeL3"
+            tiaObject.mEyeR3.name="mEyeR3"
             clickableObjects.push(tiaObject.mEyeL3);
             clickableObjects.push(tiaObject.mEyeR3);
+            loader.load( eye4, addEyes4)
+        }
+
+        function addEyes4( geom, mat ) {
+
+            // load the materials for the eyeball, iris and pupil
+            mat[0].skinning = true;
+            mat[0].morphtargets = true;
+            //mat[0].color.setHex( 0xfcfae0 );
+
+            // mEyeL is a clone of mEyeR
+            tiaObject.mEyeL4= new THREE.SkinnedMesh( geom, mat );
+            tiaObject.mEyeR4 = tiaObject.mEyeL4.clone();
+
+            // make headbone the parent so eyes move with it
+            tiaObject.faceBones.head.add( tiaObject.mEyeL4 );
+            tiaObject.faceBones.head.add( tiaObject.mEyeR4 );
+
+            // manually set position
+            tiaObject.mEyeL4.position.set( EYEL_POS.x, EYEL_POS.y, EYEL_POS.z );
+            tiaObject.mEyeR4.position.set( EYER_POS.x, EYER_POS.y, EYER_POS.z  );
+
+            // attach bones to global variables
+            tiaObject.eyeBones.eyeL4 = tiaObject.mEyeL4.skeleton.bones[0];
+            tiaObject.eyeBones.eyeR4 = tiaObject.mEyeR4.skeleton.bones[0];
+
+            // rotate inwards so not staring inifinitely into distance
+            tiaObject.eyeBones.eyeL4.rotation.set( EYEL_ROT.x, EYEL_ROT.y, EYEL_ROT.z );
+            tiaObject.eyeBones.eyeR4.rotation.set( EYER_ROT.x, EYER_ROT.y, EYER_ROT.z );
+
+            tiaObject.mEyeL4.name="mEyeL4"
+            tiaObject.mEyeR4.name="mEyeR4"
+            clickableObjects.push(tiaObject.mEyeL4);
+            clickableObjects.push(tiaObject.mEyeR4);
+            loader.load( eye5, addEyes5)
+        }
+        function addEyes5( geom, mat ) {
+
+            // load the materials for the eyeball, iris and pupil
+            mat[0].skinning = true;
+            mat[0].morphtargets = true;
+            //mat[0].color.setHex( 0xfcfae0 );
+
+            // mEyeL is a clone of mEyeR
+            tiaObject.mEyeL5= new THREE.SkinnedMesh( geom, mat );
+            tiaObject.mEyeR5 = tiaObject.mEyeL5.clone();
+
+            // make headbone the parent so eyes move with it
+            tiaObject.faceBones.head.add( tiaObject.mEyeL5 );
+            tiaObject.faceBones.head.add( tiaObject.mEyeR5 );
+
+            // manually set position
+            tiaObject.mEyeL5.position.set( EYEL_POS.x, EYEL_POS.y, EYEL_POS.z );
+            tiaObject.mEyeR5.position.set( EYER_POS.x, EYER_POS.y, EYER_POS.z  );
+
+            // attach bones to global variables
+            tiaObject.eyeBones.eyeL5 = tiaObject.mEyeL5.skeleton.bones[0];
+            tiaObject.eyeBones.eyeR5 = tiaObject.mEyeR5.skeleton.bones[0];
+
+            // rotate inwards so not staring inifinitely into distance
+            tiaObject.eyeBones.eyeL5.rotation.set( EYEL_ROT.x, EYEL_ROT.y, EYEL_ROT.z );
+            tiaObject.eyeBones.eyeR5.rotation.set( EYER_ROT.x, EYER_ROT.y, EYER_ROT.z );
+
+            tiaObject.mEyeL5.name="mEyeL5"
+            tiaObject.mEyeR5.name="mEyeR5"
+            clickableObjects.push(tiaObject.mEyeL5);
+            clickableObjects.push(tiaObject.mEyeR5);
             loader.load( hair00, addHair)
         }
 
