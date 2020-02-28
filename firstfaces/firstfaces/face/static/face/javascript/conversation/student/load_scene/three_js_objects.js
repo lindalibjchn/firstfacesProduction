@@ -165,14 +165,18 @@ function addTia() {
         tiaObject.mMouth.position.set( MOUTH_ROT.x, MOUTH_ROT.y, MOUTH_ROT.z );
 
         tiaObject.faceBones.head.add( tiaObject.mMouth );
-
+        alert(conversationVariables.attributes.eyes);
         if(conversationVariables.attributes.eyes == "1"){
             loader.load( eye1, addEyes)
         } else if(conversationVariables.attributes.eyes == "2"){
             loader.load( eye2, addEyes)
         } else if(conversationVariables.attributes.eyes == "3"){
             loader.load( eye3, addEyes)
-        } else {
+        }  else if(conversationVariables.attributes.eyes == "5"){
+            loader.load( eye5, addEyes)
+        } else if(conversationVariables.attributes.eyes == "4"){
+            loader.load( eye4, addEyes)
+        }else {
             loader.load( eye1, addEyes)
         }
 

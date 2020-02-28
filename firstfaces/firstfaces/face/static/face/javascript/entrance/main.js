@@ -595,15 +595,15 @@ function showLogInDropdown() {
 }
 
 $('#signup-btn').click(function(){
-    //click_save('#signup-btn');
-    //$('#foregroundContainer').hide();
-    //$('#su_cont').show();
-    //$('#popup-btn').click();
+    click_save('#signup-btn');
+    $('#foregroundContainer').hide();
+    $('#su_cont').show();
+    $('#popup-btn').click();
      click_save('#faq-btn');
     $('#popup-btn').click();
-    setTimeout(function(){
+    /*setTimeout(function(){
         open_alert();
-    },200)
+    },200)*/
 });
 
 
