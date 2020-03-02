@@ -4,11 +4,53 @@ function tiaPrepareToSpeak( tiaSays, speakCb=function(){}, playbackRate=1) {
     synthesisObject.sentenceNo = 0;
     synthesisObject.now = synthesisObject.data[ tiaSays ];
     synthesisObject.audio.src = prefixURL + 'media/' + synthesisObject.now.URLs[ synthesisObject.sentenceNo ];
+    //synthesisObject.audio.load();
     synthesisObject.audio.playbackRate = playbackRate;
     synthesisObject.callback = speakCb;
-    if (!conversationVariables.tutorial ) {
+}
 
-        buttonsListenNextSentence();
+function setSynthesisAudioOnChangeEvent() {
+
+    //load this early and change .src later
+    synthesisObject.audio = document.getElementById( 'synthClip' );
+    synthesisObject.audioS3 = document.getElementById( 'danSynthAudio' );
+
+    synthesisObject.audio.ondurationchange = function() {
+
+        let dur = synthesisObject.audio.duration
+        synthesisObject.now.noOfFrames = Math.floor( dur * 60 )
+        synthesisObject.gotNewDuration = true;
+        breatheObject.singleBreath.outCount = dur;
+
+        synthesisObject.now.noOfPhones = synthesisObject.now.visemes[ synthesisObject.sentenceNo ].length;
+
+        if (!conversationVariables.tutorial ) {
+
+            buttonsListenNextSentence();
+
+        } else {
+
+            if ( conversationVariables.tutorialShowButtonsListenNextSentence  ) {
+
+                buttonsListenNextSentence();
+
+            } else {
+
+                conversationVariables.tutorialShowButtonsListenNextSentence = true;
+
+            }
+
+        }
+
+        //console.log('DELAY_BEFORE_MIA_SPEAKS:', DELAY_BEFORE_MIA_SPEAKS)
+        //console.log('synthesisObject.audio.duration:', synthesisObject.audio.duration)
+        //let dur = synthesisObject.audio.duration - DELAY_BEFORE_MIA_SPEAKS
+        //let dur = synthesisObject.audio.duration
+        //console.log('dur:', dur)
+        //console.log('synthesisObject.audio.duration:', synthesisObject.audio.duration)
+        //synthesisObject.now.noOfFrames = Math.floor( dur * 60 )
+        //synthesisObject.now.noOfFramesPerPhone = Math.floor( synthesisObject.now.noOfFrames / ( synthesisObject.now.noOfPhones - 1 ) );
+
 
     }
 
@@ -22,18 +64,19 @@ function tiaSpeakButtonEvent() {
         prepareHeadBobAndTalkingBoolOnFirstSentence()
 
     }
+    synthesisObject.audio.onplay = tiaSpeakIndividualSentences();
     synthesisObject.audio.play();
 
-    if ( appleDevice ) {
+    //if ( appleDevice ) {
     
-        //console.log('speaking in apple device: 100ms delay')
-        setTimeout( tiaSpeakIndividualSentences, 900 );
+        ////console.log('speaking in apple device: 100ms delay')
+        //setTimeout( tiaSpeakIndividualSentences, 900 );
 
-    } else {
+    //} else {
 
-        tiaSpeakIndividualSentences();
+        //tiaSpeakIndividualSentences();
 
-    }
+    //}
 
 }
 
@@ -52,18 +95,18 @@ function tiaSpeakIndividualSentences() {
     synthesisObject.now.phoneCount = 0;
     synthesisObject.now.visemeOverrun = 0;
 
-    if ( !conversationVariables.stage3 ) {
+    //if ( !conversationVariables.stage3 ) {
 
-        initSingleBreath( 1, breatheObject.speakingBreathMult, tiaTimings.durationOfFirstSpeakingPhones );
-        setTimeout( function () {
+        //initSingleBreath( 1, breatheObject.speakingBreathMult, tiaTimings.durationOfFirstSpeakingPhones );
+        //setTimeout( function () {
          
-            let breatheOutDuration = Math.max( 0.5, synthesisObject.audio.duration - 1.5 )
-            initSingleBreath( -1, breatheObject.speakingBreathMult, breatheOutDuration );   
+            //let breatheOutDuration = Math.max( 0.5, synthesisObject.audio.duration - 1.5 )
+            //initSingleBreath( -1, breatheObject.speakingBreathMult, breatheOutDuration );   
             
-        }, tiaTimings.durationOfFirstSpeakingPhones * 1100 )
-        //console.log('sentenceNo:', synthesisObject.sentenceNo);
+        //}, tiaTimings.durationOfFirstSpeakingPhones * 1100 )
+        ////console.log('sentenceNo:', synthesisObject.sentenceNo);
 
-    }
+    //}
 
     showSpeechBubbleNText();
     animatePhonesInOrder();
@@ -194,7 +237,7 @@ function speakJudgementM() {
 
         expressionController( expressionObject.quarter, tiaTimings.durationOfLastSpeakingPhones, function() {
             
-            buttonsListenNextSentence();
+            //buttonsListenNextSentence();
 
         } );
 
@@ -239,7 +282,8 @@ function updateSentenceNumberAndAudioSrc() {
 
         synthesisObject.newPromptArrived = false;
         synthesisObject.audio.src = prefixURL + 'media/' + synthesisObject.now.URLs[ synthesisObject.sentenceNo ];
-        buttonsListenNextSentence();
+        //synthesisObject.audio.load();
+        //buttonsListenNextSentence();
 
     }
 

@@ -38,6 +38,13 @@ function startAudioStream() {
 
         mediaRecorder.onstop = onMediaRecorderStop;
 
+        if ( !conversationVariables.audioReadyFirstTime ) {
+
+            getEverythingElseReadyOnceAudioIsOk();
+            conversationVariables.audioReadyFirstTime = true;
+
+        }
+
     })
 
     // Error callback

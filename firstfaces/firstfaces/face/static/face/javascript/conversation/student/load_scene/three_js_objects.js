@@ -165,7 +165,7 @@ function addTia() {
         tiaObject.mMouth.position.set( MOUTH_ROT.x, MOUTH_ROT.y, MOUTH_ROT.z );
 
         tiaObject.faceBones.head.add( tiaObject.mMouth );
-        alert(conversationVariables.attributes.eyes);
+        //alert(conversationVariables.attributes.eyes);
         if(conversationVariables.attributes.eyes == "1"){
             loader.load( eye1, addEyes)
         } else if(conversationVariables.attributes.eyes == "2"){

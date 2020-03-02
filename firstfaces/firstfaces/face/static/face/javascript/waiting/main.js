@@ -12,6 +12,7 @@ $(window).on( 'load', function() {
 
             console.log(' in click tutorial button' )
             bookConversation( enterTutorial=true );
+            $( '#tutorialNotDoneInnerContainer' ).hide();
             //window.location.href = prefixURL + "conversation_student/" + waitingVariables.tutorial_conversation_id.toString();
 
         })
@@ -21,24 +22,19 @@ $(window).on( 'load', function() {
     var cont_height = getContHeight();
     $('.cont_').css("height",cont_height);
 
-
     waitingVariables.finishedConversationsNotTutorial = waitingVariables.conversations.filter( function( obj ) {
         
-        console.log('obj:', obj)
+        //console.log('obj:', obj)
         return obj.topic !== 'tutorial' && obj.completed_sentences.length !== 0;
 
     })
+
     if ( waitingVariables.finishedConversationsNotTutorial.length === 1 ) {
 
         waitingVariables.flashPoints = true;
         setTimeout( flashPoints, 1000 );
 
     }
-
-
-    console.log( 'waitingVariables.finishedConversationsNotTutorial:', waitingVariables.finishedConversationsNotTutorial )
-
-
 
 });
 

@@ -84,4 +84,23 @@ function sendSlowFPSReportToServer() {
 
 }
 
+function storeTutorialStep() {
+
+    $.ajax({
+        url: "/store_tutorial_step",
+        type: "POST",
+        data: {
+            'tutorial_step': conversationVariables.tutorialStep,
+            'conversationId': conversationVariables.conversation_dict.id,
+        },
+        success: function(json) {
+
+        },
+        error: function() {
+            console.log( 'unsuccessful store tutorial step' );
+        },
+    });
+
+}
+
 

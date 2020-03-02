@@ -134,10 +134,10 @@ def book_conversation(request):
         
         conversation = Conversation(learner=user, start_time=time_now) 
         if tutorial:
-            send_mail('Tutorial booked by: ' + request.user.username, 'starts soon', 'ucd.erle@gmail.com', ['john.sloan.1@ucdconnect.ie'])
+            send_mail('Tutorial booked by: ' + request.user.username, 'starts soon', 'ucd.erle@gmail.com', ['ucd.erle@gmail.com'])
             conversation.topic = 'tutorial'
         else:
-            send_mail('Class booked by: ' + request.user.username, 'starts soon', 'ucd.erle@gmail.com', ['john.sloan.1@ucdconnect.ie'])
+            send_mail('Class booked by: ' + request.user.username, 'starts soon', 'ucd.erle@gmail.com', ['ucd.erle@gmail.com'])
 
         conversation.save()
 
@@ -165,7 +165,7 @@ def contact_us(request):
 
     str_ = "Time: "+str(time_now)+"\nDate: "+str(date_now)+"\nName: "+name+"\nEmail: "+email+"\n\nMessage:\n"+message
 
-    send_mail("Contact Us Message", str_, 'ucd.erle@gmail.com', ['daniel.maguire@ucdconnect.ie'])
+    send_mail("Contact Us Message", str_, 'ucd.erle@gmail.com', ['ucd.erle@gmail.com'])
 
     response_data = {
     }

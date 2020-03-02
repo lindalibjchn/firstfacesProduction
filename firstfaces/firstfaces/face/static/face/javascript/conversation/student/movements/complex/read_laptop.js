@@ -4,8 +4,12 @@ function tiaLookAtLaptopAndType() {
     movementController( movementObject.abs.laptop, 0.4, 1, function() {
     
         if ( appleDevice ) {
+
+            if ( !conversationVariables.first_enter ) {
         
-            startAudioStream();
+                startAudioStream();
+
+            }
         
         }
 

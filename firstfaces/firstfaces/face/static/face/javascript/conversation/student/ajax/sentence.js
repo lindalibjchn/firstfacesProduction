@@ -105,7 +105,7 @@ function sendSentToServer() {
 
         if ( conversationVariables.tutorialStep === '071' ) {
 
-            tiaSpeakButtonEvent();
+            //tiaSpeakButtonEvent();
             tutorialOption081();
 
         }
