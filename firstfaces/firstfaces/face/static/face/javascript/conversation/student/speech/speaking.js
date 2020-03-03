@@ -170,8 +170,16 @@ function animatePhonesInOrder() {
 
             pronunciationController( expressionObject.abs[ synthesisObject.now.visemes[ synthesisObject.sentenceNo ][ synthesisObject.now.phoneCount ][ 'Viseme' ] ], synthesisObject.now.visemes[ synthesisObject.sentenceNo ][ synthesisObject.now.phoneCount ][ 'end' ], function() {
                 
-                synthesisObject.now.phoneCount += 1;
-                animatePhonesInOrder()
+                if ( isAudioFinished() ) { // stops phone animation ate end of audio when it is running slow
+
+                    endAnimatePhonesInOrder();
+
+                } else {
+
+                    synthesisObject.now.phoneCount += 1;
+                    animatePhonesInOrder();
+
+                }
                     
             })
 
@@ -179,7 +187,50 @@ function animatePhonesInOrder() {
 
     } else if ( synthesisObject.now.phoneCount === synthesisObject.now.noOfPhones ) { 
         
+        checkIfAudioIsFinished();
+    
+    }
+
+}
+
+function isAudioFinished() {
+
+    if ( synthesisObject.audio.paused ) {
+    
+        return true;
+
+    } else {
+
+        return false;
+
+    }
+
+}
+
+var checkAudioFinishedCount = 0;
+function checkIfAudioIsFinished() {
+
+    let finished = isAudioFinished();
+
+    if ( finished ) {
+
+        checkAudioFinishedCount = 0;
         endAnimatePhonesInOrder();
+
+    } else {
+
+        if ( checkAudioFinishedCount < 20 ) {
+
+            checkAudioFinishedCount += 1;
+            setTimeout( checkIfAudioIsFinished, 200 );
+
+        } else {
+
+            checkAudioFinishedCount = 0;
+            endAnimatePhonesInOrder();
+
+        }
+
     }
 
 }
@@ -221,7 +272,8 @@ function continueStockPhrases() {
 
             } 
 
-            setTimeout( updateSentenceNumberAndAudioSrc, 500 );
+            //setTimeout( updateSentenceNumberAndAudioSrc, 500 );
+            updateSentenceNumberAndAudioSrc();
        
         });
 
@@ -253,7 +305,8 @@ function continuePrompt() {
 
         expressionController( expressionObject.quarter, tiaTimings.durationOfLastSpeakingPhones, function() {
 
-            setTimeout( updateSentenceNumberAndAudioSrc, 750 );
+            //setTimeout( updateSentenceNumberAndAudioSrc, 750 );
+            updateSentenceNumberAndAudioSrc();
        
         });    
 
