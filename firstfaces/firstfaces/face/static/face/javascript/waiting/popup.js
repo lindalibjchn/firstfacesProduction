@@ -221,7 +221,7 @@ function open_about(){
 
 function openTutorial() {
 
-    bookConversation( enterTutorial=true )
+    bookConversation( true )
     $('#tutorialButton').css({
         'background-color': 'green',
         'color': 'white',

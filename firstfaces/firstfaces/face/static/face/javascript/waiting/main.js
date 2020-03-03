@@ -11,7 +11,7 @@ $(window).on( 'load', function() {
         $( '#tutorialNotDoneButton' ).click( function(){
 
             console.log(' in click tutorial button' )
-            bookConversation( enterTutorial=true );
+            bookConversation( true );
             $( '#tutorialNotDoneInnerContainer' ).hide();
             //window.location.href = prefixURL + "conversation_student/" + waitingVariables.tutorial_conversation_id.toString();
 

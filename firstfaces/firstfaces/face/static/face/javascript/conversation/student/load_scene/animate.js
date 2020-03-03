@@ -3,6 +3,7 @@ conversationVariables.cumulativeStart = performance.now();
 conversationVariables.meanLastThreeFPS = 60;
 conversationVariables.slowFPS = false;
 conversationVariables.slowFPSIterator = 0;
+conversationVariables.slowFPSWarningGiven = false;
 conversationVariables.secondsSinceLastSlowFPS = 0;
 function animate() {
 
@@ -213,6 +214,7 @@ function checkFPS( main ) {
         
         if ( conversationVariables.slowFPSIterator === 5 ) {
 
+            conversationVariables.slowFPSWarningGiven = true;
             alert( 'Your phone is running slow.\n\nSome animations will be removed to improve performance.\n\nClose other applications and refresh to reset animations' );
             sendSlowFPSReportToServer();
 

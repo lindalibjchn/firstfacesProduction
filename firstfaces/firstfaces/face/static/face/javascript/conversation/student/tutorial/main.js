@@ -11,7 +11,6 @@ function runTutorial() {
     //tiaPrepareToSpeak("tutorial_start", speakCb=function(){
 
         tutorialOption001();
-        showDoubleBtn( tutorialOption000, tiaSpeakButtonEvent ) 
     
     })
 
@@ -51,7 +50,6 @@ function tutorialOption001() {
     //tiaPrepareToSpeak("tutorial_001", speakCb=function(){
 
         tutorialOption011();
-        showDoubleBtn( tutorialOption010, tiaSpeakButtonEvent ) 
 
     })
 
@@ -95,7 +93,6 @@ function tutorialOption011() {
     //tiaPrepareToSpeak("tutorial_011", speakCb=function(){
 
         tutorialOption021();
-        showDoubleBtn( tutorialOption020, tiaSpeakButtonEvent ) 
 
     })
 
@@ -112,7 +109,6 @@ function tutorialOption012() {
     //tiaPrepareToSpeak("tutorial_011", speakCb=function(){
 
         tutorialOption021();
-        showDoubleBtn( tutorialOption020, tiaSpeakButtonEvent ) 
 
     })
 
@@ -137,7 +133,6 @@ function tutorialOption020() {
                 expressionController( expressionObject.calculated, 1, function(){
                     
                     tutorialOption012();
-                    showSingleBtn( tiaSpeakButtonEvent );
 
                 });
 
@@ -244,9 +239,8 @@ function tutorialOption031() {
 
             tiaPrepareToSpeak("I_couldn't_hear_anything_at_all", speakCb=function(){
 
-                conversationVariables.tutorialStep = '021';
+                //conversationVariables.tutorialStep = '021';
                 tutorialOption022();
-                showSingleBtn( tiaSpeakButtonEvent );
 
             })
             //buttonsListenNextSentence();
@@ -495,7 +489,6 @@ function tutorialOption081() {
         tiaPrepareToSpeak("Did_you_notice_that_the_sentence_you_just_sent_has_a_mistake_in_it", speakCb=function(){
 
             tutorialOption091();
-            showDoubleBtn( tutorialOption090, tiaSpeakButtonEvent ) 
 
         })
 
@@ -655,7 +648,6 @@ function tutorialOption131() {
         tiaPrepareToSpeak("You_can_see_that_the_mistake_in_this_sentence_was_only_a_small_one,_just_the_verb_tense_was_wrong", speakCb=function(){
 
             tutorialOption141();
-            showDoubleBtn( tutorialOption000, tiaSpeakButtonEvent );
 
         })
         

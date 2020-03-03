@@ -278,6 +278,7 @@ function finalSpeak() {
 
         expressionController( expressionObject.abs.neutral, 1 );
         talkObject.learning = true;
+        conversationVariables.entranceSequence = false
         //movementController( movementObject.abs.arm, 1, 1 );
         setTimeout(initInputReady, 1000)
 

@@ -60,7 +60,8 @@ function addAvailablesToTimetable( availableTuples, first=false ) {
         let beforeDuringAfter = barColourAndOpenNow[ 0 ];
         let openNow = barColourAndOpenNow[ 1 ];
 
-        //console.log('openNow:', openNow)
+        console.log('tup:', tup)
+        console.log('openNow:', openNow)
         if ( beforeDuringAfter === 'after' && closestAfterClass === null ) {
 
             closestAfterClass = tup[0];
@@ -279,7 +280,7 @@ function showButtonToEnterOrTextForUpcoming( option, upcomingClass ) {
     if ( option === 'enter' ) {
 
         $('#enterButtonInnerContainer').show();
-        $('#enterButton').click( bookConversation );
+        $('#enterButton').click( function(){bookConversation(false)} );
 
     } else {
         

@@ -22,8 +22,13 @@ function sendBlobToServer( blob_to_send ) {
                 currentAudID: json.audio_pk 
             }
             
-            aud.src = prefixURL + json.audio_file,
-          //console.log('got response from sending blob to server');
+            if ( json.audio_file !== "" ) {
+
+                aud.src = prefixURL + json.audio_file;
+            
+            }
+
+            //console.log('got response from sending blob to server');
             
             prepareToStopTyping();
 

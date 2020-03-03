@@ -203,7 +203,7 @@ def close_attempt(request):
     ae.typed = False
     ae.intention = ""
     ae.save();
-    aeca = AudioErrorCorrectionAttempt.objects.get(pk = request.POST['correctio_id'])
+    aeca = AudioErrorCorrectionAttempt.objects.get(pk=request.POST['correctio_id'])
     clicks = request.POST['clicks']
     aeca.clicks = clicks
     aeca.save()

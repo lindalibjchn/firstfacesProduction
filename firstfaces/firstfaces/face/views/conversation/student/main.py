@@ -150,10 +150,12 @@ def determine_if_first_full_conversation(u, tutorial):
             return True
         else:
             all_convs = Conversation.objects.filter(learner=u)
+            print('all_convs:', all_convs)
             number_tutorials = 0
             for c in all_convs:
-                if c.topic == tutorial:
+                if c.topic == 'tutorial':
                     number_tutorials += 1  
+            print('number_tutorials:', number_tutorials)
             if number_tutorials == len(all_convs) - 1:
                 first_full_conversation = True
     except:

@@ -4,7 +4,7 @@ function tiaPrepareToSpeak( tiaSays, speakCb=function(){}, playbackRate=1) {
     synthesisObject.sentenceNo = 0;
     synthesisObject.now = synthesisObject.data[ tiaSays ];
     synthesisObject.audio.src = prefixURL + 'media/' + synthesisObject.now.URLs[ synthesisObject.sentenceNo ];
-    //synthesisObject.audio.load();
+    synthesisObject.audio.load();
     synthesisObject.audio.playbackRate = playbackRate;
     synthesisObject.callback = speakCb;
 }
@@ -35,6 +35,36 @@ function setSynthesisAudioOnChangeEvent() {
                 buttonsListenNextSentence();
 
             } else {
+
+                if ( conversationVariables.tutorialStep === "001" ) {
+
+                    showDoubleBtn( tutorialOption000, tiaSpeakButtonEvent );
+
+                } else if ( conversationVariables.tutorialStep === "011" ) {
+
+                    showDoubleBtn( tutorialOption010, tiaSpeakButtonEvent ) 
+
+                } else if ( conversationVariables.tutorialStep === "021" ) {
+
+                    showDoubleBtn( tutorialOption020, tiaSpeakButtonEvent ) 
+
+                } else if ( conversationVariables.tutorialStep === "012" ) {
+
+                    showSingleBtn( tiaSpeakButtonEvent );
+
+                } else if ( conversationVariables.tutorialStep === "022" ) {
+
+                    showSingleBtn( tiaSpeakButtonEvent );
+
+                } else if ( conversationVariables.tutorialStep === "091" ) {
+
+                    showDoubleBtn( tutorialOption090, tiaSpeakButtonEvent ) 
+
+                } else if ( conversationVariables.tutorialStep === "141" ) {
+
+                    showDoubleBtn( tutorialOption000, tiaSpeakButtonEvent ) 
+
+                }
 
                 conversationVariables.tutorialShowButtonsListenNextSentence = true;
 
@@ -132,7 +162,7 @@ function animatePhonesInOrder() {
     //console.log( 'in animatePhonesInOrder:', synthesisObject.now );
     if ( synthesisObject.now.phoneCount < synthesisObject.now.noOfPhones ) {
 
-        if ( conversationVariables.slowFPS ) {
+        if ( conversationVariables.slowFPSWarningGiven ) {
 
             setTimeout( endAnimatePhonesInOrder, synthesisObject.audio.duration * 1000 );
 
@@ -282,7 +312,7 @@ function updateSentenceNumberAndAudioSrc() {
 
         synthesisObject.newPromptArrived = false;
         synthesisObject.audio.src = prefixURL + 'media/' + synthesisObject.now.URLs[ synthesisObject.sentenceNo ];
-        //synthesisObject.audio.load();
+        synthesisObject.audio.load();
         //buttonsListenNextSentence();
 
     }
@@ -297,7 +327,7 @@ function checkIfNewPromptArrived() {
 
     } else {
 
-        if ( synthesisObject.awaiting_next_prompt_count < 500 ) {
+        if ( synthesisObject.awaiting_next_prompt_count < 1000 ) {
 
             if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].awaiting_next_prompt ) {
 
@@ -308,7 +338,7 @@ function checkIfNewPromptArrived() {
                 }
 
                 synthesisObject.awaiting_next_prompt_count += 1;
-                setTimeout( checkIfNewPromptArrived, 50 );
+                setTimeout( checkIfNewPromptArrived, 100 );
 
             } else {
 

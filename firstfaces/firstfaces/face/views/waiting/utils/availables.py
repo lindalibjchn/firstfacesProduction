@@ -104,7 +104,9 @@ def check_if_currently_in_class_or_class_finished(u):
 
                 if c.end_time.date() == todays_date:
 
-                    class_finished_today = True
+                    if c.topic != "tutorial":
+
+                        class_finished_today = True
 
     return [currently_in_class, class_finished_today]
 

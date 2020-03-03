@@ -1,4 +1,4 @@
-function bookConversation( enterTutorial=false ) {
+function bookConversation( enterTutorial ) {
 
     //$(this).css({
 
@@ -9,6 +9,7 @@ function bookConversation( enterTutorial=false ) {
     
     $('#enterButton').hide()
     console.log('in bookConversation');
+    console.log('enterTutorial:', enterTutorial);
     if ( waitingVariables.currently_in_class === false ) {
 
         $.ajax({
