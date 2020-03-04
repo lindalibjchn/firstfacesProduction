@@ -244,6 +244,7 @@ function tiaTellsStudentNoFeedback() {
 
         movementController( movementObject.abs.blank, tiaTimings.fromThinkingHardDuration / 2, tiaTimings.fromThinkingHardDuration, function() {
 
+            updateConversationVariablesWithNewSentence( conversationVariables.sentence_awaiting_judgement );
             tiaPrepareToSpeak( "I'm_not_sure_about_that_sentence", speakCb=function(){} );
 
         });

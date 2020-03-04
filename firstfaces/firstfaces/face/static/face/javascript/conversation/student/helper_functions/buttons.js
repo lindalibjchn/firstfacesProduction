@@ -27,7 +27,6 @@ function buttonsListenNextSentence() {
     stopWaitingDots()
     $('#listenNextSentenceBtnCont').show();
     $('#finishListenNextSentenceBtn').hide();
-    $('#waitNextSentenceDots').hide();
     $('#listenNextSentenceBtn').show();
     $('#listenNextSentenceBtn').attr('disabled', false);
     
@@ -39,8 +38,7 @@ function buttonsListenNextSentenceWaiting() {
     $('#listenNextSentenceBtnCont').show();
     $('#listenNextSentenceBtn').hide();
     $('#finishListenNextSentenceBtn').hide();
-    $('#waitNextSentenceDots').show();
-    $('#waitNextSentenceDots').attr('disabled', true);
+    initAnimateWaitingDots();
     
 }
 
@@ -49,22 +47,22 @@ var animateWaitingDotsCount;
 function initAnimateWaitingDots() {
 
     animateWaitingDotsCount = 0;
-    animateWaitingDotsInterval = setInterval( animateWaitingDots, 1000 )
-    $('#waitNextSentenceDots').fadeIn();
-
+    animateWaitingDotsInterval = setInterval( animateWaitingDots, 1200 )
+    $('#waitNextSentenceDotsCont').fadeIn();
 
 }
 
 function animateWaitingDots() {
 
-    if ( animateWaitingDotsCount < 4 ) {
+    console.log('in animateWaitingDots')
+    if ( animateWaitingDotsCount < 5 ) {
 
-        $('#waitNextSentenceDots').innerHTML += ".";
+        $('#dot' + animateWaitingDotsCount.toString() ).fadeIn();
         animateWaitingDotsCount += 1;
 
     } else {
 
-        $('#waitNextSentenceDots').innerHTML = "";
+        $('.dots').fadeOut();
         animateWaitingDotsCount = 0;
 
     }
@@ -73,7 +71,8 @@ function animateWaitingDots() {
 
 function stopWaitingDots() {
 
-    $('#waitNextSentenceDots').fadeOut();
+    $('#waitNextSentenceDotsCont').hide();
+    clearInterval( animateWaitingDotsInterval );
 
 }
 

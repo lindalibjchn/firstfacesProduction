@@ -1,0 +1,174 @@
+{
+  "transcript": "one\ni\nwas\nwalking\nalong\nthe\nstreet\n",
+  "words": [
+    {
+      "alignedWord": "one",
+      "case": "success",
+      "end": 1.17,
+      "endOffset": 3,
+      "phones": [
+        {
+          "duration": 0.11,
+          "phone": "w_B"
+        },
+        {
+          "duration": 0.09,
+          "phone": "ah_I"
+        },
+        {
+          "duration": 0.15,
+          "phone": "n_E"
+        }
+      ],
+      "start": 0.82,
+      "startOffset": 0,
+      "word": "one"
+    },
+    {
+      "alignedWord": "i",
+      "case": "success",
+      "end": 3.63,
+      "endOffset": 5,
+      "phones": [
+        {
+          "duration": 0.19,
+          "phone": "ay_S"
+        }
+      ],
+      "start": 3.44,
+      "startOffset": 4,
+      "word": "i"
+    },
+    {
+      "alignedWord": "was",
+      "case": "success",
+      "end": 3.83,
+      "endOffset": 9,
+      "phones": [
+        {
+          "duration": 0.07,
+          "phone": "w_B"
+        },
+        {
+          "duration": 0.07,
+          "phone": "ah_I"
+        },
+        {
+          "duration": 0.06,
+          "phone": "z_E"
+        }
+      ],
+      "start": 3.63,
+      "startOffset": 6,
+      "word": "was"
+    },
+    {
+      "alignedWord": "walking",
+      "case": "success",
+      "end": 4.21,
+      "endOffset": 17,
+      "phones": [
+        {
+          "duration": 0.05,
+          "phone": "w_B"
+        },
+        {
+          "duration": 0.09,
+          "phone": "ao_I"
+        },
+        {
+          "duration": 0.08,
+          "phone": "k_I"
+        },
+        {
+          "duration": 0.08,
+          "phone": "ih_I"
+        },
+        {
+          "duration": 0.08,
+          "phone": "ng_E"
+        }
+      ],
+      "start": 3.83,
+      "startOffset": 10,
+      "word": "walking"
+    },
+    {
+      "alignedWord": "along",
+      "case": "success",
+      "end": 4.59,
+      "endOffset": 23,
+      "phones": [
+        {
+          "duration": 0.1,
+          "phone": "ah_B"
+        },
+        {
+          "duration": 0.07,
+          "phone": "l_I"
+        },
+        {
+          "duration": 0.08,
+          "phone": "ao_I"
+        },
+        {
+          "duration": 0.1,
+          "phone": "ng_E"
+        }
+      ],
+      "start": 4.24,
+      "startOffset": 18,
+      "word": "along"
+    },
+    {
+      "alignedWord": "the",
+      "case": "success",
+      "end": 4.71,
+      "endOffset": 27,
+      "phones": [
+        {
+          "duration": 0.05,
+          "phone": "dh_B"
+        },
+        {
+          "duration": 0.05,
+          "phone": "ah_E"
+        }
+      ],
+      "start": 4.61,
+      "startOffset": 24,
+      "word": "the"
+    },
+    {
+      "alignedWord": "street",
+      "case": "success",
+      "end": 4.92,
+      "endOffset": 34,
+      "phones": [
+        {
+          "duration": 0.04,
+          "phone": "s_B"
+        },
+        {
+          "duration": 0.06,
+          "phone": "t_I"
+        },
+        {
+          "duration": 0.04,
+          "phone": "r_I"
+        },
+        {
+          "duration": 0.06,
+          "phone": "iy_I"
+        },
+        {
+          "duration": 0.01,
+          "phone": "t_E"
+        }
+      ],
+      "start": 4.71,
+      "startOffset": 28,
+      "word": "street"
+    }
+  ]
+}

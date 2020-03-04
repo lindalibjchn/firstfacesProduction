@@ -102,12 +102,13 @@ function dealWithBlankTranscription() {
         $('#recordBtnsCont').hide();
         $('#upperSentenceHolder').empty();
         $('#lowerSentenceHolder').empty();
+        conversationVariables.blankTranscription = true;
         tiaPrepareToSpeak( "I_couldn't_hear_anything", speakCb=function() {
          
-            $('#recordVoiceBtn').show();
+            //$('#recordVoiceBtn').show();
             conversationVariables.mainRecord = false;
 
-            $('#recordBtnsCont').fadeIn();
+            //$('#recordBtnsCont').fadeIn();
             //removeSpeechBubble();
 
         } );

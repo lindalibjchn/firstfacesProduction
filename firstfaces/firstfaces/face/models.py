@@ -49,7 +49,7 @@ JUDGEMENT_CHOICES = (
     ('M', 'mean_by'),
     ('I', 'incorrect'),
     ('D', 'dunno'),
-    ('3', 'more_than_three')
+    ('3', 'more_than_three'),
 )
 
 
@@ -85,7 +85,12 @@ class Sentence(models.Model):
     prompt_updated_by_teacher = models.NullBooleanField(null=True)
 
     def __str__(self):
-        return  str(self.pk) + ": " + str(self.sentence)
+        try:
+            string_sent = " ".join([w[0] for w in json.loads(self.sentence)])
+        except:
+            string_sent = "None"
+        return  str(self.pk) + ": " + str(self.learner) + ": " + string_sent + ": " + str(self.judgement)
+
 
 # may need multiple audio files per sentence as student attempts and re-attempts
 class AudioFile(models.Model):

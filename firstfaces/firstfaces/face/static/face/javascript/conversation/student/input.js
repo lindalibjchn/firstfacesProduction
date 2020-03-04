@@ -29,7 +29,7 @@ function initInputReady( from, showPtsBool=false ) {
     
     }
 
-    //console.log( 'in initInputReady' );
+    console.log( 'in initInputReady' );
 
     if ( showPtsBool ) {
 
@@ -56,7 +56,7 @@ function showPts() {
 
             }
 
-            if ( totalPoints === 0 ) {
+            if ( totalPoints === 0 || pts === 0 ) {
 
                 $( '#finishPts' ).html( totalPoints.toString() )
 

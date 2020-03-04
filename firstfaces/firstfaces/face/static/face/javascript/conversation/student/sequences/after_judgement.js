@@ -31,7 +31,6 @@ function runIncorrect() {
 
 function runPrompt( judg ) {
 
-
     //recTimes.prePrepareForPromptSpeech =  Date.now() / 1000;
     // return to talking pos
     

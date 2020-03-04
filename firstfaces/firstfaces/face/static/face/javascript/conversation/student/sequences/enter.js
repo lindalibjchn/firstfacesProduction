@@ -281,6 +281,7 @@ function finalSpeak() {
         conversationVariables.entranceSequence = false
         //movementController( movementObject.abs.arm, 1, 1 );
         setTimeout(initInputReady, 1000)
+        removeSpeechBubble();
 
     }, tiaTimings.speechBubbleFadeOutDuration );
 

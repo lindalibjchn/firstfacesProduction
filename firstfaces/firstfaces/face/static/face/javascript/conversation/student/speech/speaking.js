@@ -3,6 +3,7 @@ function tiaPrepareToSpeak( tiaSays, speakCb=function(){}, playbackRate=1) {
     synthesisObject.newPromptArrived = false;
     synthesisObject.sentenceNo = 0;
     synthesisObject.now = synthesisObject.data[ tiaSays ];
+    buttonsListenNextSentenceWaiting();
     synthesisObject.audio.src = prefixURL + 'media/' + synthesisObject.now.URLs[ synthesisObject.sentenceNo ];
     synthesisObject.audio.load();
     synthesisObject.audio.playbackRate = playbackRate;
@@ -71,16 +72,6 @@ function setSynthesisAudioOnChangeEvent() {
             }
 
         }
-
-        //console.log('DELAY_BEFORE_MIA_SPEAKS:', DELAY_BEFORE_MIA_SPEAKS)
-        //console.log('synthesisObject.audio.duration:', synthesisObject.audio.duration)
-        //let dur = synthesisObject.audio.duration - DELAY_BEFORE_MIA_SPEAKS
-        //let dur = synthesisObject.audio.duration
-        //console.log('dur:', dur)
-        //console.log('synthesisObject.audio.duration:', synthesisObject.audio.duration)
-        //synthesisObject.now.noOfFrames = Math.floor( dur * 60 )
-        //synthesisObject.now.noOfFramesPerPhone = Math.floor( synthesisObject.now.noOfFrames / ( synthesisObject.now.noOfPhones - 1 ) );
-
 
     }
 
@@ -187,6 +178,7 @@ function animatePhonesInOrder() {
 
     } else if ( synthesisObject.now.phoneCount === synthesisObject.now.noOfPhones ) { 
         
+        expressionController( expressionObject.quarter, tiaTimings.durationOfLastSpeakingPhones )
         checkIfAudioIsFinished();
     
     }
@@ -237,6 +229,7 @@ function checkIfAudioIsFinished() {
 
 function endAnimatePhonesInOrder() {
 
+    expressionController( expressionObject.quarter, tiaTimings.durationOfLastSpeakingPhones )
     if ( !conversationVariables.promptSpeaking ) {
     
         continueStockPhrases();
@@ -264,7 +257,7 @@ function continueStockPhrases() {
     } else {
 
             
-        expressionController( expressionObject.quarter, tiaTimings.durationOfLastSpeakingPhones, function() {
+        //expressionController( expressionObject.quarter, tiaTimings.durationOfLastSpeakingPhones, function() {
 
             if ( conversationVariables.tutorial ) {
                 
@@ -275,7 +268,7 @@ function continueStockPhrases() {
             //setTimeout( updateSentenceNumberAndAudioSrc, 500 );
             updateSentenceNumberAndAudioSrc();
        
-        });
+        //});
 
     }
 
@@ -303,12 +296,12 @@ function continuePrompt() {
 
     } else {
 
-        expressionController( expressionObject.quarter, tiaTimings.durationOfLastSpeakingPhones, function() {
+        //expressionController( expressionObject.quarter, tiaTimings.durationOfLastSpeakingPhones, function() {
 
             //setTimeout( updateSentenceNumberAndAudioSrc, 750 );
             updateSentenceNumberAndAudioSrc();
        
-        });    
+        //});    
 
     }
 
@@ -318,11 +311,11 @@ function speakJudgementM() {
 
     if ( synthesisObject.sentenceNo === 0 ) {
 
-        expressionController( expressionObject.quarter, tiaTimings.durationOfLastSpeakingPhones, function() {
+        //expressionController( expressionObject.quarter, tiaTimings.durationOfLastSpeakingPhones, function() {
             
             //buttonsListenNextSentence();
 
-        } );
+        //} );
 
     } else {
 
@@ -337,12 +330,12 @@ function speakJudgementP() {
     //console.log('in speakJudgementP')
     if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].awaiting_next_prompt ) {
 
-        expressionController( expressionObject.quarter, tiaTimings.durationOfLastSpeakingPhones, function() {
+        //expressionController( expressionObject.quarter, tiaTimings.durationOfLastSpeakingPhones, function() {
             
             buttonsListenNextSentenceWaiting();
             checkIfNewPromptArrived();
 
-        } );
+        //} );
 
     } else {
 
@@ -363,6 +356,7 @@ function updateSentenceNumberAndAudioSrc() {
 
     } else {
 
+        buttonsListenNextSentenceWaiting();
         synthesisObject.newPromptArrived = false;
         synthesisObject.audio.src = prefixURL + 'media/' + synthesisObject.now.URLs[ synthesisObject.sentenceNo ];
         synthesisObject.audio.load();
@@ -380,7 +374,7 @@ function checkIfNewPromptArrived() {
 
     } else {
 
-        if ( synthesisObject.awaiting_next_prompt_count < 1000 ) {
+        if ( synthesisObject.awaiting_next_prompt_count < 150 ) {
 
             if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].awaiting_next_prompt ) {
 
@@ -413,7 +407,7 @@ function endTiaTalking() {
 
     synthesisObject.talking = false;
     conversationVariables.promptSpeaking = false;
-    expressionController( expressionObject.half, tiaTimings.durationOfReturnToExpressionAfterVeryLastSpeakingPhone );
+    //expressionController( expressionObject.half, tiaTimings.durationOfReturnToExpressionAfterVeryLastSpeakingPhone );
     movementController( movementObject.abs.blank, 1, 1, function() {
 
         synthesisObject.callback();
@@ -425,7 +419,16 @@ function endTiaTalking() {
                 removeSpeechBubble( tiaTimings.speechBubbleFadeOutDuration * 3 );
                 if ( !conversationVariables.tutorial ) {
 
-                    initInputReady( 'judgement', showPtsBool=true );
+                    if ( conversationVariables.blankTranscription ) {
+
+                        initInputReady( 'judgement', showPtsBool=false );
+                        conversationVariables.blankTranscription = false;
+
+                    } else {
+
+                        initInputReady( 'judgement', showPtsBool=true );
+
+                    }
 
                 } else {
 
