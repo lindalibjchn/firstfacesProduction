@@ -22,6 +22,7 @@ function reCorrectError(num){
     //Unnecessary buttons are hidden
     $('#backCorrection').hide();
     $('#recordVoiceBtn').hide();
+    $('#talkBtn').hide();
     //hide text area
     $("#sentenceHolderParent").hide();
 
@@ -29,6 +30,9 @@ function reCorrectError(num){
     //function will make overlay appear
 
     openOverlay();
+    $("#submitOverlay").click(function(){
+        $('#exitOverlay').click();
+    });
     $('#submitOverlay').show();
     moveText();
      //Populate top of overaly with error text

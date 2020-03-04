@@ -1013,9 +1013,7 @@ function submitKeyboard(){
             // john
             //  tia taps and looks at student
             //conversationVariables.showingSpectrograms = true;
-            if(!conversationVariables.goToStage3){
-                prepareToStopTyping();
-            }
+
             //$('#reRecordBtn').show();
 
             var refAudioURL = prefixURL + json.ref_audio_url;
@@ -1023,22 +1021,23 @@ function submitKeyboard(){
             refAudio.src = refAudioURL;
             //refAudio.play();
 
-            var hyp_audio_url = prefixURL + json.hyp_audio_url;
-            var hypAudio = document.getElementById("hypAudio");
-            hypAudio.src = hyp_audio_url;
-            
-            var ref_image_url =prefixURL+json.ref_image_url; 
-            var refImage = document.getElementById("refImg");
-            refImg.src = ref_image_url;
+            //var hyp_audio_url = prefixURL + json.hyp_audio_url;
+            //var hypAudio = document.getElementById("hypAudio");
+            //hypAudio.src = hyp_audio_url;
 
-             synthesisObject.data.Ref_Word = {
+            //No Images
+            //var ref_image_url =prefixURL+json.ref_image_url;
+            //var refImage = document.getElementById("refImg");
+            //refImg.src = ref_image_url;
+
+             /*synthesisObject.data.Ref_Word = {
                     'URLs':[prefixURL +json.ref_audio_url],
                     'visemes':json.ref_vis,
                     'texts': [trans],
                     'duration':json.ref_length
-             }
+             }*/
 
-            if(!json.ts_error){
+            /*if(!json.ts_error){
                 var hyp_image_url = prefixURL + json.hyp_image_url;
                 var hypImage = document.getElementById("hypImg");
                 hypImg.src = hyp_image_url;
@@ -1068,9 +1067,9 @@ function submitKeyboard(){
             else{
                 $('#hypBtn').css("background-color","red");                 
                 $('#hypInvisible').css("background-color","#ffcccb");           
-            }
+            }*/
 
-            conversationVariables.specClicks = [];
+            //conversationVariables.specClicks = [];
             conversationVariables.stage3 = true;
             conversationVariables.stage2 = false;
             conversationVariables.correctionAttemptID = json.aeca_id;
@@ -1079,17 +1078,21 @@ function submitKeyboard(){
 
             //save lenghts of both audio files
             conversationVariables.refLen = json.ref_length/conversationVariables.playspeed;
-            conversationVariables.hypLen = json.hyp_length/conversationVariables.playspeed;
+            //conversationVariables.hypLen = json.hyp_length/conversationVariables.playspeed;
             //change speed of play
-            document.getElementById('hypAudio').playbackRate = conversationVariables.playspeed;
+            //document.getElementById('hypAudio').playbackRate = conversationVariables.playspeed;
             document.getElementById('refAudio').playbackRate = conversationVariables.playspeed;
 
-            conversationVariables.hypLenOriginal = json.hyp_length;
+            //conversationVariables.hypLenOriginal = json.hyp_length;
             conversationVariables.refLenOriginal = json.ref_length;
-            var finAudio = document.getElementById("audio_"+conversationVariables.startIDX);             
-            finAudio.src = hyp_audio_url;                                     
-            $('#audio_'+conversationVariables.startIDX).attr('duration',json.hyp_length);
-            get_word_context();
+            //var finAudio = document.getElementById("audio_"+conversationVariables.startIDX);
+            //finAudio.src = hyp_audio_url;
+            //$('#audio_'+conversationVariables.startIDX).attr('duration',json.hyp_length);
+            //get_word_context();
+            if(!conversationVariables.goToStage3){
+                //alert("Here");
+                prepareToStopTyping();
+            }
 
 
         },

@@ -76,7 +76,7 @@ $('#logo-left-cont').click(function(){
     }
 });
 
-function open_shop()
+function open_shop(){
     $('.product-category-options').empty();
     if(waitingVariables.experimental_group == "control"){
          $('#logo-left-cont').empty().append('<i class="fa fa-shopping-cart fa-2x"></i>');
