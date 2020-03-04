@@ -333,7 +333,7 @@ def error_typing_used(request):
     #Synth Audio
 
     text_ = request.POST['trans'].lower()
-    logger.error('\ntext:', text_)
+    # logger.error('\ntext:', text_)
 
     try:
         temp = StockWord.objects.get(name=text_)
@@ -350,7 +350,7 @@ def error_typing_used(request):
     ref_url = url
     ref_vis = visemes
 
-    logger.error('\nref_url:', ref_url)
+    # logger.error('\nref_url:', ref_url)
 
 
 
