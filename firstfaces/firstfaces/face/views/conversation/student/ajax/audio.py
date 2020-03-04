@@ -313,7 +313,7 @@ def error_typing_used(request):
         ae = AudioError(audio=af, start_index=startID)
 
     filename = af.audio.name
-    trans = ast.literal_eval(af.alternatives)[0]["transcript"]
+    #trans = ast.literal_eval(af.alternatives)[0]["transcript"]
     #convert audio to wav
     audioPath = convert_audio(filename)
     #Get audio
@@ -368,10 +368,10 @@ def error_typing_used(request):
        # hypLen = get_audio_length(errorPath)
       #  hyp_audio = ref_path(fn)
     #else:
-    hyp_image = ""
-    hypLen = 0
-    hyp_audio = ""
-    ref_image = ""
+    #hyp_image = ""
+    #hypLen = 0
+    #hyp_audio = ""
+    #ref_image = ""
     refLen = get_audio_length(settings.BASE_DIR+'/' +ref_url[0])
 
 
@@ -387,10 +387,10 @@ def error_typing_used(request):
             #"ref_audio_url":ref_audio,
             "ref_audio_url": ref_url[0],
             "ref_vis": ref_vis,
-            "ref_image_url": ref_image,
-            "hyp_audio_url": hyp_audio,
-            "hyp_image_url": hyp_image,
-            "hyp_length": hypLen,
+            #"ref_image_url": ref_image,
+            #"hyp_audio_url": hyp_audio,
+            #"hyp_image_url": hyp_image,
+            #"hyp_length": hypLen,
             "ref_length": refLen,
             "aeca_id": aeca.id,
             "ae_id": ae.id,

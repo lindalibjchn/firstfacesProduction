@@ -192,6 +192,10 @@ function dealWithAfterTap() {
             setTimeout( set_selectable(conversationVariables.sentence_being_recorded_audio.alternatives[0].transcript) , 1200);   
         
         }
+        else{
+            //alert("Solution?");
+            $('#exitOverlay').click();
+        }
 
     }
 
