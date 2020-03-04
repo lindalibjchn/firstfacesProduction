@@ -42,15 +42,19 @@ function animateMouthPhonesInOrder() {
 
     }
 
-    if ( mouthingObject.phoneCount < mouthingObject.noOfPhones ) {
+    if ( mouthingObject.mouthing ) {
 
-        mouthingController( express_, animateMouthPhonesInOrder )
-            
-        mouthingObject.phoneCount += 1;
+        if ( mouthingObject.phoneCount < mouthingObject.noOfPhones ) {
 
-    } else {
+            mouthingController( express_, animateMouthPhonesInOrder )
+                
+            mouthingObject.phoneCount += 1;
 
-        expressionController( expressionObject.abs.talkBase, durLast_, endOfSingleWordCycle )
+        } else {
+
+            expressionController( expressionObject.abs.talkBase, durLast_, endOfSingleWordCycle )
+
+        }
 
     }
 

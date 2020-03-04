@@ -3,46 +3,14 @@ conversationVariables.cumulativeStart = performance.now();
 conversationVariables.meanLastThreeFPS = 60;
 conversationVariables.slowFPS = false;
 conversationVariables.slowFPSIterator = 0;
+conversationVariables.slowFPSWarningGiven = false;
 conversationVariables.secondsSinceLastSlowFPS = 0;
+conversationVariables.slowFPSInitialWarningGiven = false;
 function animate() {
 
     runAnimations();
 
     mainCount += 1;
-
-    if ( conversationVariables.slowFPS ) {
-
-        if ( mainCount % 2 === 0 ) {
-
-            if ( expressionObject.bool ) {
-
-                expression( mainCount );
-
-            }
-
-            if ( movementObject.bool ) {
-
-                movement( mainCount );
-
-            }
-
-        }
-
-    } else {
-
-        if ( expressionObject.bool ) {
-
-            expression( mainCount );
-       
-        }
-
-        if ( movementObject.bool ) {
-
-            movement( mainCount );
-
-        }
-
-    }
 
     if ( conversationVariables.slowFPSIterator < 5 ) {
 
@@ -62,6 +30,18 @@ function animate() {
 };
 
 function runAnimations() {
+
+    if ( expressionObject.bool ) {
+
+        expression( mainCount );
+
+    }
+
+    if ( movementObject.bool ) {
+
+        movement( mainCount );
+
+    }
 
     if ( volumeObject.bool ) {
 
@@ -205,22 +185,32 @@ function checkFPS( main ) {
 
     //console.log( 'conversationVariables.meanLastThreeFPS:', conversationVariables.meanLastThreeFPS );
 
-    if ( conversationVariables.meanLastThreeFPS < 40 ) {
+    if ( conversationVariables.meanLastThreeFPS < 45 ) {
+
+        if ( mainCount > 300 ) {
+
+            if ( !conversationVariables.slowFPSInitialWarningGiven ) {
+
+                conversationVariables.slowFPSInitialWarningGiven = true;
+                alert( "Your phone is running a little slow.\nSaoirse's audio and lip-sync animations may not work well.\nPlease close all other applications and browser tabs to ensure peak performance." );
+
+            }
+
+        }
 
         conversationVariables.secondsSinceLastSlowFPS = 0;
-        conversationVariables.slowFPS = true;
         conversationVariables.slowFPSIterator += 1;
         
         if ( conversationVariables.slowFPSIterator === 5 ) {
 
-            alert( 'Your phone is running slow.\n\nSome animations will be removed to improve performance.\n\nClose other applications and refresh to reset animations' );
+            conversationVariables.slowFPSWarningGiven = true;
+            alert( 'Lip-sync will be turned off for best performance.' );
             sendSlowFPSReportToServer();
 
         }
 
     } else {
 
-        conversationVariables.slowFPS = false;
         conversationVariables.secondsSinceLastSlowFPS += 1;
 
     }

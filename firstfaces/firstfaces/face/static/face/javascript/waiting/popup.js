@@ -1,4 +1,3 @@
-
 $( document ).ready(function(){
     $('#shop-cont').hide();
     $('#history-cont').hide();
@@ -16,6 +15,12 @@ $(window).load(function() {
        $('#logo-right-cont').css("display","flex").hide().fadeIn(700);
        $('#home-cont').fadeIn(700);
       get_user_stats();
+      if ( waitingVariables.currently_in_class ) {
+
+          $( '#tutorialButton' ).hide();
+
+      }
+
 });
 
 function get_products(){
@@ -156,14 +161,6 @@ function open_history(){
 
 function showScoresAndSentences() {
 
-    waitingVariables.finishedConversationsNotTutorial = waitingVariables.conversations.filter( function( obj ) {
-        
-        return obj.topic !== 'tutorial';
-
-    })
-
-    console.log( 'waitingVariables.finishedConversationsNotTutorial:', waitingVariables.finishedConversationsNotTutorial )
-
     if ( waitingVariables.finishedConversationsNotTutorial.length !== 0 ) {
     
         $( '#prevSentsWaitingContainer' ).css( 'display', 'flex' );
@@ -175,6 +172,7 @@ function showScoresAndSentences() {
         //addData( 'sentences', finishedConversationsNotTutorial[0].completed_sentences )
     
     }
+
     $('#pronunciationClearOverlayArea').click( hidePronunciationDataContainer );
 
 }
@@ -223,7 +221,7 @@ function open_about(){
 
 function openTutorial() {
 
-    bookConversation( enterTutorial=true )
+    bookConversation( true )
     $('#tutorialButton').css({
         'background-color': 'green',
         'color': 'white',
@@ -235,12 +233,14 @@ $('#shop-btn').click(function(){
     click_save("#shop-btn", "Shop opened");
     open_shop();
 });
-$('#tutorialButton').click(function(){
+$('#tutorialButton').on('click', function(){
+    $('#tutorialButton').off('click');
+    $('#tutorialButton').css('disabled', true);
     click_save("#tutorialButton", "Tutorial started");
     openTutorial();
 });
 $('#main-logo').click(function(){
-    click_save("#tutorialButton", "Home opened");
+    click_save("#main-logo", "Home opened");
     open_home();
 });
 $('#home-btn').click(function(){

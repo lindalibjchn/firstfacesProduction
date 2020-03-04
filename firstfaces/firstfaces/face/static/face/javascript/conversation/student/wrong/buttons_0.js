@@ -38,6 +38,8 @@ function tryAgain() {
         
     });
 
+    $('#submittedNCorrectedSentenceCont').fadeOut( 500, clearSubmittedNCorrectedSentences )
+
 }
 
 function whatsWrong() {

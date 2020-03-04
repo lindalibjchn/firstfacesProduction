@@ -13,7 +13,6 @@ function initMicVolumeBar() {
 
     mediaStreamSource.connect(meter);
 
-
     beginDrawingVolumeBar();
 
 }

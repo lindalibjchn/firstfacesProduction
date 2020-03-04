@@ -21,6 +21,7 @@ urlpatterns = [
     # AJAX
     # conversation
     path('store_emotion', conversation.store_emotion, name='store_emotion'),
+    path('store_tutorial_step', conversation.store_tutorial_step, name='store_tutorial_step'),
     path('store_topic', conversation.store_topic, name='store_topic'),
     path('store_slow_FPS', conversation.store_slow_FPS, name='store_slow_FPS'),
     path('get_pronunciation_errors',conversation.get_pronunciation_errors,name="get_pronunciation_errors"),

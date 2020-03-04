@@ -1012,7 +1012,7 @@ function submitKeyboard(){
 
             // john
             //  tia taps and looks at student
-            conversationVariables.showingSpectrograms = true;
+            //conversationVariables.showingSpectrograms = true;
             if(!conversationVariables.goToStage3){
                 prepareToStopTyping();
             }

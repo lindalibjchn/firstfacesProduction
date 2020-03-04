@@ -161,7 +161,7 @@ def create_user(request):
     ta.save()
 
     user = authenticate(request, username=username, password=password)
-    send_mail("Profile Created", 'Profile Created:\nUsername:\t'+username+'\nEmail:\t'+email+"\nNationality:\t"+nationality, 'ucd.erle@gmail.com', ['john.sloan.1@ucdconnect.ie', 'daniel.maguire@ucdconnect.ie'])
+    send_mail("Profile Created", 'Profile Created:\nUsername:\t'+username+'\nEmail:\t'+email+"\nNationality:\t"+nationality, 'ucd.erle@gmail.com', ['ucd.erle@gmail.com'])
 
     login(request, user)
 

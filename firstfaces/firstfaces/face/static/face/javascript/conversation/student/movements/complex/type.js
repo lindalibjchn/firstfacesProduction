@@ -225,7 +225,7 @@ function afterMovementBackFromTap() {
 
     if ( conversationVariables.tutorial ) {
 
-        if ( conversationVariables.tutorialStep === '021' ) {
+        if ( [ "021", "022" ].includes( conversationVariables.tutorialStep ) ) {
 
             if(!conversationVariables.stage2 && !conversationVariables.stage3) {
 

@@ -73,7 +73,7 @@ valid = get_StockWords()
     # }
 
     # return JsonResponse(response_data)
-from wordcloud import WordCloud
+# from wordcloud import WordCloud
 
 
 def store_emotion(request):
@@ -82,6 +82,20 @@ def store_emotion(request):
     conversation_id = request.POST['conversationId']
     conv = Conversation.objects.get(pk=conversation_id)
     conv.emotion = emotion
+    conv.save()
+
+    response_data = {
+
+    }
+
+    return JsonResponse(response_data)    
+
+def store_tutorial_step(request):
+
+    tutorial_step = int(request.POST['tutorial_step'])
+    conversation_id = request.POST['conversationId']
+    conv = Conversation.objects.get( pk=conversation_id )
+    conv.emotion = tutorial_step
     conv.save()
 
     response_data = {

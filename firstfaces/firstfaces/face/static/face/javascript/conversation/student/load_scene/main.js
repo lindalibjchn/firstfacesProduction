@@ -5,27 +5,32 @@ $(window).on( 'load', function() {
     // AFTER LOADING 'enterOrReEnter()' WILL BE CALLED BELOW
     
     let getUserMediaOK = checkIfDeviceCanRunSite();
+    console.log( 'getUserMediaOK:', getUserMediaOK );
 
     if ( getUserMediaOK ) {
 
-        readyTiaSynthSentences();
-
-        get_tia_attributes();
-
         readyBtns();
-
-        //readyAudio();
-
-        conversationVariables.playspeed=1.0;
-        
-        //// FOR VOLUME BAR
-        canvasContext = document.getElementById( "meter" ).getContext("2d");
-        canvasContext.transform(1, 0, 0, -1, 0, HEIGHT_VOL)
-        canvasContext.fillStyle = "#33ff00";
+        conversationVariables.audioReadyFirstTime = false;
+        readyAudio();
 
     }
 
 });
+
+function getEverythingElseReadyOnceAudioIsOk() {
+
+    readyTiaSynthSentences();
+    
+    conversationVariables.playspeed=1.0;
+    
+    //// FOR VOLUME BAR
+    canvasContext = document.getElementById( "meter" ).getContext("2d");
+    canvasContext.transform(1, 0, 0, -1, 0, HEIGHT_VOL)
+    canvasContext.fillStyle = "#33ff00";
+
+    get_tia_attributes();
+
+}
 
 function checkIfDeviceCanRunSite() {
 
@@ -68,6 +73,10 @@ function checkIfDeviceCanRunSite() {
                         alert( "Please enable MediaRecorder via the following steps. Go to:\n1. settings\n2. Safari\n3. advanced\n4. experimental features\n5. turn 'MediaRecorder' on\n6. Refresh this page" )
                         return false
 
+                    } else {
+
+                        return true
+
                     }
 
                 } else {
@@ -88,7 +97,18 @@ function checkIfDeviceCanRunSite() {
 
     } else {
 
-        return true;
+        let isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+
+        if ( isChrome ) {
+
+            return true;
+
+        } else {
+
+            alert('ERLE is only available on Google Chrome on Android')
+            return false;
+
+        }
 
     }
 
@@ -107,7 +127,7 @@ function engineRunning() {
     } else {
 
         movementController( movementObject.abs.blank, 0.1, 0.1 );
-        readyAudio();
+        //readyAudio();
 
     }
 
@@ -130,8 +150,8 @@ function engineRunning() {
             $("#foregroundContainer").fadeOut( 1500, initInputReady );
 
         }
+        
         conversationVariables.first_enter = false;
-
     
         //// DEVELOPMENT
         if ( conversationVariables.inDevelopment ) {
@@ -168,40 +188,6 @@ function setBaseExpressionsAndMovements() {
     movementObject.base = getAbsoluteCoordsOfMovementNow(); // same as above for movementObject.abs
     movementObject.now = $.extend( true, {}, movementObject.base );
     getAbsoluteCoordsOfMainMovements(); // gets coordinates for all main expressions
-
-}
-
-function setSynthesisAudioOnChangeEvent() {
-
-    //load this early and change .src later
-    synthesisObject.audio = document.getElementById( 'synthClip' );
-    synthesisObject.audioS3 = document.getElementById( 'danSynthAudio' );
-
-    synthesisObject.audio.ondurationchange = function() {
-
-        let dur = synthesisObject.audio.duration
-        synthesisObject.now.noOfFrames = Math.floor( dur * 60 )
-        synthesisObject.gotNewDuration = true;
-        breatheObject.singleBreath.outCount = dur;
-
-        //console.log('DELAY_BEFORE_MIA_SPEAKS:', DELAY_BEFORE_MIA_SPEAKS)
-        //console.log('synthesisObject.audio.duration:', synthesisObject.audio.duration)
-        //let dur = synthesisObject.audio.duration - DELAY_BEFORE_MIA_SPEAKS
-        //let dur = synthesisObject.audio.duration
-        //console.log('dur:', dur)
-        //console.log('synthesisObject.audio.duration:', synthesisObject.audio.duration)
-        synthesisObject.now.noOfPhones = synthesisObject.now.visemes[ synthesisObject.sentenceNo ].length;
-
-        //synthesisObject.now.noOfFrames = Math.floor( dur * 60 )
-        //synthesisObject.now.noOfFramesPerPhone = Math.floor( synthesisObject.now.noOfFrames / ( synthesisObject.now.noOfPhones - 1 ) );
-
-        //synthesisObject.now.noOfLeftoverFrames = synthesisObject.now.noOfFrames - synthesisObject.now.noOfFramesPerPhone * synthesisObject.now.noOfPhones;
-
-        //synthesisObject.gotNewDuration = true;
-
-        //breatheObject.singleBreath.outCount = dur;
-
-    }
 
 }
 

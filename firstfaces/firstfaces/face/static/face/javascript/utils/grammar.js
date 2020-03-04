@@ -34,7 +34,7 @@ function calculateArticleErrors( sentencesArray ) {
     
     }
         
-    $('#correctPercentage').text( correctArticlesPercent );
+    //$('#correctPercentage').text( correctArticlesPercent );
 
     inputDataForChart = putErrorObjectIntoListForChart( articleErrorsObject );
     //console.log('inputDataForChart:', inputDataForChart)
