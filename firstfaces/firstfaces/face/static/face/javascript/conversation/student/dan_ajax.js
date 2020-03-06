@@ -1381,6 +1381,8 @@ function animate_open_overlay(err_id){
         },400);
         //open overlay
         setTimeout(function(){
+            conversationVariables.stage3 = false;
+            conversationVariables.stage2 = true;
             correctError(err_id)
             
         },1000);
