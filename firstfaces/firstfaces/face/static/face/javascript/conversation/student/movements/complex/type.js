@@ -193,7 +193,6 @@ function dealWithAfterTap() {
         
         }
         else{
-            //alert("Solution?");
             $('#exitOverlay').click();
         }
 
