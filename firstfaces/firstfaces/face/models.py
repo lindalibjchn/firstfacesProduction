@@ -79,7 +79,7 @@ class Sentence(models.Model):
     #if native wants to say something in speech bubble
     correction = models.CharField(max_length=300, null=True, blank=True)
     prompts = models.ManyToManyField(Prompt, blank=True)
-    awaiting_next_prompt = models.NullBooleanField(default=False)
+    awaiting_next_prompt = models.NullBooleanField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     prompt_updated_by_teacher = models.NullBooleanField(null=True)

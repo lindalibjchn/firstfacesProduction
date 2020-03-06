@@ -97,12 +97,13 @@ function subsequentFlinches() {
 
 function dealWithBlankTranscription() {
 
-    if (!conversationVariables.tutorial ) {
+    if (!conversationVariables.tutorial && !conversationVariables.stage2 ) {
 
         $('#recordBtnsCont').hide();
         $('#upperSentenceHolder').empty();
         $('#lowerSentenceHolder').empty();
         conversationVariables.blankTranscription = true;
+        console.log('in dealWithBlankTranscription')
         tiaPrepareToSpeak( "I_couldn't_hear_anything", speakCb=function() {
          
             //$('#recordVoiceBtn').show();

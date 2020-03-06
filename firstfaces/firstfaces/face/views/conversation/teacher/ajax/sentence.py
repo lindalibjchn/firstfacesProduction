@@ -33,6 +33,17 @@ def store_judgement(request):
 
         sent.nod_shake = json.dumps([-0.4, -0.4])
 
+    elif sent_meta['judgement'] == 'P':
+
+        emotion = sent_meta['emotion']
+        if emotion != None:
+            sent.emotion = json.dumps(emotion)
+        else:
+            sent.emotion = json.dumps([0, 0])
+        
+        sent.nod_shake = json.dumps(sent_meta['nod_shake'])
+        sent.surprise = sent_meta['surprise']
+
     sent.save()
 
     response_data = {
@@ -43,48 +54,32 @@ def store_judgement(request):
 
 def store_single_prompt(request):
 
-    sent_meta = json.loads( request.POST['sentMeta'] )
-    sent_id = int(sent_meta['sent_id'])
+    # sent_meta = json.loads( request.POST['sentMeta'] )
+    # print('\n\nsent_meta:', sent_meta)
+    sent_id = int(request.POST['sentID'])
     sent = Sentence.objects.get(pk=sent_id)
     prompt_text = request.POST['promptText']
     prompt_number = int(request.POST['promptNumber'])
     prompt_name = prompt_text.replace(' ', '_')
-    sent.awaiting_next_prompt = sent_meta['awaiting_next_prompt']
+    sent.awaiting_next_prompt = json.loads(request.POST['awaitingNextPrompt'])
     print('awaiting_next_prompt', sent.awaiting_next_prompt)
 
-    prompt_levels_already_entered = [p.level for p in sent.prompts.all()]
-
-    print('prompt_levels_already_entered:', prompt_levels_already_entered)
     print('prompt_number:', prompt_number)
-    prompt_saved = False
-    if prompt_number not in prompt_levels_already_entered:
+    if prompt_text != "":
+    
+        prompt_levels_already_entered = [p.level for p in sent.prompts.all()]
+        print('prompt_levels_already_entered:', prompt_levels_already_entered)
+        if prompt_number not in prompt_levels_already_entered:
 
-        if prompt_number == 0:
+            if prompt_number == 0:
 
-            time_now = timezone.now()
-            sent.judgement = "P"
-            sent.judgement_timestamp = time_now
-            emotion = sent_meta['emotion']
-            if emotion != None:
-                sent.emotion = json.dumps(emotion)
-            else:
-                sent.emotion = json.dumps([0, 0])
-            
-            sent.nod_shake = json.dumps(sent_meta['nod_shake'])
-            sent.surprise = sent_meta['surprise']
-
-            prompt0 = Prompt.objects.filter(level=0, name=prompt_name)
-            if prompt0.exists():
-                prompt = prompt0[0]
-            else:
-                prompt = create_prompt_instance(prompt_text, 0, initial_delay=500 )
-            sent.prompts.add(prompt)
-            
-        else:
-
-            if prompt_number == 2 and prompt_text == "":
-                pass
-
+                prompt0 = Prompt.objects.filter(level=0, name=prompt_name)
+                if prompt0.exists():
+                    prompt = prompt0[0]
+                else:
+                    prompt = create_prompt_instance(prompt_text, 0, initial_delay=500 )
+                sent.prompts.add(prompt)
+                
             else:
 
                 promptN = Prompt.objects.filter(level=prompt_number, name=prompt_name)
@@ -98,12 +93,9 @@ def store_single_prompt(request):
                 sent.prompts.add(prompt)
                 sent.prompt_updated_by_teacher = True
 
-        sent.save()
-        prompt_saved = True
-
+    sent.save()
+    
     response_data = {
-
-        'prompt_saved': prompt_saved,
 
     }
 

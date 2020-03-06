@@ -42,12 +42,13 @@ function buttonsListenNextSentenceWaiting() {
     
 }
 
-var animateWaitingDotsInterval;
+var animateWaitingDotsBool = false;
 var animateWaitingDotsCount;
 function initAnimateWaitingDots() {
 
     animateWaitingDotsCount = 0;
-    animateWaitingDotsInterval = setInterval( animateWaitingDots, 1200 )
+    animateWaitingDotsBool = true;
+    animateWaitingDots()
     $('#waitNextSentenceDotsCont').fadeIn();
 
 }
@@ -66,13 +67,22 @@ function animateWaitingDots() {
         animateWaitingDotsCount = 0;
 
     }
+    setTimeout( function() {
+
+        if ( animateWaitingDotsBool ) {
+
+            animateWaitingDots();
+
+        }
+
+    }, 1200);
 
 }
 
 function stopWaitingDots() {
 
     $('#waitNextSentenceDotsCont').hide();
-    clearInterval( animateWaitingDotsInterval );
+    animateWaitingDotsBool = false;
 
 }
 
