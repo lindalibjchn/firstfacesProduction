@@ -6,7 +6,6 @@ function dealWithTutorialSpeakingEvents() {
     
         if ( synthesisObject.sentenceNo === 0 ) {
 
-            clearInterval( blinkInterval );
 
         }
 

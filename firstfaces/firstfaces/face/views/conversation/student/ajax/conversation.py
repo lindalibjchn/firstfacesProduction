@@ -170,11 +170,43 @@ def delete_session(request):
 
     return JsonResponse(response_data)    
 
+def getTotalPointsForAClass( c ):
+
+    tPoints = 0
+
+    sent_objects = Sentence.objects.filter(conversation=c)
+
+    for sent in sent_objects:
+
+        if sent.judgement == 'P': 
+
+            correctSentenceLength = len(json.loads(sent.sentence))
+            tPoints += convertCorrectSentenceLengthToPoints( correctSentenceLength )
+
+    return tPoints
+
+def convertCorrectSentenceLengthToPoints( len_sent ):
+
+    points = 0
+
+    if len_sent >= 15:
+
+        points = 30
+
+    elif len_sent >= 10:
+
+        points = 20
+
+    elif len_sent >= 5:
+
+        points = 10
+
+    return points
 
 def store_conversation_over(request):
 
     conv_id = int(request.POST['convId'])
-    points_from_class = int(request.POST['points'])
+    # points_from_class = int(request.POST['points'])
     ratings = json.loads(request.POST['ratings'])
     tutorial_complete = json.loads(request.POST['tutorial_complete'])
 
@@ -189,15 +221,15 @@ def store_conversation_over(request):
     conv.save()
 
     prof = Profile.objects.get(learner=request.user)
+
+    if not tutorial_complete:
+        prof.tutorial_complete = True
+    else:
+        points_from_class = getTotalPointsForAClass( conv ) 
+
     prof.points += points_from_class
     prof.total_points += points_from_class
     prof.save()
-
-    if not tutorial_complete:
-        p = Profile.objects.get(learner=request.user)
-        p.tutorial_complete = True
-        p.save()
-
     response_data = {
 
     }

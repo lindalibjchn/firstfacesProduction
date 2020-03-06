@@ -1,6 +1,6 @@
 function runTutorial() {
 
-    blinkInterval = setInterval( blink_button, 1500 );
+    arrowInterval = setInterval( arrowButton, 2100 );
     $('#stopAllButtonEffectsExceptInputButtons').show();
     conversationVariables.tutorialStep = 0;
     storeTutorialStep();
@@ -16,6 +16,11 @@ function runTutorial() {
 
     //buttonsListenNextSentence();
 
+}
+
+var arrowInterval;
+function arrowButton(){
+    $('#listenNextSentenceBtn').fadeTo(1000, 0.25).fadeTo(1000, 1);
 }
 
 function tutorialOption000() {

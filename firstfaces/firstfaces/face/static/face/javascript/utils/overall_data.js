@@ -130,12 +130,6 @@ function getTotalPointsForAClass( sentencesArray ) {
 
     } );
 
-    if ( tPoints > 100 ) {
-
-        tPoints = 100;
-
-    }
-
     return tPoints
 
 }

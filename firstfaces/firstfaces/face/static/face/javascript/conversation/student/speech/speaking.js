@@ -37,6 +37,9 @@ function setSynthesisAudioOnChangeEvent() {
 
             } else {
 
+                $('#listenNextSentenceBtnCont').hide();
+                stopWaitingDots();
+
                 if ( conversationVariables.tutorialStep === "001" ) {
 
                     showDoubleBtn( tutorialOption000, tiaSpeakButtonEvent );
@@ -83,6 +86,12 @@ function tiaSpeakButtonEvent() {
     if ( synthesisObject.sentenceNo === 0 ) {
 
         prepareHeadBobAndTalkingBoolOnFirstSentence()
+        
+        if ( conversationVariables.tutorial && conversationVariables.tutorialStep === 0 ) {
+
+            clearInterval( arrowInterval );
+
+        }
 
     }
     synthesisObject.audio.onplay = tiaSpeakIndividualSentences();
