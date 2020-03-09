@@ -1,4 +1,1 @@
-look
-at
-the
-man
+the,dt,man,nn,and,cc,the,dt,dogs,nns
