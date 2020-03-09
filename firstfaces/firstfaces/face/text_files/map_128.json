@@ -1,137 +1,207 @@
 {
-  "transcript": "this\nis\na\ncat\nand\na\ndog\n",
+  "transcript": "the,dt,job,nn,is,vbz,on,in,the,dt,market,nn,job,nn\n",
   "words": [
     {
-      "alignedWord": "this",
+      "alignedWord": "the",
       "case": "success",
-      "end": 0.95,
-      "endOffset": 4,
+      "end": 1.3,
+      "endOffset": 3,
       "phones": [
         {
-          "duration": 0.11,
+          "duration": 0.09,
           "phone": "dh_B"
         },
         {
-          "duration": 0.05,
-          "phone": "ih_I"
+          "duration": 0.24,
+          "phone": "ah_E"
+        }
+      ],
+      "start": 0.97,
+      "startOffset": 0,
+      "word": "the"
+    },
+    {
+      "alignedWord": "<unk>",
+      "case": "success",
+      "end": 1.32,
+      "endOffset": 6,
+      "phones": [
+        {
+          "duration": 0.01,
+          "phone": "oov_S"
+        }
+      ],
+      "start": 1.31,
+      "startOffset": 4,
+      "word": "dt"
+    },
+    {
+      "alignedWord": "job",
+      "case": "success",
+      "end": 1.78,
+      "endOffset": 10,
+      "phones": [
+        {
+          "duration": 0.15,
+          "phone": "jh_B"
         },
         {
           "duration": 0.16,
-          "phone": "s_E"
+          "phone": "aa_I"
+        },
+        {
+          "duration": 0.11,
+          "phone": "b_E"
         }
       ],
-      "start": 0.63,
-      "startOffset": 0,
-      "word": "this"
+      "start": 1.36,
+      "startOffset": 7,
+      "word": "job"
+    },
+    {
+      "alignedWord": "<unk>",
+      "case": "success",
+      "end": 1.82,
+      "endOffset": 13,
+      "phones": [
+        {
+          "duration": 0.03,
+          "phone": "oov_S"
+        }
+      ],
+      "start": 1.79,
+      "startOffset": 11,
+      "word": "nn"
     },
     {
       "alignedWord": "is",
       "case": "success",
-      "end": 1.18,
-      "endOffset": 7,
+      "end": 2.17,
+      "endOffset": 16,
       "phones": [
         {
-          "duration": 0.11,
+          "duration": 0.19,
           "phone": "ih_B"
         },
         {
-          "duration": 0.06,
+          "duration": 0.13,
           "phone": "z_E"
         }
       ],
-      "start": 1.01,
-      "startOffset": 5,
+      "start": 1.85,
+      "startOffset": 14,
       "word": "is"
     },
     {
-      "alignedWord": "a",
+      "alignedWord": "<unk>",
       "case": "success",
-      "end": 1.48,
-      "endOffset": 9,
+      "end": 2.56,
+      "endOffset": 20,
       "phones": [
         {
-          "duration": 0.16,
-          "phone": "ah_S"
+          "duration": 0.33,
+          "phone": "oov_S"
         }
       ],
-      "start": 1.32,
-      "startOffset": 8,
-      "word": "a"
-    },
-    {
-      "alignedWord": "cat",
-      "case": "success",
-      "end": 1.77,
-      "endOffset": 13,
-      "phones": [
-        {
-          "duration": 0.06,
-          "phone": "k_B"
-        },
-        {
-          "duration": 0.07,
-          "phone": "ae_I"
-        },
-        {
-          "duration": 0.01,
-          "phone": "t_E"
-        }
-      ],
-      "start": 1.63,
-      "startOffset": 10,
-      "word": "cat"
-    },
-    {
-      "alignedWord": "and",
-      "case": "success",
-      "end": 1.7999999999999998,
-      "endOffset": 17,
-      "phones": [
-        {
-          "duration": 0.01,
-          "phone": "ah_B"
-        },
-        {
-          "duration": 0.01,
-          "phone": "n_I"
-        },
-        {
-          "duration": 0.01,
-          "phone": "d_E"
-        }
-      ],
-      "start": 1.77,
-      "startOffset": 14,
-      "word": "and"
+      "start": 2.23,
+      "startOffset": 17,
+      "word": "vbz"
     },
     {
       "case": "not-found-in-audio",
-      "endOffset": 19,
-      "startOffset": 18,
-      "word": "a"
+      "endOffset": 23,
+      "startOffset": 21,
+      "word": "on"
     },
     {
-      "alignedWord": "dog",
+      "case": "not-found-in-audio",
+      "endOffset": 26,
+      "startOffset": 24,
+      "word": "in"
+    },
+    {
+      "alignedWord": "the",
       "case": "success",
-      "end": 2.8200000000000003,
-      "endOffset": 23,
+      "end": 2.99,
+      "endOffset": 30,
       "phones": [
         {
-          "duration": 0.08,
-          "phone": "d_B"
+          "duration": 0.1,
+          "phone": "dh_B"
         },
         {
-          "duration": 0.11,
-          "phone": "ao_I"
-        },
-        {
-          "duration": 0.18,
-          "phone": "g_E"
+          "duration": 0.21,
+          "phone": "ah_E"
         }
       ],
-      "start": 2.45,
-      "startOffset": 20,
-      "word": "dog"
+      "start": 2.68,
+      "startOffset": 27,
+      "word": "the"
+    },
+    {
+      "case": "not-found-in-audio",
+      "endOffset": 33,
+      "startOffset": 31,
+      "word": "dt"
+    },
+    {
+      "case": "not-found-in-audio",
+      "endOffset": 40,
+      "startOffset": 34,
+      "word": "market"
+    },
+    {
+      "alignedWord": "<unk>",
+      "case": "success",
+      "end": 3.01,
+      "endOffset": 43,
+      "phones": [
+        {
+          "duration": 0.01,
+          "phone": "oov_S"
+        }
+      ],
+      "start": 3.0,
+      "startOffset": 41,
+      "word": "nn"
+    },
+    {
+      "alignedWord": "job",
+      "case": "success",
+      "end": 3.21,
+      "endOffset": 47,
+      "phones": [
+        {
+          "duration": 0.12,
+          "phone": "jh_B"
+        },
+        {
+          "duration": 0.01,
+          "phone": "aa_I"
+        },
+        {
+          "duration": 0.01,
+          "phone": "b_E"
+        }
+      ],
+      "start": 3.07,
+      "startOffset": 44,
+      "word": "job"
+    },
+    {
+      "alignedWord": "<unk>",
+      "case": "success",
+      "end": 3.53,
+      "endOffset": 50,
+      "phones": [
+        {
+          "duration": 0.32,
+          "phone": "oov_S"
+        }
+      ],
+      "start": 3.21,
+      "startOffset": 48,
+      "word": "nn"
     }
   ]
 }

@@ -214,6 +214,7 @@ function showChoiceTextInput() {
 
     $('#submitTopicBtnCont').fadeIn( tiaTimings.speechBubbleFadeInDuration );
     $('#submitOwnTopicBtn').on( 'click', getOwnTopicFromTextbox );
+    $('#laptopContainer').fadeOut()
     
 }
 
@@ -234,6 +235,7 @@ function getOwnTopicFromTextbox() {
     } else {
 
         storeTopic( ownTopic );
+        $('#laptopContainer').fadeIn()
 
     }
 

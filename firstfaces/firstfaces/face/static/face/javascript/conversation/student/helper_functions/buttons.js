@@ -146,6 +146,44 @@ function hideTopButtons() {
 
 }
 
+var flashButtonBool = false;
+var flashButtonCount;
+var flashButtonDivId = ''
+function initFlashButton( divId ) {
+
+    flashButtonCount = 0;
+    flashButtonBool = true;
+    flashButtonDivId = divId
+    flashButton()
+
+}
+
+function flashButton() {
+
+    console.log('in flashButton')
+    if ( flashButtonCount === 0 ) {
+
+        $( '#' + flashButtonDivId ).fadeTo( 900, 0.3 );
+        flashButtonCount += 1;
+
+    } else {
+
+        $( '#' + flashButtonDivId ).fadeTo( 900, 1 );
+        flashButtonCount = 0;
+
+    }
+    setTimeout( function() {
+
+        if ( flashButtonBool ) {
+
+            flashButton();
+
+        }
+
+    }, 1000);
+
+}
+
 //function changeNextSentenceButtonAppearanceToAgree() {
 
     //$('#listenNextSentenceBtnCont').fadeIn();

@@ -1,5 +1,6 @@
 function tiaPrepareToSpeak( tiaSays, speakCb=function(){}, playbackRate=1) {
 
+    conversationVariables.stage3 = false; // fix bug after removing spectrospin
     synthesisObject.newPromptArrived = false;
     synthesisObject.sentenceNo = 0;
     synthesisObject.now = synthesisObject.data[ tiaSays ];
@@ -357,6 +358,7 @@ function speakJudgementP() {
     
 function updateSentenceNumberAndAudioSrc() {
 
+    //console.log('updateSentenceNumberAndAudioSrc');
     synthesisObject.sentenceNo += 1;
     //console.log( 'sentenceNo:', synthesisObject.sentenceNo );
     //console.log( 'synthesisObject.now.URLs[ synthesisObject.sentenceNo ]:', synthesisObject.now.URLs[ synthesisObject.sentenceNo ] );

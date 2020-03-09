@@ -100,9 +100,9 @@
 
 #inputButtonsContainer {
 
-    position: fixed;
+    position: absolute;
     width: 100%;
-    height: 10%;
+    height: 60px;
     bottom: 0;
     background-color: white;
     /*display: none;*/

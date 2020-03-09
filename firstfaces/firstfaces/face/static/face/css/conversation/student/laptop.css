@@ -1,9 +1,9 @@
 #laptopContainer {
 
-    position: fixed;
+    position: absolute;
     width: 100%;
     height: 28%;
-    bottom: 10%;
+    bottom: 60px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -13,6 +13,7 @@
 
 #laptopInnerContainer {
 
+    position: relative;
     width: 100%;
     height: 100%;
     /*background-color: #191919;*/
@@ -27,7 +28,7 @@
 
     width: 100%;
     position: absolute;
-    bottom: 0%;
+    bottom: 0;
 
 
 }

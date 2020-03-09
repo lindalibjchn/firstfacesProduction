@@ -21,7 +21,7 @@ def get_student_conversation(c, student_id_, current_conv):
     for sent in sent_objects:
 
         sent_meta = convert_django_sentence_object_to_json(sent, student_id_, c.pk)
-        if sent.judgement in ['D', '3'] or sent.judgement == 'I' and sent.correction != None or sent.judgement == 'M' and sent.indexes != None or sent.judgement== 'P' and sent.awaiting_next_prompt == False:
+        if sent.judgement in ['D', '3'] or sent.judgement == 'I' and sent.correction != None or sent.judgement == 'M' and sent.indexes != None or sent.judgement== 'P' and sent.awaiting_next_prompt != True:
             
             conversation["completed_sentences"].append(sent_meta)
 

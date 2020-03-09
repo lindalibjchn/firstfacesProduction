@@ -168,6 +168,7 @@ function dealWithAfterTap() {
                     last_trans += $('#upper_'+i).text().trim()+" ";
                }
                last_trans = last_trans.trim().toLowerCase();
+               console.log('alternatives in type.js:', conversationVariables.sentence_being_recorded_audio.alternatives)
                if(last_trans == conversationVariables.sentence_being_recorded_audio.alternatives[0].transcript.toLowerCase().trim()){
                     setTimeout(function(){
                         nodHeadAndSaySameAfterIdenticalTranscription();

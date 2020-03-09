@@ -135,6 +135,7 @@ $('#forwardErrorSelection').click(function(){
     // If an error is over 60 characters in length user is returned to the original page
     if(tooLong){
         $('#forwardErrorSelection').hide();
+        //flashButtonBool = false;
         $('#upperSentenceHolder').empty();
         $('#lowerSentenceHolder').empty();
         
@@ -180,6 +181,7 @@ $('#forwardErrorSelection').click(function(){
         //add back button and submit button
         $('#backCorrection').hide();
         $('#forwardErrorSelection').hide();
+        //flashButtonBool = false;
 
         //Dictionary is used to store errors userscorrect
         conversationVariables.errors = {};
@@ -316,6 +318,7 @@ function selectErrWord(idx){
             if(selected.length == 1){
                 $('#talkBtn').hide();
                 $('#forwardErrorSelection').show();
+                //initFlashButton('forwardErrorSelection')
             }
         } else {
 
@@ -347,6 +350,7 @@ function selectErrWord(idx){
                     remove_blur_record();
                     $('#forwardArrow').removeClass('flash');
                     $('#forwardErrorSelection').hide();
+                    //flashButtonBool = false;
                 } else {
                     if ( selected.length === 1 && selected[ 0 ] === 7 ) {
 

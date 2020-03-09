@@ -1,7 +1,1 @@
-this
-is
-a
-cat
-and
-a
-dog
+the,dt,job,nn,is,vbz,on,in,the,dt,market,nn,job,nn
