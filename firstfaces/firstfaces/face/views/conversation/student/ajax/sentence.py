@@ -194,7 +194,20 @@ def store_try_again(request):
     sent.try_again_timestamp = time_now
     sent.save()
 
+    new_sent_for_try_again = sent
+    new_sent_for_try_again.pk = None
+    new_sent_for_try_again.indexes = None
+    new_sent_for_try_again.correction = None
+    new_sent_for_try_again.judgement = None
+    new_sent_for_try_again.whats_wrong = None
+    new_sent_for_try_again.try_again = None
+    new_sent_for_try_again.save()
+    print('new_Sent_for_try_Again:', new_sent_for_try_again.pk)
+
     response_data = {
+
+            'try_again_copied_sent_id': new_sent_for_try_again.pk,
+
     }
 
     return JsonResponse(response_data)    

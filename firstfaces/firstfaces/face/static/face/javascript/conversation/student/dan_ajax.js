@@ -135,7 +135,7 @@ $('#forwardErrorSelection').click(function(){
     // If an error is over 60 characters in length user is returned to the original page
     if(tooLong){
         $('#forwardErrorSelection').hide();
-        //flashButtonBool = false;
+        flashButtonBool = false;
         $('#upperSentenceHolder').empty();
         $('#lowerSentenceHolder').empty();
         
@@ -181,7 +181,7 @@ $('#forwardErrorSelection').click(function(){
         //add back button and submit button
         $('#backCorrection').hide();
         $('#forwardErrorSelection').hide();
-        //flashButtonBool = false;
+        flashButtonBool = false;
 
         //Dictionary is used to store errors userscorrect
         conversationVariables.errors = {};
@@ -318,7 +318,7 @@ function selectErrWord(idx){
             if(selected.length == 1){
                 $('#talkBtn').hide();
                 $('#forwardErrorSelection').show();
-                //initFlashButton('forwardErrorSelection')
+                initFlashButton('forwardErrorSelection')
             }
         } else {
 
@@ -350,7 +350,7 @@ function selectErrWord(idx){
                     remove_blur_record();
                     $('#forwardArrow').removeClass('flash');
                     $('#forwardErrorSelection').hide();
-                    //flashButtonBool = false;
+                    flashButtonBool = false;
                 } else {
                     if ( selected.length === 1 && selected[ 0 ] === 7 ) {
 
@@ -452,6 +452,7 @@ function doneError(){
 $('#backCorrection').click(function(){
     $('#recordVoiceBtn').fadeIn();
     conversationVariables.playStage2 = false;
+    conversationVariables.stage3 = false;
     if(!conversationVariables.trying_again){
         conversationVariables.totalAudioLength = conversationVariables.sentence_being_recorded_audio.totalAudioLength
         var words = conversationVariables.sentence_being_recorded_audio.alternatives[0].transcript.split(" ");

@@ -84,7 +84,7 @@ def create_stock_instance( texts, initial_delay=500, breathing=False, speaking_r
             first_word = split_t[1]
         else:
             to_be_spoken = " ".join(split_t)
-        ssml = "<voice emotion='" + emotion + "'>" + t + "</voice>"
+        ssml = "<voice emotion='" + emotion + "'>" + to_be_spoken + "</voice>"
         url, viseme_list = create_tia_tts_url(first_word, gesture, ssml, 'prePreparedTiaPhrases/stockPhrases/', name + '_0' + str(i), initial_delay, breathing, speaking_rate, pitch, volume)
         urls.append(url)
         visemes.append(viseme_list)
@@ -110,12 +110,14 @@ def create_prompt_instance( text, prompt_number, initial_delay=500, breathing=Fa
         split_t.append(new_w)
 
     first_word = split_t[0]
+    print('first word in create_prompt:', first_word)
     gesture = None
     to_be_spoken = "" 
     if first_word in [*vocal_gesture_dict]:
         second_word_on = " ".join(split_t[1:])
         gesture = first_word
         to_be_spoken = create_vocal_gesture( first_word ) + "<break time='1000ms'/>" + " ".join(split_t[1:])
+        print('to be spoken:', to_be_spoken)
         first_word = split_t[1]
     else:
         to_be_spoken = " ".join(split_t)
@@ -124,7 +126,7 @@ def create_prompt_instance( text, prompt_number, initial_delay=500, breathing=Fa
     p = Prompt(name=name, level=prompt_number)
     print('name:', name)
     
-    ssml = "<voice emotion='" + emotion + "'>" + text_without_punctuation + "</voice>"
+    ssml = "<voice emotion='" + emotion + "'>" + to_be_spoken + "</voice>"
     url, visemes = create_tia_tts_url(first_word, gesture, ssml, 'prePreparedTiaPhrases/prompt' + str(prompt_number) + '/', name, initial_delay, breathing, speaking_rate, pitch, volume)
     p.url = url
 
@@ -159,6 +161,7 @@ def create_tia_tts_url(first_word, gesture, text, directory, filename, initial_d
 
     request = soapclient.service.speakExtended(accountID, password, 'Caitlin-CereWave', ssml_text, 'wav', 22050, False, True)
     viseme_data = get_viseme_data(first_word, request.metadataUrl)
+    print('\n\nssml_text:', ssml_text)
     print('viseme_data:', viseme_data)
     print('request:', request)
     print('first_word:', first_word)

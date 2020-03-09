@@ -31,14 +31,22 @@ function tryAgain() {
         type: "GET",
         data: {'sentId': conversationVariables.conversation_dict.completed_sentences[ 0 ].sent_id},
         success: function(json) {
+        
+            let copiedSent = $.extend( true, {}, conversationVariables.conversation_dict.completed_sentences[ 0 ] );
+            copiedSent.sent_id = json.try_again_copied_sent_id;
+            copiedSent.judgement = null
+            copiedSent.try_again = null
+            copiedSent.whats_wrong = null
+            copiedSent.indexes = null
+            updateConversationVariablesWithNewSentence( copiedSent );
+            $('#submittedNCorrectedSentenceCont').fadeOut( 500, clearSubmittedNCorrectedSentences );
+
         },
         error: function() {
           //console.log("that's wrong");
         },
         
     });
-
-    $('#submittedNCorrectedSentenceCont').fadeOut( 500, clearSubmittedNCorrectedSentences )
 
 }
 

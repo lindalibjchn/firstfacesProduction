@@ -91,6 +91,10 @@ function dealWithAfterTap() {
 
     // this one is for after listening to the learners speech - Daniel's stuff
     } else if (conversationVariables.stage2 && !conversationVariables.stage3){
+            
+            console.log('stage2:', conversationVariables.stage2 )
+            console.log('stage3:', conversationVariables.stage3 )
+            console.log(' in line 95 of type.js - so not calling the exitOverlay.click() function ' );
             if (conversationVariables.error_trans){
                 moveText();
                 setTimeout(function(){
@@ -131,7 +135,7 @@ function dealWithAfterTap() {
             conversationVariables.error_trans = false;
 
 
-    }else {
+    } else {
 
         if(!conversationVariables.stage2 && !conversationVariables.stage3){
             conversationVariables.trying_again = false;
