@@ -291,6 +291,7 @@ function continuePrompt() {
     //console.log( '\nin continuePrompt\n' );
     //if last sentence then just show mic, but if more sentences to come then show 'next' button
     
+    synthesisObject.speakingPrompt += 1;
     if ( synthesisObject.sentenceNo === synthesisObject.now.URLs.length - 1 ) {
 
         if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === "M" ) { 
@@ -383,11 +384,11 @@ function checkIfNewPromptArrived() {
 
     } else {
 
-        if ( synthesisObject.awaiting_next_prompt_count < 150 ) {
+        if ( synthesisObject.awaiting_next_prompt_count < 200 ) {
 
             if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].awaiting_next_prompt ) {
 
-                if ( synthesisObject.awaiting_next_prompt_count % 100 === 0 ) {
+                if ( synthesisObject.awaiting_next_prompt_count % 10 === 0 ) {
                 
                     console.log( 'awaiting_next_prompt_count in checkIfNewPromptArrived:', synthesisObject.awaiting_next_prompt_count );
 

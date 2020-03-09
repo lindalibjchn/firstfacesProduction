@@ -167,15 +167,16 @@ function getNextPrompt() {
                 console.log('in new prompt');
                 conversationVariables.conversation_dict.completed_sentences[ 0 ].prompts = json.prompts;
                 createPromptFromServerPrompts();
-                synthesisObject.newPromptArrived = json.new_prompt;
+                synthesisObject.newPromptArrived = true;
                 synthesisObject.awaiting_next_prompt_count = 0;
 
             }
 
             if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].awaiting_next_prompt ) {
 
-                if ( synthesisObject.awaiting_next_prompt_count < 500 ) {
+                if ( synthesisObject.awaiting_next_prompt_from_server_count < 10 ) {
     
+                    synthesisObject.awaiting_next_prompt_from_server_count += 1;
                     setTimeout( getNextPrompt, 2000 );
 
                 }

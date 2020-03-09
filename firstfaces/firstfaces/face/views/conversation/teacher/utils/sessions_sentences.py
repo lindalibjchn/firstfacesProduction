@@ -11,7 +11,7 @@ from django.contrib.auth.models import User
 def get_students_in_conversation_now_ids():
     
     cur_conversations = Conversation.objects.filter(end_time=None).exclude(topic="tutorial")
-    print('cur_conversations:', cur_conversations)
+    # print('cur_conversations:', cur_conversations)
 
     students_in_conversation_now_ids = []
     for c in cur_conversations:
@@ -51,7 +51,7 @@ def get_students_conversations(students_in_conversation_now_ids_):
             students_conversations["sentences_being_recorded"].append(sentence_being_recorded)
 
     students_conversations["sentences_awaiting_judgement"] = sorted(students_conversations["sentences_awaiting_judgement"], key=itemgetter("sentence_timestamp"), reverse=True)
-    print('student_conversations:', students_conversations)
+    # print('student_conversations:', students_conversations)
 
     return students_conversations
 

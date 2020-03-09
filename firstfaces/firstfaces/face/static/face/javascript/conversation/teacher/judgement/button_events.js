@@ -9,6 +9,7 @@ function prepareJudgement( e ) {
         teacherVars.sentencesNeedJudgement[ 0 ].judgement = "P";
         highlightAndFocusOnPromptBox( 0 );
         removeSelectable();
+        storeJudgement();
 
     } else if ( btnId === "wrongBtn" ) {
 

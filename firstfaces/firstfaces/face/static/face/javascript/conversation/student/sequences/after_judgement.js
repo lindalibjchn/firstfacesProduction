@@ -86,15 +86,34 @@ function tiaSpeakAfterReturningFromThinking() {
 
     } else if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].judgement === "P" ) {
 
-        createPromptFromServerPrompts();
-        conversationVariables.promptSpeaking = true;
-        conversationVariables.correctSentence = true;
-        tiaPrepareToSpeak( "prompt" );
-        
-        if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].awaiting_next_prompt ) {
+        // no prompts
+        if ( $.isEmptyObject(conversationVariables.conversation_dict.completed_sentences[0].prompts) ) {
 
-            synthesisObject.awaiting_next_prompt_count = 0;
-            setTimeout( getNextPrompt, 3000 );
+            setTimeout( function() {
+
+                expressionController( expressionObject.quarter, tiaTimings.changeExpressionDuration, function() {
+
+                    initInputReady( 'prompt empty',  showPtsBool=true );
+
+                });
+
+            }, 1000 );
+
+        } else {
+
+            synthesisObject.speakingPrompt = 0;
+            createPromptFromServerPrompts();
+            conversationVariables.promptSpeaking = true;
+            conversationVariables.correctSentence = true;
+            tiaPrepareToSpeak( "prompt" );
+            
+            if ( conversationVariables.conversation_dict.completed_sentences[ 0 ].awaiting_next_prompt ) {
+
+                synthesisObject.awaiting_next_prompt_count = 0;
+                synthesisObject.awaiting_next_prompt_from_server_count = 0;
+                setTimeout( getNextPrompt, 2000 );
+
+            }
 
         }
 

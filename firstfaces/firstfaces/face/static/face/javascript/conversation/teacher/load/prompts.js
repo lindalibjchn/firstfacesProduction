@@ -30,19 +30,33 @@ function storeSinglePromptBox( awaiting ) {
     let idOfCurrentTextBoxInFocus = $('textarea:focus').attr('id');
     let promptNumber = parseInt( idOfCurrentTextBoxInFocus[ idOfCurrentTextBoxInFocus.length - 1 ] )
     let idOfNextPromptNumber = promptNumber + 1;
-    let promptText = $( '#promptText' + promptNumber ).val();
+    //let promptText = $( '#promptText' + promptNumber ).val();
+    let promptText = $( '#' + idOfCurrentTextBoxInFocus ).val();
+    if ( promptText === undefined ) {
+
+        promptText = "";
+
+    }
     teacherVars.sentencesNeedJudgement[ 0 ].awaiting_next_prompt = awaiting,
-    $( '#promptText' + promptNumber ).attr('disabled', 'disabled');
+    $( '#' + idOfCurrentTextBoxInFocus ).attr('disabled', 'disabled');
     
+    console.log('promptNumber:', promptNumber)
+    console.log('promptText:', promptText)
     if ( promptNumber === 0 ) {
+
+        $('#prompt0SetContainer').hide();
 
         if ( promptText !== "" ) {
 
-            $('#prompt0SetContainer').hide();
             storeSinglePrompt( promptNumber, promptText );
-            $( '#promptText' + idOfNextPromptNumber ).focus();
+
+        } else if ( !awaiting ) {
+
+            storeSinglePrompt( promptNumber, promptText );
 
         }
+
+        $( '#promptText' + idOfNextPromptNumber ).focus();
 
     } else if ( promptNumber === 1 ) {
 
@@ -52,17 +66,25 @@ function storeSinglePromptBox( awaiting ) {
 
             storeSinglePrompt( promptNumber, promptText );
 
+        } else if ( !awaiting ) {
+
+            storeSinglePrompt( promptNumber, promptText );
+
         }
+
 
     } else {
 
         teacherVars.sentencesNeedJudgement[ 0 ].awaiting_next_prompt = false,
         storeSinglePrompt( promptNumber, promptText );
-        //resetJudgement();
 
     }
 
-    if ( !awaiting && promptNumber !== 2 ) {
+    if ( teacherVars.sentencesNeedJudgement[ 0 ].awaiting_next_prompt ) {
+
+        setKeydownEvents();
+
+    } else {
 
         resetJudgement();
 

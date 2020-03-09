@@ -70,13 +70,15 @@ def check_judgement(request):
                 
         if s.judgement == "P":
 
-            if s.prompts.exists():
+            if s.prompts.exists() or s.awaiting_next_prompt != None:
+                print('P prompt exists')
                 received_judgement = True
                 sent = convert_django_sentence_object_to_json(s, request.user.id, conv_id)
                 s.loop = loop
+                s.prompt_updated_by_teacher = False
                 s.save()
 
-        if s.judgement == "M":
+        elif s.judgement == "M":
 
             if jsonify_or_none(s.indexes) != None:
                 received_judgement = True

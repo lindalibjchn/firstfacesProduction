@@ -29,6 +29,7 @@ function storeJudgement() {
 
 function storeSinglePrompt( promptNumber, promptText ) {
 
+    console.log('storeSinglePrompt')
     addPromptToSentenceData( promptNumber, promptText )
     $.ajax({
         url: "/store_single_prompt",
@@ -36,12 +37,11 @@ function storeSinglePrompt( promptNumber, promptText ) {
         data: {
             'promptNumber': promptNumber,
             'promptText': promptText,
-            'sentMeta': JSON.stringify( teacherVars.sentencesNeedJudgement[ 0 ] ), 
+            'sentID': teacherVars.sentencesNeedJudgement[ 0 ].sent_id, 
+            'awaitingNextPrompt': teacherVars.sentencesNeedJudgement[ 0 ].awaiting_next_prompt, 
         }, 
         success: function(json) {
            
-          console.log('prompt_saved:', json.prompt_saved)
-
         },
         error: function() {
           
@@ -50,16 +50,6 @@ function storeSinglePrompt( promptNumber, promptText ) {
         },
 
     });
-
-    if ( promptNumber === 2 ) {
-
-        resetJudgement();
-
-    } else {
-
-        setKeydownEvents();
-
-    }
 
 }
 

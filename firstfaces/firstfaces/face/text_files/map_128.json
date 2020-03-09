@@ -1,0 +1,137 @@
+{
+  "transcript": "this\nis\na\ncat\nand\na\ndog\n",
+  "words": [
+    {
+      "alignedWord": "this",
+      "case": "success",
+      "end": 0.95,
+      "endOffset": 4,
+      "phones": [
+        {
+          "duration": 0.11,
+          "phone": "dh_B"
+        },
+        {
+          "duration": 0.05,
+          "phone": "ih_I"
+        },
+        {
+          "duration": 0.16,
+          "phone": "s_E"
+        }
+      ],
+      "start": 0.63,
+      "startOffset": 0,
+      "word": "this"
+    },
+    {
+      "alignedWord": "is",
+      "case": "success",
+      "end": 1.18,
+      "endOffset": 7,
+      "phones": [
+        {
+          "duration": 0.11,
+          "phone": "ih_B"
+        },
+        {
+          "duration": 0.06,
+          "phone": "z_E"
+        }
+      ],
+      "start": 1.01,
+      "startOffset": 5,
+      "word": "is"
+    },
+    {
+      "alignedWord": "a",
+      "case": "success",
+      "end": 1.48,
+      "endOffset": 9,
+      "phones": [
+        {
+          "duration": 0.16,
+          "phone": "ah_S"
+        }
+      ],
+      "start": 1.32,
+      "startOffset": 8,
+      "word": "a"
+    },
+    {
+      "alignedWord": "cat",
+      "case": "success",
+      "end": 1.77,
+      "endOffset": 13,
+      "phones": [
+        {
+          "duration": 0.06,
+          "phone": "k_B"
+        },
+        {
+          "duration": 0.07,
+          "phone": "ae_I"
+        },
+        {
+          "duration": 0.01,
+          "phone": "t_E"
+        }
+      ],
+      "start": 1.63,
+      "startOffset": 10,
+      "word": "cat"
+    },
+    {
+      "alignedWord": "and",
+      "case": "success",
+      "end": 1.7999999999999998,
+      "endOffset": 17,
+      "phones": [
+        {
+          "duration": 0.01,
+          "phone": "ah_B"
+        },
+        {
+          "duration": 0.01,
+          "phone": "n_I"
+        },
+        {
+          "duration": 0.01,
+          "phone": "d_E"
+        }
+      ],
+      "start": 1.77,
+      "startOffset": 14,
+      "word": "and"
+    },
+    {
+      "case": "not-found-in-audio",
+      "endOffset": 19,
+      "startOffset": 18,
+      "word": "a"
+    },
+    {
+      "alignedWord": "dog",
+      "case": "success",
+      "end": 2.8200000000000003,
+      "endOffset": 23,
+      "phones": [
+        {
+          "duration": 0.08,
+          "phone": "d_B"
+        },
+        {
+          "duration": 0.11,
+          "phone": "ao_I"
+        },
+        {
+          "duration": 0.18,
+          "phone": "g_E"
+        }
+      ],
+      "start": 2.45,
+      "startOffset": 20,
+      "word": "dog"
+    }
+  ]
+}
