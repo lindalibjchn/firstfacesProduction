@@ -71,15 +71,15 @@ function sendSentToServer() {
             recTimes.clickTalkBtn = Date.now() / 1000;
 
 
-             if(!conversationVariables.trying_again){
-                    sent_id = conversationVariables.sentence_being_recorded.sent_id;
-                    curr_id = conversationVariables.sentence_being_recorded.conv_id;
-             }else{
+             //if(!conversationVariables.trying_again){
+            sent_id = conversationVariables.sentence_being_recorded.sent_id;
+            curr_id = conversationVariables.sentence_being_recorded.conv_id;
+             //}else{
                      //sent_id = conversationVariables.previous_sent_sent_id;
                      //curr_id = conversationVariables.previous_sent_conv_id
-                sent_id = conversationVariables.conversation_dict.completed_sentences[0].sent_id
-                curr_id = conversationVariables.conversation_dict.completed_sentences[0].conv_id
-            }
+                //sent_id = conversationVariables.conversation_dict.completed_sentences[0].sent_id
+                //curr_id = conversationVariables.conversation_dict.completed_sentences[0].conv_id
+            //}
             conversationVariables.trying_again = false
             $.ajax({
                 url: "/store_sent",

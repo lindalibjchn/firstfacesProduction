@@ -1,9 +1,11 @@
 function tiaPrepareToSpeak( tiaSays, speakCb=function(){}, playbackRate=1) {
 
+    console.log( 'tiaSays:', tiaSays );
     conversationVariables.stage3 = false; // fix bug after removing spectrospin
     synthesisObject.newPromptArrived = false;
     synthesisObject.sentenceNo = 0;
     synthesisObject.now = synthesisObject.data[ tiaSays ];
+    console.log('synthesisObject.now in tiaPrepareToSpeak:', synthesisObject.now);
     buttonsListenNextSentenceWaiting();
     synthesisObject.audio.src = prefixURL + 'media/' + synthesisObject.now.URLs[ synthesisObject.sentenceNo ];
     synthesisObject.audio.load();
@@ -419,6 +421,7 @@ function endTiaTalking() {
 
     synthesisObject.talking = false;
     conversationVariables.promptSpeaking = false;
+    synthesisObject.now = {};
     //expressionController( expressionObject.half, tiaTimings.durationOfReturnToExpressionAfterVeryLastSpeakingPhone );
     movementController( movementObject.abs.blank, 1, 1, function() {
 

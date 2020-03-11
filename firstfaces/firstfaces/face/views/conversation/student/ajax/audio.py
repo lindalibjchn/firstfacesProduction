@@ -108,15 +108,6 @@ def store_blob(request):
     a.save()
     # settings.TIME00 = datetime.datetime.now()
 
-    update = Update.objects.latest('pk')
-    update.updated_aud = True
-    updated_audio_ids = jsonify_or_none(update.audio_ids)
-    if updated_audio_ids == None:
-        update.audio_ids = json.dumps([s.id])
-    else:
-        update.audio_ids = json.dumps((updated_audio_ids).append(s.id))
-    update.save()
-
     # need to save the file before can acces url to use ffmpeg (in utils.py)
     audioLength = 0
     audioFile = ""
@@ -126,6 +117,16 @@ def store_blob(request):
         audioLength = get_audio_length(settings.BASE_DIR+"/"+audioFile)
         a.alternatives = json.dumps(alternatives)
         a.save()
+
+        update = Update.objects.latest('pk')
+        update.updated_aud = True
+        updated_audio_ids = jsonify_or_none(update.audio_ids)
+        if updated_audio_ids == None:
+            update.audio_ids = json.dumps([s.id])
+        else:
+            update.audio_ids = json.dumps((updated_audio_ids).append(s.id))
+        update.save()
+
     else:
         a.delete()
         audioFile = ""

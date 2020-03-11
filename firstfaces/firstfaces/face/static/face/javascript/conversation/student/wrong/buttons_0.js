@@ -29,16 +29,20 @@ function tryAgain() {
     $.ajax({
         url: "/store_try_again",
         type: "GET",
-        data: {'sentId': conversationVariables.conversation_dict.completed_sentences[ 0 ].sent_id},
+        data: {
+            'sentId': conversationVariables.conversation_dict.completed_sentences[ 0 ].sent_id
+        },
         success: function(json) {
         
-            let copiedSent = $.extend( true, {}, conversationVariables.conversation_dict.completed_sentences[ 0 ] );
-            copiedSent.sent_id = json.try_again_copied_sent_id;
-            copiedSent.judgement = null
-            copiedSent.try_again = null
-            copiedSent.whats_wrong = null
-            copiedSent.indexes = null
-            updateConversationVariablesWithNewSentence( copiedSent );
+            //let copiedSent = $.extend( true, {}, conversationVariables.conversation_dict.completed_sentences[ 0 ] );
+            //copiedSent.sent_id = json.try_again_copied_sent_id;
+            //copiedSent.judgement = null
+            //copiedSent.try_again = null
+            //copiedSent.whats_wrong = null
+            //copiedSent.indexes = null
+            //updateConversationVariablesWithNewSentence( copiedSent );
+            console.log('json:', json);
+            conversationVariables.sentence_being_recorded = json.try_again_sent,
             $('#submittedNCorrectedSentenceCont').fadeOut( 500, clearSubmittedNCorrectedSentences );
 
         },
@@ -47,6 +51,61 @@ function tryAgain() {
         },
         
     });
+
+}
+
+function highlightErrors() {
+
+    let highlightedErrors = []
+    conversationVariables.conversation_dict.completed_sentences[ 0 ].indexes.forEach( function( i ) {
+
+        let wordIndexes = convertDatabaseIndexesToWordIndexes( i );
+
+        wordIndexes.forEach( function( w ) {
+
+            if ( !highlightedErrors.includes( w ) ) {
+
+                selectErrWord( 'upper_' + w.toString() );
+
+            };
+
+            highlightedErrors.push( w );
+
+        });
+
+    });
+
+}
+
+function convertDatabaseIndexesToWordIndexes( dbIndexes ) {
+
+    if ( dbIndexes.length === 1 ) {
+
+        if ( dbIndexes[ 0 ] % 2 !== 0 ) {
+
+            return [ Math.floor( dbIndexes[ 0 ] / 2 ) ];
+
+        } else {
+
+            let biggest = dbIndexes[ 0 ] / 2
+            return [ biggest - 1, biggest ]
+
+        }
+
+    } else {
+
+        let smallest = Math.floor( dbIndexes[ 0 ] / 2 )
+        let biggest = Math.floor( dbIndexes[ dbIndexes.length - 1 ] / 2 )
+        indexesRange = []
+        for ( var wIndexes=smallest; wIndexes<=biggest; wIndexes++ ) {
+
+            indexesRange.push( wIndexes );
+
+        }
+
+        return indexesRange
+
+    }
 
 }
 

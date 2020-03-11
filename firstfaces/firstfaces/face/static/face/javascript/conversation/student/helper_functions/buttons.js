@@ -163,12 +163,12 @@ function flashButton() {
     console.log('in flashButton')
     if ( flashButtonCount === 0 ) {
 
-        $( '#' + flashButtonDivId ).fadeTo( 900, 0.3 );
+        $( '#' + flashButtonDivId ).fadeTo( 700, 0.5 );
         flashButtonCount += 1;
 
     } else {
 
-        $( '#' + flashButtonDivId ).fadeTo( 900, 1 );
+        $( '#' + flashButtonDivId ).fadeTo( 700, 1 );
         flashButtonCount = 0;
 
     }
@@ -180,7 +180,7 @@ function flashButton() {
 
         }
 
-    }, 1000);
+    }, 800);
 
 }
 

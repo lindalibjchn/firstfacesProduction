@@ -194,19 +194,12 @@ def store_try_again(request):
     sent.try_again_timestamp = time_now
     sent.save()
 
-    new_sent_for_try_again = sent
-    new_sent_for_try_again.pk = None
-    new_sent_for_try_again.indexes = None
-    new_sent_for_try_again.correction = None
-    new_sent_for_try_again.judgement = None
-    new_sent_for_try_again.whats_wrong = None
-    new_sent_for_try_again.try_again = None
-    new_sent_for_try_again.save()
-    print('new_Sent_for_try_Again:', new_sent_for_try_again.pk)
+    new_s = Sentence(learner=request.user, conversation=sent.conversation)
+    new_s.save()
 
     response_data = {
 
-            'try_again_copied_sent_id': new_sent_for_try_again.pk,
+            'try_again_sent': convert_django_sentence_object_to_json( new_s, request.user.pk, sent.conversation.pk  ),
 
     }
 

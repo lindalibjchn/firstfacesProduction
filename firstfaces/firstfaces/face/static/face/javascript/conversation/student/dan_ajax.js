@@ -17,6 +17,14 @@ function set_selectable(trans){
    var duration = words.length * 125;
    setTimeout(function(){
         $('.selectable-word').attr("onclick","selectErrWord(this.id)");
+        if ( conversationVariables.trying_again ) {
+            setTimeout( function() {
+            
+                highlightErrors();
+
+            }, 500 );
+
+        }
    },duration);
 }
 
@@ -566,6 +574,7 @@ function closeTimeOverlayCont(){
 //Allows users to type what they meant to say
 $('#keyboardOverlay').click(function(){
     moveText();
+    conversationVariables.stage3 = true;
 
     conversationVariables.movedText = true;
     increase_type_size_stage2();
